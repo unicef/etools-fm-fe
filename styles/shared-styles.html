@@ -1,11 +1,16 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <!-- shared styles for all views -->
 <!-- not for styling index.html or pmp-shell -->
+
+<link rel="import" href="app-mixins.html">
 
 <dom-module id="shared-styles">
   <template>
     <style>
+      *[hidden] {
+        display: none !important;
+      }
 
       h1 {
         font-size: 25px;
@@ -32,7 +37,6 @@
 
       paper-tabs {
         color: var(--light-primary-text-color);
-        --paper-tabs-selection-bar-color: var(--accent-color);
         --paper-tabs: {
           font-size: 14px;
           font-weight: 500;
@@ -52,13 +56,14 @@
         @apply(--layout-center-center);
       }
 
-      iron-pages[hidden] {
-        display: none;
+      paper-item {
+        font-size: 15px;
+        white-space: nowrap;
       }
 
       paper-material {
         padding: 15px 20px;
-        background-color: var(--light-theme-content-color);
+        background-color: var(--primary-background-color);
       }
 
       iron-icon.dark {
@@ -77,6 +82,98 @@
       paper-icon-button.light {
         color: var(--light-icon-color);
         --paper-icon-button-ink-color: var(--light-ink-color);
+      }
+
+      .dropdown-with-clear-btn paper-icon-button.clear,
+      .dropdown-with-clear-btn paper-icon-button.remove,
+      paper-icon-button.remove-field.remove {
+        width: 35px;
+        height: 35px;
+        top: 10px;
+      }
+
+      .dropdown-with-clear-btn paper-icon-button.remove,
+      paper-icon-button.remove-field.remove {
+        color: #ea4022 /* TODO: replace with app-theme var */
+      }
+
+      .dropdown-with-clear-btn {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+
+      paper-input {
+        --paper-input-prefix: {
+          margin-top: -5px;
+          margin-right: 10px;
+          color: var(--dark-secondary-text-color);
+        };
+        --paper-input-suffix: {
+          margin-top: -5px;
+          margin-left: 10px;
+          color: var(--dark-secondary-text-color);
+        };
+      }
+      paper-dropdown-menu paper-item {
+        cursor: pointer;
+      }
+
+      /* paper input readonly state */
+      paper-input[readonly],
+      paper-textarea[readonly],
+      .form-field-wrapper {
+        --paper-input-container-underline: {
+          display: none;
+        };
+        --paper-input-container-underline-focus: {
+          display: none;
+        };
+        --paper-input-container-underline-disabled: {
+          display: none;
+        };
+        --paper-input-char-counter: {
+          display: none;
+        };
+        width: 100%;
+      }
+
+      etools-searchable-multiselection-menu {
+        --esmm-readonly-input-container-underline: {
+          display: none;
+        };
+      }
+      etools-currency-amount-input[readonly] {
+        --etools-currency-container-underline: {
+          display: none;
+        };
+        --etools-currency-container-underline-focus: {
+          display: none;
+        };
+        --etools-currency-container-underline-disabled: {
+          display: none;
+        };
+      }
+
+      paper-input.right-to-left {
+        text-align: right;
+        --paper-input-container-input: {
+          direction: rtl;
+          unicode-bidi: bidi-override;
+        }
+      }
+
+      .custom-field-wrapper {
+        padding: 8px 0;
+      }
+
+      .custom-field-wrapper etools-checkable-input {
+        --etools-checkable-input-label: {
+          margin-top: 1px;
+        }
+      }
+
+      .capitalize {
+        text-transform: capitalize;
       }
 
       /* responsive css rules */

@@ -16,15 +16,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../scripts/polyfils/es6-polyfils.html">
+<link rel="import" href="../bower_components/etools-loading/etools-loading-behavior.html">
 
 <link rel="import" href="app-config/etools-app-config.html">
+<link rel="import" href="app-behaviors/notification-toasts-behavior.html">
+
+<link rel="import" href="app-elements/page-header/page-header.html">
+<link rel="import" href="app-elements/page-footer/page-footer.html">
+
 <link rel="import" href="app-elements/user-data/user-data.html">
 <link rel="import" href="app-elements/side-bar-item/side-bar-item.html">
 
@@ -39,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template>
 
-    <style include="shared-styles">
+    <style include="page-layout-styles shared-styles iron-flex iron-flex-alignment">
 
       :host {
         display: block;
@@ -109,15 +120,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <user-data permissions="{{permissions}}"></user-data>
+    <user-data user="{{user}}" permissions="{{permissions}}"></user-data>
 
     <app-location route="{{route}}"></app-location>
 
     <app-route
         route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        pattern$="[[baseUrl]]:page"
+        data="{{routeData}}"></app-route>
 
     <app-drawer-layout id="layout" responsive-width="850px" narrow="{{narrow}}" fullbleed>
 
@@ -126,50 +136,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="side-nav-wrapper">
 
-          <app-toolbar class="header">
-            <img id="etools-logo" src="../images/etools_logo.svg" alt="etools logo">
-            <paper-icon-button id="app-select" on-tap="openAppMenu" class="dark" icon="apps"></paper-icon-button>
+          <app-toolbar class="header uppercase">
+            Partnership <br>
+            Management
           </app-toolbar>
 
-          <div class="nav-menu">
-            <iron-selector selected="[[page]]" attr-for-selected="name" selectable="side-bar-item" role="navigation">
-
-              <side-bar-item name="section1" icon="description" href="/section1/tab1"></side-bar-item>
-              <side-bar-item name="section2" icon="book" href="/section2"></side-bar-item>
-              <side-bar-item name="section3" icon="build" href="/section3"></side-bar-item>
-              <div class="divider"></div>
-
-              <!-- Permissions example: only display settings if the user has permission -->
-              <side-bar-item hidden$="{{!permissions.userInfoMenu}}" name="settings" icon="settings" href="/settings"></side-bar-item>
-
-              <side-bar-item name="user support" icon="help" href="/support"></side-bar-item>
-              <side-bar-item name="discussions" icon="question-answer" href="/discussion"></side-bar-item>
-              <side-bar-item name="information" icon="info" href="/information"></side-bar-item>
-
+          <div class="nav-menu layout vertical">
+            <iron-selector selected="[[page]]" attr-for-selected="menu-name" selectable="side-bar-item" role="navigation">
+              <template is="dom-if" if="[[permissions.loggedInDefault]]">
+                <side-bar-item menu-name="section1" name="section1" icon="social:people" href$="[[baseUrl]]section1/tab1"></side-bar-item>
+                <side-bar-item menu-name="section2" name="section2" icon="av:playlist-add-check" href$="[[baseUrl]]section2"></side-bar-item>
+                <side-bar-item menu-name="section3" name="section3" icon="verified-user" href$="[[baseUrl]]section3"></side-bar-item>
+                <div class="divider"></div>
+                <side-bar-item menu-name="settings" name="settings" icon="settings" href="/"></side-bar-item>
+              </template>
             </iron-selector>
-          </div>
 
-          <div class="footer">
-            <img id="unicef-logo" src="../images/UNICEF_logo.png" alt="UNICEF logo">
-          </div>
+            <div class="flexy"></div>
 
+            <div class="secondary-header">eTools Community Channels</div>
+            <side-bar-item name="Knowledge base" class="lighter-item" icon="maps:local-library" href="https://etools.uservoice.com"></side-bar-item>
+            <side-bar-item name="Discussion" class="lighter-item" icon="icons:question-answer" href="https://www.yammer.com/unicef.org/#/threads/inGroup?type=in_group&feedId=5782560"></side-bar-item>
+            <side-bar-item name="Information" class="lighter-item last-one" icon="icons:info" href="http://etools.unicefresults.org"></side-bar-item>
+          </div>
         </div>
 
       </app-drawer>
 
       <!-- Main content -->
+      <app-header-layout fullbleed has-scrolling-region>
+        <app-header  fixed shadow>
+          <page-header id="pageheader" title="eTools" user="[[user]]"></page-header>
+        </app-header>
+        <iron-pages id="pages"
+                    selected="[[page]]"
+                    attr-for-selected="name"
+                    fallback-selection="not-found"
+                    role="main">
 
-      <iron-pages id="pages"
-                  selected="[[page]]"
-                  attr-for-selected="name"
-                  fallback-selection="not-found"
-                  role="main">
-        <page-section1 name="section1" route="{{subroute}}"></page-section1>
-        <page-section2 name="section2" route="{{subroute}}"></page-section2>
-        <page-section3 name="section3" route="{{subroute}}"></page-section3>
-        <page-not-found name="not-found"></page-not-found>
-      </iron-pages>
-
+          <template is="dom-if" id="privatePages" on-dom-change="_pagesStamped" if="[[permissions.loggedInDefault]]">
+            <page-section1 name="section1"
+                           route="[[subroute]]"
+                           permissions="[[permissions]]"
+                           on-dom-change="_pagesStamped"></page-section1>
+            <page-section2 name="section2"
+                           route="[[subroute]]"
+                           permissions="[[permissions]]"></page-section2>
+            <page-section3 name="section3"
+                           route="[[subroute]]"
+                           permissions="[[permissions]]"></page-section3>
+          </template>
+          <page-not-found name="not-found"></page-not-found>
+        </iron-pages>
+        <page-footer></page-footer>
+      </app-header-layout>
     </app-drawer-layout>
 
   </template>
@@ -187,68 +207,114 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged'
         },
-
+        route: {
+          type: Object
+        },
+        _pagesAvailable: {
+          type: Boolean,
+          value: false
+        },
         narrow: {
           type: Boolean,
           reflectToAttribute: true
         },
-
-        _toast: {
+        baseUrl: String,
+        initialLoad: {
+          type: Boolean,
+          value: true
+        },
+        permissions: {
           type: Object,
           value: null
         },
-
-        _toastQueue: {
-          type: Array,
-          value: function() { return []; }
-        },
+        subroute: {
+          type: Object
+        }
 
       },
 
+      behaviors: [
+        etoolsAppConfig.globals,
+        pmpBehaviors.NotificationToastsBehavior,
+        etoolsBehaviors.LoadingBehavior
+      ],
+
       observers: [
-        '_routePageChanged(routeData.page)'
+        '_routePageChanged(routeData.page)',
+        '_permissionsPagesStamped(permissions, _pagesAvailable)'
       ],
 
       listeners: {
-        'toast': 'queueToast',
+        'global-loading': '_handleLoading',
         'drawer': 'toggleDrawer',
         '404': '_pageNotFound',
+        'update-main-path': '_updateMainPath',
+        'forbidden': '_onForbidden'
+      },
+
+      _onForbidden: function(event) {
+        console.error('unauthorized');
+        window.location.href = this.loginPath;
+      },
+
+      ready: function() {
+        // create loading element, used for global loading
+        this.globalLoadingElement = this.createLoading();
+        // this.fire('global-loading', {message: 'Loading data...', active: true});
       },
 
       attached: function() {
-        if (this.route.path === '/') {
-          this.set('route.path', '/section1/tab1');
-        }
+        // for some reason the "$=" will make basePath undefined, we need to use a local property
+        this.baseUrl = this.basePath;
+
+        //if (this.route.path === this.baseUrl) {
+        //  this.set('route.path', this.baseUrl + 'partners/list');
+        //}
+      },
+      detached: function() {
+        // clean: remove global loading element if the app-shell is detached
+        this.removeLoading(this.globalLoadingElement);
       },
 
+      _updateMainPath: function(event) {
+        if (event.detail.path !== this.route.path.replace(this.baseUrl, '')) {
+          // set route.path only if received path is different
+          this.set('route.path', this.baseUrl + event.detail.path);
+          this.set('route.__queryParams', null);
+        }
+        event.stopPropagation();
+      },
+      _permissionsPagesStamped: function(permissions, _pagesAvailable) {
+        if (!permissions || !_pagesAvailable) {
+          return;
+        }
+        if ((this.route.path === this.baseUrl || this.route.path === '/') &&
+          permissions.loggedInDefault) {
+          // setting the default path
+          this.set('route.path', this.baseUrl + 'partners/list');
+        } else if (this.initialLoad) {
+          // reseting the page as the pages might not have been stamped
+          this._routePageChanged(this.routeData.page);
+        }
+
+        this.initialLoad = false;
+      },
       toggleDrawer: function() {
         this.$.drawer.toggle();
       },
 
-      queueToast: function(e, detail) {
-        if (!this._toast) {
-          this._toast = document.createElement('paper-toast');
-          this.listen(this._toast, 'iron-overlay-closed', 'dequeueToast');
-          Polymer.dom(this.$.layout).appendChild(this._toast);
-          Polymer.dom.flush();
-        }
-        if (!this._toastQueue.length) {
-          this.push('_toastQueue', detail);
-          this._toast.show(detail);
-        } else {
-          this.push('_toastQueue', detail);
-        }
-      },
-
-      dequeueToast: function() {
-        this.shift('_toastQueue');
-        if (this._toastQueue.length) {
-          this._toast.show(this._toastQueue[0]);
-        }
-      },
-
       _routePageChanged: function(page) {
-        this.page = page || 'section1';
+        if ((this.route) && (this.baseUrl)) {
+          var subroute = JSON.parse(JSON.stringify(this.route));
+          subroute.path = this.route.path.substring(subroute.path.indexOf(this.baseUrl) + this.baseUrl.length);
+          this.set('subroute', subroute);
+        }
+
+        if (this._pagesAvailable || (['settings', 'etc'].indexOf(page) !== -1)) {
+          this.set('page', (page || 'partners'));
+        } else {
+          //console.log('No permissions yet or page hasn\'t stampped', page);
+        }
       },
 
       _pageChanged: function(page) {
@@ -259,6 +325,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _pageNotFound: function() {
         this.page = 'not-found';
         this.fire('toast', {text: 'Oops you hit a 404!'});
+      },
+
+      _pagesStamped: function() {
+        if (!this._pagesAvailable) {
+          this.$.privatePages.render();
+          this._pagesAvailable = true;
+        }
+      },
+
+      /**
+       * Show loading when data is requested from server, or save is in progress...
+       */
+      _handleLoading: function(event) {
+        event.stopImmediatePropagation();
+        this.debounce('showGlobalLoading', function() {
+          if (this.globalLoadingElement) {
+            var loadingMsg = 'Loading...';
+            if (event.detail && typeof event.detail.message === 'string' && event.detail.message !== '') {
+              loadingMsg = event.detail.message;
+            }
+            this.globalLoadingElement.loadingText = loadingMsg;
+            var isActive = (event.detail.active === true) ? true : false;
+            this.globalLoadingElement.active = isActive;
+          }
+        }, 50);
       }
 
     });

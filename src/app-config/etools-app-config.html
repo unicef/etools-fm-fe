@@ -5,71 +5,117 @@ App global configuration
 <link rel="import" href="../../scripts/lodash/lodash.html">
 
 <script>
-    'use strict';
+  'use strict';
 
-    /* exported etoolsAjaxDefaultDexieDbPrefix */
-    var etoolsAjaxDefaultDexieDbPrefix = 'frontendTemplate';
+  /* exported etoolsAjaxDefaultDexieDbPrefix */
+  var etoolsAjaxDefaultDexieDbPrefix = 'frontendTemplate';
 
-    var etoolsAppConfig = {
-      // dexie js
-      appDexieDb: new Dexie('etoolsApp'),
+  /**
+   * for db versioning check
+   * https://github.com/dfahlander/Dexie.js/wiki/Design#database-versioning
+   */
+  var etoolsCustomDexieDb = new Dexie('frontendTemplateApp');
+  etoolsCustomDexieDb.version(1).stores({
+    collectionsList: '&name, expire',
+    countries: 'id'
+  });
 
-      // app endpoints
-      endpoints: {
-        userInfo: {
-          url: '/users/api/profile/',
-          exp: 30 * 60 * 1000, // 30min
-          cachingKey: 'userData'
-        },
-        countries: {
-          url: '../../data/countries.json',
-          exp: 6 * 60 * 60 * 1000, // 6h
-          cachingKey: 'countries'
-        },
-        testTemplateEndpointUse: {
-          template: '/api/country/<%=id%>',
-          exp: 30 * 60 * 1000, // 30min
-          cachingKey: 'countries'
+  var etoolsAppConfig = {
+
+    db: etoolsCustomDexieDb,
+
+    // globals
+    globals: {
+
+      baseSite: window.location.origin,
+      // on your project change /pmp/ accordingly
+      basePath: (window.location.port === '8080') ? '/' : '/pmp/',
+      serverBackend: (window.location.port !== '8080'),
+      loginPath: window.location.origin + '/login/',
+
+      getEndpoint: function(endpointName, data) {
+        var endpoint = JSON.parse(JSON.stringify(etoolsAppConfig.endpoints[endpointName]));
+        if (endpoint && endpoint.hasOwnProperty('template') && endpoint.template !== '') {
+          endpoint.url = this.baseSite + _.template(endpoint.template)(data);
         }
+        return endpoint;
       },
 
-      globals: {
-        // globals
-        baseSite: window.location.origin,
-        basePath: (window.location.port === '8080') ? '/' : '/partners/',
+      getAllPermissions: function() {
+        return etoolsAppConfig.permissions;
+      }
+    },
 
-        getEndpoint: function(endpointName, data) {
-          var endpoint = etoolsAppConfig.endpoints[endpointName];
-          if (endpoint && endpoint.hasOwnProperty('template') && endpoint.template !== '') {
-            endpoint.url = this.baseSite + _.template(endpoint.template)(data);
-          }
-          return endpoint;
-        },
+    // permissions
+    permissions: {
+      defaultPermissions: [
+        'loggedInDefault',
+        'userInfoMenu',
+        'viewPartnerDetails',
+        'viewAgreementDetails',
+        'viewInterventionDetails',
+      ],
+      unicefUserPermissions: [
+        'editInterventionDetails'
+      ],
+      superPermissions: [
+        'loggedInDefault',
+        'userInfoMenu',
+        'interventionsMenu',
+        'statsMenu',
+        'viewPartnerDetails',
+        'editPartnerDetails',
+        'viewAgreementDetails',
+        'editAgreementDetails',
+        'viewInterventionDetails',
+        'editInterventionDetails'
+      ],
+      partnershipManagerPermissions: [
+        'partnershipManager',
+        'editPartnerDetails',
+        'editAgreementDetails',
+      ],
+      PMEPermissions: [
+        'PME'
+      ],
+      ICTPermissions: [
+        'ICT'
+      ]
+    }
+  };
 
-        getAllPermissions: function() {
-          return etoolsAppConfig.permissions;
-        }
-      },
+  var localEps = {
+    userInfo: {
+      url: '/users/api/profile/',
+      exp: 30 * 60 * 1000, // 30min
+      cachingKey: 'userData'
+    },
+    countries: {
+      url: '../../data/countries.json',
+      exp: 6 * 60 * 60 * 1000, // 6h
+      cachingKey: 'countries'
+    },
+    testTemplateEndpointUse: {
+      template: '/api/country/<%=id%>',
+      exp: 30 * 60 * 1000, // 30min
+      cachingKey: 'countries'
+    }
+  };
 
-      // permissions
-      permissions: {
-        superPermissions: ['loggedInDefault', 'userInfoMenu',
-                           'interventionsMenu', 'statsMenu'], //for testing
-        partnerOnlyPermissions: ['interventionsMenu'],
-        defaultPermissions: ['loggedInDefault','userInfoMenu'],
-        partnerPermissions: ['interventionsMenu'],
-        managementPermissions: ['statsMenu']
-      },
+  var serverEps = {
+    // examples from pmp app
+    agreements: {
+      template: '/api/v2/agreements/',
+      exp: 30 * 60 * 1000, // 30min
+      cachingKey: 'agreements'
+    },
+    agreementDetails: {
+      template: '/api/v2/agreements/<%=id%>/',
+    }
+  };
+  /* jshint ignore:start */
+  etoolsAppConfig.endpoints = etoolsAppConfig.globals.serverBackend ? serverEps : localEps;
+  /* jshint ignore:end */
 
-    };
-
-    /**
-     * for db versioning check
-     * https://github.com/dfahlander/Dexie.js/wiki/Design#database-versioning
-     */
-    etoolsAppConfig.appDexieDb.version(1).stores({
-      collectionsList: '&name,expire',
-      countries: 'id, name'
-    });
 
 </script>

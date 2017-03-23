@@ -53,6 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         lazyRegister: true
       };
 
+      var baseUrl = '/';
+
       // Load webcomponentsjs polyfill if browser does not support native Web Components
       (function() {
         'use strict';
@@ -84,15 +86,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       })();
 
+      // add base tag with href set to baseUrl
+      var base = document.createElement('base');
+      base.href = baseUrl;
+      document.head.appendChild(base);
+
       // Load pre-caching Service Worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('/service-worker.js');
         });
       }
-    </script>
 
-    <link rel="import" href="/src/app-shell.html">
+      // set app shell import path based on baseUrl
+      var appShellImport = document.createElement('link');
+      appShellImport.rel = 'import';
+      appShellImport.href = baseUrl + 'src/app-shell.html';
+      document.head.appendChild(appShellImport);
+    </script>
 
     <style>
       body {
