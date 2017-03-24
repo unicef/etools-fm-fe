@@ -57,10 +57,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-drawer {
+        z-index: 100;
         --app-drawer-width: 220px;
         --app-drawer-content-container: {
-            background-color: var(--light-theme-content-color);
+          background-color: var(--light-theme-content-color);
         };
+      }
+
+      app-toolbar {
+        background-color: var(--secondary-color);
+        color: white;
+        --app-toolbar-font-size: 16px;
       }
 
       .side-nav-wrapper {
@@ -80,6 +87,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #etools-logo {
         height: 50%;
         width: 60%;
+      }
+      .uppercase {
+        text-transform: uppercase;
       }
 
       #unicef-logo {
@@ -101,21 +111,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 8px 0;
         border-bottom: 1px solid var(--dark-divider-color);
       }
-
-      .side-nav-wrapper .footer {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-
-        margin-top: auto;
-        min-height: 26px;
-        padding: 16px 16px;
-        border-top: 1px solid var(--dark-divider-color);
+      .nav-menu {
+        background: var(--sidebar-bg-color, #fff);
       }
-
-      #countries {
-        position: fixed;
-        top: 9px;
-        right: 20px;
+      .nav-menu, .flexy {
+        @apply(--layout-flex);
+      }
+      .secondary-header {
+        color: var(--primary-text-color);
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        font-size: 12px;
+        border-top: 1px solid var(--gray-lighter);
+      }
+      .warning-toast-dismiss-btn {
+        text-transform: none;
+        color: var(--ternary-color);
+      }
+      .last-one {
+        margin-bottom: 10px;
+      }
+      .lighter-item {
+        --sidebar-icon-color: var(--sidebar-secondary-text-color);
+        --sidebar-text-color: var(--sidebar-secondary-text-color);
       }
 
     </style>
@@ -137,8 +156,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="side-nav-wrapper">
 
           <app-toolbar class="header uppercase">
-            Partnership <br>
-            Management
+            App Frontend <br>
+            Template
           </app-toolbar>
 
           <div class="nav-menu layout vertical">
@@ -266,10 +285,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       attached: function() {
         // for some reason the "$=" will make basePath undefined, we need to use a local property
         this.baseUrl = this.basePath;
-
-        //if (this.route.path === this.baseUrl) {
-        //  this.set('route.path', this.baseUrl + 'partners/list');
-        //}
       },
       detached: function() {
         // clean: remove global loading element if the app-shell is detached
@@ -291,7 +306,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if ((this.route.path === this.baseUrl || this.route.path === '/') &&
           permissions.loggedInDefault) {
           // setting the default path
-          this.set('route.path', this.baseUrl + 'partners/list');
+          this.set('route.path', this.baseUrl + 'section1/tab1');
         } else if (this.initialLoad) {
           // reseting the page as the pages might not have been stamped
           this._routePageChanged(this.routeData.page);
@@ -311,7 +326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         if (this._pagesAvailable || (['settings', 'etc'].indexOf(page) !== -1)) {
-          this.set('page', (page || 'partners'));
+          this.set('page', (page || 'section1'));
         } else {
           //console.log('No permissions yet or page hasn\'t stampped', page);
         }
@@ -324,7 +339,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _pageNotFound: function() {
         this.page = 'not-found';
-        this.fire('toast', {text: 'Oops you hit a 404!'});
+        this.fire('toast', {text: 'Oops you hit a 404!', showCloseBtn: true});
       },
 
       _pagesStamped: function() {

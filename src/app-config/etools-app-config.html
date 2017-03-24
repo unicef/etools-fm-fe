@@ -85,7 +85,7 @@ App global configuration
   };
 
   var localEps = {
-    userInfo: {
+    user: {
       url: '/users/api/profile/',
       exp: 30 * 60 * 1000, // 30min
       cachingKey: 'userData'
@@ -116,6 +116,5 @@ App global configuration
   /* jshint ignore:start */
   etoolsAppConfig.endpoints = etoolsAppConfig.globals.serverBackend ? serverEps : localEps;
   /* jshint ignore:end */
-
 
 </script>

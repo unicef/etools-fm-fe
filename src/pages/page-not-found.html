@@ -1,49 +1,51 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
+<link rel="import" href="../../styles/page-layout-styles.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
 <dom-module id="page-not-found">
 
   <template>
 
-    <style include="shared-styles">
+    <style include="page-layout-styles shared-styles">
 
       :host {
         display: block;
       }
 
       a {
+        @apply(--layout-horizontal);
         color: var(--accent-color);
       }
 
+      #go-home-label {
+        line-height: 24px;
+      }
+
+      iron-icon {
+        margin-right: 10px;
+      }
     </style>
 
-
     <app-header-layout>
+      <div class="page-top-content">
+        <div class="top-content">
+          <div class="top-content-row title-row">
+            <h1 main-title>
+              404 - Page Not Found
+            </h1>
+          </div>
+        </div>
+      </div>
 
-      <app-header fixed shadow>
-
-        <app-toolbar>
-          <paper-icon-button class="light" icon="menu" on-tap="openDrawer"></paper-icon-button>
-          <div main-title>404</div>
-        </app-toolbar>
-
-      </app-header>
-
-      <div id="pageContent">
-        <paper-material elevation="1">
-          <a href="/section1/tab1">Head back home.</a>
-        </paper-material>
+      <div class="page">
+        <a href="/section1/tab1">
+          <iron-icon icon="home"></iron-icon>
+          <span id="go-home-label">Head back home.</span>
+        </a>
       </div>
 
     </app-header-layout>
@@ -55,10 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
       is: 'page-not-found',
-
-      openDrawer: function() {
-        this.fire('drawer');
-      },
 
     });
 

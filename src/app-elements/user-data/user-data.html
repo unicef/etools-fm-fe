@@ -1,6 +1,9 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/etools-ajax/etools-ajax.html">
 <link rel="import" href="../../../scripts/lodash/lodash.html">
+<link rel="import" href="../../app-config/etools-app-config.html">
+
+<link rel="import" href="../../app-behaviors/data-element-behavior.html">
 
 <dom-module id="user-data">
 
@@ -8,116 +11,110 @@
 
     <etools-ajax id="ajax"
                  endpoint="[[endpoint]]"
+                 caching-storage="custom"
+                 dexie-db-collection="user"
                  on-success="_handleResponse"
-                 on-fail="_handleError"
-                 caching-storage="dexie"></etools-ajax>
+                 on-fail="_handleError"></etools-ajax>
   </template>
 
   <script>
+    (function() {
+      'use strict';
 
-    var _data = {};
-    var _userEls = [];
+      Polymer({
 
-    var _setUserData = function(data) {
-      _data.user = data || {};
-      _data.permissions = {};
-      var permissions = this.getAllPermissions();
+        is: 'user-data',
 
-      if (!_.isEmpty(data)) {
+        behaviors: [pmpBehaviors.DataElementBehavior,
+                    etoolsAppConfig.globals],
 
-        permissions.defaultPermissions.forEach(function(perm) {
-          _data.permissions[perm] = true;
-        });
-        // if partner: (!staff)
-        if (!_data.user.is_staff) {
-          permissions.partnerOnlyPermissions.forEach(function(perm) {
-            _data.permissions[perm] = true;
-          });
-        } else {
-          // user is not partner but staff:
-          permissions.managementPermissions.forEach(function(perm) {
-            _data.permissions[perm] = true;
-          });
+        properties: {
 
-          if (_data.user.profile.partner_staff_member) {
-            // staff that has faked partnership by setting partner_staff_member on their profile
-            permissions.partnerPermissions.forEach(function(perm) {
-              _data.permissions[perm] = true;
-            });
+          endpointName: {
+            type: String,
+            value: 'user'
+          },
+
+          user: {
+            type: Object,
+            readOnly: true,
+            notify: true
+          },
+          userGroups: {
+            type: Array,
+            readOnly: true
+          },
+
+          permissions: {
+            type: Object,
+            readOnly: true,
+            notify: true,
           }
-        }
-      } else {
-        //for testing
-        console.log('setting super permissions');
-        permissions.superPermissions.forEach(function(perm) {
-          _data.permissions[perm] = true;
-        });
-      }
 
-      this.load(_data);
-      _userEls.forEach(function(el) {
-        if (el !== this) { el.load(_data); }
-      });
-    };
-
-    Polymer({
-
-      is: 'user-data',
-
-      behaviors: [etoolsAppConfig.globals],
-
-      properties: {
-
-        user: {
-          type: Object,
-          readOnly: true,
-          notify: true
         },
 
-        permissions: {
-          type: Object,
-          readOnly: true,
-          notify: true,
+        _handleResponse: function(res) {
+          // TODO: check response to make sure it contains a valid user
+          this._setUserData(res.detail);
+        },
+
+        _findGroup: function(groupName) {
+          return _.find(this.userGroups, function(grp) {
+             return grp.name === groupName;
+          });
+        },
+        _handleError: function(rsp, err) {
+          console.log(rsp);
+          console.log(err);
+          this._setUser(null);
+          this._setPermissions(null);
+        },
+
+        _setUserData: function(data) {
+          var _user = data;
+          var _permissions = {};
+
+          this._setUser(_user);
+          var permissionsList = this.getAllPermissions();
+
+          if (!_.isEmpty(data)) {
+            this._setUserGroups(_user.groups);
+
+            permissionsList.defaultPermissions.forEach(function(perm) {
+              _permissions[perm] = true;
+            });
+            if (this._findGroup('UNICEF User')) {
+              permissionsList.unicefUserPermissions.forEach(function(perm) {
+                _permissions[perm] = true;
+              });
+            }
+            if (this._findGroup('Partnership Manager')) {
+              permissionsList.partnershipManagerPermissions.forEach(function(perm) {
+                _permissions[perm] = true;
+              });
+            }
+            if (this._findGroup('PME')) {
+              permissionsList.PMEPermissions.forEach(function(perm) {
+                _permissions[perm] = true;
+              });
+            }
+            if (this._findGroup('ICT')) {
+              permissionsList.ICTPermissions.forEach(function(perm) {
+                _permissions[perm] = true;
+              });
+            }
+          } else {
+            //for testing
+            permissionsList.superPermissions.forEach(function(perm) {
+              _permissions[perm] = true;
+            });
+          }
+          this._setPermissions(_permissions);
         }
 
-      },
+      });
 
-      ready: function() {
-        this.load(_data);
-      },
-
-      attached: function() {
-        if (_userEls.length === 0 && !_data.user) {
-          this.endpoint = this.getEndpoint('userInfo');
-        }
-        _userEls.push(this);
-      },
-
-      detached: function() {
-        _userEls.splice(_userEls.indexOf(this), 1);
-      },
-
-      load: function(data) {
-        //console.log(data);
-        if (data.user) {
-          this._setUser(data.user);
-          this._setPermissions(data.permissions);
-        }
-      },
-
-      _handleResponse: function(res) {
-        // TODO: check response to make sure it contains a valid user
-        console.log('resp');
-        _setUserData.bind(this)(res.detail);
-      },
-
-      _handleError: function(rsp, err) {
-        console.log(rsp);
-        console.log(err);
-        _setUserData.bind(this)(null);
-      },
-
-    });
+    })();
 
   </script>
 

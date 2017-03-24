@@ -2,11 +2,17 @@
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../../bower_components/etools-content-panel/etools-content-panel.html">
 
+<link rel="import" href="../../../styles/page-layout-styles.html">
+<link rel="import" href="../../../styles/shared-styles.html">
+
 <dom-module id="page-with-sidebar">
   <template>
-    <style include="page-layout-styles">
+    <style include="page-layout-styles shared-styles">
       :host {
         @apply(--layout-horizontal);
+        width: 100%;
+      }
+      #sidebar etools-content-panel {
         width: 100%;
       }
     </style>
@@ -18,7 +24,7 @@
     </div>
 
     <div id="sidebar">
-      <etools-content-panel title="Some sidebar content">
+      <etools-content-panel title="Sidebar">
         <p>Synced from VISION</p>
       </etools-content-panel>
     </div>

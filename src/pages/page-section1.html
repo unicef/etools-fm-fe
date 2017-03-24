@@ -1,68 +1,82 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
-<link rel="import" href="../app-elements/page-header/page-header.html">
 <link rel="import" href="../app-elements/page-elements/page-with-sidebar.html">
 <link rel="import" href="../app-elements/page-elements/simple-page.html">
 
 <link rel="import" href="../../styles/page-layout-styles.html">
 <link rel="import" href="../../styles/shared-styles.html">
+<link rel="import" href="../../styles/buttons-styles.html">
+
 
 <dom-module id="page-section1">
 
   <template>
 
-    <style include="page-layout-styles shared-styles">
+    <style include="page-layout-styles shared-styles buttons-styles">
 
     :host {
       display: block;
     }
-
     </style>
 
     <app-route
         route="{{route}}"
-        pattern="/:tab"
-        data="{{routeData}}"
-        active="{{tabsActive}}"></app-route>
-
-    <app-route
-        route="{{route}}"
-        pattern="/tab1"
-        active="{{tab1Active}}"></app-route>
-
-    <app-route
-        route="{{route}}"
-        pattern="/tab2"
-        active="{{tab2Active}}"></app-route>
+        pattern="section1/:tab"
+        active="{{tabsActive}}"
+        data="{{routeData}}"></app-route>
 
     <app-header-layout>
 
-      <app-header id="header" fixed shadow>
+      <div class="page-top-content with-tabs">
+        <div class="top-content">
+          <div class="top-content-row title-row">
+            <h1 main-title>
+              Active tab: [[routeData.tab]]
+            </h1>
+            <div class="top-content-actions-wrapper">
+              <div class="top-content-action">
+                <paper-button>
+                  <iron-icon icon="file-download"></iron-icon>
+                  Export
+                </paper-button>
+              </div>
+              <div class="top-content-action">
+                <paper-button class="primary-btn with-prefix" on-tap="_goToSection2Page">
+                  <iron-icon icon="flight-takeoff"></iron-icon>
+                  Go to section 2
+                </paper-button>
+              </div>
+            </div>
+          </div>
 
-        <page-header title$="Page section 1 - [[routeData.tab]]"></page-header>
+          <div class="top-content-row">
+            <paper-tabs
+                selected="{{routeData.tab}}"
+                attr-for-selected="name" noink bottom-item>
 
-        <div id="tabsWrapper" hidden$="{{!tabsActive}}">
-          <app-toolbar id="tabs">
-
-            <paper-tabs selected="[[routeData.tab]]" attr-for-selected="name" fallback-selection="tab1" noink bottom-item>
               <paper-tab name="tab1" link>
-                <a href="/section1/tab1" class="tab-link" tabindex="-1">tab 1</a>
+                <span class="tab-content">Tab 1 title</span>
               </paper-tab>
 
               <paper-tab name="tab2" link>
-                <a href="/section1/tab2" class="tab-link" tabindex="-1">tab 2</a>
+                <span class="tab-content">Tab 2 title</span>
               </paper-tab>
+
             </paper-tabs>
+          </div>
 
-          </app-toolbar>
         </div>
-
-      </app-header>
+      </div>
 
       <iron-pages id="categoryPages"
-                  selected="{{routeData.tab}}"
+                  selected="[[routeData.tab]]"
                   attr-for-selected="name"
                   fallback-selection="tab1"
                   role="main">
@@ -85,18 +99,43 @@
 
       is: 'page-section1',
 
-      properties: {},
+      properties: {
+        section1Page: {
+          type: String,
+        },
+        routeData: {
+          type: Object,
+        }
+      },
 
       observers: [
-        '_tabChanged(routeData.tab)'
+        '_resizeHeader(tabsActive)',
+        '_updateUrlTab(routeData.tab)',
+        '_pageChanged(routeData.tab)'
       ],
 
-      _tabChanged: function(tab) {
-        var tabs = ['tab1', 'tab2'];
-        if (tabs.indexOf(tab) === -1) {
-          this.fire('404');
+      _resizeHeader: function() {
+        this.$$('app-header-layout').notifyResize();
+      },
+
+      _pageChanged: function(tab) {
+        var activePage = tab;
+        this.set('section1Page', activePage);
+      },
+
+      _updateUrlTab: function(tab) {
+        if (!tab) {
+          return;
         }
-      }
+        this.debounce('debounce-url-tab-update', function() {
+          this.fire('update-main-path', {path: this.route.path}, {bubbles: false});
+        }.bind(this), 50);
+      },
+
+      _goToSection2Page: function(event) {
+        // go to section 2 page
+        this.fire('update-main-path', {path: 'section2'});
+      },
 
     });
 
