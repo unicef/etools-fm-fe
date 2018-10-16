@@ -1,0 +1,21 @@
+<!--import [polymer/polymer-element, multi-notification-item]-->
+
+<dom-module id="multi-notification-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                z-index: 105;
+            }
+        </style>
+
+        <template is="dom-repeat" items="[[notifications]]">
+            <multi-notification-item id="[[item.id]]" opened text="{{item.text}}"></multi-notification-item>
+        </template>
+    </template>
+
+    <!--inject scripts './multi-notification-list.js'-->
+</dom-module>

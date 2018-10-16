@@ -1,0 +1,17 @@
+{
+  "entrypoint": "./src/index.html",
+  "shell": "elements/core-elements/app-shell-element/app-shell.html",
+  "fragments": [
+    "elements/pages/not-found-page-view/not-found-page-view.html"
+  ],
+  "sources": [
+    "./src/images/**/*",
+    "elements/**/*",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "./src/manifest.json",
+    "./src/bower_components/webcomponentsjs/*.js",
+    "./src/bower_components/babel-polyfill/browser-polyfill.js"
+  ]
+}

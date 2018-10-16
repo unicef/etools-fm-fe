@@ -1,0 +1,13 @@
+node_modules/
+bower_components/
+build/
+src/bower_components/
+dist/
+.tmp
+.idea
+*.sublime-project
+*.sublime-workspace
+
+
+/package-lock.json
+/src/bower_components/

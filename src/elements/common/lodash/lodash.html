@@ -1,0 +1,17 @@
+<dom-module id="lodash">
+    <script src="../../../bower_components/lodash/dist/lodash.min.js"></script>
+
+    <script>
+        _.mixin({
+            isJSONObj: function(str) {
+                var json;
+                try {
+                    json = JSON.parse(str);
+                } catch (e) {
+                    return false;
+                }
+                return _.isObject(json);
+            }
+        });
+    </script>
+</dom-module>

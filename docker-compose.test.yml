@@ -1,0 +1,27 @@
+version: '2.0'
+
+services:
+  selenium-hub:
+    image: selenium/hub
+    environment:
+      SE_OPTS: "-timeout 600"
+    ports:
+      - 4444:4444
+
+  selenium-chrome:
+    image: selenium/node-chrome
+    environment:
+        HUB_PORT_4444_TCP_ADDR: selenium-hub
+        HUB_PORT_4444_TCP_PORT: 4444
+    links:
+      - selenium-hub:hub
+
+  apd:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: etoolsdev/etools-apd:dev
+    command: ["sh", "./test.sh"]
+    depends_on:
+      - selenium-hub
+      - selenium-chrome

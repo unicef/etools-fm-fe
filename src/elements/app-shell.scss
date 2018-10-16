@@ -1,0 +1,24 @@
+:host {
+    display: block;
+}
+
+app-drawer {
+    visibility: visible;
+    right: auto;
+    z-index: 65 !important;
+
+    --app-drawer-width: 220px;
+    --app-drawer-content-container: {
+        transform: translate3d(0, 0, 0);
+        background-color: var(--light-theme-content-color);
+    };
+}
+
+#layout {
+    padding-left: 220px;
+}
+
+app-header {
+    padding-left: 220px;
+    z-index: 60 !important;
+}

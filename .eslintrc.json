@@ -1,0 +1,42 @@
+{
+  "extends": ["eslint:recommended", "google"],
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "html"
+  ],
+  "rules": {
+    "padded-blocks": "off",
+    "brace-style": "off",
+    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"], "capIsNewExceptionPattern": "^Etools..|^APDMixins.." }],
+    "no-var": "off",
+    "no-console": 0,
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "comma-dangle": ["error", "never"],
+    "max-len": ["error", { "code": 120 }],
+    "camelcase": ["error", {"properties": "never"}],
+    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
+    "one-var": ["off"]
+  },
+  "globals": {
+    "moment": true,
+    "Promise": true,
+    "Polymer": true,
+    "Dexie": true,
+    "etoolsBehaviors": true,
+    "etoolsAppConfig": true,
+    "EtoolsMixinFactory": true,
+    "EtoolsAjaxRequestMixin": true,
+    "EtoolsMixins": true,
+    "APDMixins": true,
+    "_": true,
+    "ShadyCSS": true,
+    "Set": true
+  }
+}

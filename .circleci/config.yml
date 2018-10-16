@@ -1,0 +1,82 @@
+version: 2
+jobs:
+  test:
+    working_directory: ~/code
+    # The primary container is an instance of the first list image listed. Your build commands run in this container.
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install firefox
+          command: |
+            sudo apt-get remove firefox-mozilla-build &&
+            sudo sh -c "echo 'deb http://ftp.hr.debian.org/debian sid main' >> /etc/apt/sources.list" &&
+            sudo apt-get update &&
+            sudo apt-get remove binutils
+            sudo apt-get install -t sid firefox &&
+            firefox --version
+      - restore_cache:
+          key: cache-{{ checksum "package.json" }}
+      - run:
+          name: Install node modules
+          command: npm install
+      - save_cache:
+          key: cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - restore_cache:
+          key: cache-{{ checksum "bower.json" }}
+      - run:
+          name: Install bower components
+          command: ./node_modules/.bin/bower install --allow-root --config.interactive=false
+      - save_cache:
+          key: cache-{{ checksum "bower.json" }}
+          paths:
+            - bower_components
+      - run:
+          name: Run Tests
+          command: ./node_modules/.bin/gulp test --pc
+
+  build_and_deploy:
+    working_directory: ~/code
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker:
+          reusable: true
+          exclusive: true
+      - run:
+          name: Exporting revision number
+          command: |
+            REVNO=${CIRCLE_SHA1}
+            BUILDDATE=$(date -u +%F_%T)
+            sed -i "0,/revNo/s//$REVNO/" bower.json
+            sed -i "0,/bDate/s//$BUILDDATE/" bower.json
+      - run:
+          name: Building the image
+          command: |
+            TAG=${CIRCLE_BRANCH}
+            docker build -t unicef/etools-action-points:$TAG .
+      - run:
+          name: Pushing to Docker Hub
+          command: |
+            TAG=${CIRCLE_BRANCH}
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push unicef/etools-action-points:$TAG
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
+      - build_and_deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - staging
+                - develop

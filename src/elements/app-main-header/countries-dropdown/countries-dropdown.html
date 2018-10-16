@@ -1,0 +1,40 @@
+<!--import [polymer/polymer-element, paper-dropdown-menu, paper-listbox, paper-item, etools-ajax, etools-page-refresh/etools-refresh-behavior]-->
+<!--import [etools-app-config]-->
+
+<dom-module id="countries-dropdown">
+    <template>
+        <style></style>
+        <!-- inject styles './../header-styles.scss'-->
+
+        <etools-ajax
+                method="POST"
+                url="{{url}}"
+                body="{{countryData}}"
+                on-success="_handleResponse"
+                on-forbidden="_handleError"
+                on-fail="_handleError">
+        </etools-ajax>
+
+        <paper-menu-button
+                id="dropdown" vertical-align="top"
+                vertical-offset="56"
+                horizontal-align="right">
+            <paper-button slot="dropdown-trigger">
+                <span class="dropdown-text">[[country.name]]</span>
+
+                <iron-icon class="arrow-down" icon="icons:arrow-drop-down"></iron-icon>
+                <iron-icon class="arrow-up" icon="icons:arrow-drop-up"></iron-icon>
+            </paper-button>
+
+            <paper-listbox slot="dropdown-content" selected="[[countryIndex]]" on-iron-select="_countrySelected">
+                <template id="repeat" is="dom-repeat" items="[[countries]]">
+                    <paper-item on-tap="_changeCountry">
+                        [[item.name]]
+                    </paper-item>
+                </template>
+            </paper-listbox>
+        </paper-menu-button>
+    </template>
+
+    <!-- inject scripts './countries-dropdown.js'-->
+</dom-module>

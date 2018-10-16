@@ -1,0 +1,55 @@
+<!--import [polymer/polymer-element, shadycss/apply-shim, etools-behaviors/etools-mixin-factory, app-route/app-location, app-route,
+            app-layout, paper-icon-button, paper-material, iron-selector, iron-pages, iron-collapse, iron-icons,
+            iron-icons/social-icons, iron-icons/av-icons, etools-loading/etools-loading-mixin]-->
+
+<!--import [app-main-header, app-sidebar-menu, permission-controller, etools-app-config,
+            user-controller, side-bar-item, countries-dropdown, shared-styles,
+            page-layout-styles, app-theme]-->
+
+<dom-module id="app-shell">
+    <template>
+        <!-- inject styles './app-shell.scss'-->
+        <style include="page-layout-styles shared-styles">
+            app-header {
+                background-color: var(--header-bg-color);
+            }
+        </style>
+
+
+        <app-location route="{{route}}"></app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="[[basePath]]:page"
+                data="{{routeData}}">
+        </app-route>
+
+        <etools-loading id="global-loading" absolute></etools-loading>
+
+        <div id="layout">
+            <!-- Drawer content -->
+            <app-drawer slot="drawer" id="drawer" transition-duration="350" disable-swipe opened>
+                <app-sidebar-menu class="opened" route="{{route}}" page="[[page]]"></app-sidebar-menu>
+            </app-drawer>
+
+            <!-- Main content -->
+
+            <app-header id="header" fixed shadow>
+                <app-main-header user="[[user]]"></app-main-header>
+            </app-header>
+
+            <iron-pages
+                    id="pages"
+                    selected="[[page]]"
+                    attr-for-selected="name"
+                    fallback-selection="not-found"
+                    role="main">
+                <not-found-page-view name="not-found" id="not-found"></not-found-page-view>
+            </iron-pages>
+
+        </div>
+        <multi-notification-list></multi-notification-list>
+    </template>
+
+    <!-- inject scripts './app-shell.js'-->
+</dom-module>
