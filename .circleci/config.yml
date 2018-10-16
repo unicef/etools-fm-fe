@@ -58,13 +58,13 @@ jobs:
           name: Building the image
           command: |
             TAG=${CIRCLE_BRANCH}
-            docker build -t unicef/etools-action-points:$TAG .
+            docker build -t unicef/etools-field-monitoring:$TAG .
       - run:
           name: Pushing to Docker Hub
           command: |
             TAG=${CIRCLE_BRANCH}
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push unicef/etools-action-points:$TAG
+            docker push unicef/etools-field-monitoring:$TAG
 
 workflows:
   version: 2
