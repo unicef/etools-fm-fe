@@ -55,10 +55,15 @@
             }
 
             :host a#main iron-icon#icon {
-                margin: 0 16px;
+                margin: 0 16px 0 20px;
                 min-width: 30px;
                 min-height: 30px;
+                color: #9d9d9d;
             }
+
+            :host(.iron-selected:not([nested-nav])) a#main iron-icon#icon { color: var(--module-color); }
+            :host(:not([opened])) #name { display: none; }
+
             :host(:not(.lighter-item)) {
                 color: var(--module-color);
             }

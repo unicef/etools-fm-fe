@@ -1,13 +1,13 @@
 'use strict';
 
-class AppMainHeader extends APDMixins.AppConfig(Polymer.Element) {
+class AppMainHeader extends  EtoolsMixinFactory.combineMixins([
+    FMMixins.AppConfig, FMMixins.ReduxMixin], Polymer.Element) {
+
     static get is() {return 'app-main-header';}
 
     static get properties() {
         return {
-            user: {
-                type: Object
-            }
+            user: Object
         };
     }
 
@@ -15,6 +15,10 @@ class AppMainHeader extends APDMixins.AppConfig(Polymer.Element) {
         super.connectedCallback();
         this.addEventListener('main_refresh', this._refreshPage);
         this.addEventListener('sign-out', this._logout);
+
+        this.subscribeOnStore(store => store.userData, (user) => {
+            if (user) { this.user = user; }
+        });
     }
 
     ready() {

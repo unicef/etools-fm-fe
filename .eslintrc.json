@@ -1,8 +1,10 @@
 {
   "extends": ["eslint:recommended", "google"],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module"
   },
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true
@@ -11,9 +13,10 @@
     "html"
   ],
   "rules": {
+    "object-curly-spacing": 0,
     "padded-blocks": "off",
     "brace-style": "off",
-    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"], "capIsNewExceptionPattern": "^Etools..|^APDMixins.." }],
+    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"], "capIsNewExceptionPattern": "^Etools..|^FMMixins.." }],
     "no-var": "off",
     "no-console": 0,
     "require-jsdoc": "off",
@@ -34,7 +37,7 @@
     "EtoolsMixinFactory": true,
     "EtoolsAjaxRequestMixin": true,
     "EtoolsMixins": true,
-    "APDMixins": true,
+    "FMMixins": true,
     "_": true,
     "ShadyCSS": true,
     "Set": true

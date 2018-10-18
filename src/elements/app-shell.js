@@ -1,6 +1,9 @@
+import { InitializeApplication, FINISHED_INITIALIZATION_STATE } from './redux-store/actions/app-initialization.actions';
+import { RunGlobalLoading, StopGlobalLoading } from './redux-store/actions/global-loading.actions';
+
 class AppShell extends EtoolsMixinFactory.combineMixins([
-    APDMixins.AppConfig,
-    APDMixins.UserController,
+    FMMixins.AppConfig,
+    FMMixins.ReduxMixin,
     EtoolsMixins.LoadingMixin], Polymer.Element) {
 
     static get is() {return 'app-shell';}
@@ -26,16 +29,6 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
                     return [];
                 }
             },
-            globalLoadingQueue: {
-                type: Array,
-                value: function() {return [];}
-            },
-            user: {
-                type: Object,
-                value: function() {
-                    return {};
-                }
-            },
             route: {
                 type: Object,
                 notify: true
@@ -55,15 +48,21 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         this.addEventListener('toast', (e, detail) => this.queueToast(e, detail));
         this.addEventListener('drawer-toggle-tap', e => this.toggleDrawer(e));
         this.addEventListener('404', e => this._pageNotFound(e));
-        this.addEventListener('static-data-loaded', e => this._staticDataLoaded(e));
-        this.addEventListener('global-loading', e => this.handleLoading(e));
+
+        this.subscribeOnStore(store => store.globalLoading, loadingQueue => this.handleLoading(loadingQueue));
+        this.subscribeOnStore(store => store.initialization, (initialization) => {
+            if (initialization === FINISHED_INITIALIZATION_STATE) {
+                this.page = _.get(this, 'routeData.page') || this._initRoute();
+                this.dispatchOnStore(new StopGlobalLoading({type: 'initialization'}));
+            }
+        });
         this._setBgColor();
     }
 
     connectedCallback() {
         super.connectedCallback();
-        // let eventData = {message: 'Loading...', active: true, type: 'initialisation'};
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail: eventData}));
+        this.dispatchOnStore(new RunGlobalLoading({type: 'initialization', message: 'Loading'}));
+        this.dispatchOnStore(new InitializeApplication(['unicefUsers', 'locations']));
     }
 
     toggleDrawer() {
@@ -81,17 +80,11 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         this.$.layout.style.paddingLeft = drawerWidth;
         this.$.header.style.paddingLeft = drawerWidth;
 
-        this.$.drawer.querySelector('app-sidebar-menu').classList.toggle('opened', isClosed);
+        const sidebar = this.$.drawer.querySelector('app-sidebar-menu');
+        sidebar.classList.toggle('opened', isClosed);
+        sidebar.toggleAttribute('opened', isClosed);
         this.$.drawer.toggleClass('opened', isClosed);
         this.$.drawer.toggleAttribute('opened', isClosed);
-    }
-
-    _staticDataLoaded(e) {
-        if (e && e.type === 'static-data-loaded') {this.staticDataLoaded = true;}
-        if (this.staticDataLoaded) {
-            this.user = this.getUserData();
-            this.page = _.get(this, 'routeData.page') || this._initRoute();
-        }
     }
 
     queueToast(e) {
@@ -114,9 +107,9 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
 
     _pageChanged(page) {
         if (this.$[`${page}`] instanceof Polymer.Element) {return;}
-        this.dispatchEvent(new CustomEvent('global-loading', {
-            detail: {message: 'Loading...', active: true, type: 'initialisation'}
-        }));
+        // this.dispatchEvent(new CustomEvent('global-loading', {
+        //     detail: {message: 'Loading...', active: true, type: 'initialisation'}
+        // }));
 
         var resolvedPageUrl;
         if (page === 'not-found') {
@@ -131,9 +124,8 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     }
 
     _loadPage() {
-        if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
-        this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
-        // if (this.route.path === '/') { this._initRoute();}
+        // if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
     }
 
     _pageNotFound(event) {
@@ -143,35 +135,26 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
             'Oops you hit a 404!';
 
         this.dispatchEvent(new CustomEvent('toast', {detail: {text: message}}));
-        this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
     }
 
     _initRoute() {
-        let path = `${this.basePath}action-points`;
+        let path = `${this.basePath}`;
         this.set('route.path', path);
-        return 'action-points';
+        return '';
     }
 
-    handleLoading(event) {
-        if (!event.detail || !event.detail.type) {
-            console.error('Bad details object', JSON.stringify(event.detail));
-            return;
-        }
-        let loadingElement = this.$['global-loading'];
+    handleLoading(loadingQueue = []) {
+        const loadingElement = this.$['global-loading'];
+        const currentData = loadingQueue[0];
 
-        if (event.detail.active && loadingElement.active) {
-            this.globalLoadingQueue.push(event);
-        } else if (event.detail.active && typeof event.detail.message === 'string' && event.detail.message !== '') {
-            loadingElement.loadingText = event.detail.message;
+        if (currentData && loadingElement.type !== currentData.type) {
+            loadingElement.loadingText = currentData.message;
             loadingElement.active = true;
+            loadingElement.type = currentData.type;
         } else {
             loadingElement.active = false;
-            this.globalLoadingQueue = this.globalLoadingQueue.filter((element) => {
-                return element.detail.type !== event.detail.type;
-            });
-            if (this.globalLoadingQueue.length) {
-                this.handleLoading(this.globalLoadingQueue.shift());
-            }
+            loadingElement.type = null;
         }
     }
 

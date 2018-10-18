@@ -1,6 +1,6 @@
 {
-  "name": "eTools - Action Points Dashboard",
-  "short_name": "eTools - APD",
+  "name": "eTools - Field Monitoring Module",
+  "short_name": "eTools - FM",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#3f51b5",

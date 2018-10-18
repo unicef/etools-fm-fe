@@ -3,13 +3,13 @@
     'use strict';
     let _permissionCollection = {};
 
-    window.APDMixins = window.APDMixins || {};
+    window.FMMixins = window.FMMixins || {};
     /*
      * Mixin for manage permission data.
      * @polymer
      * @mixinFunction
      */
-    window.APDMixins.PermissionController = superClass => class extends superClass {
+    window.FMMixins.PermissionController = superClass => class extends superClass {
         _addToCollection(collectionName, data) {
             // check arguments
             if (!collectionName || !data) {
