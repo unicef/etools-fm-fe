@@ -2,7 +2,7 @@
             app-layout, paper-icon-button, paper-material, iron-selector, iron-pages, iron-collapse, iron-icons,
             iron-icons/social-icons, iron-icons/av-icons, etools-loading/etools-loading-mixin]-->
 
-<!--import [app-main-header, app-sidebar-menu, permission-controller, etools-app-config,
+<!--import [main-header, sidebar-menu, permission-controller, etools-app-config,
             side-bar-item, countries-dropdown, shared-styles, page-layout-styles, app-theme, redux-mixin]-->
 
 <dom-module id="app-shell">
@@ -28,13 +28,13 @@
         <div id="layout">
             <!-- Drawer content -->
             <app-drawer slot="drawer" id="drawer" transition-duration="350" disable-swipe opened>
-                <app-sidebar-menu class="opened" route="{{route}}" page="[[page]]" opened></app-sidebar-menu>
+                <sidebar-menu class="opened" route="{{route}}" page="[[page]]" opened></sidebar-menu>
             </app-drawer>
 
             <!-- Main content -->
 
             <app-header id="header" fixed shadow>
-                <app-main-header></app-main-header>
+                <main-header></main-header>
             </app-header>
 
             <iron-pages

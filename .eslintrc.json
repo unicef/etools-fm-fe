@@ -13,6 +13,7 @@
     "html"
   ],
   "rules": {
+    "no-case-declarations": 0,
     "object-curly-spacing": 0,
     "padded-blocks": "off",
     "brace-style": "off",

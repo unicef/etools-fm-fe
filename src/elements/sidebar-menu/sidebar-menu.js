@@ -1,5 +1,5 @@
-class AppSidebarMenu extends FMMixins.AppConfig(Polymer.Element) {
-    static get is() {return 'app-sidebar-menu';}
+class SidebarMenu extends FMMixins.AppConfig(Polymer.Element) {
+    static get is() {return 'sidebar-menu';}
 
     static get properties() {
         return {
@@ -12,22 +12,22 @@ class AppSidebarMenu extends FMMixins.AppConfig(Polymer.Element) {
                         name: 'Settings',
                         icon: 'settings-applications',
                         link: 'settings'
-                    },  {
+                    }, {
                         view: 'overview-planing',
                         name: 'Overview Planing',
                         icon: 'assignment-turned-in',
                         link: 'overview-planing'
-                    },  {
+                    }, {
                         view: 'assign-visits',
                         name: 'Assign Visits',
                         icon: 'communication:location-on',
                         link: 'assign-visits'
-                    },  {
+                    }, {
                         view: 'data-collection',
                         name: 'Visit & Data Collection',
                         icon: 'assignment',
                         link: 'data-collection'
-                    },  {
+                    }, {
                         view: 'analysis',
                         name: 'Analysis',
                         icon: 'assessment',
@@ -47,4 +47,4 @@ class AppSidebarMenu extends FMMixins.AppConfig(Polymer.Element) {
     }
 }
 
-window.customElements.define(AppSidebarMenu.is, AppSidebarMenu);
+window.customElements.define(SidebarMenu.is, SidebarMenu);

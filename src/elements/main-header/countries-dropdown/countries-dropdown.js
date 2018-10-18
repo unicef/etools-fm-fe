@@ -1,7 +1,7 @@
 'use strict';
 
 class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior],
-    window.FMMixins.AppConfig(Polymer.Element)) {
+    FMMixins.AppConfig(Polymer.Element)) {
 
     static get is() {return 'countries-dropdown';}
 

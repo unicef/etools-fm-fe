@@ -16,6 +16,6 @@ export function loadStaticData(dataName) {
                 console.error(`Can not load static data "${dataName}". Reason: request error.`);
                 console.error(error);
                 return Promise.resolve();
-            })
-    }
+            });
+    };
 }
