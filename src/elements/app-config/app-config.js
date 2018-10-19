@@ -1,5 +1,21 @@
 import { endpoints } from './endpoints';
 
+const BASE_SITE = window.location.origin;
+const SERVER_BACKEND = (window.location.port !== '8080');
+const BASE_PATH = SERVER_BACKEND ? '/field-monitoring/' : '/';
+const STAGING_DOMAIN = 'etools-staging.unicef.org';
+const PRODUCTION_DOMAIN = 'etools.unicef.org';
+
+export function getEndpoint(endpointName, data) {
+    let endpoint = _.clone(endpoints[endpointName]);
+    if (endpoint && endpoint.hasOwnProperty('template') && endpoint.template !== '') {
+        endpoint.url = BASE_SITE + _.template(endpoint.template)(data);
+    } else {
+        endpoint.url = `${BASE_SITE}${endpoint.url}`;
+    }
+    return endpoint;
+}
+
 window.FMMixins = window.FMMixins || {};
 window.FMMixins.AppConfig = Polymer.dedupingMixin(baseClass => class extends baseClass {
     constructor() {
@@ -11,22 +27,18 @@ window.FMMixins.AppConfig = Polymer.dedupingMixin(baseClass => class extends bas
         });
         window.EtoolsRequestCacheDb = etoolsCustomDexieDb;
 
-        this.baseSite = window.location.origin;
-        this.serverBackend = (window.location.port !== '8080');
-        this.basePath = this.serverBackend ? '/field-monitoring/' : '/';
+        this.baseSite = BASE_SITE;
+        this.serverBackend = SERVER_BACKEND;
+        this.basePath = BASE_PATH;
         this.epsData = endpoints;
         // dexie js
         this.appDexieDb = etoolsCustomDexieDb;
-        this.stagingDomain = 'etools-staging.unicef.org';
-        this.productionDomain = 'etools.unicef.org';
+        this.stagingDomain = STAGING_DOMAIN;
+        this.productionDomain = PRODUCTION_DOMAIN;
     }
 
     getEndpoint(endpointName, data) {
-        let endpoint = _.clone(this.epsData[endpointName]);
-        if (endpoint && endpoint.hasOwnProperty('template') && endpoint.template !== '') {
-            endpoint.url = this.baseSite + _.template(endpoint.template)(data);
-        }
-        return endpoint;
+        return getEndpoint(endpointName, data);
     }
 
     resetOldUserData() {
@@ -42,11 +54,11 @@ window.FMMixins.AppConfig = Polymer.dedupingMixin(baseClass => class extends bas
 
     isProductionServer() {
         let location = window.location.href;
-        return location.indexOf(this.productionDomain) > -1;
+        return location.indexOf(PRODUCTION_DOMAIN) > -1;
     }
 
     isStagingServer() {
         let location = window.location.href;
-        return location.indexOf(this.stagingDomain) > -1;
+        return location.indexOf(STAGING_DOMAIN) > -1;
     }
 });

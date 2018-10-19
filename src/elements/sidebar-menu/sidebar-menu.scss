@@ -71,7 +71,7 @@
     }
 }
 
-:host(:not(.opened)) {
+:host(:not([opened])) {
     app-toolbar {
         padding: 0;
 
@@ -83,7 +83,7 @@
     .secondary-header { display: none; }
 }
 
-:host(.opened) {
+:host([opened]) {
     app-toolbar {
         #close-drawer { display: initial; }
         img, iron-icon { display: none; }

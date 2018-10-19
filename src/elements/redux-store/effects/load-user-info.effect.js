@@ -1,9 +1,10 @@
 import { AddUserData } from '../actions/user-data.actions';
-import { endpoints } from '../../app-config/endpoints';
+import { getEndpoint } from '../../app-config/app-config';
 
 export function loadUserData() {
     return function(dispatch) {
-        return fetch(endpoints.userProfile.url)
+        const endpoint = getEndpoint('userProfile');
+        return fetch(endpoint.url)
             .then(resp => resp.json())
             .then(user => dispatch(new AddUserData(user)));
     };

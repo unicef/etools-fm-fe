@@ -27,8 +27,8 @@
 
         <div id="layout">
             <!-- Drawer content -->
-            <app-drawer slot="drawer" id="drawer" transition-duration="350" disable-swipe opened>
-                <sidebar-menu class="opened" route="{{route}}" page="[[page]]" opened></sidebar-menu>
+            <app-drawer slot="drawer" id="drawer" transition-duration="350" disable-swipe>
+                <sidebar-menu route="{{route}}" page="[[page]]" opened="[[isDrawerOpened]]"></sidebar-menu>
             </app-drawer>
 
             <!-- Main content -->

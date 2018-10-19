@@ -15,9 +15,9 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
                 reflectToAttribute: true,
                 observer: '_pageChanged'
             },
-            narrow: {
+            isDrawerOpened: {
                 type: Boolean,
-                reflectToAttribute: true
+                value: true
             },
             _toast: {
                 type: Object,
@@ -45,8 +45,9 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
 
     ready() {
         super.ready();
-        this.addEventListener('toast', (e, detail) => this.queueToast(e, detail));
         this.addEventListener('drawer-toggle-tap', e => this.toggleDrawer(e));
+
+        this.addEventListener('toast', (e, detail) => this.queueToast(e, detail));
         this.addEventListener('404', e => this._pageNotFound(e));
 
         this.subscribeOnStore(store => store.globalLoading, loadingQueue => this.handleLoading(loadingQueue));
@@ -66,25 +67,12 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     }
 
     toggleDrawer() {
-        let isClosed = !this.$.drawer.opened;
-        let drawerWidth;
-
-        if (isClosed) {
-            drawerWidth = '220px';
-        } else {
-            drawerWidth = '70px';
-        }
+        const drawerWidth = !this.isDrawerOpened ? '220px' : '70px';
+        this.isDrawerOpened = !this.isDrawerOpened;
 
         this.$.drawer.updateStyles({'--app-drawer-width': drawerWidth});
-
         this.$.layout.style.paddingLeft = drawerWidth;
         this.$.header.style.paddingLeft = drawerWidth;
-
-        const sidebar = this.$.drawer.querySelector('app-sidebar-menu');
-        sidebar.classList.toggle('opened', isClosed);
-        sidebar.toggleAttribute('opened', isClosed);
-        this.$.drawer.toggleClass('opened', isClosed);
-        this.$.drawer.toggleAttribute('opened', isClosed);
     }
 
     queueToast(e) {
@@ -108,7 +96,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     _pageChanged(page) {
         if (this.$[`${page}`] instanceof Polymer.Element) {return;}
         // this.dispatchEvent(new CustomEvent('global-loading', {
-        //     detail: {message: 'Loading...', active: true, type: 'initialisation'}
+        //     detail: {message: 'Loading...', active: true, type: 'initialisation !!Set another name!!'}
         // }));
 
         var resolvedPageUrl;
@@ -125,7 +113,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
 
     _loadPage() {
         // if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation !!Set another name!!'}}));
     }
 
     _pageNotFound(event) {
@@ -135,7 +123,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
             'Oops you hit a 404!';
 
         this.dispatchEvent(new CustomEvent('toast', {detail: {text: message}}));
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation'}}));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation !!Set another name!!'}}));
     }
 
     _initRoute() {

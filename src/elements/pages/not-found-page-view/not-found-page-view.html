@@ -23,22 +23,16 @@
 
     <script>
         'use strict';
+        (function() {
+            class NotFoundPageView extends FMMixins.AppConfig(Polymer.Element) {
+                static get is() {return 'not-found-page-view';}
 
-        class NotFoundPageView extends FMMixins.AppConfig(Polymer.Element) {
-            static get is() {return 'not-found-page-view';}
-
-            getLink() {
-                return this.getAbsolutePath('field-monitoring');
+                getLink() {
+                    return this.getAbsolutePath('settings');
+                }
             }
 
-            openDrawer() {
-                this.dispatchEvent(new CustomEvent('drawer', {
-                    bubbles: true,
-                    composed: true
-                }));
-            }
-        }
-
-        customElements.define(NotFoundPageView.is, NotFoundPageView);
+            customElements.define(NotFoundPageView.is, NotFoundPageView);
+        })();
     </script>
 </dom-module>

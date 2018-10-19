@@ -1,9 +1,9 @@
-import { endpoints } from '../../app-config/endpoints';
+import { getEndpoint } from '../../app-config/app-config';
 import { AddStaticData } from '../actions/static-data.actions';
 
 export function loadStaticData(dataName) {
     return (dispatch) => {
-        const endpoint = endpoints[dataName];
+        const endpoint = getEndpoint(dataName);
         const url = endpoint && endpoint.url;
         if (!url) {
             console.error(`Can not load static data "${dataName}". Reason: url was not found.`);
