@@ -31,7 +31,7 @@
                 const id = this.notifications[i].id;
                 const index = _.findIndex(newNotifications, notification => notification.id === id);
 
-                if (index) {
+                if (index > -1) {
                     newNotifications.splice(index, 1);
                     i++;
                 } else {
