@@ -20,16 +20,6 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
                 type: Boolean,
                 value: true
             },
-            _toast: {
-                type: Object,
-                value: null
-            },
-            _toastQueue: {
-                type: Array,
-                value: function() {
-                    return [];
-                }
-            },
             route: {
                 type: Object,
                 notify: true
@@ -73,18 +63,6 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         this.$.drawer.updateStyles({'--app-drawer-width': drawerWidth});
         this.$.layout.style.paddingLeft = drawerWidth;
         this.$.header.style.paddingLeft = drawerWidth;
-    }
-
-    queueToast(e) {
-        let detail = e.detail;
-        let notificationList = this.shadowRoot.querySelector('multi-notification-list');
-        if (!notificationList) {return;}
-
-        if (detail && detail.reset) {
-            notificationList.dispatchEvent(new CustomEvent('reset-notifications'));
-        } else {
-            notificationList.dispatchEvent(new CustomEvent('notification-push', {detail: detail}));
-        }
     }
 
     _routePageChanged() {
