@@ -17,7 +17,10 @@
 
         connectedCallback() {
             super.connectedCallback();
-            this.subscribeOnStore(store => store.notifications, notifications => this._onNotificationsChange(notifications));
+            this.subscribeOnStore(
+                store => store.notifications,
+                notifications => this._onNotificationsChange(notifications)
+            );
         }
 
         _onNotificationsChange(notifications = []) {

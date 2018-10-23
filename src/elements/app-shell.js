@@ -113,7 +113,8 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
 
     _loadPage() {
         // if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation !!Set another name!!'}}));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
+        // {type: 'initialisation !!Set another name!!'}}));
     }
 
     _pageNotFound(event) {
@@ -123,7 +124,8 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
             'Oops you hit a 404!';
 
         this.dispatchOnStore(new AddNotification(message));
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation !!Set another name!!'}}));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
+        // {type: 'initialisation !!Set another name!!'}}));
     }
 
     _initRoute() {

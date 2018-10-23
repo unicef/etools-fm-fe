@@ -1,7 +1,7 @@
 import { RunGlobalLoading, StopGlobalLoading } from '../../redux-store/actions/global-loading.actions';
 import { AddNotification } from '../../redux-store/actions/notification.actions';
 
-class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior, ],
+class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior],
     FMMixins.AppConfig(FMMixins.ReduxMixin(Polymer.Element))) {
 
     static get is() {return 'countries-dropdown';}
