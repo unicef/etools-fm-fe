@@ -1,6 +1,6 @@
-'use strict';
+import { RemoveNotification } from '../redux-store/actions/notification.actions';
 
-class MultiNotificationItem extends Polymer.Element {
+class MultiNotificationItem extends FMMixins.ReduxMixin(Polymer.Element) {
     static get is() {return 'multi-notification-item';}
 
     static get properties() {
@@ -19,17 +19,12 @@ class MultiNotificationItem extends Polymer.Element {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener('transitionend', e => this._onTransitionEnd(e));
+        this.opened = true;
     }
 
     _onTransitionEnd(e) {
-        if (e && e.target === this && e.propertyName === 'opacity') {
-            if (!this.opened) {
-                this.dispatchEvent(new CustomEvent('notification-shift', {
-                    detail: {id: this.id},
-                    bubbles: true,
-                    composed: true
-                }));
-            }
+        if (e && e.target === this && e.propertyName === 'opacity' && !this.opened) {
+            this.dispatchOnStore(new RemoveNotification(this.id));
         }
     }
 

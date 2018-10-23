@@ -1,4 +1,5 @@
-<!--import [polymer/polymer-element, multi-notification-item]-->
+<!--import [polymer/polymer-element]-->
+<!--import [redux-mixin, multi-notification-item]-->
 
 <dom-module id="multi-notification-list">
     <template>
@@ -12,8 +13,8 @@
             }
         </style>
 
-        <template is="dom-repeat" items="[[notifications]]">
-            <multi-notification-item id="[[item.id]]" opened text="{{item.text}}"></multi-notification-item>
+        <template is="dom-repeat" items="[[notifications]]" id="test">
+            <multi-notification-item id="[[item.id]]" text="{{item.text}}"></multi-notification-item>
         </template>
     </template>
 

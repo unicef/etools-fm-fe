@@ -1,7 +1,8 @@
-'use strict';
+import { RunGlobalLoading, StopGlobalLoading } from '../../redux-store/actions/global-loading.actions';
+import { AddNotification } from '../../redux-store/actions/notification.actions';
 
-class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior],
-    FMMixins.AppConfig(Polymer.Element)) {
+class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior, ],
+    FMMixins.AppConfig(FMMixins.ReduxMixin(Polymer.Element))) {
 
     static get is() {return 'countries-dropdown';}
 
@@ -55,27 +56,19 @@ class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRe
 
         if (Number(parseFloat(id)) !== id) {throw new Error('Can not find country id!');}
 
-        this.dispatchEvent(new CustomEvent('global-loading', {
-            detail: {type: 'change-country', active: true, message: 'Please wait while country is changing...'},
-            bubbles: true,
-            composed: true
-        }));
+
+        this.dispatchOnStore(new RunGlobalLoading({
+            type: 'change-country',
+            message: 'Please wait while country is changing...'}));
+
         this.countryData = {country: id};
         this.url = this.getEndpoint('changeCountry').url;
     }
     _handleError() {
         this.countryData = null;
         this.url = null;
-        this.dispatchEvent(new CustomEvent('global-loading', {
-            detail: {type: 'change-country'},
-            bubbles: true,
-            composed: true
-        }));
-        this.dispatchEvent(new CustomEvent('toast', {
-            detail: {text: 'Can not change country. Please, try again later'},
-            bubbles: true,
-            composed: true
-        }));
+        this.dispatchOnStore(new StopGlobalLoading({type: 'change-country'}));
+        this.dispatchOnStore(new AddNotification('Can not change country. Please, try again later'));
     }
     _handleResponse() {
         this.refreshInProgress = true;
@@ -84,7 +77,7 @@ class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRe
 
     _refreshPage() {
         this.refreshInProgress = false;
-        window.location.href = `${window.location.origin}/apd/`;
+        window.location.href = `${window.location.origin}/field-monitoring/`;
     }
 }
 

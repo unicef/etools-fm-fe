@@ -1,5 +1,6 @@
 import { InitializeApplication, FINISHED_INITIALIZATION_STATE } from './redux-store/actions/app-initialization.actions';
 import { RunGlobalLoading, StopGlobalLoading } from './redux-store/actions/global-loading.actions';
+import { AddNotification } from './redux-store/actions/notification.actions';
 
 class AppShell extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
@@ -47,7 +48,6 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         super.ready();
         this.addEventListener('drawer-toggle-tap', e => this.toggleDrawer(e));
 
-        this.addEventListener('toast', (e, detail) => this.queueToast(e, detail));
         this.addEventListener('404', e => this._pageNotFound(e));
 
         this.subscribeOnStore(store => store.globalLoading, loadingQueue => this.handleLoading(loadingQueue));
@@ -122,7 +122,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
             `${event.detail.message}` :
             'Oops you hit a 404!';
 
-        this.dispatchEvent(new CustomEvent('toast', {detail: {text: message}}));
+        this.dispatchOnStore(new AddNotification(message));
         // this.dispatchEvent(new CustomEvent('global-loading', {detail: {type: 'initialisation !!Set another name!!'}}));
     }
 
