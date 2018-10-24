@@ -9,6 +9,7 @@ const gulpIf = require('gulp-if');
 const combine = require('stream-combiner2').obj;
 const through2 = require('through2').obj;
 const path = require('path');
+const webpackOptions = require('./wp-config');
 // const replace = require('gulp-replace');
 
 function buildElements(done) {
@@ -30,7 +31,9 @@ function buildElements(done) {
         // ))
         // combine html/js/scss
         .pipe(builder(
-            [`${process.cwd()}/src/bower_components/`]
+            [`${process.cwd()}/src/bower_components/`],
+            null,
+            webpackOptions
         ))
         // compile html/js/scss
         .pipe(gulpIf(

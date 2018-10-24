@@ -5,13 +5,16 @@ const combine = require('stream-combiner2').obj;
 const compileHtmlTags = require('gulp-compile-html-tags');
 const gulpif = require('gulp-if');
 const sass = require('gulp-sass');
+const webpackOptions = require('./wp-config');
 // const path = require('path');
 
 function preBuild(done) {
     return gulp.src(['./src/elements/**/*.html'])
-        .pipe(polytempl([{
-            path: `${process.cwd()}/bower_components/`, new_base: `${process.cwd()}/src/bower_components/`
-        }]))
+        .pipe(polytempl(
+            [`${process.cwd()}/src/bower_components/`],
+            null,
+            webpackOptions
+        ))
         .pipe(gulpif(
             function(file) {
                 return !~file.basename.indexOf('.spec.html');

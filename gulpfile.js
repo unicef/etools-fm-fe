@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 
+process.env.ENV = 'development';
 const clean = require('./gulp-tasks/clean');
 const path = require('path');
 const preBuild = require('./gulp-tasks/pre-build');
@@ -11,7 +12,6 @@ const copyImages = require('./gulp-tasks/copy-images');
 const copyBower = require('./gulp-tasks/copy-bower');
 const runTests = require('./gulp-tasks/test');
 const jsLinter = require('./gulp-tasks/js-linter');
-
 global.config = {
     appName: 'etoolsApd',
     polymerJsonPath: path.join(process.cwd(), 'polymer.json'),
