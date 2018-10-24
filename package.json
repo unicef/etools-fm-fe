@@ -49,7 +49,7 @@
     "plylog": "^0.4.0",
     "polymer-build": "^3.0.1",
     "polymer-cli": "^1.6.0",
-    "polytempl": "^2.0.4",
+    "polytempl": "^2.0.5",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "stream-combiner2": "^1.1.1",
