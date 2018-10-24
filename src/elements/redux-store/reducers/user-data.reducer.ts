@@ -1,8 +1,8 @@
-import { ADD_USER_DATA } from '../actions/user-data.actions';
+import { ADD_USER_DATA, AddUserData } from '../actions/user-data.actions';
 
-const INITIAL = null;
+const INITIAL: IUserProfile | null = null;
 
-export function userData(state = INITIAL, action) {
+export function userData(state = INITIAL, action: AddUserData) {
     switch (action.type) {
         case ADD_USER_DATA:
             return state ? state : action.payload;

@@ -3,21 +3,18 @@ export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
 export const RESET_NOTIFICATIONS = 'RESET_NOTIFICATIONS';
 
 export class AddNotification {
-    constructor(text) {
-        this.type = ADD_NOTIFICATION;
-        this.payload = text;
-    }
+    public readonly type = ADD_NOTIFICATION;
+    public constructor(public payload: string) { }
 }
 
 export class RemoveNotification {
-    constructor(id) {
-        this.type = REMOVE_NOTIFICATION;
-        this.payload = id;
-    }
+    public readonly type = REMOVE_NOTIFICATION;
+    public constructor(public payload: string) { }
 }
 
 export class ResetNotification {
-    constructor() {
-        this.type = RESET_NOTIFICATIONS;
-    }
+    public readonly type = RESET_NOTIFICATIONS;
+    public constructor() { }
 }
+
+export type NotificationActions = AddNotification | RemoveNotification | ResetNotification;

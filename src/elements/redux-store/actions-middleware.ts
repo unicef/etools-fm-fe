@@ -1,3 +1,5 @@
+import { Action, Dispatch } from 'redux';
+
 export default function actionsMiddleware() {
-    return dispatch => action => dispatch({...action});
+    return (dispatch: Dispatch) => (action: Action) => dispatch({...action});
 }

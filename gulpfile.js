@@ -1,9 +1,9 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const argv = require('yargs').argv;
-if (argv.develop) {
+// if (argv.develop) {
     process.env.ENV = 'development';
-}
+// }
 
 const clean = require('./gulp-tasks/clean');
 const path = require('path');

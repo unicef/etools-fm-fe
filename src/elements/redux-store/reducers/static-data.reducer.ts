@@ -1,8 +1,13 @@
-import { ADD_STATIC_DATA, UPDATE_STATIC_DATA, RESET_STATIC_DATA } from '../actions/static-data.actions';
+import {
+    ADD_STATIC_DATA,
+    RESET_STATIC_DATA,
+    StaticDataActions,
+    UPDATE_STATIC_DATA
+} from '../actions/static-data.actions';
 
 const INITIAL = {};
 
-export function staticData(state = INITIAL, action) {
+export function staticData(state: StaticData = INITIAL, action: StaticDataActions<any>) {
     const {dataName, payload: data = []} = action;
     switch (action.type) {
         case ADD_STATIC_DATA:
@@ -19,8 +24,8 @@ export function staticData(state = INITIAL, action) {
                 throw new Error(`Data "${dataName}" is missing. Use Add data action first.`);
             }
             const newStateData = {...state};
-            const staticData = newStateData[dataName];
-            newStateData[dataName] = [...staticData, data];
+            const currentData = newStateData[dataName];
+            newStateData[dataName] = [...currentData, data];
             return newStateData;
 
         case RESET_STATIC_DATA:

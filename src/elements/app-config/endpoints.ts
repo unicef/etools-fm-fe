@@ -1,4 +1,4 @@
-export const endpoints = {
+export const endpoints: Endpoints = {
     userProfile: {
         url: '/users/api/profile/'
     },

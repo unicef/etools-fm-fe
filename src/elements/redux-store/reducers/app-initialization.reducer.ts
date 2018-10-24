@@ -1,17 +1,20 @@
 import {
-    INITIALIZE_APPLICATION,
     FINISH_INITIALIZATION,
-    IN_PROGRESS_INITIALIZATION_STATE,
     FINISHED_INITIALIZATION_STATE,
+    FinishInitialisation,
+    IN_PROGRESS_INITIALIZATION_STATE,
     INITIAL_INITIALIZATION_STATE,
-    FinishInitialisation } from '../actions/app-initialization.actions';
+    INITIALIZE_APPLICATION,
+    InitializeApplication } from '../actions/app-initialization.actions';
 import { loadUserData } from '../effects/load-user-info.effect';
 import { store } from '../index';
 import { loadStaticData } from '../effects/load-static-data.effect';
 
+type ActionType = FinishInitialisation | InitializeApplication;
+
 const INITIAL = INITIAL_INITIALIZATION_STATE;
 
-export function initialization(state = INITIAL, action) {
+export function initialization(state: string = INITIAL, action: ActionType) {
     switch (action.type) {
         case INITIALIZE_APPLICATION:
             if (
@@ -21,7 +24,7 @@ export function initialization(state = INITIAL, action) {
                 console.warn('Initialization can be called only once');
                 return state;
             }
-            loadData(action.payload);
+            loadData((action as InitializeApplication).payload);
             return IN_PROGRESS_INITIALIZATION_STATE;
         case FINISH_INITIALIZATION:
             return FINISHED_INITIALIZATION_STATE;
@@ -30,11 +33,11 @@ export function initialization(state = INITIAL, action) {
     }
 }
 
-function loadData(dataNames) {
+function loadData(dataNames: string[]) {
     store
         .dispatch(loadUserData())
         .then(() => {
-            let promises = [];
+            let promises: Promise<void>[] = [];
             if (dataNames && dataNames.length) {
                 promises = dataNames.map(dataName => store.dispatch(loadStaticData(dataName)));
             }
