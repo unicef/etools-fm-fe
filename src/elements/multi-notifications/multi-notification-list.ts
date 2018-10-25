@@ -1,12 +1,12 @@
 (function() {
     class MultiNotificationList extends FMMixins.ReduxMixin(Polymer.Element) {
-        static get is() {return 'multi-notification-list';}
+        public static get is() { return 'multi-notification-list'; }
 
-        static get properties() {
+        public static get properties() {
             return {
                 notifications: {
                     type: Array,
-                    value() {return [];}
+                    value() { return []; }
                 },
                 limit: {
                     type: Number,
@@ -15,21 +15,21 @@
             };
         }
 
-        connectedCallback() {
+        public connectedCallback() {
             super.connectedCallback();
             this.subscribeOnStore(
-                store => store.notifications,
-                notifications => this._onNotificationsChange(notifications)
+                (store: FMStore) => store.notifications,
+                (notifications: Toast[]) => this.onNotificationsChange(notifications)
             );
         }
 
-        _onNotificationsChange(notifications = []) {
-            const newNotifications = notifications.slice(0, this.limit);
+        private onNotificationsChange(notifications: Toast[] = []) {
+            const newNotifications: Toast[] = notifications.slice(0, this.limit);
 
             let i = 0;
             while (i < this.notifications.length) {
                 const id = this.notifications[i].id;
-                const index = _.findIndex(newNotifications, notification => notification.id === id);
+                const index = _.findIndex(newNotifications, (notification: Toast) => notification.id === id);
 
                 if (index > -1) {
                     newNotifications.splice(index, 1);
@@ -39,6 +39,7 @@
                 }
             }
 
+            // @ts-ignore
             Polymer.dom.flush();
             this.push('notifications', ...newNotifications);
         }

@@ -1,8 +1,8 @@
 (function() {
     class SidebarMenu extends FMMixins.AppConfig(Polymer.Element) {
-        static get is() {return 'sidebar-menu';}
+        public static get is() { return 'sidebar-menu'; }
 
-        static get properties() {
+        public static get properties() {
             return {
                 page: String,
                 items: {
@@ -43,7 +43,7 @@
             };
         }
 
-        _toggleDrawer() {
+        public toggleDrawer() {
             this.dispatchEvent(new CustomEvent('drawer-toggle-tap', {bubbles: true, composed: true}));
         }
     }

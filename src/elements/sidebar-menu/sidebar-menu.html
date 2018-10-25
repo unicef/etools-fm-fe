@@ -8,10 +8,10 @@
         <!-- inject styles './sidebar-menu.scss'-->
 
         <app-toolbar class="menu-header">
-            <iron-icon icon="flag" on-tap="_toggleDrawer"></iron-icon>
-            <!--<img src$="[[getAbsolutePath('images/ap_icon_v2.svg')]]" on-tap="_toggleDrawer">-->
+            <iron-icon icon="flag" on-tap="toggleDrawer"></iron-icon>
+            <!--<img src$="[[getAbsolutePath('images/ap_icon_v2.svg')]]" on-tap="toggleDrawer">-->
             <div main-title>Field <br> Monitoring</div>
-            <paper-icon-button id="close-drawer" on-tap="_toggleDrawer" icon="icons:chevron-left" drawer-toggle></paper-icon-button>
+            <paper-icon-button id="close-drawer" on-tap="toggleDrawer" icon="icons:chevron-left" drawer-toggle></paper-icon-button>
         </app-toolbar>
 
         <div class="nav-menu">
@@ -44,5 +44,5 @@
         </div>
     </template>
 
-    <!-- inject scripts './sidebar-menu.js'-->
+    <!-- inject scripts './sidebar-menu.ts'-->
 </dom-module>

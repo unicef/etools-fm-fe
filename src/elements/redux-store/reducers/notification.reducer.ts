@@ -9,7 +9,6 @@ const INITIAL: Toast[] = [];
 export function notifications(state = INITIAL, action: NotificationActions): Toast[] {
     switch (action.type) {
         case ADD_NOTIFICATION:
-            // @ts-ignore
             const id = _.uniqueId('toast');
             const notification: Toast = {id, text: action.payload};
             return [...state, notification];

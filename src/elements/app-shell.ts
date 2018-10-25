@@ -1,4 +1,4 @@
-import { InitializeApplication, FINISHED_INITIALIZATION_STATE } from './redux-store/actions/app-initialization.actions';
+import { FINISHED_INITIALIZATION_STATE, InitializeApplication } from './redux-store/actions/app-initialization.actions';
 import { RunGlobalLoading, StopGlobalLoading } from './redux-store/actions/global-loading.actions';
 import { AddNotification } from './redux-store/actions/notification.actions';
 
@@ -7,9 +7,9 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     FMMixins.ReduxMixin,
     EtoolsMixins.LoadingMixin], Polymer.Element) {
 
-    static get is() {return 'app-shell';}
+    public static get is() { return 'app-shell'; }
 
-    static get properties() {
+    public static get properties() {
         return {
             page: {
                 type: String,
@@ -28,20 +28,23 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         };
     }
 
-    static get observers() {
+    public static get observers() {
         return [
             '_routePageChanged(route.path)'
         ];
     }
 
-    ready() {
+    public ready() {
         super.ready();
-        this.addEventListener('drawer-toggle-tap', e => this.toggleDrawer(e));
+        this.addEventListener('drawer-toggle-tap', () => this.toggleDrawer());
 
-        this.addEventListener('404', e => this._pageNotFound(e));
+        this.addEventListener('404', (event: CustomEvent) => this._pageNotFound(event));
 
-        this.subscribeOnStore(store => store.globalLoading, loadingQueue => this.handleLoading(loadingQueue));
-        this.subscribeOnStore(store => store.initialization, (initialization) => {
+        this.subscribeOnStore(
+            (store: FMStore) => store.globalLoading,
+            (loadingQueue: LoadingData[]) => this.handleLoading(loadingQueue)
+        );
+        this.subscribeOnStore((store: FMStore) => store.initialization, (initialization: string) => {
             if (initialization === FINISHED_INITIALIZATION_STATE) {
                 this.page = _.get(this, 'routeData.page') || this._initRoute();
                 this.dispatchOnStore(new StopGlobalLoading({type: 'initialization'}));
@@ -50,13 +53,13 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         this._setBgColor();
     }
 
-    connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
         this.dispatchOnStore(new RunGlobalLoading({type: 'initialization', message: 'Loading'}));
         this.dispatchOnStore(new InitializeApplication(['unicefUsers', 'locations']));
     }
 
-    toggleDrawer() {
+    public toggleDrawer() {
         const drawerWidth = !this.isDrawerOpened ? '220px' : '70px';
         this.isDrawerOpened = !this.isDrawerOpened;
 
@@ -65,54 +68,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         this.$.header.style.paddingLeft = drawerWidth;
     }
 
-    _routePageChanged() {
-        // if (!this.initLoadingComplete || !this.routeData.page) {return;}
-        this.page = this.routeData.page || 'field-monitoring';
-        this.scroll(0, 0);
-    }
-
-    _pageChanged(page) {
-        if (this.$[`${page}`] instanceof Polymer.Element) {return;}
-        // this.dispatchEvent(new CustomEvent('global-loading', {
-        //     detail: {message: 'Loading...', active: true, type: 'initialisation !!Set another name!!'}
-        // }));
-
-        var resolvedPageUrl;
-        if (page === 'not-found') {
-            resolvedPageUrl = 'elements/pages/not-found-page-view/not-found-page-view.html';
-        } else {
-            resolvedPageUrl = `elements/pages/${page}-page-components/${page}-page-main/${page}-page-main.html`;
-        }
-        Polymer.importHref(resolvedPageUrl,
-            () => this._loadPage(),
-            event => this._pageNotFound(event),
-            true);
-    }
-
-    _loadPage() {
-        // if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
-        // {type: 'initialisation !!Set another name!!'}}));
-    }
-
-    _pageNotFound(event) {
-        this.page = 'not-found';
-        let message = event && event.detail && event.detail.message ?
-            `${event.detail.message}` :
-            'Oops you hit a 404!';
-
-        this.dispatchOnStore(new AddNotification(message));
-        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
-        // {type: 'initialisation !!Set another name!!'}}));
-    }
-
-    _initRoute() {
-        let path = `${this.basePath}`;
-        this.set('route.path', path);
-        return '';
-    }
-
-    handleLoading(loadingQueue = []) {
+    public handleLoading(loadingQueue: LoadingData[] = []) {
         const loadingElement = this.$['global-loading'];
         const currentData = loadingQueue[0];
 
@@ -126,7 +82,53 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    _setBgColor() {
+    public _routePageChanged() {
+        // if (!this.initLoadingComplete || !this.routeData.page) {return;}
+        this.page = this.routeData.page || 'field-monitoring';
+        this.scroll(0, 0);
+    }
+
+    public _pageChanged(page: string) {
+        if (this.$[`${page}`] instanceof Polymer.Element) { return; }
+        // this.dispatchEvent(new CustomEvent('global-loading', {
+        //     detail: {message: 'Loading...', active: true, type: 'initialisation !!Set another name!!'}
+        // }));
+
+        let resolvedPageUrl;
+        if (page === 'not-found') {
+            resolvedPageUrl = 'elements/pages/not-found-page-view/not-found-page-view.html';
+        } else {
+            resolvedPageUrl = `elements/pages/${page}-page-components/${page}-page-main/${page}-page-main.html`;
+        }
+        Polymer.importHref(resolvedPageUrl,
+            () => this._loadPage(),
+            (event: ErrorEvent) => this._pageNotFound(event),
+            true);
+    }
+
+    private _loadPage() {
+        // if (!this.initLoadingComplete) {this.initLoadingComplete = true;}
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
+        // {type: 'initialisation !!Set another name!!'}}));
+    }
+
+    private _initRoute() {
+        const path = `${this.basePath}`;
+        this.set('route.path', path);
+        return '';
+    }
+
+    private _pageNotFound(event: CustomEvent | ErrorEvent) {
+        this.page = 'not-found';
+        const reason = event instanceof ErrorEvent ?  event.message : _.get(event, 'detail.message');
+        const message = reason ? `${reason}` : 'Oops you hit a 404!';
+
+        this.dispatchOnStore(new AddNotification(message));
+        // this.dispatchEvent(new CustomEvent('global-loading', {detail:
+        // {type: 'initialisation !!Set another name!!'}}));
+    }
+
+    private _setBgColor() {
         // If not production environment, changing header color to red
         if (!this.isProductionServer()) {
             this.updateStyles({'--header-bg-color': 'var(--nonprod-header-color)'});

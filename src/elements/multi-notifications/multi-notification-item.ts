@@ -1,13 +1,13 @@
 import { RemoveNotification } from '../redux-store/actions/notification.actions';
 
 class MultiNotificationItem extends FMMixins.ReduxMixin(Polymer.Element) {
-    static get is() {return 'multi-notification-item';}
+    public static get is() { return 'multi-notification-item'; }
 
-    static get properties() {
+    public static get properties() {
         return {
             opened: {
                 type: Boolean,
-                observer: '_openedChanged'
+                observer: 'openedChanged'
             },
             text: {
                 type: String,
@@ -16,31 +16,13 @@ class MultiNotificationItem extends FMMixins.ReduxMixin(Polymer.Element) {
         };
     }
 
-    connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('transitionend', e => this._onTransitionEnd(e));
+        this.addEventListener('transitionend', (event: AnimationEvent) => this._onTransitionEnd(event));
         this.opened = true;
     }
 
-    _onTransitionEnd(e) {
-        if (e && e.target === this && e.propertyName === 'opacity' && !this.opened) {
-            this.dispatchOnStore(new RemoveNotification(this.id));
-        }
-    }
-
-    _renderOpened() {
-        requestAnimationFrame(() => {
-            this.classList.add('notification-open');
-        });
-    }
-
-    _renderClosed() {
-        requestAnimationFrame(() => {
-            this.classList.remove('notification-open');
-        });
-    }
-
-    _openedChanged(opened) {
+    public openedChanged(opened: boolean) {
         if (opened) {
             this._renderOpened();
         } else {
@@ -48,10 +30,29 @@ class MultiNotificationItem extends FMMixins.ReduxMixin(Polymer.Element) {
         }
     }
 
-    close() {
+    public close() {
         this.opened = false;
     }
+
+    private _onTransitionEnd(event: AnimationEvent) {
+        // @ts-ignore
+        if (event && event.target === this && event.propertyName === 'opacity' && !this.opened) {
+            this.dispatchOnStore(new RemoveNotification(this.id));
+        }
+    }
+
+    private _renderOpened() {
+        requestAnimationFrame(() => {
+            this.classList.add('notification-open');
+        });
+    }
+
+    private _renderClosed() {
+        requestAnimationFrame(() => {
+            this.classList.remove('notification-open');
+        });
+    }
+
 }
 
 window.customElements.define(MultiNotificationItem.is, MultiNotificationItem);
-

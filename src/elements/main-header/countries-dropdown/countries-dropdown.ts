@@ -4,9 +4,14 @@ import { AddNotification } from '../../redux-store/actions/notification.actions'
 class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRefreshBehavior],
     FMMixins.AppConfig(FMMixins.ReduxMixin(Polymer.Element))) {
 
-    static get is() {return 'countries-dropdown';}
+    public countryIndex: number | undefined;
+    public countryData: any;
+    public url: any;
+    public refreshInProgress: any;
 
-    static get properties() {
+    public static get is() { return 'countries-dropdown'; }
+
+    public static get properties() {
         return {
             opened: {
                 type: Boolean,
@@ -26,59 +31,75 @@ class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRe
         };
     }
 
-    static get observers() {
+    public static get observers() {
         return [
-            '_setCountryIndex(countries, countryId)'
+            'setCountryIndex(countries, countryId)'
         ];
     }
 
-    connectedCallback() {
+    public connectedCallback() {
+        // @ts-ignore
         super.connectedCallback();
-        this.addEventListener('paper-dropdown-close', this._toggleOpened);
-        this.addEventListener('paper-dropdown-open', this._toggleOpened);
+        // @ts-ignore
+        this.addEventListener('paper-dropdown-close', this.toggleOpened);
+        // @ts-ignore
+        this.addEventListener('paper-dropdown-open', this.toggleOpened);
     }
-    _setCountryIndex(countries, countryId) {
-        if (!(countries instanceof Array)) {return;}
+
+    public setCountryIndex(countries: UserCountry[], countryId: number) {
+        if (!(countries instanceof Array)) { return; }
 
         this.countryIndex = countries.findIndex((country) => {
             return country.id === countryId;
         });
     }
-    _toggleOpened() {
-        this.set('opened', this.$.dropdown.opened);
+
+    public _countrySelected(event: CustomEvent) {
+        // @ts-ignore
+        this.set('country', this.$.repeat.itemForElement(event.detail.item));
     }
-    _countrySelected(e) {
-        this.set('country', this.$.repeat.itemForElement(e.detail.item));
-    }
-    _changeCountry(event) {
-        let country = event && event.model && event.model.item;
-        let id = country && country.id;
 
-        if (Number(parseFloat(id)) !== id) {throw new Error('Can not find country id!');}
+    public _changeCountry(event: any) {
+        const country = event && event.model && event.model.item;
+        const id = country && country.id;
 
+        if (Number(parseFloat(id)) !== id) {throw new Error('Can not find country id!'); }
 
+        // @ts-ignore
         this.dispatchOnStore(new RunGlobalLoading({
             type: 'change-country',
             message: 'Please wait while country is changing...'}));
 
         this.countryData = {country: id};
+        // @ts-ignore
         this.url = this.getEndpoint('changeCountry').url;
     }
-    _handleError() {
+
+    public _handleError() {
         this.countryData = null;
         this.url = null;
+        // @ts-ignore
         this.dispatchOnStore(new StopGlobalLoading({type: 'change-country'}));
+        // @ts-ignore
         this.dispatchOnStore(new AddNotification('Can not change country. Please, try again later'));
     }
-    _handleResponse() {
+
+    public _handleResponse() {
         this.refreshInProgress = true;
+        // @ts-ignore
         this.clearDexieDbs();
     }
 
-    _refreshPage() {
+    public _refreshPage() {
         this.refreshInProgress = false;
         window.location.href = `${window.location.origin}/field-monitoring/`;
     }
+
+    private toggleOpened() {
+        // @ts-ignore
+        this.set('opened', this.$.dropdown.opened);
+    }
+
 }
 
 window.customElements.define(CountriesDropdown.is, CountriesDropdown);

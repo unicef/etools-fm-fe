@@ -3,45 +3,45 @@
 class MainHeader extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig, FMMixins.ReduxMixin], Polymer.Element) {
 
-    static get is() {return 'main-header';}
+    public static get is() { return 'main-header'; }
 
-    static get properties() {
+    public static get properties() {
         return {
             user: Object
         };
     }
 
-    connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('main_refresh', this._refreshPage);
-        this.addEventListener('sign-out', this._logout);
+        this.addEventListener('main_refresh', this.refreshPage);
+        this.addEventListener('sign-out', this.logout);
 
-        this.subscribeOnStore(store => store.userData, (user) => {
-            if (user) {this.user = user;}
+        this.subscribeOnStore((store: FMStore) => store.userData, (user: IUserProfile) => {
+            if (user) { this.user = user; }
         });
     }
 
-    ready() {
+    public ready() {
         super.ready();
-        this._isStaging();
+        this.isStaging();
     }
 
-    _isStaging() {
+    public openDrawer() {
+        this.dispatchEvent(new CustomEvent('drawer'));
+    }
+
+    private isStaging() {
         if (this.isStagingServer()) {
             this.$.envWarningIf.if = true;
         }
     }
 
-    openDrawer() {
-        this.dispatchEvent(new CustomEvent('drawer'));
-    }
-
-    _refreshPage(event) {
+    private refreshPage(event: CustomEvent) {
         event.stopImmediatePropagation();
         this.$.refresh.refresh();
     }
 
-    _logout() {
+    private logout() {
         this.resetOldUserData();
         window.location.href = `${window.location.origin}/saml2/logout/`;
     }
