@@ -7,6 +7,7 @@ interface Window {
 interface FMMixins {
     AppConfig: any;
     ReduxMixin: any;
+    PermissionController: any;
 }
 
 declare const EtoolsMixinFactory: any;
