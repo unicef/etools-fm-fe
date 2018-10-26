@@ -1,9 +1,9 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const argv = require('yargs').argv;
-// if (argv.develop) {
-    process.env.ENV = 'development';
-// }
+if (argv.develop) {
+    // process.env.ENV = 'development';
+}
 
 const clean = require('./gulp-tasks/clean');
 const path = require('path');
@@ -23,8 +23,26 @@ global.config = {
 
 const build = require('./gulp-tasks/build');
 
+const spawn = require('child_process').spawn;
+
+gulp.task('buildElements', gulp.series(buildElements));
+
+gulp.task('new', (done) => {
+    const proc = spawn('node', ['./node_modules/.bin/gulp', `buildElements`]);
+    proc.stdout.on('data', (data) => {
+        console.log(`${data}`);
+    });
+    proc.stderr.on('data', (data) => {
+        console.log(`\x1b[31m${data}\x1b[0m`);
+    });
+
+    proc.on('close', () => {
+        done();
+    });
+});
+
 gulp.task('watch', function() {
-    gulp.watch(['./src/elements/**/*.*'], gulp.series(jsLinter, buildElements));
+    gulp.watch(['./src/elements/**/*.*'], gulp.series(jsLinter, 'new'));
     gulp.watch(['./src/manifest.json', './index.html'], gulp.series(copyAssets));
     gulp.watch(['./src/images/**/*.*'], gulp.series(copyImages));
     gulp.watch(['./src/bower_components/**/*.*'], gulp.series(copyBower()));
