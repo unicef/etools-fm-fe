@@ -2,8 +2,9 @@ type FMStore = {
     userData: IUserProfile,
     staticData: StaticData,
     initialization: string,
-    globalLoading: any[]
-    notifications: any[]
+    globalLoading: LoadingData[]
+    notifications: Toast[]
+    methods: Method[]
 };
 
 type StaticData = {

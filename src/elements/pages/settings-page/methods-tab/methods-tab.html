@@ -1,0 +1,60 @@
+<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles]-->
+
+<dom-module id="methods-tab">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './methods-tab.scss'-->
+
+        <paper-card>
+            <div class="layout horizontal">
+                <etools-dropdown
+                        class="filter-dropdown"
+                        selected="[[methods]]"
+                        label="Method"
+                        placeholder$="Select Method"
+                        options="[[methods]]"
+                        option-label="name"
+                        option-value="id"
+                        on-iron-select="_changeFilterValue"
+                        hide-search allow-outside-scroll>
+                </etools-dropdown>
+            </div>
+        </paper-card>
+
+        <paper-card>
+
+            <div class="table-title-block with-bottom-line">
+                <div class="table-title">Recommended Data Collection Method Types</div>
+                <div class="buttons-container">
+                    <paper-icon-button
+                            class="panel-button"
+                            icon="add-box"></paper-icon-button>
+                </div>
+            </div>
+
+            <etools-data-table-header id="listHeader"
+                                      no-collapse no-title>
+                <etools-data-table-column class="flex-1" field="method">
+                    Method
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-4" field="types" sortable>
+                    Recommended Type
+                </etools-data-table-column>
+            </etools-data-table-header>
+
+            <template is="dom-if" if="[[!types.length]]">
+                <etools-data-table-row no-collapse>
+                    <div slot="row-data" class="layout horizontal">
+                        <div  class="col-data flex-1 truncate">-</div>
+                        <div class="col-data flex-4 truncate">-</div>
+                    </div>
+                </etools-data-table-row>
+            </template>
+        </paper-card>
+
+    </template>
+
+    <!-- inject scripts './methods-tab.ts'-->
+</dom-module>

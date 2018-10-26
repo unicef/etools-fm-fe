@@ -1,0 +1,65 @@
+<!--import [polymer/polymer-element]-->
+
+<dom-module id="table-styles">
+    <template>
+        <style>
+            .table-title-block {
+                position: relative;
+                display: flex;
+                align-items: center;
+                height: 50px;
+                padding: 0 10px 0 25px;
+
+                &.with-bottom-line { border-bottom: 1px solid #9c9c9c;}
+
+                .table-title {
+                    flex: auto;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    font-size: 18px;
+                }
+
+                .buttons-container {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+
+                }
+
+                .panel-button {
+                    opacity: 0.45;
+                    transition: 0.15s;
+                    &:hover { opacity: 0.57; }
+                }
+            }
+
+            .col-data {
+                height: 47px;
+                display: flex;
+                align-items: center;
+            }
+
+            etools-data-table-row {
+                --icon-wrapper: #{'{
+                    padding: 0 24px;
+                }'};
+                --list-divider-color: #e0e0e0;
+                --list-icon-color: rgba(0, 0, 0, 0.54);
+            }
+            etools-data-table-header {
+                --header-title: #{'{
+                    padding-left: 47px;
+                    font-weight: 500;
+                }'};
+                --header-columns: #{'{
+                    margin-left: 47px;
+                }'};
+                --list-divider-color: 1px solid rgba(244, 243, 242, 0.26);
+                --list-bg-color: #f2eee8;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+            }
+        </style>
+    </template>
+</dom-module>

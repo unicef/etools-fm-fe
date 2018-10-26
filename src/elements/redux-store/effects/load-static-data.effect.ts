@@ -12,7 +12,10 @@ export function loadStaticData(dataName: string) {
         }
         return fetch(url)
             .then(resp => resp.json())
-            .then(data => { dispatch(new AddStaticData(dataName, data)); })
+            .then(data => {
+                const staticData = data.results || data;
+                dispatch(new AddStaticData(dataName, staticData));
+            })
             .catch((error) => {
                 console.error(`Can not load static data "${dataName}". Reason: request error.`);
                 console.error(error);

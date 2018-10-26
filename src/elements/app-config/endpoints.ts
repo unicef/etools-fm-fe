@@ -3,6 +3,12 @@ export const endpoints: Endpoints = {
         url: '/users/api/profile/'
     },
 
+    methods: {
+        url: '/api/field-monitoring/settings/methods/',
+        exp: 10 * 24 * 60 * 60 * 1000, // 10days
+        cacheTableName: 'methods'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
     changeCountry: {
         url: '/users/api/changecountry/'
