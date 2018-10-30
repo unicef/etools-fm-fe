@@ -4,6 +4,10 @@ class PagesHeader  extends Polymer.Element {
     public static get properties() {
         return {
             title: String,
+            tab: {
+                type: String,
+                notify: true
+            },
             tabs: {
                 type: Array,
                 value: () => []

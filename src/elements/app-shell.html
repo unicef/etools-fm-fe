@@ -3,7 +3,8 @@
             iron-icons/social-icons, iron-icons/av-icons, etools-loading/etools-loading-mixin]-->
 
 <!--import [main-header, sidebar-menu, permission-controller, etools-app-config, multi-notification-list,
-            side-bar-item, countries-dropdown, shared-styles, page-layout-styles, app-theme, redux-mixin, settings-page]-->
+            side-bar-item, countries-dropdown, shared-styles, page-layout-styles, app-theme, redux-mixin,
+            query-params-mixin]-->
 
 <dom-module id="app-shell">
     <template>
@@ -20,7 +21,8 @@
         <app-route
                 route="{{route}}"
                 pattern="[[basePath]]:page"
-                data="{{routeData}}">
+                data="{{routeData}}"
+                tail="{{subRoute}}">
         </app-route>
 
         <etools-loading id="global-loading" absolute></etools-loading>
@@ -43,7 +45,7 @@
                     attr-for-selected="name"
                     fallback-selection="not-found"
                     role="main">
-                <settings-page name="settings" id="settings"></settings-page>
+                <settings-page name="settings" id="settings" route="{{subRoute}}"></settings-page>
                 <not-found-page-view name="not-found" id="not-found"></not-found-page-view>
             </iron-pages>
 

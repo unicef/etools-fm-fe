@@ -1,0 +1,23 @@
+<dom-module id="sites-tab">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './sites-tab.scss'-->
+        <app-route
+                route="{{route}}"
+                data="{{routeData}}"
+                query-params="{{queryParams}}">
+        </app-route>
+        <iron-location path="{{path}}" query="{{query}}"></iron-location>
+        <iron-query-params
+                params-string="{{query}}"
+                params-object="{{queryParams}}">
+        </iron-query-params>
+        <app-route-converter
+                path="{{path}}"
+                query-params="{{queryParams}}"
+                route="{{route}}">
+        </app-route-converter>
+        Sites
+    </template>
+    <!-- inject scripts './sites-tab.ts'-->
+</dom-module>

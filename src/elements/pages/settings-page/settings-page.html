@@ -1,16 +1,23 @@
 <!--import [polymer/polymer-element]-->
 
-<!--import [pages-header, methods-tab]-->
+<!--import [pages-header, methods-tab, cp-outputs-tab, sites-tab]-->
 
 <dom-module id="settings-page">
     <template>
         <!-- inject styles './settings-page.scss'-->
 
-        <pages-header title="Settings" tabs="[[tabs]]"></pages-header>
-
-
-        <methods-tab></methods-tab>
-
+        <app-route
+                route="{{route}}"
+                pattern="/:tab"
+                data="{{routeData}}"
+                tail="{{subRoute}}">
+        </app-route>
+        <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
+        <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
+            <cp-outputs-tab name="cp-outputs" route="{{subRoute}}"></cp-outputs-tab>
+            <sites-tab name="sites" route="{{subRoute}}"></sites-tab>
+            <methods-tab name="methods" route="{{subRoute}}"></methods-tab>
+        </iron-pages>
     </template>
 
     <!-- inject scripts './settings-page.ts'-->

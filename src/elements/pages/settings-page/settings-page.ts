@@ -3,6 +3,11 @@ class SettingsPage extends Polymer.Element {
 
     public static get properties() {
         return {
+            route: {
+                type: Object,
+                notify: true
+            },
+            routeData: Object,
             tabs: {
                 type: Array,
                 value: () => [
@@ -12,6 +17,18 @@ class SettingsPage extends Polymer.Element {
                 ]
             }
         };
+    }
+
+    public static get observers() {
+        return [
+            '_routeChanged(route.path)'
+        ];
+    }
+
+    public _routeChanged(path: string) {
+        if (!path.match(/[^\\/]/g)) {
+            this.set('route.path', '/cp-outputs');
+        }
     }
 
 }

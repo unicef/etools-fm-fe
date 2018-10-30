@@ -8,6 +8,7 @@ interface FMMixins {
     AppConfig: any;
     ReduxMixin: any;
     PermissionController: any;
+    QueryParamsMixin: any;
 }
 
 declare const EtoolsMixinFactory: any;

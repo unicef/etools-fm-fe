@@ -1,6 +1,9 @@
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
 
-class MethodsTab extends FMMixins.PermissionController(FMMixins.ReduxMixin(Polymer.Element)) {
+class MethodsTab extends EtoolsMixinFactory.combineMixins([
+    FMMixins.PermissionController,
+    FMMixins.ReduxMixin,
+    FMMixins.QueryParamsMixin], Polymer.Element) {
     public static get is() { return 'methods-tab'; }
 
     public static get properties() {
@@ -12,8 +15,37 @@ class MethodsTab extends FMMixins.PermissionController(FMMixins.ReduxMixin(Polym
             types: {
                 type: Array,
                 value: () => []
+            },
+            queryParams: {
+                type: Object,
+                observer: '_updateQueries',
+                notify: true
             }
         };
+    }
+
+    public static get observers() {
+        return [
+            '_setPath(path)'
+        ];
+    }
+
+    public _setPath(path: string) {
+        if (!~path.indexOf('methods')) { return; }
+        this.clearQueries();
+        this.updateQueries(this._queryParams, null, true);
+    }
+
+    public _updateQueries(): any {
+        if (!~this.path.indexOf('methods')) { return; }
+        this._queryParams = this.queryParams;
+    }
+
+    public _changeFilterValue(e: any) {
+        const selectedItem = e.detail.selectedItem;
+        if (selectedItem) {
+            this.set('queryParams.method', selectedItem.id);
+        }
     }
 
     public connectedCallback() {
