@@ -63,7 +63,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         this.dispatchOnStore(new RunGlobalLoading({type: 'initialization', message: 'Loading'}));
-        this.dispatchOnStore(new InitializeApplication(['methods', 'locations']));
+        this.dispatchOnStore(new InitializeApplication(['methods', 'locations', 'cpOutcomes']));
     }
 
     public toggleDrawer() {

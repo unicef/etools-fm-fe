@@ -1,0 +1,25 @@
+:host {
+  position: relative;
+  display: block;
+  padding: 0 25px 25px;
+
+  .filter-dropdown {
+    margin-left: 20px;
+    width: 240px;
+
+    --esmm-list-wrapper: {
+      margin-top: 0;
+      padding-top: 12px;
+      -ms-overflow-style: auto;
+    }
+  }
+}
+
+paper-card {
+  padding: 8px 0;
+  display: block;
+  margin-top: 25px;
+  --paper-card_-_background-color: white;
+  --paper-card_-_margin: 0 24px;
+  //--paper-card_-_width: calc(100% - 48px);
+}

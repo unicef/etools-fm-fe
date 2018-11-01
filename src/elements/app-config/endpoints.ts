@@ -27,12 +27,20 @@ export const endpoints: Endpoints = {
     interventionsList: {
         template: '/api/v2/interventions/'
     },
-    cpOutputsV2: {
-        template: '/api/v2/reports/results/?values=<%=ids%>'
+    cpOutcomes: {
+        template: '/api/v2/reports/results/?result_type=outcome',
+        exp: 60 * 60 * 1000, // 1 hour
+        cacheTableName: 'cpOutcomes'
     },
-    cpOutputsList: {
-        template: '/api/v2/reports/results/?verbosity=minimal'
+    cpOutputs: {
+        url: '/api/field-monitoring/settings/cp-outputs/'
     },
+    // cpOutputsV2: {
+    //     template: '/api/v2/reports/results/?values=<%=ids%>'
+    // },
+    // cpOutputsList: {
+    //     template: '/api/v2/reports/results/?verbosity=minimal'
+    // },
     locations: {
         url: '/api/locations-light/',
         exp: 25 * 60 * 60 * 1000, // 25h

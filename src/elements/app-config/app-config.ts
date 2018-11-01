@@ -25,6 +25,13 @@ export function getEndpoint(endpointName: string, data?: EndpointTemplateData): 
     return endpoint;
 }
 
+export function objectToQuery(obj: any) {
+    const query = Object.keys(obj)
+        .map(key => `${key}=${obj[key]}`)
+        .join('&');
+    return query.length > 0 ? '?' + query : '';
+}
+
 window.FMMixins = window.FMMixins || {};
 window.FMMixins.AppConfig = Polymer.dedupingMixin((baseClass: any) => class Config extends baseClass {
     public constructor() {

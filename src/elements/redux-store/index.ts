@@ -8,8 +8,17 @@ import { staticData } from './reducers/static-data.reducer';
 import { globalLoading } from './reducers/global-loading.reducer';
 import { notifications } from './reducers/notification.reducer';
 import { permissions } from './reducers/permissions.reducer';
+import { cpOutputs } from './reducers/cp-outputs.reducer';
 
-const red = redux.combineReducers({initialization, userData, staticData, globalLoading, notifications, permissions});
+const red = redux.combineReducers({
+    initialization,
+    userData,
+    staticData,
+    globalLoading,
+    notifications,
+    permissions,
+    cpOutputs
+});
 export const store = redux.createStore(
     red,
     redux.applyMiddleware(thunkMiddleware as ThunkMiddleware<any>, actionsMiddleware)

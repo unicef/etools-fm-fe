@@ -17,7 +17,76 @@
                 query-params="{{queryParams}}"
                 route="{{route}}">
         </app-route-converter>
-        CP Outputs
+        <paper-card>
+            <div class="layout horizontal">
+                <etools-dropdown
+                        class="filter-dropdown"
+                        label="CP Outcome"
+                        placeholder$="Select"
+                        options="[[cpOutcomes]]"
+                        option-label="name"
+                        option-value="id"
+                        trigger-value-change-event
+                        on-etools-selected-item-changed="_changeFilterValue"
+                        hide-search allow-outside-scroll>
+                </etools-dropdown>
+            </div>
+        </paper-card>
+
+
+        <paper-card>
+            <div class="table-title-block with-bottom-line">
+                <div class="table-title">Country Programme Outputs</div>
+            </div>
+
+            <etools-data-table-header id="listHeader" no-collapse no-title>
+                <etools-data-table-column class="flex-3" field="name">
+                    [[getDescriptorLabel(permissions, 'fm_config.cp_output')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-1" field="fm_config.is_monitored">
+                    [[getDescriptorLabel(permissions, 'fm_config.is_monitored')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-1" field="fm_config.is_priority">
+                    [[getDescriptorLabel(permissions, 'fm_config.is_priority')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-2" field="interventions">
+                    [[getDescriptorLabel(permissions, 'interventions')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-3" field="fm_config.government_partners">
+                    [[getDescriptorLabel(permissions, 'fm_config.government_partners')]]
+                </etools-data-table-column>
+            </etools-data-table-header>
+            <template is="dom-if" if="[[!cpOutputs.length]]">
+                <etools-data-table-row no-collapse>
+                    <div slot="row-data" class="layout horizontal">
+                        <div  class="col-data flex-3 truncate">-</div>
+                        <div  class="col-data flex-1">-</div>
+                        <div  class="col-data flex-1">-</div>
+                        <div  class="col-data flex-2 truncate">-</div>
+                        <div  class="col-data flex-3 truncate">-</div>
+                    </div>
+                </etools-data-table-row>
+            </template>
+            <template is="dom-repeat" items="[[cpOutputs]]" as="item">
+                <etools-data-table-row no-collapse>
+                    <div slot="row-data" class="layout horizontal">
+                        <div class="col-data flex-3 truncate">[[item.name]]</div>
+                        <div class="col-data flex-1">[[item.fm_config.is_monitored]]</div>
+                        <div class="col-data flex-1">[[item.fm_config.is_priority]]</div>
+                        <div class="col-data flex-2 truncate">[[item.interventions]]</div>
+                        <div class="col-data flex-3 truncate">[[item.fm_config.government_partners]]</div>
+                    </div>
+                </etools-data-table-row>
+            </template>
+            <etools-data-table-footer
+                    page-size="[[pageSize]]"
+                    page-number="[[pageNumber]]"
+                    total-results="[[count]]"
+                    visible-range="{{visibleRange}}"
+                    on-page-size-changed="_pageSizeSelected"
+                    on-page-number-changed="_pageNumberChanged">
+            </etools-data-table-footer>
+        </paper-card>
     </template>
 
     <!-- inject scripts './cp-outputs-tab.ts'-->
