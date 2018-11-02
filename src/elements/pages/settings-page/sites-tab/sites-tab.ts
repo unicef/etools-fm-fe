@@ -8,29 +8,32 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
 
     public static get properties() {
         return {
+            route: {
+                type: Object,
+                notify: true
+            },
             queryParams: {
                 type: Object,
-                observer: '_updateQueries',
-                notify: true
+                observer: '_updateQueries'
             }
         };
     }
 
     public static get observers() {
         return [
-            '_setPath(path)'
+            '_setActive(isActive)'
         ];
     }
 
-    public _setPath(path: string) {
-        if (!~path.indexOf('sites')) { return; }
-        this.clearQueries();
-        this.updateQueries(this._queryParams, null, true);
+    public _setActive(isActive: boolean) {
+        if (!isActive) { return; }
+        // this._initQueryParams();
     }
 
     public _updateQueries(): any {
-        if (!~this.path.indexOf('sites')) { return; }
-        this._queryParams = this.queryParams;
+        if (!this.isActive) { return; }
+        this.preservedListQueryParams = this.queryParams;
+        this.updateQueries(this.queryParams);
     }
 }
 

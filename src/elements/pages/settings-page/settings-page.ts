@@ -31,6 +31,10 @@ class SettingsPage extends Polymer.Element {
         }
     }
 
+    public _isActive(activeTab: string, tab: string) {
+        return activeTab === tab;
+    }
+
 }
 
 customElements.define(SettingsPage.is, SettingsPage);

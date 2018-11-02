@@ -13,6 +13,39 @@
       -ms-overflow-style: auto;
     }
   }
+
+  .editable-row {
+    position: relative;
+
+    .hover-block {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      line-height: 48px;
+    }
+  }
+
+  .editable-row:hover {
+    .hover-block {
+      display: block;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.toggle-button {
+  @apply --layout-horizontal;
+  @apply --layout-center;
+  margin: 0 16px;
+  align-self: center;
+  padding: 18px 0 18px 10px;
+}
+.toggle-button span {
+  padding: 0 12px;
+  font-size: 16px;
 }
 
 paper-card {

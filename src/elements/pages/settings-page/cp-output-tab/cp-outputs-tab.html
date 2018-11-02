@@ -1,22 +1,13 @@
+<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button]-->
+
 <dom-module id="cp-outputs-tab">
     <template>
         <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
         <!-- inject styles './cp-outputs-tab.scss'-->
         <app-route
                 route="{{route}}"
-                data="{{routeData}}"
-                query-params="{{queryParams}}">
+                query-params="{{preservedListQueryParams}}">
         </app-route>
-        <iron-location path="{{path}}" query="{{query}}"></iron-location>
-        <iron-query-params
-                params-string="{{query}}"
-                params-object="{{queryParams}}">
-        </iron-query-params>
-        <app-route-converter
-                path="{{path}}"
-                query-params="{{queryParams}}"
-                route="{{route}}">
-        </app-route-converter>
         <paper-card>
             <div class="layout horizontal">
                 <etools-dropdown
@@ -30,9 +21,12 @@
                         on-etools-selected-item-changed="_changeFilterValue"
                         hide-search allow-outside-scroll>
                 </etools-dropdown>
+                <div class="toggle-button">
+                    <paper-toggle-button checked="{{isMonitored}}"></paper-toggle-button>
+                    <span>Show only 'Monitored At Community Level'</span>
+                </div>
             </div>
         </paper-card>
-
 
         <paper-card>
             <div class="table-title-block with-bottom-line">
@@ -69,12 +63,23 @@
             </template>
             <template is="dom-repeat" items="[[cpOutputs]]" as="item">
                 <etools-data-table-row no-collapse>
-                    <div slot="row-data" class="layout horizontal">
+                    <div slot="row-data" class="layout horizontal editable-row">
                         <div class="col-data flex-3 truncate">[[item.name]]</div>
-                        <div class="col-data flex-1">[[item.fm_config.is_monitored]]</div>
-                        <div class="col-data flex-1">[[item.fm_config.is_priority]]</div>
+                        <div class="col-data flex-1">
+                            <template is="dom-if" if="[[item.fm_config.is_monitored]]">
+                                <iron-icon icon="icons:check"></iron-icon>
+                            </template>
+                        </div>
+                        <div class="col-data flex-1">
+                            <template is="dom-if" if="[[item.fm_config.is_priority]]">
+                                <iron-icon icon="icons:check"></iron-icon>
+                            </template>
+                        </div>
                         <div class="col-data flex-2 truncate">[[item.interventions]]</div>
                         <div class="col-data flex-3 truncate">[[item.fm_config.government_partners]]</div>
+                        <div class="hover-block">
+                            <iron-icon icon="icons:create" on-click="_openDialog"></iron-icon>
+                        </div>
                     </div>
                 </etools-data-table-row>
             </template>
@@ -87,6 +92,14 @@
                     on-page-number-changed="_pageNumberChanged">
             </etools-data-table-footer>
         </paper-card>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                opened="{{isOpenedCpOutput}}"
+                dialog-title="[[dialogHeader]]">
+
+        </etools-dialog>
     </template>
 
     <!-- inject scripts './cp-outputs-tab.ts'-->

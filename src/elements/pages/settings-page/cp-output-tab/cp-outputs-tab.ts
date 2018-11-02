@@ -12,10 +12,22 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
     public static get properties() {
         return {
+            route: {
+                type: Object,
+                notify: true
+            },
+            isActive: {
+                type: Boolean
+            },
+            dialogHeader: {
+                type: String
+            },
+            isOpenedCpOutput: {
+                type: Boolean
+            },
             queryParams: {
                 type: Object,
-                observer: '_updateQueries',
-                notify: true
+                observer: '_updateQueries'
             },
             pageNumber: {
                 type: Number,
@@ -31,43 +43,42 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
     public static get observers() {
         return [
-            '_setPath(path)'
+            '_setActive(isActive)'
         ];
     }
 
-    public _setPath(path: string) {
-        if (!~path.indexOf('cp-outputs')) { return; }
-        this.clearQueries();
+    public _setActive(isActive: boolean) {
+        if (!isActive) { return; }
         this._initQueryParams();
-        this.updateQueries(this.componentQueryParams);
     }
 
     public _updateQueries(): any {
-        if (!~this.path.indexOf('cp-outputs')) { return; }
-        this.componentQueryParams = this.queryParams;
+        if (!this.isActive) { return; }
+        this.preservedListQueryParams = this.queryParams;
+        this.updateQueries(this.queryParams);
         this.loadData();
     }
 
     public loadData() {
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
-                this.dispatchOnStore(loadCpOutputs(this.componentQueryParams));
+                this.dispatchOnStore(loadCpOutputs(this.queryParams));
             });
     }
 
     public _changeFilterValue(e: any) {
         const selectedItem = e.detail.selectedItem;
         if (selectedItem) {
-            this.set('queryParams.cp_outcome', selectedItem.id);
+            this.set('queryParams', Object.assign({}, this.queryParams, {cp_outcome: selectedItem.id}));
         }
     }
 
     public _pageNumberChanged({detail}: any) {
-        this.set('queryParams.page', detail.value);
+        this.set('queryParams', Object.assign({}, this.queryParams, {page: detail.value}));
     }
 
     public _pageSizeSelected({detail}: any) {
-        this.set('queryParams.page_size', detail.value);
+        this.set('queryParams', Object.assign({}, this.queryParams, {page_size: detail.value}));
     }
 
     public connectedCallback() {
@@ -95,13 +106,17 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.permissionSubscriber();
     }
 
+    public _openDialog() {
+        this.isOpenedCpOutput = true;
+    }
+
     private _initQueryParams() {
-        if (!_.get(this.componentQueryParams, 'page')) {
-            this.set('componentQueryParams.page', this.pageNumber);
-        }
-        if (!_.get(this.componentQueryParams, 'page_size')) {
-            this.set('componentQueryParams.page_size', this.pageSize);
-        }
+        const pageNumber = _.get(this.preservedListQueryParams, 'page', this.pageNumber);
+        const pageSize = _.get(this.preservedListQueryParams, 'page_size', this.pageSize);
+        this.set('queryParams', {
+            page: pageNumber,
+            page_size: pageSize
+        });
     }
 }
 

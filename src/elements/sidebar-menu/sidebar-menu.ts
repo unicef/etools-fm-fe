@@ -11,12 +11,12 @@
                         {
                             view: 'settings',
                             name: 'Settings',
-                            icon: 'settings-applications',
+                            icon: 'settings',
                             link: 'settings'
                         }, {
                             view: 'overview-planing',
                             name: 'Overview Planing',
-                            icon: 'assignment-turned-in',
+                            icon: 'av:playlist-add-check',
                             link: 'overview-planing'
                         }, {
                             view: 'assign-visits',
@@ -31,7 +31,7 @@
                         }, {
                             view: 'analysis',
                             name: 'Analysis',
-                            icon: 'assessment',
+                            icon: 'av:equalizer',
                             link: 'analysis'
                         }
                     ]

@@ -14,9 +14,9 @@
         </app-route>
         <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
-            <cp-outputs-tab name="cp-outputs" route="{{subRoute}}"></cp-outputs-tab>
-            <sites-tab name="sites" route="{{subRoute}}"></sites-tab>
-            <methods-tab name="methods" route="{{subRoute}}"></methods-tab>
+            <cp-outputs-tab name="cp-outputs" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'cp-outputs')]]"></cp-outputs-tab>
+            <sites-tab name="sites" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'sites')]]"></sites-tab>
+            <methods-tab name="methods" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'methods')]]"></methods-tab>
         </iron-pages>
     </template>
 

@@ -8,6 +8,10 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
     public static get properties() {
         return {
+            route: {
+                type: Object,
+                notify: true
+            },
             methods: {
                 type: Array,
                 value: () => []
@@ -18,33 +22,32 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             },
             queryParams: {
                 type: Object,
-                observer: '_updateQueries',
-                notify: true
+                observer: '_updateQueries'
             }
         };
     }
 
     public static get observers() {
         return [
-            '_setPath(path)'
+            '_setActive(isActive)'
         ];
     }
 
-    public _setPath(path: string) {
-        if (!~path.indexOf('methods')) { return; }
-        this.clearQueries();
-        this.updateQueries(this._queryParams, null, true);
+    public _setActive(isActive: boolean) {
+        if (!isActive) { return; }
+        // this._initQueryParams();
     }
 
     public _updateQueries(): any {
-        if (!~this.path.indexOf('methods')) { return; }
-        this._queryParams = this.queryParams;
+        if (!this.isActive) { return; }
+        this.preservedListQueryParams = this.queryParams;
+        this.updateQueries(this.queryParams);
     }
 
     public _changeFilterValue(e: any) {
         const selectedItem = e.detail.selectedItem;
         if (selectedItem) {
-            this.set('queryParams.method', selectedItem.id);
+            this.set('queryParams', Object.assign({}, this.queryParams, {method: selectedItem.id}));
         }
     }
 
