@@ -4,14 +4,6 @@ module.exports = {
     watch: false,
     devtool: ENVIRONMENT === 'development' ? 'cheap-module-inline-source-map' : false,
     module: {
-        // rules: [
-        //     {
-        //         test: /\.ts(x?)$/,
-        //         exclude: [/node_modules/],
-        //         enforce: 'pre',
-        //         use: ['ts-loader','tslint-loader']
-        //     }
-        // ],
         loaders: [{
             test: /\.ts(x?)$/,
             loader: 'ts-loader',

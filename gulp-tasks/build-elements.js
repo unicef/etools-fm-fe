@@ -10,26 +10,13 @@ const combine = require('stream-combiner2').obj;
 const through2 = require('through2').obj;
 const path = require('path');
 const webpackOptions = require('./wp-config');
+const argv = require('yargs').argv;
+const outputPath = argv.buildOutput || './build/';
 // const replace = require('gulp-replace');
 
 function buildElements(done) {
     // let testSources = [];
     gulp.src(['./src/elements/**/*.html'])
-        // .pipe(gulpIf(
-        //     function(file) {
-        //         return ~file.basename.indexOf('.spec.html');
-        //     },
-        //     // move test files into /tests folder
-        //     through2(function(file, enc, callback) {
-        //         file.base = path.normalize(file.base + '/..');
-        //         file.path = `${file.base}/tests/${file.basename}`;
-        //
-        //         testSources.push(file.basename);
-        //         testSources.push(`${file.basename}?dom=shadow`);
-        //         callback(null, file);
-        //     })
-        // ))
-        // combine html/js/scss
         .pipe(builder(
             [`${process.cwd()}/src/bower_components/`],
             null,
@@ -51,29 +38,15 @@ function buildElements(done) {
                     return data;
                 }),
                 through2(function(file, enc, callback) {
-                    file.base = path.normalize(file.base + '/..');
+                    if (!argv.buildOutput) {
+                        file.base = path.normalize(file.base + '/..');
+                    }
                     callback(null, file);
                 })
             )
         ))
-        .pipe(gulp.dest('./build/'))
+        .pipe(gulp.dest(outputPath))
         .on('end', function() {
-            // let testsPerFile = 24;
-            // let indexFilesLength = Math.ceil(testSources.length / testsPerFile) || 1;
-            //
-            // console.log(`\x1b[32mFound ${testSources.length} test files. They will be combined into ${indexFilesLength} file(s).\x1b[0m`);
-            //
-            // for (let i = 0; i < indexFilesLength; i++) {
-            //     fs.writeFileSync(`./build/tests/index${i + 1}.spec.html`, fs.readFileSync('./src/tests/index.spec.html'));
-            // }
-            //
-            // // add test sources to index{1,2...}.spec.html
-            // gulp.src('./build/tests/index*.spec.html')
-            //     .pipe(replace('<!--testSources-->', function(match) {
-            //         return `"${testSources.splice(0, testsPerFile).join('", "')}"`;
-            //     }))
-            //     .pipe(gulp.dest('./build/tests/'));
-
             done();
         });
 }

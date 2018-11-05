@@ -3,7 +3,7 @@
 const del = require('del');
 
 function postBuild() {
-    return del(['elements'], {force: true});
+    return del(['src/build-elements'], {force: true});
 }
 
 module.exports = postBuild;

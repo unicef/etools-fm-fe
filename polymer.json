@@ -1,18 +1,24 @@
 {
   "entrypoint": "./src/index.html",
-  "shell": "elements/core-elements/app-shell-element/app-shell.html",
+  "shell": "src/build-elements/app-shell.html",
   "fragments": [
-    "elements/pages/settings-page/settings-page.html",
-    "elements/pages/not-found-page-view/not-found-page-view.html"
+    "src/build-elements/pages/settings-page/settings-page.html",
+    "src/build-elements/pages/not-found-page-view/not-found-page-view.html"
   ],
   "sources": [
     "./src/images/**/*",
-    "elements/**/*",
+    "src/build-elements/**/*",
     "bower.json"
   ],
   "extraDependencies": [
     "./src/manifest.json",
     "./src/bower_components/webcomponentsjs/*.js",
     "./src/bower_components/babel-polyfill/browser-polyfill.js"
-  ]
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ],
+    "ignoreWarnings": ["multiple-global-declarations", "could-not-resolve-reference"]
+  }
 }

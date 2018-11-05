@@ -10,6 +10,8 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const cssSlam = require('css-slam').gulp;
 const htmlMinifier = require('gulp-html-minifier');
+const through2 = require('through2').obj;
+const path = require('path');
 
 const polymerJson = require(global.config.polymerJsonPath);
 const polymerProject = new polymerBuild.PolymerProject(polymerJson);
@@ -65,6 +67,11 @@ function build() {
             .pipe(polymerProject.addBabelHelpersInEntrypoint())
             .pipe(polymerProject.bundler({
                 stripComments: true
+            }))
+            .pipe(through2(function(file, enc, callback) {
+                file.base = path.normalize(file.base + '/src');
+                file.path = file.path.replace('build-elements', 'elements');
+                callback(null, file);
             }))
             .pipe(gulp.dest(global.config.buildDirectory));
 
