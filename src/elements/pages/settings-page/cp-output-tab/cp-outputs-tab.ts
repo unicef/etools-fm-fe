@@ -5,61 +5,28 @@ import { getEndpoint } from '../../../app-config/app-config';
 class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.PermissionController,
     FMMixins.ReduxMixin,
-    FMMixins.QueryParamsMixin], Polymer.Element) {
+    FMMixins.RouteHelperMixin], Polymer.Element) {
     public static get is() {
         return 'cp-outputs-tab';
     }
 
     public static get properties() {
         return {
-            route: {
-                type: Object,
-                notify: true
-            },
-            isActive: {
-                type: Boolean
-            },
             dialogHeader: {
                 type: String
             },
             isOpenedCpOutput: {
                 type: Boolean
             },
-            queryParams: {
-                type: Object,
-                observer: '_updateQueries'
-            },
-            pageNumber: {
-                type: Number,
-                value: 1
-            },
-            pageSize: {
-                type: Number,
-                value: 10
-            },
-            count: Number,
+            count: Number
         };
     }
 
-    public static get observers() {
-        return [
-            '_setActive(isActive)'
-        ];
+    public getInitQueryParams(): QueryParams {
+        return { page: 1, page_size: 10 };
     }
 
-    public _setActive(isActive: boolean) {
-        if (!isActive) { return; }
-        this._initQueryParams();
-    }
-
-    public _updateQueries(): void {
-        if (!this.isActive) { return; }
-        this.preservedListQueryParams = this.queryParams;
-        this.updateQueries(this.queryParams);
-        this.loadData();
-    }
-
-    public loadData() {
+    public finishLoad() {
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
                 this.dispatchOnStore(loadCpOutputs(this.queryParams));
@@ -69,16 +36,19 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _changeFilterValue(e: CustomEvent) {
         const selectedItem = e.detail.selectedItem;
         if (selectedItem) {
-            this.set('queryParams', Object.assign({}, this.queryParams, {cp_outcome: selectedItem.id}));
+            this.updateQueryParams({cp_outcome: selectedItem.id});
+            this.finishLoad();
         }
     }
 
-    public _pageNumberChanged({detail}: any) {
-        this.set('queryParams', Object.assign({}, this.queryParams, {page: detail.value}));
+    public _pageNumberChanged({detail}: CustomEvent) {
+        this.updateQueryParams({page: detail.value});
+        this.finishLoad();
     }
 
-    public _pageSizeSelected({detail}: any) {
-        this.set('queryParams', Object.assign({}, this.queryParams, {page_size: detail.value}));
+    public _pageSizeSelected({detail}: CustomEvent) {
+        this.updateQueryParams({page_size: detail.value});
+        this.finishLoad();
     }
 
     public connectedCallback() {
@@ -108,15 +78,6 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
     public _openDialog() {
         this.isOpenedCpOutput = true;
-    }
-
-    private _initQueryParams() {
-        const pageNumber = _.get(this.preservedListQueryParams, 'page', this.pageNumber);
-        const pageSize = _.get(this.preservedListQueryParams, 'page_size', this.pageSize);
-        this.set('queryParams', {
-            page: pageNumber,
-            page_size: pageSize
-        });
     }
 }
 

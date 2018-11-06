@@ -11,7 +11,7 @@ class SettingsPage extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 notify: true
             },
-            routeData: Object,
+            lastTab: String,
             tabs: {
                 type: Array,
                 value: () => [
@@ -35,16 +35,11 @@ class SettingsPage extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    public _isActive(activeTab: string, tab: string) {
-        return activeTab === tab;
-    }
-
     public connectedCallback() {
         super.connectedCallback();
         const endpoint = this.getEndpoint('methodTypes');
         this.dispatchOnStore(loadPermissions(endpoint.url, 'methodTypes'));
     }
-
 }
 
 customElements.define(SettingsPage.is, SettingsPage);

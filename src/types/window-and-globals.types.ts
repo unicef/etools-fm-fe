@@ -10,7 +10,7 @@ interface FMMixins {
     ReduxMixin: any;
     CommonMethods: any;
     PermissionController: any;
-    QueryParamsMixin: any;
+    RouteHelperMixin: any;
     ErrorHandlerMixin: any;
 }
 

@@ -5,18 +5,12 @@
 <dom-module id="settings-page">
     <template>
         <!-- inject styles './settings-page.scss'-->
-
-        <app-route
-                route="{{route}}"
-                pattern="/:tab"
-                data="{{routeData}}"
-                tail="{{subRoute}}">
-        </app-route>
+        <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
         <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
-            <cp-outputs-tab name="cp-outputs" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'cp-outputs')]]"></cp-outputs-tab>
-            <sites-tab name="sites" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'sites')]]"></sites-tab>
-            <methods-tab name="methods" route="{{subRoute}}" is-active="[[_isActive(routeData.tab, 'methods')]]"></methods-tab>
+            <cp-outputs-tab name="cp-outputs" route="{{route}}"></cp-outputs-tab>
+            <sites-tab name="sites" route="{{route}}"></sites-tab>
+            <methods-tab name="methods" route="{{route}}"></methods-tab>
         </iron-pages>
     </template>
 

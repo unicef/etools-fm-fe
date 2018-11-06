@@ -1,21 +1,18 @@
 <!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table, etools-dialog,
             etools-ajax/etools-ajax-request-mixin, paper-input]-->
 
-<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin, query-params-mixin]-->
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin, route-helper-mixin]-->
 
 <dom-module id="methods-tab">
     <template>
         <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
         <!-- inject styles './methods-tab.scss'-->
-        <app-route
-                route="{{route}}"
-                query-params="{{queryParams}}">
-        </app-route>
+        <app-route route="{{route}}" pattern="/methods" active="{{isActive}}"></app-route>
         <paper-card>
             <div class="layout horizontal">
                 <etools-dropdown
                         class="filter-dropdown"
-                        selected="[[methods]]"
+                        selected="[[queryParams.method]]"
                         label="Method"
                         placeholder$="Select Method"
                         options="[[methods]]"
@@ -78,8 +75,8 @@
             </template>
 
             <etools-data-table-footer
-                    page-size="[[pageSize]]"
-                    page-number="[[pageNumber]]"
+                    page-size="[[queryParams.page_size]]"
+                    page-number="[[queryParams.page]]"
                     total-results="[[count]]"
                     on-page-size-changed="_pageSizeSelected"
                     on-page-number-changed="_pageNumberChanged">

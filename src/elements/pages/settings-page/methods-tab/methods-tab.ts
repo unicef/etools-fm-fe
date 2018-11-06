@@ -5,17 +5,12 @@ import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/action
 class MethodsTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
-    FMMixins.QueryParamsMixin,
+    FMMixins.RouteHelperMixin,
     EtoolsAjaxRequestMixin], Polymer.Element) {
     public static get is() { return 'methods-tab'; }
 
     public static get properties() {
         return {
-            route: {
-                type: Object,
-                notify: true
-            },
-            isActive: Boolean,
             methods: {
                 type: Array,
                 value: () => []
@@ -23,18 +18,6 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             types: {
                 type: Array,
                 value: () => []
-            },
-            queryParams: {
-                type: Object,
-                observer: '_updateQueries'
-            },
-            pageNumber: {
-                type: Number,
-                value: 1
-            },
-            pageSize: {
-                type: Number,
-                value: 10
             },
             count: Number,
             editedItem: {
@@ -52,25 +35,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         };
     }
 
-    public static get observers() {
-        return [
-            '_setActive(isActive)'
-        ];
-    }
-
-    public _setActive(isActive: boolean): void {
-        if (!isActive) { return; }
-        this.initBaseListQueries(this.preservedListQueryParams);
-    }
-
-    public _updateQueries(): void {
-        if (!this.isActive) { return; }
-        this.preservedListQueryParams = this.queryParams;
-        this.updateQueries(this.queryParams);
-        this.loadData();
-    }
-
-    public loadData() {
+    public finishLoad() {
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
                 this.dispatchOnStore(new RunGlobalLoading({type: 'methodTypes', message: 'Loading Data...'}));
@@ -82,7 +47,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     public _changeFilterValue(event: CustomEvent) {
         const selectedItem = event.detail.selectedItem;
         if (selectedItem) {
-            this.set('queryParams', Object.assign({}, this.queryParams, {method: selectedItem.id}));
+            this.updateQueryParams({method: selectedItem.id});
         }
     }
 
@@ -185,7 +150,6 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     public isRemoveDialog(theme: string): boolean {
         return theme === 'confirmation';
     }
-
 }
 
 customElements.define(MethodsTab.is, MethodsTab);
