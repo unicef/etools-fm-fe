@@ -1,7 +1,8 @@
 <!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table, etools-dialog,
             etools-ajax/etools-ajax-request-mixin, paper-input]-->
 
-<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin, route-helper-mixin]-->
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin, error-handler-mixin]-->
 
 <dom-module id="methods-tab">
     <template>
@@ -114,18 +115,26 @@
                             required$="[[getRequiredStatus(permissions, 'method')]]"
                             disabled$="[[isDropdownReadonly(permissions, editedItem)]]"
                             readonly$="[[isDropdownReadonly(permissions, editedItem)]]"
+                            invalid="{{errors.method}}"
+                            error-message="{{errors.method}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"
                             allow-outside-scroll
                             dynamic-align></etools-dropdown>
 
                     <paper-input
                             class="validate-input disabled-as-readonly flex-5"
                             value="{{editedItem.name}}"
-                            max-length="10"
+                            maxlength="30"
                             label="[[getDescriptorLabel(permissions, 'name')]]"
                             placeholder="[[getPlaceholder(permissions, 'name', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'name')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'name')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'name')]]"></paper-input>
+                            readonly$="[[getReadonlyStatus(permissions, 'name')]]"
+                            invalid="{{errors.name}}"
+                            error-message="{{errors.name}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"></paper-input>
                     <div class="flex-4"></div>
                 </div>
             </template>

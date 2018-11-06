@@ -35,6 +35,10 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         };
     }
 
+    public getInitQueryParams(): QueryParams {
+        return { page: 1, page_size: 10 };
+    }
+
     public finishLoad() {
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
@@ -48,6 +52,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         const selectedItem = event.detail.selectedItem;
         if (selectedItem) {
             this.updateQueryParams({method: selectedItem.id});
+            this.finishLoad();
         }
     }
 
@@ -123,10 +128,12 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             .sendRequest({endpoint, method, body: this.editedItem})
             .then(() => {
                 if (this.dialog.type === 'add') {
-                    this.set('queryParams', {page: 1, page_size: this.queryParams.page_size});
+                    this.updateQueryParams({page: 1});
                 }
                 this.set('dialog.opened', false);
-                this.loadData();
+                this.finishLoad();
+            }, (error: any) => {
+                this.errors = error && error.response;
             })
             .finally(() => this.savingInProcess = false);
     }
@@ -145,6 +152,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         this.dialog = null;
         this.resetInputs();
         this.editedItem = {};
+        this.errors = null;
     }
 
     public isRemoveDialog(theme: string): boolean {
