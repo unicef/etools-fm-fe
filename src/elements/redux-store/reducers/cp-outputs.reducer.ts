@@ -1,13 +1,10 @@
-import { SET_CP_OUTPUTS } from '../actions/cp-outputs.actions';
+import { CpOutputsActions, SET_CP_OUTPUTS } from '../actions/cp-outputs.actions';
 
-export function cpOutputs(state = {}, action: {type: string, payload: ListData}) {
+export function cpOutputs(state = {}, action: CpOutputsActions) {
     switch (action.type) {
         case SET_CP_OUTPUTS:
-            const payload = action.payload;
             return {
-                ...state,
-                results: payload.results,
-                count: payload.count
+                ...action.payload
             };
         default:
             return state;

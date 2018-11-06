@@ -7,7 +7,7 @@
                 position: relative;
                 display: flex;
                 align-items: center;
-                height: 50px;
+                height: 60px;
                 padding: 0 10px 0 25px;
 
                 &.with-bottom-line { border-bottom: 1px solid #9c9c9c;}
@@ -35,6 +35,31 @@
                 }
             }
 
+            .editable-row {
+                position: relative;
+
+                .hover-block {
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    line-height: 48px;
+
+                    iron-icon {
+                        color: rgba(0,0,0,.54);
+                        padding-left: 5px;
+                    }
+                }
+            }
+
+            .editable-row:hover {
+                .hover-block {
+                    display: block;
+                    cursor: pointer;
+                }
+            }
+
             .col-data {
                 height: 47px;
                 display: flex;
@@ -59,6 +84,25 @@
                 --list-divider-color: 1px solid rgba(244, 243, 242, 0.26);
                 --list-bg-color: #f2eee8;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+            }
+            etools-data-table-footer {
+                padding: 5px 0;
+            }
+
+            paper-card.table-container {
+                padding: 0;
+            }
+
+            .remove-title {
+                padding: 0 25px 15px;
+                font-size: 17px;
+                color: rgba(0, 0, 0, 0.87);
+                font-weight: 500;
+                line-height: 28px;
+            }
+
+            paper-dialog .container {
+                padding: 14px;
             }
         </style>
     </template>

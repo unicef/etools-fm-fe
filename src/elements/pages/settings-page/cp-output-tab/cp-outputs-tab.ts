@@ -52,7 +52,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this._initQueryParams();
     }
 
-    public _updateQueries(): any {
+    public _updateQueries(): void {
         if (!this.isActive) { return; }
         this.preservedListQueryParams = this.queryParams;
         this.updateQueries(this.queryParams);
@@ -66,7 +66,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
             });
     }
 
-    public _changeFilterValue(e: any) {
+    public _changeFilterValue(e: CustomEvent) {
         const selectedItem = e.detail.selectedItem;
         if (selectedItem) {
             this.set('queryParams', Object.assign({}, this.queryParams, {cp_outcome: selectedItem.id}));
@@ -87,7 +87,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputs'));
         this.cpOutputsSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'cpOutputs'),
-            (cpOutputs: ListData) => {
+            (cpOutputs: IListData<SettingsCpOutput>) => {
                 this.cpOutputs = cpOutputs.results || [];
                 this.count = cpOutputs.count;
             });

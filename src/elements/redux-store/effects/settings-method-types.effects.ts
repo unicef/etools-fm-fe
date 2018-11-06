@@ -1,13 +1,13 @@
-import { SetCpOutputs } from '../actions/cp-outputs.actions';
+import { SetMethodTypesList } from '../actions/settings-method-types.actions';
 import { Dispatch } from 'redux';
 import { getEndpoint, objectToQuery } from '../../app-config/app-config';
 
-export function loadCpOutputs(queryParams: QueryParams) {
+export function loadMethodTypes(queryParams: QueryParams) {
     return function(dispatch: Dispatch) {
-        const endpoint = getEndpoint('cpOutputs') as StaticEndpoint;
+        const endpoint = getEndpoint('methodTypes') as StaticEndpoint;
         const url = endpoint.url + objectToQuery(queryParams);
         return fetch(url, {method: 'GET'})
             .then(resp => resp.json())
-            .then(response => dispatch(new SetCpOutputs(response)));
+            .then(response => dispatch(new SetMethodTypesList({...response, current: url})));
     };
 }

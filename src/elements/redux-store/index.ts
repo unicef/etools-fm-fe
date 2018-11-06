@@ -9,6 +9,7 @@ import { globalLoading } from './reducers/global-loading.reducer';
 import { notifications } from './reducers/notification.reducer';
 import { permissions } from './reducers/permissions.reducer';
 import { cpOutputs } from './reducers/cp-outputs.reducer';
+import { methodTypes } from './reducers/settings-method-types.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -17,7 +18,8 @@ const red = redux.combineReducers({
     globalLoading,
     notifications,
     permissions,
-    cpOutputs
+    cpOutputs,
+    methodTypes
 });
 export const store = redux.createStore(
     red,

@@ -1,6 +1,7 @@
-<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table]-->
+<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table, etools-dialog,
+            etools-ajax/etools-ajax-request-mixin, paper-input]-->
 
-<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles]-->
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin, query-params-mixin]-->
 
 <dom-module id="methods-tab">
     <template>
@@ -27,13 +28,15 @@
             </div>
         </paper-card>
 
-        <paper-card>
+        <paper-card class="table-container">
 
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">Recommended Data Collection Method Types</div>
                 <div class="buttons-container">
                     <paper-icon-button
+                            on-tap="openDialog"
                             class="panel-button"
+                            data-type="add"
                             icon="add-box"></paper-icon-button>
                 </div>
             </div>
@@ -41,12 +44,29 @@
             <etools-data-table-header id="listHeader"
                                       no-collapse no-title>
                 <etools-data-table-column class="flex-1" field="method">
-                    Method
+                    [[getDescriptorLabel(permissions, 'method')]]
                 </etools-data-table-column>
                 <etools-data-table-column class="flex-4" field="types" sortable>
-                    Recommended Type
+                    [[getDescriptorLabel(permissions, 'name')]]
                 </etools-data-table-column>
             </etools-data-table-header>
+
+            <template is="dom-repeat" items="[[types]]">
+                <etools-data-table-row no-collapse secondary-bg-on-hover>
+                    <div slot="row-data" class="layout horizontal editable-row">
+
+                        <div class="col-data flex-1 truncate">[[getMethodName(item.method)]]</div>
+                        <div class="col-data flex-4">[[item.name]]</div>
+
+                        <div class="hover-block">
+                            <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
+                            <iron-icon icon="icons:delete" on-tap="openDialog" data-type="remove"></iron-icon>
+                        </div>
+
+                    </div>
+                </etools-data-table-row>
+
+            </template>
 
             <template is="dom-if" if="[[!types.length]]">
                 <etools-data-table-row no-collapse>
@@ -56,7 +76,64 @@
                     </div>
                 </etools-data-table-row>
             </template>
+
+            <etools-data-table-footer
+                    page-size="[[pageSize]]"
+                    page-number="[[pageNumber]]"
+                    total-results="[[count]]"
+                    on-page-size-changed="_pageSizeSelected"
+                    on-page-number-changed="_pageNumberChanged">
+            </etools-data-table-footer>
         </paper-card>
+
+        <etools-dialog
+                size="md"
+                id="dialog"
+                theme="[[dialog.theme]]"
+                no-padding
+                opened="{{dialog.opened}}"
+                dialog-title="[[dialog.title]]"
+                keep-dialog-open
+                on-confirm-btn-clicked="saveType"
+                on-iron-overlay-closed="resetData"
+                ok-button-text="[[dialog.confirm]]">
+            <etools-loading
+                    active="[[savingInProcess]]"
+                    loading-text="Saving Data">
+            </etools-loading>
+            <template is="dom-if" if="[[isRemoveDialog(dialog.theme)]]">
+                <div class="remove-title">Are you sure that you want to delete this type?</div>
+            </template>
+            <template is="dom-if" if="[[!isRemoveDialog(dialog.theme)]]">
+                <div class="container layout horizontal">
+                    <etools-dropdown
+                            class="validate-input disabled-as-readonly flex-3"
+                            selected="{{editedItem.method}}"
+                            label="[[getDescriptorLabel(permissions, 'method')]]"
+                            placeholder="[[getPlaceholder(permissions, 'method', 'Select')]]"
+                            options="[[methods]]"
+                            option-label="name"
+                            option-value="id"
+                            required$="[[getRequiredStatus(permissions, 'method')]]"
+                            disabled$="[[isDropdownReadonly(permissions, editedItem)]]"
+                            readonly$="[[isDropdownReadonly(permissions, editedItem)]]"
+                            allow-outside-scroll
+                            dynamic-align></etools-dropdown>
+
+                    <paper-input
+                            class="validate-input disabled-as-readonly flex-5"
+                            value="{{editedItem.name}}"
+                            max-length="10"
+                            label="[[getDescriptorLabel(permissions, 'name')]]"
+                            placeholder="[[getPlaceholder(permissions, 'name', 'Enter')]]"
+                            required$="[[getRequiredStatus(permissions, 'name')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'name')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'name')]]"></paper-input>
+                    <div class="flex-4"></div>
+                </div>
+            </template>
+
+        </etools-dialog>
 
     </template>
 

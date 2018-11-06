@@ -1,4 +1,8 @@
-class SettingsPage extends Polymer.Element {
+import { loadPermissions } from '../../redux-store/effects/load-permissions.effect';
+
+class SettingsPage extends EtoolsMixinFactory.combineMixins([
+    FMMixins.AppConfig,
+    FMMixins.ReduxMixin], Polymer.Element) {
     public static get is() { return 'settings-page'; }
 
     public static get properties() {
@@ -33,6 +37,12 @@ class SettingsPage extends Polymer.Element {
 
     public _isActive(activeTab: string, tab: string) {
         return activeTab === tab;
+    }
+
+    public connectedCallback() {
+        super.connectedCallback();
+        const endpoint = this.getEndpoint('methodTypes');
+        this.dispatchOnStore(loadPermissions(endpoint.url, 'methodTypes'));
     }
 
 }

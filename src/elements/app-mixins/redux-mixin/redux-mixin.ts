@@ -24,7 +24,7 @@ window.FMMixins.ReduxMixin = (superClass: any) => class extends superClass {
     }
 
     public dispatchOnStore(action: Action) {
-        this._store.dispatch(action);
+        return this._store.dispatch(action);
     }
 
     public getFromStore(select: StoreSelector) {

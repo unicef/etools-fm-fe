@@ -21,5 +21,10 @@ paper-card {
     margin-top: 25px;
     --paper-card_-_background-color: white;
     --paper-card_-_margin: 0 24px;
-    //--paper-card_-_width: calc(100% - 48px);
+}
+
+etools-dialog {
+    --etools-dialog-confirmation-content: #{'{
+                    min-height: 0;
+                }'};
 }

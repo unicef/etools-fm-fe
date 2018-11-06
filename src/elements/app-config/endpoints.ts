@@ -9,6 +9,24 @@ export const endpoints: Endpoints = {
         cacheTableName: 'methods'
     },
 
+    methodTypes: {
+        url: '/api/field-monitoring/settings/methods/types/'
+    },
+
+    methodTypeDetails: {
+        template: '/api/field-monitoring/settings/methods/types/<%=id%>/'
+    },
+
+    cpOutcomes: {
+        template: '/api/v2/reports/results/?result_type=outcome',
+        exp: 60 * 60 * 1000, // 1 hour
+        cacheTableName: 'cpOutcomes'
+    },
+
+    cpOutputs: {
+        url: '/api/field-monitoring/settings/cp-outputs/'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
     changeCountry: {
         url: '/users/api/changecountry/'
@@ -26,14 +44,6 @@ export const endpoints: Endpoints = {
     },
     interventionsList: {
         template: '/api/v2/interventions/'
-    },
-    cpOutcomes: {
-        template: '/api/v2/reports/results/?result_type=outcome',
-        exp: 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'cpOutcomes'
-    },
-    cpOutputs: {
-        url: '/api/field-monitoring/settings/cp-outputs/'
     },
     // cpOutputsV2: {
     //     template: '/api/v2/reports/results/?values=<%=ids%>'

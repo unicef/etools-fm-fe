@@ -99,4 +99,13 @@ window.FMMixins.QueryParamsMixin = (superClass: any) => class extends superClass
         }
         this.dispatchEvent(new CustomEvent('location-changed', {bubbles: true, composed: true}));
     }
+
+    public initBaseListQueries(params: BaseListParams | undefined): void {
+        const pageNumber = _.get(params, 'page', this.pageNumber);
+        const pageSize = _.get(params, 'page_size', this.pageSize);
+        this.set('queryParams', {
+            page: pageNumber,
+            page_size: pageSize
+        });
+    }
 };
