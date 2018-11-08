@@ -27,6 +27,10 @@ export const endpoints: Endpoints = {
         url: '/api/field-monitoring/settings/cp-outputs/'
     },
 
+    siteLocations: {
+        url: '/api/field-monitoring/settings/sites/'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
     changeCountry: {
         url: '/users/api/changecountry/'

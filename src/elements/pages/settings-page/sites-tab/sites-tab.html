@@ -1,9 +1,94 @@
+<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table, etools-dialog,
+            etools-ajax/etools-ajax-request-mixin, paper-input]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin]-->
+
 <dom-module id="sites-tab">
     <template>
-        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors iron-flex-alignment"></style>
         <!-- inject styles './sites-tab.scss'-->
         <app-route route="{{route}}" pattern="/sites" active="{{isActive}}"></app-route>
-        Sites
+
+        <paper-card class="table-container">
+
+            <div class="table-title-block with-bottom-line">
+                <div class="table-title">Site Specific Locations</div>
+                <div class="buttons-container">
+                    <paper-icon-button
+                            on-tap="openDialog"
+                            class="panel-button"
+                            data-type="add"
+                            icon="add-box"></paper-icon-button>
+                </div>
+            </div>
+
+            <etools-data-table-header id="listHeader"
+                                      no-collapse no-title>
+                <etools-data-table-column class="w30">
+                    Parent Administrative Location
+                </etools-data-table-column>
+                <etools-data-table-column class="w90px layout center-center">
+                    Active
+                </etools-data-table-column>
+                <etools-data-table-column class="w150px">
+                    Name of Site
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-auto">
+                    Detail on Security
+                </etools-data-table-column>
+            </etools-data-table-header>
+
+            <template is="dom-repeat" items="[[sites]]" as="parentLocation">
+                <etools-data-table-row no-collapse>
+                    <div slot="row-data" class="layout horizontal editable-row parent-row">
+
+                        <div class="col-data w30 layout vertical start center-justified flex-none">
+                            <span class="admin-level-text">[[getAdminLevel(parentLocation.gateway.admin_level)]]</span>
+                            <span>[[parentLocation.name]]</span>
+                        </div>
+
+                        <div class="sites-list">
+                            <template is="dom-repeat" items="[[parentLocation.sites]]" as="site">
+                                <div class="layout horizontal editable-row site-row center">
+                                    <div class="col-data w90px layout center-center flex-none">
+                                        <div class$="active-marker [[getActiveClass(site.is_active)]]"></div>
+                                    </div>
+                                    <div class="col-data w150px flex-none">[[site.name]]</div>
+                                    <div class="col-data flex-auto security-detail">[[site.security_detail]]</div>
+
+                                    <div class="hover-block">
+                                        <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
+                                        <iron-icon icon="icons:delete" on-tap="openDialog" data-type="remove"></iron-icon>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+
+                    </div>
+                </etools-data-table-row>
+
+            </template>
+
+            <template is="dom-if" if="[[!sites.length]]">
+                <!--<etools-data-table-row no-collapse>-->
+                    <!--<div slot="row-data" class="layout horizontal">-->
+                        <!--<div  class="col-data flex-1 truncate">-</div>-->
+                        <!--<div class="col-data flex-4 truncate">-</div>-->
+                    <!--</div>-->
+                <!--</etools-data-table-row>-->
+            </template>
+
+            <etools-data-table-footer
+                    page-size="[[queryParams.page_size]]"
+                    page-number="[[queryParams.page]]"
+                    total-results="[[count]]"
+                    on-page-size-changed="_pageSizeSelected"
+                    on-page-number-changed="_pageNumberChanged">
+            </etools-data-table-footer>
+        </paper-card>
+
     </template>
     <!-- inject scripts './sites-tab.ts'-->
 </dom-module>

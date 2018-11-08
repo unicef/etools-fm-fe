@@ -1,4 +1,4 @@
-import { loadMethodTypes } from '../../../redux-store/effects/settings-method-types.effects';
+import { loadMethodTypes } from '../../../redux-store/effects/settings-method-types.effect';
 import { getEndpoint } from '../../../app-config/app-config';
 import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
 

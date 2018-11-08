@@ -10,6 +10,7 @@ import { notifications } from './reducers/notification.reducer';
 import { permissions } from './reducers/permissions.reducer';
 import { cpOutputs } from './reducers/cp-outputs.reducer';
 import { methodTypes } from './reducers/settings-method-types.reducer';
+import { specificLocations } from './reducers/site-specific-locations.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -19,7 +20,8 @@ const red = redux.combineReducers({
     notifications,
     permissions,
     cpOutputs,
-    methodTypes
+    methodTypes,
+    specificLocations
 });
 export const store = redux.createStore(
     red,
