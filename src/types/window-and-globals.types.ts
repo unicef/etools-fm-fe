@@ -20,3 +20,7 @@ declare const FMMixins: FMMixins;
 declare const EtoolsMixins: {LoadingMixin: any};
 declare const etoolsBehaviors: {EtoolsRefreshBehavior: any};
 declare const _: any;
+declare const L: any;
+type HTMLElementEvent<T extends HTMLElement> = Event & {
+    target: T & {invalid: boolean};
+};
