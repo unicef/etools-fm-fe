@@ -26,7 +26,12 @@ export const endpoints: Endpoints = {
     cpOutputs: {
         url: '/api/field-monitoring/settings/cp-outputs/'
     },
-
+    cpOutputsConfigs: {
+        url: '/api/field-monitoring/settings/cp-outputs/configs/'
+    },
+    cpOutputDetails: {
+        template: '/api/field-monitoring/settings/cp-outputs/<%=id%>/'
+    },
     siteLocations: {
         url: '/api/field-monitoring/settings/sites/'
     },
@@ -43,18 +48,17 @@ export const endpoints: Endpoints = {
     partnerOrganisationDetails: {
         template: '/api/v2/partners/<%=id%>/'
     },
+    governmentPartners: {
+        url: '/api/v2/partners/?partner_type=Government',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'partners'
+    },
     interventionDetails: {
         template: '/api/v2/interventions/<%=id%>/'
     },
     interventionsList: {
         template: '/api/v2/interventions/'
     },
-    // cpOutputsV2: {
-    //     template: '/api/v2/reports/results/?values=<%=ids%>'
-    // },
-    // cpOutputsList: {
-    //     template: '/api/v2/reports/results/?verbosity=minimal'
-    // },
     locations: {
         url: '/api/locations-light/',
         exp: 25 * 60 * 60 * 1000, // 25h

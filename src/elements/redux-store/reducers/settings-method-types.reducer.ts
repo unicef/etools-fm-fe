@@ -12,8 +12,11 @@ const INITIAL = {
 export function methodTypes(state = INITIAL, action: SettingsMethodTypesActions) {
     switch (action.type) {
         case SET_METHOD_TYPES_LIST:
+            return Object.assign({}, state, action.payload);
         case START_METHOD_TYPE_UPDATING:
+            return Object.assign({}, state, {updateInProcess: true});
         case STOP_METHOD_TYPE_UPDATING:
+            return Object.assign({}, state, {updateInProcess: false});
         case SET_METHOD_TYPE_UPDATING_ERROR:
             return Object.assign({}, state, action.payload);
         default:

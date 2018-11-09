@@ -16,12 +16,16 @@
                         option-label="name"
                         option-value="id"
                         trigger-value-change-event
-                        on-etools-selected-item-changed="_changeFilterValue"
+                        on-etools-selected-item-changed="_changeOutcomeFilter"
                         hide-search allow-outside-scroll>
                 </etools-dropdown>
                 <div class="toggle-button">
-                    <paper-toggle-button checked="{{isMonitored}}"></paper-toggle-button>
+                    <paper-toggle-button checked="[[queryParams.is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
                     <span>Show only 'Monitored At Community Level'</span>
+                </div>
+                <div class="toggle-button">
+                    <paper-toggle-button checked="[[queryParams.expired]]" on-checked-changed="_changeExpired"></paper-toggle-button>
+                    <span>Show expired</span>
                 </div>
             </div>
         </paper-card>
@@ -33,7 +37,7 @@
 
             <etools-data-table-header id="listHeader" no-collapse no-title>
                 <etools-data-table-column class="flex-3" field="name">
-                    [[getDescriptorLabel(permissions, 'fm_config.cp_output')]]
+                    [[getDescriptorLabel(permissions, 'fm_config.cp_output')]] (Expired <iron-icon class="expired" icon="icons:history"></iron-icon>)
                 </etools-data-table-column>
                 <etools-data-table-column class="flex-1" field="fm_config.is_monitored">
                     [[getDescriptorLabel(permissions, 'fm_config.is_monitored')]]
@@ -62,7 +66,12 @@
             <template is="dom-repeat" items="[[cpOutputs]]" as="item">
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row">
-                        <div class="col-data flex-3 truncate">[[item.name]]</div>
+                        <div class="col-data flex-3 truncate">
+                            <template is="dom-if" if="[[item.expired]]">
+                                <iron-icon class="expired cell" icon="icons:history"></iron-icon>
+                            </template>
+                            [[item.name]]
+                        </div>
                         <div class="col-data flex-1">
                             <template is="dom-if" if="[[item.fm_config.is_monitored]]">
                                 <iron-icon icon="icons:check"></iron-icon>
@@ -73,11 +82,17 @@
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-2 truncate">[[item.interventions]]</div>
-                        <div class="col-data flex-3 truncate">[[item.fm_config.government_partners]]</div>
-                        <div class="hover-block">
-                            <iron-icon icon="icons:create" on-click="_openDialog"></iron-icon>
+                        <div class="col-data flex-2 truncate">
+                            [[_getItemsHeader('INTERVENTION', item.item.interventions)]]
                         </div>
+                        <div class="col-data flex-3 truncate">
+                            <a on-click="_openPartners">[[_getItemsHeader('PARTNER', item.fm_config.government_partners)]]</a>
+                        </div>
+                        <template is="dom-if" if="[[isAllowEdit()]]">
+                            <div class="hover-block">
+                                <iron-icon icon="icons:create" on-click="_openDialog"></iron-icon>
+                            </div>
+                        </template>
                     </div>
                 </etools-data-table-row>
             </template>
@@ -94,9 +109,64 @@
         <etools-dialog
                 size="md"
                 no-padding
-                opened="{{isOpenedCpOutput}}"
-                dialog-title="[[dialogHeader]]">
+                keep-dialog-open
+                opened="{{dialogPartners.opened}}"
+                dialog-title="Partners"
+                hide-confirm-btn>
+            <div class="container layout vertical">
+                <template is="dom-repeat" items="[[partners]]" as="partner">
+                    <div class="partner-row"><a>[[partner.name]]</a></div>
+                </template>
+            </div>
+        </etools-dialog>
 
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialog.opened}}"
+                dialog-title="[[dialog.title]]"
+                ok-button-text="[[dialog.confirm]]"
+                on-confirm-btn-clicked="onFinishEdit">
+            <etools-loading
+                    active="[[requestInProcess]]"
+                    loading-text="Saving Data">
+            </etools-loading>
+            <div class="container layout vertical">
+                <div class="layout horizontal">
+                    <div class="toggle-button">
+                        <paper-toggle-button
+                                disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_monitored')]]"
+                                checked="{{editModel.fm_config.is_monitored}}"></paper-toggle-button>
+                        <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_monitored')]]</span>
+                    </div>
+                    <div class="toggle-button">
+                        <paper-toggle-button
+                                disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_priority')]]"
+                                checked="{{editModel.fm_config.is_priority}}"></paper-toggle-button>
+                        <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_priority')]]</span>
+                    </div>
+                </div>
+                <div class="layout horizontal">
+                    <etools-dropdown-multi
+                            class="validate-input disabled-as-readonly flex"
+                            label="[[getDescriptorLabel(permissionsDetails, 'fm_config.government_partners')]]"
+                            selected-items="{{editModel.fm_config.government_partners}}"
+                            options="[[governmentPartners]]"
+                            option-value="id"
+                            option-label="name"
+                            required$="[[getRequiredStatus(permissionsDetails, 'fm_config.government_partners')]]"
+                            disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.government_partners')]]"
+                            readonly$="[[getReadonlyStatus(permissionsDetails, 'fm_config.government_partners')]]"
+                            invalid="{{errors.fm_config.government_partners}}"
+                            error-message="{{errors.fm_config.government_partners}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"
+                            allow-outside-scroll
+                            dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+            </div>
         </etools-dialog>
     </template>
 

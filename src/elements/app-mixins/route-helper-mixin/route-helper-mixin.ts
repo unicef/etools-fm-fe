@@ -13,8 +13,7 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
                 notify: true
             },
             queryParams: {
-                type: Object,
-                value: () => {}
+                type: Object
             },
             isActive: {
                 type: Boolean,
@@ -30,6 +29,7 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
         const initQueryParams = this.getInitQueryParams();
         const queryString = this.getQueryString();
         const queryParams = this.queryParams || this.decodeParams(queryString);
+        this.queryParams = {}; // initialization query params
         this.updateQueryParams(Object.assign({}, initQueryParams, queryParams));
         this.finishLoad();
     }
@@ -98,10 +98,23 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
     }
 
     public updateQueryParams(...params: QueryParams[]) {
-        this.queryParams = Object.assign({}, this.queryParams, ...params);
-        const path = this.getRoutePath();
-        const qs = this.encodeParams(this.queryParams);
-        this.updateQueryString(path, qs);
+        // Query Params must be initialized
+        if (!this.queryParams) { return; }
+        const queryParams = Object.assign({}, this.queryParams, ...params);
+        this._updateQueryParams(queryParams);
+    }
+
+    public removeQueryParams(...paramsToRemove: string[]): void {
+        // Query Params must be initialized
+        if (!this.queryParams) { return; }
+        const queryParams: QueryParams = {};
+        const paramsNames: string[] = Object.keys(this.queryParams);
+        for (const paramName of paramsNames) {
+            if (!~paramsToRemove.indexOf(paramName)) {
+                queryParams[paramName] = this.queryParams[paramName];
+            }
+        }
+        this._updateQueryParams(queryParams);
     }
 
     public updateQueryString(path: string, qs: string) {
@@ -126,4 +139,11 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
      * Call after active configured route
      */
     public finishLoad(): void { }
+
+    private _updateQueryParams(queryParams: QueryParams) {
+        this.queryParams = queryParams;
+        const path = this.getRoutePath();
+        const qs = this.encodeParams(queryParams);
+        this.updateQueryString(path, qs);
+    }
 };

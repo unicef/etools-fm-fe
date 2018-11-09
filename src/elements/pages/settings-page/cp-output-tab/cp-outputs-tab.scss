@@ -29,6 +29,26 @@
     font-size: 16px;
 }
 
+.expired {
+    width: 16px;
+    height: 16px;
+    color: red;
+    margin: -.5rem 0;
+}
+.col-data .expired {
+    margin-right: 5px;
+}
+
+.col-data a {
+    color: var(--module-primary);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.partner-row {
+    padding: 10px;
+}
+
 paper-card {
     padding: 8px 0;
     display: block;

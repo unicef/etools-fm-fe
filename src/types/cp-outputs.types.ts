@@ -1,4 +1,11 @@
-type CpOutput =  {
+type CpOutput = {
+    id: number;
+    name: string;
+    fm_config: null | FmConfig;
+    interventions: Intervention[];
+};
+
+type GovernmentPartner = {
     id: number,
     name: string
 };
@@ -8,11 +15,12 @@ type CpOutcome = {
     name: string
 };
 
-type SettingsCpOutput = {
-    id: number;
-    name: string;
-    fm_config: null;
-    interventions: Intervention[];
+type FmConfig = {
+    cp_output: number,
+    government_partners: GovernmentPartner[] | []
+    id: number,
+    is_monitored: boolean,
+    is_priority: boolean
 };
 
 type Intervention = {

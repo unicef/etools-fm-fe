@@ -23,7 +23,7 @@ export function getEndpoint(endpointName: string, data?: EndpointTemplateData): 
     return endpoint;
 }
 
-export function objectToQuery(obj: any) {
+export function objectToQuery(obj: QueryParams) {
     const query = Object.keys(obj)
         .map(key => `${key}=${obj[key]}`)
         .join('&');

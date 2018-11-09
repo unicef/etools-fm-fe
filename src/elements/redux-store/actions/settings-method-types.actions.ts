@@ -10,12 +10,10 @@ export class SetMethodTypesList {
 
 export class StartMethodTypeUpdating {
     public readonly type = START_METHOD_TYPE_UPDATING;
-    public payload = {updateInProcess: true};
 }
 
 export class StopMethodTypeUpdating {
     public readonly type = STOP_METHOD_TYPE_UPDATING;
-    public payload = {updateInProcess: false};
 }
 
 export class SetMethodTypeUpdatingError {

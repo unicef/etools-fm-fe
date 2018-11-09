@@ -25,5 +25,8 @@ declare const L: any;
 type HTMLElementEvent<T extends HTMLElement> = Event & {
     target: T & {invalid: boolean};
 };
+type EventModel<T> = {
+    model: { item: T };
+};
 
 type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';
