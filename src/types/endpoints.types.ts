@@ -5,9 +5,10 @@ type Endpoints = {
 };
 
 type StaticEndpoint = {
-    url: string,
-    exp?: number
-    cacheTableName?: string
+    url: string;
+    exp?: number;
+    cacheTableName?: string;
+    template?: string;
 };
 
 type DynamicEndpoint = {

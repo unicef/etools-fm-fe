@@ -8,4 +8,4 @@ type MethodType = {
     id: number;
     method: number;
     name: string;
-}
+};

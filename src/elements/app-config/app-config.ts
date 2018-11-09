@@ -10,13 +10,11 @@ function isDynamicEndpoint(endpoint: Endpoint): endpoint is DynamicEndpoint {
     return endpoint.hasOwnProperty('template') && (endpoint as DynamicEndpoint).template !== '';
 }
 
-export function getEndpoint(endpointName: string): Endpoint;
-export function getEndpoint(endpointName: string, data: EndpointTemplateData): Endpoint;
-export function getEndpoint(endpointName: string, data?: EndpointTemplateData): Endpoint {
-    // @ts-ignore
+export function getEndpoint(endpointName: string): StaticEndpoint;
+export function getEndpoint(endpointName: string, data: EndpointTemplateData): StaticEndpoint;
+export function getEndpoint(endpointName: string, data?: EndpointTemplateData): StaticEndpoint {
     const endpoint = _.clone(endpoints[endpointName]);
     if (isDynamicEndpoint(endpoint)) {
-        // @ts-ignore
         const url = `${BASE_SITE}${_.template(endpoint.template)(data)}`;
         return {url, ...endpoint};
     } else {

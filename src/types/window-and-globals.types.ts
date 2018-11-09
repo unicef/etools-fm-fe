@@ -12,6 +12,7 @@ interface FMMixins {
     PermissionController: any;
     RouteHelperMixin: any;
     ErrorHandlerMixin: any;
+    MapMixin: any;
 }
 
 declare const EtoolsMixinFactory: any;
@@ -24,3 +25,5 @@ declare const L: any;
 type HTMLElementEvent<T extends HTMLElement> = Event & {
     target: T & {invalid: boolean};
 };
+
+type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';

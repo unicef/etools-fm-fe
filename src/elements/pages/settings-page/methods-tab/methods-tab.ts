@@ -1,5 +1,8 @@
-import { loadMethodTypes } from '../../../redux-store/effects/settings-method-types.effect';
-import { getEndpoint } from '../../../app-config/app-config';
+import {
+    addMethodType,
+    loadMethodTypes, removeMethodType,
+    updateMethodType
+} from '../../../redux-store/effects/settings-method-types.effect';
 import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
 
 class MethodsTab extends EtoolsMixinFactory.combineMixins([
@@ -64,6 +67,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                 if (!methods) { return; }
                 this.methods = methods.filter(method => method.is_types_applicable);
             });
+
         this.typesSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'methodTypes'),
             (types: IStatedListData<MethodType> | undefined) => {
@@ -71,10 +75,27 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                 this.types = types.results || [];
                 this.count = types.count || 0;
             });
+
         this.permissionsSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'permissions.methodTypes'),
             (permissions: IPermissionActions | undefined) => {
                 this.permissions = permissions;
+            });
+
+        this.updateTypeSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'methodTypes.updateInProcess'),
+            (updateInProcess: boolean | null) => {
+                this.savingInProcess = updateInProcess;
+                if (updateInProcess !== false) { return; }
+
+                this.errors = this.getFromStore('methodTypes.errors');
+                if (this.errors) { return; }
+
+                if (this.dialog.type === 'add') {
+                    this.updateQueryParams({page: 1});
+                }
+                this.set('dialog.opened', false);
+                this.finishLoad();
             });
     }
 
@@ -98,44 +119,23 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public saveType() {
-        const id = this.editedItem.id;
-        let method;
-        let endpoint;
-
-        switch (this.dialog.type) {
-            case 'add':
-                method = 'POST';
-                endpoint = getEndpoint('methodTypes');
-                break;
-            case 'edit':
-                method = 'PATCH';
-                endpoint = getEndpoint('methodTypeDetails', {id});
-                break;
-            case 'remove':
-                method = 'DELETE';
-                endpoint = getEndpoint('methodTypeDetails', {id});
-                this.editedItem.delete = true;
-                break;
-        }
-
-        if (_.isEqual(this.originalData, this.editedItem)) {
+        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
+        if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
         }
 
-        this.savingInProcess = true;
-        this
-            .sendRequest({endpoint, method, body: this.editedItem})
-            .then(() => {
-                if (this.dialog.type === 'add') {
-                    this.updateQueryParams({page: 1});
-                }
-                this.set('dialog.opened', false);
-                this.finishLoad();
-            }, (error: any) => {
-                this.errors = error && error.response;
-            })
-            .finally(() => this.savingInProcess = false);
+        switch (this.dialog.type) {
+            case 'add':
+                this.dispatchOnStore(addMethodType(this.editedItem));
+                break;
+            case 'edit':
+                this.dispatchOnStore(updateMethodType(this.editedItem));
+                break;
+            case 'remove':
+                this.dispatchOnStore(removeMethodType(this.editedItem.id));
+                break;
+        }
     }
 
     public getMethodName(methodId: number): string {
