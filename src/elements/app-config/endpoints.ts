@@ -26,14 +26,20 @@ export const endpoints: Endpoints = {
     cpOutputs: {
         url: '/api/field-monitoring/settings/cp-outputs/'
     },
+
     cpOutputsConfigs: {
         url: '/api/field-monitoring/settings/cp-outputs/configs/'
     },
+
     cpOutputDetails: {
         template: '/api/field-monitoring/settings/cp-outputs/<%=id%>/'
     },
+
     siteLocations: {
         url: '/api/field-monitoring/settings/sites/'
+    },
+    siteLocationsDetails: {
+        template: '/api/field-monitoring/settings/sites/<%=id%>/'
     },
 
     // Old endpoints. TODO: remove latter if redundant

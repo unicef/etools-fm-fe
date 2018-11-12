@@ -37,8 +37,10 @@ class SettingsPage extends EtoolsMixinFactory.combineMixins([
 
     public connectedCallback() {
         super.connectedCallback();
-        const endpoint = this.getEndpoint('methodTypes');
-        this.dispatchOnStore(loadPermissions(endpoint.url, 'methodTypes'));
+        const methodTypesEndpoint = this.getEndpoint('methodTypes');
+        const siteLocationsEndpoint = this.getEndpoint('siteLocations');
+        this.dispatchOnStore(loadPermissions(methodTypesEndpoint.url, 'methodTypes'));
+        this.dispatchOnStore(loadPermissions(siteLocationsEndpoint.url, 'siteLocations'));
     }
 }
 

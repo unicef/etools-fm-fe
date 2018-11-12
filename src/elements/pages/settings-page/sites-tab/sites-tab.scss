@@ -48,6 +48,14 @@
             max-height: 38px;
         }
     }
+
+    #map {
+        position: relative;
+        width: #{'calc(100% - 12px)'};
+        height: 400px;
+        margin: 12px;
+        z-index: 0;
+    }
 }
 
 paper-card {
@@ -60,4 +68,10 @@ paper-card {
 
 etools-data-table-row {
     --list-row-wrapper-padding: 0 0 0 24px;
+}
+
+etools-data-table-header {
+    --data-table-header: #{'{
+                    padding: 0 0 0 24px;
+                }'};
 }

@@ -13,6 +13,7 @@ interface FMMixins {
     RouteHelperMixin: any;
     ErrorHandlerMixin: any;
     MapMixin: any;
+    TextareaMaxRowsMixin: any;
 }
 
 declare const EtoolsMixinFactory: any;
@@ -30,3 +31,9 @@ type EventModel<T> = {
 };
 
 type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';
+
+type MarkerDataObj = {
+    coords: [number, number];
+    staticData?: any;
+    popup?: string
+};

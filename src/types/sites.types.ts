@@ -28,6 +28,14 @@ type LocationGateway = {
 };
 
 type GeojsonPoint = {
-    coordinates: [number, number]
+    coordinates: CoordinatesArray
     type: 'Point';
+};
+
+type CoordinatesArray = [number, number];
+
+type SiteStatusOption = {
+    id?: number;
+    value: boolean;
+    display_name: string;
 };

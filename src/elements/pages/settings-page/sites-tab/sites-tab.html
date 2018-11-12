@@ -1,12 +1,12 @@
 <!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-data-table, etools-dialog,
-            etools-ajax/etools-ajax-request-mixin, paper-input]-->
+            etools-ajax/etools-ajax-request-mixin, paper-input, paper-input/paper-textarea]-->
 
 <!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
-            route-helper-mixin]-->
+            route-helper-mixin, map-mixin, textarea-max-rows-mixin]-->
 
 <dom-module id="sites-tab">
     <template>
-        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors iron-flex-alignment"></style>
+        <style include="map-styles shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors iron-flex-alignment"></style>
         <!-- inject styles './sites-tab.scss'-->
         <app-route route="{{route}}" pattern="/sites" active="{{isActive}}"></app-route>
 
@@ -88,6 +88,93 @@
                     on-page-number-changed="_pageNumberChanged">
             </etools-data-table-footer>
         </paper-card>
+
+        <etools-dialog
+                size="md"
+                id="dialog"
+                theme="[[dialog.theme]]"
+                no-padding
+                opened="{{dialog.opened}}"
+                dialog-title="[[dialog.title]]"
+                keep-dialog-open
+                on-confirm-btn-clicked="saveSite"
+                on-iron-overlay-closed="resetData"
+                on-iron-overlay-opened="mapInitialization"
+                ok-button-text="[[dialog.confirm]]">
+            <etools-loading
+                    active="[[savingInProcess]]"
+                    loading-text="Saving Data">
+            </etools-loading>
+            <template is="dom-if" if="[[isRemoveDialog(dialog.theme)]]">
+                <div class="remove-title">Are you sure that you want to delete this Site Specific Location?</div>
+            </template>
+            <template is="dom-if" if="[[!isRemoveDialog(dialog.theme)]]">
+                <div class="container">
+                    <div class="layout horizontal">
+                        <paper-input
+                                class="validate-input disabled-as-readonly flex-7"
+                                value="{{editedItem.name}}"
+                                maxlength="100"
+                                label="[[getDescriptorLabel(permissions, 'name')]]"
+                                placeholder="[[getPlaceholder(permissions, 'name', 'Enter')]]"
+                                required$="[[getRequiredStatus(permissions, 'name')]]"
+                                disabled$="[[getReadonlyStatus(permissions, 'name')]]"
+                                readonly$="[[getReadonlyStatus(permissions, 'name')]]"
+                                invalid="{{errors.name}}"
+                                error-message="{{errors.name}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"></paper-input>
+
+                        <etools-dropdown
+                                id="statusDropdown"
+                                class="validate-input disabled-as-readonly flex-2"
+                                selected="[[setStatusValue(editedItem.is_active)]]"
+                                label="[[getDescriptorLabel(permissions, 'is_active')]]"
+                                placeholder="[[getPlaceholder(permissions, 'is_active', 'Select')]]"
+                                options="[[statusOptions]]"
+                                option-label="display_name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'is_active')]]"
+                                disabled$="[[getReadonlyStatus(permissions, 'is_active')]]"
+                                readonly$="[[getReadonlyStatus(permissions, 'is_active')]]"
+                                invalid="{{errors.is_active}}"
+                                error-message="{{errors.is_active}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                allow-outside-scroll
+                                dynamic-align></etools-dropdown>
+                    </div>
+
+                    <template is="dom-if" if="[[isEditDialog(dialog.type)]]">
+                        <paper-input
+                                class="disabled-as-readonly"
+                                value="[[editedItem.parent.name]]"
+                                label="[[getDescriptorLabel(permissions, 'parent.name')]]"
+                                placeholder="Empty Field"
+                                disabled readonly></paper-input>
+                    </template>
+
+
+                    <div class="map" id="map"></div>
+
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly"
+                            value="{{editedItem.security_detail}}"
+                            max-rows="3"
+                            label="[[getDescriptorLabel(permissions, 'security_detail')]]"
+                            placeholder="[[getPlaceholder(permissions, 'security_detail', 'Enter')]]"
+                            required$="[[getRequiredStatus(permissions, 'security_detail')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'security_detail')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'security_detail')]]"
+                            invalid="{{errors.security_detail}}"
+                            error-message="{{errors.security_detail}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"></paper-textarea>
+                </div>
+
+            </template>
+
+        </etools-dialog>
 
     </template>
     <!-- inject scripts './sites-tab.ts'-->
