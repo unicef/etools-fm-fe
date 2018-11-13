@@ -17,9 +17,8 @@ export function loadCpOutputs(queryParams: QueryParams) {
     };
 }
 
-export function updateCpOutput(cpOutput: CpOutput) {
+export function updateCpOutput(id: number, cpOutput: CpOutput) {
     return function(dispatch: Dispatch) {
-        const id = cpOutput.id;
         const endpoint = getEndpoint('cpOutputDetails', {id});
         const options = {
             method: 'PATCH',

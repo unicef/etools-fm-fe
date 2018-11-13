@@ -16,9 +16,8 @@ export function loadMethodTypes(queryParams: QueryParams) {
     };
 }
 
-export function updateMethodType(type: MethodType) {
+export function updateMethodType(id: number, type: MethodType) {
     return function(dispatch: Dispatch) {
-        const id = type.id;
         const endpoint = getEndpoint('methodTypeDetails', {id});
         return startRequest(dispatch, endpoint.url, 'PATCH', type);
     };

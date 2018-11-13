@@ -6,6 +6,7 @@ import {
 import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
 
 class MethodsTab extends EtoolsMixinFactory.combineMixins([
+    FMMixins.ProcessDataMixin,
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
     FMMixins.RouteHelperMixin,
@@ -130,7 +131,8 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                 this.dispatchOnStore(addMethodType(this.editedItem));
                 break;
             case 'edit':
-                this.dispatchOnStore(updateMethodType(this.editedItem));
+                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
+                this.dispatchOnStore(updateMethodType(this.editedItem.id, changes));
                 break;
             case 'remove':
                 this.dispatchOnStore(removeMethodType(this.editedItem.id));

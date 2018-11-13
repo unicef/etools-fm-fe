@@ -14,6 +14,7 @@ interface FMMixins {
     ErrorHandlerMixin: any;
     MapMixin: any;
     TextareaMaxRowsMixin: any;
+    ProcessDataMixin: any;
 }
 
 declare const EtoolsMixinFactory: any;

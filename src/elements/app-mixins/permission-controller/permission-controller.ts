@@ -5,6 +5,10 @@ window.FMMixins.PermissionController = (superClass: any) => class extends superC
                 !this.collectionExists(collection, path, 'PUT');
     }
 
+    public getPropertyType(collection: IPermissionActions, path: string) {
+        return this.getDescriptorFromAll(collection, path, 'type');
+    }
+
     public getRequiredStatus(collection: IPermissionActions, path: string) {
         return this.getDescriptorFromAll(collection, path, 'required');
     }

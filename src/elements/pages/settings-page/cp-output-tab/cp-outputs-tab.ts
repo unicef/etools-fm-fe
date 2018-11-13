@@ -3,6 +3,7 @@ import { loadPermissions } from '../../../redux-store/effects/load-permissions.e
 import { getEndpoint } from '../../../app-config/app-config';
 
 class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
+    FMMixins.ProcessDataMixin,
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
     FMMixins.RouteHelperMixin], Polymer.Element) {
@@ -159,9 +160,8 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
             this.dialog = { opened: false };
             return;
         }
-        const partners = this.editModel.fm_config.government_partners;
-        this.editModel.fm_config.government_partners = partners.map((partner: GovernmentPartner) => partner.id);
-        this.dispatchOnStore(updateCpOutput(this.editModel));
+        const changes = this.changesToRequest(this.originalModel, this.editModel, this.permissionsDetails);
+        this.dispatchOnStore(updateCpOutput(this.editModel.id, changes));
     }
 }
 
