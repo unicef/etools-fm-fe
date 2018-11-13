@@ -82,12 +82,14 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                     // this.updateQueryParams({page: 1});
                 }
                 this.set('dialog.opened', false);
-                this.loadData();
+                this.startLoad();
             });
+    }
 
-        this.loadData();
-        // @ts-ignore
-        // window.test = this;
+    public initStarLoad() {
+        if (!this._sitesObjects.length) {
+            this.startLoad();
+        }
     }
 
     public disconnectedCallback() {
@@ -195,6 +197,15 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         return active ? 1 : 0;
     }
 
+    public finishLoad() {
+        this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
+            Polymer.Async.timeOut.after(100), () => {
+                this.dispatchOnStore(new RunGlobalLoading({type: 'specificLocations', message: 'Loading Data...'}));
+                this.dispatchOnStore(loadSiteLocations())
+                    .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
+            });
+    }
+
     private regroupSitesByParent(sites: Site[]): IGroupedSites[] {
         return _(sites)
             .groupBy((site: Site) => site.parent.id)
@@ -213,15 +224,6 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             return {coords, staticData: site, popup: site.name};
         });
         this.setStaticMarkers(sitesCoords);
-    }
-
-    private loadData() {
-        this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
-            Polymer.Async.timeOut.after(100), () => {
-                this.dispatchOnStore(new RunGlobalLoading({type: 'specificLocations', message: 'Loading Data...'}));
-                this.dispatchOnStore(loadSiteLocations())
-                    .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
-            });
     }
 }
 

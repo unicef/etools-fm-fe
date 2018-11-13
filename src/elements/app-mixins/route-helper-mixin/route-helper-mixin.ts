@@ -31,7 +31,7 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
         const queryParams = this.queryParams || this.decodeParams(queryString);
         this.queryParams = {}; // initialization query params
         this.updateQueryParams(Object.assign({}, initQueryParams, queryParams));
-        this.finishLoad();
+        this.initStarLoad();
     }
 
     /**
@@ -136,9 +136,23 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
     public getInitQueryParams(): QueryParams { return {}; }
 
     /**
+     * Call startLoad when route active first time
+     */
+    public initStarLoad() {
+        this.startLoad();
+    }
+
+    /**
      * Call after active configured route
      */
-    public finishLoad(): void { }
+    public startLoad(): void {
+        if (!this.queryParams) { return; }
+        this.finishLoad();
+    }
+
+    public finishLoad(): void {
+        throw Error('Method not implemented');
+    }
 
     private _updateQueryParams(queryParams: QueryParams) {
         this.queryParams = queryParams;

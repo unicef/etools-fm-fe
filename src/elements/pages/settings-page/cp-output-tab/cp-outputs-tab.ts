@@ -22,6 +22,8 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public finishLoad() {
+        // only when route is initialized
+        if (!this.queryParams) { return; }
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
                 this.dispatchOnStore(loadCpOutputs(this.queryParams));
@@ -35,7 +37,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         } else {
             this.removeQueryParams('expired');
         }
-        this.finishLoad();
+        this.startLoad();
     }
 
     public _changeIsMonitored({ detail }: CustomEvent) {
@@ -45,25 +47,25 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         } else {
             this.removeQueryParams('is_monitored');
         }
-        this.finishLoad();
+        this.startLoad();
     }
 
     public _changeOutcomeFilter({ detail }: CustomEvent) {
         const selectedItem = detail.selectedItem;
         if (selectedItem) {
             this.updateQueryParams({cp_outcome: selectedItem.id});
-            this.finishLoad();
+            this.startLoad();
         }
     }
 
     public _pageNumberChanged({detail}: CustomEvent) {
         this.updateQueryParams({page: detail.value});
-        this.finishLoad();
+        this.startLoad();
     }
 
     public _pageSizeSelected({detail}: CustomEvent) {
         this.updateQueryParams({page_size: detail.value});
-        this.finishLoad();
+        this.startLoad();
     }
 
     public connectedCallback() {
@@ -111,7 +113,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
                 this.updateQueryParams({page: 1});
                 this.dialog = {opened: false};
-                this.finishLoad();
+                this.startLoad();
             });
     }
 

@@ -56,7 +56,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         const selectedItem = event.detail.selectedItem;
         if (selectedItem) {
             this.updateQueryParams({method: selectedItem.id});
-            this.finishLoad();
+            this.startLoad();
         }
     }
 
@@ -96,7 +96,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                     this.updateQueryParams({page: 1});
                 }
                 this.set('dialog.opened', false);
-                this.finishLoad();
+                this.startLoad();
             });
     }
 
