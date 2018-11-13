@@ -29,6 +29,7 @@ type HTMLElementEvent<T extends HTMLElement> = Event & {
 };
 type EventModel<T> = {
     model: { item: T };
+    target?: any;
 };
 
 type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';

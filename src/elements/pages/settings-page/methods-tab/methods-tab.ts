@@ -52,12 +52,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             });
     }
 
-    public _changeFilterValue(event: CustomEvent) {
-        const selectedItem = event.detail.selectedItem;
+    public _changeFilterValue({ detail }: CustomEvent) {
+        const selectedItem = detail.selectedItem;
         if (selectedItem) {
-            this.updateQueryParams({method: selectedItem.id});
-            this.startLoad();
+            this.updateQueryParams({method: selectedItem.id, page: 1});
+        } else {
+            this.removeQueryParams('method');
         }
+        this.startLoad();
     }
 
     public connectedCallback() {
@@ -107,15 +109,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         this.this.permissionsSubscriber();
     }
 
-    public openDialog(event: MouseEvent): void {
-        const icon = event.target;
-        const dialogType = _.get(icon, 'dataset.type');
+    public openDialog({ model, target }: EventModel<MethodType>): void {
+        const dialogType = _.get(target, 'dataset.type');
         if (!dialogType) { return; }
 
-        const model = _.get(event, 'model.item', {});
+        const { item } = model;
         const texts = this.dialogTexts[dialogType];
-        this.editedItem = {...model};
-        this.originalData = {...model};
+        this.editedItem = {...item};
+        this.originalData = {...item};
         this.dialog = {opened: true, ...texts};
     }
 
@@ -159,6 +160,16 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
     public isRemoveDialog(theme: string): boolean {
         return theme === 'confirmation';
+    }
+
+    public _pageNumberChanged({detail}: CustomEvent) {
+        this.updateQueryParams({page: detail.value});
+        this.startLoad();
+    }
+
+    public _pageSizeSelected({detail}: CustomEvent) {
+        this.updateQueryParams({page_size: detail.value});
+        this.startLoad();
     }
 }
 
