@@ -1,12 +1,18 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const argv = require('yargs').argv;
+const path = require('path');
+
+const COUNTER_PROPERTY_NAME = 'filesChangedCount';
+process.env.BUILD_CACHE_PATH = path.normalize(`${process.cwd()}/gulp-tasks/`);
+process.env.WP_CONFIG_PATH = path.normalize(`${process.cwd()}/gulp-tasks/wp-config.js`);
+process.env.NOT_CHAIN_REBUILD = false;
+process.env.COUNTER_PROPERTY_NAME = COUNTER_PROPERTY_NAME;
 if (argv.develop) {
     // process.env.ENV = 'development';
 }
 
 const clean = require('./gulp-tasks/clean');
-const path = require('path');
 const preBuild = require('./gulp-tasks/pre-build');
 const postBuild = require('./gulp-tasks/post-build');
 const buildElements = require('./gulp-tasks/build-elements');
@@ -20,32 +26,25 @@ global.config = {
     polymerJsonPath: path.join(process.cwd(), 'polymer.json'),
     buildDirectory: 'build'
 };
+global[COUNTER_PROPERTY_NAME] = 99;
 
 const build = require('./gulp-tasks/build');
 
-const spawn = require('child_process').spawn;
-
 gulp.task('buildElements', gulp.series(buildElements));
 
-gulp.task('new', (done) => {
-    const proc = spawn('node', ['./node_modules/.bin/gulp', `buildElements`]);
-    proc.stdout.on('data', (data) => {
-        console.log(`${data}`);
-    });
-    proc.stderr.on('data', (data) => {
-        console.log(`\x1b[31m${data}\x1b[0m`);
-    });
-
-    proc.on('close', () => {
-        done();
-    });
-});
-
 gulp.task('watch', function() {
-    gulp.watch(['./src/elements/**/*.*'], gulp.series(jsLinter, 'new'));
+    const watcher = gulp.watch(['./src/elements/**/*.*'], gulp.series(buildElements));
     gulp.watch(['./src/manifest.json', './index.html'], gulp.series(copyAssets));
     gulp.watch(['./src/images/**/*.*'], gulp.series(copyImages));
     gulp.watch(['./src/bower_components/**/*.*'], gulp.series(copyBower()));
+
+    watcher.on('all', (eventName, path) => {
+        const isAddOrChange = eventName === 'add' || eventName === 'change';
+        const isTmpFile = !!~path.indexOf('jb_tmp');
+        const isScriptFile = !!~path.indexOf('.js') || !!~path.indexOf('.ts');
+        if (!isAddOrChange || isTmpFile || !isScriptFile) {return;}
+        global[COUNTER_PROPERTY_NAME]++;
+    });
 });
 
 gulp.task('lint', gulp.series(jsLinter));
@@ -53,7 +52,7 @@ gulp.task('test', gulp.series(clean, gulp.parallel(buildElements, copyAssets, co
 
 gulp.task('startServer', () => {nodemon({script: 'express.js'});});
 
-gulp.task('devBuild', gulp.series(clean, jsLinter, gulp.parallel(buildElements, copyAssets, copyImages, copyBower())));
+gulp.task('devBuild', gulp.series(clean, gulp.parallel(buildElements, copyAssets, copyImages, copyBower())));
 gulp.task('prodBuild', gulp.series(clean, preBuild, build, postBuild));
 
 gulp.task('devup', gulp.series('devBuild', gulp.parallel('startServer', 'watch')));

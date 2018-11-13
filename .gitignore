@@ -11,3 +11,4 @@ dist/
 
 /package-lock.json
 /src/bower_components/
+/gulp-tasks/buildCache.json
