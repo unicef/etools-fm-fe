@@ -58,6 +58,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             this.updateQueryParams({method: selectedItem.id, page: 1});
         } else {
             this.removeQueryParams('method');
+            this.updateQueryParams({page: 1});
         }
         this.startLoad();
     }
