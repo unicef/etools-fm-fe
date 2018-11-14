@@ -38,10 +38,14 @@ export const endpoints: Endpoints = {
     siteLocations: {
         url: '/api/field-monitoring/settings/sites/'
     },
+
     siteLocationsDetails: {
         template: '/api/field-monitoring/settings/sites/<%=id%>/'
     },
 
+    currentWorkspace: {
+        url: '/api/field-monitoring/settings/locations/country/'
+    },
     // Old endpoints. TODO: remove latter if redundant
     changeCountry: {
         url: '/users/api/changecountry/'

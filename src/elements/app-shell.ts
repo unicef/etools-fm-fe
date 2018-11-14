@@ -30,7 +30,14 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 notify: true
             },
-            queryParams: Object
+            queryParams: Object,
+            initialData: {
+                type: Array,
+                value: () => [
+                    'methods', 'locations', 'cpOutcomes',
+                    'governmentPartners', 'currentWorkspace'
+                ]
+            }
         };
     }
 
@@ -63,7 +70,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         this.dispatchOnStore(new RunGlobalLoading({type: 'initialization', message: 'Loading'}));
-        this.dispatchOnStore(new InitializeApplication(['methods', 'locations', 'cpOutcomes', 'governmentPartners']));
+        this.dispatchOnStore(new InitializeApplication(this.initialData));
     }
 
     public toggleDrawer() {

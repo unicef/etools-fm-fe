@@ -2,7 +2,7 @@
             etools-ajax/etools-ajax-request-mixin, paper-input, paper-input/paper-textarea]-->
 
 <!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
-            route-helper-mixin, map-mixin, textarea-max-rows-mixin]-->
+            route-helper-mixin, map-mixin, textarea-max-rows-mixin, process-data-mixin]-->
 
 <dom-module id="sites-tab">
     <template>
@@ -13,7 +13,7 @@
         <paper-card class="table-container">
 
             <div class="table-title-block with-bottom-line">
-                <div class="table-title">Site Specific Locations</div>
+                <div class="table-title">[[permissions.title]]</div>
                 <div class="buttons-container">
                     <paper-icon-button
                             on-tap="openDialog"
@@ -26,16 +26,16 @@
             <etools-data-table-header id="listHeader"
                                       no-collapse no-title>
                 <etools-data-table-column class="w30">
-                    Parent Administrative Location
+                    [[getDescriptorLabel(permissions, 'parent.gateway.admin_level')]]
                 </etools-data-table-column>
                 <etools-data-table-column class="w90px layout center-center">
-                    Active
+                    [[getDescriptorLabel(permissions, 'is_active')]]
                 </etools-data-table-column>
                 <etools-data-table-column class="w150px">
-                    Name of Site
+                    [[getDescriptorLabel(permissions, 'name')]]
                 </etools-data-table-column>
                 <etools-data-table-column class="flex-auto">
-                    Detail on Security
+                    [[getDescriptorLabel(permissions, 'security_detail')]]
                 </etools-data-table-column>
             </etools-data-table-header>
 
@@ -55,7 +55,7 @@
                                         <div class$="active-marker [[getActiveClass(site.is_active)]]"></div>
                                     </div>
                                     <div class="col-data w150px flex-none">[[site.name]]</div>
-                                    <div class="col-data flex-auto security-detail">[[site.security_detail]]</div>
+                                    <div class="col-data flex-auto security-detail"><span>[[site.security_detail]]</span></div>
 
                                     <div class="hover-block">
                                         <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
@@ -72,12 +72,14 @@
             </template>
 
             <template is="dom-if" if="[[!sites.length]]">
-                <!--<etools-data-table-row no-collapse>-->
-                    <!--<div slot="row-data" class="layout horizontal">-->
-                        <!--<div  class="col-data flex-1 truncate">-</div>-->
-                        <!--<div class="col-data flex-4 truncate">-</div>-->
-                    <!--</div>-->
-                <!--</etools-data-table-row>-->
+                <etools-data-table-row no-collapse>
+                    <div slot="row-data" class="layout horizontal">
+                        <div  class="col-data w30">-</div>
+                        <div class="col-data w90px layout center-center">-</div>
+                        <div class="col-data w150px">-</div>
+                        <div class="col-data flex-auto">-</div>
+                    </div>
+                </etools-data-table-row>
             </template>
 
             <etools-data-table-footer

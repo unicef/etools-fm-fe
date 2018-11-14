@@ -22,9 +22,3 @@ paper-card {
     --paper-card_-_background-color: white;
     --paper-card_-_margin: 0 24px;
 }
-
-etools-dialog {
-    --etools-dialog-confirmation-content: #{'{
-                    min-height: 0;
-                }'};
-}

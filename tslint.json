@@ -55,7 +55,7 @@
       "timeEnd",
       "trace"
     ],
-    "no-debugger": true,
+    "no-debugger": false,
     "no-arg": true,
     "no-invalid-this": true,
     "no-shadowed-variable": true,

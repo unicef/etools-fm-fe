@@ -18,7 +18,7 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
             const marker = L.marker(data.coords).addTo(this.map);
             marker.staticData = data.staticData;
             if (data.popup) {
-                marker.bindPopup(data.popup);
+                marker.bindPopup(`<b>${data.popup}</b>`);
             }
             markers.push(marker);
         });

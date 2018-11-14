@@ -39,3 +39,12 @@ type SiteStatusOption = {
     value: boolean;
     display_name: string;
 };
+
+type Workspace = {
+    id: string;
+    gateway: LocationGateway;
+    geom: null;
+    point: GeojsonPoint;
+    p_code: string;
+    name: string;
+};

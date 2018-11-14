@@ -5,14 +5,16 @@ import {
     removeSiteLocation,
     updateSiteLocation
 } from '../../../redux-store/effects/site-specific-locations.effects';
-import { LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent, Marker } from 'leaflet';
+import { AddNotification } from '../../../redux-store/actions/notification.actions';
 
 class SitesTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
     FMMixins.RouteHelperMixin,
     FMMixins.MapMixin,
-    FMMixins.TextareaMaxRowsMixin], Polymer.Element) {
+    FMMixins.TextareaMaxRowsMixin,
+    FMMixins.ProcessDataMixin], Polymer.Element) {
 
     public static get is() { return 'sites-tab'; }
 
@@ -39,15 +41,19 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                     remove: {type: 'remove', theme: 'confirmation'}
                 }
             },
-            defaultMapCenter: {
-                type: Array,
-                value: () => [-0.09, 51.505]
-            }
+            defaultMapCenter: Array
         };
     }
 
     public connectedCallback() {
         super.connectedCallback();
+        this.currentWorkspaceSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'staticData.currentWorkspace'),
+            (workspace: Workspace | undefined) => {
+                if (!workspace) { return; }
+                this.defaultMapCenter = _.get(workspace, 'point.coordinates', [-0.09, 51.505]);
+            });
+
         this.sitesSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'specificLocations'),
             (sites: IStatedListData<Site> | undefined) => {
@@ -77,10 +83,13 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                 if (updateInProcess !== false) { return; }
 
                 this.errors = this.getFromStore('specificLocations.errors');
+                if (_.get(this.errors, 'point')) {
+                    this.dispatchOnStore(new AddNotification('Please, select correct location on map'));
+                }
                 if (this.errors) { return; }
 
                 if (this.dialog.type === 'add') {
-                    // this.updateQueryParams({page: 1});
+                    this.updateQueryParams({page: 1});
                 }
                 this.set('dialog.opened', false);
                 this.startLoad();
@@ -101,6 +110,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         super.disconnectedCallback();
         this.sitesSubscriber();
         this.permissionsSubscriber();
+        this.updateSiteLocationSubscriber();
+        this.currentWorkspaceSubscriber();
     }
 
     public getActiveClass(isActive: boolean): string {
@@ -124,6 +135,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public mapInitialization() {
+        if (this.dialog.type === 'remove') { return; }
         if (!this.map) {
             const mapContainer = this.shadowRoot.querySelector('#map');
             this.initMap(mapContainer);
@@ -154,24 +166,32 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
 
         if (this.dynamicMarker && this.dynamicMarker.staticData) {
             const coords = _.clone(this.dynamicMarker.staticData.point.coordinates).reverse();
-            this.dynamicMarker.setLatLng(coords);
+            this.dynamicMarker.setLatLng(coords).closePopup();
         } else if (this.dynamicMarker) {
             this.removeDynamicMarker();
         }
+        _.each(this.staticMarkers, (marker: Marker) => marker.closePopup());
         this.dynamicMarker = null;
     }
 
     public saveSite() {
+        if (this.dialog.type === 'remove') {
+            this.dispatchOnStore(removeSiteLocation(this.editedItem.id));
+            return;
+        }
+
         const isActive = this.shadowRoot.querySelector('#statusDropdown').selected;
         this.editedItem.is_active = !!isActive;
 
         const {lat, lng} = _.result(this, 'dynamicMarker.getLatLng', {});
-        this.editedItem.point = {
-            type: 'Point',
-            coordinates: [lng, lat]
-        };
+        if (lat && lng) {
+            this.editedItem.point = {
+                type: 'Point',
+                coordinates: [lng, lat]
+            };
+        }
 
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem);
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -182,10 +202,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                 this.dispatchOnStore(addSiteLocation(this.editedItem));
                 break;
             case 'edit':
-                this.dispatchOnStore(updateSiteLocation(this.editedItem));
-                break;
-            case 'remove':
-                this.dispatchOnStore(removeSiteLocation(this.editedItem.id));
+                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
+                this.dispatchOnStore(updateSiteLocation(this.editedItem.id, changes));
                 break;
         }
     }

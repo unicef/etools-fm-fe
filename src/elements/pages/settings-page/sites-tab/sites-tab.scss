@@ -44,8 +44,13 @@
 
         .security-detail {
             overflow: hidden;
-            align-items: flex-start;
             max-height: 38px;
+            align-items: center;
+
+            span {
+                display: block;
+                max-height: 38px;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 window.FMMixins = window.FMMixins || {};
-window.FMMixins.ProcessDataMixin = (superClass: any) => class extends superClass {
+window.FMMixins.ProcessDataMixin = (superClass: any) => class extends FMMixins.PermissionController(superClass) {
 
     public changes(originalData: any, modifiedData: any, permissions: IBackendPermissions, toRequest: boolean = false,
                    pathProperty: string = '') {
@@ -7,9 +7,10 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends superClass
             const subPath = pathProperty.length === 0 ? key : `${pathProperty}.${key}`;
             const originalValue = originalData[key];
             let modifiedValue = modifiedData[key];
-            const propertyType = this.getPropertyType(permissions, subPath);
+            const propertyType = this.getDescriptorType(permissions, subPath);
             if (propertyType === 'nested object') {
                 modifiedValue = this.changes(originalData[key], modifiedData[key], permissions, toRequest, subPath);
+                if (_.isEmpty(modifiedValue) &&  !_.isEmpty(originalValue)) { return changes; }
             }
             let modifiedToCompare = modifiedValue;
             let originalToCompare = originalValue;
@@ -31,7 +32,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends superClass
         return Object.keys(originalData).reduce((dataToRequest: any, key) => {
             const subPath = pathData.length === 0 ? key : `${pathData}.${key}`;
             let value = originalData[key];
-            const propertyType = this.getPropertyType(permissions, subPath);
+            const propertyType = this.getDescriptorType(permissions, subPath);
             if (propertyType === 'nested object') {
                 value = this.dataToRequest(value, permissions, subPath);
             }
@@ -44,7 +45,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends superClass
 
     private _simplifyValue(value: any) {
         if (Array.isArray(value)) { return value.map(obj => obj.hasOwnProperty('id') && obj.id); }
-        if (value.hasOwnProperty('id')) { return value.id; }
+        if (value && value.hasOwnProperty('id')) { return value.id; }
         return value;
     }
 };
