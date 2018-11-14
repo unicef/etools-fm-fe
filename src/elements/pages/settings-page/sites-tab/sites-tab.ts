@@ -230,8 +230,10 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public filterSites(sitesObject: Site[]): Site[] {
+        if (!this.queryParams) { return sitesObject; }
         const page = this.queryParams.page;
         const pageSize = this.queryParams.page_size;
+        if (!page || !pageSize) { return sitesObject; }
         const startIndex = page * pageSize - pageSize;
         const endIndex = page * pageSize;
         return sitesObject.slice(startIndex, endIndex);
