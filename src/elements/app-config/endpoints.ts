@@ -61,7 +61,7 @@ export const endpoints: Endpoints = {
     governmentPartners: {
         url: '/api/v2/partners/?partner_type=Government',
         exp: 2 * 60 * 60 * 1000, // 2h
-        cacheTableName: 'partners'
+        cacheTableName: 'governmentPartners'
     },
     interventionDetails: {
         template: '/api/v2/interventions/<%=id%>/'

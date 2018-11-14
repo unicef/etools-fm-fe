@@ -10,21 +10,24 @@
             <div class="layout horizontal">
                 <etools-dropdown
                         class="filter-dropdown"
+                        selected="[[queryParams.parent]]"
                         label="CP Outcome"
                         placeholder$="Select"
                         options="[[cpOutcomes]]"
                         option-label="name"
                         option-value="id"
                         trigger-value-change-event
+                        enable-none-option
+                        none-option-label=""
                         on-etools-selected-item-changed="_changeOutcomeFilter"
                         hide-search allow-outside-scroll>
                 </etools-dropdown>
                 <div class="toggle-button-control">
-                    <paper-toggle-button checked="[[queryParams.is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
+                    <paper-toggle-button checked="[[queryParams.fm_config__is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
                     <span>Show only 'Monitored At Community Level'</span>
                 </div>
                 <div class="toggle-button-control">
-                    <paper-toggle-button checked="[[queryParams.expired]]" on-checked-changed="_changeExpired"></paper-toggle-button>
+                    <paper-toggle-button checked="[[!queryParams.is_active]]" on-checked-changed="_changeExpired"></paper-toggle-button>
                     <span>Show expired</span>
                 </div>
             </div>

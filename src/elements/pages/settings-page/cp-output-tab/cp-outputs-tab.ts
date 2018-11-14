@@ -32,10 +32,10 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
     public _changeExpired({ detail }: CustomEvent) {
         const checked = detail.value;
-        if (checked) {
-            this.updateQueryParams({expired: checked});
+        if (!checked) {
+            this.updateQueryParams({is_active: !checked});
         } else {
-            this.removeQueryParams('expired');
+            this.removeQueryParams('is_active');
         }
         this.startLoad();
     }
@@ -43,9 +43,9 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _changeIsMonitored({ detail }: CustomEvent) {
         const checked = detail.value;
         if (checked) {
-            this.updateQueryParams({is_monitored: checked});
+            this.updateQueryParams({fm_config__is_monitored: checked});
         } else {
-            this.removeQueryParams('is_monitored');
+            this.removeQueryParams('fm_config__is_monitored');
         }
         this.startLoad();
     }
@@ -53,9 +53,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _changeOutcomeFilter({ detail }: CustomEvent) {
         const selectedItem = detail.selectedItem;
         if (selectedItem) {
-            this.updateQueryParams({cp_outcome: selectedItem.id});
-            this.startLoad();
+            this.updateQueryParams({parent: selectedItem.id});
+        } else {
+            this.removeQueryParams('parent');
+            this.updateQueryParams({page: 1});
         }
+        this.startLoad();
     }
 
     public _pageNumberChanged({detail}: CustomEvent) {
@@ -87,7 +90,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
             (partners: GovernmentPartner[]) => { this.governmentPartners = partners || []; });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.cpOutcome'),
+            (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
         this.permissionListSubscriber = this.subscribeOnStore(
