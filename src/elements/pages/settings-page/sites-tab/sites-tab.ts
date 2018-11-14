@@ -229,7 +229,9 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public refreshData() {
-        const sitesObject = this.filterSites(this._sitesObjects);
+        let sitesObject = this.filterSites(this._sitesObjects);
+        this.count = sitesObject.length;
+        sitesObject = this._filterPagination(sitesObject);
         this.sites = this.regroupSitesByParent(sitesObject);
     }
 
@@ -265,9 +267,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public filterSites(sitesObject: Site[]): Site[] {
-        let sites = this._filterShowInactive(sitesObject);
-        sites = this._filterSearch(sites);
-        return this._filterPagination(sites);
+        const sites = this._filterShowInactive(sitesObject);
+        return this._filterSearch(sites);
     }
 
     public _pageNumberChanged({detail}: CustomEvent) {
