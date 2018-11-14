@@ -65,6 +65,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
     public connectedCallback() {
         super.connectedCallback();
+        this.addEventListener('sort-changed', this.sort);
         this.methodsSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'staticData.methods'),
             (methods: Method[] | undefined) => {
@@ -104,10 +105,17 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public disconnectedCallback() {
+        this.removeEventListener('sort-changed', this.sort);
         super.disconnectedCallback();
         this.methodsSubscriber();
         this.typesSubscriber();
         this.this.permissionsSubscriber();
+    }
+
+    public sort({ detail }: CustomEvent) {
+        const { field, direction } = detail;
+        this.updateQueryParams({ordering: `${direction === 'desc' ? '-' : ''}${field}`});
+        this.startLoad();
     }
 
     public openDialog({ model, target }: EventModel<MethodType>): void {
