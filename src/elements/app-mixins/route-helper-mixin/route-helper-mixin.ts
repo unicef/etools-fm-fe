@@ -1,3 +1,5 @@
+import NumberComparer = Chai.NumberComparer;
+
 window.FMMixins = window.FMMixins || {};
 /*
  * Mixin for support query params in router.
@@ -46,8 +48,10 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
         for (let i = 0; i < paramList.length; i++) {
             const param = paramList[i].split('=');
             if (param[0]) {
-                params[decodeURIComponent(param[0])] =
-                    decodeURIComponent(param[1] || '');
+                const valueString = decodeURIComponent(param[1] || '');
+                let value: number | string = Number.parseInt(valueString);
+                value = !Number.isNaN(value) ? value : valueString;
+                params[decodeURIComponent(param[0])] = value;
             }
         }
         return params;
