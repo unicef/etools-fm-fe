@@ -150,6 +150,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputDetails'));
     }
 
+    public _selectedEditItemPartners({ detail }: CustomEvent) {
+        if (!this.editModel || !this.editModel.fm_config) { return; }
+        const { selectedItems } = detail;
+        this.editModel.fm_config.government_partners = selectedItems;
+    }
+
     public _openPartners({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.fm_config && item.fm_config.government_partners;
