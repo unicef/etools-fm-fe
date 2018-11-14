@@ -16,19 +16,6 @@
 
 }
 
-.toggle-button {
-    @apply --layout-horizontal;
-    @apply --layout-center;
-    margin: 0 16px;
-    align-self: center;
-    padding: 18px 0 18px 10px;
-}
-
-.toggle-button span {
-    padding: 0 12px;
-    font-size: 16px;
-}
-
 .expired {
     width: 16px;
     height: 16px;

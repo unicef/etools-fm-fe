@@ -10,6 +10,25 @@
         <!-- inject styles './sites-tab.scss'-->
         <app-route route="{{route}}" pattern="/sites" active="{{isActive}}"></app-route>
 
+        <paper-card>
+            <div class="layout horizontal">
+                <paper-input
+                        class="search-input"
+                        type="search"
+                        value="[[queryParams.search]]"
+                        placeholder="Search location or site"
+                        on-value-changed="_searchKeyDown"
+                        inline>
+                    <iron-icon icon="search" slot="prefix"></iron-icon>
+                </paper-input>
+
+                <div class="toggle-button-control">
+                    <paper-toggle-button checked="[[queryParams.show_inactive]]" on-checked-changed="_changeShowInactive"></paper-toggle-button>
+                    <span>Show inactive sites</span>
+                </div>
+            </div>
+        </paper-card>
+
         <paper-card class="table-container">
 
             <div class="table-title-block with-bottom-line">

@@ -19,11 +19,11 @@
                         on-etools-selected-item-changed="_changeOutcomeFilter"
                         hide-search allow-outside-scroll>
                 </etools-dropdown>
-                <div class="toggle-button">
+                <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
                     <span>Show only 'Monitored At Community Level'</span>
                 </div>
-                <div class="toggle-button">
+                <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.expired]]" on-checked-changed="_changeExpired"></paper-toggle-button>
                     <span>Show expired</span>
                 </div>
