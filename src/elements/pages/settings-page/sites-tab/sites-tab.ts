@@ -53,7 +53,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             (sites: IStatedListData<Site> | undefined) => {
                 if (!sites) { return; }
                 this._sitesObjects = sites.results || [];
-                this.sites = this.regroupSitesByParent(this._sitesObjects);
+                const sitesObject = this.filterSites(this._sitesObjects);
+                this.sites = this.regroupSitesByParent(sitesObject);
                 this.count = sites.count || 0;
                 this.renderMarkers();
             });
@@ -84,6 +85,10 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                 this.set('dialog.opened', false);
                 this.startLoad();
             });
+    }
+
+    public getInitQueryParams(): QueryParams {
+        return {page: 1, page_size: 10};
     }
 
     public initStarLoad() {
@@ -204,6 +209,26 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                 this.dispatchOnStore(loadSiteLocations())
                     .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
             });
+    }
+
+    public filterSites(sitesObject: Site[]): Site[] {
+        const page = this.queryParams.page;
+        const pageSize = this.queryParams.page_size;
+        const startIndex = page * pageSize - pageSize;
+        const endIndex = page * pageSize;
+        return sitesObject.slice(startIndex, endIndex);
+    }
+
+    public _pageNumberChanged({detail}: CustomEvent) {
+        this.updateQueryParams({page: detail.value});
+        const sitesObject = this.filterSites(this._sitesObjects);
+        this.sites = this.regroupSitesByParent(sitesObject);
+    }
+
+    public _pageSizeSelected({detail}: CustomEvent) {
+        this.updateQueryParams({page_size: detail.value});
+        const sitesObject = this.filterSites(this._sitesObjects);
+        this.sites = this.regroupSitesByParent(sitesObject);
     }
 
     private regroupSitesByParent(sites: Site[]): IGroupedSites[] {
