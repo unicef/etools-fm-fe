@@ -58,6 +58,6 @@ function startRequest(dispatch: Dispatch, url: string, method: RequestMethod, da
     const options = {method,  body: JSON.stringify(data)};
     return request(url, options)
         .then(() => dispatch(new SetSiteLocationsUpdatingError({errors: null})))
-        .catch((errors) => dispatch(new SetSiteLocationsUpdatingError({errors})))
+        .catch((error) => dispatch(new SetSiteLocationsUpdatingError({errors: error.data})))
         .then(() => dispatch(new StopSiteLocationsUpdating()));
 }

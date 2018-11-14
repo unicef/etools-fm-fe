@@ -33,7 +33,7 @@ export function updateCpOutput(id: number, cpOutput: CpOutput) {
         dispatch(new StartRequestCpOutput());
         return request(endpoint.url, options)
             .then(() => dispatch(new SetRequestErrorCpOutput({errors: null})))
-            .catch((errors) => dispatch(new SetRequestErrorCpOutput({errors})))
+            .catch((error) => dispatch(new SetRequestErrorCpOutput({errors: error.data})))
             .then(() => dispatch(new FinishRequestCpOutput()));
     };
 }

@@ -9,7 +9,11 @@ export function request(input: RequestInfo, init?: RequestInit) {
             } else {
                 return response
                     .text()
-                    .then((error) => Promise.reject(JSON.parse(error)));
+                    .then((error) => {
+                        const data = JSON.parse(error);
+                        const {status, statusText} = response;
+                        return Promise.reject({data, status, statusText});
+                    });
             }
         });
 }

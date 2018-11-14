@@ -48,6 +48,6 @@ function startRequest(dispatch: Dispatch, url: string, method: RequestMethod, da
     const options = {method,  body: JSON.stringify(data)};
     return request(url, options)
         .then(() => dispatch(new SetMethodTypeUpdatingError({errors: null})))
-        .catch((errors) => dispatch(new SetMethodTypeUpdatingError({errors})))
+        .catch((error) => dispatch(new SetMethodTypeUpdatingError({errors: error.data})))
         .then(() => dispatch(new StopMethodTypeUpdating()));
 }
