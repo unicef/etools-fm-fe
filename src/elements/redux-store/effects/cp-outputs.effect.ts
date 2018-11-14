@@ -6,13 +6,18 @@ import {
 } from '../actions/cp-outputs.actions';
 import { Dispatch } from 'redux';
 import { getEndpoint, objectToQuery } from '../../app-config/app-config';
+import { request } from '../request';
+import { AddNotification } from '../actions/notification.actions';
 
 export function loadCpOutputs(queryParams: QueryParams) {
     return function(dispatch: Dispatch) {
         const endpoint = getEndpoint('cpOutputs') as StaticEndpoint;
         const url = endpoint.url + objectToQuery(queryParams);
-        return fetch(url, {method: 'GET'})
-            .then(resp => resp.json())
+        return request(url, {method: 'GET'})
+            .catch(() => {
+                dispatch(new AddNotification('Can not Load CP Outputs'));
+                return {results: []};
+            })
             .then(response => dispatch(new SetCpOutputs(response)));
     };
 }
@@ -26,9 +31,9 @@ export function updateCpOutput(id: number, cpOutput: CpOutput) {
             headers: {'Content-Type': 'application/json'}
         };
         dispatch(new StartRequestCpOutput());
-        return fetch(endpoint.url, options)
+        return request(endpoint.url, options)
             .then(() => dispatch(new SetRequestErrorCpOutput({errors: null})))
-            .catch((error) => dispatch(new SetRequestErrorCpOutput({errors: error.json()})))
+            .catch((errors) => dispatch(new SetRequestErrorCpOutput({errors})))
             .then(() => dispatch(new FinishRequestCpOutput()));
     };
 }
