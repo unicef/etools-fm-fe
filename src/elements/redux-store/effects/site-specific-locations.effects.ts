@@ -17,7 +17,16 @@ export function loadSiteLocations() {
                 dispatch(new AddNotification('Can not Load locations'));
                 return {results: []};
             })
-            .then(response => dispatch(new SetSpecificLocatinos({...response, current: endpoint.url})));
+            .then((response = []) => {
+                const respObject = {
+                    count: response.length,
+                    next: null,
+                    previous: null,
+                    results: response,
+                    current: endpoint.url
+                };
+                dispatch(new SetSpecificLocatinos(respObject));
+            });
     };
 }
 

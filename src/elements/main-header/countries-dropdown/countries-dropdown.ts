@@ -88,6 +88,9 @@ class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRe
         this.refreshInProgress = true;
         // @ts-ignore
         this.clearDexieDbs();
+        // @ts-ignore
+        // TODO: fix clearDexieDbs logic
+        this._triggerPageRefresh();
     }
 
     public _refreshPage() {

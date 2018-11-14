@@ -36,7 +36,7 @@ export const endpoints: Endpoints = {
     },
 
     siteLocations: {
-        url: '/api/field-monitoring/settings/sites/'
+        url: '/api/field-monitoring/settings/sites/?page_size=all'
     },
 
     siteLocationsDetails: {
