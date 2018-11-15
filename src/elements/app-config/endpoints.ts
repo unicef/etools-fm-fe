@@ -47,6 +47,10 @@ export const endpoints: Endpoints = {
         url: '/api/field-monitoring/settings/locations/country/'
     },
 
+    yearPlan: {
+        template: '/api/field-monitoring/planning/year-plan/<%=year%>/'
+    },
+
     changeCountry: {
         url: '/users/api/changecountry/'
     },

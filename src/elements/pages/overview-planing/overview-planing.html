@@ -1,0 +1,36 @@
+<!--import [polymer/polymer-element, etools-dropdown]-->
+
+<!--import [pages-header, redux-mixin, etools-app-config]-->
+
+<dom-module id="overview-planing">
+    <template>
+        <!-- inject styles './overview-planing.scss'-->
+        <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
+        <pages-header title="Overview Planing" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
+
+        <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'rationale', 'plan-by-tasks')]]">
+            <div class="year-select-and-info">
+                <etools-dropdown class="filter-dropdown"
+                                 selected="{{selectedYear}}"
+                                 label="Year"
+                                 placeholder$="Select Year"
+                                 options="[[yearOptions]]"
+                                 option-label="label"
+                                 option-value="value"
+                                 trigger-value-change-event
+                                 on-etools-selected-item-changed="onYearSelected"
+                                 hide-search allow-outside-scroll></etools-dropdown>
+
+                <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'plan-by-tasks')]]">
+
+                </template>
+            </div>
+        </template>
+
+
+        <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
+        </iron-pages>
+    </template>
+
+    <!-- inject scripts './overview-planing.ts'-->
+</dom-module>

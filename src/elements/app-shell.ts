@@ -110,7 +110,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
         if (page === 'not-found') {
             resolvedPageUrl = 'elements/pages/not-found-page-view/not-found-page-view.html';
         } else {
-            resolvedPageUrl = `elements/pages/${page}-page/${page}-page.html`;
+            resolvedPageUrl = `elements/pages/${page}/${page}.html`;
         }
         Polymer.importHref(resolvedPageUrl,
             () => this._loadPage(),
