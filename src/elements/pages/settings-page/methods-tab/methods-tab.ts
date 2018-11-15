@@ -122,7 +122,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         const dialogType = _.get(target, 'dataset.type');
         if (!dialogType) { return; }
 
-        const { item } = model;
+        const { item = {} } = model || {};
         const texts = this.dialogTexts[dialogType];
         this.editedItem = {...item};
         this.originalData = {...item};

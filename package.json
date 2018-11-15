@@ -21,6 +21,7 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.7.0",
     "bower": "^1.8.2",
+    "browser-cookies": "^1.2.0",
     "css-slam": "^1.2.1",
     "del": "^2.2.1",
     "eslint": "^4.19.1",
