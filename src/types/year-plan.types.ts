@@ -1,8 +1,8 @@
 type YearPlan = {
-    history: YearPlanHistory;
+    history: YearPlanHistory[];
     methodology_notes: string;
     modalities: string;
-    other_aspects: YearPlanAspects;
+    other_aspects: YearPlanAspects[];
     partner_engagement: string;
     prioritization_criteria: string;
     target_visits: number;
