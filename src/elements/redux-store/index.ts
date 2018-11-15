@@ -11,6 +11,7 @@ import { permissions } from './reducers/permissions.reducer';
 import { cpOutputs } from './reducers/cp-outputs.reducer';
 import { methodTypes } from './reducers/settings-method-types.reducer';
 import { specificLocations } from './reducers/site-specific-locations.reducer';
+import { yearPlan } from './reducers/year-plan.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -21,7 +22,8 @@ const red = redux.combineReducers({
     permissions,
     cpOutputs,
     methodTypes,
-    specificLocations
+    specificLocations,
+    yearPlan
 });
 export const store = redux.createStore(
     red,

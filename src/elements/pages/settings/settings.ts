@@ -1,9 +1,9 @@
 import { loadPermissions } from '../../redux-store/effects/load-permissions.effect';
 
-class SettingsPage extends EtoolsMixinFactory.combineMixins([
+class Settings extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.ReduxMixin], Polymer.Element) {
-    public static get is() { return 'settings-page'; }
+    public static get is() { return 'fm-settings'; }
 
     public static get properties() {
         return {
@@ -30,6 +30,8 @@ class SettingsPage extends EtoolsMixinFactory.combineMixins([
     }
 
     public _routeChanged(path: string) {
+        const prefix = _.get(this, 'route.prefix', '');
+        if (!~prefix.indexOf('settings')) { return; }
         if (!path.match(/[^\\/]/g)) {
             this.set('route.path', '/cp-outputs');
         }
@@ -44,4 +46,4 @@ class SettingsPage extends EtoolsMixinFactory.combineMixins([
     }
 }
 
-customElements.define(SettingsPage.is, SettingsPage);
+customElements.define(Settings.is, Settings);
