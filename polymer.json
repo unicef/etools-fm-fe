@@ -2,7 +2,8 @@
   "entrypoint": "./src/index.html",
   "shell": "src/build-elements/app-shell.html",
   "fragments": [
-    "src/build-elements/pages/settings-page/settings-page.html",
+    "src/build-elements/pages/overview-planing/overview-planing.html",
+    "src/build-elements/pages/settings/settings.html",
     "src/build-elements/pages/not-found-page-view/not-found-page-view.html"
   ],
   "sources": [
