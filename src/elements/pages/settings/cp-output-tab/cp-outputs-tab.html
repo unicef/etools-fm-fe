@@ -85,7 +85,7 @@
                             </template>
                         </div>
                         <div class="col-data flex-2 truncate">
-                            [[_getItemsHeader('INTERVENTION', item.item.interventions)]]
+                            <a on-click="_openPartners">[[_getItemsHeader('PARTNER', item.interventions, item.fm_config.government_partners)]]</a>
                         </div>
                         <div class="col-data flex-3 truncate">
                             <a on-click="_openPartners">[[_getItemsHeader('PARTNER', item.fm_config.government_partners)]]</a>
