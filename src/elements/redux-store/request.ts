@@ -1,10 +1,8 @@
-import cookies from 'browser-cookies';
-
 export function request(input: RequestInfo, init?: RequestInit) {
     if (init && !_.get(init, `headers['Content-Type']`)) {
         _.set(init, `headers['Content-Type']`, 'application/json');
     }
-    const csrfToken = cookies.get('csrftoken') || '';
+    const csrfToken = getToken();
     _.set(init, `headers['x-csrftoken']`, csrfToken);
 
     return fetch(input, init)
@@ -21,4 +19,22 @@ export function request(input: RequestInfo, init?: RequestInit) {
                     });
             }
         });
+}
+
+function getToken() {
+    const cookieObj = document.cookie.split(';').map(function(c) {
+        return c.trim().split('=').map(decodeURIComponent);
+    }).reduce(function(a, b) {
+        try {
+            // @ts-ignore
+            a[b[0]] = JSON.parse(b[1]);
+        } catch (e) {
+            // @ts-ignore
+            a[b[0]] = b[1];
+        }
+        return a;
+    }, {});
+
+    // @ts-ignore
+    return (cookieObj && cookieObj.csrftoken) || '';
 }
