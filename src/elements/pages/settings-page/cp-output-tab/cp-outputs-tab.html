@@ -127,7 +127,9 @@
                 hide-confirm-btn>
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
-                    <div class="partner-row"><a>[[partner.name]]</a></div>
+                    <div class="partner-row"><a>[[partner.name]]</a>
+                        <template is="dom-if" if="[[partner.number]]">| [[partner.number]]</template>
+                    </div>
                 </template>
             </div>
         </etools-dialog>
