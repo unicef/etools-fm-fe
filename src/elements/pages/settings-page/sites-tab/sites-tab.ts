@@ -133,13 +133,14 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         this.dialog = {opened: true, ...texts};
     }
 
-    public mapInitialization() {
+    public mapInitialization(event: CustomEvent) {
+        if (event.target !== this.$.dialog) { return; }
         if (this.dialog.type === 'remove') { return; }
         if (!this.map) {
             const mapContainer = this.shadowRoot.querySelector('#map');
             this.initMap(mapContainer);
-            this.map.on('click', (event: LeafletMouseEvent) => {
-                const {lat, lng} = event.latlng;
+            this.map.on('click', (clickEvent: LeafletMouseEvent) => {
+                const {lat, lng} = clickEvent.latlng;
                 this.changeDMLocation([lat, lng]);
             });
             this.renderMarkers();
