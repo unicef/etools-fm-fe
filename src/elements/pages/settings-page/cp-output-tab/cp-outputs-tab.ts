@@ -120,9 +120,10 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
             });
     }
 
-    public _getItemsHeader(listName: string, items: []): string {
-        if (!items || !items.length) { return ''; }
-        return `${items.length} ${listName}${items.length !== 1 ? 'S' : ''}`;
+    public _getItemsHeader(listName: string, ...items: []): string {
+        const arr = items.reduce((result: any[], item: any) => [...result, ...item || []], []);
+        if (!arr || !arr.length) { return ''; }
+        return `${arr.length} ${listName}${arr.length !== 1 ? 'S' : ''}`;
     }
 
     public disconnectedCallback() {
@@ -159,6 +160,14 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _openPartners({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.fm_config && item.fm_config.government_partners;
+        this.dialogPartners = {opened: true};
+    }
+
+    public _openInterventions({ model }: EventModel<CpOutput>) {
+        const { item } = model;
+        const interventions = item.fm_config && item.interventions || [];
+        const governmentPartners = item.fm_config && item.fm_config.government_partners || [];
+        this.partners = [...interventions, ...governmentPartners];
         this.dialogPartners = {opened: true};
     }
 
