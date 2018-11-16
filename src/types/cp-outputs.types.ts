@@ -5,7 +5,7 @@ type CpOutput = {
     interventions: Intervention[];
 };
 
-type GovernmentPartner = {
+type Partner = {
     id: number,
     name: string
 };
@@ -17,7 +17,7 @@ type CpOutcome = {
 
 type FmConfig = {
     cp_output: number,
-    government_partners: GovernmentPartner[] | []
+    government_partners: Partner[] | []
     id: number,
     is_monitored: boolean,
     is_priority: boolean
