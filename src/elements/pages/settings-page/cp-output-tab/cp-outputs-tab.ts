@@ -37,6 +37,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         } else {
             this.removeQueryParams('is_active');
         }
+        this.updateQueryParams({page: 1});
         this.startLoad();
     }
 
@@ -47,6 +48,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         } else {
             this.removeQueryParams('fm_config__is_monitored');
         }
+        this.updateQueryParams({page: 1});
         this.startLoad();
     }
 
@@ -87,7 +89,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'staticData.governmentPartners'),
-            (partners: GovernmentPartner[]) => { this.governmentPartners = partners || []; });
+            (partners: Partner[]) => { this.governmentPartners = partners || []; });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
@@ -120,10 +122,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
             });
     }
 
-    public _getItemsHeader(listName: string, ...items: []): string {
-        const arr = items.reduce((result: any[], item: any) => [...result, ...item || []], []);
-        if (!arr || !arr.length) { return ''; }
-        return `${arr.length} ${listName}${arr.length !== 1 ? 'S' : ''}`;
+    public _isOnePartner(items: any[]): boolean {
+        return items && items.length === 1;
+    }
+
+    public _isManyPartners(items: any[]): boolean {
+        return items && items.length > 1;
     }
 
     public disconnectedCallback() {
@@ -160,15 +164,15 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _openPartners({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.fm_config && item.fm_config.government_partners;
-        this.dialogPartners = {opened: true};
+        const dialogTitle = this.getDescriptorLabel(this.permissions, 'fm_config.government_partners');
+        this.dialogPartners = {title: dialogTitle, opened: true};
     }
 
     public _openInterventions({ model }: EventModel<CpOutput>) {
         const { item } = model;
-        const interventions = item.fm_config && item.interventions || [];
-        const governmentPartners = item.fm_config && item.fm_config.government_partners || [];
-        this.partners = [...interventions, ...governmentPartners];
-        this.dialogPartners = {opened: true};
+        this.partners = item.interventions ? item.interventions.map((intervention => intervention.partner)) : [];
+        const dialogTitle = this.getDescriptorLabel(this.permissions, 'interventions');
+        this.dialogPartners = {title: dialogTitle, opened: true};
     }
 
     public isAllowEdit(): boolean {
