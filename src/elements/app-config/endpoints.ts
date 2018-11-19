@@ -4,17 +4,17 @@ export const endpoints: Endpoints = {
     },
 
     methods: {
-        url: '/api/field-monitoring/settings/methods/',
+        url: '/api/v1/field-monitoring/settings/methods/',
         exp: 10 * 24 * 60 * 60 * 1000, // 10days
         cacheTableName: 'methods'
     },
 
     methodTypes: {
-        url: '/api/field-monitoring/settings/methods/types/'
+        url: '/api/v1/field-monitoring/settings/methods/types/'
     },
 
     methodTypeDetails: {
-        template: '/api/field-monitoring/settings/methods/types/<%=id%>/'
+        template: '/api/v1/field-monitoring/settings/methods/types/<%=id%>/'
     },
 
     cpOutcomes: {
@@ -24,27 +24,27 @@ export const endpoints: Endpoints = {
     },
 
     cpOutputs: {
-        url: '/api/field-monitoring/settings/cp-outputs/'
+        url: '/api/v1/field-monitoring/settings/cp-outputs/'
     },
 
     cpOutputsConfigs: {
-        url: '/api/field-monitoring/settings/cp-outputs/configs/'
+        url: '/api/v1/field-monitoring/settings/cp-outputs/configs/'
     },
 
     cpOutputDetails: {
-        template: '/api/field-monitoring/settings/cp-outputs/<%=id%>/'
+        template: '/api/v1/field-monitoring/settings/cp-outputs/<%=id%>/'
     },
 
     siteLocations: {
-        url: '/api/field-monitoring/settings/sites/?page_size=all'
+        url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
     },
 
     siteLocationsDetails: {
-        template: '/api/field-monitoring/settings/sites/<%=id%>/'
+        template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
     },
 
     currentWorkspace: {
-        url: '/api/field-monitoring/settings/locations/country/'
+        url: '/api/v1/field-monitoring/settings/locations/country/'
     },
 
     yearPlan: {
