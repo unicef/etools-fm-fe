@@ -1,0 +1,151 @@
+<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-dialog, paper-input,
+            etools-data-table, attachments-list]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin, process-data-mixin]-->
+
+<dom-module id="rationale-tab">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './rationale-tab.scss'-->
+
+        <app-route route="{{route}}" pattern="/rationale" active="{{isActive}}"></app-route>
+        <paper-card>
+            <div class="table-title-block with-bottom-line">
+                <div class="table-title">[[permissions.title]]</div>
+                <div class="buttons-container">
+                    <paper-icon-button
+                            on-tap="_openEditDialog"
+                            class="panel-button"
+                            data-type="edit"
+                            icon="create"></paper-icon-button>
+                </div>
+            </div>
+            <div class="container layout vertical rational-view">
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'prioritization_criteria', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.prioritization_criteria)]]</div>
+                </div>
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'methodology_notes', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.methodology_notes)]]</div>
+                </div>
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'modalities', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.modalities)]]</div>
+                </div>
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'target_visits', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.target_visits)]]</div>
+                </div>
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'partner_engagement', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.partner_engagement)]]</div>
+                </div>
+                <div class="text-control">
+                    <label>[[getDescriptorLabel(permissions, 'other_aspects', yearPlan)]]</label>
+                    <div class="value">[[_formatValue(yearPlan.other_aspects)]]</div>
+                </div>
+            </div>
+        </paper-card>
+
+        <paper-card>
+            <attachments-list></attachments-list>
+        </paper-card>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialog.opened}}"
+                ok-button-text="Save"
+                dialog-title="Rationale"
+                on-confirm-btn-clicked="onFinishEdit">
+            <etools-loading
+                    active="[[requestInProcess]]"
+                    loading-text="Saving Data">
+            </etools-loading>
+            <div class="container layout vertical">
+                <paper-input
+                        class="validate-input disabled-as-readonly"
+                        value="{{editModel.prioritization_criteria}}"
+                        label="[[getDescriptorLabel(permissions, 'prioritization_criteria')]]"
+                        placeholder="e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response"
+                        required$="[[getRequiredStatus(permissions, 'prioritization_criteria')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
+                        invalid="{{errors.prioritization_criteria}}"
+                        error-message="{{errors.prioritization_criteria}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+                <paper-input
+                        class="validate-input disabled-as-readonly"
+                        value="{{editModel.methodology_notes}}"
+                        label="[[getDescriptorLabel(permissions, 'methodology_notes')]]"
+                        placeholder="e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs"
+                        required$="[[getRequiredStatus(permissions, 'methodology_notes')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
+                        invalid="{{errors.methodology_notes}}"
+                        error-message="{{errors.methodology_notes}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+                <paper-input
+                        class="validate-input disabled-as-readonly"
+                        value="{{editModel.modalities}}"
+                        label="[[getDescriptorLabel(permissions, 'modalities')]]"
+                        placeholder="e.g Staff, UNV, SSAs, TPMs to undertake field monitoring"
+                        required$="[[getRequiredStatus(permissions, 'modalities')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'modalities')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'modalities')]]"
+                        invalid="{{errors.modalities}}"
+                        error-message="{{errors.modalities}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+                <paper-input
+                        class="validate-input disabled-as-readonly flex=5"
+                        value="{{editModel.target_visits}}"
+                        label="[[getDescriptorLabel(permissions, 'target_visits')]]"
+                        placeholder=""
+                        required$="[[getRequiredStatus(permissions, 'target_visits')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'target_visits')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'target_visits')]]"
+                        invalid="{{errors.target_visits}}"
+                        error-message="{{errors.target_visits}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+                <paper-input
+                        class="validate-input disabled-as-readonly flex=5"
+                        value="{{editModel.partner_engagement}}"
+                        label="[[getDescriptorLabel(permissions, 'partner_engagement')]]"
+                        placeholder="e.g any arrangements established for join visits"
+                        required$="[[getRequiredStatus(permissions, 'partner_engagement')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
+                        invalid="{{errors.partner_engagement}}"
+                        error-message="{{errors.partner_engagement}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+                <paper-input
+                        class="validate-input disabled-as-readonly flex=5"
+                        value="{{editModel.other_aspects}}"
+                        label="[[getDescriptorLabel(permissions, 'other_aspects')]]"
+                        placeholder="e.g any arrangements established for join visits"
+                        required$="[[getRequiredStatus(permissions, 'other_aspects')]]"
+                        disabled$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
+                        readonly$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
+                        invalid="{{errors.other_aspects}}"
+                        error-message="{{errors.other_aspects}}"
+                        on-focus="resetFieldError"
+                        on-tap="resetFieldError">
+                </paper-input>
+            </div>
+        </etools-dialog>
+    </template>
+    <!-- inject scripts './rationale-tab.ts'-->
+</dom-module>

@@ -48,7 +48,11 @@ export const endpoints: Endpoints = {
     },
 
     yearPlan: {
-        template: '/api/field-monitoring/planning/year-plan/<%=year%>/'
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
+    },
+
+    attachments: {
+        template: '/api/v1/field-monitoring/settings/attachments/'
     },
 
     changeCountry: {

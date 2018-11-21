@@ -39,3 +39,10 @@ type MarkerDataObj = {
     staticData?: any;
     popup?: string
 };
+
+// todo fill attachment fields
+type Attachment = {
+    id?: number
+    file_type: number,
+    file: object
+};

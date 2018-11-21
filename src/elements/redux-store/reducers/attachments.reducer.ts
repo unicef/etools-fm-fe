@@ -1,20 +1,20 @@
 import {
-    FINISH_REQUEST_YEAR_PLAN,
-    SET_YEAR_PLAN_DATA,
-    START_REQUEST_YEAR_PLAN,
-    YearPlanActions
-} from '../actions/year-plan.actions';
+    AttachmentsActions,
+    FINISH_REQUEST_ATTACHMENTS,
+    SET_ATTACHMENTS,
+    START_REQUEST_ATTACHMENTS
+} from '../actions/attachments.actions';
 
 const INITIAL = {};
 
-export function yearPlan(state = INITIAL, action: YearPlanActions) {
+export function attachments(state = INITIAL, action: AttachmentsActions) {
     switch (action.type) {
-        case SET_YEAR_PLAN_DATA:
+        case SET_ATTACHMENTS:
             const data = {...action.payload};
             return Object.assign({}, state, {data});
-        case START_REQUEST_YEAR_PLAN:
+        case START_REQUEST_ATTACHMENTS:
             return Object.assign({}, state, {requestInProcess: true});
-        case FINISH_REQUEST_YEAR_PLAN:
+        case FINISH_REQUEST_ATTACHMENTS:
             return Object.assign({}, state, {requestInProcess: false});
         default:
             return state;

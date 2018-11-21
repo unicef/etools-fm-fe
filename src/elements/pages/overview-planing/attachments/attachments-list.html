@@ -1,0 +1,94 @@
+<!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-dialog, paper-input,
+            etools-data-table, etools-file]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin, process-data-mixin]-->
+
+<dom-module id="attachments-list">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './attachments-list.scss'-->
+
+
+        <div class="table-title-block with-bottom-line">
+            <div class="table-title">[[permissions.title]]</div>
+            <div class="buttons-container">
+                <paper-icon-button
+                        on-tap="_openUploadAttachment"
+                        class="panel-button"
+                        data-type="add"
+                        icon="add-box"></paper-icon-button>
+            </div>
+        </div>
+        <etools-data-table-header id="listHeader" no-collapse no-title>
+            <etools-data-table-column class="flex-1" field="created">
+                [[getDescriptorLabel(permissions, 'created')]]
+            </etools-data-table-column>
+            <etools-data-table-column class="flex-1" field="file_type">
+                [[getDescriptorLabel(permissions, 'file_type')]]
+            </etools-data-table-column>
+            <etools-data-table-column class="flex-1" field="file">
+                [[getDescriptorLabel(permissions, 'file')]]
+            </etools-data-table-column>
+        </etools-data-table-header>
+        <template is="dom-if" if="[[!attachments.length]]">
+            <etools-data-table-row no-collapse>
+                <div slot="row-data" class="layout horizontal">
+                    <div  class="col-data flex-1 truncate">-</div>
+                </div>
+                <div slot="row-data" class="layout horizontal">
+                    <div  class="col-data flex-1 truncate">-</div>
+                </div>
+                <div slot="row-data" class="layout horizontal">
+                    <div  class="col-data flex-1 truncate">-</div>
+                </div>
+            </etools-data-table-row>
+        </template>
+        <template is="dom-repeat" items="[[attachments]]" as="attachment">
+            <etools-data-table-row no-collapse secondary-bg-on-hover>
+                <div slot="row-data" class="layout horizontal editable-row">
+                    <div class="col-data flex-1 truncate">
+                        [[attachment.created]]
+                    </div>
+                    <div class="col-data flex-1 truncate">
+                        [[attachment.file_type]]
+                    </div>
+                    <div class="col-data flex-1 truncate">
+                        [[attachment.filename]]
+                    </div>
+                </div>
+            </etools-data-table-row>
+        </template>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialog.opened}}"
+                ok-button-text="Upload"
+                dialog-title="Upload Attachment "
+                on-confirm-btn-clicked="onFinishUpload">
+            <div class="container layout horizontal">
+                <etools-dropdown
+                    class="validate-input disabled-as-readonly flex-1"
+                    selected="{{attachment.file_type}}"
+                    label="[[getDescriptorLabel(Attachments, 'file_type')]]"
+                    placeholder="[[getPlaceholder(Attachments, 'file_type', 'Select')]]"
+                    options="[[fileTypes]]"
+                    option-label="display_name"
+                    option-value="value"
+                    required$="[[getRequiredStatus(Attachments, 'file_type')]]"
+                    invalid="{{errors.file_type}}"
+                    error-message="{{errors.file_type}}"
+                    on-focus="resetFieldError"
+                    on-tap="resetFieldError"
+                    allow-outside-scroll
+                    dynamic-align></etools-dropdown>
+                <div class="flex-1">
+                    <etools-file files="{{attachment.file}}"></etools-file>
+                </div>
+            </div>
+        </etools-dialog>
+    </template>
+    <!-- inject scripts './attachments-list.ts'-->
+</dom-module>

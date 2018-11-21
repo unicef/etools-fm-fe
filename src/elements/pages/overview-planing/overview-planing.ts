@@ -1,5 +1,3 @@
-import { loadYearPlan } from '../../redux-store/effects/year-paln.effects';
-
 class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.ReduxMixin], Polymer.Element) {
@@ -11,7 +9,6 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 notify: true
             },
-            lastTab: String,
             tabs: {
                 type: Array,
                 value: () => [
@@ -46,12 +43,16 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.selectedYear = currentYear;
     }
 
+    public disconnectedCallback() {
+        super.disconnectedCallback();
+        this.yearPlanSubscriber();
+    }
+
     public showYearAndInfo(tabName: string, ...showIn: string[]): boolean {
         return !!~showIn.indexOf(tabName);
     }
 
     public onYearSelected() {
-        this.dispatchOnStore(loadYearPlan(this.selectedYear));
     }
 }
 
