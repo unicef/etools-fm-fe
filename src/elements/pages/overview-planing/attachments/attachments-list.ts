@@ -15,6 +15,8 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
     }
 
     public _openUploadAttachment() {
+        this.errors = null;
+        this.resetInputs();
         this.dialog = {opened: true};
         this.attachment = { file: [] };
     }
@@ -22,6 +24,7 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
     public onFinishUpload() {
         const file = this.attachment.file[0];
         const fileType = this.attachment.file_type;
+        if (!file || !fileType) { return; }
         const attachment = {
             file: file.raw,
             file_type: fileType

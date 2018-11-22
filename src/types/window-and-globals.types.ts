@@ -22,6 +22,7 @@ declare const EtoolsAjaxRequestMixin: any;
 declare const FMMixins: FMMixins;
 declare const EtoolsMixins: {LoadingMixin: any};
 declare const etoolsBehaviors: {EtoolsRefreshBehavior: any};
+declare const moment: any;
 declare const _: any;
 declare const L: any;
 type HTMLElementEvent<T extends HTMLElement> = Event & {
@@ -38,11 +39,4 @@ type MarkerDataObj = {
     coords: [number, number];
     staticData?: any;
     popup?: string
-};
-
-// todo fill attachment fields
-type Attachment = {
-    id?: number
-    file_type: number,
-    file: object
 };

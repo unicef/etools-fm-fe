@@ -2,7 +2,12 @@ import { Dispatch } from 'redux';
 import { AddNotification } from '../actions/notification.actions';
 import { request } from '../request';
 import { getEndpoint } from '../../app-config/app-config';
-import { FinishRequestAttachments, SetAttachments, StartRequestAttachments } from '../actions/attachments.actions';
+import {
+    FinishRequestAttachments,
+    SetAttachments,
+    SetSecondAttachment,
+    StartRequestAttachments
+} from '../actions/attachments.actions';
 
 export function loadAttachments() {
     return function (dispatch: Dispatch) {
@@ -23,17 +28,18 @@ export function uploadAttachment(data: any) {
         const endpoint = getEndpoint('attachments');
         dispatch(new StartRequestAttachments());
         const body = new FormData();
-        Object.keys(data).forEach((key) => body.append(key, data[key]));
+        Object.keys(data).forEach((key) => {
+            body.append(key, data[key]);
+        });
         const options = {
             method: 'POST',
-            body,
-            headers: {'Content-Type': 'application/json'}
+            body
         };
         return request(endpoint.url, options)
             .catch(() => {
                 dispatch(new AddNotification(`Can not upload attachment`));
             })
-            .then((attachments: IListData<Attachment>) =>  dispatch(new SetAttachments(attachments)))
+            .then((attachment: Attachment) =>  dispatch(new SetSecondAttachment(attachment)))
             .then(() => dispatch(new FinishRequestAttachments()));
     };
 }
