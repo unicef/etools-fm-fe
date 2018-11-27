@@ -1,6 +1,9 @@
 export function request(input: RequestInfo, init?: RequestInit) {
     const csrfToken = getToken();
     _.set(init, `headers['x-csrftoken']`, csrfToken);
+    if (!_.get(init, 'headers["Content-Type"]')) {
+        _.set(init, `headers['Content-Type']`, 'application/json');
+    }
 
     return fetch(input, init)
         .then((response) => {
