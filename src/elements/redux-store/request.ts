@@ -1,7 +1,9 @@
-export function request(input: RequestInfo, init?: RequestInit) {
+export function request(input: RequestInfo, init: RequestInit = {}) {
     const csrfToken = getToken();
     _.set(init, `headers['x-csrftoken']`, csrfToken);
-    if (!_.get(init, 'headers["Content-Type"]')) {
+
+    const isformData = init.body instanceof FormData;
+    if (!isformData && !_.get(init, 'headers["Content-Type"]')) {
         _.set(init, `headers['Content-Type']`, 'application/json');
     }
 
