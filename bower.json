@@ -42,7 +42,8 @@
     "webcomponentsjs": "1.2.2",
     "babel-polyfill": "^0.0.1",
     "etools-profile-dropdown": "^3.1.0",
-    "etools-file": "^2.0.1"
+    "etools-file": "^2.0.1",
+    "paper-radio-group": "^2.2.0"
   },
   "devDependencies": {},
   "resolutions": {

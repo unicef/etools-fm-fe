@@ -23,6 +23,12 @@ export function getEndpoint(endpointName: string, data?: EndpointTemplateData): 
     return endpoint;
 }
 
+export function jsonToFormData(json: any) {
+    const body = new FormData();
+    Object.keys(json).forEach((key) => { body.append(key, json[key]); });
+    return body;
+}
+
 export function objectToQuery(obj: QueryParams) {
     const query = Object.keys(obj)
         .map(key => `${key}=${obj[key]}`)

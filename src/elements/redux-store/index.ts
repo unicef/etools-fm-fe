@@ -13,6 +13,7 @@ import { methodTypes } from './reducers/settings-method-types.reducer';
 import { specificLocations } from './reducers/site-specific-locations.reducer';
 import { yearPlan } from './reducers/year-plan.reducer';
 import { attachments } from './reducers/attachments.reducer';
+import { logIssues } from './reducers/log-issues.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -25,7 +26,8 @@ const red = redux.combineReducers({
     methodTypes,
     specificLocations,
     yearPlan,
-    attachments
+    attachments,
+    logIssues
 });
 export const store = redux.createStore(
     red,

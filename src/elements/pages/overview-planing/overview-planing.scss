@@ -9,4 +9,13 @@
             width: 105px;
         }
     }
+
+    .add-btn {
+        color: white;
+        background-color: var(--module-primary);
+
+        iron-icon {
+            margin-right: 5px;
+        }
+    }
 }

@@ -1,0 +1,279 @@
+<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin, paper-radio-group,
+            paper-radio-group, textarea-max-rows-mixin, paper-input/paper-textarea, etools-data-table]-->
+
+<dom-module id="preparation-tab">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './preparation-tab.scss'-->
+
+        <app-route route="{{route}}" pattern="/preparation" active="{{isActive}}"></app-route>
+
+        <paper-card>
+            <div class="layout horizontal">
+                <etools-dropdown
+                        class="filter-dropdown"
+                        selected="[[queryParams.cp_output]]"
+                        label="[[getDescriptorLabel(permissions, 'cp_output')]]"
+                        placeholder$="Select"
+                        options="[[cpOutputs]]"
+                        option-label="name"
+                        option-value="id"
+                        trigger-value-change-event
+                        enable-none-option
+                        on-etools-selected-item-changed="changeCpOutputsFilter"
+                        hide-search allow-outside-scroll>
+                </etools-dropdown>
+                <etools-dropdown
+                        class="filter-dropdown"
+                        selected="[[queryParams.partner]]"
+                        label="[[getDescriptorLabel(permissions, 'partner')]]"
+                        placeholder$="Select"
+                        options="[[monitoredPartners]]"
+                        option-label="name"
+                        option-value="id"
+                        trigger-value-change-event
+                        enable-none-option
+                        on-etools-selected-item-changed="changePartnerFilter"
+                        hide-search allow-outside-scroll>
+                </etools-dropdown>
+                <etools-dropdown
+                        class="filter-dropdown"
+                        selected="[[queryParams.location_site]]"
+                        label="[[getDescriptorLabel(permissions, 'location_site')]]"
+                        placeholder$="Select"
+                        options="[[siteLocations]]"
+                        option-label="name"
+                        option-value="id"
+                        trigger-value-change-event
+                        enable-none-option
+                        on-etools-selected-item-changed="changeSitesFilter"
+                        hide-search allow-outside-scroll>
+                </etools-dropdown>
+                <div class="toggle-button-control">
+                    <paper-toggle-button checked="[[queryParams.status]]" on-checked-changed="changeOnlyNewFilter"></paper-toggle-button>
+                    <span>Show only New</span>
+                </div>
+            </div>
+        </paper-card>
+
+        <paper-card>
+            <div class="table-title-block with-bottom-line">
+                <div class="table-title">[[visibleRange.0]] - [[visibleRange.1]] of [[count]] issues to show</div>
+            </div>
+            <etools-data-table-header no-title>
+                <etools-data-table-column class="flex-1" field="related_to_type">
+                    [[getDescriptorLabel(permissions, 'related_to_type')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-2" field="name" sortable>
+                    [[getDescriptorLabel(permissions, 'cp_output.name')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-3" field="issue">
+                    [[getDescriptorLabel(permissions, 'issue')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-1" field="attachments">
+                    [[getDescriptorLabel(permissions, 'attachments')]]
+                </etools-data-table-column>
+                <etools-data-table-column class="flex-1" field="status">
+                    [[getDescriptorLabel(permissions, 'status')]]
+                </etools-data-table-column>
+            </etools-data-table-header>
+            <template is="dom-if" if="[[!logIssues.length]]">
+                <etools-data-table-row>
+                    <div slot="row-data" class="layout horizontal editable-row flex">
+                        <div class="col-data flex-1 truncate">-</div>
+                        <div class="col-data flex-2 truncate">-</div>
+                        <div class="col-data flex-3 truncate">-</div>
+                        <div class="col-data flex-1 truncate">-</div>
+                        <div class="col-data flex-1 truncate">-</div>
+                    </div>
+                </etools-data-table-row>
+            </template>
+            <template is="dom-repeat" items="[[logIssues]]" as="item">
+                <etools-data-table-row secondary-bg-on-hover>
+                    <div slot="row-data" class="layout horizontal editable-row flex">
+                        <div class="col-data flex-1">
+                            <span class="truncate">[[getColumnRelatedTypeValue(item)]]</span>
+                        </div>
+                        <div class="col-data flex-2">
+                            <span class="truncate">[[getColumnNameValue(item)]]</span>
+                        </div>
+                        <div class="col-data flex-3 truncate">
+                            <span class="truncate">[[item.issue]]</span>
+                        </div>
+                        <div class="col-data flex-1">
+                            <div class="files-column" on-click="onDownloadFiles">
+                                <iron-icon icon="icons:file-download"></iron-icon>
+                                [[item.attachments.length]] FILES
+                            </div>
+                        </div>
+                        <div class="col-data flex-1">[[getChoiceLabel(item.status, statuses)]]</div>
+
+                        <template is="dom-if" if="[[actionAllowed(permissions, 'create')]]">
+                            <div class="hover-block">
+                                <iron-icon icon="icons:create" on-click="openEditLogIssue"></iron-icon>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div slot="row-data-details" class="layout horizontal">
+                        <div class="row-details-content">
+                            <div class="rdc-title">[[getDescriptorLabel(permissions, 'author')]]</div>
+                            <div class="truncate">[[item.author.name]]</div>
+                        </div>
+                        <div class="row-details-content">
+                            <div class="rdc-title">Last Modified By</div>
+                            <div class="truncate">[[item.history.0.by_user_display]] - [[formatDate(item.history.0.created)]]</div>
+                        </div>
+                        <div class="row-details-content">
+                            <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
+                            <div class="truncate">[[item.closed_by]]</div>
+                        </div>
+                    </div>
+                </etools-data-table-row>
+            </template>
+            <etools-data-table-footer
+                    page-size="[[queryParams.page_size]]"
+                    page-number="[[queryParams.page]]"
+                    total-results="[[count]]"
+                    visible-range="{{visibleRange}}"
+                    on-page-size-changed="_pageSizeSelected"
+                    on-page-number-changed="_pageNumberChanged">
+            </etools-data-table-footer>
+        </paper-card>
+        <etools-dialog
+                id="dialog"
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialog.opened}}"
+                ok-button-text="{{dialog.confirm}}"
+                dialog-title="{{dialog.title}}"
+                on-iron-overlay-closed="resetData"
+                on-confirm-btn-clicked="onFinishDialog">
+            <etools-loading
+                    active="[[requestInProcess]]"
+                    loading-text="Saving Data"></etools-loading>
+            <div class="container layout vertical">
+                <div class="layout horizontal center">
+                    <div class="layout vertical related-to-type">
+                        <label id="related-to-type">[[getDescriptorLabel(permissionsDetails, 'related_to_type')]]</label>
+                        <paper-radio-group
+                                class="flex-2"
+                                selected="{{dialog.relatedToType}}"
+                                disabled="[[isEditDialog(dialog.type)]]">
+                            <template is="dom-repeat" items="[[relatedTypes]]" as="type">
+                                <paper-radio-button
+                                        name="[[type.value]]"
+                                        disabled="[[isEditDialog(dialog.type)]]">
+                                    [[type.display_name]]
+                                </paper-radio-button>
+                            </template>
+                        </paper-radio-group>
+                    </div>
+                    <etools-dropdown
+                            class="flex-1"
+                            selected="{{issue.status}}"
+                            label="[[getDescriptorLabel(permissionsDetails, 'status')]]"
+                            placeholder$="Select"
+                            options="[[statuses]]"
+                            option-label="display_name"
+                            option-value="value"
+                            required$="[[getRequiredStatus(permissionsDetails, 'status')]]"
+                            error-message="{{errors.status}}"
+                            trigger-value-change-event
+                            hide-search allow-outside-scroll></etools-dropdown>
+                </div>
+                <template is="dom-if" if="[[isType(dialog.relatedToType, 'partner')]]">
+                    <div class="layout horizontal">
+                        <etools-dropdown
+                                selected="[[_simplifyValue(issue.partner)]]"
+                                label="[[getDescriptorLabel(permissionsDetails, 'partner')]]"
+                                placeholder$="Select"
+                                options="[[monitoredPartners]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissionsDetails, 'partner')]]"
+                                error-message="{{errors.partner}}"
+                                trigger-value-change-event
+                                on-etools-selected-item-changed="setIssuePartner"
+                                enable-none-option
+                                hide-search allow-outside-scroll>
+                        </etools-dropdown>
+                    </div>
+                </template>
+                <template is="dom-if" if="[[isType(dialog.relatedToType, 'cp_output')]]">
+                    <div class="layout horizontal">
+                        <etools-dropdown
+                                selected="[[_simplifyValue(issue.cp_output)]]"
+                                label="[[getDescriptorLabel(permissionsDetails, 'cp_output')]]"
+                                placeholder$="Select"
+                                options="[[cpOutputs]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissionsDetails, 'cp_output')]]"
+                                error-message="{{errors.cp_output}}"
+                                trigger-value-change-event
+                                on-etools-selected-item-changed="setIssueCpOutput"
+                                enable-none-option
+                                hide-search allow-outside-scroll>
+                        </etools-dropdown>
+                    </div>
+                </template>
+                <template is="dom-if" if="[[isType(dialog.relatedToType, 'location')]]">
+                    <div class="layout horizontal">
+                        <etools-dropdown
+                                selected="[[_simplifyValue(issue.location)]]"
+                                label="[[getDescriptorLabel(permissionsDetails, 'location')]]"
+                                placeholder$="Select"
+                                options="[[locations]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissionsDetails, 'location')]]"
+                                error-message="{{errors.location}}"
+                                trigger-value-change-event
+                                on-etools-selected-item-changed="setIssueLocation"
+                                enable-none-option
+                                hide-search allow-outside-scroll>
+                        </etools-dropdown>
+                        <etools-dropdown
+                                selected="[[_simplifyValue(issue.location_site)]]"
+                                label="[[getDescriptorLabel(permissionsDetails, 'location_site')]]"
+                                placeholder$="Select"
+                                options="[[siteLocations]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissionsDetails, 'location_site')]]"
+                                error-message="{{errors.location_site}}"
+                                trigger-value-change-event
+                                enable-none-option
+                                on-etools-selected-item-changed="setIssueLocationSite"
+                                hide-search allow-outside-scroll>
+                        </etools-dropdown>
+                    </div>
+                </template>
+                <div class="layout horizontal">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly"
+                            value="{{issue.issue}}"
+                            max-rows="3"
+                            label="[[getDescriptorLabel(permissionsDetails, 'issue')]]"
+                            placeholder="[[getPlaceholder(permissionsDetails, 'issue', 'Enter')]]"
+                            required$="[[getRequiredStatus(permissionsDetails, 'issue')]]"
+                            disabled$="[[getReadonlyStatus(permissionsDetails, 'issue')]]"
+                            readonly$="[[getReadonlyStatus(permissionsDetails, 'issue')]]"
+                            invalid="{{errors.issue}}"
+                            error-message="{{errors.issue}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"></paper-textarea>
+                </div>
+                <etools-file
+                        class="flex-1"
+                        label="Attachment"
+                        upload-label="Attach file"
+                        files="{{currentFiles}}"
+                        multiple></etools-file>
+            </div>
+        </etools-dialog>
+    </template>
+    <!-- inject scripts './preparation-tab.ts'-->
+</dom-module>

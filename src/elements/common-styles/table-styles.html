@@ -63,6 +63,24 @@
                 height: 47px;
                 display: flex;
                 align-items: center;
+                min-width: 0;
+            }
+
+            .col-data .truncate {
+                flex-wrap: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .row-details-content {
+                font-size: 12px;
+                padding-right: 30px;
+            }
+            .row-details-content .rdc-title {
+                display: inline-block;
+                color: var(--list-secondary-text-color, #757575);
+                font-weight: bold;
+                margin-bottom: 5px;
             }
 
             etools-data-table-row {

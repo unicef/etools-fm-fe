@@ -1,5 +1,6 @@
 class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
+    FMMixins.PermissionController,
     FMMixins.ReduxMixin], Polymer.Element) {
     public static get is() { return 'overview-planing'; }
 
@@ -41,6 +42,9 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         const currentYear = new Date().getFullYear();
         this.yearOptions = [currentYear - 1, currentYear].map(year => ({label: year, value: year}));
         this.selectedYear = currentYear;
+        this.logIssueAllowSubscribe = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'permissions.logIssues'),
+            (permissions: IBackendPermissions) => { this.logIssuesPermissions = permissions; });
     }
 
     public disconnectedCallback() {
@@ -53,6 +57,15 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     }
 
     public onYearSelected() {
+    }
+
+    public _isShowLogIssue(tab: string, permissions: IPermissionActions) {
+        return (tab === 'preparation' && permissions && this.actionAllowed(permissions, 'create'));
+    }
+
+    public _onCreateLogIssue() {
+        const preparationTab = this.shadowRoot.querySelector('preparation-tab');
+        preparationTab.dispatchEvent(new CustomEvent('create-log-issue', {bubbles: true, composed: true}));
     }
 }
 

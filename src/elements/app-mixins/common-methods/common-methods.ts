@@ -21,7 +21,7 @@ window.FMMixins.CommonMethods = (superClass: any) => class extends FMMixins.Perm
         event.target.invalid = false;
     }
 
-    public getChoiceLabel(value: number, options: Option[]) {
+    public getChoiceLabel(value: number | string, options: Option[]) {
         if (!options || options.length === 0) {
             return value;
         }
