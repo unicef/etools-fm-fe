@@ -1,10 +1,12 @@
-<!--import [polymer/polymer-element, paper-button, etools-dropdown, rationale-tab, preparation-tab]-->
+<!--import [polymer/polymer-element, etools-dropdown, rationale-tab]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config]-->
+<!--import [pages-header, redux-mixin, etools-app-config, month-counter]-->
 
 <dom-module id="overview-planing">
     <template>
+        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles"></style>
         <!-- inject styles './overview-planing.scss'-->
+
         <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
         <pages-header title="Overview Planing" tab="{{routeData.tab}}" tabs="[[tabs]]">
             <template is="dom-if" if="[[_isShowLogIssue(routeData.tab, logIssuesPermissions)]]">
@@ -16,7 +18,7 @@
         </pages-header>
 
         <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'rationale', 'plan-by-tasks')]]">
-            <div class="year-select-and-info">
+            <div class="year-select-and-info layout start">
                 <etools-dropdown class="filter-dropdown"
                                  selected="{{selectedYear}}"
                                  label="Year"
@@ -29,13 +31,20 @@
                                  hide-search allow-outside-scroll></etools-dropdown>
 
                 <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'plan-by-tasks')]]">
-
+                    <div class="year-info horizontal layout end end-justified flex-auto">
+                        <div class="text horizontal layout center end-justified flex-auto">
+                            total planned: <span class="amount">[[yearPlan.total_planned.tasks]]</span>
+                            tasks covering <span class="amount">[[yearPlan.total_planned.cp_outputs]]</span>
+                            outputs in <span class="amount">[[yearPlan.total_planned.sites]]</span>  sites <div class="line"></div>
+                                number of tasks by month:</div>
+                        <month-counter show-titles count="[[yearPlan.tasks_by_month]]"></month-counter>
+                    </div>
                 </template>
             </div>
         </template>
 
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
-            <rationale-tab name="rationale" route="{{route}}" selected-year="[[selectedYear]]"></rationale-tab>
+            <rationale-tab name="rationale" route="{{route}}" selected-year="[[selectedYear]]" year-plan="[[yearPlan]]"></rationale-tab>
             <preparation-tab name="preparation" route="{{route}}"></preparation-tab>
         </iron-pages>
     </template>

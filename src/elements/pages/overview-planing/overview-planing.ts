@@ -1,3 +1,5 @@
+import { loadYearPlan } from '../../redux-store/effects/year-paln.effects';
+
 class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.PermissionController,
@@ -42,6 +44,11 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         const currentYear = new Date().getFullYear();
         this.yearOptions = [currentYear - 1, currentYear].map(year => ({label: year, value: year}));
         this.selectedYear = currentYear;
+
+        this.yearPlanSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'yearPlan.data'),
+            (yearPlan: YearPlan) => { this.yearPlan = yearPlan; });
+
         this.logIssueAllowSubscribe = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'permissions.logIssues'),
             (permissions: IBackendPermissions) => { this.logIssuesPermissions = permissions; });
@@ -57,6 +64,7 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     }
 
     public onYearSelected() {
+        this.dispatchOnStore(loadYearPlan(this.selectedYear));
     }
 
     public _isShowLogIssue(tab: string, permissions: IPermissionActions) {

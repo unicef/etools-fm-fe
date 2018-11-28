@@ -15,7 +15,7 @@
                 <div class="table-title">[[permissions.title]]</div>
                 <div class="buttons-container">
                     <paper-icon-button
-                            on-tap="_openEditDialog"
+                            on-tap="openEditDialog"
                             class="panel-button"
                             data-type="edit"
                             icon="create"></paper-icon-button>
@@ -24,27 +24,27 @@
             <div class="container layout vertical rational-view">
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'prioritization_criteria', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.prioritization_criteria)]]</div>
+                    <div class="value">[[formatValue(yearPlan.prioritization_criteria)]]</div>
                 </div>
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'methodology_notes', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.methodology_notes)]]</div>
+                    <div class="value">[[formatValue(yearPlan.methodology_notes)]]</div>
                 </div>
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'modalities', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.modalities)]]</div>
+                    <div class="value">[[formatValue(yearPlan.modalities)]]</div>
                 </div>
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'target_visits', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.target_visits)]]</div>
+                    <div class="value">[[formatValue(yearPlan.target_visits)]]</div>
                 </div>
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'partner_engagement', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.partner_engagement)]]</div>
+                    <div class="value">[[formatValue(yearPlan.partner_engagement)]]</div>
                 </div>
                 <div class="text-control">
                     <label>[[getDescriptorLabel(permissions, 'other_aspects', yearPlan)]]</label>
-                    <div class="value">[[_formatValue(yearPlan.other_aspects)]]</div>
+                    <div class="value">[[formatValue(yearPlan.other_aspects)]]</div>
                 </div>
             </div>
         </paper-card>
