@@ -4,7 +4,7 @@
 
 <!--import [main-header, sidebar-menu, permission-controller, etools-app-config, multi-notification-list,
             side-bar-item, countries-dropdown, shared-styles, page-layout-styles, app-theme, redux-mixin,
-            route-helper-mixin]-->
+            route-helper-mixin, footer]-->
 
 <dom-module id="app-shell">
     <template>
@@ -48,7 +48,7 @@
                 <settings-page name="settings" id="settings" route="{{subRoute}}"></settings-page>
                 <not-found-page-view name="not-found" id="not-found"></not-found-page-view>
             </iron-pages>
-
+            <page-footer></page-footer>
         </div>
         <multi-notification-list></multi-notification-list>
     </template>
