@@ -96,7 +96,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return {page: 1, page_size: 10, show_inactive: true};
+        return {page: 1, page_size: 10, show_inactive: false};
     }
 
     public initStarLoad() {
