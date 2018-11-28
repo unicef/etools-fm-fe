@@ -126,7 +126,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         const dialogType = _.get(icon, 'dataset.type');
         if (!dialogType) { return; }
 
-        const model = _.get(event, 'model.site', {});
+        const model = _.get(event, 'model.site', {is_active: true});
         const texts = this.dialogTexts[dialogType] || {};
         this.editedItem = {...model};
         this.originalData = {...model};
@@ -141,6 +141,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             this.map.on('click', (event: LeafletMouseEvent) => {
                 const {lat, lng} = event.latlng;
                 this.changeDMLocation([lat, lng]);
+                this.setCoordsString();
             });
             this.renderMarkers();
         }
@@ -153,6 +154,17 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         if (id) {
             this.dynamicMarker = this.staticMarkers.find((marker: any) => marker.staticData.id === id);
             this.dynamicMarker.openPopup();
+        }
+
+        this.setCoordsString();
+    }
+
+    public setCoordsString(): void {
+        if (!this.dynamicMarker) {
+            this.currentCoords = null;
+        } else {
+            const {lat, lng} = this.dynamicMarker.getLatLng();
+            this.currentCoords = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
         }
     }
 
@@ -171,6 +183,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         }
         _.each(this.staticMarkers, (marker: Marker) => marker.closePopup());
         this.dynamicMarker = null;
+        this.setCoordsString();
     }
 
     public saveSite() {
