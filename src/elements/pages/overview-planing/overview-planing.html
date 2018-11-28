@@ -1,4 +1,4 @@
-<!--import [polymer/polymer-element, etools-dropdown, rationale-tab, iron-flex-layout]-->
+<!--import [polymer/polymer-element, etools-dropdown, rationale-tab]-->
 
 <!--import [pages-header, redux-mixin, etools-app-config, month-counter]-->
 
@@ -8,7 +8,14 @@
         <!-- inject styles './overview-planing.scss'-->
 
         <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
-        <pages-header title="Overview Planing" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
+        <pages-header title="Overview Planing" tab="{{routeData.tab}}" tabs="[[tabs]]">
+            <template is="dom-if" if="[[_isShowLogIssue(routeData.tab, logIssuesPermissions)]]">
+                <paper-button class="add-btn" on-click="_onCreateLogIssue">
+                    <iron-icon icon="icons:add"></iron-icon>
+                    Log Issue
+                </paper-button>
+            </template>
+        </pages-header>
 
         <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'rationale', 'plan-by-tasks')]]">
             <div class="year-select-and-info layout start">
@@ -38,6 +45,7 @@
 
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
             <rationale-tab name="rationale" route="{{route}}" selected-year="[[selectedYear]]" year-plan="[[yearPlan]]"></rationale-tab>
+            <preparation-tab name="preparation" route="{{route}}"></preparation-tab>
         </iron-pages>
     </template>
 

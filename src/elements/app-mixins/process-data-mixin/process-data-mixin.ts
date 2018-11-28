@@ -7,6 +7,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends FMMixins.P
             const subPath = pathProperty.length === 0 ? key : `${pathProperty}.${key}`;
             const originalValue = originalData[key];
             let modifiedValue = modifiedData[key];
+            if (originalValue === null && modifiedValue === null) { return changes; }
             const propertyType = this.getDescriptorType(permissions, subPath);
             if (propertyType === 'nested object') {
                 modifiedValue = this.changes(originalData[key], modifiedData[key], permissions, toRequest, subPath);

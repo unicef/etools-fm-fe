@@ -51,8 +51,24 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
     },
 
+    logIssues: {
+        url: '/api/v1/field-monitoring/settings/log-issues/'
+    },
+
+    logIssuesDetails: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/'
+    },
+
+    logIssuesAttachments: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
+    },
+
+    logIssuesAttachmentsDetails: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>'
+    },
+
     attachments: {
-        template: '/api/v1/field-monitoring/settings/attachments/'
+        url: '/api/v1/field-monitoring/settings/attachments/'
     },
 
     changeCountry: {
@@ -63,6 +79,18 @@ export const endpoints: Endpoints = {
         url: '/api/v2/partners/?partner_type=Government',
         exp: 2 * 60 * 60 * 1000, // 2h
         cacheTableName: 'governmentPartners'
+    },
+
+    monitoredPartners: {
+        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'monitoredPartners'
+    },
+
+    monitoredCpOutputs: {
+        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'monitoredCpOutputs'
     },
 
     locations: {

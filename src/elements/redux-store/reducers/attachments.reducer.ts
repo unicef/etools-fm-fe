@@ -7,6 +7,7 @@ import {
 } from '../actions/attachments.actions';
 
 const INITIAL = {
+    requestInProcess: null,
     data: {
         count: 0,
         results: [] as Attachment[]
