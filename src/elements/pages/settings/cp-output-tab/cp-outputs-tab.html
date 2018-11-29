@@ -8,19 +8,23 @@
         <app-route route="{{route}}" pattern="/cp-outputs" active="{{isActive}}"></app-route>
         <paper-card>
             <div class="layout horizontal">
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.parent]]"
-                        label="CP Outcome"
-                        placeholder$="Select"
-                        options="[[cpOutcomes]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="_changeOutcomeFilter"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.parent]]"
+                            label="CP Outcome"
+                            placeholder$="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="_changeOutcomeFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.fm_config__is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
                     <span>Show only 'Monitored At Community Level'</span>

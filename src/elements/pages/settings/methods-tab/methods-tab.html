@@ -11,19 +11,20 @@
         <app-route route="{{route}}" pattern="/methods" active="{{isActive}}"></app-route>
         <paper-card>
             <div class="layout horizontal">
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.method]]"
-                        label="Method"
-                        placeholder$="Select Method"
-                        options="[[methods]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="_changeFilterValue"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.method]]"
+                            label="Method"
+                            placeholder$="Select Method"
+                            options="[[methods]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="_changeFilterValue"
+                            hide-search allow-outside-scroll>
+                    </etools-dropdown>
+                </div>
             </div>
         </paper-card>
 
