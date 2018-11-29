@@ -40,12 +40,12 @@
         }
     }
 
-    .add-btn {
-        color: white;
+    paper-button.add-btn {
         background-color: var(--module-primary);
-
-        iron-icon {
-            margin-right: 5px;
-        }
+        color: white;
+        height: 36px;
+        font-weight: 500;
+        padding-left: 10px;
+        padding-right: 15px;
     }
 }

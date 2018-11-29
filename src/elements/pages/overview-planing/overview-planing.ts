@@ -17,10 +17,25 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
                 value: () => [
                     {name: 'rationale', query: 'rationale'},
                     {name: 'co overview', query: 'co-overview'},
-                    {name: 'plan by tasks', query: 'plan-by-tasks'},
+                    {name: 'plan by task', query: 'plan-by-task'},
                     {name: 'checklist', query: 'checklist'},
                     {name: 'preparation', query: 'preparation'}
                 ]
+            },
+            permissions: {
+                type: Object,
+                value: () => ({})
+            },
+            addBtnTexts: {
+                type: Object,
+                value: () => ({
+                    'preparation': 'Log Issue',
+                    'plan-by-task': 'Plan A Task'
+                })
+            },
+            showAddButton: {
+                type: Boolean,
+                computed: 'checkAddBtn(routeData.tab, permissions.*)'
             }
         };
     }
@@ -51,7 +66,11 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
 
         this.logIssueAllowSubscribe = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'permissions.logIssues'),
-            (permissions: IBackendPermissions) => { this.logIssuesPermissions = permissions; });
+            (permissions: IBackendPermissions) => { this.set('permissions.preparation', permissions); });
+
+        this.planByTaskAllowSubscribe = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'permissions.planingTasks'),
+            (permissions: IBackendPermissions) => { this.set('permissions.plan-by-task', permissions); });
     }
 
     public disconnectedCallback() {
@@ -67,13 +86,19 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadYearPlan(this.selectedYear));
     }
 
-    public _isShowLogIssue(tab: string, permissions: IPermissionActions) {
-        return (tab === 'preparation' && permissions && this.actionAllowed(permissions, 'create'));
+    public checkAddBtn(tabName: string) {
+        const permissions = this.permissions[tabName];
+        const btnText = this.getAddBtnText(tabName);
+        return !!btnText && !!permissions && this.actionAllowed(permissions, 'create');
     }
 
-    public _onCreateLogIssue() {
-        const preparationTab = this.shadowRoot.querySelector('preparation-tab');
-        preparationTab.dispatchEvent(new CustomEvent('create-log-issue', {bubbles: true, composed: true}));
+    public getAddBtnText(tab: string) {
+        return this.addBtnTexts[tab] || '';
+    }
+
+    public addBtnClick() {
+        const tab = this.shadowRoot.querySelector(`#${this.routeData.tab}`);
+        tab.dispatchEvent(new CustomEvent('add-new', {bubbles: true, composed: true}));
     }
 }
 

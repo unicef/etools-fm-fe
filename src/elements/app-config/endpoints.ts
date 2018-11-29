@@ -99,6 +99,10 @@ export const endpoints: Endpoints = {
         cacheTableName: 'locations'
     },
 
+    planingTasks: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
 
     interventionDetails: {

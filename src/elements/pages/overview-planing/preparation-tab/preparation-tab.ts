@@ -25,7 +25,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         this.addEventListener('sort-changed', this.sort);
-        this.addEventListener('create-log-issue', () => this.openCreateLogIssue());
+        this.addEventListener('add-new', () => this.openCreateLogIssue());
 
         const endpoint = getEndpoint('logIssues') as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'logIssues'));
