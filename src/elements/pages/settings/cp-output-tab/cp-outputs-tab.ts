@@ -144,10 +144,10 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         const { item } = model;
         this.dialog = { opened: true, confirm: 'Save', title: item.name };
 
-        // init drop-down
-        if (!item.fm_config) {
-            item.fm_config = { government_partners: [] } as FmConfig;
-        }
+        // init
+        if (!item.fm_config) { item.fm_config = {} as FmConfig; }
+        if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
+        if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
 
         this.editModel = _.cloneDeep(item);
         this.originalModel =  _.cloneDeep(item);
