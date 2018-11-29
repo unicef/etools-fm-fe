@@ -171,7 +171,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _openInterventions({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.interventions ? item.interventions.map((intervention => {
-            return {...intervention.partner, ...{number: intervention.number}};
+            return {...intervention.partner, ...{number: intervention.number, url: intervention.url}};
         })) : [];
         const dialogTitle = this.getDescriptorLabel(this.permissions, 'interventions');
         this.dialogPartners = {title: dialogTitle, opened: true};

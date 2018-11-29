@@ -1,4 +1,4 @@
-<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin]-->
+<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin, tab-inputs-styles]-->
 
 <dom-module id="cp-outputs-tab">
     <template>
@@ -84,20 +84,23 @@
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-2 truncate">
+                        <div class="col-data flex-2">
                             <template is="dom-if" if="[[_isOnePartner(item.interventions)]]">
-                                <a>[[item.interventions.0.partner.name]] | [[item.interventions.0.number]]</a>
+                                <span class="truncate">
+                                    <a class="link-button" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
+                                    <a class="link-button" href$="[[item.interventions.0.url]]">[[item.interventions.0.number]]</a>
+                                </span>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.interventions)]]">
-                                <a on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
+                                <a class="link-button" on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
                             </template>
                         </div>
-                        <div class="col-data flex-3 truncate">
+                        <div class="col-data flex-3">
                             <template is="dom-if" if="[[_isOnePartner(item.fm_config.government_partners)]]">
-                                <a>[[item.fm_config.government_partners.0.name]]</a>
+                                <a class="link-button truncate">[[item.fm_config.government_partners.0.name]]</a>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.fm_config.government_partners)]]">
-                                <a on-click="_openPartners">[[item.fm_config.government_partners.length]] PARTNERS</a>
+                                <a class="link-button" on-click="_openPartners">[[item.fm_config.government_partners.length]] PARTNERS</a>
                             </template>
                         </div>
                         <template is="dom-if" if="[[isAllowEdit()]]">
@@ -127,8 +130,11 @@
                 hide-confirm-btn>
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
-                    <div class="partner-row"><a>[[partner.name]]</a>
-                        <template is="dom-if" if="[[partner.number]]">| [[partner.number]]</template>
+                    <div class="partner-row">
+                        <a class="link-button" href$="[[partner.url]]">[[partner.name]]</a>
+                        <template is="dom-if" if="[[partner.number]]">
+                            | <a class="link-button" href$="[[partner.url]]">[[partner.number]]</a>
+                        </template>
                     </div>
                 </template>
             </div>
