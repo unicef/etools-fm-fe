@@ -1,1 +1,36 @@
+:host {
+    position: relative;
+    display: block;
+    padding: 0 25px 25px;
 
+    .location-code { margin: 0 10px 0 5px; }
+
+    .container:not(.first) {
+        padding-top: 0;
+    }
+
+    .field-title {
+        padding: 0 12px;
+    }
+
+    .col-data a {
+        color: var(--module-primary);
+        font-weight: 500;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    iron-icon:not([data-type]) {
+        color: #de422e;
+        width: 16px;
+        height: 15px;
+    }
+}
+
+paper-card {
+    padding: 8px 0;
+    display: block;
+    margin-top: 25px;
+    --paper-card_-_background-color: white;
+    --paper-card_-_margin: 0 24px;
+}

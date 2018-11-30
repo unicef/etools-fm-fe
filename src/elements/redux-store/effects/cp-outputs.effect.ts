@@ -8,10 +8,11 @@ import { Dispatch } from 'redux';
 import { getEndpoint, objectToQuery } from '../../app-config/app-config';
 import { request } from '../request';
 import { AddNotification } from '../actions/notification.actions';
+import { ResetStaticData } from '../actions/static-data.actions';
 
 export function loadCpOutputs(queryParams: QueryParams) {
     return function(dispatch: Dispatch) {
-        const endpoint = getEndpoint('cpOutputs') as StaticEndpoint;
+        const endpoint = getEndpoint('cpOutputs');
         const url = endpoint.url + objectToQuery(queryParams);
         return request(url, {method: 'GET'})
             .catch(() => {
@@ -19,6 +20,20 @@ export function loadCpOutputs(queryParams: QueryParams) {
                 return {results: []};
             })
             .then(response => dispatch(new SetCpOutputs(response)));
+    };
+}
+
+export function loadCpOutputsConfigs() {
+    return function(dispatch: Dispatch) {
+        const {url} = getEndpoint('cpOutputsConfigs');
+        return request(`${url}?is_monitored=true`, {method: 'GET'})
+            .catch(() => {
+                dispatch(new AddNotification('Can not Load CP Outputs Configs'));
+                return {results: []};
+            })
+            .then(response => {
+                dispatch(new ResetStaticData('cpOutputsConfigs', response.results));
+            });
     };
 }
 

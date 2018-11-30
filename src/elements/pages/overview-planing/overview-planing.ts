@@ -57,7 +57,7 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         const currentYear = new Date().getFullYear();
-        this.yearOptions = [currentYear - 1, currentYear].map(year => ({label: year, value: year}));
+        this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
         this.selectedYear = currentYear;
 
         this.yearPlanSubscriber = this.subscribeOnStore(

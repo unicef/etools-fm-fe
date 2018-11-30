@@ -1,4 +1,5 @@
 type NullOrNumber = null | number;
+import { months } from '../month-list';
 
 class MonthCounter extends Polymer.Element {
     public static get is() { return 'month-counter'; }
@@ -7,10 +8,7 @@ class MonthCounter extends Polymer.Element {
         return {
             months: {
                 type: Array,
-                value: () => ['January', 'February', 'March',
-                    'April', 'May', 'June',
-                    'July', 'August', 'September',
-                    'October', 'November', 'December']
+                value: () => months
             },
             showTitles: Boolean,
             count: {
@@ -25,7 +23,7 @@ class MonthCounter extends Polymer.Element {
     }
 
     public getCountForMonth(countArray: number[], index: number): NullOrNumber {
-        const count = countArray[index];
+        const count = (countArray || [])[index];
         return isNaN(count) ? null : count;
     }
 }

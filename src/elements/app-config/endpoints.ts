@@ -103,6 +103,10 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/'
     },
 
+    planingTaskDetails: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/<%=id%>/'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
 
     interventionDetails: {

@@ -1,0 +1,27 @@
+<!--import [polymer/polymer-element, iron-flex-layout, paper-input]-->
+
+<!--import [tab-inputs-styles]-->
+<dom-module id="month-counter-input">
+    <template>
+        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles"></style>
+        <!-- inject styles './month-counter-input.scss'-->
+
+        <template is="dom-repeat" items="[[months]]" as="month">
+
+            <div class="month">
+                <paper-input
+                        pattern="0-9"
+                        label="[[getMonthName(month, 3)]]"
+                        value="[[getCountForMonth(count, index)]]"
+                        data-index$="[[index]]"
+                        always-float-label
+                        maxlength="2"
+                        on-input="onCountChange"></paper-input>
+            </div>
+
+        </template>
+
+    </template>
+
+    <!-- inject scripts './month-counter-input.ts'-->
+</dom-module>
