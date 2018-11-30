@@ -10,45 +10,56 @@
 
         <paper-card>
             <div class="layout horizontal">
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.cp_output]]"
-                        label="[[getDescriptorLabel(permissions, 'cp_output')]]"
-                        placeholder$="Select"
-                        options="[[cpOutputs]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="changeCpOutputsFilter"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.partner]]"
-                        label="[[getDescriptorLabel(permissions, 'partner')]]"
-                        placeholder$="Select"
-                        options="[[monitoredPartners]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="changePartnerFilter"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.location_site]]"
-                        label="[[getDescriptorLabel(permissions, 'location_site')]]"
-                        placeholder$="Select"
-                        options="[[siteLocations]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="changeSitesFilter"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.cp_output]]"
+                            label="[[getDescriptorLabel(permissions, 'cp_output')]]"
+                            placeholder$="Select"
+                            options="[[cpOutputs]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="changeCpOutputsFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.partner]]"
+                            label="[[getDescriptorLabel(permissions, 'partner')]]"
+                            placeholder$="Select"
+                            options="[[monitoredPartners]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="changePartnerFilter"
+                            hide-search allow-outside-scroll
+                            min-width="350px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.location_site]]"
+                            label="[[getDescriptorLabel(permissions, 'location_site')]]"
+                            placeholder$="Select"
+                            options="[[siteLocations]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="changeSitesFilter"
+                            hide-search allow-outside-scroll
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.status]]" on-checked-changed="changeOnlyNewFilter"></paper-toggle-button>
                     <span>Show only New</span>

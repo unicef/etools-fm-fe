@@ -3,17 +3,6 @@
   display: block;
   padding: 0 25px 25px;
 
-  .filter-dropdown {
-    margin-left: 20px;
-    width: 240px;
-
-    --esmm-list-wrapper: {
-      margin-top: 0;
-      padding-top: 12px;
-      -ms-overflow-style: auto;
-    }
-  }
-
   .related-to-type {
     label {
       color: var(--secondary-text-color);

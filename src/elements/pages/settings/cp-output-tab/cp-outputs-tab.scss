@@ -4,14 +4,6 @@
     padding: 0 25px 25px;
 
     .filter-dropdown {
-        margin-left: 20px;
-        width: 240px;
-
-        --esmm-list-wrapper: {
-            margin-top: 0;
-            padding-top: 12px;
-            -ms-overflow-style: auto;
-        }
     }
 
 }
@@ -24,12 +16,6 @@
 }
 .col-data .expired {
     margin-right: 5px;
-}
-
-.col-data a {
-    color: var(--module-primary);
-    font-weight: 500;
-    cursor: pointer;
 }
 
 .partner-row {

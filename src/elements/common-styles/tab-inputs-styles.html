@@ -86,12 +86,25 @@
                 font-weight: 500;
             }
 
+            a.link-button {
+                color: var(--module-primary);
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .filter-dropdown {
+                margin-left: 20px;
+            }
+            .filter-dropdown etools-dropdown,
+            .filter-dropdown etools-dropdown-multi {
+                min-width: 240px;
+            }
+
             etools-dropdown,
             etools-dropdown-multi,
             paper-dropdown-menu,
             paper-textarea,
             paper-input {
-                width: 100%;
                 padding: 0 12px;
                 color: var(--gray-mid);
                 box-sizing: border-box;

@@ -19,8 +19,7 @@
 
         <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'rationale', 'plan-by-task')]]">
             <div class="year-select-and-info layout start">
-                <etools-dropdown class="filter-dropdown"
-                                 selected="{{selectedYear}}"
+                <etools-dropdown selected="{{selectedYear}}"
                                  label="Year"
                                  placeholder$="Select Year"
                                  options="[[yearOptions]]"

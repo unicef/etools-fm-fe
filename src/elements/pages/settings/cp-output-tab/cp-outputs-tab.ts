@@ -144,10 +144,10 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         const { item } = model;
         this.dialog = { opened: true, confirm: 'Save', title: item.name };
 
-        // init drop-down
-        if (!item.fm_config) {
-            item.fm_config = { government_partners: [] } as FmConfig;
-        }
+        // init
+        if (!item.fm_config) { item.fm_config = {} as FmConfig; }
+        if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
+        if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
 
         this.editModel = _.cloneDeep(item);
         this.originalModel =  _.cloneDeep(item);
@@ -171,7 +171,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _openInterventions({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.interventions ? item.interventions.map((intervention => {
-            return {...intervention.partner, ...{number: intervention.number}};
+            return {...intervention.partner, ...{number: intervention.number, url: intervention.url}};
         })) : [];
         const dialogTitle = this.getDescriptorLabel(this.permissions, 'interventions');
         this.dialogPartners = {title: dialogTitle, opened: true};

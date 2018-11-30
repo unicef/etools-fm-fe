@@ -11,19 +11,20 @@
         <app-route route="{{route}}" pattern="/methods" active="{{isActive}}"></app-route>
         <paper-card>
             <div class="layout horizontal">
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.method]]"
-                        label="Method"
-                        placeholder$="Select Method"
-                        options="[[methods]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="_changeFilterValue"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.method]]"
+                            label="Method"
+                            placeholder$="Select Method"
+                            options="[[methods]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            enable-none-option
+                            on-etools-selected-item-changed="_changeFilterValue"
+                            hide-search allow-outside-scroll>
+                    </etools-dropdown>
+                </div>
             </div>
         </paper-card>
 
@@ -59,7 +60,6 @@
 
                         <div class="hover-block">
                             <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
-                            <iron-icon icon="icons:delete" on-tap="openDialog" data-type="remove"></iron-icon>
                         </div>
 
                     </div>
@@ -95,7 +95,7 @@
                 keep-dialog-open
                 on-confirm-btn-clicked="saveType"
                 on-iron-overlay-closed="resetData"
-                ok-button-text="[[dialog.confirm]]">
+                ok-btn-text="[[dialog.confirm]]">
             <etools-loading
                     active="[[savingInProcess]]"
                     loading-text="Saving Data">
