@@ -11,54 +11,51 @@
         <paper-card>
             <div class="layout horizontal">
                 <div class="filter-dropdown">
-                    <etools-dropdown
-                            selected="[[queryParams.cp_output]]"
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.cp_output__in)]]"
                             label="[[getDescriptorLabel(permissions, 'cp_output')]]"
                             placeholder$="Select"
                             options="[[cpOutputs]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
-                            enable-none-option
-                            on-etools-selected-item-changed="changeCpOutputsFilter"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-items-changed="changeCpOutputsFilter"
                             hide-search allow-outside-scroll
                             min-width="470px"
                             horizontal-align="left"
                             no-dynamic-align>
-                    </etools-dropdown>
+                    </etools-dropdown-multi>
                 </div>
                 <div class="filter-dropdown">
-                    <etools-dropdown
-                            selected="[[queryParams.partner]]"
+                    <etools-dropdown-multi
+                            selected-values$="[[_simplifyValue(queryParams.partner__in, [])]]"
                             label="[[getDescriptorLabel(permissions, 'partner')]]"
                             placeholder$="Select"
                             options="[[monitoredPartners]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
-                            enable-none-option
-                            on-etools-selected-item-changed="changePartnerFilter"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-items-changed="changePartnerFilter"
                             hide-search allow-outside-scroll
                             min-width="350px"
                             horizontal-align="left"
                             no-dynamic-align>
-                    </etools-dropdown>
+                    </etools-dropdown-multi>
                 </div>
                 <div class="filter-dropdown">
-                    <etools-dropdown
-                            selected="[[queryParams.location_site]]"
+                    <etools-dropdown-multi
+                            selected-values$="[[_simplifyValue(queryParams.location_site__in, [])]]"
                             label="[[getDescriptorLabel(permissions, 'location_site')]]"
                             placeholder$="Select"
                             options="[[siteLocations]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
-                            enable-none-option
-                            on-etools-selected-item-changed="changeSitesFilter"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-items-changed="changeSitesFilter"
                             hide-search allow-outside-scroll
                             horizontal-align="left"
                             no-dynamic-align>
-                    </etools-dropdown>
+                    </etools-dropdown-multi>
                 </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.status]]" on-checked-changed="changeOnlyNewFilter"></paper-toggle-button>

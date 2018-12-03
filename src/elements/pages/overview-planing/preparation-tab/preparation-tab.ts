@@ -19,7 +19,13 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return {
+            page: 1,
+            page_size: 10,
+            cp_output__in: [],
+            partner__in: [],
+            location_site__in: []
+        };
     }
 
     public connectedCallback() {
@@ -201,34 +207,34 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public changeSitesFilter({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem) {
-            this.updateQueryParams({location_site: selectedItem.id});
+        const { selectedItems } = detail;
+        if (selectedItems && selectedItems.length) {
+            const values = selectedItems.map((item: ISiteParrentLocation) => item.id);
+            this.updateQueryParams({location_site__in: values});
         } else {
-            this.removeQueryParams('location_site');
-            this.updateQueryParams({page: 1});
+            this.updateQueryParams({page: 1, location_site__in: []});
         }
         this.startLoad();
     }
 
     public changePartnerFilter({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem) {
-            this.updateQueryParams({partner: selectedItem.id});
+        const { selectedItems } = detail;
+        if (selectedItems && selectedItems.length) {
+            const values = selectedItems.map((item: Partner) => item.id);
+            this.updateQueryParams({partner__in: values});
         } else {
-            this.removeQueryParams('partner');
-            this.updateQueryParams({page: 1});
+            this.updateQueryParams({page: 1, partner__in: []});
         }
         this.startLoad();
     }
 
     public changeCpOutputsFilter({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem) {
-            this.updateQueryParams({cp_output: selectedItem.id});
+        const { selectedItems } = detail;
+        if (selectedItems && selectedItems.length) {
+            const values = selectedItems.map((item: CpOutput) => item.id);
+            this.updateQueryParams({cp_output__in: values});
         } else {
-            this.removeQueryParams('cp_output');
-            this.updateQueryParams({page: 1});
+            this.updateQueryParams({page: 1, cp_output__in: []});
         }
         this.startLoad();
     }

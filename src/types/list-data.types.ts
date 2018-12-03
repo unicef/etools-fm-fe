@@ -10,5 +10,5 @@ interface IStatedListData<T> extends IListData<T> {
 }
 
 type QueryParams = {
-    [param: string]: number | string | boolean;
+    [param: string]: number | string | boolean | (string | number)[];
 };

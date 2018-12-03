@@ -45,7 +45,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends FMMixins.P
     }
 
     public _simplifyValue(value: any) {
-        if (Array.isArray(value)) { return value.map(obj => obj && obj.hasOwnProperty('id') && obj.id); }
+        if (Array.isArray(value)) { return value.map(obj => obj && obj.hasOwnProperty('id') && obj.id || obj); }
         if (value && value.hasOwnProperty('id')) { return value.id; }
         return value;
     }

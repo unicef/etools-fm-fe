@@ -7,7 +7,7 @@ import {
 } from '../actions/cp-outputs.actions';
 
 const INITIAL = {
-    updateInProcess: null,
+    requestInProcess: null,
     errors: {}
 };
 

@@ -18,7 +18,11 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return {
+            page: 1,
+            page_size: 10,
+            parent__in: []
+        };
     }
 
     public finishLoad() {
@@ -53,12 +57,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public _changeOutcomeFilter({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem) {
-            this.updateQueryParams({parent: selectedItem.id});
+        const { selectedItems } = detail;
+        if (selectedItems) {
+            const values = selectedItems.map((item: CpOutcome) => item.id);
+            this.updateQueryParams({parent__in: values});
         } else {
-            this.removeQueryParams('parent');
-            this.updateQueryParams({page: 1});
+            this.updateQueryParams({page: 1, parent__in: []});
         }
         this.startLoad();
     }

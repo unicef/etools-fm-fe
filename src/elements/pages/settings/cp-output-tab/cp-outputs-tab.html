@@ -9,21 +9,20 @@
         <paper-card>
             <div class="layout horizontal">
                 <div class="filter-dropdown">
-                    <etools-dropdown
-                            selected="[[queryParams.parent]]"
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.parent__in)]]"
                             label="CP Outcome"
                             placeholder$="Select"
                             options="[[cpOutcomes]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
-                            enable-none-option
-                            on-etools-selected-item-changed="_changeOutcomeFilter"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-items-changed="_changeOutcomeFilter"
                             hide-search allow-outside-scroll
                             min-width="470px"
                             horizontal-align="left"
                             no-dynamic-align>
-                    </etools-dropdown>
+                    </etools-dropdown-multi>
                 </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.fm_config__is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>

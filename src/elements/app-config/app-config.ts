@@ -30,9 +30,13 @@ export function jsonToFormData(json: any) {
 }
 
 export function objectToQuery(obj: QueryParams) {
-    const query = Object.keys(obj)
-        .map(key => `${key}=${obj[key]}`)
-        .join('&');
+    const params: string[] = [];
+    Object.keys(obj).forEach(key => {
+        const value = obj[key];
+        if (!value || Array.isArray(value) && !value.length) { return; }
+        params.push(`${key}=${value}`);
+    });
+    const query = params.join('&');
     return query.length > 0 ? '?' + query : '';
 }
 
