@@ -51,6 +51,7 @@
                         <div class="col-data w300px"><month-counter count="[[item.plan_by_month]]"></month-counter></div>
 
                         <div class="hover-block">
+                            <iron-icon icon="icons:content-copy" on-tap="openDialog" data-type="copy"></iron-icon>
                             <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
                             <iron-icon icon="icons:delete" on-tap="openDialog" data-type="remove"></iron-icon>
                         </div>
@@ -90,129 +91,184 @@
                 keep-dialog-open
                 on-confirm-btn-clicked="saveTask"
                 on-iron-overlay-closed="resetData"
-                ok-button-text="[[dialog.confirm]]">
+                ok-btn-text="[[dialog.confirm]]">
             <etools-loading
                     active="[[savingInProcess]]"
                     loading-text="Saving Data">
             </etools-loading>
-            <template is="dom-if" if="[[isRemoveDialog(dialog.theme)]]">
+
+            <template is="dom-if" if="[[notTouched]]">
+                <div class="copy-warning">It is required to change at least one of the fields below.</div>
+            </template>
+
+            <template is="dom-if" if="[[checkDialogType(dialog.type, 'remove')]]">
                 <div class="remove-title">Are you sure that you want to delete this task?</div>
             </template>
-            <template is="dom-if" if="[[!isRemoveDialog(dialog.theme)]]">
-                <div class="container first layout horizontal">
-                    <etools-dropdown
-                            class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.cp_output_config)]]"
-                            selected-item="{{selectedOutput}}"
-                            label="[[getDescriptorLabel(permissions, 'cp_output_config')]]"
-                            placeholder="[[getPlaceholder(permissions, 'cp_output_config', 'Select')]]"
-                            options="[[cpOutputConfigs]]"
-                            option-label="name"
-                            option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'cp_output_config')]]"
-                            disabled$="[[getReadonlyStatus(permissions, 'cp_output_config')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'cp_output_config')]]"
-                            invalid="{{errors.cp_output_config}}"
-                            error-message="{{errors.cp_output_config}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            on-etools-selected-item-changed="setEditedValue"
-                            data-fieldname="cp_output_config"
-                            trigger-value-change-event allow-outside-scroll dynamic-align></etools-dropdown>
+
+            <template is="dom-if" if="[[checkDialogType(dialog.type, 'edit')]]">
+                <div class="edited-info">
+                    <div class="title">You have selected</div>
+                    <div class="line layout start horizontal">
+                        <div class="title">[[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]]</div> <div class="value">[[originalData.cp_output_config.cp_output.name]]</div>
+                    </div>
+                    <div class="line layout start horizontal">
+                        <div class="title">[[getDescriptorLabel(permissions, 'partner')]]</div> <div class="value">[[originalData.partner.name]]</div>
+                    </div>
+                    <div class="line layout start horizontal" hidden$="[[!originalData.intervention]]">
+                        <div class="title">[[getDescriptorLabel(permissions, 'intervention')]]</div> <div class="value">[[originalData.intervention.title]]</div>
+                    </div>
+                </div>
+            </template>
+
+            <template is="dom-if" if="[[!checkDialogType(dialog.type, 'remove')]]">
+                <div hidden$="[[checkDialogType(dialog.type, 'edit')]]">
+                    <div class="container first layout horizontal">
+                        <etools-dropdown
+                                class="validate-input disabled-as-readonly flex-3"
+                                selected="[[_simplifyValue(editedItem.cp_output_config)]]"
+                                selected-item="{{selectedOutput}}"
+                                label="[[getDescriptorLabel(permissions, 'cp_output_config')]]"
+                                placeholder="[[getPlaceholder(permissions, 'cp_output_config', 'Select')]]"
+                                options="[[cpOutputConfigs]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'cp_output_config')]]"
+                                disabled$="[[getReadonlyStatus(permissions, 'cp_output_config')]]"
+                                readonly$="[[getReadonlyStatus(permissions, 'cp_output_config')]]"
+                                invalid="{{errors.cp_output_config}}"
+                                error-message="{{errors.cp_output_config}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                on-etools-selected-item-changed="setEditedValue"
+                                data-fieldname="cp_output_config"
+                                trigger-value-change-event allow-outside-scroll dynamic-align></etools-dropdown>
+                    </div>
+
+                    <div class="container layout horizontal">
+                        <etools-dropdown
+                                class="validate-input disabled-as-readonly flex-3"
+                                selected="[[_simplifyValue(editedItem.partner)]]"
+                                label="[[getDescriptorLabel(permissions, 'partner')]]"
+                                placeholder="[[getPlaceholder(permissions, 'partner', 'Select')]]"
+                                options="[[selectedOutput.partners]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'partner')]]"
+                                disabled$="[[isReadonlyField(permissions, 'partner', editedItem.cp_output_config)]]"
+                                readonly$="[[isReadonlyField(permissions, 'partner', editedItem.cp_output_config)]]"
+                                invalid="{{errors.partner}}"
+                                error-message="{{errors.partner}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                on-etools-selected-item-changed="setEditedValue"
+                                data-fieldname="partner"
+                                trigger-value-change-event allow-outside-scroll
+                                dynamic-align></etools-dropdown>
+                    </div>
+
+                    <div class="container layout horizontal">
+                        <etools-dropdown
+                                class="validate-input disabled-as-readonly flex-3"
+                                selected="[[_simplifyValue(editedItem.intervention)]]"
+                                label="[[getDescriptorLabel(permissions, 'intervention')]]"
+                                placeholder="[[getPlaceholder(permissions, 'intervention', 'Select')]]"
+                                options="[[interventionsList]]"
+                                option-label="title"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'intervention')]]"
+                                disabled$="[[isReadonlyField(permissions, 'intervention', editedItem.partner)]]"
+                                readonly$="[[isReadonlyField(permissions, 'intervention', editedItem.partner)]]"
+                                invalid="{{errors.intervention}}"
+                                error-message="{{errors.intervention}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                on-etools-selected-item-changed="setEditedValue"
+                                data-fieldname="intervention"
+                                trigger-value-change-event allow-outside-scroll
+                                dynamic-align></etools-dropdown>
+                    </div>
+
+                    <div class="container layout horizontal">
+                        <etools-dropdown
+                                class="validate-input disabled-as-readonly flex-3"
+                                selected="[[_simplifyValue(editedItem.location)]]"
+                                selected-item="{{selectedLocation}}"
+                                label="[[getDescriptorLabel(permissions, 'location')]]"
+                                placeholder="[[getPlaceholder(permissions, 'location', 'Select')]]"
+                                options="[[locations]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'location')]]"
+                                disabled$="[[getReadonlyStatus(permissions, 'location')]]"
+                                readonly$="[[getReadonlyStatus(permissions, 'location')]]"
+                                invalid="{{errors.location}}"
+                                error-message="{{errors.location}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                on-etools-selected-item-changed="setEditedValue"
+                                data-fieldname="location"
+                                trigger-value-change-event allow-outside-scroll
+                                dynamic-align></etools-dropdown>
+
+                        <etools-dropdown
+                                class="validate-input disabled-as-readonly flex-3"
+                                selected="[[_simplifyValue(editedItem.location_site)]]"
+                                label="[[getDescriptorLabel(permissions, 'location_site')]]"
+                                placeholder="[[getPlaceholder(permissions, 'location_site', 'Select')]]"
+                                options="[[selectedLocation.sites]]"
+                                option-label="name"
+                                option-value="id"
+                                required$="[[getRequiredStatus(permissions, 'location_site')]]"
+                                disabled$="[[isReadonlyField(permissions, 'location_site', editedItem.location)]]"
+                                readonly$="[[isReadonlyField(permissions, 'location_site', editedItem.location)]]"
+                                invalid="{{errors.location_site}}"
+                                error-message="{{errors.location_site}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                on-etools-selected-item-changed="setEditedValue"
+                                data-fieldname="location_site"
+                                trigger-value-change-event allow-outside-scroll
+                                dynamic-align></etools-dropdown>
+                    </div>
                 </div>
 
-                <div class="container layout horizontal">
-                    <etools-dropdown
-                            class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.partner)]]"
-                            label="[[getDescriptorLabel(permissions, 'partner')]]"
-                            placeholder="[[getPlaceholder(permissions, 'partner', 'Select')]]"
-                            options="[[selectedOutput.partners]]"
-                            option-label="name"
-                            option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'partner')]]"
-                            disabled$="[[getReadonlyStatus(permissions, 'partner')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'partner')]]"
-                            invalid="{{errors.partner}}"
-                            error-message="{{errors.partner}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            on-etools-selected-item-changed="setEditedValue"
-                            data-fieldname="partner"
-                            trigger-value-change-event allow-outside-scroll
-                            dynamic-align></etools-dropdown>
-                </div>
 
-                <div class="container layout horizontal">
-                    <etools-dropdown
-                            class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.intervention)]]"
-                            label="[[getDescriptorLabel(permissions, 'intervention')]]"
-                            placeholder="[[getPlaceholder(permissions, 'intervention', 'Select')]]"
-                            options="[[selectedOutput.cp_output.interventions]]"
-                            option-label="title"
-                            option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'intervention')]]"
-                            disabled$="[[getReadonlyStatus(permissions, 'intervention')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'intervention')]]"
-                            invalid="{{errors.intervention}}"
-                            error-message="{{errors.intervention}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            on-etools-selected-item-changed="setEditedValue"
-                            data-fieldname="intervention"
-                            trigger-value-change-event allow-outside-scroll
-                            dynamic-align></etools-dropdown>
-                </div>
+                <div class="container block layout horizontal" is-edit-dialog$="[[checkDialogType(dialog.type, 'edit')]]">
 
-                <div class="container layout horizontal">
-                    <etools-dropdown
-                            class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.location)]]"
-                            selected-item="{{selectedLocation}}"
-                            label="[[getDescriptorLabel(permissions, 'location')]]"
-                            placeholder="[[getPlaceholder(permissions, 'location', 'Select')]]"
-                            options="[[locations]]"
-                            option-label="name"
-                            option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'location')]]"
-                            disabled$="[[getReadonlyStatus(permissions, 'location')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'location')]]"
-                            invalid="{{errors.location}}"
-                            error-message="{{errors.location}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            on-etools-selected-item-changed="setEditedValue"
-                            data-fieldname="location"
-                            trigger-value-change-event allow-outside-scroll
-                            dynamic-align></etools-dropdown>
-
-                    <etools-dropdown
-                            class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.location_site)]]"
-                            label="[[getDescriptorLabel(permissions, 'location_site')]]"
-                            placeholder="[[getPlaceholder(permissions, 'location_site', 'Select')]]"
-                            options="[[selectedLocation.sites]]"
-                            option-label="name"
-                            option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'location_site')]]"
-                            disabled$="[[getReadonlyStatus(permissions, 'location_site')]]"
-                            readonly$="[[getReadonlyStatus(permissions, 'location_site')]]"
-                            invalid="{{errors.location_site}}"
-                            error-message="{{errors.location_site}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            on-etools-selected-item-changed="setEditedValue"
-                            data-fieldname="location_site"
-                            trigger-value-change-event allow-outside-scroll
-                            dynamic-align></etools-dropdown>
-                </div>
-
-                <div class="container layout horizontal">
                     <div class="field-title layout center horizontal">
                         Plan numbers of tasks per month in the selected Location/Site
                     </div>
-                    <month-counter-input count="{{editedItem.plan_by_month}}"></month-counter-input>
+
+                    <div class="location-and-counter layout horizontal center">
+
+                        <div class="layout start vertical flex-auto" hidden$="[[!checkDialogType(dialog.type, 'edit')]]">
+                            <div class="layout start horizontal">
+                                <b>[[getLocationPart(originalData.location.name, 'name')]]</b>
+                                <span class="location-code">[[[getLocationPart(originalData.location.name, 'code')]]]</span>
+                            </div>
+                            <i>[[originalData.location_site.name]]</i>
+                        </div>
+
+                        <month-counter-input count="{{editedItem.plan_by_month}}"></month-counter-input>
+                    </div>
+
+                </div>
+
+
+                <div class="container selected-partners-tasks" hidden$="[[!partnerTasks.length]]">
+                    <div class="planned-tasks-text">Planned tasks for the selected Partner and PD/SSFA</div>
+                    <template is="dom-repeat" items="[[partnerTasks]]">
+                        <div class="layout horizontal">
+                            <div class="layout start vertical flex-auto">
+                                <div class="layout start horizontal">
+                                    <b>[[getLocationPart(item.location.name, 'name')]]</b>
+                                    <span class="location-code">[[[getLocationPart(item.location.name, 'code')]]]</span>
+                                </div>
+                                <i>[[item.location_site.name]]</i>
+                            </div>
+                            <month-counter-input count="[[item.plan_by_month]]" readonly></month-counter-input>
+                        </div>
+                    </template>
                 </div>
             </template>
 

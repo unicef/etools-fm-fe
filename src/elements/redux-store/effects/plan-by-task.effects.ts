@@ -3,6 +3,8 @@ import { getEndpoint, objectToQuery } from '../../app-config/app-config';
 import { request } from '../request';
 import { AddNotification } from '../actions/notification.actions';
 import {
+    SetPartnerTasks,
+    SetPartnerTasksLoadingState,
     SetTasksList,
     SetTasksUpdatingError,
     StartTasksUpdating,
@@ -19,6 +21,21 @@ export function loadPlaningTasks(year: number, queryParams: QueryParams = {}) {
                 return {results: []};
             })
             .then(response => dispatch(new SetTasksList({...response, current: url})));
+    };
+}
+
+export function loadPartnerTasks(year: number, queryParams: QueryParams = {}) {
+    return function(dispatch: Dispatch) {
+        dispatch(new SetPartnerTasksLoadingState(true));
+        const endpoint = getEndpoint('planingTasks', {year});
+        const url = endpoint.url + objectToQuery({...queryParams, page_size: 'all'});
+        return request(url, {method: 'GET'})
+            .catch(() => {
+                dispatch(new AddNotification('Can not Load Planing Tasks for selected Partner'));
+                return [];
+            })
+            .then(response => dispatch(new SetPartnerTasks(response)))
+            .then(() => dispatch(new SetPartnerTasksLoadingState(false)));
     };
 }
 

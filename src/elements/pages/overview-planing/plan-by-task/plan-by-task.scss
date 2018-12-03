@@ -25,6 +25,50 @@
         width: 16px;
         height: 15px;
     }
+
+    .copy-warning {
+        position: relative;
+        margin-bottom: 10px;
+        padding: 20px 24px;
+        background-color: #ededee;
+        color: #212121;
+        font-size: 15px;
+    }
+
+    etools-dialog .container.selected-partners-tasks {
+        padding: 14px 28px ;
+        background-color: #ededee;
+    }
+
+    .planned-tasks-text {
+        margin-bottom: 14px;
+    }
+    .container.block {
+        display: flex;
+        flex-direction: row;
+        padding-right: 24px;
+    }
+    .container.block[is-edit-dialog] {
+        flex-direction: column;
+
+        .field-title { padding: 24px 12px 12px; }
+        .location-and-counter { padding-left: 12px; }
+    }
+    .edited-info {
+        position: relative;
+        padding: 14px 28px 21px;
+        background-color: #ededee;
+
+        & > .title { padding-bottom: 14px; }
+        .line { margin-bottom: 7px; }
+        .line .title {
+            color: #7c7c7c;
+            width: 97px;
+        }
+        .line .value { text-transform: uppercase; }
+
+
+    }
 }
 
 paper-card {

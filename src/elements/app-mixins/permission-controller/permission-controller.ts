@@ -11,7 +11,8 @@ window.FMMixins.PermissionController = (superClass: any) => class extends superC
     }
 
     public getRequiredStatus(collection: IPermissionActions, path: string) {
-        return this.getDescriptorFromAll(collection, path, 'required');
+        return this.getFieldDescriptor(collection, path, 'required', 'POST') ||
+                this.getFieldDescriptor(collection, path, 'required', 'PUT');
     }
 
     public getDescriptorChoices(collection: IPermissionActions, path: string) {

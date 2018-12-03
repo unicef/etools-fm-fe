@@ -1,5 +1,5 @@
 import {
-    PlaningTasksActions, SET_TASKS_LIST,
+    PlaningTasksActions, SET_PARTNER_TASKS, SET_PARTNER_TASKS_LOADING_STATE, SET_TASKS_LIST,
     SET_TASKS_UPDATING_ERROR,
     START_TASKS_UPDATING,
     STOP_TASKS_UPDATING
@@ -7,7 +7,11 @@ import {
 
 const INITIAL = {
     updateInProcess: null,
-    errors: {}
+    errors: {},
+    partnerTasks: {
+        loading: false,
+        tasks: []
+    }
 };
 
 export function planingTasks(state = INITIAL, action: PlaningTasksActions) {
@@ -20,6 +24,14 @@ export function planingTasks(state = INITIAL, action: PlaningTasksActions) {
             return Object.assign({}, state, {updateInProcess: false});
         case SET_TASKS_UPDATING_ERROR:
             return Object.assign({}, state, action.payload);
+        case SET_PARTNER_TASKS:
+            const newState = Object.assign({}, state);
+            newState.partnerTasks = Object.assign({}, newState.partnerTasks, {tasks: action.payload});
+            return newState;
+        case SET_PARTNER_TASKS_LOADING_STATE:
+            const newTasksState = Object.assign({}, state);
+            newTasksState.partnerTasks = Object.assign({}, newTasksState.partnerTasks, {loading: action.payload});
+            return newTasksState;
         default:
             return state;
     }

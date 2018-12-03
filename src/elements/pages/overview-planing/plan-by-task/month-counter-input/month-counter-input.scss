@@ -36,3 +36,15 @@
     }
 
 }
+
+:host([readonly]) {
+    paper-input {
+        --paper-input-container-underline: #{'{
+                    display: none;
+                }'};
+        --paper-input-container-underline-focus: #{'{
+                    display: none;
+                }'};
+        --paper-input-container-focus-color: var(--secondary-text-color);
+    }
+}

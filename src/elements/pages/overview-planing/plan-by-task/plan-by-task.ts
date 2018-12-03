@@ -4,12 +4,14 @@ import { loadCpOutputsConfigs } from '../../../redux-store/effects/cp-outputs.ef
 import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
 import { loadSiteLocations } from '../../../redux-store/effects/site-specific-locations.effects';
 import {
+    loadPartnerTasks,
     loadPlaningTasks,
     removePlaningTask,
     updatePlaningTask
 } from '../../../redux-store/effects/plan-by-task.effects';
 import { addPlaningTask } from '../../../redux-store/effects/plan-by-task.effects';
 import { loadYearPlan } from '../../../redux-store/effects/year-paln.effects';
+import { SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
 
 class PlanByTask extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -35,7 +37,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                     add: {title: 'Add Task', confirm: 'Add', type: 'add', theme: 'default'},
                     edit: {title: 'Edit Task', confirm: 'Save', type: 'edit', theme: 'default'},
                     copy: {title: 'Copy Task', confirm: 'Save', type: 'copy', theme: 'default'},
-                    remove: {type: 'remove', theme: 'confirmation'}
+                    remove: {type: 'remove', theme: 'confirmation', confirm: 'Delete'}
                 }
             },
             errors: {
@@ -45,6 +47,15 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             planingTasks: {
                 type: Array,
                 value: () => []
+            },
+            notTouched: {
+                type: Boolean,
+                value: false
+            },
+            interventionsList: {
+                type: Array,
+                value: () => [],
+                computed: 'setInterventionsList(editedItem.partner, selectedOutput)'
             }
         };
     }
@@ -68,6 +79,14 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 if (!planingTasks) { return; }
                 this.planingTasks = planingTasks.results || [];
                 this.count = planingTasks.count || 0;
+            });
+
+        this.partnerTasksSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'planingTasks.partnerTasks'),
+            (partnerTasks: {loading: boolean, tasks: PlaningTask[]} | undefined) => {
+                if (!partnerTasks) { return; }
+                this.partnerTasksLoading = partnerTasks.loading;
+                this.partnerTasks = partnerTasks.tasks.filter((task) => task.id !== this.editedItem.id);
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
@@ -149,6 +168,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this.editedItem = _.cloneDeep(item);
         this.originalData = _.cloneDeep(item);
         this.dialog = {opened: true, ...texts};
+        this._checkNotTouched();
     }
 
     public resetData(event: CustomEvent): void {
@@ -160,6 +180,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public saveTask() {
+        if (this.dialog.type === 'copy' && this.notTouched) { return; }
         const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
@@ -176,8 +197,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             case 'remove':
                 this.dispatchOnStore(removePlaningTask(this.selectedYear, this.editedItem.id));
                 break;
-            case 'clone':
-                // this.dispatchOnStore(addPlaningTask(this.selectedYear, this.editedItem));
+            case 'copy':
+                this.dispatchOnStore(addPlaningTask(this.selectedYear, this.editedItem));
                 break;
         }
     }
@@ -185,22 +206,80 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     public setEditedValue({ detail, target }: CustomEvent) {
         const { selectedItem } = detail;
         const fieldName = (target as HTMLElement).dataset.fieldname;
+
         if (fieldName) {
-            this.editedItem[fieldName] = selectedItem && selectedItem.id || null;
+            this.set(`editedItem.${fieldName}`, selectedItem && selectedItem.id || null);
         }
 
-        if (fieldName === 'cp_output_config') {
-            this.clearEditedField('partner', 'selectedOutput.partners');
-            this.clearEditedField('intervention', 'selectedOutput.cp_output.interventions');
+        if (fieldName === 'cp_output_config') { this.clearEditedField('partner', 'selectedOutput.partners'); }
+        if (fieldName === 'location') { this.clearEditedField('location_site', 'selectedLocation.sites'); }
+        if (fieldName === 'partner') { this.clearEditedField('intervention', 'interventionsList'); }
+
+        if (fieldName === 'partner' || fieldName === 'intervention' || fieldName === 'cp_output_config') {
+            this.loadPartnerTasks();
         }
 
-        if (fieldName === 'location_site') {
-            this.clearEditedField('location_site', 'selectedLocation.sites');
+        this._checkNotTouched();
+    }
+
+    public setInterventionsList(partner: number, output: CpOutputConfig) {
+        if (!partner || !output) {
+            return [];
+        } else {
+            const interventions = output.cp_output && output.cp_output.interventions;
+            return interventions.filter((intervention: Intervention) => intervention.partner.id === partner);
         }
     }
 
-    public isRemoveDialog(theme: string): boolean {
-        return theme === 'confirmation';
+    public loadPartnerTasks() {
+        const type = this.dialog && this.dialog.type;
+        const isCopyOrAdd = type !== 'add' && type !== 'copy';
+
+        const partner = !_.isObject(this.editedItem.partner) && this.editedItem.partner;
+        const intervention = !_.isObject(this.editedItem.intervention) && this.editedItem.intervention;
+        const missingPartnerOrIntervention = !partner || (this.interventionsList.length && !intervention);
+        const tasks = this.getFromStore('planingTasks.partnerTasks.tasks');
+
+        if (missingPartnerOrIntervention && !!tasks && !!tasks.length) {
+            this.dispatchOnStore(new SetPartnerTasks([]));
+            return;
+        } else if (missingPartnerOrIntervention || isCopyOrAdd) {
+            return;
+        }
+
+        if (!this.interventionsList.length) {
+            this.dispatchOnStore(loadPartnerTasks(this.selectedYear, { partner }));
+        } else {
+            this.dispatchOnStore(loadPartnerTasks(this.selectedYear, { partner, intervention }));
+        }
+    }
+
+    public checkDialogType(currentType: string, ...expectedTypes: string[]): boolean {
+        return !!~expectedTypes.indexOf(currentType);
+    }
+
+    public isReadonlyField(permissions: PermissionsCollections, field: string, dependency: number) {
+        return this.getReadonlyStatus(permissions, field) || !dependency;
+    }
+
+    public _checkNotTouched() {
+        const isCopyDialog = this.dialog && this.dialog.type === 'copy';
+        if (!isCopyDialog) {
+            this.notTouched = false;
+            return;
+        }
+        this.notTouched = _.every(this.originalData, (value: any, key: string) => {
+            if (_.isArray(value)) { return true; }
+            const isObject = _.isObject(value);
+            if (isObject) {
+                const originalId = +value.id;
+                const currentId = +_.get(this, `editedItem.${key}.id`) || +this.editedItem[key];
+                return !originalId || originalId === currentId;
+            } else {
+                return value === this.editedItem[key];
+            }
+        });
+
     }
 
     public pageNumberChanged({detail}: CustomEvent) {
@@ -213,7 +292,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this.startLoad();
     }
 
-    public getLocationPart(location: string, partToSelect: string) {
+    public getLocationPart(location: string = '', partToSelect: string) {
         const splittedLocation = location.match(/(.*)\s\[(.*)]/i) || [];
         switch (partToSelect) {
             case 'name':
@@ -228,13 +307,13 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     private clearEditedField(field: string, path: string = field) {
         const exists = this.checkExistenceInList(field, path);
         if (!exists) {
-            this.set(`editedItem[${field}]`, null);
+            this.set(`editedItem.${field}`, null);
         }
     }
 
     private checkExistenceInList(field: string, path: string = field) {
         const list = _.get(this, path, []);
-        return  list.find((item: any) => _.isEqual(this.editedItem[field], item) || item.id === this.editedItem[field]);
+        return list.find((item: any) => _.isEqual(this.editedItem[field], item) || item.id === this.editedItem[field]);
     }
 }
 

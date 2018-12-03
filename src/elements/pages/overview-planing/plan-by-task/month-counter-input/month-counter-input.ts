@@ -14,6 +14,11 @@ class MonthCounterInput extends Polymer.Element {
             count: {
                 type: Array,
                 value: () => [],
+            },
+            readonly: {
+                type: Boolean,
+                value: false,
+                observer: 'updateStyles'
             }
         };
     }
