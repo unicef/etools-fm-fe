@@ -1,4 +1,5 @@
-<!--import [polymer/polymer-element, etools-dropdown, iron-flex-layout, iron-icons/notification-icons]-->
+<!--import [polymer/polymer-element, etools-dropdown, etools-dropdown/etools-dropdown-multi,iron-flex-layout,
+            iron-icons/notification-icons]-->
 
 <!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, redux-mixin, etools-app-config, month-counter,
             route-helper-mixin, process-data-mixin, common-methods, month-counter-input]-->
@@ -10,24 +11,122 @@
 
         <app-route route="{{route}}" pattern="/plan-by-task" active="{{isActive}}"></app-route>
 
+
+        <paper-card>
+            <div class="layout horizontal wrap">
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.cp_output_config__cp_output__parent__in)]]"
+                            label="CP Outcome"
+                            placeholder="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="filterValueChanged"
+                            allow-outside-scroll
+                            data-property="cp_output_config__cp_output__parent__in"
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.cp_output_config__in)]]"
+                            label="[[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]]"
+                            placeholder="Select"
+                            options="[[cpOutputConfigs]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="filterValueChanged"
+                            allow-outside-scroll
+                            data-property="cp_output_config__in"
+                            min-width="450px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.partner__in)]]"
+                            label="[[getDescriptorLabel(permissions, 'partner')]]"
+                            placeholder="Select"
+                            options="[[filterPartners]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="filterValueChanged"
+                            allow-outside-scroll
+                            data-property="partner__in"
+                            min-width="400px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.location__in)]]"
+                            label="[[getDescriptorLabel(permissions, 'location')]]"
+                            placeholder="Select"
+                            options="[[filterLocations]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="filterValueChanged"
+                            allow-outside-scroll
+                            data-property="location__in"
+                            min-width="400px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.location_site__in)]]"
+                            label="[[getDescriptorLabel(permissions, 'location_site')]]"
+                            placeholder="Select"
+                            options="[[filterSites]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="filterValueChanged"
+                            allow-outside-scroll
+                            data-property="location_site__in"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="toggle-button-control">
+                    <paper-toggle-button
+                            checked="[[queryParams.cp_output_config__is_priority]]"
+                            on-checked-changed="filterValueChanged"
+                            data-property="cp_output_config__is_priority"></paper-toggle-button>
+                    <span>Show Priority Only</span>
+                </div>
+            </div>
+        </paper-card>
+
+
         <paper-card class="table-container">
 
             <div class="table-title-block with-bottom-line">
-                <div class="table-title">[[permissions.title]]</div>
+                <div class="table-title">[[visibleRange.0]] - [[visibleRange.1]] of [[count]] monitoring tasks to show</div>
             </div>
 
             <etools-data-table-header id="listHeader"
                                       no-collapse no-title>
-                <etools-data-table-column class="flex-4" field="method">
-                    [[getDescriptorLabel(permissions, 'cp_output_config')]] (Priority <iron-icon icon="notification:priority-high"></iron-icon>)
+                <etools-data-table-column class="flex-4" field="cp_output_config__cp_output__name" sortable>
+                    [[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]] (Priority <iron-icon icon="notification:priority-high"></iron-icon>)
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-4" field="name" sortable>
+                <etools-data-table-column class="flex-4" field="partner__name,intervention__title" sortable>
                     [[getDescriptorLabel(permissions, 'partner')]] & [[getDescriptorLabel(permissions, 'intervention')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-5" field="method">
+                <etools-data-table-column class="flex-5" field="location__name,location_site__name" sortable>
                     [[getDescriptorLabel(permissions, 'location')]] & [[getDescriptorLabel(permissions, 'location_site')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="w300px" field="method">
+                <etools-data-table-column class="w300px" field="plan">
                     [[getDescriptorLabel(permissions, 'plan_by_month')]]
                 </etools-data-table-column>
             </etools-data-table-header>
@@ -76,8 +175,9 @@
                     page-size="[[queryParams.page_size]]"
                     page-number="[[queryParams.page]]"
                     total-results="[[count]]"
-                    on-page-size-changed="_pageSizeSelected"
-                    on-page-number-changed="_pageNumberChanged">
+                    visible-range="{{visibleRange}}"
+                    on-page-size-changed="pageSizeSelected"
+                    on-page-number-changed="pageNumberChanged">
             </etools-data-table-footer>
         </paper-card>
 

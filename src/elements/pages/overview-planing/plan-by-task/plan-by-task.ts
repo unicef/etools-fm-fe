@@ -12,6 +12,7 @@ import {
 import { addPlaningTask } from '../../../redux-store/effects/plan-by-task.effects';
 import { loadYearPlan } from '../../../redux-store/effects/year-paln.effects';
 import { SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
+import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 
 class PlanByTask extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -63,6 +64,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         this.addEventListener('add-new', () => this.openDialog({} as EventModel<PlaningTask>));
+        this.addEventListener('sort-changed', this.sort);
 
         this.methodsSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'staticData.cpOutputsConfigs'),
@@ -125,18 +127,62 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 this.startLoad();
                 this.dispatchOnStore(loadYearPlan(this.selectedYear));
             });
+
+        this.cpOutcomeSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
+            (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
+
+        this.filterLocationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'staticData.tasksFilterLocations'),
+            (locations: Location[]) => { this.filterLocations = locations || []; });
+
+        this.filterSitesSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'staticData.tasksFilterSites'),
+            (sites: Site[]) => { this.filterSites = sites || []; });
+
+        this.filterPartnersSubscriber = this.subscribeOnStore(
+            (store: FMStore) => _.get(store, 'staticData.tasksFilterPartners'),
+            (partners: Partner[]) => { this.filterPartners = partners || []; });
+    }
+
+    public disconnectedCallback() {
+        this.disconnectedCallback();
+        this.methodsSubscriber();
+        this.planingTasksSubscriber();
+        this.partnerTasksSubscriber();
+        this.permissionsSubscriber();
+        this.sitesSubscriber();
+        this.updateTypeSubscriber();
+        this.cpOutcomeSubscriber();
+        this.filterLocationsSubscriber();
+        this.filterSitesSubscriber();
+        this.filterPartnersSubscriber();
+
+        this.removeEventListener('sort-changed', this.sort);
+        this.removeEventListener('add-new', this.openCreateLogIssue);
     }
 
     public setYear(year: number) {
         if (year) {
             const endpoint = getEndpoint('planingTasks', {year});
             this.dispatchOnStore(loadPermissions(endpoint.url, 'planingTasks'));
+            this.dispatchOnStore(loadStaticData('tasksFilterLocations', {year}, true));
+            this.dispatchOnStore(loadStaticData('tasksFilterSites', {year}, true));
+            this.dispatchOnStore(loadStaticData('tasksFilterPartners', {year}, true));
             this.startLoad();
         }
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return {
+            page: 1,
+            page_size: 10,
+            cp_output_config__cp_output__parent__in: [],
+            cp_output_config__in: [],
+            partner__in: [],
+            location__in: [],
+            location_site__in: []
+        };
     }
 
     public initStarLoad() {
@@ -155,7 +201,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
             Polymer.Async.timeOut.after(100), () => {
                 this.dispatchOnStore(new RunGlobalLoading({type: 'planingTasks', message: 'Loading Data...'}));
-                this.dispatchOnStore(loadPlaningTasks(this.selectedYear))
+                this.dispatchOnStore(loadPlaningTasks(this.selectedYear, this.queryParams))
                     .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'planingTasks'})));
             });
     }
@@ -289,6 +335,28 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public pageSizeSelected({detail}: CustomEvent) {
         this.updateQueryParams({page_size: detail.value});
+        this.startLoad();
+    }
+
+    public filterValueChanged({ detail, target }: CustomEvent) {
+        const { selectedItems, selectedItem, value } = detail;
+        const property = _.get(target, 'dataset.property');
+        if (!property) { throw new Error('Filter must contain data property attribute'); }
+
+        if (selectedItems) {
+            const values = selectedItems.map((item: CpOutcome) => item.id);
+            this.updateQueryParams({page: 1, [property]: values});
+        } else if (selectedItem || value) {
+            this.updateQueryParams({page: 1, [property]: value || selectedItem.id});
+        } else {
+            this.updateQueryParams({page: 1, [property]: []});
+        }
+        this.startLoad();
+    }
+
+    public sort({ detail }: CustomEvent) {
+        const { field, direction } = detail;
+        this.updateQueryParams({ordering: `${direction === 'desc' ? '-' : ''}${field}`});
         this.startLoad();
     }
 

@@ -107,6 +107,18 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/<%=id%>/'
     },
 
+    tasksFilterLocations: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/locations/?page_size=all'
+    },
+
+    tasksFilterSites: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/locations/sites/?page_size=all'
+    },
+
+    tasksFilterPartners: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/partners/?page_size=all'
+    },
+
     // Old endpoints. TODO: remove latter if redundant
 
     interventionDetails: {

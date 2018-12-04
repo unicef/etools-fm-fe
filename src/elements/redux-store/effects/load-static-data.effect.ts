@@ -1,11 +1,11 @@
 import { getEndpoint } from '../../app-config/app-config';
-import { AddStaticData } from '../actions/static-data.actions';
+import { AddStaticData, ResetStaticData } from '../actions/static-data.actions';
 import { Dispatch } from 'redux';
 
-export function loadStaticData(dataName: string) {
+export function loadStaticData(dataName: string, params?: any, reset?: boolean) {
     return (dispatch: Dispatch) => {
-        const endpoint = getEndpoint(dataName);
-        const url = endpoint && (endpoint as StaticEndpoint).url;
+        const endpoint = getEndpoint(dataName, params);
+        const url = endpoint && endpoint.url;
         if (!url) {
             console.error(`Can not load static data "${dataName}". Reason: url was not found.`);
             return Promise.resolve();
@@ -14,7 +14,11 @@ export function loadStaticData(dataName: string) {
             .then(resp => resp.json())
             .then(data => {
                 const staticData = data.results || data;
-                dispatch(new AddStaticData(dataName, staticData));
+                if (reset) {
+                    dispatch(new ResetStaticData(dataName, staticData));
+                } else {
+                    dispatch(new AddStaticData(dataName, staticData));
+                }
             })
             .catch((error) => {
                 console.error(`Can not load static data "${dataName}". Reason: request error.`);

@@ -107,7 +107,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     public disconnectedCallback() {
         this.disconnectedCallback();
         this.removeEventListener('sort-changed', this.sort);
-        this.removeEventListener('create-log-issue', this.openCreateLogIssue);
+        this.removeEventListener('add-new', this.openCreateLogIssue);
         this.logIssuesSubscriber();
         this.cpOutputsSubscriber();
         this.monitoredPartnersSubscriber();
