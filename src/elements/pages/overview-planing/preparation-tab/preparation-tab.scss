@@ -14,6 +14,10 @@
     color: var(--module-primary);
     cursor: pointer;
   }
+
+  .filter-dropdown {
+    max-width: 470px;
+  }
 }
 
 paper-card {
