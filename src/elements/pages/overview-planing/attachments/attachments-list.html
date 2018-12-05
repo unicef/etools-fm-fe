@@ -44,19 +44,25 @@
                 </div>
             </etools-data-table-row>
         </template>
-        <template is="dom-repeat" items="[[attachments]]" as="attachment">
+        <template is="dom-repeat" items="[[attachments]]" as="item">
             <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row">
                     <div class="col-data flex-1 truncate">
-                        [[formatDate(attachment.created)]]
+                        [[formatDate(item.created)]]
                     </div>
                     <div class="col-data flex-1 truncate">
-                        [[getChoiceLabel(attachment.file_type, fileTypes)]]
+                        [[getChoiceLabel(item.file_type, fileTypes)]]
                     </div>
                     <div class="col-data flex-4 truncate file-link">
                         <iron-icon icon="icons:attachment"></iron-icon>
-                        <a class="file-link" href$="[[attachment.file]]">[[attachment.filename]]</a>
+                        <a class="file-link" href$="[[item.file]]">[[item.filename]]</a>
                     </div>
+                    <template is="dom-if" if="[[isAllowEdit(permissions)]]">
+                        <div class="hover-block">
+                            <iron-icon icon="icons:create" on-click="openDialog"></iron-icon>
+                            <iron-icon icon="icons:clear" on-click="onDeleteAttachment"></iron-icon>
+                        </div>
+                    </template>
                 </div>
             </etools-data-table-row>
         </template>
@@ -66,13 +72,16 @@
                 no-padding
                 keep-dialog-open
                 opened="{{dialog.opened}}"
-                ok-btn-text="Upload"
-                dialog-title="Upload Attachment "
+                ok-btn-text="[[dialog.confirm]]"
+                dialog-title="[[dialog.title]]"
                 on-confirm-btn-clicked="onFinishUpload">
+            <etools-loading
+                    active="[[requestInProcess]]"
+                    loading-text="Saving Attachment"></etools-loading>
             <div class="container layout horizontal">
                 <etools-dropdown
                     class="validate-input disabled-as-readonly flex-1"
-                    selected="{{attachment.file_type}}"
+                    selected="{{selectedModel.file_type}}"
                     label="[[getDescriptorLabel(permissions, 'file_type')]]"
                     placeholder="[[getPlaceholder(permissions, 'file_type', 'Select')]]"
                     options="[[fileTypes]]"
@@ -84,10 +93,27 @@
                     on-focus="resetFieldError"
                     on-tap="resetFieldError"
                     allow-outside-scroll
-                    dynamic-align></etools-dropdown>
-                <div class="flex-1">
-                    <etools-file files="{{attachment.file}}"></etools-file>
+                    dynamic-align>
+                </etools-dropdown>
+                <div>
+                    <etools-file files="{{file}}" hide-delete-btn></etools-file>
                 </div>
+            </div>
+        </etools-dialog>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                theme="confirmation"
+                opened="{{dialogDelete.opened}}"
+                ok-btn-text="Delete"
+                on-confirm-btn-clicked="onFinishDelete">
+            <etools-loading
+                    active="[[requestInProcess]]"
+                    loading-text="Deleting Attachment"></etools-loading>
+            <div class="container layout horizontal">
+                <div>Delete attachment?</div>
             </div>
         </etools-dialog>
     </template>
