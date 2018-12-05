@@ -142,7 +142,7 @@
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
                     <div class="partner-row">
-                        <a class="link-button" href$="[[partner.url]]">[[partner.name]]</a>
+                        <a class="link-button" href$="[[partner.url]]" target="_blank">[[partner.name]]</a>
                         <template is="dom-if" if="[[partner.number]]">
                             | <a class="link-button" href$="[[partner.url]]" target="_blank">[[partner.number]]</a>
                         </template>
