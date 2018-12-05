@@ -215,21 +215,6 @@
                 <div class="remove-title">Are you sure that you want to delete this task?</div>
             </template>
 
-            <!--<template is="dom-if" if="[[checkDialogType(dialog.type, 'edit')]]">-->
-                <!--<div class="edited-info">-->
-                    <!--<div class="title">You have selected</div>-->
-                    <!--<div class="line layout start horizontal">-->
-                        <!--<div class="title">[[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]]</div> <div class="value">[[originalData.cp_output_config.cp_output.name]]</div>-->
-                    <!--</div>-->
-                    <!--<div class="line layout start horizontal">-->
-                        <!--<div class="title">[[getDescriptorLabel(permissions, 'partner')]]</div> <div class="value">[[originalData.partner.name]]</div>-->
-                    <!--</div>-->
-                    <!--<div class="line layout start horizontal" hidden$="[[!originalData.intervention]]">-->
-                        <!--<div class="title">[[getDescriptorLabel(permissions, 'intervention')]]</div> <div class="value">[[originalData.intervention.title]]</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</template>-->
-
             <template is="dom-if" if="[[!checkDialogType(dialog.type, 'remove')]]">
                 <div class="container first layout horizontal">
                     <etools-dropdown
@@ -284,7 +269,7 @@
                             options="[[interventionsList]]"
                             option-label="title"
                             option-value="id"
-                            required$="[[getRequiredStatus(permissions, 'intervention')]]"
+                            required$="[[isInterventionRequired(permissions, 'intervention', selectedModel.partner)]]"
                             disabled$="[[isReadonlyField(permissions, 'intervention', selectedModel.partner, dialog.type)]]"
                             readonly$="[[isReadonlyField(permissions, 'intervention', selectedModel.partner, dialog.type)]]"
                             invalid="{{errors.intervention}}"

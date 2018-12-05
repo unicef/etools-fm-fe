@@ -328,6 +328,13 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         return dialogType === 'edit' || this.getReadonlyStatus(permissions, field) || !dependency;
     }
 
+    public isInterventionRequired(permissions: PermissionsCollections, field: string, partner: number | null) {
+        const isNotGovernment = partner && this.selectedOutput && !this.selectedOutput.government_partners.find(
+            (govPartner: Partner) => govPartner.id === partner
+        );
+        return !!permissions && this.getRequiredStatus(permissions, field) || isNotGovernment;
+    }
+
     public pageNumberChanged({detail}: CustomEvent) {
         this.updateQueryParams({page: detail.value});
         this.startLoad();
@@ -348,6 +355,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             this.updateQueryParams({page: 1, [property]: values});
         } else if (selectedItem || value) {
             this.updateQueryParams({page: 1, [property]: value || selectedItem.id});
+        } else if (value === false) {
+            this.removeQueryParams(property);
         } else {
             this.updateQueryParams({page: 1, [property]: []});
         }
