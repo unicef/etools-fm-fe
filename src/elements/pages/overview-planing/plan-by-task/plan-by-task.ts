@@ -366,7 +366,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             case 'name':
                 return splittedLocation[1];
             case 'code':
-                return splittedLocation[2];
+                return `[${splittedLocation[2]}]`;
             default:
                 return location;
         }

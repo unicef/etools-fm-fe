@@ -30,7 +30,7 @@
                 </div>
                 <div class="filter-dropdown">
                     <etools-dropdown-multi
-                            selected-values$="[[_simplifyValue(queryParams.partner__in, [])]]"
+                            selected-values$="[[_simplifyValue(queryParams.partner__in)]]"
                             label="[[getDescriptorLabel(permissions, 'partner')]]"
                             placeholder="Select"
                             options="[[monitoredPartners]]"
@@ -47,7 +47,7 @@
                 </div>
                 <div class="filter-dropdown">
                     <etools-dropdown-multi
-                            selected-values$="[[_simplifyValue(queryParams.location_site__in, [])]]"
+                            selected-values$="[[_simplifyValue(queryParams.location_site__in)]]"
                             label="[[getDescriptorLabel(permissions, 'location_site')]]"
                             placeholder="Select"
                             options="[[siteLocations]]"
