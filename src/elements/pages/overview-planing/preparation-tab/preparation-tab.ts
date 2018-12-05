@@ -121,7 +121,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     public openCreateLogIssue() {
         this.dialog = {
             opened: true,
-            confirm: 'Create',
+            confirm: 'Save',
             title: 'Create Log Issue',
             relatedToType: 'cp_output',
             type: 'create'
