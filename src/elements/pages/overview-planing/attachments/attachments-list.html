@@ -9,17 +9,18 @@
         <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
         <!-- inject styles './attachments-list.scss'-->
 
-
         <div class="table-title-block with-bottom-line">
             <div class="table-title">[[permissions.title]]</div>
             <div class="buttons-container">
                 <paper-icon-button
-                        on-tap="_openUploadAttachment"
+                        on-tap="openUploadAttachment"
                         class="panel-button"
                         data-type="add"
                         icon="add-box"></paper-icon-button>
             </div>
         </div>
+
+
         <etools-data-table-header id="listHeader" no-collapse no-title>
             <etools-data-table-column class="flex-1" field="created">
                 [[getDescriptorLabel(permissions, 'created')]]
@@ -31,6 +32,7 @@
                 [[getDescriptorLabel(permissions, 'file')]]
             </etools-data-table-column>
         </etools-data-table-header>
+
         <template is="dom-if" if="[[!attachments.length]]">
             <etools-data-table-row no-collapse>
                 <div slot="row-data" class="layout horizontal">
@@ -44,6 +46,7 @@
                 </div>
             </etools-data-table-row>
         </template>
+
         <template is="dom-repeat" items="[[attachments]]" as="attachment">
             <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row">

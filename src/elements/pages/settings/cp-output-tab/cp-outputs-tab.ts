@@ -153,16 +153,16 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
         if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
 
-        this.editModel = _.cloneDeep(item);
+        this.selectedModel = _.cloneDeep(item);
         this.originalModel =  _.cloneDeep(item);
         const endpoint = getEndpoint('cpOutputDetails', {id: item.id}) as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputDetails'));
     }
 
     public _selectedEditItemPartners({ detail }: CustomEvent) {
-        if (!this.editModel || !this.editModel.fm_config) { return; }
+        if (!this.selectedModel || !this.selectedModel.fm_config) { return; }
         const { selectedItems } = detail;
-        this.editModel.fm_config.government_partners = selectedItems;
+        this.selectedModel.fm_config.government_partners = selectedItems;
     }
 
     public _openPartners({ model }: EventModel<CpOutput>) {
@@ -186,12 +186,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public onFinishEdit() {
-        if (_.isEqual(this.editModel, this.originalModel)) {
+        if (_.isEqual(this.selectedModel, this.originalModel)) {
             this.dialog = { opened: false };
             return;
         }
-        const changes = this.changesToRequest(this.originalModel, this.editModel, this.permissionsDetails);
-        this.dispatchOnStore(updateCpOutput(this.editModel.id, changes));
+        const changes = this.changesToRequest(this.originalModel, this.selectedModel, this.permissionsDetails);
+        this.dispatchOnStore(updateCpOutput(this.selectedModel.id, changes));
     }
 }
 

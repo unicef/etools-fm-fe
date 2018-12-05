@@ -14,7 +14,18 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
 
     public static get properties() {
         return {
-            count: Number
+            count: Number,
+            dialogTexts: {
+                type: Object,
+                value: () => ({
+                    add: {title: 'Log Issue', confirm: 'Log', type: 'create'},
+                    edit: {title: 'Edit Issue', confirm: 'Save', type: 'edit'}
+                })
+            },
+            selectedModel: {
+                type: Object,
+                value: () => ({})
+            }
         };
     }
 
@@ -105,7 +116,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public disconnectedCallback() {
-        this.disconnectedCallback();
+        super.disconnectedCallback();
         this.removeEventListener('sort-changed', this.sort);
         this.removeEventListener('add-new', this.openCreateLogIssue);
         this.logIssuesSubscriber();
@@ -119,14 +130,13 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public openCreateLogIssue() {
+        const dialogTexts = this.dialogTexts['add'];
         this.dialog = {
             opened: true,
-            confirm: 'Create',
-            title: 'Create Log Issue',
             relatedToType: 'cp_output',
-            type: 'create'
+            ...dialogTexts
         };
-        this.issue = {};
+        this.selectedModel = {};
         this.currentFiles = [];
         // set permissions for create
         this.permissionsDetails = this.permissions;
@@ -136,17 +146,19 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         const { item } = model;
         if  (!item.id) { return; }
         const files = item.attachments.map((attachment: Attachment) => this.transformAttachmentToFile(attachment));
+
+        const dialogTexts = this.dialogTexts['edit'];
         this.dialog = {
             opened: true,
-            confirm: 'Save',
-            title: 'Edit Log Issue',
             relatedToType: item.related_to_type,
-            type: 'edit'
+            ...dialogTexts
         };
-        this.originalIssue = _.cloneDeep(item);
-        this.issue = _.cloneDeep(item);
+
+        this.originalData = _.cloneDeep(item);
+        this.selectedModel = _.cloneDeep(item);
         this.originalFiles = _.cloneDeep(files);
         this.currentFiles = _.cloneDeep(files);
+
         // load permissions for update
         const endpoint = getEndpoint('logIssuesDetails', {id: item.id}) as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'logIssuesDetails'));
@@ -167,13 +179,12 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public onFinishDialog() {
-        const issue = this.issue;
         if (this.dialog.type === 'create') {
             const files = this.currentFiles;
-            this.createIssue(issue, files);
+            this.createIssue(this.selectedModel, files);
         }
         if (this.dialog.type === 'edit') {
-            this.updateIssue(issue);
+            this.updateIssue(this.selectedModel);
         }
     }
 
@@ -181,7 +192,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         if (target !== this.$.dialog) { return; }
         this.dialog = null;
         this.resetInputs();
-        this.issue = {};
+        this.selectedModel = {};
         this.errors = null;
     }
 
@@ -191,7 +202,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public updateIssue(issue: LogIssue) {
-        const data = this.changesToRequest(this.originalIssue, this.issue, this.permissions);
+        const data = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
         const changedFiles: Attachment[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
         const newFiles: Attachment[] = this.getNewFiles(this.currentFiles);
         const deletedFiles: Attachment[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
@@ -206,35 +217,16 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         return field === value;
     }
 
-    public changeSitesFilter({ detail }: CustomEvent) {
+    public changeFilter({ detail, target }: CustomEvent) {
         const { selectedItems } = detail;
-        if (selectedItems && selectedItems.length) {
-            const values = selectedItems.map((item: ISiteParrentLocation) => item.id);
-            this.updateQueryParams({location_site__in: values});
-        } else {
-            this.updateQueryParams({page: 1, location_site__in: []});
-        }
-        this.startLoad();
-    }
+        const property = (target as HTMLElement).dataset.property;
+        if (!property) { throw new Error('Filter must contain data property attribute'); }
 
-    public changePartnerFilter({ detail }: CustomEvent) {
-        const { selectedItems } = detail;
         if (selectedItems && selectedItems.length) {
-            const values = selectedItems.map((item: Partner) => item.id);
-            this.updateQueryParams({partner__in: values});
+            const values = selectedItems.map((item: any) => item.id);
+            this.updateQueryParams({[property]: values});
         } else {
-            this.updateQueryParams({page: 1, partner__in: []});
-        }
-        this.startLoad();
-    }
-
-    public changeCpOutputsFilter({ detail }: CustomEvent) {
-        const { selectedItems } = detail;
-        if (selectedItems && selectedItems.length) {
-            const values = selectedItems.map((item: CpOutput) => item.id);
-            this.updateQueryParams({cp_output__in: values});
-        } else {
-            this.updateQueryParams({page: 1, cp_output__in: []});
+            this.updateQueryParams({page: 1, [property]: []});
         }
         this.startLoad();
     }
@@ -260,40 +252,10 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         this.startLoad();
     }
 
-    public setIssuePartner({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem && selectedItem.id) {
-            this.issue.partner = selectedItem.id;
-        } else {
-            this.issue.cp_output = null;
-        }
-    }
-
-    public setIssueCpOutput({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem && selectedItem.id) {
-            this.issue.cp_output = selectedItem.id;
-        } else {
-            this.issue.cp_output = null;
-        }
-    }
-
-    public setIssueLocation({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem && selectedItem.id) {
-            this.issue.location = selectedItem.id;
-        } else {
-            this.issue.cp_output = null;
-        }
-    }
-
-    public setIssueLocationSite({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem && selectedItem.id) {
-            this.issue.location_site = selectedItem.id;
-        } else {
-            this.issue.cp_output = null;
-        }
+    public setValue({ detail, target }: CustomEvent) {
+        const fieldName = (target as HTMLElement).dataset.fieldname || '';
+        const { selectedItem } = detail;
+        this.selectedModel[fieldName] = selectedItem && selectedItem.id || null;
     }
 
     public getColumnRelatedTypeValue(item: LogIssue) {

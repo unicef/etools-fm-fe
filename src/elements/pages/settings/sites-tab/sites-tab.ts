@@ -28,7 +28,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 value: () => []
             },
-            editedItem: {
+            selectedModel: {
                 type: Object,
                 value: () => ({})
             },
@@ -128,7 +128,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
 
         const model = _.get(event, 'model.site', {is_active: true});
         const texts = this.dialogTexts[dialogType] || {};
-        this.editedItem = {...model};
+        this.selectedModel = {...model};
         this.originalData = {...model};
         this.dialog = {opened: true, ...texts};
     }
@@ -146,12 +146,12 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             });
             this.renderMarkers();
         }
-        const coords = _.get(this, 'editedItem.point.coordinates', this.defaultMapCenter);
+        const coords = _.get(this, 'selectedModel.point.coordinates', this.defaultMapCenter);
         const reversedCoords = _.clone(coords).reverse();
         const zoom = coords === this.defaultMapCenter ? 8 : 15;
         this.map.setView(reversedCoords, zoom);
 
-        const id = this.editedItem.id;
+        const id = this.selectedModel.id;
         if (id) {
             this.dynamicMarker = this.staticMarkers.find((marker: any) => marker.staticData.id === id);
             this.dynamicMarker.openPopup();
@@ -173,7 +173,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         if (event.target !== this.$.dialog) { return; }
         this.dialog = null;
         this.resetInputs();
-        this.editedItem = {};
+        this.selectedModel = {};
         this.errors = null;
 
         if (this.dynamicMarker && this.dynamicMarker.staticData) {
@@ -189,22 +189,22 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
 
     public saveSite() {
         if (this.dialog.type === 'remove') {
-            this.dispatchOnStore(removeSiteLocation(this.editedItem.id));
+            this.dispatchOnStore(removeSiteLocation(this.selectedModel.id));
             return;
         }
 
         const isActive = this.shadowRoot.querySelector('#statusDropdown').selected;
-        this.editedItem.is_active = !!isActive;
+        this.selectedModel.is_active = !!isActive;
 
         const {lat, lng} = _.result(this, 'dynamicMarker.getLatLng', {});
         if (lat && lng) {
-            this.editedItem.point = {
+            this.selectedModel.point = {
                 type: 'Point',
                 coordinates: [lng, lat]
             };
         }
 
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem);
+        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel);
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -212,11 +212,11 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
 
         switch (this.dialog.type) {
             case 'add':
-                this.dispatchOnStore(addSiteLocation(this.editedItem));
+                this.dispatchOnStore(addSiteLocation(this.selectedModel));
                 break;
             case 'edit':
-                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
-                this.dispatchOnStore(updateSiteLocation(this.editedItem.id, changes));
+                const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
+                this.dispatchOnStore(updateSiteLocation(this.selectedModel.id, changes));
                 break;
         }
     }

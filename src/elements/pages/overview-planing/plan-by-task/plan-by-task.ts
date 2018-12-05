@@ -29,7 +29,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 type: Number,
                 observer: 'setYear'
             },
-            editedItem: {
+            selectedModel: {
                 type: Object,
                 value: () => ({})
             },
@@ -53,7 +53,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             interventionsList: {
                 type: Array,
                 value: () => [],
-                computed: 'setInterventionsList(editedItem.partner, selectedOutput)'
+                computed: 'setInterventionsList(selectedModel.partner, selectedOutput)'
             }
         };
     }
@@ -85,7 +85,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             (partnerTasks: {loading: boolean, tasks: PlaningTask[]} | undefined) => {
                 if (!partnerTasks) { return; }
                 this.partnerTasksLoading = partnerTasks.loading;
-                this.partnerTasks = partnerTasks.tasks.filter((task) => task.id !== this.editedItem.id);
+                this.partnerTasks = partnerTasks.tasks.filter((task) => task.id !== this.selectedModel.id);
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
@@ -222,7 +222,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
 
         const texts = this.dialogTexts[dialogType];
-        this.editedItem = _.cloneDeep(item);
+        this.selectedModel = _.cloneDeep(item);
         this.originalData = _.cloneDeep(item);
         this.dialog = {opened: true, ...texts};
     }
@@ -231,7 +231,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         if (event.target !== this.$.dialog) { return; }
         this.dialog = null;
         this.resetInputs();
-        this.editedItem = {};
+        this.selectedModel = {};
         this.errors = null;
     }
 
@@ -241,7 +241,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             return;
         }
 
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -249,28 +249,28 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
         switch (this.dialog.type) {
             case 'add':
-                this.dispatchOnStore(addPlaningTask(this.selectedYear, this.editedItem));
+                this.dispatchOnStore(addPlaningTask(this.selectedYear, this.selectedModel));
                 break;
             case 'edit':
-                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
-                this.dispatchOnStore(updatePlaningTask(this.selectedYear, this.editedItem.id, changes));
+                const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
+                this.dispatchOnStore(updatePlaningTask(this.selectedYear, this.selectedModel.id, changes));
                 break;
             case 'remove':
-                this.dispatchOnStore(removePlaningTask(this.selectedYear, this.editedItem.id));
+                this.dispatchOnStore(removePlaningTask(this.selectedYear, this.selectedModel.id));
                 break;
             case 'copy':
-                this.dispatchOnStore(addPlaningTask(this.selectedYear, this.editedItem));
+                this.dispatchOnStore(addPlaningTask(this.selectedYear, this.selectedModel));
                 break;
         }
     }
 
     public validateExisted(): boolean {
-        if (!this.partnerTasks.length || !this.editedItem) { return false; }
+        if (!this.partnerTasks.length || !this.selectedModel) { return false; }
         return _.some(this.partnerTasks, (task: PlaningTask) => {
             return _.every(
                 ['location', 'location_site', 'intervention', 'partner', 'cp_output'],
                 // @ts-ignore
-                (key: string) => this.editedItem[key] === (task[key] && task[key].id));
+                (key: string) => this.selectedModel[key] === (task[key] && task[key].id));
         });
     }
 
@@ -279,7 +279,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         const fieldName = (target as HTMLElement).dataset.fieldname;
 
         if (fieldName) {
-            this.set(`editedItem.${fieldName}`, selectedItem && selectedItem.id || null);
+            this.set(`selectedModel.${fieldName}`, selectedItem && selectedItem.id || null);
         }
 
         if (fieldName === 'cp_output_config') { this.clearEditedField('partner', 'selectedOutput.partners'); }
@@ -301,8 +301,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public loadPartnerTasks() {
-        const partner = !_.isObject(this.editedItem.partner) && this.editedItem.partner;
-        const intervention = !_.isObject(this.editedItem.intervention) && this.editedItem.intervention;
+        const partner = !_.isObject(this.selectedModel.partner) && this.selectedModel.partner;
+        const intervention = !_.isObject(this.selectedModel.intervention) && this.selectedModel.intervention;
         const missingPartnerOrIntervention = !partner || (this.interventionsList.length && !intervention);
         const tasks = this.getFromStore('planingTasks.partnerTasks.tasks');
 
@@ -344,7 +344,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         if (!property) { throw new Error('Filter must contain data property attribute'); }
 
         if (selectedItems) {
-            const values = selectedItems.map((item: CpOutcome) => item.id);
+            const values = selectedItems.map((item: any) => item.id);
             this.updateQueryParams({page: 1, [property]: values});
         } else if (selectedItem || value) {
             this.updateQueryParams({page: 1, [property]: value || selectedItem.id});
@@ -375,13 +375,15 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     private clearEditedField(field: string, path: string = field) {
         const exists = this.checkExistenceInList(field, path);
         if (!exists) {
-            this.set(`editedItem.${field}`, null);
+            this.set(`selectedModel.${field}`, null);
         }
     }
 
     private checkExistenceInList(field: string, path: string = field) {
         const list = _.get(this, path, []);
-        return list.find((item: any) => _.isEqual(this.editedItem[field], item) || item.id === this.editedItem[field]);
+        return list.find(
+            (item: any) => _.isEqual(this.selectedModel[field], item) || item.id === this.selectedModel[field]
+        );
     }
 }
 

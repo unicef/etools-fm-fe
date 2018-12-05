@@ -107,15 +107,15 @@
                 <div class="container layout horizontal">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="{{editedItem.method}}"
+                            selected="{{selectedModel.method}}"
                             label="[[getDescriptorLabel(permissions, 'method')]]"
                             placeholder="[[getPlaceholder(permissions, 'method', 'Select')]]"
                             options="[[methods]]"
                             option-label="name"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'method')]]"
-                            disabled$="[[isDropdownReadonly(permissions, editedItem)]]"
-                            readonly$="[[isDropdownReadonly(permissions, editedItem)]]"
+                            disabled$="[[isDropdownReadonly(permissions, selectedModel)]]"
+                            readonly$="[[isDropdownReadonly(permissions, selectedModel)]]"
                             invalid="{{errors.method}}"
                             error-message="{{errors.method}}"
                             on-focus="resetFieldError"
@@ -125,7 +125,7 @@
 
                     <paper-input
                             class="validate-input disabled-as-readonly flex-5"
-                            value="{{editedItem.name}}"
+                            value="{{selectedModel.name}}"
                             maxlength="30"
                             label="[[getDescriptorLabel(permissions, 'name')]]"
                             placeholder="[[getPlaceholder(permissions, 'name', 'Enter')]]"

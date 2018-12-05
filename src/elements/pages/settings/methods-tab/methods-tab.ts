@@ -24,7 +24,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                 value: () => []
             },
             count: Number,
-            editedItem: {
+            selectedModel: {
                 type: Object,
                 value: () => ({})
             },
@@ -124,13 +124,13 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
         const { item = {} } = model || {};
         const texts = this.dialogTexts[dialogType];
-        this.editedItem = {...item};
+        this.selectedModel = {...item};
         this.originalData = {...item};
         this.dialog = {opened: true, ...texts};
     }
 
     public saveType() {
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -138,14 +138,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
         switch (this.dialog.type) {
             case 'add':
-                this.dispatchOnStore(addMethodType(this.editedItem));
+                this.dispatchOnStore(addMethodType(this.selectedModel));
                 break;
             case 'edit':
-                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
-                this.dispatchOnStore(updateMethodType(this.editedItem.id, changes));
+                const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
+                this.dispatchOnStore(updateMethodType(this.selectedModel.id, changes));
                 break;
             case 'remove':
-                this.dispatchOnStore(removeMethodType(this.editedItem.id));
+                this.dispatchOnStore(removeMethodType(this.selectedModel.id));
                 break;
         }
     }
@@ -156,14 +156,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public isDropdownReadonly(permissions: IPermissionActions): boolean {
-        return !!this.editedItem.id || !!(permissions && this.getReadonlyStatus(permissions, 'method'));
+        return !!this.selectedModel.id || !!(permissions && this.getReadonlyStatus(permissions, 'method'));
     }
 
     public resetData(event: CustomEvent): void {
         if (event.target !== this.$.dialog) { return; }
         this.dialog = null;
         this.resetInputs();
-        this.editedItem = {};
+        this.selectedModel = {};
         this.errors = null;
     }
 

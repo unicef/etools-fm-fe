@@ -234,7 +234,7 @@
                 <div class="container first layout horizontal">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.cp_output_config)]]"
+                            selected="[[_simplifyValue(selectedModel.cp_output_config)]]"
                             selected-item="{{selectedOutput}}"
                             label="[[getDescriptorLabel(permissions, 'cp_output_config')]]"
                             placeholder="[[getPlaceholder(permissions, 'cp_output_config', 'Select')]]"
@@ -256,15 +256,15 @@
                 <div class="container layout horizontal">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.partner)]]"
+                            selected="[[_simplifyValue(selectedModel.partner)]]"
                             label="[[getDescriptorLabel(permissions, 'partner')]]"
                             placeholder="[[getPlaceholder(permissions, 'partner', 'Select')]]"
                             options="[[selectedOutput.partners]]"
                             option-label="name"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'partner')]]"
-                            disabled$="[[isReadonlyField(permissions, 'partner', editedItem.cp_output_config, dialog.type)]]"
-                            readonly$="[[isReadonlyField(permissions, 'partner', editedItem.cp_output_config, dialog.type)]]"
+                            disabled$="[[isReadonlyField(permissions, 'partner', selectedModel.cp_output_config, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'partner', selectedModel.cp_output_config, dialog.type)]]"
                             invalid="{{errors.partner}}"
                             error-message="{{errors.partner}}"
                             on-focus="resetFieldError"
@@ -278,15 +278,15 @@
                 <div class="container layout horizontal">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.intervention)]]"
+                            selected="[[_simplifyValue(selectedModel.intervention)]]"
                             label="[[getDescriptorLabel(permissions, 'intervention')]]"
                             placeholder="[[getPlaceholder(permissions, 'intervention', 'Select')]]"
                             options="[[interventionsList]]"
                             option-label="title"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'intervention')]]"
-                            disabled$="[[isReadonlyField(permissions, 'intervention', editedItem.partner, dialog.type)]]"
-                            readonly$="[[isReadonlyField(permissions, 'intervention', editedItem.partner, dialog.type)]]"
+                            disabled$="[[isReadonlyField(permissions, 'intervention', selectedModel.partner, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'intervention', selectedModel.partner, dialog.type)]]"
                             invalid="{{errors.intervention}}"
                             error-message="{{errors.intervention}}"
                             on-focus="resetFieldError"
@@ -300,7 +300,7 @@
                 <div class="container layout horizontal">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.location)]]"
+                            selected="[[_simplifyValue(selectedModel.location)]]"
                             selected-item="{{selectedLocation}}"
                             label="[[getDescriptorLabel(permissions, 'location')]]"
                             placeholder="[[getPlaceholder(permissions, 'location', 'Select')]]"
@@ -321,7 +321,7 @@
 
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
-                            selected="[[_simplifyValue(editedItem.location_site)]]"
+                            selected="[[_simplifyValue(selectedModel.location_site)]]"
                             label="[[getDescriptorLabel(permissions, 'location_site')]]"
                             placeholder="[[getPlaceholder(permissions, 'location_site', 'Select')]]"
                             options="[[selectedLocation.sites]]"
@@ -348,7 +348,7 @@
                     </div>
 
                     <div class="location-and-counter layout horizontal center">
-                        <month-counter-input count="{{editedItem.plan_by_month}}" year="[[selectedYear]]" test="test"></month-counter-input>
+                        <month-counter-input count="{{selectedModel.plan_by_month}}" year="[[selectedYear]]" test="test"></month-counter-input>
                     </div>
 
                 </div>

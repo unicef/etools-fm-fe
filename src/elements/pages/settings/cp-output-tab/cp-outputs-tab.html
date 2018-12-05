@@ -6,6 +6,8 @@
         <!-- inject styles './cp-outputs-tab.scss'-->
 
         <app-route route="{{route}}" pattern="/cp-outputs" active="{{isActive}}"></app-route>
+
+
         <paper-card>
             <div class="layout horizontal">
                 <div class="filter-dropdown">
@@ -35,7 +37,7 @@
             </div>
         </paper-card>
 
-        <paper-card>
+        <paper-card class="table-container">
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">Country Programme Outputs</div>
             </div>
@@ -57,6 +59,7 @@
                     [[getDescriptorLabel(permissions, 'fm_config.government_partners')]]
                 </etools-data-table-column>
             </etools-data-table-header>
+
             <template is="dom-if" if="[[!cpOutputs.length]]">
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal">
@@ -68,6 +71,7 @@
                     </div>
                 </etools-data-table-row>
             </template>
+
             <template is="dom-repeat" items="[[cpOutputs]]" as="item">
                 <etools-data-table-row no-collapse secondary-bg-on-hover>
                     <div slot="row-data" class="layout horizontal editable-row">
@@ -114,6 +118,7 @@
                     </div>
                 </etools-data-table-row>
             </template>
+
             <etools-data-table-footer
                     page-size="[[queryParams.page_size]]"
                     page-number="[[queryParams.page]]"
@@ -122,7 +127,9 @@
                     on-page-size-changed="_pageSizeSelected"
                     on-page-number-changed="_pageNumberChanged">
             </etools-data-table-footer>
+
         </paper-card>
+
 
         <etools-dialog
                 size="md"
@@ -131,6 +138,7 @@
                 opened="{{dialogPartners.opened}}"
                 dialog-title="{{dialogPartners.title}}"
                 hide-confirm-btn>
+
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
                     <div class="partner-row">
@@ -141,6 +149,7 @@
                     </div>
                 </template>
             </div>
+
         </etools-dialog>
 
         <etools-dialog
@@ -155,18 +164,19 @@
                     active="[[requestInProcess]]"
                     loading-text="Saving Data">
             </etools-loading>
+
             <div class="container layout vertical">
                 <div class="layout horizontal">
                     <div class="toggle-button-control">
                         <paper-toggle-button
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_monitored')]]"
-                                checked="{{editModel.fm_config.is_monitored}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_monitored}}"></paper-toggle-button>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_monitored')]]</span>
                     </div>
                     <div class="toggle-button-control">
                         <paper-toggle-button
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_priority')]]"
-                                checked="{{editModel.fm_config.is_priority}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_priority}}"></paper-toggle-button>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_priority')]]</span>
                     </div>
                 </div>
@@ -174,7 +184,7 @@
                     <etools-dropdown-multi
                             class="validate-input disabled-as-readonly flex"
                             label="[[getDescriptorLabel(permissionsDetails, 'fm_config.government_partners')]]"
-                            selected-values="[[_simplifyValue(editModel.fm_config.government_partners)]]"
+                            selected-values="[[_simplifyValue(selectedModel.fm_config.government_partners)]]"
                             options="[[governmentPartners]]"
                             option-value="id"
                             option-label="name"

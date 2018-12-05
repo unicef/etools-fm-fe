@@ -14,7 +14,7 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
         return {};
     }
 
-    public _openUploadAttachment() {
+    public openUploadAttachment() {
         this.errors = null;
         this.resetInputs();
         this.dialog = {opened: true};
@@ -34,9 +34,11 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
 
     public connectedCallback() {
         super.connectedCallback();
+
         this.dispatchOnStore(loadAttachments());
         const endpoint = getEndpoint('attachments') as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'attachments'));
+
         this.permissionSubscriber = this.subscribeOnStore(
             (store: FMStore) => _.get(store, 'permissions.attachments'),
             (permissions: IBackendPermissions) => {

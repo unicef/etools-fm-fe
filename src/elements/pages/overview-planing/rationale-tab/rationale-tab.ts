@@ -33,16 +33,16 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
 
     public openEditDialog() {
         this.dialog = {opened: true};
-        this.editModel = _.cloneDeep(this.yearPlan);
+        this.selectedModel = _.cloneDeep(this.yearPlan);
         this.originalModel =  _.cloneDeep(this.yearPlan);
     }
 
     public onFinishEdit() {
-        if (_.isEqual(this.editModel, this.originalModel)) {
+        if (_.isEqual(this.selectedModel, this.originalModel)) {
             this.dialog = { opened: false };
             return;
         }
-        const changes = this.changesToRequest(this.originalModel, this.editModel, this.permissions);
+        const changes = this.changesToRequest(this.originalModel, this.selectedModel, this.permissions);
         this.dispatchOnStore(updateYearPlan(this.selectedYear, changes));
     }
 
