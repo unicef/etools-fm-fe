@@ -35,15 +35,18 @@
         }
     }
 
+    paper-input[readonly] {
+        --paper-input-container-focus-color: var(--secondary-text-color) !important;
+    }
 }
 
 :host([readonly]) {
     paper-input {
         --paper-input-container-underline: #{'{
-                    display: none;
+                    display: none !important;
                 }'};
         --paper-input-container-underline-focus: #{'{
-                    display: none;
+                    display: none !important;
                 }'};
         --paper-input-container-focus-color: var(--secondary-text-color);
     }

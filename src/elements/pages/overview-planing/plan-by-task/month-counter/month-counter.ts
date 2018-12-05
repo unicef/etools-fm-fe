@@ -1,5 +1,5 @@
 type NullOrNumber = null | number;
-import { months } from '../month-list';
+import { months } from '../../../../common-elements/month-list';
 
 class MonthCounter extends Polymer.Element {
     public static get is() { return 'month-counter'; }

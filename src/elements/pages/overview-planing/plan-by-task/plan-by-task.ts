@@ -13,6 +13,7 @@ import { addPlaningTask } from '../../../redux-store/effects/plan-by-task.effect
 import { loadYearPlan } from '../../../redux-store/effects/year-paln.effects';
 import { SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
+import { AddNotification } from '../../../redux-store/actions/notification.actions';
 
 class PlanByTask extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -48,10 +49,6 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             planingTasks: {
                 type: Array,
                 value: () => []
-            },
-            notTouched: {
-                type: Boolean,
-                value: false
             },
             interventionsList: {
                 type: Array,
@@ -146,7 +143,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public disconnectedCallback() {
-        this.disconnectedCallback();
+        super.disconnectedCallback();
         this.methodsSubscriber();
         this.planingTasksSubscriber();
         this.partnerTasksSubscriber();
@@ -157,9 +154,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this.filterLocationsSubscriber();
         this.filterSitesSubscriber();
         this.filterPartnersSubscriber();
-
         this.removeEventListener('sort-changed', this.sort);
-        this.removeEventListener('add-new', this.openCreateLogIssue);
     }
 
     public setYear(year: number) {
@@ -206,15 +201,30 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             });
     }
 
+    public reopenDialog(event: EventModel<PlaningTask>): void {
+        this.set('dialog.opened', false);
+        // @ts-ignore
+        this.resetData({target: this.$.dialog});
+        this.openDialog(event);
+        this.loadPartnerTasks();
+    }
+
     public openDialog({ model, target }: EventModel<PlaningTask>): void {
         const dialogType = _.get(target, 'dataset.type', 'add');
         const count = Array.apply(null, Array(12)).map(() => 0);
-        const { item = {plan_by_month: count} } = model || {};
+        const { item = ({plan_by_month: count} as PlaningTask) } = model || {};
+
+        if (dialogType === 'copy') {
+            delete item.id;
+            delete item.location;
+            delete item.location_site;
+            item.plan_by_month = [];
+        }
+
         const texts = this.dialogTexts[dialogType];
         this.editedItem = _.cloneDeep(item);
         this.originalData = _.cloneDeep(item);
         this.dialog = {opened: true, ...texts};
-        this._checkNotTouched();
     }
 
     public resetData(event: CustomEvent): void {
@@ -226,12 +236,17 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public saveTask() {
-        if (this.dialog.type === 'copy' && this.notTouched) { return; }
+        if ((this.dialog.type === 'copy' || this.dialog.type === 'add') && this.validateExisted()) {
+            this.dispatchOnStore(new AddNotification('Task in this location already exists. Please use existing.'));
+            return;
+        }
+
         const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
         }
+
         switch (this.dialog.type) {
             case 'add':
                 this.dispatchOnStore(addPlaningTask(this.selectedYear, this.editedItem));
@@ -249,6 +264,16 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
     }
 
+    public validateExisted(): boolean {
+        if (!this.partnerTasks.length || !this.editedItem) { return false; }
+        return _.some(this.partnerTasks, (task: PlaningTask) => {
+            return _.every(
+                ['location', 'location_site', 'intervention', 'partner', 'cp_output'],
+                // @ts-ignore
+                (key: string) => this.editedItem[key] === (task[key] && task[key].id));
+        });
+    }
+
     public setEditedValue({ detail, target }: CustomEvent) {
         const { selectedItem } = detail;
         const fieldName = (target as HTMLElement).dataset.fieldname;
@@ -264,8 +289,6 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         if (fieldName === 'partner' || fieldName === 'intervention' || fieldName === 'cp_output_config') {
             this.loadPartnerTasks();
         }
-
-        this._checkNotTouched();
     }
 
     public setInterventionsList(partner: number, output: CpOutputConfig) {
@@ -278,9 +301,6 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public loadPartnerTasks() {
-        const type = this.dialog && this.dialog.type;
-        const isCopyOrAdd = type !== 'add' && type !== 'copy';
-
         const partner = !_.isObject(this.editedItem.partner) && this.editedItem.partner;
         const intervention = !_.isObject(this.editedItem.intervention) && this.editedItem.intervention;
         const missingPartnerOrIntervention = !partner || (this.interventionsList.length && !intervention);
@@ -289,7 +309,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         if (missingPartnerOrIntervention && !!tasks && !!tasks.length) {
             this.dispatchOnStore(new SetPartnerTasks([]));
             return;
-        } else if (missingPartnerOrIntervention || isCopyOrAdd) {
+        } else if (missingPartnerOrIntervention) {
             return;
         }
 
@@ -304,28 +324,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         return !!~expectedTypes.indexOf(currentType);
     }
 
-    public isReadonlyField(permissions: PermissionsCollections, field: string, dependency: number) {
-        return this.getReadonlyStatus(permissions, field) || !dependency;
-    }
-
-    public _checkNotTouched() {
-        const isCopyDialog = this.dialog && this.dialog.type === 'copy';
-        if (!isCopyDialog) {
-            this.notTouched = false;
-            return;
-        }
-        this.notTouched = _.every(this.originalData, (value: any, key: string) => {
-            if (_.isArray(value)) { return true; }
-            const isObject = _.isObject(value);
-            if (isObject) {
-                const originalId = +value.id;
-                const currentId = +_.get(this, `editedItem.${key}.id`) || +this.editedItem[key];
-                return !originalId || originalId === currentId;
-            } else {
-                return value === this.editedItem[key];
-            }
-        });
-
+    public isReadonlyField(permissions: PermissionsCollections, field: string, dependency: number, dialogType: string) {
+        return dialogType === 'edit' || this.getReadonlyStatus(permissions, field) || !dependency;
     }
 
     public pageNumberChanged({detail}: CustomEvent) {

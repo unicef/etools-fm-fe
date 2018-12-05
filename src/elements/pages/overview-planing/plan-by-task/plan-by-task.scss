@@ -13,17 +13,50 @@
         padding: 0 12px;
     }
 
-    .col-data a {
-        color: var(--module-primary);
-        font-weight: 500;
-        cursor: pointer;
-        text-transform: uppercase;
+    .tasks-per-month-title {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+            width: 13px;
+            height: 13px;
+            margin-left: 4px;
+            line-height: 13px;
+            text-align: center;
+            color: white;
+            font-size: 10px;
+            font-weight: 400;
+            background-color: #2b3b46;
+        }
+        div.completed {
+            background-color: #309a53;
+            margin-right: 4px;
+        }
+    }
+
+    .col-data {
+        & > div { width: 100%; }
+        a {
+            color: var(--module-primary);
+            font-weight: 500;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
     }
 
     iron-icon:not([data-type]) {
         color: #de422e;
         width: 16px;
         height: 15px;
+    }
+
+    iron-icon.link-icon {
+        color: var(--module-primary);
+        margin-right: 6px;
+        width: 16px;
+        height: 15px;
+        cursor: pointer;
     }
 
     .copy-warning {

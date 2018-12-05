@@ -7,6 +7,10 @@ class MonthCounterInput extends Polymer.Element {
 
     public static get properties() {
         return {
+            year: {
+                type: Number,
+                value: 0
+            },
             months: {
                 type: Array,
                 value: () => months
@@ -43,6 +47,12 @@ class MonthCounterInput extends Polymer.Element {
         if (!isNaN(index)) {
             this.count[index] = +value || 0;
         }
+    }
+
+    public isReadonly(readonly: boolean, month: number, year: number) {
+        if (readonly || isNaN(+month) || !year) { return true; }
+        const date = new Date(+year, +month + 1);
+        return new Date().getTime() >= date.getTime();
     }
 }
 
