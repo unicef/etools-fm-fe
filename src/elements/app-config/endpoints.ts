@@ -71,6 +71,10 @@ export const endpoints: Endpoints = {
         url: '/api/v1/field-monitoring/settings/attachments/'
     },
 
+    attachmentsDetails: {
+        template: '/api/v1/field-monitoring/settings/attachments/<%=id%>/'
+    },
+
     changeCountry: {
         url: '/users/api/changecountry/'
     },
