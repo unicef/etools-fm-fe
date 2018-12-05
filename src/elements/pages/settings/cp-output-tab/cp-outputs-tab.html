@@ -43,7 +43,7 @@
             </div>
 
             <etools-data-table-header id="listHeader" no-collapse no-title>
-                <etools-data-table-column class="flex-3" field="name">
+                <etools-data-table-column class="flex-4" field="name">
                     [[getDescriptorLabel(permissions, 'fm_config.cp_output')]] (Expired <iron-icon class="expired" icon="icons:history"></iron-icon>)
                 </etools-data-table-column>
                 <etools-data-table-column class="flex-1" field="fm_config.is_monitored">
@@ -52,10 +52,10 @@
                 <etools-data-table-column class="flex-1" field="fm_config.is_priority">
                     [[getDescriptorLabel(permissions, 'fm_config.is_priority')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-2" field="interventions">
+                <etools-data-table-column class="flex-4" field="interventions">
                     [[getDescriptorLabel(permissions, 'interventions')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-3" field="fm_config.government_partners">
+                <etools-data-table-column class="flex-4" field="fm_config.government_partners">
                     [[getDescriptorLabel(permissions, 'fm_config.government_partners')]]
                 </etools-data-table-column>
             </etools-data-table-header>
@@ -63,11 +63,11 @@
             <template is="dom-if" if="[[!cpOutputs.length]]">
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal">
-                        <div  class="col-data flex-3 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
                         <div  class="col-data flex-1">-</div>
                         <div  class="col-data flex-1">-</div>
-                        <div  class="col-data flex-2 truncate">-</div>
-                        <div  class="col-data flex-3 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
                     </div>
                 </etools-data-table-row>
             </template>
@@ -75,7 +75,7 @@
             <template is="dom-repeat" items="[[cpOutputs]]" as="item">
                 <etools-data-table-row no-collapse secondary-bg-on-hover>
                     <div slot="row-data" class="layout horizontal editable-row">
-                        <div class="col-data flex-3 truncate">
+                        <div class="col-data flex-4 truncate">
                             <template is="dom-if" if="[[item.expired]]">
                                 <iron-icon class="expired cell" icon="icons:history"></iron-icon>
                             </template>
@@ -91,18 +91,18 @@
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-2">
+                        <div class="col-data flex-4">
                             <template is="dom-if" if="[[_isOnePartner(item.interventions)]]">
                                 <span class="truncate">
-                                    <a class="link-button" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
-                                    <a class="link-button" href$="[[item.interventions.0.url]]">[[item.interventions.0.number]]</a>
+                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
+                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.number]]</a>
                                 </span>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.interventions)]]">
-                                <a class="link-button" on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
+                                <a class="link-button" target="_blank" on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
                             </template>
                         </div>
-                        <div class="col-data flex-3">
+                        <div class="col-data flex-4">
                             <template is="dom-if" if="[[_isOnePartner(item.fm_config.government_partners)]]">
                                 <a class="link-button truncate">[[item.fm_config.government_partners.0.name]]</a>
                             </template>
@@ -137,14 +137,15 @@
                 keep-dialog-open
                 opened="{{dialogPartners.opened}}"
                 dialog-title="{{dialogPartners.title}}"
+                cancel-btn-text="Close"
                 hide-confirm-btn>
 
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
                     <div class="partner-row">
-                        <a class="link-button" href$="[[partner.url]]" target="_blank">[[partner.name]]</a>
+                        <a class="link-button" target="_blank" href$="[[partner.url]]">[[partner.name]]</a>
                         <template is="dom-if" if="[[partner.number]]">
-                            | <a class="link-button" href$="[[partner.url]]" target="_blank">[[partner.number]]</a>
+                            | <a class="link-button" target="_blank" href$="[[partner.url]]">[[partner.number]]</a>
                         </template>
                     </div>
                 </template>
