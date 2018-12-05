@@ -150,11 +150,11 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
         // init
         if (!item.fm_config) { item.fm_config = {} as FmConfig; }
+        this.originalModel =  _.cloneDeep(item);
         if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
         if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
-
         this.selectedModel = _.cloneDeep(item);
-        this.originalModel =  _.cloneDeep(item);
+
         const endpoint = getEndpoint('cpOutputDetails', {id: item.id}) as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputDetails'));
     }
