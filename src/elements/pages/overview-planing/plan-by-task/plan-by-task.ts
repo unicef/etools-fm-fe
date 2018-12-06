@@ -14,6 +14,7 @@ import { loadYearPlan } from '../../../redux-store/effects/year-paln.effects';
 import { SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 import { AddNotification } from '../../../redux-store/actions/notification.actions';
+import { locationsInvert } from '../../settings/sites-tab/locations-invert';
 
 class PlanByTask extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -64,7 +65,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this.addEventListener('sort-changed', this.sort);
 
         this.methodsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.cpOutputsConfigs'),
+            (store: FMStore) => R.path(['staticData', 'cpOutputsConfigs'], store),
             (cpOConfigs: CpOutputConfig[] | undefined) => {
                 if (!cpOConfigs) { return; }
                 this.cpOutputConfigs = cpOConfigs.map(
@@ -73,7 +74,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             });
 
         this.planingTasksSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'planingTasks'),
+            (store: FMStore) => R.path(['planingTasks'], store),
             (planingTasks: IStatedListData<PlaningTask> | undefined) => {
                 if (!planingTasks) { return; }
                 this.planingTasks = planingTasks.results || [];
@@ -81,7 +82,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             });
 
         this.partnerTasksSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'planingTasks.partnerTasks'),
+            (store: FMStore) => R.path(['planingTasks', 'partnerTasks'], store),
             (partnerTasks: {loading: boolean, tasks: PlaningTask[]} | undefined) => {
                 if (!partnerTasks) { return; }
                 this.partnerTasksLoading = partnerTasks.loading;
@@ -89,27 +90,20 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.planingTasks'),
+            (store: FMStore) => R.path(['permissions', 'planingTasks'], store),
             (permissions: IPermissionActions | undefined) => {
                 this.permissions = permissions;
             });
 
         this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'specificLocations.results'),
+            (store: FMStore) => R.path(['specificLocations', 'results'], store),
             (sites: Site[] | undefined) => {
                 if (!sites) { return; }
-                this.locations = _(sites)
-                    .groupBy((site: Site) => site.parent.id)
-                    .map((groupedSites: Site[]) => {
-                        const parent = groupedSites[0].parent;
-                        return {...parent, sites: groupedSites};
-                    })
-                    .sortBy('name')
-                    .value();
+                this.locations = locationsInvert(sites);
             });
 
         this.updateTypeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'planingTasks.updateInProcess'),
+            (store: FMStore) => R.path(['planingTasks', 'updateInProcess'], store),
             (updateInProcess: boolean | null) => {
                 this.savingInProcess = updateInProcess;
                 if (updateInProcess !== false) { return; }
@@ -126,19 +120,19 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
+            (store: FMStore) => R.path(['staticData', 'cpOutcomes'], store),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
         this.filterLocationsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.tasksFilterLocations'),
+            (store: FMStore) => R.path(['staticData', 'tasksFilterLocations'], store),
             (locations: Location[]) => { this.filterLocations = locations || []; });
 
         this.filterSitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.tasksFilterSites'),
+            (store: FMStore) => R.path(['staticData', 'tasksFilterSites'], store),
             (sites: Site[]) => { this.filterSites = sites || []; });
 
         this.filterPartnersSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.tasksFilterPartners'),
+            (store: FMStore) => R.path(['staticData', 'tasksFilterPartners'], store),
             (partners: Partner[]) => { this.filterPartners = partners || []; });
     }
 
@@ -210,7 +204,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public openDialog({ model, target }: EventModel<PlaningTask>): void {
-        const dialogType = _.get(target, 'dataset.type', 'add');
+        const dialogType = R.pathOr('add', ['dataset', 'type'], target);
         const count = Array.apply(null, Array(12)).map(() => 0);
         const { item = ({plan_by_month: count} as PlaningTask) } = model || {};
 
@@ -222,8 +216,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
 
         const texts = this.dialogTexts[dialogType];
-        this.selectedModel = _.cloneDeep(item);
-        this.originalData = _.cloneDeep(item);
+        this.selectedModel = R.clone(item);
+        this.originalData = R.clone(item);
         this.dialog = {opened: true, ...texts};
     }
 
@@ -241,7 +235,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             return;
         }
 
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = R.equals(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -266,9 +260,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public validateExisted(): boolean {
         if (!this.partnerTasks.length || !this.selectedModel) { return false; }
-        return _.some(this.partnerTasks, (task: PlaningTask) => {
-            return _.every(
-                ['location', 'location_site', 'intervention', 'partner', 'cp_output'],
+        return this.partnerTasks.some((task: PlaningTask) => {
+            return ['location', 'location_site', 'intervention', 'partner', 'cp_output'].every(
                 // @ts-ignore
                 (key: string) => this.selectedModel[key] === (task[key] && task[key].id));
         });
@@ -301,8 +294,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public loadPartnerTasks() {
-        const partner = !_.isObject(this.selectedModel.partner) && this.selectedModel.partner;
-        const intervention = !_.isObject(this.selectedModel.intervention) && this.selectedModel.intervention;
+        const partner = R.is(Object, this.selectedModel.partner) && this.selectedModel.partner;
+        const intervention = !R.is(Object, this.selectedModel.intervention) && this.selectedModel.intervention;
         const missingPartnerOrIntervention = !partner || (this.interventionsList.length && !intervention);
         const tasks = this.getFromStore('planingTasks.partnerTasks.tasks');
 
@@ -347,7 +340,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public filterValueChanged({ detail, target }: CustomEvent) {
         const { selectedItems, selectedItem, value } = detail;
-        const property = _.get(target, 'dataset.property');
+        const property = R.path(['dataset', 'property'], target);
         if (!property) { throw new Error('Filter must contain data property attribute'); }
 
         if (selectedItems) {
@@ -389,9 +382,9 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     private checkExistenceInList(field: string, path: string = field) {
-        const list = _.get(this, path, []);
+        const list = R.pathOr([], path.split('.'), this);
         return list.find(
-            (item: any) => _.isEqual(this.selectedModel[field], item) || item.id === this.selectedModel[field]
+            (item: any) => R.equals(this.selectedModel[field], item) || item.id === this.selectedModel[field]
         );
     }
 }

@@ -47,7 +47,7 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     }
 
     public _routeChanged(path: string) {
-        const prefix = _.get(this, 'route.prefix', '');
+        const prefix = R.pathOr('', ['route', 'prefix'], this);
         if (!~prefix.indexOf('overview-planing')) { return; }
         if (!path.match(/[^\\/]/g)) {
             this.set('route.path', '/rationale');
@@ -61,15 +61,15 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.selectedYear = currentYear;
 
         this.yearPlanSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'yearPlan.data'),
+            (store: FMStore) => R.path(['yearPlan', 'data'], store),
             (yearPlan: YearPlan) => { this.yearPlan = yearPlan; });
 
         this.logIssueAllowSubscribe = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.logIssues'),
+            (store: FMStore) => R.path(['permissions', 'logIssues'], store),
             (permissions: IBackendPermissions) => { this.set('permissions.preparation', permissions); });
 
         this.planByTaskAllowSubscribe = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.planingTasks'),
+            (store: FMStore) => R.path(['permissions', 'planingTasks'], store),
             (permissions: IBackendPermissions) => { this.set('permissions.plan-by-task', permissions); });
     }
 

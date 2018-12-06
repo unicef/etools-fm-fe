@@ -48,38 +48,38 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpoint.url, 'logIssues'));
 
         this.logIssuesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'logIssues'),
+            (store: FMStore) => R.path(['logIssues'], store),
             (logIssues: IListData<LogIssue>) => {
                 this.logIssues = logIssues.results || [];
                 this.count = logIssues.count;
             });
 
         this.cpOutputsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.monitoredCpOutputs'),
+            (store: FMStore) => R.path(['staticData', 'monitoredCpOutputs'], store),
             (cpOutputs: IListData<CpOutput>) => {
                 this.cpOutputs = cpOutputs || [];
             });
 
         this.monitoredPartnersSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.monitoredPartners'),
+            (store: FMStore) => R.path(['staticData', 'monitoredPartners'], store),
             (monitoredPartners: []) => {
                 this.monitoredPartners = monitoredPartners || [];
             });
 
         this.locationsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.locations'),
+            (store: FMStore) => R.path(['staticData', 'locations'], store),
             (locations: IListData<ISiteParrentLocation>) => {
                 this.locations = locations || [];
             });
 
         this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.siteLocations'),
+            (store: FMStore) => R.path(['staticData', 'siteLocations'], store),
             (siteLocations: IListData<Site>) => {
                 this.siteLocations = siteLocations || [];
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.logIssues'),
+            (store: FMStore) => R.path(['permissions', 'logIssues'], store),
             (permissions: IBackendPermissions) => {
                 this.permissions = permissions;
                 if (permissions) {
@@ -89,19 +89,19 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
             });
 
         this.permissionsDetailsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.logIssuesDetails'),
+            (store: FMStore) => R.path(['permissions', 'logIssuesDetails'], store),
             (permissions: IBackendPermissions) => {
                 this.permissionsDetails = permissions;
             });
 
         this.requestLogIssuesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'logIssues.requestInProcess'),
+            (store: FMStore) => R.path(['logIssues', 'requestInProcess'], store),
             (requestInProcess: boolean | null) => {
                 this.requestInProcess = requestInProcess;
                 if (requestInProcess !== false) { return; }
 
                 this.errors = this.getFromStore('logIssues.errors');
-                if (this.errors && !_.isEmpty(this.errors)) {
+                if (this.errors && !R.isEmpty(this.errors)) {
                     const nonFieldErrors = this.errors.non_field_errors;
                     if (nonFieldErrors) {
                         nonFieldErrors.forEach((error: string) => this.dispatchOnStore(new AddNotification(error)));
@@ -154,10 +154,10 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
             ...dialogTexts
         };
 
-        this.originalData = _.cloneDeep(item);
-        this.selectedModel = _.cloneDeep(item);
-        this.originalFiles = _.cloneDeep(files);
-        this.currentFiles = _.cloneDeep(files);
+        this.originalData = R.clone(item);
+        this.selectedModel = R.clone(item);
+        this.originalFiles = R.clone(files);
+        this.currentFiles = R.clone(files);
 
         // load permissions for update
         const endpoint = getEndpoint('logIssuesDetails', {id: item.id}) as StaticEndpoint;
@@ -206,7 +206,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         const changedFiles: Attachment[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
         const newFiles: Attachment[] = this.getNewFiles(this.currentFiles);
         const deletedFiles: Attachment[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
-        if (!issue.id || _.isEmpty(data) && !newFiles.length &&  !deletedFiles.length && !changedFiles.length) {
+        if (!issue.id || R.isEmpty(data) && !newFiles.length &&  !deletedFiles.length && !changedFiles.length) {
             this.dialog = { opened: false };
             return;
         }

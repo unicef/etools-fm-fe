@@ -127,7 +127,7 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
     public hasChanges(original: QueryParams, ...params: QueryParams[]) {
         return params.some((param: QueryParams) => {
             return Object.keys(param).some((key: string) => {
-                return !_.isEqual(original[key], param[key]);
+                return !R.equals(original[key], param[key]);
             });
         });
     }

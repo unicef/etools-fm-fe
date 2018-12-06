@@ -17,13 +17,13 @@
                         type="search"
                         value="[[queryParams.search]]"
                         placeholder="Search location or site"
-                        on-value-changed="_searchKeyDown"
+                        on-value-changed="searchKeyDown"
                         inline>
                     <iron-icon icon="search" slot="prefix"></iron-icon>
                 </paper-input>
 
                 <div class="toggle-button-control">
-                    <paper-toggle-button checked="[[queryParams.show_inactive]]" on-checked-changed="_changeShowInactive"></paper-toggle-button>
+                    <paper-toggle-button checked="[[queryParams.show_inactive]]" on-checked-changed="changeShowInactive"></paper-toggle-button>
                     <span>Show inactive sites</span>
                 </div>
             </div>
@@ -104,8 +104,8 @@
                     page-size="[[queryParams.page_size]]"
                     page-number="[[queryParams.page]]"
                     total-results="[[count]]"
-                    on-page-size-changed="_pageSizeSelected"
-                    on-page-number-changed="_pageNumberChanged">
+                    on-page-size-changed="pageSizeSelected"
+                    on-page-number-changed="pageNumberChanged">
             </etools-data-table-footer>
         </paper-card>
 
@@ -177,7 +177,7 @@
 
                     <div class="map" id="map"></div>
 
-                    <div hidden$="[[!currentCoords]]" class="current-coords">Coordinates: [[currentCoords]]</div>
+                    <div hidden$="[[!currentCoords]]" class="current-coords">Selected site:     [[currentCoords]]</div>
 
                     <paper-textarea
                             class="validate-input disabled-as-readonly"

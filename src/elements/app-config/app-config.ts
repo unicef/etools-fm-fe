@@ -13,9 +13,17 @@ function isDynamicEndpoint(endpoint: Endpoint): endpoint is DynamicEndpoint {
 export function getEndpoint(endpointName: string): StaticEndpoint;
 export function getEndpoint(endpointName: string, data: EndpointTemplateData): StaticEndpoint;
 export function getEndpoint(endpointName: string, data?: EndpointTemplateData): StaticEndpoint {
-    const endpoint = _.clone(endpoints[endpointName]);
+    const endpoint = R.clone(endpoints[endpointName]);
     if (isDynamicEndpoint(endpoint)) {
-        const url = `${BASE_SITE}${_.template(endpoint.template)(data)}`;
+        const urlPath = R.pipe(
+            R.toPairs,
+            R.reduce(
+                (urlTemplate: string, pair: [string, string]) =>
+                    R.replace(`<%=${pair[0]}%>`, pair[1], urlTemplate),
+                endpoint.template
+            )
+        )(data);
+        const url = `${BASE_SITE}${urlPath}`;
         return {url, ...endpoint};
     } else {
         endpoint.url = `${BASE_SITE}${endpoint.url}`;

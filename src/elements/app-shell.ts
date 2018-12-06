@@ -124,7 +124,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
     }
 
     private _initRoute() {
-        const page = _.get(this, 'routeData.page');
+        const page = R.path(['routeData', 'page'], this);
         if (page) {
             this.page = page;
         } else {
@@ -135,7 +135,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
 
     private _pageNotFound(event: CustomEvent | ErrorEvent) {
         this.page = 'not-found';
-        const reason = event instanceof ErrorEvent ?  event.message : _.get(event, 'detail.message');
+        const reason = event instanceof ErrorEvent ?  event.message : R.path(['detail', 'message'], event);
         const message = reason ? `${reason}` : 'Oops you hit a 404!';
 
         this.dispatchOnStore(new AddNotification(message));

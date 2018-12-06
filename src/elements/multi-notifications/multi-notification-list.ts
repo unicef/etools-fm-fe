@@ -29,7 +29,7 @@
             let i = 0;
             while (i < this.notifications.length) {
                 const id = this.notifications[i].id;
-                const index = _.findIndex(newNotifications, (notification: Toast) => notification.id === id);
+                const index = newNotifications.findIndex((notification: Toast) => notification.id === id);
 
                 if (index > -1) {
                     newNotifications.splice(index, 1);

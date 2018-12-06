@@ -30,7 +30,7 @@ window.FMMixins.ReduxMixin = (superClass: any) => class extends superClass {
     public getFromStore(select: StoreSelector) {
         if (typeof select === 'string') {
             const state = this._store.getState();
-            return _.get(state, select);
+            return R.path(select.split('.'), state);
         } else if (typeof select === 'function') {
             return select(this._store.getState());
         } else {

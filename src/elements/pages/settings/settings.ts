@@ -30,7 +30,7 @@ class Settings extends EtoolsMixinFactory.combineMixins([
     }
 
     public _routeChanged(path: string) {
-        const prefix = _.get(this, 'route.prefix', '');
+        const prefix = R.pathOr('', ['route', 'prefix'], this);
         if (!~prefix.indexOf('settings')) { return; }
         if (!path.match(/[^\\/]/g)) {
             this.set('route.path', '/cp-outputs');

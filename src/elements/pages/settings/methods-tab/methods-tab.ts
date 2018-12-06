@@ -40,7 +40,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return { page: 1, page_size: 10, ordering: 'name' };
     }
 
     public finishLoad() {
@@ -67,14 +67,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         super.connectedCallback();
         this.addEventListener('sort-changed', this.sort);
         this.methodsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.methods'),
+            (store: FMStore) => R.path(['staticData', 'methods'], store),
             (methods: Method[] | undefined) => {
                 if (!methods) { return; }
                 this.methods = methods.filter(method => method.is_types_applicable);
             });
 
         this.typesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'methodTypes'),
+            (store: FMStore) => R.path(['methodTypes'], store),
             (types: IStatedListData<MethodType> | undefined) => {
                 if (!types) { return; }
                 this.types = types.results || [];
@@ -82,13 +82,13 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.methodTypes'),
+            (store: FMStore) => R.path(['permissions', 'methodTypes'], store),
             (permissions: IPermissionActions | undefined) => {
                 this.permissions = permissions;
             });
 
         this.updateTypeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'methodTypes.updateInProcess'),
+            (store: FMStore) => R.path(['methodTypes', 'updateInProcess'], store),
             (updateInProcess: boolean | null) => {
                 this.savingInProcess = updateInProcess;
                 if (updateInProcess !== false) { return; }
@@ -119,7 +119,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public openDialog({ model, target }: EventModel<MethodType>): void {
-        const dialogType = _.get(target, 'dataset.type');
+        const dialogType = R.path(['dataset', 'type'], target);
         if (!dialogType) { return; }
 
         const { item = {} } = model || {};
@@ -130,7 +130,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public saveType() {
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = R.equals(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;

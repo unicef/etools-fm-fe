@@ -37,11 +37,11 @@ class MonthCounterInput extends Polymer.Element {
     }
 
     public onCountChange({target}: KeyboardEvent) {
-        const index = _.get(target, 'dataset.index');
-        const value = _.get(target, 'value', 0);
+        const index = R.path(['dataset', 'index'], target);
+        const value = R.pathOr(0, ['value'], target);
 
         if (value !== `${+value}`) {
-            _.set(target, 'value', +value || 0);
+            R.set(R.lensProp('value'), +value || 0, target);
         }
 
         if (!isNaN(index)) {

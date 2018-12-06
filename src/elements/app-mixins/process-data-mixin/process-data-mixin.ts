@@ -11,7 +11,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends FMMixins.P
             const propertyType = this.getDescriptorType(permissions, subPath);
             if (propertyType === 'nested object') {
                 modifiedValue = this.changes(originalData[key], modifiedData[key], permissions, toRequest, subPath);
-                if (_.isEmpty(modifiedValue) &&  !_.isEmpty(originalValue)) { return changes; }
+                if (R.isEmpty(modifiedValue) &&  !R.isEmpty(originalValue)) { return changes; }
             }
             let modifiedToCompare = modifiedValue;
             let originalToCompare = originalValue;
@@ -19,7 +19,7 @@ window.FMMixins.ProcessDataMixin = (superClass: any) => class extends FMMixins.P
                 modifiedToCompare = this._simplifyValue(modifiedValue);
                 originalToCompare = this._simplifyValue(originalValue);
             }
-            if (_.isEqual(modifiedToCompare, originalToCompare)) { return changes; }
+            if (R.equals(modifiedToCompare, originalToCompare)) { return changes; }
             if (toRequest) { modifiedValue = modifiedToCompare; }
             return { ...changes, [key]: modifiedValue };
         }, {});

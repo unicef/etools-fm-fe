@@ -33,12 +33,12 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
 
     public openEditDialog() {
         this.dialog = {opened: true};
-        this.selectedModel = _.cloneDeep(this.yearPlan);
-        this.originalModel =  _.cloneDeep(this.yearPlan);
+        this.selectedModel = R.clone(this.yearPlan);
+        this.originalModel =  R.clone(this.yearPlan);
     }
 
     public onFinishEdit() {
-        if (_.isEqual(this.selectedModel, this.originalModel)) {
+        if (R.equals(this.selectedModel, this.originalModel)) {
             this.dialog = { opened: false };
             return;
         }
@@ -50,11 +50,11 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
         super.connectedCallback();
 
         this.permissionSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.yearPlan'),
+            (store: FMStore) => R.path(['permissions', 'yearPlan'], store),
             (permissions: IBackendPermissions) => { this.permissions = permissions; });
 
         this.requestYearPlanSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'yearPlan.requestInProcess'),
+            (store: FMStore) => R.path(['yearPlan', 'requestInProcess'], store),
             (requestInProcess: boolean | null) => {
                 this.requestInProcess = requestInProcess;
                 if (requestInProcess !== false) { return; }

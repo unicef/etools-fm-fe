@@ -7,6 +7,7 @@ import {
 } from '../../../redux-store/effects/site-specific-locations.effects';
 import { LeafletMouseEvent, Marker } from 'leaflet';
 import { AddNotification } from '../../../redux-store/actions/notification.actions';
+import { locationsInvert } from './locations-invert';
 
 class SitesTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.CommonMethods,
@@ -48,24 +49,23 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
         this.currentWorkspaceSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.currentWorkspace'),
+            (store: FMStore) => R.path(['staticData', 'currentWorkspace'], store),
             (workspace: Workspace | undefined) => {
                 if (!workspace) { return; }
-                this.defaultMapCenter = _.get(workspace, 'point.coordinates', [-0.09, 51.505]);
+                this.defaultMapCenter = R.pathOr([-0.09, 51.505], ['point', 'coordinates'], workspace);
             });
 
         this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'specificLocations'),
+            (store: FMStore) => R.path(['specificLocations'], store),
             (sites: IStatedListData<Site> | undefined) => {
                 if (!sites) { return; }
                 this._sitesObjects = sites.results || [];
                 this.refreshData();
-                this.count = sites.count || 0;
                 this.renderMarkers();
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.siteLocations'),
+            (store: FMStore) => R.path(['permissions', 'siteLocations'], store),
             (permissions: IPermissionActions | undefined) => {
                 this.permissions = permissions;
                 const statusOptions = permissions && this.getDescriptorChoices(permissions, 'is_active') || [];
@@ -76,13 +76,13 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             });
 
         this.updateSiteLocationSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'specificLocations.updateInProcess'),
+            (store: FMStore) => R.path(['specificLocations', 'updateInProcess'], store),
             (updateInProcess: boolean | null) => {
                 this.savingInProcess = updateInProcess;
                 if (updateInProcess !== false) { return; }
 
                 this.errors = this.getFromStore('specificLocations.errors');
-                if (_.get(this.errors, 'point')) {
+                if (R.path(['point'], this.errors)) {
                     this.dispatchOnStore(new AddNotification('Please, select correct location on map'));
                 }
                 if (this.errors) { return; }
@@ -118,15 +118,15 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getAdminLevel(level: number | null): string {
-        return _.isNumber(level) ? `Admin ${level}` : '';
+        return R.is(Number, level) ? `Admin ${level}` : '';
     }
 
     public openDialog(event: MouseEvent): void {
         const icon = event.target;
-        const dialogType = _.get(icon, 'dataset.type');
+        const dialogType = R.path(['dataset', 'type'], icon);
         if (!dialogType) { return; }
 
-        const model = _.get(event, 'model.site', {is_active: true});
+        const model = R.pathOr({is_active: true}, ['model', 'site'], event);
         const texts = this.dialogTexts[dialogType] || {};
         this.selectedModel = {...model};
         this.originalData = {...model};
@@ -146,8 +146,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             });
             this.renderMarkers();
         }
-        const coords = _.get(this, 'selectedModel.point.coordinates', this.defaultMapCenter);
-        const reversedCoords = _.clone(coords).reverse();
+        const coords = R.pathOr(this.defaultMapCenter, ['selectedModel', 'point', 'coordinates'], this);
+        const reversedCoords = R.clone(coords).reverse();
         const zoom = coords === this.defaultMapCenter ? 8 : 15;
         this.map.setView(reversedCoords, zoom);
 
@@ -165,7 +165,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             this.currentCoords = null;
         } else {
             const {lat, lng} = this.dynamicMarker.getLatLng();
-            this.currentCoords = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            this.currentCoords = `Latitude ${lat.toFixed(6)}     Longitude ${lng.toFixed(6)}`;
         }
     }
 
@@ -177,12 +177,12 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         this.errors = null;
 
         if (this.dynamicMarker && this.dynamicMarker.staticData) {
-            const coords = _.clone(this.dynamicMarker.staticData.point.coordinates).reverse();
+            const coords = R.clone(this.dynamicMarker.staticData.point.coordinates).reverse();
             this.dynamicMarker.setLatLng(coords).closePopup();
         } else if (this.dynamicMarker) {
             this.removeDynamicMarker();
         }
-        _.each(this.staticMarkers, (marker: Marker) => marker.closePopup());
+        (this.staticMarkers || []).forEach((marker: Marker) => marker.closePopup());
         this.dynamicMarker = null;
         this.setCoordsString();
     }
@@ -196,7 +196,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         const isActive = this.shadowRoot.querySelector('#statusDropdown').selected;
         this.selectedModel.is_active = !!isActive;
 
-        const {lat, lng} = _.result(this, 'dynamicMarker.getLatLng', {});
+        const {lat, lng} = R.pathOr(() => ({}), ['dynamicMarker', 'getLatLng'], this).bind(this.dynamicMarker)();
         if (lat && lng) {
             this.selectedModel.point = {
                 type: 'Point',
@@ -204,7 +204,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             };
         }
 
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.selectedModel);
+        const equalOrIsDeleteDialog = R.equals(this.originalData, this.selectedModel);
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -246,7 +246,7 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         let sitesObject = this.filterSites(this._sitesObjects);
         this.count = sitesObject.length;
         sitesObject = this._filterPagination(sitesObject);
-        this.sites = this.regroupSitesByParent(sitesObject);
+        this.sites = locationsInvert(sitesObject);
     }
 
     public _filterShowInactive(sitesObject: Site[]): Site[] {
@@ -285,27 +285,28 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
         return this._filterSearch(sites);
     }
 
-    public _pageNumberChanged({detail}: CustomEvent) {
+    public pageNumberChanged({detail}: CustomEvent) {
         this.updateQueryParams({page: detail.value});
         this.refreshData();
     }
 
-    public _pageSizeSelected({detail}: CustomEvent) {
+    public pageSizeSelected({detail}: CustomEvent) {
         this.updateQueryParams({page_size: detail.value});
         this.refreshData();
     }
 
-    public _changeShowInactive({ detail }: CustomEvent) {
+    public changeShowInactive({ detail }: CustomEvent) {
         const checked = detail.value;
         if (checked) {
-            this.updateQueryParams({show_inactive: checked});
+            this.updateQueryParams({show_inactive: checked, page: 1});
         } else {
             this.removeQueryParams('show_inactive');
+            this.updateQueryParams({page: 1});
         }
         this.refreshData();
     }
 
-    public _searchKeyDown({ detail }: CustomEvent) {
+    public searchKeyDown({ detail }: CustomEvent) {
         const { value } = detail;
         if (value === null || value === undefined) { return; }
         this._debounceSearch = Polymer.Debouncer.debounce(
@@ -316,21 +317,10 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             });
     }
 
-    private regroupSitesByParent(sites: Site[]): IGroupedSites[] {
-        return _(sites)
-            .groupBy((site: Site) => site.parent.id)
-            .map((groupedSites: Site[]) => {
-                const parent = groupedSites[0].parent;
-                return {...parent, sites: groupedSites};
-            })
-            .sortBy('name')
-            .value();
-    }
-
     private renderMarkers() {
         if (!this.map) { return; }
         const sitesCoords = this._sitesObjects.map((site: Site) => {
-            const coords = _.clone(site.point.coordinates).reverse();
+            const coords = R.clone(site.point.coordinates).reverse();
             return {coords, staticData: site, popup: site.name};
         });
         this.setStaticMarkers(sitesCoords);

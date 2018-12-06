@@ -9,7 +9,7 @@ const INITIAL: Toast[] = [];
 export function notifications(state = INITIAL, action: NotificationActions): Toast[] {
     switch (action.type) {
         case ADD_NOTIFICATION:
-            const id = _.uniqueId('toast');
+            const id = `${Math.random()}`.slice(2);
             const notification: Toast = {id, text: action.payload};
             return [...state, notification];
         case REMOVE_NOTIFICATION:

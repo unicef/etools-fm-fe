@@ -46,16 +46,16 @@
                 <etools-data-table-column class="flex-4" field="name">
                     [[getDescriptorLabel(permissions, 'fm_config.cp_output')]] (Expired <iron-icon class="expired" icon="icons:history"></iron-icon>)
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-1" field="fm_config.is_monitored">
+                <etools-data-table-column class="w110px layout center-center" field="fm_config.is_monitored">
                     [[getDescriptorLabel(permissions, 'fm_config.is_monitored')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-1" field="fm_config.is_priority">
+                <etools-data-table-column class="w100px layout center-center" field="fm_config.is_priority">
                     [[getDescriptorLabel(permissions, 'fm_config.is_priority')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-4" field="interventions">
+                <etools-data-table-column class="flex-5" field="interventions">
                     [[getDescriptorLabel(permissions, 'interventions')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-4" field="fm_config.government_partners">
+                <etools-data-table-column class="flex-5" field="fm_config.government_partners">
                     [[getDescriptorLabel(permissions, 'fm_config.government_partners')]]
                 </etools-data-table-column>
             </etools-data-table-header>
@@ -81,17 +81,17 @@
                             </template>
                             [[item.name]]
                         </div>
-                        <div class="col-data flex-1">
+                        <div class="col-data w110px layout center-center">
                             <template is="dom-if" if="[[item.fm_config.is_monitored]]">
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-1">
+                        <div class="col-data w100px layout center-center">
                             <template is="dom-if" if="[[item.fm_config.is_priority]]">
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-4">
+                        <div class="col-data flex-5">
                             <template is="dom-if" if="[[_isOnePartner(item.interventions)]]">
                                 <span class="truncate">
                                     <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
@@ -102,9 +102,9 @@
                                 <a class="link-button" target="_blank" on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
                             </template>
                         </div>
-                        <div class="col-data flex-4">
+                        <div class="col-data flex-5">
                             <template is="dom-if" if="[[_isOnePartner(item.fm_config.government_partners)]]">
-                                <a class="link-button truncate">[[item.fm_config.government_partners.0.name]]</a>
+                                <a class="link-button truncate" href$="[[item.fm_config.government_partners.0.url]]" target="_blank">[[item.fm_config.government_partners.0.name]]</a>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.fm_config.government_partners)]]">
                                 <a class="link-button" on-click="_openPartners">[[item.fm_config.government_partners.length]] PARTNERS</a>

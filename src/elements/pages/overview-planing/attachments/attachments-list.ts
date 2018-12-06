@@ -63,7 +63,7 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
     public updateModel() {
         const data = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
         const file = this.file[0];
-        if (!this.selectedModel.id || _.isEmpty(data) && !file.raw) {
+        if (!this.selectedModel.id || R.isEmpty(data) && !file.raw) {
             this.dialog = { opened: false };
             return;
         }
@@ -83,8 +83,8 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
         };
 
         this.file = [{ file_name: item.filename, path: item.file }];
-        this.originalData = _.clone(item);
-        this.selectedModel = _.clone(item);
+        this.originalData = R.clone(item);
+        this.selectedModel = R.clone(item);
     }
 
     public onDeleteAttachment({ model }: EventModel<Attachment>) {
@@ -113,21 +113,21 @@ class AttachmentsList extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpoint.url, 'attachments'));
 
         this.permissionSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.attachments'),
+            (store: FMStore) => R.path(['permissions', 'attachments'], store),
             (permissions: IBackendPermissions) => {
                 this.permissions = permissions;
                 this.fileTypes = permissions && this.getDescriptorChoices(permissions, 'file_type') || [];
             });
 
         this.attachmentsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'attachments.data'),
+            (store: FMStore) => R.path(['attachments', 'data'], store),
             (attachments: IListData<Attachment>) => {
                 this.attachments = attachments && attachments.results;
                 this.count = attachments && attachments.count;
             });
 
         this.requestAttachmentsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'attachments.requestInProcess'),
+            (store: FMStore) => R.path(['attachments', 'requestInProcess'], store),
             (requestInProcess: boolean | null) => {
                 this.requestInProcess = requestInProcess;
                 if (requestInProcess !== false) { return; }

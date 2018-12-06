@@ -85,34 +85,34 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'cpOutputsConfigs'));
 
         this.cpOutputsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'cpOutputs'),
+            (store: FMStore) => R.path(['cpOutputs'], store),
             (cpOutputs: IListData<CpOutput>) => {
                 this.cpOutputs = cpOutputs.results || [];
                 this.count = cpOutputs.count;
             });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.governmentPartners'),
+            (store: FMStore) => R.path(['staticData', 'governmentPartners'], store),
             (partners: Partner[]) => { this.governmentPartners = partners || []; });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
+            (store: FMStore) => R.path(['staticData', 'cpOutcomes'], store),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
         this.permissionListSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputs'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputs'], store),
             (permissions: IBackendPermissions) => { this.permissions = permissions; });
 
         this.permissionDetailsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputDetails'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputDetails'], store),
             (permissions: IBackendPermissions) => { this.permissionsDetails = permissions; });
 
         this.permissionConfigsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputsConfigs'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputsConfigs'], store),
             (permissions: IBackendPermissions) => { this.permissionsConfigs = permissions; });
 
         this.requestCpOutputSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'cpOutputs.requestInProcess'),
+            (store: FMStore) => R.path(['cpOutputs', 'requestInProcess'], store),
             (requestInProcess: boolean | null) => {
                 this.requestInProcess = requestInProcess;
                 if (requestInProcess !== false) { return; }
@@ -120,7 +120,6 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
                 this.errors = this.getFromStore('cpOutputs.errors');
                 if (this.errors) { return; }
 
-                this.updateQueryParams({page: 1});
                 this.dialog = {opened: false};
                 this.startLoad();
             });
@@ -150,10 +149,10 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
         // init
         if (!item.fm_config) { item.fm_config = {} as FmConfig; }
-        this.originalModel =  _.cloneDeep(item);
+        this.originalData =  R.clone(item);
         if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
         if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
-        this.selectedModel = _.cloneDeep(item);
+        this.selectedModel = R.clone(item);
 
         const endpoint = getEndpoint('cpOutputDetails', {id: item.id}) as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputDetails'));
@@ -186,11 +185,11 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public onFinishEdit() {
-        if (_.isEqual(this.selectedModel, this.originalModel)) {
+        if (R.equals(this.selectedModel, this.originalData)) {
             this.dialog = { opened: false };
             return;
         }
-        const changes = this.changesToRequest(this.originalModel, this.selectedModel, this.permissionsDetails);
+        const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissionsDetails);
         this.dispatchOnStore(updateCpOutput(this.selectedModel.id, changes));
     }
 }
