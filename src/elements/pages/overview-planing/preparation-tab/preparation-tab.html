@@ -118,10 +118,12 @@
                             <span class="truncate">[[item.issue]]</span>
                         </div>
                         <div class="col-data flex-1">
-                            <div class="files-column" on-click="onDownloadFiles">
-                                <iron-icon icon="icons:file-download"></iron-icon>
-                                [[item.attachments.length]] FILES
-                            </div>
+                            <template is="dom-if" if="[[item.attachments.length]]">
+                                <div class="files-column" on-click="onDownloadFiles">
+                                    <iron-icon icon="icons:file-download"></iron-icon>
+                                    [[item.attachments.length]] FILES
+                                </div>
+                            </template>
                         </div>
                         <div class="col-data flex-1">[[getChoiceLabel(item.status, statuses)]]</div>
 
