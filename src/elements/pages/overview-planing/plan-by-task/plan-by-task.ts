@@ -231,7 +231,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public saveTask() {
         if ((this.dialog.type === 'copy' || this.dialog.type === 'add') && this.validateExisted()) {
-            this.dispatchOnStore(new AddNotification('Task in this location already exists. Please use existing.'));
+            const message = 'Identical task is already planned. Please edit existing object instead.';
+            this.dispatchOnStore(new AddNotification(message));
             return;
         }
 
