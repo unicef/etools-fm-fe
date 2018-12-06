@@ -1,5 +1,5 @@
 <!--import [polymer/polymer-element, paper-card, etools-dropdown, iron-flex-layout, etools-dialog, paper-input,
-            etools-data-table, attachments-list]-->
+            etools-data-table, attachments-list, textarea-max-rows-mixin]-->
 
 <!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
             route-helper-mixin, process-data-mixin]-->
@@ -74,9 +74,10 @@
             </etools-loading>
 
             <div class="container layout vertical">
-                <paper-input
+                <paper-textarea
                         class="validate-input disabled-as-readonly"
                         value="{{selectedModel.prioritization_criteria}}"
+                        max-rows="3"
                         label="[[getDescriptorLabel(permissions, 'prioritization_criteria')]]"
                         placeholder="e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response"
                         required$="[[getRequiredStatus(permissions, 'prioritization_criteria')]]"
@@ -86,10 +87,11 @@
                         error-message="{{errors.prioritization_criteria}}"
                         on-focus="resetFieldError"
                         on-tap="resetFieldError">
-                </paper-input>
-                <paper-input
+                </paper-textarea>
+                <paper-textarea
                         class="validate-input disabled-as-readonly"
                         value="{{selectedModel.methodology_notes}}"
+                        max-rows="3"
                         label="[[getDescriptorLabel(permissions, 'methodology_notes')]]"
                         placeholder="e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs"
                         required$="[[getRequiredStatus(permissions, 'methodology_notes')]]"
@@ -99,10 +101,11 @@
                         error-message="{{errors.methodology_notes}}"
                         on-focus="resetFieldError"
                         on-tap="resetFieldError">
-                </paper-input>
-                <paper-input
+                </paper-textarea>
+                <paper-textarea
                         class="validate-input disabled-as-readonly"
                         value="{{selectedModel.modalities}}"
+                        max-rows="3"
                         label="[[getDescriptorLabel(permissions, 'modalities')]]"
                         placeholder="e.g Staff, UNV, SSAs, TPMs to undertake field monitoring"
                         required$="[[getRequiredStatus(permissions, 'modalities')]]"
@@ -112,10 +115,11 @@
                         error-message="{{errors.modalities}}"
                         on-focus="resetFieldError"
                         on-tap="resetFieldError">
-                </paper-input>
+                </paper-textarea>
                 <paper-input
                         class="validate-input disabled-as-readonly flex=5"
                         value="{{selectedModel.target_visits}}"
+                        type="number"
                         label="[[getDescriptorLabel(permissions, 'target_visits')]]"
                         placeholder=""
                         required$="[[getRequiredStatus(permissions, 'target_visits')]]"
@@ -126,9 +130,10 @@
                         on-focus="resetFieldError"
                         on-tap="resetFieldError">
                 </paper-input>
-                <paper-input
+                <paper-textarea
                         class="validate-input disabled-as-readonly flex=5"
                         value="{{selectedModel.partner_engagement}}"
+                        max-rows="3"
                         label="[[getDescriptorLabel(permissions, 'partner_engagement')]]"
                         placeholder="e.g any arrangements established for join visits"
                         required$="[[getRequiredStatus(permissions, 'partner_engagement')]]"
@@ -138,20 +143,20 @@
                         error-message="{{errors.partner_engagement}}"
                         on-focus="resetFieldError"
                         on-tap="resetFieldError">
-                </paper-input>
-                <paper-input
-                        class="validate-input disabled-as-readonly flex=5"
-                        value="{{selectedModel.other_aspects}}"
-                        label="[[getDescriptorLabel(permissions, 'other_aspects')]]"
-                        placeholder="e.g any arrangements established for join visits"
-                        required$="[[getRequiredStatus(permissions, 'other_aspects')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
-                        invalid="{{errors.other_aspects}}"
-                        error-message="{{errors.other_aspects}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-input>
+                </paper-textarea>
+                <!--<paper-textarea-->
+                        <!--class="validate-input disabled-as-readonly flex=5"-->
+                        <!--value="{{selectedModel.other_aspects}}"-->
+                        <!--label="[[getDescriptorLabel(permissions, 'other_aspects')]]"-->
+                        <!--placeholder="e.g any arrangements established for join visits"-->
+                        <!--required$="[[getRequiredStatus(permissions, 'other_aspects')]]"-->
+                        <!--disabled$="[[getReadonlyStatus(permissions, 'other_aspects')]]"-->
+                        <!--readonly$="[[getReadonlyStatus(permissions, 'other_aspects')]]"-->
+                        <!--invalid="{{errors.other_aspects}}"-->
+                        <!--error-message="{{errors.other_aspects}}"-->
+                        <!--on-focus="resetFieldError"-->
+                        <!--on-tap="resetFieldError">-->
+                <!--</paper-textarea>-->
             </div>
 
         </etools-dialog>
