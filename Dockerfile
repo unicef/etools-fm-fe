@@ -21,11 +21,11 @@ ADD . /code/
 # remove installed modules for clean setup
 RUN rm -rf /code/build/
 RUN rm -rf /code/node_modules/
-RUN rm -rf /code/bower_modules/
+RUN rm -rf /code/src/bower_modules/
 
 WORKDIR /code
 RUN mv /tmp/node_modules /code/node_modules
-RUN mv /tmp/bower_components /code/bower_components
+RUN mv /tmp/bower_components /code/src/bower_components
 RUN gulp
 EXPOSE 8080
 CMD ["node", "express.js"]
