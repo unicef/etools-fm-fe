@@ -174,6 +174,10 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         });
     }
 
+    public isAllowEdit(model: LogIssue, permissions: IBackendPermissions) {
+        return model.status !== 'past' && this.actionAllowed(permissions, 'create');
+    }
+
     public isEditDialog(type: string) {
         return type === 'edit';
     }
@@ -260,10 +264,11 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
 
     public getColumnRelatedTypeValue(item: LogIssue) {
         let type = 'cp_output';
+
         if (item.partner) {
             type = 'partner';
         } else if (item.location_site) {
-            type = 'location_site';
+            type = 'location';
         }
         return this.getChoiceLabel(type, this.relatedTypes);
     }
@@ -271,8 +276,8 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     public getColumnNameValue(item: LogIssue) {
         if (item.partner) {
             return item.partner.name;
-        } else if (item.location_site) {
-            return item.location_site.name;
+        } else if (item.location && item.location_site) {
+            return `${item.location.name} - ${item.location_site.name}`;
         } else if (item.cp_output) {
             return item.cp_output.name;
         }

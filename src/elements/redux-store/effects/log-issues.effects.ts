@@ -61,9 +61,12 @@ export function updateLogIssue(logIssueId: number, issue: LogIssue,
         return request(endpointLogIssue.url, options)
             .then(() => {
                 const promises: Promise<void>[] = [];
-                changedAttachments.forEach(changedFile => promises.push(updateAttachment(logIssueId, changedFile)));
-                deletedAttachments.forEach(deletedFile => promises.push(deleteAttachment(logIssueId, deletedFile)));
-                newAttachments.forEach(newFile => promises.push(addAttachment(logIssueId, newFile)));
+                changedAttachments.forEach(changedFile => promises.push(updateAttachment(logIssueId, changedFile)
+                    .catch(() => dispatch(new AddNotification('Can not update attachment')))));
+                deletedAttachments.forEach(deletedFile => promises.push(deleteAttachment(logIssueId, deletedFile)
+                    .catch(() => dispatch(new AddNotification('Can not delete attachment')))));
+                newAttachments.forEach(newFile => promises.push(addAttachment(logIssueId, newFile)
+                    .catch(() => dispatch(new AddNotification('Can not upload attachment')))));
                 return Promise.all(promises);
             })
             .then(() => dispatch(new SetRequestErrorLogIssues({errors: null})))

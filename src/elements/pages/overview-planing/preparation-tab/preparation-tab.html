@@ -75,7 +75,7 @@
                 <div class="table-title">[[visibleRange.0]] - [[visibleRange.1]] of [[count]] issues to show</div>
             </div>
 
-            <etools-data-table-header no-title>
+            <etools-data-table-header no-title no-collapse="[[!logIssues.length]]">
                 <etools-data-table-column class="flex-1" field="related_to_type">
                     [[getDescriptorLabel(permissions, 'related_to_type')]]
                 </etools-data-table-column>
@@ -94,7 +94,7 @@
             </etools-data-table-header>
 
             <template is="dom-if" if="[[!logIssues.length]]">
-                <etools-data-table-row>
+                <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
                         <div class="col-data flex-1 truncate">-</div>
                         <div class="col-data flex-2 truncate">-</div>
@@ -114,8 +114,8 @@
                         <div class="col-data flex-2">
                             <span class="truncate">[[getColumnNameValue(item)]]</span>
                         </div>
-                        <div class="col-data flex-3 truncate">
-                            <span class="truncate">[[item.issue]]</span>
+                        <div class="col-data flex-3">
+                            <span class="two-line-truncate">[[item.issue]]</span>
                         </div>
                         <div class="col-data flex-1">
                             <template is="dom-if" if="[[item.attachments.length]]">
@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-data flex-1">[[getChoiceLabel(item.status, statuses)]]</div>
 
-                        <template is="dom-if" if="[[actionAllowed(permissions, 'create')]]">
+                        <template is="dom-if" if="[[isAllowEdit(item, permissions)]]">
                             <div class="hover-block">
                                 <iron-icon icon="icons:create" on-click="openEditLogIssue"></iron-icon>
                             </div>
@@ -143,10 +143,12 @@
                             <div class="rdc-title">Last Modified By</div>
                             <div class="truncate">[[item.history.0.by_user_display]] - [[formatDate(item.history.0.created)]]</div>
                         </div>
-                        <div class="row-details-content">
-                            <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
-                            <div class="truncate">[[item.closed_by]]</div>
-                        </div>
+                        <template is="dom-if" if="[[item.closed_by]]">
+                            <div class="row-details-content">
+                                <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
+                                <div class="truncate">[[item.closed_by]]</div>
+                            </div>
+                        </template>
                     </div>
                 </etools-data-table-row>
             </template>
