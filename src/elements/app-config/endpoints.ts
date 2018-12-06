@@ -48,7 +48,31 @@ export const endpoints: Endpoints = {
     },
 
     yearPlan: {
-        template: '/api/field-monitoring/planning/year-plan/<%=year%>/'
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
+    },
+
+    logIssues: {
+        url: '/api/v1/field-monitoring/settings/log-issues/'
+    },
+
+    logIssuesDetails: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/'
+    },
+
+    logIssuesAttachments: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
+    },
+
+    logIssuesAttachmentsDetails: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>'
+    },
+
+    attachments: {
+        url: '/api/v1/field-monitoring/settings/attachments/'
+    },
+
+    attachmentsDetails: {
+        template: '/api/v1/field-monitoring/settings/attachments/<%=id%>/'
     },
 
     changeCountry: {
@@ -61,10 +85,42 @@ export const endpoints: Endpoints = {
         cacheTableName: 'governmentPartners'
     },
 
+    monitoredPartners: {
+        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'monitoredPartners'
+    },
+
+    monitoredCpOutputs: {
+        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'monitoredCpOutputs'
+    },
+
     locations: {
         url: '/api/locations-light/',
         exp: 25 * 60 * 60 * 1000, // 25h
         cacheTableName: 'locations'
+    },
+
+    planingTasks: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/'
+    },
+
+    planingTaskDetails: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/<%=id%>/'
+    },
+
+    tasksFilterLocations: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/locations/?page_size=all'
+    },
+
+    tasksFilterSites: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/locations/sites/?page_size=all'
+    },
+
+    tasksFilterPartners: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/partners/?page_size=all'
     },
 
     // Old endpoints. TODO: remove latter if redundant

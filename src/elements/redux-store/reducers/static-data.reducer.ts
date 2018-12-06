@@ -29,9 +29,6 @@ export function staticData(state: StaticData = INITIAL, action: StaticDataAction
             return newStateData;
 
         case RESET_STATIC_DATA:
-            if (!state[dataName]) {
-                throw new Error(`Data "${dataName}" is missing. Use Add data action first.`);
-            }
             return {
                 ...state,
                 [dataName]: data

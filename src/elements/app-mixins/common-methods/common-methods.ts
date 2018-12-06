@@ -20,4 +20,21 @@ window.FMMixins.CommonMethods = (superClass: any) => class extends FMMixins.Perm
         if (field) { this.set(`errors.${field}`, false); }
         event.target.invalid = false;
     }
+
+    public getChoiceLabel(value: number | string, options: Option[]) {
+        if (!options || options.length === 0) {
+            return value;
+        }
+        const option = options.find((type: Option) => type.value === value);
+        return option && option.display_name;
+    }
+
+    public formatDate(value: string, format = 'DD MMM YYYY') {
+        if (!value) { return; }
+
+        const date = new Date(value);
+        if (date.toString() !== 'Invalid Date') {
+            return moment.utc(date).format(format);
+        }
+    }
 };

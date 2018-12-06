@@ -13,9 +13,17 @@ function isDynamicEndpoint(endpoint: Endpoint): endpoint is DynamicEndpoint {
 export function getEndpoint(endpointName: string): StaticEndpoint;
 export function getEndpoint(endpointName: string, data: EndpointTemplateData): StaticEndpoint;
 export function getEndpoint(endpointName: string, data?: EndpointTemplateData): StaticEndpoint {
-    const endpoint = _.clone(endpoints[endpointName]);
+    const endpoint = R.clone(endpoints[endpointName]);
     if (isDynamicEndpoint(endpoint)) {
-        const url = `${BASE_SITE}${_.template(endpoint.template)(data)}`;
+        const urlPath = R.pipe(
+            R.toPairs,
+            R.reduce(
+                (urlTemplate: string, pair: [string, string]) =>
+                    R.replace(`<%=${pair[0]}%>`, pair[1], urlTemplate),
+                endpoint.template
+            )
+        )(data);
+        const url = `${BASE_SITE}${urlPath}`;
         return {url, ...endpoint};
     } else {
         endpoint.url = `${BASE_SITE}${endpoint.url}`;
@@ -23,10 +31,20 @@ export function getEndpoint(endpointName: string, data?: EndpointTemplateData): 
     return endpoint;
 }
 
+export function jsonToFormData(json: any) {
+    const body = new FormData();
+    Object.keys(json).forEach((key) => { body.append(key, json[key]); });
+    return body;
+}
+
 export function objectToQuery(obj: QueryParams) {
-    const query = Object.keys(obj)
-        .map(key => `${key}=${obj[key]}`)
-        .join('&');
+    const params: string[] = [];
+    Object.keys(obj).forEach(key => {
+        const value = obj[key];
+        if (!value || Array.isArray(value) && !value.length) { return; }
+        params.push(`${key}=${value}`);
+    });
+    const query = params.join('&');
     return query.length > 0 ? '?' + query : '';
 }
 

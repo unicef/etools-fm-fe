@@ -14,28 +14,24 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
     public setStaticMarkers(markersData: MarkerDataObj[]) {
         this.removeStaticMarkers();
         const markers: Marker[] = [];
-        _.each(markersData, (data: MarkerDataObj) => {
+        R.forEach((data: MarkerDataObj) => {
             const marker = L.marker(data.coords).addTo(this.map);
             marker.staticData = data.staticData;
             if (data.popup) {
                 marker.bindPopup(`<b>${data.popup}</b>`);
             }
             markers.push(marker);
-        });
+        }, markersData);
         this.staticMarkers = markers;
     }
 
     public removeStaticMarkers() {
         if (this.staticMarkers && this.staticMarkers.length) {
-            _.each(this.staticMarkers, (marker: Marker) => {
+            R.forEach((marker: Marker) => {
                 marker.removeFrom(this.map);
-            });
+            }, this.staticMarkers);
         }
     }
-    //
-    // public toggleStaticMarkers(show: boolean) {
-    //
-    // }
 
     public addDynamicMarker(cordinates: [number, number]) {
         if (!this.map) { throw new Error('Please, initialize map!'); }

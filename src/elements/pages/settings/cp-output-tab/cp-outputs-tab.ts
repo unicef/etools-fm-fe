@@ -18,7 +18,11 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return {
+            page: 1,
+            page_size: 10,
+            parent__in: []
+        };
     }
 
     public finishLoad() {
@@ -53,12 +57,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public _changeOutcomeFilter({ detail }: CustomEvent) {
-        const selectedItem = detail.selectedItem;
-        if (selectedItem) {
-            this.updateQueryParams({parent: selectedItem.id});
+        const { selectedItems } = detail;
+        if (selectedItems) {
+            const values = selectedItems.map((item: CpOutcome) => item.id);
+            this.updateQueryParams({parent__in: values});
         } else {
-            this.removeQueryParams('parent');
-            this.updateQueryParams({page: 1});
+            this.updateQueryParams({page: 1, parent__in: []});
         }
         this.startLoad();
     }
@@ -81,34 +85,34 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'cpOutputsConfigs'));
 
         this.cpOutputsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'cpOutputs'),
+            (store: FMStore) => R.path(['cpOutputs'], store),
             (cpOutputs: IListData<CpOutput>) => {
                 this.cpOutputs = cpOutputs.results || [];
                 this.count = cpOutputs.count;
             });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.governmentPartners'),
+            (store: FMStore) => R.path(['staticData', 'governmentPartners'], store),
             (partners: Partner[]) => { this.governmentPartners = partners || []; });
 
         this.cpOutcomeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.cpOutcomes'),
+            (store: FMStore) => R.path(['staticData', 'cpOutcomes'], store),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
         this.permissionListSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputs'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputs'], store),
             (permissions: IBackendPermissions) => { this.permissions = permissions; });
 
         this.permissionDetailsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputDetails'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputDetails'], store),
             (permissions: IBackendPermissions) => { this.permissionsDetails = permissions; });
 
         this.permissionConfigsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.cpOutputsConfigs'),
+            (store: FMStore) => R.path(['permissions', 'cpOutputsConfigs'], store),
             (permissions: IBackendPermissions) => { this.permissionsConfigs = permissions; });
 
         this.requestCpOutputSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'cpOutputs.requestInProcess'),
+            (store: FMStore) => R.path(['cpOutputs', 'requestInProcess'], store),
             (requestInProcess: boolean | null) => {
                 this.requestInProcess = requestInProcess;
                 if (requestInProcess !== false) { return; }
@@ -116,7 +120,6 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
                 this.errors = this.getFromStore('cpOutputs.errors');
                 if (this.errors) { return; }
 
-                this.updateQueryParams({page: 1});
                 this.dialog = {opened: false};
                 this.startLoad();
             });
@@ -144,21 +147,21 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         const { item } = model;
         this.dialog = { opened: true, confirm: 'Save', title: item.name };
 
-        // init drop-down
-        if (!item.fm_config) {
-            item.fm_config = { government_partners: [] } as FmConfig;
-        }
+        // init
+        if (!item.fm_config) { item.fm_config = {} as FmConfig; }
+        this.originalData =  R.clone(item);
+        if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
+        if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
+        this.selectedModel = R.clone(item);
 
-        this.editModel = _.cloneDeep(item);
-        this.originalModel =  _.cloneDeep(item);
         const endpoint = getEndpoint('cpOutputDetails', {id: item.id}) as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'cpOutputDetails'));
     }
 
     public _selectedEditItemPartners({ detail }: CustomEvent) {
-        if (!this.editModel || !this.editModel.fm_config) { return; }
+        if (!this.selectedModel || !this.selectedModel.fm_config) { return; }
         const { selectedItems } = detail;
-        this.editModel.fm_config.government_partners = selectedItems;
+        this.selectedModel.fm_config.government_partners = selectedItems;
     }
 
     public _openPartners({ model }: EventModel<CpOutput>) {
@@ -171,7 +174,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     public _openInterventions({ model }: EventModel<CpOutput>) {
         const { item } = model;
         this.partners = item.interventions ? item.interventions.map((intervention => {
-            return {...intervention.partner, ...{number: intervention.number}};
+            return {...intervention.partner, ...{number: intervention.number, url: intervention.url}};
         })) : [];
         const dialogTitle = this.getDescriptorLabel(this.permissions, 'interventions');
         this.dialogPartners = {title: dialogTitle, opened: true};
@@ -182,12 +185,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public onFinishEdit() {
-        if (_.isEqual(this.editModel, this.originalModel)) {
+        if (R.equals(this.selectedModel, this.originalData)) {
             this.dialog = { opened: false };
             return;
         }
-        const changes = this.changesToRequest(this.originalModel, this.editModel, this.permissionsDetails);
-        this.dispatchOnStore(updateCpOutput(this.editModel.id, changes));
+        const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissionsDetails);
+        this.dispatchOnStore(updateCpOutput(this.selectedModel.id, changes));
     }
 }
 

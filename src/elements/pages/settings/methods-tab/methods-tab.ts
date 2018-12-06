@@ -24,7 +24,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
                 value: () => []
             },
             count: Number,
-            editedItem: {
+            selectedModel: {
                 type: Object,
                 value: () => ({})
             },
@@ -40,7 +40,7 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public getInitQueryParams(): QueryParams {
-        return { page: 1, page_size: 10 };
+        return { page: 1, page_size: 10, ordering: 'name' };
     }
 
     public finishLoad() {
@@ -67,14 +67,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
         super.connectedCallback();
         this.addEventListener('sort-changed', this.sort);
         this.methodsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'staticData.methods'),
+            (store: FMStore) => R.path(['staticData', 'methods'], store),
             (methods: Method[] | undefined) => {
                 if (!methods) { return; }
                 this.methods = methods.filter(method => method.is_types_applicable);
             });
 
         this.typesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'methodTypes'),
+            (store: FMStore) => R.path(['methodTypes'], store),
             (types: IStatedListData<MethodType> | undefined) => {
                 if (!types) { return; }
                 this.types = types.results || [];
@@ -82,13 +82,13 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'permissions.methodTypes'),
+            (store: FMStore) => R.path(['permissions', 'methodTypes'], store),
             (permissions: IPermissionActions | undefined) => {
                 this.permissions = permissions;
             });
 
         this.updateTypeSubscriber = this.subscribeOnStore(
-            (store: FMStore) => _.get(store, 'methodTypes.updateInProcess'),
+            (store: FMStore) => R.path(['methodTypes', 'updateInProcess'], store),
             (updateInProcess: boolean | null) => {
                 this.savingInProcess = updateInProcess;
                 if (updateInProcess !== false) { return; }
@@ -119,18 +119,18 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public openDialog({ model, target }: EventModel<MethodType>): void {
-        const dialogType = _.get(target, 'dataset.type');
+        const dialogType = R.path(['dataset', 'type'], target);
         if (!dialogType) { return; }
 
         const { item = {} } = model || {};
         const texts = this.dialogTexts[dialogType];
-        this.editedItem = {...item};
+        this.selectedModel = {...item};
         this.originalData = {...item};
         this.dialog = {opened: true, ...texts};
     }
 
     public saveType() {
-        const equalOrIsDeleteDialog = _.isEqual(this.originalData, this.editedItem) && this.dialog.type !== 'remove';
+        const equalOrIsDeleteDialog = R.equals(this.originalData, this.selectedModel) && this.dialog.type !== 'remove';
         if (equalOrIsDeleteDialog) {
             this.set('dialog.opened', false);
             return;
@@ -138,14 +138,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
 
         switch (this.dialog.type) {
             case 'add':
-                this.dispatchOnStore(addMethodType(this.editedItem));
+                this.dispatchOnStore(addMethodType(this.selectedModel));
                 break;
             case 'edit':
-                const changes = this.changesToRequest(this.originalData, this.editedItem, this.permissions);
-                this.dispatchOnStore(updateMethodType(this.editedItem.id, changes));
+                const changes = this.changesToRequest(this.originalData, this.selectedModel, this.permissions);
+                this.dispatchOnStore(updateMethodType(this.selectedModel.id, changes));
                 break;
             case 'remove':
-                this.dispatchOnStore(removeMethodType(this.editedItem.id));
+                this.dispatchOnStore(removeMethodType(this.selectedModel.id));
                 break;
         }
     }
@@ -156,14 +156,14 @@ class MethodsTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public isDropdownReadonly(permissions: IPermissionActions): boolean {
-        return !!this.editedItem.id || !!(permissions && this.getReadonlyStatus(permissions, 'method'));
+        return !!this.selectedModel.id || !!(permissions && this.getReadonlyStatus(permissions, 'method'));
     }
 
     public resetData(event: CustomEvent): void {
         if (event.target !== this.$.dialog) { return; }
         this.dialog = null;
         this.resetInputs();
-        this.editedItem = {};
+        this.selectedModel = {};
         this.errors = null;
     }
 

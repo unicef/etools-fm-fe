@@ -1,9 +1,11 @@
-export function request(input: RequestInfo, init?: RequestInit) {
-    if (init && !_.get(init, `headers['Content-Type']`)) {
-        _.set(init, `headers['Content-Type']`, 'application/json');
-    }
+export function request(input: RequestInfo, init: RequestInit = {}) {
     const csrfToken = getToken();
-    _.set(init, `headers['x-csrftoken']`, csrfToken);
+    init = R.set(R.lensPath(['headers', 'x-csrftoken']), csrfToken, init);
+
+    const isformData = init.body instanceof FormData;
+    if (!isformData && !R.path(['headers', 'Content-Type'], init)) {
+        init = R.set(R.lensPath(['headers', 'Content-Type']), 'application/json', init);
+    }
 
     return fetch(input, init)
         .then((response) => {

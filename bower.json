@@ -34,14 +34,18 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.4",
     "paper-input": "PolymerElements/paper-input#^2.2.2",
     "paper-tabs": "PolymerElements/paper-tabs#^2.1.1",
-    "etools-dropdown": "^2.0.0",
+    "etools-dropdown": "^2.1.1",
     "etools-data-table": "^2.0.1",
     "etools-datepicker": "^2.0.0",
     "etools-dialog": "^2.0.1",
     "paper-toggle-button": "^2.1.1",
     "webcomponentsjs": "1.2.2",
     "babel-polyfill": "^0.0.1",
-    "etools-profile-dropdown": "^3.1.0"
+    "etools-profile-dropdown": "^3.1.0",
+    "etools-file": "2.0.1",
+    "paper-radio-group": "^2.2.0",
+    "paper-radio-button": "2.1.0",
+    "ramda": "^0.26.1"
   },
   "devDependencies": {},
   "resolutions": {
@@ -52,6 +56,8 @@
     "paper-icon-button": "2.2.0",
     "iron-flex-layout": "2.0.3",
     "iron-meta": "2.1.1",
-    "webcomponentsjs": "1.2.2"
+    "webcomponentsjs": "1.2.2",
+    "etools-dropdown": "2.1.1",
+    "paper-radio-button": "2.1.0"
   }
 }

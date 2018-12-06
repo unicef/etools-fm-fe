@@ -48,13 +48,25 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
         for (let i = 0; i < paramList.length; i++) {
             const param = paramList[i].split('=');
             if (param[0]) {
-                const valueString = decodeURIComponent(param[1] || '');
-                let value: number | string = Number.parseInt(valueString);
-                value = !Number.isNaN(value) ? value : valueString;
-                params[decodeURIComponent(param[0])] = value;
+                const key = decodeURIComponent(param[0]);
+                const value = decodeURIComponent(param[1] || '');
+                if (this.isArrayParam(param)) {
+                    const valueItems = value.split(',');
+                    params[key] = valueItems.map((item: string) => {
+                        return !Number.isNaN(+item) ? +item : item;
+                    });
+                } else if (!Number.isNaN(+value)) {
+                    params[key] = +value;
+                } else {
+                    params[key] = value;
+                }
             }
         }
         return params;
+    }
+
+    public isArrayParam(param: any) {
+        return param[0].endsWith('__in') || param[1] && !!~param[1].indexOf(',');
     }
 
     /**
@@ -70,11 +82,14 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
             const key = keys[i];
             const value = params[key];
             const encodedKey = encodeURIComponent(key);
-            if (value === '') {
-                encodedParams.push(encodedKey);
-            } else if (value) {
-                const encodedValue = encodeURIComponent(value.toString());
-                encodedParams.push(`${encodedKey}=${encodedValue}`);
+            if (value) {
+                let encodedValue: string;
+                encodedValue = Array.isArray(value) ?
+                    value.map((param) => (encodeURIComponent(param.toString()))).join(',') :
+                    encodeURIComponent(value.toString());
+                if (encodedValue) {
+                    encodedParams.push(`${encodedKey}=${encodedValue}`);
+                }
             }
         }
         return encodedParams.join('&');
@@ -104,8 +119,17 @@ window.FMMixins.RouteHelperMixin = (superClass: any) => class extends superClass
     public updateQueryParams(...params: QueryParams[]) {
         // Query Params must be initialized
         if (!this.queryParams) { return; }
+        if  (!this.hasChanges(this.queryParams, ...params)) { return; }
         const queryParams = Object.assign({}, this.queryParams, ...params);
         this._updateQueryParams(queryParams);
+    }
+
+    public hasChanges(original: QueryParams, ...params: QueryParams[]) {
+        return params.some((param: QueryParams) => {
+            return Object.keys(param).some((key: string) => {
+                return !R.equals(original[key], param[key]);
+            });
+        });
     }
 
     public removeQueryParams(...paramsToRemove: string[]): void {

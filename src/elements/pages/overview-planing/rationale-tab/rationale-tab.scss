@@ -1,0 +1,31 @@
+:host {
+  position: relative;
+  display: block;
+  padding: 0 25px 25px;
+}
+
+.text-control {
+  padding: 10px;
+
+  label {
+    color: var(--gray-mid);
+    font-size: var(--paper-font-caption_-_font-size);
+    font-weight: var(--paper-font-caption_-_font-weight);
+  }
+
+  .value {
+    height: 1rem;
+  }
+}
+
+.rational-view {
+  margin: 10px;
+}
+
+paper-card {
+  padding: 8px 0;
+  display: block;
+  margin-top: 25px;
+  --paper-card_-_background-color: white;
+  --paper-card_-_margin: 0 24px;
+}

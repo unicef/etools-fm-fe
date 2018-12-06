@@ -1,4 +1,4 @@
-<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin]-->
+<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin, tab-inputs-styles]-->
 
 <dom-module id="cp-outputs-tab">
     <template>
@@ -6,21 +6,26 @@
         <!-- inject styles './cp-outputs-tab.scss'-->
 
         <app-route route="{{route}}" pattern="/cp-outputs" active="{{isActive}}"></app-route>
+
+
         <paper-card>
             <div class="layout horizontal">
-                <etools-dropdown
-                        class="filter-dropdown"
-                        selected="[[queryParams.parent]]"
-                        label="CP Outcome"
-                        placeholder$="Select"
-                        options="[[cpOutcomes]]"
-                        option-label="name"
-                        option-value="id"
-                        trigger-value-change-event
-                        enable-none-option
-                        on-etools-selected-item-changed="_changeOutcomeFilter"
-                        hide-search allow-outside-scroll>
-                </etools-dropdown>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[_simplifyValue(queryParams.parent__in)]]"
+                            label="CP Outcome"
+                            placeholder$="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-items-changed="_changeOutcomeFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button checked="[[queryParams.fm_config__is_monitored]]" on-checked-changed="_changeIsMonitored"></paper-toggle-button>
                     <span>Show only 'Monitored At Community Level'</span>
@@ -32,72 +37,77 @@
             </div>
         </paper-card>
 
-        <paper-card>
+        <paper-card class="table-container">
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">Country Programme Outputs</div>
             </div>
 
             <etools-data-table-header id="listHeader" no-collapse no-title>
-                <etools-data-table-column class="flex-3" field="name">
+                <etools-data-table-column class="flex-4" field="name">
                     [[getDescriptorLabel(permissions, 'fm_config.cp_output')]] (Expired <iron-icon class="expired" icon="icons:history"></iron-icon>)
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-1" field="fm_config.is_monitored">
+                <etools-data-table-column class="w110px layout center-center" field="fm_config.is_monitored">
                     [[getDescriptorLabel(permissions, 'fm_config.is_monitored')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-1" field="fm_config.is_priority">
+                <etools-data-table-column class="w100px layout center-center" field="fm_config.is_priority">
                     [[getDescriptorLabel(permissions, 'fm_config.is_priority')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-2" field="interventions">
+                <etools-data-table-column class="flex-5" field="interventions">
                     [[getDescriptorLabel(permissions, 'interventions')]]
                 </etools-data-table-column>
-                <etools-data-table-column class="flex-3" field="fm_config.government_partners">
+                <etools-data-table-column class="flex-5" field="fm_config.government_partners">
                     [[getDescriptorLabel(permissions, 'fm_config.government_partners')]]
                 </etools-data-table-column>
             </etools-data-table-header>
+
             <template is="dom-if" if="[[!cpOutputs.length]]">
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal">
-                        <div  class="col-data flex-3 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
                         <div  class="col-data flex-1">-</div>
                         <div  class="col-data flex-1">-</div>
-                        <div  class="col-data flex-2 truncate">-</div>
-                        <div  class="col-data flex-3 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
+                        <div  class="col-data flex-4 truncate">-</div>
                     </div>
                 </etools-data-table-row>
             </template>
+
             <template is="dom-repeat" items="[[cpOutputs]]" as="item">
                 <etools-data-table-row no-collapse secondary-bg-on-hover>
                     <div slot="row-data" class="layout horizontal editable-row">
-                        <div class="col-data flex-3 truncate">
+                        <div class="col-data flex-4 truncate">
                             <template is="dom-if" if="[[item.expired]]">
                                 <iron-icon class="expired cell" icon="icons:history"></iron-icon>
                             </template>
                             [[item.name]]
                         </div>
-                        <div class="col-data flex-1">
+                        <div class="col-data w110px layout center-center">
                             <template is="dom-if" if="[[item.fm_config.is_monitored]]">
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-1">
+                        <div class="col-data w100px layout center-center">
                             <template is="dom-if" if="[[item.fm_config.is_priority]]">
                                 <iron-icon icon="icons:check"></iron-icon>
                             </template>
                         </div>
-                        <div class="col-data flex-2 truncate">
+                        <div class="col-data flex-5">
                             <template is="dom-if" if="[[_isOnePartner(item.interventions)]]">
-                                <a>[[item.interventions.0.partner.name]] | [[item.interventions.0.number]]</a>
+                                <span class="truncate">
+                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
+                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.number]]</a>
+                                </span>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.interventions)]]">
-                                <a on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
+                                <a class="link-button" target="_blank" on-click="_openInterventions">[[item.interventions.length]] PARTNERSHIPS</a>
                             </template>
                         </div>
-                        <div class="col-data flex-3 truncate">
+                        <div class="col-data flex-5">
                             <template is="dom-if" if="[[_isOnePartner(item.fm_config.government_partners)]]">
-                                <a>[[item.fm_config.government_partners.0.name]]</a>
+                                <a class="link-button truncate" href$="[[item.fm_config.government_partners.0.url]]" target="_blank">[[item.fm_config.government_partners.0.name]]</a>
                             </template>
                             <template is="dom-if" if="[[_isManyPartners(item.fm_config.government_partners)]]">
-                                <a on-click="_openPartners">[[item.fm_config.government_partners.length]] PARTNERS</a>
+                                <a class="link-button" on-click="_openPartners">[[item.fm_config.government_partners.length]] PARTNERS</a>
                             </template>
                         </div>
                         <template is="dom-if" if="[[isAllowEdit()]]">
@@ -108,6 +118,7 @@
                     </div>
                 </etools-data-table-row>
             </template>
+
             <etools-data-table-footer
                     page-size="[[queryParams.page_size]]"
                     page-number="[[queryParams.page]]"
@@ -116,7 +127,9 @@
                     on-page-size-changed="_pageSizeSelected"
                     on-page-number-changed="_pageNumberChanged">
             </etools-data-table-footer>
+
         </paper-card>
+
 
         <etools-dialog
                 size="md"
@@ -124,14 +137,20 @@
                 keep-dialog-open
                 opened="{{dialogPartners.opened}}"
                 dialog-title="{{dialogPartners.title}}"
+                cancel-btn-text="Close"
                 hide-confirm-btn>
+
             <div class="container layout vertical">
                 <template is="dom-repeat" items="[[partners]]" as="partner">
-                    <div class="partner-row"><a>[[partner.name]]</a>
-                        <template is="dom-if" if="[[partner.number]]">| [[partner.number]]</template>
+                    <div class="partner-row">
+                        <a class="link-button" target="_blank" href$="[[partner.url]]">[[partner.name]]</a>
+                        <template is="dom-if" if="[[partner.number]]">
+                            | <a class="link-button" target="_blank" href$="[[partner.url]]">[[partner.number]]</a>
+                        </template>
                     </div>
                 </template>
             </div>
+
         </etools-dialog>
 
         <etools-dialog
@@ -146,18 +165,19 @@
                     active="[[requestInProcess]]"
                     loading-text="Saving Data">
             </etools-loading>
+
             <div class="container layout vertical">
                 <div class="layout horizontal">
                     <div class="toggle-button-control">
                         <paper-toggle-button
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_monitored')]]"
-                                checked="{{editModel.fm_config.is_monitored}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_monitored}}"></paper-toggle-button>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_monitored')]]</span>
                     </div>
                     <div class="toggle-button-control">
                         <paper-toggle-button
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_priority')]]"
-                                checked="{{editModel.fm_config.is_priority}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_priority}}"></paper-toggle-button>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_priority')]]</span>
                     </div>
                 </div>
@@ -165,7 +185,7 @@
                     <etools-dropdown-multi
                             class="validate-input disabled-as-readonly flex"
                             label="[[getDescriptorLabel(permissionsDetails, 'fm_config.government_partners')]]"
-                            selected-values="[[_simplifyValue(editModel.fm_config.government_partners)]]"
+                            selected-values="[[_simplifyValue(selectedModel.fm_config.government_partners)]]"
                             options="[[governmentPartners]]"
                             option-value="id"
                             option-label="name"
