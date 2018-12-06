@@ -294,7 +294,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public loadPartnerTasks() {
-        const partner = R.is(Object, this.selectedModel.partner) && this.selectedModel.partner;
+        const partner = !R.is(Object, this.selectedModel.partner) && this.selectedModel.partner;
         const intervention = !R.is(Object, this.selectedModel.intervention) && this.selectedModel.intervention;
         const missingPartnerOrIntervention = !partner || (this.interventionsList.length && !intervention);
         const tasks = this.getFromStore('planingTasks.partnerTasks.tasks');
@@ -322,10 +322,14 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public isInterventionRequired(permissions: PermissionsCollections, field: string, partner: number | null) {
-        const isNotGovernment = partner && this.selectedOutput && !this.selectedOutput.government_partners.find(
+        const isNotGovernment = !this.isGovernment(partner);
+        return !!permissions && this.getRequiredStatus(permissions, field) || isNotGovernment;
+    }
+
+    public isGovernment(partner: number | null) {
+        return !!partner && !!this.selectedOutput && !!this.selectedOutput.government_partners.find(
             (govPartner: Partner) => govPartner.id === partner
         );
-        return !!permissions && this.getRequiredStatus(permissions, field) || isNotGovernment;
     }
 
     public pageNumberChanged({detail}: CustomEvent) {

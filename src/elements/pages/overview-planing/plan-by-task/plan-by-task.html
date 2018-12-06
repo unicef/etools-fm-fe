@@ -260,7 +260,7 @@
                             dynamic-align></etools-dropdown>
                 </div>
 
-                <div class="container layout horizontal">
+                <div class="container layout horizontal" hidden$="[[isGovernment(selectedModel.partner)]]">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
                             selected="[[_simplifyValue(selectedModel.intervention)]]"
