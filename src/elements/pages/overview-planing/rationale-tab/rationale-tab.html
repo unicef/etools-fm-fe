@@ -73,77 +73,89 @@
                     loading-text="Saving Data">
             </etools-loading>
 
-            <div class="container layout vertical">
-                <paper-textarea
-                        class="validate-input disabled-as-readonly"
-                        value="{{selectedModel.prioritization_criteria}}"
-                        max-rows="3"
-                        label="[[getDescriptorLabel(permissions, 'prioritization_criteria')]]"
-                        placeholder="e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response"
-                        required$="[[getRequiredStatus(permissions, 'prioritization_criteria')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
-                        invalid="{{errors.prioritization_criteria}}"
-                        error-message="{{errors.prioritization_criteria}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-textarea>
-                <paper-textarea
-                        class="validate-input disabled-as-readonly"
-                        value="{{selectedModel.methodology_notes}}"
-                        max-rows="3"
-                        label="[[getDescriptorLabel(permissions, 'methodology_notes')]]"
-                        placeholder="e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs"
-                        required$="[[getRequiredStatus(permissions, 'methodology_notes')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
-                        invalid="{{errors.methodology_notes}}"
-                        error-message="{{errors.methodology_notes}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-textarea>
-                <paper-textarea
-                        class="validate-input disabled-as-readonly"
-                        value="{{selectedModel.modalities}}"
-                        max-rows="3"
-                        label="[[getDescriptorLabel(permissions, 'modalities')]]"
-                        placeholder="e.g Staff, UNV, SSAs, TPMs to undertake field monitoring"
-                        required$="[[getRequiredStatus(permissions, 'modalities')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'modalities')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'modalities')]]"
-                        invalid="{{errors.modalities}}"
-                        error-message="{{errors.modalities}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-textarea>
-                <paper-input
-                        class="validate-input disabled-as-readonly flex=5"
-                        value="{{selectedModel.target_visits}}"
-                        type="number"
-                        label="[[getDescriptorLabel(permissions, 'target_visits')]]"
-                        placeholder=""
-                        required$="[[getRequiredStatus(permissions, 'target_visits')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'target_visits')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'target_visits')]]"
-                        invalid="{{errors.target_visits}}"
-                        error-message="{{errors.target_visits}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-input>
-                <paper-textarea
-                        class="validate-input disabled-as-readonly flex=5"
-                        value="{{selectedModel.partner_engagement}}"
-                        max-rows="3"
-                        label="[[getDescriptorLabel(permissions, 'partner_engagement')]]"
-                        placeholder="e.g any arrangements established for join visits"
-                        required$="[[getRequiredStatus(permissions, 'partner_engagement')]]"
-                        disabled$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
-                        readonly$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
-                        invalid="{{errors.partner_engagement}}"
-                        error-message="{{errors.partner_engagement}}"
-                        on-focus="resetFieldError"
-                        on-tap="resetFieldError">
-                </paper-textarea>
+            <div class="layout vertical">
+                <div class="container layout horizontal">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.prioritization_criteria}}"
+                            max-rows="3"
+                            rows="2"
+                            label="[[getDescriptorLabel(permissions, 'prioritization_criteria')]]"
+                            placeholder="e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response"
+                            required$="[[getRequiredStatus(permissions, 'prioritization_criteria')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
+                            invalid="{{errors.prioritization_criteria}}"
+                            error-message="{{errors.prioritization_criteria}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-textarea>
+                </div>
+                <div class="container layout horizontal">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.methodology_notes}}"
+                            max-rows="3"
+                            rows="2"
+                            label="[[getDescriptorLabel(permissions, 'methodology_notes')]]"
+                            placeholder="e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs"
+                            required$="[[getRequiredStatus(permissions, 'methodology_notes')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
+                            invalid="{{errors.methodology_notes}}"
+                            error-message="{{errors.methodology_notes}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-textarea>
+                </div>
+                <div class="container layout horizontal">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.modalities}}"
+                            max-rows="3"
+                            label="[[getDescriptorLabel(permissions, 'modalities')]]"
+                            placeholder="e.g Staff, UNV, SSAs, TPMs to undertake field monitoring"
+                            required$="[[getRequiredStatus(permissions, 'modalities')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'modalities')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'modalities')]]"
+                            invalid="{{errors.modalities}}"
+                            error-message="{{errors.modalities}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-textarea>
+                </div>
+                <div class="container layout horizontal">
+                    <paper-input
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.target_visits}}"
+                            type="number"
+                            label="[[getDescriptorLabel(permissions, 'target_visits')]]"
+                            placeholder=""
+                            required$="[[getRequiredStatus(permissions, 'target_visits')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'target_visits')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'target_visits')]]"
+                            invalid="{{errors.target_visits}}"
+                            error-message="{{errors.target_visits}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-input>
+                </div>
+                <div class="container layout horizontal">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.partner_engagement}}"
+                            max-rows="3"
+                            label="[[getDescriptorLabel(permissions, 'partner_engagement')]]"
+                            placeholder="e.g any arrangements established for join visits"
+                            required$="[[getRequiredStatus(permissions, 'partner_engagement')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
+                            invalid="{{errors.partner_engagement}}"
+                            error-message="{{errors.partner_engagement}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-textarea>
+                </div>
                 <!--<paper-textarea-->
                         <!--class="validate-input disabled-as-readonly flex=5"-->
                         <!--value="{{selectedModel.other_aspects}}"-->

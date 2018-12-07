@@ -114,8 +114,8 @@
                         <div class="col-data flex-2">
                             <span class="truncate">[[getColumnNameValue(item)]]</span>
                         </div>
-                        <div class="col-data flex-3">
-                            <span class="two-line-truncate">[[item.issue]]</span>
+                        <div class="col-data layout center flex-3">
+                            <span class="layout horizontal center two-line-truncate">[[item.issue]]</span>
                         </div>
                         <div class="col-data flex-1">
                             <template is="dom-if" if="[[item.attachments.length]]">
@@ -146,7 +146,7 @@
                         <template is="dom-if" if="[[item.closed_by]]">
                             <div class="row-details-content">
                                 <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
-                                <div class="truncate">[[item.closed_by]]</div>
+                                <div class="truncate">[[item.closed_by.name]]</div>
                             </div>
                         </template>
                     </div>
@@ -215,18 +215,21 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'partner')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.partner)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'partner')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'partner', 'Select')]]"
                                 options="[[monitoredPartners]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'partner')]]"
-                                error-message="{{errors.partner}}"
+                                required
+                                invalid$="[[errors.partner]]"
+                                error-message="[[errors.partner]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="partner"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>
@@ -235,18 +238,21 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'cp_output')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.cp_output)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'cp_output')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'cp_output', 'Select')]]"
                                 options="[[cpOutputs]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'cp_output')]]"
-                                error-message="{{errors.cp_output}}"
+                                required
+                                invalid$="[[errors.cp_output]]"
+                                error-message="[[errors.cp_output]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="cp_output"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>
@@ -255,33 +261,39 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'location')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.location)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'location')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'location', 'Select')]]"
                                 options="[[locations]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'location')]]"
-                                error-message="{{errors.location}}"
+                                required
+                                invalid$="[[errors.location]]"
+                                error-message="[[errors.location]]"
                                 trigger-value-change-event
-                                on-etools-selected-item-changed="setValue"
+                                on-etools-selected-item-changed="setLocation"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="location"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.location_site)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'location_site')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'location_site', 'Select')]]"
-                                options="[[siteLocations]]"
+                                options="[[locationSites]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'location_site')]]"
-                                error-message="{{errors.location_site}}"
+                                required
+                                invalid$="[[errors.location_site]]"
+                                error-message="[[errors.location_site]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="location_site"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>
