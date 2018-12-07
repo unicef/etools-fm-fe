@@ -100,6 +100,10 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         const tab = this.shadowRoot.querySelector(`#${this.routeData.tab}`);
         tab.dispatchEvent(new CustomEvent('add-new', {bubbles: true, composed: true}));
     }
+
+    public getPlural(count: number): string {
+        return !count || +count > 1 ? 's' : '';
+    }
 }
 
 customElements.define(OverviewPlaning.is, OverviewPlaning);

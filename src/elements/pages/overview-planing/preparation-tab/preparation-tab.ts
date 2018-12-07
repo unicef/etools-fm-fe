@@ -40,7 +40,8 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
             page_size: 10,
             cp_output__in: [],
             partner__in: [],
-            location_site__in: []
+            location_site__in: [],
+            status: 'new'
         };
     }
 
