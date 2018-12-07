@@ -1,6 +1,9 @@
 :host {
   position: relative;
   display: block;
+  etools-file {
+    max-width: 470px;
+  }
 }
 
 paper-card {
