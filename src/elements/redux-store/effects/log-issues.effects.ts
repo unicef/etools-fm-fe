@@ -34,7 +34,8 @@ export function createLogIssue(issue: LogIssue, files: Attachment[]) {
             .then(response => {
                 const id = response.id;
                 const promises: Promise<void>[] = [];
-                files.forEach(file => promises.push(addAttachment(id, file)));
+                files.forEach(file => promises.push(addAttachment(id, file)
+                    .catch(() => dispatch(new AddNotification('Can not upload attachment')))));
                 // for (const file of files) {
                 //     promises.push(uploadLogIssueAttachment(id, file));
                 // }

@@ -2,6 +2,8 @@ import { loadPermissions } from '../../../redux-store/effects/load-permissions.e
 import { getEndpoint } from '../../../app-config/app-config';
 import { createLogIssue, loadLogIssues, updateLogIssue } from '../../../redux-store/effects/log-issues.effects';
 import { AddNotification } from '../../../redux-store/actions/notification.actions';
+import { locationsInvert } from '../../settings/sites-tab/locations-invert';
+import { loadSiteLocations } from '../../../redux-store/effects/site-specific-locations.effects';
 
 class PreparationTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -21,6 +23,9 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
                     add: {title: 'Log Issue', confirm: 'Log', type: 'create'},
                     edit: {title: 'Edit Issue', confirm: 'Save', type: 'edit'}
                 })
+            },
+            errors: {
+                type: Object
             },
             selectedModel: {
                 type: Object,
@@ -46,6 +51,9 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
 
         const endpoint = getEndpoint('logIssues') as StaticEndpoint;
         this.dispatchOnStore(loadPermissions(endpoint.url, 'logIssues'));
+        if (!this.getFromStore('specificLocations.results')) {
+            this.dispatchOnStore(loadSiteLocations());
+        }
 
         this.logIssuesSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['logIssues'], store),
@@ -66,16 +74,12 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
                 this.monitoredPartners = monitoredPartners || [];
             });
 
-        this.locationsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['staticData', 'locations'], store),
-            (locations: IListData<ISiteParrentLocation>) => {
-                this.locations = locations || [];
-            });
-
         this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['staticData', 'siteLocations'], store),
-            (siteLocations: IListData<Site>) => {
-                this.siteLocations = siteLocations || [];
+            (store: FMStore) => R.path(['specificLocations'], store),
+            (sites: IStatedListData<Site> | undefined) => {
+                if (!sites) { return; }
+                const sitesObject = sites.results || [];
+                this.locations = locationsInvert(sitesObject);
             });
 
         this.permissionsSubscriber = this.subscribeOnStore(
@@ -136,7 +140,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
             relatedToType: 'cp_output',
             ...dialogTexts
         };
-        this.selectedModel = {};
+        this.selectedModel = { status: 'new' };
         this.currentFiles = [];
         // set permissions for create
         this.permissionsDetails = this.permissions;
@@ -182,7 +186,31 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         return type === 'edit';
     }
 
+    public validate() {
+        const type = this.dialog.relatedToType;
+        if (type === 'cp_output' && !this.selectedModel.cp_output ) {
+            this.errors = {...this.errors, ...{cp_output: 'Cp Output is not provided'}};
+            return false;
+        }
+        if (type === 'partner' && !this.selectedModel.partner ) {
+            this.errors = {...this.errors, ...{partner: 'Partner is not provided'}};
+            return false;
+        }
+        if (type === 'location') {
+            if (!this.selectedModel.location) {
+                this.errors = {...this.errors, ...{location: 'Location is not provided'}};
+                return false;
+            }
+            if (!this.selectedModel.location_site) {
+                this.errors = {...this.errors, ...{location_site: 'Location Site is not provided'}};
+                return false;
+            }
+        }
+        return true;
+    }
+
     public onFinishDialog() {
+        if (!this.validate()) { return; }
         if (this.dialog.type === 'create') {
             const files = this.currentFiles;
             this.createIssue(this.selectedModel, files);
@@ -260,6 +288,14 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         const fieldName = (target as HTMLElement).dataset.fieldname || '';
         const { selectedItem } = detail;
         this.selectedModel[fieldName] = selectedItem && selectedItem.id || null;
+    }
+
+    public setLocation(e: CustomEvent) {
+        this.setValue(e);
+        const locationId = this.selectedModel && this.selectedModel.location;
+        if (!locationId) { return; }
+        const location = this.locations.find((item: ISiteParrentLocation) => item.id === locationId);
+        this.locationSites = location && location.sites || [];
     }
 
     public getColumnRelatedTypeValue(item: LogIssue) {
