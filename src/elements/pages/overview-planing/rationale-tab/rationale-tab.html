@@ -74,14 +74,13 @@
             </etools-loading>
 
             <div class="layout vertical">
-                <div class="container layout horizontal">
+                <div class="container">
                     <paper-textarea
                             class="validate-input disabled-as-readonly flex"
                             value="{{selectedModel.prioritization_criteria}}"
                             max-rows="3"
-                            rows="2"
                             label="[[getDescriptorLabel(permissions, 'prioritization_criteria')]]"
-                            placeholder="e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response"
+                            placeholder="[[getPlaceholder(permissions, 'prioritization_criteria', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'prioritization_criteria')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
                             readonly$="[[getReadonlyStatus(permissions, 'prioritization_criteria')]]"
@@ -90,15 +89,15 @@
                             on-focus="resetFieldError"
                             on-tap="resetFieldError">
                     </paper-textarea>
+                    <div class="helper-text">e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response</div>
                 </div>
-                <div class="container layout horizontal">
+                <div class="container">
                     <paper-textarea
                             class="validate-input disabled-as-readonly flex"
                             value="{{selectedModel.methodology_notes}}"
                             max-rows="3"
-                            rows="2"
                             label="[[getDescriptorLabel(permissions, 'methodology_notes')]]"
-                            placeholder="e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs"
+                            placeholder="[[getPlaceholder(permissions, 'methodology_notes', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'methodology_notes')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
                             readonly$="[[getReadonlyStatus(permissions, 'methodology_notes')]]"
@@ -107,14 +106,15 @@
                             on-focus="resetFieldError"
                             on-tap="resetFieldError">
                     </paper-textarea>
+                    <div class="helper-text">e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs</div>
                 </div>
-                <div class="container layout horizontal">
+                <div class="container">
                     <paper-textarea
                             class="validate-input disabled-as-readonly flex"
                             value="{{selectedModel.modalities}}"
                             max-rows="3"
                             label="[[getDescriptorLabel(permissions, 'modalities')]]"
-                            placeholder="e.g Staff, UNV, SSAs, TPMs to undertake field monitoring"
+                            placeholder="[[getPlaceholder(permissions, 'modalities', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'modalities')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'modalities')]]"
                             readonly$="[[getReadonlyStatus(permissions, 'modalities')]]"
@@ -123,38 +123,37 @@
                             on-focus="resetFieldError"
                             on-tap="resetFieldError">
                     </paper-textarea>
+                    <div class="helper-text">e.g Staff, UNV, SSAs, TPMs to undertake field monitoring</div>
                 </div>
-                <div class="container layout horizontal">
+                <div class="container">
                     <paper-input
-                            class="validate-input disabled-as-readonly flex"
+                            class="validate-input disabled-as-readonly flex numeric-input"
                             value="{{selectedModel.target_visits}}"
                             type="number"
                             label="[[getDescriptorLabel(permissions, 'target_visits')]]"
-                            placeholder=""
+                            placeholder="[[getPlaceholder(permissions, 'target_visits', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'target_visits')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'target_visits')]]"
                             readonly$="[[getReadonlyStatus(permissions, 'target_visits')]]"
-                            invalid="{{errors.target_visits}}"
-                            error-message="{{errors.target_visits}}"
+                            on-input="onTargetVisitsChange"
                             on-focus="resetFieldError"
                             on-tap="resetFieldError">
                     </paper-input>
                 </div>
-                <div class="container layout horizontal">
+                <div class="container">
                     <paper-textarea
                             class="validate-input disabled-as-readonly flex"
                             value="{{selectedModel.partner_engagement}}"
                             max-rows="3"
                             label="[[getDescriptorLabel(permissions, 'partner_engagement')]]"
-                            placeholder="e.g any arrangements established for join visits"
+                            placeholder="[[getPlaceholder(permissions, 'partner_engagement', 'Enter')]]"
                             required$="[[getRequiredStatus(permissions, 'partner_engagement')]]"
                             disabled$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
                             readonly$="[[getReadonlyStatus(permissions, 'partner_engagement')]]"
-                            invalid="{{errors.partner_engagement}}"
-                            error-message="{{errors.partner_engagement}}"
                             on-focus="resetFieldError"
                             on-tap="resetFieldError">
                     </paper-textarea>
+                    <div class="helper-text">e.g any arrangements established for join visits</div>
                 </div>
                 <!--<paper-textarea-->
                         <!--class="validate-input disabled-as-readonly flex=5"-->

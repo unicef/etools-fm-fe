@@ -7,6 +7,7 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
+    FMMixins.TextareaMaxRowsMixin,
     FMMixins.RouteHelperMixin], Polymer.Element) {
 
     public static get is() { return 'rationale-tab'; }
@@ -75,6 +76,14 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public finishLoad() { }
+
+    public onTargetVisitsChange({target}: CustomEvent) {
+        if (!target) { return; }
+        let value = R.path(['value'], target);
+        value = +value || 0;
+        // @ts-ignore
+        target.value = value;
+    }
 }
 
 customElements.define(RationaleTab.is, RationaleTab);

@@ -206,9 +206,10 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     public openDialog({ model, target }: EventModel<PlaningTask>): void {
         const dialogType = R.pathOr('add', ['dataset', 'type'], target);
         const count = Array.apply(null, Array(12)).map(() => 0);
-        const { item = ({plan_by_month: count} as PlaningTask) } = model || {};
+        let { item = ({plan_by_month: count} as PlaningTask) } = model || {};
 
         if (dialogType === 'copy') {
+            item = R.clone(item);
             delete item.id;
             delete item.location;
             delete item.location_site;
