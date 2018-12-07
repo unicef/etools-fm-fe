@@ -2,10 +2,14 @@
   position: relative;
   display: block;
   padding: 0 25px 25px;
+
+  .container:not(:first-of-type) {
+    padding-top: 0;
+  }
 }
 
 .text-control {
-  padding: 10px;
+  padding: 14px;
 
   label {
     color: var(--gray-mid);
@@ -15,11 +19,16 @@
 
   .value {
     height: 1rem;
+    padding-bottom: 3px;
   }
 }
 
+.text-control:not(:first-of-type) {
+  padding: 0 14px 14px 14px;
+}
+
 .rational-view {
-  margin: 10px;
+  padding: 14px 10px 0;
 }
 
 paper-card {

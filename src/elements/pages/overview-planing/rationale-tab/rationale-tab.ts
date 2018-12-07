@@ -28,7 +28,9 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
     }
 
     public formatValue(value: string) {
-        return value !== null && value !== undefined && value !== '' ? value : '...';
+        const isEmptyValue = value === null || value === undefined || value === '' && !Array.isArray(value);
+        return Array.isArray(value) && !value.length || isEmptyValue ?
+            '...' : value;
     }
 
     public openEditDialog() {

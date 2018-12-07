@@ -75,7 +75,7 @@
                 <div class="table-title">[[visibleRange.0]] - [[visibleRange.1]] of [[count]] issues to show</div>
             </div>
 
-            <etools-data-table-header no-title>
+            <etools-data-table-header no-title no-collapse="[[!logIssues.length]]">
                 <etools-data-table-column class="flex-1" field="related_to_type">
                     [[getDescriptorLabel(permissions, 'related_to_type')]]
                 </etools-data-table-column>
@@ -94,7 +94,7 @@
             </etools-data-table-header>
 
             <template is="dom-if" if="[[!logIssues.length]]">
-                <etools-data-table-row>
+                <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
                         <div class="col-data flex-1 truncate">-</div>
                         <div class="col-data flex-2 truncate">-</div>
@@ -114,18 +114,20 @@
                         <div class="col-data flex-2">
                             <span class="truncate">[[getColumnNameValue(item)]]</span>
                         </div>
-                        <div class="col-data flex-3 truncate">
-                            <span class="truncate">[[item.issue]]</span>
+                        <div class="col-data layout center flex-3">
+                            <span class="layout horizontal center two-line-truncate">[[item.issue]]</span>
                         </div>
                         <div class="col-data flex-1">
-                            <div class="files-column" on-click="onDownloadFiles">
-                                <iron-icon icon="icons:file-download"></iron-icon>
-                                [[item.attachments.length]] FILES
-                            </div>
+                            <template is="dom-if" if="[[item.attachments.length]]">
+                                <div class="files-column" on-click="onDownloadFiles">
+                                    <iron-icon icon="icons:file-download"></iron-icon>
+                                    [[item.attachments.length]] FILES
+                                </div>
+                            </template>
                         </div>
                         <div class="col-data flex-1">[[getChoiceLabel(item.status, statuses)]]</div>
 
-                        <template is="dom-if" if="[[actionAllowed(permissions, 'create')]]">
+                        <template is="dom-if" if="[[isAllowEdit(item, permissions)]]">
                             <div class="hover-block">
                                 <iron-icon icon="icons:create" on-click="openEditLogIssue"></iron-icon>
                             </div>
@@ -141,10 +143,12 @@
                             <div class="rdc-title">Last Modified By</div>
                             <div class="truncate">[[item.history.0.by_user_display]] - [[formatDate(item.history.0.created)]]</div>
                         </div>
-                        <div class="row-details-content">
-                            <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
-                            <div class="truncate">[[item.closed_by]]</div>
-                        </div>
+                        <template is="dom-if" if="[[item.closed_by]]">
+                            <div class="row-details-content">
+                                <div class="rdc-title">[[getDescriptorLabel(permissions, 'closed_by')]]</div>
+                                <div class="truncate">[[item.closed_by.name]]</div>
+                            </div>
+                        </template>
                     </div>
                 </etools-data-table-row>
             </template>
@@ -211,18 +215,21 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'partner')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.partner)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'partner')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'partner', 'Select')]]"
                                 options="[[monitoredPartners]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'partner')]]"
-                                error-message="{{errors.partner}}"
+                                required
+                                invalid$="[[errors.partner]]"
+                                error-message="[[errors.partner]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="partner"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>
@@ -231,18 +238,21 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'cp_output')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.cp_output)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'cp_output')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'cp_output', 'Select')]]"
                                 options="[[cpOutputs]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'cp_output')]]"
-                                error-message="{{errors.cp_output}}"
+                                required
+                                invalid$="[[errors.cp_output]]"
+                                error-message="[[errors.cp_output]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="cp_output"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>
@@ -251,33 +261,39 @@
                 <template is="dom-if" if="[[isType(dialog.relatedToType, 'location')]]">
                     <div class="layout horizontal preparation-input-container">
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.location)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'location')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'location', 'Select')]]"
                                 options="[[locations]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'location')]]"
-                                error-message="{{errors.location}}"
+                                required
+                                invalid$="[[errors.location]]"
+                                error-message="[[errors.location]]"
                                 trigger-value-change-event
-                                on-etools-selected-item-changed="setValue"
+                                on-etools-selected-item-changed="setLocation"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="location"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                         <etools-dropdown
+                                class="validate-input disabled-as-readonly flex"
                                 selected="[[_simplifyValue(selectedModel.location_site)]]"
                                 label="[[getDescriptorLabel(permissionsDetails, 'location_site')]]"
                                 placeholder="[[getPlaceholder(permissionsDetails, 'location_site', 'Select')]]"
-                                options="[[siteLocations]]"
+                                options="[[locationSites]]"
                                 option-label="name"
                                 option-value="id"
-                                required$="[[getRequiredStatus(permissionsDetails, 'location_site')]]"
-                                error-message="{{errors.location_site}}"
+                                required
+                                invalid$="[[errors.location_site]]"
+                                error-message="[[errors.location_site]]"
                                 trigger-value-change-event
                                 on-etools-selected-item-changed="setValue"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
                                 data-fieldname="location_site"
-                                enable-none-option
                                 hide-search allow-outside-scroll>
                         </etools-dropdown>
                     </div>

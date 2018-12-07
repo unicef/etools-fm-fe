@@ -5,5 +5,6 @@ type LogIssue = {
     cp_output?: CpOutput | null,
     location?: ISiteParrentLocation | null,
     location_site?: Site | null,
+    status: string,
     attachments: []
 };
