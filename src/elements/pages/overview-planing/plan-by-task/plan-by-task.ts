@@ -213,7 +213,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             delete item.id;
             delete item.location;
             delete item.location_site;
-            item.plan_by_month = [];
+            item.plan_by_month = R.map(() => 0, new Array(12));
         }
 
         const texts = this.dialogTexts[dialogType];

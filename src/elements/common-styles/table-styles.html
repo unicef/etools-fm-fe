@@ -62,10 +62,13 @@
             }
 
             .col-data {
-                height: 47px;
+                max-height: 66px;
+                height: auto;
+                min-height: 47px;
                 display: flex;
                 align-items: center;
                 min-width: 0;
+                overflow: hidden;
             }
 
             .col-data .two-line-truncate {
@@ -79,6 +82,12 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+
+            .col-data .flexible-text {
+                display: block;
+                max-height: 57px;
+                margin: 4px 0;
             }
 
             .row-details-content {

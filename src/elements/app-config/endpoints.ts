@@ -18,7 +18,7 @@ export const endpoints: Endpoints = {
     },
 
     cpOutcomes: {
-        template: '/api/v2/reports/results/?result_type=outcome',
+        template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
         exp: 60 * 60 * 1000, // 1 hour
         cacheTableName: 'cpOutcomes'
     },
