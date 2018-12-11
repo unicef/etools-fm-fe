@@ -159,6 +159,12 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public setYear(year: number) {
+        if (year && this.isActive) {
+            this.updateQueryParams({ year });
+        } else if (year && this.queryParams) {
+            this.queryParams.year = year;
+        }
+
         if (year) {
             const endpoint = getEndpoint('planingTasks', {year});
             this.dispatchOnStore(loadPermissions(endpoint.url, 'planingTasks'));
@@ -177,7 +183,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             cp_output_config__in: [],
             partner__in: [],
             location__in: [],
-            location_site__in: []
+            location_site__in: [],
+            year: this.selectedYear
         };
     }
 
