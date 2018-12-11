@@ -17,6 +17,9 @@
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">[[permissions.title]]</div>
                 <div class="buttons-container">
+                    <div class="history-info" hidden$="[[!yearPlan.history.length]]">
+                        Last editeb by [[yearPlan.history.0.by_user_display]] on [[getChangesDate(yearPlan.history.0.created)]]
+                    </div>
                     <paper-icon-button
                             on-tap="openEditDialog"
                             class="panel-button"
