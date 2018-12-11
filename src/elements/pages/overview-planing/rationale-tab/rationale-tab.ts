@@ -89,6 +89,10 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
         // @ts-ignore
         target.value = value;
     }
+
+    public getChangesDate(date: string) {
+        return date ? moment(date).format('DD MMM YYYY') : '';
+    }
 }
 
 customElements.define(RationaleTab.is, RationaleTab);

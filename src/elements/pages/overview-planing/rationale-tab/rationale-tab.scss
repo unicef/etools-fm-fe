@@ -14,6 +14,14 @@
     }
 
     .numeric-input { width: 170px; }
+
+    .history-info {
+        color: var(--gray-light);
+        font-size: 13px;
+        font-style: italic;
+        margin-right: 20px;
+        letter-spacing: 0.04em;
+    }
 }
 
 .text-control {
