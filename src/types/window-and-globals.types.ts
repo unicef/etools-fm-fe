@@ -26,6 +26,7 @@ declare const moment: any;
 declare const _: any;
 declare const R: any;
 declare const L: any;
+declare const Dexie: any;
 type HTMLElementEvent<T extends HTMLElement> = Event & {
     target: T & {invalid: boolean};
 };

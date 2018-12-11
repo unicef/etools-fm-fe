@@ -99,7 +99,14 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             (store: FMStore) => R.path(['specificLocations', 'results'], store),
             (sites: Site[] | undefined) => {
                 if (!sites) { return; }
-                this.locations = locationsInvert(sites);
+                this.sitesByParent = locationsInvert(sites);
+            });
+
+        this.locationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'locations'], store),
+            (locations: Location[] | undefined) => {
+                if (!locations) { return; }
+                this.locations = locations;
             });
 
         this.updateTypeSubscriber = this.subscribeOnStore(
@@ -278,7 +285,11 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
 
         if (fieldName === 'cp_output_config') { this.clearEditedField('partner', 'selectedOutput.partners'); }
-        if (fieldName === 'location') { this.clearEditedField('location_site', 'selectedLocation.sites'); }
+        if (fieldName === 'location') {
+            this.selectedLocation = !!selectedItem && this.sitesByParent.find(
+                (location: ISiteParrentLocation) => location.id === selectedItem.id);
+            this.clearEditedField('location_site', 'selectedLocation.sites');
+        }
         if (fieldName === 'partner') { this.clearEditedField('intervention', 'interventionsList'); }
 
         if (fieldName === 'partner' || fieldName === 'intervention' || fieldName === 'cp_output_config') {
