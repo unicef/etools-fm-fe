@@ -286,7 +286,6 @@
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
                             selected="[[_simplifyValue(selectedModel.location)]]"
-                            selected-item="{{selectedLocation}}"
                             label="[[getDescriptorLabel(permissions, 'location')]]"
                             placeholder="[[getPlaceholder(permissions, 'location', 'Select')]]"
                             options="[[locations]]"
@@ -313,8 +312,8 @@
                             option-label="name"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'location_site')]]"
-                            disabled$="[[isReadonlyField(permissions, 'location_site', 1, dialog.type)]]"
-                            readonly$="[[isReadonlyField(permissions, 'location_site', 1, dialog.type)]]"
+                            disabled$="[[isReadonlyField(permissions, 'location_site', selectedLocation.id, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'location_site', selectedLocation.id, dialog.type)]]"
                             invalid="{{errors.location_site}}"
                             error-message="{{errors.location_site}}"
                             on-focus="resetFieldError"

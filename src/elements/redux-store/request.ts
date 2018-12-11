@@ -1,3 +1,22 @@
+class RequestBase {
+    public lastAjaxRequest: any;
+    public reqProgress: any;
+    public etoolsAjaxCacheListsExpireMapTable = 'listsExpireMapTable';
+    public _setLastAjaxRequest(a: any) {
+        this.lastAjaxRequest = a;
+    }
+
+    public _setReqProgress(a: any) {
+        this.reqProgress = a;
+    }
+
+    public get etoolsAjaxCacheDb() {
+        return (window as any).EtoolsRequestCacheDb;
+    }
+}
+
+export const EtoolsRequest = new (EtoolsAjaxRequestMixin(RequestBase));
+
 export function request(input: RequestInfo, init: RequestInit = {}) {
     const csrfToken = getToken();
     init = R.set(R.lensPath(['headers', 'x-csrftoken']), csrfToken, init);

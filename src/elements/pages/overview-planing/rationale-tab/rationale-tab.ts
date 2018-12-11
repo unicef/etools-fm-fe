@@ -26,6 +26,11 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
             const endpoint = getEndpoint('yearPlan', { year });
             this.dispatchOnStore(loadPermissions(endpoint.url, 'yearPlan'));
         }
+        if (year && this.isActive) {
+            this.updateQueryParams({ year });
+        } else if (year) {
+            this.queryParams = { year };
+        }
     }
 
     public formatValue(value: string) {

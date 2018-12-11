@@ -99,7 +99,14 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             (store: FMStore) => R.path(['specificLocations', 'results'], store),
             (sites: Site[] | undefined) => {
                 if (!sites) { return; }
-                this.locations = locationsInvert(sites);
+                this.sitesByParent = locationsInvert(sites);
+            });
+
+        this.locationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'locations'], store),
+            (locations: Location[] | undefined) => {
+                if (!locations) { return; }
+                this.locations = locations;
             });
 
         this.updateTypeSubscriber = this.subscribeOnStore(
@@ -152,6 +159,12 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public setYear(year: number) {
+        if (year && this.isActive) {
+            this.updateQueryParams({ year });
+        } else if (year && this.queryParams) {
+            this.queryParams.year = year;
+        }
+
         if (year) {
             const endpoint = getEndpoint('planingTasks', {year});
             this.dispatchOnStore(loadPermissions(endpoint.url, 'planingTasks'));
@@ -170,7 +183,8 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             cp_output_config__in: [],
             partner__in: [],
             location__in: [],
-            location_site__in: []
+            location_site__in: [],
+            year: this.selectedYear
         };
     }
 
@@ -278,7 +292,11 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
 
         if (fieldName === 'cp_output_config') { this.clearEditedField('partner', 'selectedOutput.partners'); }
-        if (fieldName === 'location') { this.clearEditedField('location_site', 'selectedLocation.sites'); }
+        if (fieldName === 'location') {
+            this.selectedLocation = !!selectedItem && this.sitesByParent.find(
+                (location: ISiteParrentLocation) => location.id === selectedItem.id);
+            this.clearEditedField('location_site', 'selectedLocation.sites');
+        }
         if (fieldName === 'partner') { this.clearEditedField('intervention', 'interventionsList'); }
 
         if (fieldName === 'partner' || fieldName === 'intervention' || fieldName === 'cp_output_config') {

@@ -54,12 +54,18 @@ window.FMMixins.AppConfig = Polymer.dedupingMixin((baseClass: any) => class Conf
         super();
 
         // dexie js
-        // const etoolsCustomDexieDb = new Dexie('FM');
-        // etoolsCustomDexieDb.version(1).stores({
-        //     listsExpireMapTable: '&name, expire'
-        // });
-        // (window as any).EtoolsRequestCacheDb = etoolsCustomDexieDb;
-        this.appDexieDb = {};
+        const etoolsCustomDexieDb = new Dexie('FM');
+        etoolsCustomDexieDb.version(1).stores({
+            listsExpireMapTable: '&name, expire',
+            methods: 'id',
+            cpOutcomes: 'id',
+            governmentPartners: 'id',
+            monitoredPartners: 'id',
+            monitoredCpOutputs: 'id',
+            locations: 'id'
+        });
+        (window as any).EtoolsRequestCacheDb = etoolsCustomDexieDb;
+        this.appDexieDb = etoolsCustomDexieDb;
 
         this.baseSite = BASE_SITE;
         this.serverBackend = SERVER_BACKEND;

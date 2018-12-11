@@ -4,7 +4,7 @@ export const endpoints: Endpoints = {
     },
 
     methods: {
-        url: '/api/v1/field-monitoring/settings/methods/',
+        url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
         exp: 10 * 24 * 60 * 60 * 1000, // 10days
         cacheTableName: 'methods'
     },
@@ -86,13 +86,13 @@ export const endpoints: Endpoints = {
     },
 
     monitoredPartners: {
-        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/',
+        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/?page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
         cacheTableName: 'monitoredPartners'
     },
 
     monitoredCpOutputs: {
-        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true',
+        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true&page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
         cacheTableName: 'monitoredCpOutputs'
     },

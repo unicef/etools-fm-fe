@@ -56,10 +56,10 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
             });
 
         this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['specificLocations'], store),
+            (store: FMStore) => R.path(['specificLocations', 'results'], store),
             (sites: IStatedListData<Site> | undefined) => {
                 if (!sites) { return; }
-                this._sitesObjects = sites.results || [];
+                this._sitesObjects = sites || [];
                 this.refreshData();
                 this.renderMarkers();
             });
@@ -102,6 +102,8 @@ class SitesTab extends EtoolsMixinFactory.combineMixins([
     public initStarLoad() {
         if (!this._sitesObjects.length) {
             this.startLoad();
+        } else {
+            this.refreshData();
         }
     }
 
