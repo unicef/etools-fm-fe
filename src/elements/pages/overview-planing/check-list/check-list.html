@@ -1,0 +1,161 @@
+<!--import [polymer/polymer-element, paper-card, iron-flex-layout]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin, process-data-mixin]-->
+
+<dom-module id="check-list">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './check-list.scss'-->
+
+        <app-route route="{{route}}" pattern="/checklist" active="{{isActive}}"></app-route>
+
+        <paper-card>
+            <div class="layout horizontal">
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[_simplifyValue(queryParams.cp_outcome)]]"
+                            label="CP Outcome"
+                            placeholder="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-item-changed="_changeOutcomeFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[_simplifyValue(queryParams.cp_output)]]"
+                            label="[[getDescriptorLabel(permissionsConfigs, 'cp_output')]]"
+                            placeholder="Select"
+                            options="[[cpOutputsOptions]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-item-changed="_changeOutputFilter"
+                            hide-search allow-outside-scroll
+                            data-property="cp_output__in"
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+            </div>
+        </paper-card>
+
+        <template is="dom-if" if="[[cpOutputConfig]]">
+            <paper-card class="table-container">
+                <div class="table-title-block with-bottom-line">
+                    <div class="table-title">
+                        <div class="cp-output-name">
+                            [[cpOutputConfig.cp_output.name]]
+                            <div class="cp-output-find"><iron-icon icon="icons:search"></iron-icon></div>
+                        </div>
+                    </div>
+                    <div class="buttons-container">
+                        <paper-icon-button
+                                on-tap="openEditConfig"
+                                class="panel-button"
+                                data-type="edit"
+                                icon="create"></paper-icon-button>
+                    </div>
+                </div>
+                <div class="categories-block">
+                    <template is="dom-repeat" items="[[categories]]">
+                        <div class$="category-item [[getSelectedClass(item, selectedCategories)]]"
+                             on-click="onSelectCategory">[[item.name]]
+                        </div>
+                    </template>
+                </div>
+                <etools-data-table-header no-title no-collapse>
+                    <etools-data-table-column class="flex-1" field="related_to_type">
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-1" field="name">
+                    </etools-data-table-column>
+                </etools-data-table-header>
+
+                <template is="dom-if" if="[[!filteredChecklistItems.length]]">
+                    <etools-data-table-row no-collapse>
+                        <div slot="row-data" class="layout horizontal editable-row flex">
+                            <div class="col-data flex-1 truncate">-</div>
+                            <div class="col-data flex-1 truncate">-</div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+
+                <template is="dom-repeat" items="[[filteredChecklistItems]]" as="item">
+                    <etools-data-table-row secondary-bg-on-hover no-collapse>
+                        <div slot="row-data" class="layout horizontal editable-row flex">
+                            <div class="col-data flex-1">
+                                <span class="truncate">[[item.question_number]]) [[item.question_text]]</span>
+                            </div>
+                            <div class="col-data flex-1">
+                            </div>
+
+                            <div class="hover-block">
+                                <iron-icon icon="icons:create"></iron-icon>
+                            </div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+            </paper-card>
+        </template>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialogEditConfig.opened}}"
+                ok-btn-text="Save"
+                dialog-title="[[getDescriptorLabel(permissionsConfigs, 'recommended_method_types')]]"
+                on-confirm-btn-clicked="onFinishEditConfig">
+
+            <div class="layout vertical">
+                <div class="container layout horizontal">
+                    <etools-dropdown-multi
+                            class="validate-input disabled-as-readonly flex"
+                            label="Recommended Key Informant"
+                            placeholder="Select"
+                            selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 1)]]"
+                            options="[[methodTypesKIG]]"
+                            option-value="id"
+                            option-label="name"
+                            invalid="{{errors.recommended_method_types}}"
+                            error-message="{{errors.recommended_method_types}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="selectRecommendedMethodTypes"
+                            allow-outside-scroll
+                            dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+                <div class="container layout horizontal">
+                    <etools-dropdown-multi
+                            class="validate-input disabled-as-readonly flex"
+                            label="Recommended Focus Group Types"
+                            placeholder="Select"
+                            selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 2)]]"
+                            options="[[methodTypesFG]]"
+                            option-value="id"
+                            option-label="name"
+                            invalid="{{errors.recommended_method_types}}"
+                            error-message="{{errors.recommended_method_types}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="selectRecommendedMethodTypes"
+                            allow-outside-scroll
+                            dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
+            </div>
+        </etools-dialog>
+    </template>
+    <!-- inject scripts './check-list.ts'-->
+</dom-module>

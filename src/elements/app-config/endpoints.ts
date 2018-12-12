@@ -75,6 +75,14 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/settings/attachments/<%=id%>/'
     },
 
+    checklistCategories: {
+        url: '/api/v1/field-monitoring/settings/checklist/categories/?page_size=all'
+    },
+
+    checklistItems: {
+        url: '/api/v1/field-monitoring/settings/checklist/'
+    },
+
     changeCountry: {
         url: '/users/api/changecountry/'
     },
