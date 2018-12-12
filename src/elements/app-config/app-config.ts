@@ -2,7 +2,7 @@ import { endpoints } from './endpoints';
 
 const BASE_SITE = window.location.origin;
 const SERVER_BACKEND = (window.location.port !== '8080');
-const BASE_PATH = SERVER_BACKEND ? '/field-monitoring/' : '/';
+const BASE_PATH = SERVER_BACKEND ? '/fm/' : '/';
 const STAGING_DOMAIN = 'etools-staging.unicef.org';
 const PRODUCTION_DOMAIN = 'etools.unicef.org';
 
