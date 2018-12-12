@@ -3,6 +3,7 @@ import { getEndpoint, objectToQuery } from '../../app-config/app-config';
 import { request } from '../request';
 import { AddNotification } from '../actions/notification.actions';
 import {
+    SetInterventionLocations,
     SetPartnerTasks,
     SetPartnerTasksLoadingState,
     SetTasksList,
@@ -36,6 +37,19 @@ export function loadPartnerTasks(year: number, queryParams: QueryParams = {}) {
             })
             .then(response => dispatch(new SetPartnerTasks(response)))
             .then(() => dispatch(new SetPartnerTasksLoadingState(false)));
+    };
+}
+
+export function loadInterventionLocations(interventionId: number) {
+    return function(dispatch: Dispatch) {
+        const endpoint = getEndpoint('interventionLocations', {interventionId});
+        const url = endpoint.url;
+        return request(url, {method: 'GET'})
+            .catch(() => {
+                dispatch(new AddNotification('Can not Load Locations for selected Intervention'));
+                return [];
+            })
+            .then(response => dispatch(new SetInterventionLocations(response)));
     };
 }
 
