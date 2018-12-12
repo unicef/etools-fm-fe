@@ -4,6 +4,7 @@ import { loadCpOutputsConfigs } from '../../../redux-store/effects/cp-outputs.ef
 import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
 import { loadSiteLocations } from '../../../redux-store/effects/site-specific-locations.effects';
 import {
+    loadInterventionLocations,
     loadPartnerTasks,
     loadPlaningTasks,
     removePlaningTask,
@@ -11,7 +12,7 @@ import {
 } from '../../../redux-store/effects/plan-by-task.effects';
 import { addPlaningTask } from '../../../redux-store/effects/plan-by-task.effects';
 import { loadYearPlan } from '../../../redux-store/effects/year-paln.effects';
-import { SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
+import { SetInterventionLocations, SetPartnerTasks } from '../../../redux-store/actions/plan-by-task.actions';
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 import { AddNotification } from '../../../redux-store/actions/notification.actions';
 import { locationsInvert } from '../../settings/sites-tab/locations-invert';
@@ -55,6 +56,10 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 type: Array,
                 value: () => [],
                 computed: 'setInterventionsList(selectedModel.partner, selectedOutput)'
+            },
+            enableLocationSelect: {
+                type: Boolean,
+                computed: 'setEnableLocationSelect(selectedModel.partner, selectedModel.intervention)'
             }
         };
     }
@@ -73,13 +78,13 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 );
             });
 
+        this.tasksCountSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['planingTasks', 'count'], store),
+            (count: number | undefined) => this.count = count || 0);
+
         this.planingTasksSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['planingTasks'], store),
-            (planingTasks: IStatedListData<PlaningTask> | undefined) => {
-                if (!planingTasks) { return; }
-                this.planingTasks = planingTasks.results || [];
-                this.count = planingTasks.count || 0;
-            });
+            (store: FMStore) => R.path(['planingTasks', 'results'], store),
+            (planingTasks: PlaningTask[] | undefined) => this.planingTasks = planingTasks || []);
 
         this.partnerTasksSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['planingTasks', 'partnerTasks'], store),
@@ -89,18 +94,19 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                 this.partnerTasks = partnerTasks.tasks.filter((task) => task.id !== this.selectedModel.id);
             });
 
+        this.interventionLocationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['planingTasks', 'locationsList'], store),
+            (locations: ISiteParrentLocation[] | undefined) => this.locationsList = locations || []);
+
         this.permissionsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['permissions', 'planingTasks'], store),
-            (permissions: IPermissionActions | undefined) => {
-                this.permissions = permissions;
-            });
+            (permissions: IPermissionActions | undefined) =>  this.permissions = permissions);
 
         this.sitesSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['specificLocations', 'results'], store),
             (sites: Site[] | undefined) => {
                 if (!sites) { return; }
-                this.sitesByParent = locationsInvert(sites);
-            });
+                this.sitesByParent = locationsInvert(sites); });
 
         this.locationsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['staticData', 'locations'], store),
@@ -177,14 +183,9 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public getInitQueryParams(): QueryParams {
         return {
-            page: 1,
-            page_size: 10,
-            cp_output_config__cp_output__parent__in: [],
-            cp_output_config__in: [],
-            partner__in: [],
-            location__in: [],
-            location_site__in: [],
-            year: this.selectedYear
+            page: 1, page_size: 10, cp_output_config__cp_output__parent__in: [],
+            cp_output_config__in: [], partner__in: [], location__in: [],
+            location_site__in: [], year: this.selectedYear
         };
     }
 
@@ -290,17 +291,18 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         if (fieldName) {
             this.set(`selectedModel.${fieldName}`, selectedItem && selectedItem.id || null);
         }
-
         if (fieldName === 'cp_output_config') { this.clearEditedField('partner', 'selectedOutput.partners'); }
         if (fieldName === 'location') {
             this.selectedLocation = !!selectedItem && this.sitesByParent.find(
-                (location: ISiteParrentLocation) => location.id === selectedItem.id);
+                (location: ISiteParrentLocation) => location.id === selectedItem.id) || selectedItem;
             this.clearEditedField('location_site', 'selectedLocation.sites');
         }
         if (fieldName === 'partner') { this.clearEditedField('intervention', 'interventionsList'); }
-
         if (fieldName === 'partner' || fieldName === 'intervention' || fieldName === 'cp_output_config') {
             this.loadPartnerTasks();
+            this.loadLocationsList()
+                .then(() => this.clearEditedField('location', 'locationsList'))
+                .catch(() => 'ignore');
         }
     }
 
@@ -333,6 +335,25 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
     }
 
+    public loadLocationsList() {
+        const partnerAsObject = R.is(Object, this.selectedModel.partner);
+        const interventionAsObject = R.is(Object, this.selectedModel.intervention);
+        if (partnerAsObject || interventionAsObject) { return Promise.reject(); }
+
+        const partner = this.selectedModel.partner;
+        const intervention = this.selectedModel.intervention;
+
+        if (partner && this.isGovernment(partner)) {
+            this.dispatchOnStore(new SetInterventionLocations(this.locations || []));
+            return Promise.resolve();
+        } else if (intervention) {
+            return this.dispatchOnStore(loadInterventionLocations(intervention));
+        } else {
+            this.dispatchOnStore(new SetInterventionLocations([]));
+            return Promise.resolve();
+        }
+    }
+
     public checkDialogType(currentType: string, ...expectedTypes: string[]): boolean {
         return !!~expectedTypes.indexOf(currentType);
     }
@@ -350,6 +371,10 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         return !!partner && !!this.selectedOutput && !!this.selectedOutput.government_partners.find(
             (govPartner: Partner) => govPartner.id === partner
         );
+    }
+
+    public setEnableLocationSelect(partner: number | null, intervention: number | null): boolean {
+        return !!partner && this.isGovernment(partner) || !!intervention;
     }
 
     public pageNumberChanged({detail}: CustomEvent) {

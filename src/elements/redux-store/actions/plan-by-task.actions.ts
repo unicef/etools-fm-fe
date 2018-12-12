@@ -4,6 +4,7 @@ export const STOP_TASKS_UPDATING = 'STOP_TASKS_UPDATING';
 export const SET_TASKS_UPDATING_ERROR = 'SET_TASKS_UPDATING_ERROR';
 export const SET_PARTNER_TASKS_LOADING_STATE = 'SET_PARTNER_TASKS_LOADING_STATE';
 export const SET_PARTNER_TASKS = 'SET_PARTNER_TASKS';
+export const SET_INTERVENTION_LOCATIONS = 'SET_INTERVENTION_LOCATIONS';
 
 export class SetTasksList {
     public readonly type = SET_TASKS_LIST;
@@ -33,5 +34,10 @@ export class SetPartnerTasksLoadingState {
     public constructor(public payload: boolean) {}
 }
 
-export type PlaningTasksActions = SetTasksList | StartTasksUpdating |
+export class SetInterventionLocations {
+    public readonly type = SET_INTERVENTION_LOCATIONS;
+    public constructor(public payload: ISiteParrentLocation[]) {}
+}
+
+export type PlaningTasksActions = SetTasksList | StartTasksUpdating | SetInterventionLocations |
     StopTasksUpdating | SetTasksUpdatingError | SetPartnerTasks | SetPartnerTasksLoadingState;
