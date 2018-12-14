@@ -42,6 +42,15 @@
             color: white;
         }
     }
+
+    .static-text {
+        padding: 12px;
+    }
+
+    a.link {
+        color: var(--primary-color);
+        cursor: pointer;
+    }
 }
 
 paper-card {

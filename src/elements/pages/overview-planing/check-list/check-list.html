@@ -21,7 +21,7 @@
                             option-label="name"
                             option-value="id"
                             trigger-value-change-event
-                            on-etools-selected-item-changed="_changeOutcomeFilter"
+                            on-etools-selected-item-changed="changeOutcomeFilter"
                             hide-search allow-outside-scroll
                             min-width="470px"
                             horizontal-align="left"
@@ -33,11 +33,11 @@
                             selected="[[_simplifyValue(queryParams.cp_output)]]"
                             label="[[getDescriptorLabel(permissionsConfigs, 'cp_output')]]"
                             placeholder="Select"
-                            options="[[cpOutputsOptions]]"
+                            options="[[getCpOutputOptions(filteredConfigs)]]"
                             option-label="name"
                             option-value="id"
                             trigger-value-change-event
-                            on-etools-selected-item-changed="_changeOutputFilter"
+                            on-etools-selected-item-changed="changeOutputFilter"
                             hide-search allow-outside-scroll
                             data-property="cp_output__in"
                             min-width="470px"
@@ -116,9 +116,9 @@
                 on-confirm-btn-clicked="onFinishEditConfig">
 
             <div class="layout vertical">
-                <div class="container layout horizontal">
+                <div class="container layout vertical">
                     <etools-dropdown-multi
-                            class="validate-input disabled-as-readonly flex"
+                            class="validate-input disabled-as-readonly"
                             label="Recommended Key Informant"
                             placeholder="Select"
                             selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 1)]]"
@@ -130,14 +130,15 @@
                             on-focus="resetFieldError"
                             on-tap="resetFieldError"
                             trigger-value-change-event
-                            on-etools-selected-items-changed="selectRecommendedMethodTypes"
+                            on-etools-selected-items-changed="selectMethodTypesKIG"
                             allow-outside-scroll
                             dynamic-align>
                     </etools-dropdown-multi>
+                    <span class="static-text">If other, add at <a class="link">Settings</a></span>
                 </div>
-                <div class="container layout horizontal">
+                <div class="container layout vertical">
                     <etools-dropdown-multi
-                            class="validate-input disabled-as-readonly flex"
+                            class="validate-input disabled-as-readonly"
                             label="Recommended Focus Group Types"
                             placeholder="Select"
                             selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 2)]]"
@@ -149,10 +150,11 @@
                             on-focus="resetFieldError"
                             on-tap="resetFieldError"
                             trigger-value-change-event
-                            on-etools-selected-items-changed="selectRecommendedMethodTypes"
+                            on-etools-selected-items-changed="selectMethodTypesFG"
                             allow-outside-scroll
                             dynamic-align>
                     </etools-dropdown-multi>
+                    <span class="static-text">If other, add at <a class="link">Settings</a></span>
                 </div>
             </div>
         </etools-dialog>

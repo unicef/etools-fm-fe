@@ -1,7 +1,7 @@
 import {
     loadChecklistCategories,
-    loadChecklistCpOutputs,
-    loadChecklistItems, loadChecklistMethodTypes
+    loadChecklistCpOutputsConfigs,
+    loadChecklistItems, loadChecklistMethodTypes, updateChecklistCpOutputConfig
 } from '../../../redux-store/effects/checklist.effects';
 import { getEndpoint } from '../../../app-config/app-config';
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
@@ -25,6 +25,10 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'cpOutputsConfigs'));
         }
 
+        if (!this.getFromStore('checklist.cpOutputsConfigs')) {
+            this.dispatchOnStore(loadChecklistCpOutputsConfigs());
+        }
+
         if (!this.getFromStore('checklist.methodTypes')) {
             this.dispatchOnStore(loadChecklistMethodTypes());
         }
@@ -33,14 +37,14 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             (store: FMStore) => R.path(['staticData', 'cpOutcomes'], store),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
-        this.cpOutputSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['checklist', 'cpOutputs'], store),
-            (cpOutputs: CpOutputConfig[]) => {
-                this.cpOutputsConfigs = cpOutputs || [];
-                this.cpOutputsOptions = this.cpOutputsConfigs.map((cpOutput: CpOutputConfig) => ({
-                    id: cpOutput.cp_output.id,
-                    name: cpOutput.cp_output.name
-                })) || [];
+        this.cpOutputsConfigsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['checklist', 'cpOutputsConfigs'], store),
+            (cpOutputsConfigs: CpOutputConfig[]) => {
+                this.cpOutputsConfigs = cpOutputsConfigs || [];
+                const cpOutcomeId = this.queryParams && this.queryParams.cp_outcome;
+                const cpOutputId = this.queryParams && this.queryParams.cp_output;
+                this.filteredConfigs = this.getConfigsByCpOutcome(cpOutcomeId);
+                this.cpOutputConfig = this.getCpOutputConfigById(cpOutputId);
             });
 
         this.checklistCategoriesSubscriber = this.subscribeOnStore(
@@ -60,6 +64,13 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             (store: FMStore) => R.path(['permissions', 'cpOutputsConfigs'], store),
             (permissions: IBackendPermissions) => { this.permissionsConfigs = permissions; });
 
+        this.methodsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'methods'], store),
+            (methods: Method[] | undefined) => {
+                if (!methods) { return; }
+                this.methods = methods.filter(method => method.is_types_applicable);
+            });
+
         this.typesSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['checklist', 'methodTypes'], store),
             (methodTypes: MethodType[]) => {
@@ -75,15 +86,30 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
 
     public openEditConfig() {
         this.dialogEditConfig = { opened: true };
+        this.selectedModel = R.clone(this.cpOutputConfig);
+        this.originalData = R.clone(this.cpOutputConfig);
     }
 
     public onFinishEditConfig() {
+        const changes = this.changes(this.originalData, this.selectedModel, this.permissionsConfigs);
+        if (!R.isEmpty(changes)) {
+            this.dispatchOnStore(updateChecklistCpOutputConfig(this.selectedModel.id, changes));
+        }
         this.dialogEditConfig = { opened: false };
     }
 
-    public selectRecommendedMethodTypes({ detail }: CustomEvent) {
+    public selectMethodTypesKIG({ detail }: CustomEvent) {
         const { selectedItems } = detail;
-        console.log(selectedItems);
+        if  (!selectedItems || !this.selectedModel) { return; }
+        this.selectedTypesKIG = selectedItems && selectedItems.map((item: MethodType) => item && item.id) || [];
+        this.selectedModel.recommended_method_types = [...this.selectedTypesFG || [], ...this.selectedTypesKIG];
+    }
+
+    public selectMethodTypesFG({ detail }: CustomEvent) {
+        const { selectedItems } = detail;
+        if  (!selectedItems || !this.selectedModel) { return; }
+        this.selectedTypesFG = selectedItems && selectedItems.map((item: MethodType) => item && item.id) || [];
+        this.selectedModel.recommended_method_types = [...this.selectedTypesKIG || [], ...this.selectedTypesFG];
     }
 
     public onSelectCategory({model}:  EventModel<ChecklistCategory>) {
@@ -107,11 +133,11 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             'selected' : '';
     }
 
-    public _changeOutcomeFilter({ detail }: CustomEvent) {
+    public changeOutcomeFilter({ detail }: CustomEvent) {
         const { selectedItem } = detail;
         if (selectedItem) {
-            // this.removeQueryParams('cp_outcome');
-            this.dispatchOnStore(loadChecklistCpOutputs(selectedItem.id));
+            this.removeQueryParams('cp_output');
+            this.filteredConfigs = this.getConfigsByCpOutcome(selectedItem.id);
             this.updateQueryParams({cp_outcome: selectedItem.id});
         } else {
             this.removeQueryParams('cp_outcome');
@@ -121,18 +147,31 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    public _changeOutputFilter({ detail }: CustomEvent) {
+    public getConfigsByCpOutcome(id: number) {
+        return this.cpOutputsConfigs.filter((cpOutputConfig: CpOutputConfig) => cpOutputConfig.cp_output.parent === id);
+    }
+
+    public getCpOutputOptions(filteredConfigs: CpOutputConfig[]) {
+        return filteredConfigs.map((cpOutputConfig: CpOutputConfig) => ({
+            id: cpOutputConfig.cp_output.id,
+            name: cpOutputConfig.cp_output.name
+        })) || [];
+    }
+
+    public changeOutputFilter({ detail }: CustomEvent) {
         const { selectedItem } = detail;
         if (selectedItem) {
             this.updateQueryParams({cp_output: selectedItem.id});
-            this.cpOutputConfig = this.cpOutputsConfigs.find((item: CpOutputConfig) => {
-                return item.cp_output.id === selectedItem.id;
-            });
+            this.cpOutputConfig = this.getCpOutputConfigById(selectedItem.id);
         } else {
             this.removeQueryParams('cp_output');
             this.cpOutputConfig = null;
         }
         this.startLoad();
+    }
+
+    public getCpOutputConfigById(id: number): CpOutputConfig {
+        return this.filteredConfigs.find((item: CpOutputConfig) => item.cp_output.id === id);
     }
 
     public finishLoad() {
@@ -151,7 +190,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     public disconnectedCallback() {
         super.disconnectedCallback();
         this.cpOutcomeSubscriber();
-        this.cpOutputSubscriber();
+        this.cpOutputsConfigsSubscriber();
         this.checklistCategoriesSubscriber();
         this.checklistItemsSubscriber();
     }
