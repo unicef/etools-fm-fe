@@ -9,6 +9,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
+    FMMixins.TextareaMaxRowsMixin,
     FMMixins.RouteHelperMixin], Polymer.Element) {
     public static get is() {
         return 'preparation-tab';

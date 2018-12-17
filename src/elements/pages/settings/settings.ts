@@ -2,6 +2,7 @@ import { loadPermissions } from '../../redux-store/effects/load-permissions.effe
 
 class Settings extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
+    FMMixins.RouteHelperMixin,
     FMMixins.ReduxMixin], Polymer.Element) {
     public static get is() { return 'fm-settings'; }
 
@@ -51,7 +52,8 @@ class Settings extends EtoolsMixinFactory.combineMixins([
 
     public exportData() {
         const url = this.getEndpoint('sitesCSVExport').url;
-        window.open(url, '_blank');
+        const params = this.getQueryString() || '';
+        window.open(url + params, '_blank');
     }
 }
 
