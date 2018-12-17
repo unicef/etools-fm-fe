@@ -44,6 +44,15 @@ class Settings extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(methodTypesEndpoint.url, 'methodTypes'));
         this.dispatchOnStore(loadPermissions(siteLocationsEndpoint.url, 'siteLocations'));
     }
+
+    public isSitesTab(tabName: string) {
+        return tabName === 'sites';
+    }
+
+    public exportData() {
+        const url = this.getEndpoint('sitesCSVExport').url;
+        window.open(url, '_blank');
+    }
 }
 
 customElements.define(Settings.is, Settings);
