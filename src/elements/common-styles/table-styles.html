@@ -147,7 +147,18 @@
                     margin-right: 0;
                 }'};
                 etools-loading { font-size: 14px; }
+
+                --etools-dialog-content: #{'{
+                    width: 100%;
+                    max-width: 100% !important;
+                    max-height: calc(85vh - 132px) !important; /* 85vh - (header height + buttons section height) */
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    display: block;
+                    margin-top: 0;
+                }'};
             }
+
         </style>
     </template>
 </dom-module>

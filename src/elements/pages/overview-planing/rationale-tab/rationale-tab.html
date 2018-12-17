@@ -158,19 +158,23 @@
                     </paper-textarea>
                     <div class="helper-text">e.g any arrangements established for join visits</div>
                 </div>
-                <!--<paper-textarea-->
-                        <!--class="validate-input disabled-as-readonly flex=5"-->
-                        <!--value="{{selectedModel.other_aspects}}"-->
-                        <!--label="[[getDescriptorLabel(permissions, 'other_aspects')]]"-->
-                        <!--placeholder="e.g any arrangements established for join visits"-->
-                        <!--required$="[[getRequiredStatus(permissions, 'other_aspects')]]"-->
-                        <!--disabled$="[[getReadonlyStatus(permissions, 'other_aspects')]]"-->
-                        <!--readonly$="[[getReadonlyStatus(permissions, 'other_aspects')]]"-->
-                        <!--invalid="{{errors.other_aspects}}"-->
-                        <!--error-message="{{errors.other_aspects}}"-->
-                        <!--on-focus="resetFieldError"-->
-                        <!--on-tap="resetFieldError">-->
-                <!--</paper-textarea>-->
+                <div class="container">
+                    <paper-textarea
+                            class="validate-input disabled-as-readonly flex"
+                            value="{{selectedModel.other_aspects}}"
+                            max-rows="3"
+                            label="[[getDescriptorLabel(permissions, 'other_aspects')]]"
+                            placeholder="e.g any arrangements established for join visits"
+                            required$="[[getRequiredStatus(permissions, 'other_aspects')]]"
+                            disabled$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
+                            readonly$="[[getReadonlyStatus(permissions, 'other_aspects')]]"
+                            invalid="{{errors.other_aspects}}"
+                            error-message="{{errors.other_aspects}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError">
+                    </paper-textarea>
+                </div>
+
             </div>
 
         </etools-dialog>
