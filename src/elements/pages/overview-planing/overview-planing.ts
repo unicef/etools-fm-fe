@@ -83,7 +83,7 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.yearPlanSubscriber();
     }
 
-    public showYearAndInfo(tabName: string, ...showIn: string[]): boolean {
+    public checkTab(tabName: string, ...showIn: string[]): boolean {
         return !!~showIn.indexOf(tabName);
     }
 
@@ -108,6 +108,11 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
 
     public getPlural(count: number): string {
         return !count || +count > 1 ? 's' : '';
+    }
+
+    public exportData() {
+        const url = this.getEndpoint('issuesCSVExport').url;
+        window.open(url, '_blank');
     }
 }
 

@@ -43,6 +43,10 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
     },
 
+    sitesCSVExport: {
+        url: '/api/v1/field-monitoring/settings/sites/export/'
+    },
+
     currentWorkspace: {
         url: '/api/v1/field-monitoring/settings/locations/country/'
     },
@@ -65,6 +69,10 @@ export const endpoints: Endpoints = {
 
     logIssuesAttachmentsDetails: {
         template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>'
+    },
+
+    issuesCSVExport: {
+        url: '/api/v1/field-monitoring/settings/log-issues/export/'
     },
 
     attachments: {
