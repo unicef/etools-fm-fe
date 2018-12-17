@@ -112,7 +112,8 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
 
     public exportData() {
         const url = this.getEndpoint('issuesCSVExport').url;
-        window.open(url, '_blank');
+        const params = this.getQueryString() || '';
+        window.open(url + params, '_blank');
     }
 }
 

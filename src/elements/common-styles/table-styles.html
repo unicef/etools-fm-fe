@@ -62,7 +62,6 @@
             }
 
             .col-data {
-                max-height: 66px;
                 height: auto;
                 min-height: 47px;
                 display: flex;
@@ -86,7 +85,6 @@
 
             .col-data .flexible-text {
                 display: block;
-                max-height: 57px;
                 margin: 4px 0;
             }
 
@@ -151,12 +149,16 @@
                 --etools-dialog-content: #{'{
                     width: 100%;
                     max-width: 100% !important;
-                    max-height: calc(85vh - 132px) !important; /* 85vh - (header height + buttons section height) */
+
                     overflow-x: hidden;
                     overflow-y: auto;
                     display: block;
                     margin-top: 0;
                 }'};
+            }
+
+            paper-textarea {
+                overflow: hidden;
             }
 
         </style>
