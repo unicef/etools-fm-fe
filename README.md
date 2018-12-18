@@ -1,72 +1,32 @@
-eTools Frontend Template
-====================================
+[![Built with pwa–starter–kit](https://img.shields.io/badge/built_with-pwa–starter–kit_-blue.svg)](https://github.com/Polymer/pwa-starter-kit "Built with pwa–starter–kit")
+[![Build status](https://api.travis-ci.org/Polymer/pwa-starter-kit.svg?branch=master)](https://travis-ci.org/Polymer/pwa-starter-kit)
 
-Installation
-------------
+> ## 🛠 Status: In Development
+> PWA Starter Kit is currently in development. It's on the fast track to a 1.0 release, so we encourage you to use it and give us your feedback, but there are things that haven't been finalized yet and you can expect some changes.
+>
+> See the list of Known Issues and TODOs, below, for updates.
 
-Using git, clone to a local directory:
+# PWA Starter Kit
 
-```bash
-$ git clone https://github.com/unicef-polymer/etools-frontend-template.git
-```
-Assuming node and npm are already installed, make sure bower is also installed, if not run:
+This sample app is a starting point for building PWAs. Out of the box, the template
+gives you the following features:
+- all the PWA goodness (manifest, service worker)
+- a responsive layout
+- application theming
+- example of using Redux for state management
+- offline UI
+- simple routing solution
+- fast time-to-interactive and first-paint through the PRPL pattern
+- easy deployment to prpl-server or static hosting
+- unit and integrating testing starting points
+- documentation about other advanced patterns.
 
-```bash
-$ npm install -g bower
-```
-Also install polymer-cli:
-```bash
-$ npm install -g polymer-cli
-```
+### 📖 Head over to the [documentation site](https://pwa-starter-kit.polymer-project.org/) for more details or check out [how to get started](https://pwa-starter-kit.polymer-project.org/setup/)!
 
-Install packages:
-```bash
-$ npm install
-$ bower install
-```
+![pwa-starter-kit screenshot](https://user-images.githubusercontent.com/1369170/39715580-a1be5126-51e2-11e8-8440-96b07be03a3c.png)
 
-Build Application
------------------
+## TODOs
 
-To build the distribution version:
-
-```bash
-$ gulp
-```
-
-We will be using a bundled build since we don't support
-HHTP/2 and server push.
-
-Before the build is created the CSS and images are minified,
-Javascript is uglifyed, also there are javascript and html hints.
-If any of these tasks fail, the entire build process fails.
-So correct your code and try again :)
-
-Run Application
----------------
-
-To run the application you can use:
-
-```bash
-$ polymer serve
-View your app at http://localhost:8080
-```
-This command will start the server and serve your files directly from app sources.
-At this point you do not need to build anything, the files will not be served from build folder.
-
-```bash
-$ polymer serve build/bundled
-View your app at http://localhost:8080
-```
-This command will start the server and use the bundled build (build/bundled folder) to serve the files from.
-Before you can serve the bundled build you have to generate the build files.
-Service worker only works in the built app, so test service worker functionality here.
-
-Additional options for gulp tasks
----------------------------------
-
-Set -l parameter for any gulp task to activate polymer logs during build process
-
-```bash
-$ gulp -l
-```
+- [x] Setup Safari testing on Travis.
+- [x] Deploy all templates as demos.
+- [ ] Update to latest [Material Web Components](https://github.com/material-components/material-components-web-components).

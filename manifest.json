@@ -1,7 +1,8 @@
 {
-  "name": "eTools - Partnership Management Portal",
-  "short_name": "eTools - Partnership Management",
-  "start_url": "/?homescreen=1",
+  "name": "My App",
+  "short_name": "My App",
+  "description": "My App description",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#3f51b5",
   "background_color": "#3f51b5",
