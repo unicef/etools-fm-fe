@@ -91,6 +91,14 @@ export const endpoints: Endpoints = {
         cacheTableName: 'governmentPartners'
     },
 
+    checklistPlaned: {
+        template: '/api/v1/field-monitoring/settings/cp-outputs/configs/<%=config_id%>/planned-checklist/'
+    },
+
+    checklistPlanedDetails: {
+        template: '/api/v1/field-monitoring/settings/cp-outputs/configs/<%=config_id%>/planned-checklist/<%=id%>/'
+    },
+
     changeCountry: {
         url: '/users/api/changecountry/'
     },

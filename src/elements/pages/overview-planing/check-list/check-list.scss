@@ -3,6 +3,39 @@
     display: block;
     padding: 0 25px 25px;
 
+    .config-info-title {
+        border-left: #eee 2px solid;
+        padding-left: 15px;
+    }
+
+    .config-recommended-title,
+    .config-recommended-content {
+      font-size: 12px;
+    }
+
+    .config-recommended-title {
+        color: var(--secondary-text-color);
+        font-weight: 500;
+    }
+
+    .method-column {
+        margin: 0 7px;
+    }
+    .method-check-column {
+        width: 30px;
+    }
+
+    .col-data .bold-text {
+        font-weight: 500;
+    }
+
+    .col-data .not-selected-method {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 4px;
+        background-color: #e1e1e1;
+    }
+
     .cp-output-name {
         display: flex;
         flex-flow: row;
@@ -50,6 +83,62 @@
     a.link {
         color: var(--primary-color);
         cursor: pointer;
+    }
+
+    .content-box {
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .text-inform {
+        //padding: 10px 0;
+        background-color: #eeeeee;
+    }
+
+    .recommend-methods {
+        border-bottom: 1px solid #dbdbdb;
+    }
+
+    .partner-item {
+        margin: 10px 12px 0;
+    }
+
+    .partner-item-title {
+        width: 100%;
+        //margin-left: 3px;
+    }
+
+    .partner-item-title,
+    .partner-item-number {
+        background-color: #eee;
+        padding: 3px;
+    }
+
+    .methods-list {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+
+        .method-item {
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            padding: 10px;
+
+            .method-name {
+                font-size: 12px;
+                color: var(--dark-secondary-text-color);
+                font-weight: 500;
+            }
+        }
+    }
+
+    etools-dialog .container {
+        padding: 16px;
+    }
+
+    etools-dialog label {
+        margin: 0 12px;
     }
 }
 
