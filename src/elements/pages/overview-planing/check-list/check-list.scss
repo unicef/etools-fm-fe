@@ -25,10 +25,6 @@
         color: red;
     }
 
-    .selected-methods-column {
-
-    }
-
     .method-column {
         margin: 0 7px;
     }
@@ -75,7 +71,8 @@
 
     .categories-block {
         display: flex;
-        padding: 10px 10px 10px 25px;
+        flex-flow: row wrap;
+        padding: 5px 10px 5px 25px;
         align-items: center;
 
         .category-item {
@@ -85,7 +82,7 @@
             font-size: 14px;
             font-weight: 500;
             padding: 5px 14px;
-            margin: 0 5px;
+            margin: 5px;
             cursor: pointer;
         }
 
@@ -119,12 +116,15 @@
     }
 
     .partner-item {
+        display: flex;
+        flex-flow: row;
         margin: 10px 12px 0;
     }
 
     .partner-item-title {
-        width: 100%;
-        //margin-left: 3px;
+        display: flex;
+        flex: 1;
+        margin-left: 3px;
     }
 
     .partner-item-title,
@@ -162,6 +162,12 @@
 
     etools-dialog label {
         margin: 0 12px;
+    }
+}
+
+etools-dialog {
+    --etools-dialog-title: {
+        padding: 8px 54px 8px 24px;
     }
 }
 
