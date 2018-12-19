@@ -31,6 +31,10 @@ export const endpoints: Endpoints = {
         url: '/api/v1/field-monitoring/settings/cp-outputs/configs/'
     },
 
+    cpOutputsConfigsDetails: {
+        template: '/api/v1/field-monitoring/settings/cp-outputs/configs/<%=id%>/'
+    },
+
     cpOutputDetails: {
         template: '/api/v1/field-monitoring/settings/cp-outputs/<%=id%>/'
     },
@@ -81,6 +85,26 @@ export const endpoints: Endpoints = {
 
     attachmentsDetails: {
         template: '/api/v1/field-monitoring/settings/attachments/<%=id%>/'
+    },
+
+    checklistCategories: {
+        url: '/api/v1/field-monitoring/settings/checklist/categories/?page_size=all',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'governmentPartners'
+    },
+
+    checklistItems: {
+        url: '/api/v1/field-monitoring/settings/checklist/?page_size=all',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'governmentPartners'
+    },
+
+    checklistPlaned: {
+        template: '/api/v1/field-monitoring/settings/cp-outputs/configs/<%=config_id%>/planned-checklist/'
+    },
+
+    checklistPlanedDetails: {
+        template: '/api/v1/field-monitoring/settings/cp-outputs/configs/<%=config_id%>/planned-checklist/<%=id%>/'
     },
 
     changeCountry: {

@@ -5,6 +5,11 @@ window.FMMixins.PermissionController = (superClass: any) => class extends superC
                 !this.collectionExists(collection, path, 'PUT');
     }
 
+    public getDescriptorChild(collection: IPermissionActions, path: string) {
+        return this.getFieldDescriptor(collection, path, 'child', 'POST') ||
+            this.getFieldDescriptor(collection, path, 'child', 'PUT');
+    }
+
     public getDescriptorType(collection: IPermissionActions, path: string) {
         return this.getFieldDescriptor(collection, path, 'type', 'POST') ||
             this.getFieldDescriptor(collection, path, 'type', 'PUT');

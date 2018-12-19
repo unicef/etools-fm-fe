@@ -15,6 +15,7 @@ import { yearPlan } from './reducers/year-plan.reducer';
 import { attachments } from './reducers/attachments.reducer';
 import { logIssues } from './reducers/log-issues.reducer';
 import { planingTasks } from './reducers/plan-by-task.reducer';
+import { checklist } from './reducers/checklist.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -29,7 +30,8 @@ const red = redux.combineReducers({
     yearPlan,
     attachments,
     logIssues,
-    planingTasks
+    planingTasks,
+    checklist
 });
 export const store = redux.createStore(
     red,
