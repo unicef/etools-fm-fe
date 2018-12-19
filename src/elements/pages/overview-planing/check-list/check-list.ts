@@ -135,7 +135,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         if (newTypePartners !== oldTypePartners) {
             const deletedPartners = oldData
                 .filter((pi: PartnerInfo) => pi.id)
-                .map((pi: PartnerInfo) => ({ id: pi.id, _deleted: true}));
+                .map((pi: PartnerInfo) => ({ id: pi.id, _delete: true}));
             allPartnersChanges = [...deletedPartners];
         }
         const partnersChangesObj = this.changes(oldData, partnersInfo, permissions, true, 'partners_info.child');

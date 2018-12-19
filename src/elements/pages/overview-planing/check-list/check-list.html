@@ -83,16 +83,16 @@
                     </template>
                 </div>
                 <etools-data-table-header no-title no-collapse>
-                    <etools-data-table-column class="flex-3" field="related_to_type">
-                        Checklist Item
+                    <etools-data-table-column class="flex-5" field="related_to_type">
+                        Checklist Item (<iron-icon class="required-item" icon="icons:star"></iron-icon>Required for Programmatic Visits for HACT)
                     </etools-data-table-column>
                     <etools-data-table-column class="flex-4" field="name">
                         Specific Details to Probe
                     </etools-data-table-column>
                     <etools-data-table-column class="flex-1 layout center-justified" field="url">
-                        URL to Standard
+                        <div>URL to</div><div>Standard</div>
                     </etools-data-table-column>
-                    <etools-data-table-column class="flex-1" field="methods">
+                    <etools-data-table-column class="layout center-justified" field="methods">
                         <div class="layout horizontal center-justified">Methods</div>
                         <div class="layout horizontal center-justified">
                             <div class="method-column">Ob</div>
@@ -106,10 +106,10 @@
                 <template is="dom-if" if="[[!filteredChecklistItems.length]]">
                     <etools-data-table-row no-collapse>
                         <div slot="row-data" class="layout horizontal editable-row flex">
-                            <div class="col-data flex-3 truncate">-</div>
+                            <div class="col-data flex-5 truncate">-</div>
                             <div class="col-data flex-4 truncate">-</div>
                             <div class="col-data flex-1 truncate layout center-justified">-</div>
-                            <div class="col-data flex-1 truncate">-</div>
+                            <div class="col-data truncate layout center-justified selected-methods-column">-</div>
                         </div>
                     </etools-data-table-row>
                 </template>
@@ -117,7 +117,7 @@
                 <template is="dom-repeat" items="[[filteredChecklistItems]]" as="item">
                     <etools-data-table-row secondary-bg-on-hover no-collapse>
                         <div slot="row-data" class="layout horizontal editable-row flex">
-                            <div class="col-data flex-3">
+                            <div class="col-data flex-5">
                                 <span class="truncate"><span class="bold-text">[[item.question_number]])</span> [[item.question_text]]</span>
                             </div>
                             <div class="col-data flex-4">
@@ -125,31 +125,29 @@
                                     <div><span class="bold-text">All Partnerships:</span> [[getAllPartnersDetailsColumn(planedItems, item.id)]]</div>
                                 </template>
                                 <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'each')]]">
-                                    <div><span class="bold-text">By Partnership:</span> <a class="link" on-click="openChecklistItem">VIEW</a></div>
+                                    <div><span class="bold-text">By Partnership:</span> <a class="link view-partnerships" on-click="openChecklistItem">VIEW</a></div>
                                 </template>
                             </div>
                             <div class="col-data flex-1 layout center-justified">
                                 <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'all')]]">
-                                    <a class="link" href$="[[getAllPartnersUlrColumn(planedItems, item.id)]]">
+                                    <a class="link" target="_blank" href$="[[getAllPartnersUlrColumn(planedItems, item.id)]]">
                                         <iron-icon icon="icons:open-in-new"></iron-icon>
                                     </a>
                                 </template>
                             </div>
-                            <div class="col-data flex-1">
-                                <div class="layout horizontal center-justified">
-                                    <template is="dom-repeat" items="[[allMethods]]" as="method">
-                                        <template is="dom-if" if="[[isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
-                                            <iron-icon class="method-check-column" icon="icons:check"></iron-icon>
-                                        </template>
-                                        <template is="dom-if" if="[[!isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
-                                            <div class="not-selected-method"></div>
-                                        </template>
+                            <div class="col-data layout horizontal center-justified">
+                                <template is="dom-repeat" items="[[allMethods]]" as="method">
+                                    <template is="dom-if" if="[[isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
+                                        <iron-icon class="method-check-column" icon="icons:check"></iron-icon>
                                     </template>
-                                </div>
+                                    <template is="dom-if" if="[[!isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
+                                        <div class="not-selected-method"></div>
+                                    </template>
+                                </template>
                             </div>
 
                             <div class="hover-block">
-                                    <iron-icon icon="icons:create" on-click="openChecklistItem"></iron-icon>
+                                <iron-icon icon="icons:create" on-click="openChecklistItem"></iron-icon>
                             </div>
                         </div>
                     </etools-data-table-row>
