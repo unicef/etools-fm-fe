@@ -106,10 +106,10 @@
                 <template is="dom-if" if="[[!filteredChecklistItems.length]]">
                     <etools-data-table-row no-collapse>
                         <div slot="row-data" class="layout horizontal editable-row flex">
-                            <div class="col-data flex-5 truncate">-</div>
-                            <div class="col-data flex-4 truncate">-</div>
-                            <div class="col-data flex-1 truncate layout center-justified">-</div>
-                            <div class="col-data truncate layout center-justified selected-methods-column">-</div>
+                            <div class="col-data flex-5">-</div>
+                            <div class="col-data flex-4">-</div>
+                            <div class="col-data flex-1 layout center-justified">-</div>
+                            <div class="col-data layout center-justified selected-methods-column">-</div>
                         </div>
                     </etools-data-table-row>
                 </template>
@@ -118,7 +118,11 @@
                     <etools-data-table-row secondary-bg-on-hover no-collapse>
                         <div slot="row-data" class="layout horizontal editable-row flex">
                             <div class="col-data flex-5">
-                                <span class="truncate"><span class="bold-text">[[item.question_number]])</span> [[item.question_text]]</span>
+                                <span class="bold-text">[[item.question_number]])&nbsp;</span>
+                                <template is="dom-if" if="[[item.is_required]]">
+                                    <iron-icon class="required-item" icon="icons:star"></iron-icon>
+                                </template>
+                                [[item.question_text]]
                             </div>
                             <div class="col-data flex-4">
                                 <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'all')]]">
@@ -183,7 +187,7 @@
                             allow-outside-scroll
                             dynamic-align>
                     </etools-dropdown-multi>
-                    <span class="static-text">If other, add at <a class="link">Settings</a></span>
+                    <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
                 </div>
                 <div class="container layout vertical">
                     <etools-dropdown-multi
@@ -203,7 +207,7 @@
                             allow-outside-scroll
                             dynamic-align>
                     </etools-dropdown-multi>
-                    <span class="static-text">If other, add at <a class="link">Settings</a></span>
+                    <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
                 </div>
             </div>
         </etools-dialog>
@@ -216,39 +220,62 @@
                 ok-btn-text="Save"
                 dialog-title="[[dialogItem.title]]"
                 on-confirm-btn-clicked="onFinishItem">
-            <div class="layout vertical content-box">
-                <div class="container text-inform">Changing any fields below will be applied to visits in future that have not finalized their checklist.</div>
-                <div class="container recommend-methods">
-                    <label>Recommend data collection methods:</label>
-                    <div class="methods-list">
-                        <template is="dom-repeat" items="[[allMethods]]">
-                            <div class="method-item">
-                                <div class="method-name">[[item.name]]</div>
-                                <paper-checkbox checked="[[isSelectedPlanedMethod(selectedPlanedItem, item.id)]]"
-                                                on-change="selectChecklistMethod"></paper-checkbox>
-                            </div>
+            <div class="content-box">
+                <div class="layout vertical">
+                    <div class="container text-inform">Changing any fields below will be applied to visits in future that have not finalized their checklist.</div>
+                    <div class="container recommend-methods">
+                        <label>Recommend data collection methods:</label>
+                        <div class="methods-list">
+                            <template is="dom-repeat" items="[[allMethods]]">
+                                <div class="method-item">
+                                    <div class="method-name">[[item.name]]</div>
+                                    <paper-checkbox checked="[[isSelectedPlanedMethod(selectedPlanedItem, item.id)]]"
+                                                    on-change="selectChecklistMethod"></paper-checkbox>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="container layout vertical">
+                        <label>Specify details to probe:</label>
+                        <paper-radio-group selected="{{typePartnersInfo}}" on-selected-changed="changeTypeInfo">
+                            <paper-radio-button name="all">For all partnerships</paper-radio-button>
+                            <paper-radio-button name="each">By each partnership</paper-radio-button>
+                        </paper-radio-group>
+                        <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'all')]]">
+                            <paper-input
+                                    class="validate-input disabled-as-readonly flex"
+                                    value="{{partnersInfo.0.specific_details}}"
+                                    label="Specify Details To Probe For All Partnerships"
+                                    placeholder="Enter Specify Details To Probe For All Partnerships">
+                            </paper-input>
+                            <paper-input
+                                    class="validate-input disabled-as-readonly flex"
+                                    value="{{partnersInfo.0.standard_url}}"
+                                    label="URL to Standard"
+                                    placeholder="e.g. link to SPHERE, etc.">
+                            </paper-input>
+                        </template>
+                        <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'each')]]">
+                            <template is="dom-repeat" items="[[partnersInfo]]">
+                                <div class="partner-item">
+                                    <div class="partner-item-number">[[getPartnerInfoNumber(index)]]/[[partnersInfo.length]]</div>
+                                    <div class="partner-item-title">[[item.partner.name]]</div>
+                                </div>
+                                <paper-input
+                                        class="validate-input disabled-as-readonly flex"
+                                        value="{{item.specific_details}}"
+                                        label="Specify Details To Probe"
+                                        placeholder="Enter Specify Details To Probe">
+                                </paper-input>
+                                <paper-input
+                                        class="validate-input disabled-as-readonly flex"
+                                        value="{{item.standard_url}}"
+                                        label="URL to Standard"
+                                        placeholder="e.g. link to SPHERE, etc.">
+                                </paper-input>
+                            </template>
                         </template>
                     </div>
-                </div>
-                <div class="container layout vertical">
-                    <label>Specify details to probe:</label>
-                    <paper-radio-group selected="{{typePartnersInfo}}" on-selected-changed="changeTypeInfo">
-                        <paper-radio-button name="all">For all partnerships</paper-radio-button>
-                        <paper-radio-button name="each">By each partnership</paper-radio-button>
-                    </paper-radio-group>
-                    <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'all')]]">
-                        <paper-input label="Specify Details To Probe For All Partnerships" value="{{partnersInfo.0.specific_details}}"></paper-input>
-                        <paper-input label="URL to Standard" value="{{partnersInfo.0.standard_url}}"></paper-input>
-                    </template>
-                    <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'each')]]">
-                        <template is="dom-repeat" items="[[partnersInfo]]">
-                            <div class="partner-item">
-                                <div class="partner-item-title">[[index]]/[[partnersInfo.length]] [[item.partner.name]]</div>
-                            </div>
-                            <paper-input label="Specify Details To Probe" value="{{item.specific_details}}"></paper-input>
-                            <paper-input label="URL to Standard" value="{{item.standard_url}}"></paper-input>
-                        </template>
-                    </template>
                 </div>
             </div>
         </etools-dialog>
