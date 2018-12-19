@@ -253,7 +253,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
 
     public goToSettings() {
         this.dialogEditConfig = {opened: false};
-        history.pushState({}, '', '/fm/settings');
+        history.pushState({}, '', '/fm/settings/methods');
         window.dispatchEvent(new CustomEvent('location-changed'));
     }
 
