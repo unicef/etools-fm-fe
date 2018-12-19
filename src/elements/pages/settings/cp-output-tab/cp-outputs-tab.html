@@ -14,7 +14,7 @@
                     <etools-dropdown-multi
                             selected-values="[[_simplifyValue(queryParams.parent__in)]]"
                             label="CP Outcome"
-                            placeholder$="Select"
+                            placeholder="Select"
                             options="[[cpOutcomes]]"
                             option-label="name"
                             option-value="id"
@@ -94,7 +94,7 @@
                         <div class="col-data flex-5">
                             <template is="dom-if" if="[[_isOnePartner(item.interventions)]]">
                                 <span class="truncate">
-                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |
+                                    <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.partner.name]]</a> |<br>
                                     <a class="link-button" target="_blank" href$="[[item.interventions.0.url]]">[[item.interventions.0.number]]</a>
                                 </span>
                             </template>

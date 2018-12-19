@@ -28,16 +28,14 @@ window.FMMixins.TextareaMaxRowsMixin = (superClass: any) => class extends superC
 
         if (!maxRows || maxRows <= 1) { return false; }
 
-        this.async(() => {
-            const lineHeight = textareaAutogrowStyles.lineHeight || '';
-            const lineHeightPx = parseInt(lineHeight, 10);
+        const lineHeight = textareaAutogrowStyles.lineHeight || '';
+        const lineHeightPx = parseInt(lineHeight, 10);
 
-            if (lineHeightPx) {
-                const maxHeight = maxRows * lineHeightPx + 5;
-                textareaAutogrow.style.maxHeight = `${maxHeight}px`;
-            }
-            textareaAutogrow.textarea.style.overflow = 'auto';
-        });
+        if (lineHeightPx) {
+            const maxHeight = maxRows * lineHeightPx + 5;
+            textareaAutogrow.style.maxHeight = `${maxHeight}px`;
+        }
+        textareaAutogrow.textarea.style.overflow = 'auto';
         return true;
     }
 };

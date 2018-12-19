@@ -1,6 +1,8 @@
 <!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin, paper-radio-group,
             paper-radio-button, textarea-max-rows-mixin, paper-input/paper-textarea, etools-data-table]-->
 
+<!--import [textarea-max-rows-mixin]-->
+
 <dom-module id="preparation-tab">
     <template>
         <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
@@ -10,7 +12,7 @@
 
 
         <paper-card>
-            <div class="layout horizontal">
+            <div class="layout horizontal wrap">
                 <div class="filter-dropdown">
                     <etools-dropdown-multi
                             selected-values="[[_simplifyValue(queryParams.cp_output__in)]]"
@@ -115,12 +117,11 @@
                             <span class="truncate">[[getColumnNameValue(item)]]</span>
                         </div>
                         <div class="col-data layout center flex-3">
-                            <span class="layout horizontal center two-line-truncate">[[item.issue]]</span>
+                            <span class="flexible-text">[[item.issue]]</span>
                         </div>
                         <div class="col-data flex-1">
                             <template is="dom-if" if="[[item.attachments.length]]">
-                                <div class="files-column" on-click="onDownloadFiles">
-                                    <iron-icon icon="icons:file-download"></iron-icon>
+                                <div class="files-column" on-click="openViewDialog">
                                     [[item.attachments.length]] FILES
                                 </div>
                             </template>
@@ -172,6 +173,7 @@
                 keep-dialog-open
                 opened="{{dialog.opened}}"
                 ok-btn-text="{{dialog.confirm}}"
+                hide-confirm-btn="[[!dialog.confirm]]"
                 dialog-title="{{dialog.title}}"
                 on-iron-overlay-closed="resetData"
                 on-confirm-btn-clicked="onFinishDialog">
@@ -187,11 +189,11 @@
                         <paper-radio-group
                                 class="flex-2"
                                 selected="{{dialog.relatedToType}}"
-                                disabled="[[isEditDialog(dialog.type)]]">
+                                disabled="[[isDialogType(dialog.type, 'edit', 'view')]]">
                             <template is="dom-repeat" items="[[relatedTypes]]" as="type">
                                 <paper-radio-button
                                         name="[[type.value]]"
-                                        disabled="[[isEditDialog(dialog.type)]]">
+                                        disabled="[[isDialogType(dialog.type, 'edit', 'view')]]">
                                     [[type.display_name]]
                                 </paper-radio-button>
                             </template>
@@ -199,7 +201,7 @@
                     </div>
 
                     <etools-dropdown
-                            class="flex-1"
+                            class="validate-input disabled-as-readonly flex-1"
                             selected="{{selectedModel.status}}"
                             label="[[getDescriptorLabel(permissionsDetails, 'status')]]"
                             placeholder="[[getPlaceholder(permissionsDetails, 'status', 'Select')]]"
@@ -207,6 +209,8 @@
                             option-label="display_name"
                             option-value="value"
                             required$="[[getRequiredStatus(permissionsDetails, 'status')]]"
+                            disabled$="[[isDialogType(dialog.type, 'view')]]"
+                            readonly$="[[isDialogType(dialog.type, 'view')]]"
                             error-message="{{errors.status}}"
                             trigger-value-change-event
                             hide-search allow-outside-scroll></etools-dropdown>
@@ -223,6 +227,8 @@
                                 option-label="name"
                                 option-value="id"
                                 required
+                                disabled$="[[isDialogType(dialog.type, 'view')]]"
+                                readonly$="[[isDialogType(dialog.type, 'view')]]"
                                 invalid$="[[errors.partner]]"
                                 error-message="[[errors.partner]]"
                                 trigger-value-change-event
@@ -246,6 +252,8 @@
                                 option-label="name"
                                 option-value="id"
                                 required
+                                disabled$="[[isDialogType(dialog.type, 'view')]]"
+                                readonly$="[[isDialogType(dialog.type, 'view')]]"
                                 invalid$="[[errors.cp_output]]"
                                 error-message="[[errors.cp_output]]"
                                 trigger-value-change-event
@@ -269,6 +277,8 @@
                                 option-label="name"
                                 option-value="id"
                                 required
+                                disabled$="[[isDialogType(dialog.type, 'view')]]"
+                                readonly$="[[isDialogType(dialog.type, 'view')]]"
                                 invalid$="[[errors.location]]"
                                 error-message="[[errors.location]]"
                                 trigger-value-change-event
@@ -287,6 +297,8 @@
                                 option-label="name"
                                 option-value="id"
                                 required
+                                disabled$="[[isDialogType(dialog.type, 'view')]]"
+                                readonly$="[[isDialogType(dialog.type, 'view')]]"
                                 invalid$="[[errors.location_site]]"
                                 error-message="[[errors.location_site]]"
                                 trigger-value-change-event
@@ -306,8 +318,8 @@
                         label="[[getDescriptorLabel(permissionsDetails, 'issue')]]"
                         placeholder="[[getPlaceholder(permissionsDetails, 'issue', 'Enter')]]"
                         required$="[[getRequiredStatus(permissionsDetails, 'issue')]]"
-                        disabled$="[[getReadonlyStatus(permissionsDetails, 'issue')]]"
-                        readonly$="[[getReadonlyStatus(permissionsDetails, 'issue')]]"
+                        disabled$="[[isDialogType(dialog.type, 'view')]]"
+                        readonly$="[[isDialogType(dialog.type, 'view')]]"
                         invalid="{{errors.issue}}"
                         error-message="{{errors.issue}}"
                         on-focus="resetFieldError"
@@ -318,6 +330,7 @@
                         label="Attachment"
                         upload-label="Attach file"
                         files="{{currentFiles}}"
+                        readonly="[[isDialogType(dialog.type, 'view')]]"
                         multiple></etools-file>
             </div>
 

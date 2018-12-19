@@ -3,6 +3,7 @@ import { loadYearPlan } from '../../redux-store/effects/year-paln.effects';
 class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.PermissionController,
+    FMMixins.RouteHelperMixin,
     FMMixins.ReduxMixin], Polymer.Element) {
     public static get is() { return 'overview-planing'; }
 
@@ -58,7 +59,11 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         super.connectedCallback();
         const currentYear = new Date().getFullYear();
         this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
-        this.selectedYear = currentYear;
+
+        const queryString = this.getQueryString();
+        const queryParams = this.decodeParams(queryString);
+        const yearFromParams = queryParams && queryParams.year;
+        this.selectedYear = yearFromParams || currentYear;
 
         this.yearPlanSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['yearPlan', 'data'], store),
@@ -78,7 +83,7 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.yearPlanSubscriber();
     }
 
-    public showYearAndInfo(tabName: string, ...showIn: string[]): boolean {
+    public checkTab(tabName: string, ...showIn: string[]): boolean {
         return !!~showIn.indexOf(tabName);
     }
 
@@ -99,6 +104,16 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     public addBtnClick() {
         const tab = this.shadowRoot.querySelector(`#${this.routeData.tab}`);
         tab.dispatchEvent(new CustomEvent('add-new', {bubbles: true, composed: true}));
+    }
+
+    public getPlural(count: number): string {
+        return !count || +count > 1 ? 's' : '';
+    }
+
+    public exportData() {
+        const url = this.getEndpoint('issuesCSVExport').url;
+        const params = this.getQueryString() || '';
+        window.open(url + params, '_blank');
     }
 }
 

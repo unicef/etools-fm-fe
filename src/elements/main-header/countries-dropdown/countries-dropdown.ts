@@ -95,7 +95,7 @@ class CountriesDropdown extends Polymer.mixinBehaviors([etoolsBehaviors.EtoolsRe
 
     public _refreshPage() {
         this.refreshInProgress = false;
-        window.location.href = `${window.location.origin}/field-monitoring/`;
+        window.location.href = `${window.location.origin}/fm/`;
     }
 
     private toggleOpened() {

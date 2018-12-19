@@ -51,7 +51,7 @@ class MonthCounterInput extends Polymer.Element {
 
     public isReadonly(readonly: boolean, month: number, year: number) {
         if (readonly || isNaN(+month) || !year) { return true; }
-        const date = new Date(+year, +month + 1);
+        const date = new Date(+year, +month + 4);
         return new Date().getTime() >= date.getTime();
     }
 }

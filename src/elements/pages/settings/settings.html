@@ -1,12 +1,19 @@
 <!--import [polymer/polymer-element]-->
 
-<!--import [pages-header, methods-tab, cp-outputs-tab, sites-tab, redux-mixin, etools-app-config]-->
+<!--import [pages-header, methods-tab, cp-outputs-tab, sites-tab, redux-mixin, etools-app-config, main-page-styles]-->
 
 <dom-module id="fm-settings">
     <template>
         <!-- inject styles './settings.scss'-->
+        <style include="main-page-styles"></style>
+
         <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
-        <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
+        <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]">
+            <paper-button class="grey-buttons export" hidden$="[[!isSitesTab(routeData.tab)]]" on-tap="exportData">
+                <iron-icon icon="file-download"></iron-icon>
+                Export
+            </paper-button>
+        </pages-header>
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
             <cp-outputs-tab name="cp-outputs" route="{{route}}"></cp-outputs-tab>
             <sites-tab name="sites" route="{{route}}"></sites-tab>

@@ -221,8 +221,8 @@
                             class="validate-input disabled-as-readonly flex-3"
                             selected="[[_simplifyValue(selectedModel.cp_output_config)]]"
                             selected-item="{{selectedOutput}}"
-                            label="[[getDescriptorLabel(permissions, 'cp_output_config')]]"
-                            placeholder="[[getPlaceholder(permissions, 'cp_output_config', 'Select')]]"
+                            label="[[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]]"
+                            placeholder="[[getPlaceholder(permissions, 'cp_output_config.cp_output', 'Select')]]"
                             options="[[cpOutputConfigs]]"
                             option-label="name"
                             option-value="id"
@@ -260,7 +260,7 @@
                             dynamic-align></etools-dropdown>
                 </div>
 
-                <div class="container layout horizontal">
+                <div class="container layout horizontal" hidden$="[[isGovernment(selectedModel.partner)]]">
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
                             selected="[[_simplifyValue(selectedModel.intervention)]]"
@@ -286,15 +286,14 @@
                     <etools-dropdown
                             class="validate-input disabled-as-readonly flex-3"
                             selected="[[_simplifyValue(selectedModel.location)]]"
-                            selected-item="{{selectedLocation}}"
                             label="[[getDescriptorLabel(permissions, 'location')]]"
                             placeholder="[[getPlaceholder(permissions, 'location', 'Select')]]"
-                            options="[[locations]]"
+                            options="[[locationsList]]"
                             option-label="name"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'location')]]"
-                            disabled$="[[isReadonlyField(permissions, 'location', 1, dialog.type)]]"
-                            readonly$="[[isReadonlyField(permissions, 'location', 1, dialog.type)]]"
+                            disabled$="[[isReadonlyField(permissions, 'location', enableLocationSelect, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'location', enableLocationSelect, dialog.type)]]"
                             invalid="{{errors.location}}"
                             error-message="{{errors.location}}"
                             on-focus="resetFieldError"
@@ -313,8 +312,8 @@
                             option-label="name"
                             option-value="id"
                             required$="[[getRequiredStatus(permissions, 'location_site')]]"
-                            disabled$="[[isReadonlyField(permissions, 'location_site', 1, dialog.type)]]"
-                            readonly$="[[isReadonlyField(permissions, 'location_site', 1, dialog.type)]]"
+                            disabled$="[[isReadonlyField(permissions, 'location_site', selectedLocation, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'location_site', selectedLocation, dialog.type)]]"
                             invalid="{{errors.location_site}}"
                             error-message="{{errors.location_site}}"
                             on-focus="resetFieldError"

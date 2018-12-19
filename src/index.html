@@ -49,14 +49,14 @@
             font-weight: 400;
             line-height: 1.5;
             min-height: 100vh;
-            background-color: #FAFAFA;
+            background-color: #EEEEEE;
             color: rgba(0, 0, 0, 0.87);
         }
     </style>
     <script>
         (function() {
             'use strict';
-            window.baseUrl = window.location.port !== '8080' ? '/field-monitoring/' : '/';
+            window.baseUrl = window.location.port !== '8080' ? '/fm/' : '/';
             var base = document.createElement('base');
             base.href = window.baseUrl;
             document.head.appendChild(base);

@@ -62,10 +62,12 @@
             }
 
             .col-data {
-                height: 47px;
+                height: auto;
+                min-height: 47px;
                 display: flex;
                 align-items: center;
                 min-width: 0;
+                overflow: hidden;
             }
 
             .col-data .two-line-truncate {
@@ -79,6 +81,11 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+
+            .col-data .flexible-text {
+                display: block;
+                margin: 4px 0;
             }
 
             .row-details-content {
@@ -138,7 +145,22 @@
                     margin-right: 0;
                 }'};
                 etools-loading { font-size: 14px; }
+
+                --etools-dialog-content: #{'{
+                    width: 100%;
+                    max-width: 100% !important;
+
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    display: block;
+                    margin-top: 0;
+                }'};
             }
+
+            paper-textarea {
+                overflow: hidden;
+            }
+
         </style>
     </template>
 </dom-module>

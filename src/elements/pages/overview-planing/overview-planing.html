@@ -1,24 +1,31 @@
 <!--import [polymer/polymer-element, etools-dropdown, iron-flex-layout, paper-button, iron-icons]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config, month-counter, rationale-tab, plan-by-task, preparation-tab,
-            check-list]-->
+<!--import [pages-header, redux-mixin, etools-app-config, month-counter, rationale-tab, plan-by-task,
+            preparation-tab, check-list, main-page-styles]-->
 
 <dom-module id="overview-planing">
     <template>
-        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles"></style>
         <!-- inject styles './overview-planing.scss'-->
+        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles main-page-styles"></style>
 
         <app-route route="{{route}}" pattern="/:tab" data="{{routeData}}"></app-route>
         <pages-header title="Overview Planing" tab="{{routeData.tab}}" tabs="[[tabs]]">
+
+            <paper-button class="grey-buttons export" hidden$="[[!checkTab(routeData.tab, 'preparation')]]" on-tap="exportData">
+                <iron-icon icon="file-download"></iron-icon>
+                Export
+            </paper-button>
+
             <template is="dom-if" if="[[showAddButton]]">
                 <paper-button class="add-btn" on-click="addBtnClick">
                     <iron-icon icon="icons:add"></iron-icon>
                     [[getAddBtnText(routeData.tab)]]
                 </paper-button>
             </template>
+
         </pages-header>
 
-        <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'rationale', 'plan-by-task')]]">
+        <template is="dom-if" if="[[checkTab(routeData.tab, 'rationale', 'plan-by-task')]]">
             <div class="year-select-and-info layout start">
                 <etools-dropdown selected="{{selectedYear}}"
                                  label="Year"
@@ -30,12 +37,13 @@
                                  on-etools-selected-item-changed="onYearSelected"
                                  hide-search allow-outside-scroll></etools-dropdown>
 
-                <template is="dom-if" if="[[showYearAndInfo(routeData.tab, 'plan-by-task')]]">
+                <template is="dom-if" if="[[checkTab(routeData.tab, 'plan-by-task')]]">
                     <div class="year-info horizontal layout end end-justified flex-auto">
                         <div class="text horizontal layout center end-justified flex-auto">
                             total planned: <span class="amount">[[yearPlan.total_planned.tasks]]</span>
-                            tasks covering <span class="amount">[[yearPlan.total_planned.cp_outputs]]</span>
-                            outputs in <span class="amount">[[yearPlan.total_planned.sites]]</span>  sites <div class="line"></div>
+                            task[[getPlural(yearPlan.total_planned.tasks)]] covering <span class="amount">[[yearPlan.total_planned.cp_outputs]]</span>
+                            output[[getPlural(yearPlan.total_planned.cp_outputs)]] in <span class="amount">[[yearPlan.total_planned.sites]]</span>
+                            site[[getPlural(yearPlan.total_planned.sites)]] <div class="line"></div>
                                 number of tasks by month:</div>
                         <month-counter show-titles count="[[yearPlan.tasks_by_month]]"></month-counter>
                     </div>

@@ -9,6 +9,7 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
     FMMixins.CommonMethods,
     FMMixins.ReduxMixin,
+    FMMixins.TextareaMaxRowsMixin,
     FMMixins.RouteHelperMixin], Polymer.Element) {
     public static get is() {
         return 'preparation-tab';
@@ -21,7 +22,8 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 value: () => ({
                     add: {title: 'Log Issue', confirm: 'Log', type: 'create'},
-                    edit: {title: 'Edit Issue', confirm: 'Save', type: 'edit'}
+                    edit: {title: 'Edit Issue', confirm: 'Save', type: 'edit'},
+                    view: {title: 'View Issue', confirm: '', type: 'view'}
                 })
             },
             errors: {
@@ -40,7 +42,8 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
             page_size: 10,
             cp_output__in: [],
             partner__in: [],
-            location_site__in: []
+            location_site__in: [],
+            status: 'new'
         };
     }
 
@@ -168,6 +171,15 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         this.dispatchOnStore(loadPermissions(endpoint.url, 'logIssuesDetails'));
     }
 
+    public openViewDialog(event: EventModel<LogIssue>) {
+        this.openEditLogIssue(event);
+        const dialogTexts = this.dialogTexts['view'];
+        this.dialog = {
+            ...this.dialog,
+            ...dialogTexts
+        };
+    }
+
     public onDownloadFiles({ model }: EventModel<LogIssue>) {
         const { item } = model;
         if  (!item.id) { return; }
@@ -182,8 +194,8 @@ class PreparationTab extends EtoolsMixinFactory.combineMixins([
         return model.status !== 'past' && this.actionAllowed(permissions, 'create');
     }
 
-    public isEditDialog(type: string) {
-        return type === 'edit';
+    public isDialogType(type: string, ...allowedTypes: string[]) {
+        return !!~allowedTypes.indexOf(type);
     }
 
     public validate() {

@@ -4,7 +4,7 @@ export const endpoints: Endpoints = {
     },
 
     methods: {
-        url: '/api/v1/field-monitoring/settings/methods/',
+        url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
         exp: 10 * 24 * 60 * 60 * 1000, // 10days
         cacheTableName: 'methods'
     },
@@ -18,7 +18,7 @@ export const endpoints: Endpoints = {
     },
 
     cpOutcomes: {
-        template: '/api/v2/reports/results/?result_type=outcome',
+        template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
         exp: 60 * 60 * 1000, // 1 hour
         cacheTableName: 'cpOutcomes'
     },
@@ -47,6 +47,10 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
     },
 
+    sitesCSVExport: {
+        url: '/api/v1/field-monitoring/settings/sites/export/'
+    },
+
     currentWorkspace: {
         url: '/api/v1/field-monitoring/settings/locations/country/'
     },
@@ -69,6 +73,10 @@ export const endpoints: Endpoints = {
 
     logIssuesAttachmentsDetails: {
         template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>'
+    },
+
+    issuesCSVExport: {
+        url: '/api/v1/field-monitoring/settings/log-issues/export/'
     },
 
     attachments: {
@@ -110,13 +118,13 @@ export const endpoints: Endpoints = {
     },
 
     monitoredPartners: {
-        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/',
+        url: '/api/v1/field-monitoring/settings/cp-outputs/partners/?page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
         cacheTableName: 'monitoredPartners'
     },
 
     monitoredCpOutputs: {
-        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true',
+        url: '/api/v1/field-monitoring/settings/cp-outputs/?fm_config__is_monitored=true&page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
         cacheTableName: 'monitoredCpOutputs'
     },
@@ -147,13 +155,7 @@ export const endpoints: Endpoints = {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/tasks/partners/?page_size=all'
     },
 
-    // Old endpoints. TODO: remove latter if redundant
-
-    interventionDetails: {
-        template: '/api/v2/interventions/<%=id%>/'
-    },
-
-    interventionsList: {
-        template: '/api/v2/interventions/'
+    interventionLocations: {
+        template: '/api/v1/field-monitoring/settings/interventions/<%=interventionId%>/locations/?page_size=all'
     }
 };
