@@ -1,12 +1,12 @@
 import {
     ChecklistActions,
-    FINISH_REQUEST_CHECKLIST_CONFIG,
-    SET_CHECKLIST_CATEGORIES,
+    FINISH_REQUEST_CHECKLIST,
     SET_CHECKLIST_CP_OUTPUTS_CONFIGS,
-    SET_CHECKLIST_ITEMS,
     SET_CHECKLIST_METHOD_TYPES, SET_CHECKLIST_PLANED,
     SET_ERROR_CHECKLIST_CONFIG,
-    START_REQUEST_CHECKLIST_CONFIG, UPDATE_CHECKLIST_CONFIG, UPDATE_CHECKLIST_PLANED
+    START_REQUEST_CHECKLIST,
+    UPDATE_CHECKLIST_CONFIG,
+    UPDATE_CHECKLIST_PLANED
 } from '../actions/checklist.actions';
 
 const INITIAL = {
@@ -18,10 +18,6 @@ export function checklist(state = INITIAL, action: ChecklistActions) {
     switch (action.type) {
         case SET_CHECKLIST_CP_OUTPUTS_CONFIGS:
             return Object.assign({}, state, {cpOutputsConfigs: action.payload});
-        case SET_CHECKLIST_CATEGORIES:
-            return Object.assign({}, state, {categories: action.payload});
-        case SET_CHECKLIST_ITEMS:
-            return Object.assign({}, state, {items: action.payload});
         case SET_CHECKLIST_PLANED:
             return Object.assign({}, state, {planedItems: action.payload});
         case UPDATE_CHECKLIST_CONFIG:
@@ -43,9 +39,9 @@ export function checklist(state = INITIAL, action: ChecklistActions) {
             return Object.assign({}, state, {planedItems});
         case SET_CHECKLIST_METHOD_TYPES:
             return Object.assign({}, state, {methodTypes: action.payload});
-        case START_REQUEST_CHECKLIST_CONFIG:
+        case START_REQUEST_CHECKLIST:
             return Object.assign({}, state, {requestInProcess: true});
-        case FINISH_REQUEST_CHECKLIST_CONFIG:
+        case FINISH_REQUEST_CHECKLIST:
             return Object.assign({}, state, {requestInProcess: false});
         case SET_ERROR_CHECKLIST_CONFIG:
             return Object.assign({}, state, action.payload);
