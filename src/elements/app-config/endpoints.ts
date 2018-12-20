@@ -90,13 +90,13 @@ export const endpoints: Endpoints = {
     checklistCategories: {
         url: '/api/v1/field-monitoring/settings/checklist/categories/?page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
-        cacheTableName: 'governmentPartners'
+        cacheTableName: 'checklistCategories'
     },
 
     checklistItems: {
         url: '/api/v1/field-monitoring/settings/checklist/?page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h
-        cacheTableName: 'governmentPartners'
+        cacheTableName: 'checklistItems'
     },
 
     checklistPlaned: {

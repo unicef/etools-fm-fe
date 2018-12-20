@@ -52,7 +52,7 @@ export function loadChecklistItems() {
 
 export function loadChecklistMethodTypes() {
     return function(dispatch: Dispatch) {
-        const endpoint = getEndpoint('methodTypes') as StaticEndpoint;
+        const endpoint = getEndpoint('methodTypes');
         const url = endpoint.url + '?page_size=all';
         return request(url, {method: 'GET'})
             .catch(() => {
@@ -99,7 +99,7 @@ export function updateChecklistPlaned(id: number, configId: number, data: Checkl
 
 export function loadPlanedChecklist(id: number) {
     return function(dispatch: Dispatch) {
-        const endpoint = getEndpoint('checklistPlaned', {config_id: id}) as StaticEndpoint;
+        const endpoint = getEndpoint('checklistPlaned', {config_id: id});
         const url = endpoint.url + '?page_size=all';
         return request(url, {method: 'GET'})
             .catch(() => {
