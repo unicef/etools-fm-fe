@@ -28,22 +28,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body>
     <test-fixture id="view1">
       <template>
-        <my-view1 active></my-view1>
+        <page-one active></page-one>
       </template>
     </test-fixture>
     <test-fixture id="view2">
       <template>
-        <my-view2 active></my-view2>
-      </template>
-    </test-fixture>
-    <test-fixture id="view3">
-      <template>
-        <my-view3 active></my-view3>
+        <page-two active></page-two>
       </template>
     </test-fixture>
     <test-fixture id="view404">
       <template>
-        <my-view404 active></my-view404>
+        <page-not-found active></page-not-found>
       </template>
     </test-fixture>
 
@@ -51,24 +46,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       import '@polymer/test-fixture';
       import 'axe-core/axe.min.js';
       import {axeReport} from 'pwa-helpers/axe-report.js';
-      import '../../src/components/my-view1.js';
-      import '../../src/components/my-view2.js';
-      import '../../src/components/my-view3.js';
-      import '../../src/components/my-view404.js';
+      import '../../src/components/pages/page-one.js';
+      import '../../src/components/pages/page-two.js';
+      import '../../src/components/pages/page-not-found.js';
 
       suite('views a11y tests', function() {
-        test('my-view1', function() {
+        test('page-one', function() {
           const el = fixture('view1');
           return axeReport(el);
         });
 
-        test('my-view2', function() {
+        test('page-two', function() {
           const el = fixture('view2');
-          return axeReport(el);
-        });
-
-        test('my-view3', function() {
-          const el = fixture('view3');
           return axeReport(el);
         });
 

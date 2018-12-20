@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "Etools Frontend Template",
+  "short_name": "Etools Frontend Template",
+  "description": "Etools Frontend Template description",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#3f51b5",

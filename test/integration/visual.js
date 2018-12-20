@@ -55,16 +55,13 @@ describe('👀 page screenshots are correct', function() {
     it('/index.html', async function() {
       return takeAndCompareScreenshot(page, '', 'wide');
     });
-    it('/view1', async function() {
-      return takeAndCompareScreenshot(page, 'view1', 'wide');
+    it('/page-one', async function() {
+      return takeAndCompareScreenshot(page, 'page-one', 'wide');
     });
-    it('/view2', async function() {
-      return takeAndCompareScreenshot(page, 'view2', 'wide');
+    it('/page-two', async function() {
+      return takeAndCompareScreenshot(page, 'page-two', 'wide');
     });
-    it('/view3', async function() {
-      return takeAndCompareScreenshot(page, 'view3', 'wide');
-    });
-    it('/404', async function() {
+    it('/page-not-found', async function() {
       return takeAndCompareScreenshot(page, 'batmanNotAView', 'wide');
     });
   });
@@ -77,16 +74,13 @@ describe('👀 page screenshots are correct', function() {
     it('/index.html', async function() {
       return takeAndCompareScreenshot(page, '', 'narrow');
     });
-    it('/view1', async function() {
-      return takeAndCompareScreenshot(page, 'view1', 'narrow');
+    it('/page-one', async function() {
+      return takeAndCompareScreenshot(page, 'page-one', 'narrow');
     });
-    it('/view2', async function() {
-      return takeAndCompareScreenshot(page, 'view2', 'narrow');
+    it('/page-two', async function() {
+      return takeAndCompareScreenshot(page, 'page-two', 'narrow');
     });
-    it('/view3', async function() {
-      return takeAndCompareScreenshot(page, 'view3', 'narrow');
-    });
-    it('/404', async function() {
+    it('/page-not-found', async function() {
       return takeAndCompareScreenshot(page, 'batmanNotAView', 'narrow');
     });
   });
