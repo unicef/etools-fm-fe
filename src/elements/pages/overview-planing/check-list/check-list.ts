@@ -48,8 +48,11 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 this.cpOutputsConfigs = cpOutputsConfigs || [];
                 const cpOutcomeId = this.queryParams && this.queryParams.cp_outcome;
                 const cpOutputId = this.queryParams && this.queryParams.cp_output;
-                this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId);
-                this.cpOutputConfig = this.getCpOutputConfigById(cpOutputId);
+                this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId, this.cpOutputsConfigs);
+                this.cpOutputConfig = this.getConfigById(cpOutputId, this.filteredConfigs);
+                this.changeOutputConfig(this.cpOutputConfig);
+
+                this.startLoad();
             });
 
         this.checklistCategoriesSubscriber = this.subscribeOnStore(
@@ -87,6 +90,12 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 this.methodTypesKIG = methodTypes && methodTypes.filter(item => item.method === 1) || [];
                 this.methodTypesFG = methodTypes && methodTypes.filter(item => item.method === 2) || [];
             });
+
+        this.requestSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['checklist', 'requestInProcess'], store),
+            (requestInProcess: boolean | null) => {
+                this.requestInProcess = requestInProcess;
+            });
     }
 
     public getTypesOfMethodsString(methodTypes: MethodType[], method: number) {
@@ -116,9 +125,9 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         const editItem = planedItem || {
             checklist_item:
             item.id, methods: [],
-            partners_info: [{partner: null}]
+            partners_info: [{partner: null, standard_url: ''}]
         };
-        this.dialogItem =  {opened: true, title};
+        this.dialogItem =  {opened: true, title, isNew: !planedItem};
         this.originalPlanedItem = R.clone(editItem);
         this.selectedPlanedItem = R.clone(editItem);
         const partnersInfo = R.clone(this.selectedPlanedItem.partners_info);
@@ -127,17 +136,19 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     }
 
     public onFinishItem() {
-        let allChanges = [];
+        let allChanges: any = {};
         const allPartnersChanges =
             this.getPartnersChanges(this.selectedPlanedItem, this.partnersInfo, this.permissionsConfigsItems);
         const planedItemChanges =
             this.changes(this.originalPlanedItem, this.selectedPlanedItem, this.permissionsConfigsItems);
 
-        if (!R.isEmpty(planedItemChanges)) {
-            allChanges = {...planedItemChanges};
-        }
-        if (!R.isEmpty(allPartnersChanges)) {
-            allChanges = {...allChanges, ...{partners_info: allPartnersChanges}};
+        if (this.dialogItem.isNew) {
+            if (!R.isEmpty(planedItemChanges) || !R.isEmpty(allPartnersChanges)) {
+                allChanges = {...this.selectedPlanedItem, ...{partners_info: this.partnersInfo}};
+            }
+        } else {
+            if (!R.isEmpty(planedItemChanges)) {allChanges = {...planedItemChanges}; }
+            if (!R.isEmpty(allPartnersChanges)) {allChanges = {...allChanges, ...{partners_info: allPartnersChanges}}; }
         }
         const checklistItemId = this.selectedPlanedItem.checklist_item;
         const configId = this.cpOutputConfig.id;
@@ -293,7 +304,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         const { selectedItem } = detail;
         if (selectedItem) {
             this.removeQueryParams('cp_output');
-            this.filteredConfigs = this.getConfigsByOutcome(selectedItem.id);
+            this.filteredConfigs = this.getConfigsByOutcome(selectedItem.id, this.cpOutputsConfigs);
             this.updateQueryParams({cp_outcome: selectedItem.id});
         } else {
             this.removeQueryParams('cp_outcome');
@@ -303,12 +314,12 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    public getConfigsByOutcome(id: number) {
-        return this.cpOutputsConfigs
-            .filter((config: CpOutputConfig) => config.cp_output.parent === id && config.is_monitored);
+    public getConfigsByOutcome(id: number, configs: CpOutputConfig[]): CpOutputConfig[] {
+        return configs && configs
+            .filter((config: CpOutputConfig) => config.cp_output.parent === id && config.is_monitored) || [];
     }
 
-    public getCpOutputOptions(filteredConfigs: CpOutputConfig[]) {
+    public getOutputOptions(filteredConfigs: CpOutputConfig[]) {
         return filteredConfigs
             .map((cpOutputConfig: CpOutputConfig) => ({
                 id: cpOutputConfig.cp_output.id,
@@ -324,16 +335,8 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         const { selectedItem } = detail;
         if (selectedItem) {
             this.updateQueryParams({cp_output: selectedItem.id});
-            this.cpOutputConfig = this.getCpOutputConfigById(selectedItem.id);
-            if (this.cpOutputConfig) {
-                const configPartners = this.cpOutputConfig.partners;
-                this.partners = configPartners && configPartners.map((partner: Partner) => {
-                    return {id: partner.id, name: partner.name};
-                });
-                const endpointConfigs = getEndpoint('checklistPlaned', {config_id: this.cpOutputConfig.id});
-                this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'checklistPlaned'));
-                this.dispatchOnStore(loadPlanedChecklist(this.cpOutputConfig.id));
-            }
+            this.cpOutputConfig = this.getConfigById(selectedItem.id, this.filteredConfigs);
+            this.changeOutputConfig(this.cpOutputConfig);
         } else {
             this.removeQueryParams('cp_output');
             this.cpOutputConfig = null;
@@ -342,8 +345,19 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         this.startLoad();
     }
 
-    public getCpOutputConfigById(id: number): CpOutputConfig {
-        return this.filteredConfigs.find((item: CpOutputConfig) => item.cp_output.id === id);
+    public changeOutputConfig(cpOutputConfig: CpOutputConfig) {
+        if (!cpOutputConfig) { return; }
+        const configPartners = cpOutputConfig.partners;
+        this.partners = configPartners && configPartners.map((partner: Partner) => {
+            return {id: partner.id, name: partner.name};
+        });
+        const endpointConfigs = getEndpoint('checklistPlaned', {config_id: cpOutputConfig.id});
+        this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'checklistPlaned'));
+        this.dispatchOnStore(loadPlanedChecklist(cpOutputConfig.id));
+    }
+
+    public getConfigById(id: number, configs: CpOutputConfig[]): CpOutputConfig | undefined {
+        return configs && configs.find((item: CpOutputConfig) => item.cp_output.id === id);
     }
 
     public finishLoad() {
