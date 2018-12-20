@@ -1,7 +1,5 @@
 import {
-    loadChecklistCategories,
     loadChecklistCpOutputsConfigs,
-    loadChecklistItems,
     loadChecklistMethodTypes,
     loadPlanedChecklist,
     updateChecklistCpOutputConfig, updateChecklistPlaned
@@ -21,10 +19,8 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     public connectedCallback() {
         super.connectedCallback();
 
-        this.dispatchOnStore(loadChecklistCategories());
-        this.dispatchOnStore(loadChecklistItems());
         if (!this.getFromStore('permissions.cpOutputsConfigs')) {
-            const endpointConfigs = getEndpoint('cpOutputsConfigs') as StaticEndpoint;
+            const endpointConfigs = getEndpoint('cpOutputsConfigs');
             this.dispatchOnStore(loadPermissions(endpointConfigs.url, 'cpOutputsConfigs'));
         }
 
@@ -36,7 +32,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             this.dispatchOnStore(loadChecklistMethodTypes());
         }
 
-        this.cpOutcomeSubscriber = this.subscribeOnStore(
+        this.planedItemsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['checklist', 'planedItems'], store),
             (planedItems: ChecklistPlanedItem[]) => {
                 this.planedItems = planedItems || [];
@@ -52,19 +48,19 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 this.cpOutputsConfigs = cpOutputsConfigs || [];
                 const cpOutcomeId = this.queryParams && this.queryParams.cp_outcome;
                 const cpOutputId = this.queryParams && this.queryParams.cp_output;
-                this.filteredConfigs = this.getConfigsByCpOutcome(cpOutcomeId);
+                this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId);
                 this.cpOutputConfig = this.getCpOutputConfigById(cpOutputId);
             });
 
         this.checklistCategoriesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['checklist', 'categories'], store),
+            (store: FMStore) => R.path(['staticData', 'checklistCategories'], store),
             (categories: ChecklistCategory[]) => {
                 this.categories = categories || [];
                 if (categories && categories.length) { this.selectedCategories = [categories[0].id]; }
             });
 
         this.checklistItemsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['checklist', 'items'], store),
+            (store: FMStore) => R.path(['staticData', 'checklistItems'], store),
             (items: ChecklistItem[]) => {
                 this.checklistItems = items || [];
             });
@@ -111,44 +107,23 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         return checklistPlaned && this.isSelectedPlanedMethod(checklistPlaned, methodId);
     }
 
+    public getPartnerInfoNumber(index: number) { return ++index; }
+
     public openChecklistItem({ model }: EventModel<ChecklistItem>) {
         const { item } = model;
         const title = `${item.question_number}) ${item.question_text}`;
-        this.dialogItem =  {opened: true, title};
         const planedItem = this.planedItems.find((pi: ChecklistPlanedItem) => pi.checklist_item === item.id);
-        this.originalPlanedItem = planedItem ? R.clone(planedItem) : {};
-        this.selectedPlanedItem = planedItem ? R.clone(planedItem) : {
-            checklist_item: item.id,
-            methods: [],
+        const editItem = planedItem || {
+            checklist_item:
+            item.id, methods: [],
             partners_info: [{partner: null}]
         };
+        this.dialogItem =  {opened: true, title};
+        this.originalPlanedItem = R.clone(editItem);
+        this.selectedPlanedItem = R.clone(editItem);
         const partnersInfo = R.clone(this.selectedPlanedItem.partners_info);
         this.typePartnersInfo = this.getTyperPartnersInfo(partnersInfo);
         this.partnersInfo = this.getPartnersInfo(this.typePartnersInfo, partnersInfo);
-    }
-
-    public getPartnerInfoNumber(index: number) { return ++index; }
-
-    public getPartnersChanges(selectedPlanedItem: ChecklistPlanedItem, partnersInfo: PartnerInfo[],
-                              permissions: IBackendPermissions) {
-        let allPartnersChanges = [];
-        const oldData = R.clone(selectedPlanedItem.partners_info);
-        const oldTypePartners = this.getTyperPartnersInfo(selectedPlanedItem.partners_info);
-        const newTypePartners = this.getTyperPartnersInfo(partnersInfo);
-        if (newTypePartners !== oldTypePartners) {
-            const deletedPartners = oldData
-                .filter((pi: PartnerInfo) => pi.id)
-                .map((pi: PartnerInfo) => ({ id: pi.id, _delete: true}));
-            allPartnersChanges = [...deletedPartners];
-        }
-        const partnersChangesObj = this.changes(oldData, partnersInfo, permissions, true, 'partners_info.child');
-        const partnersInfoChanges = Object.keys(partnersChangesObj).map(change => partnersChangesObj[change]);
-        return [...allPartnersChanges, ...partnersInfoChanges].map((partnerInfo) => {
-            if (partnerInfo && partnerInfo.partner && partnerInfo.partner.id) {
-                partnerInfo.partner = partnerInfo.partner.id;
-            }
-            return partnerInfo;
-        });
     }
 
     public onFinishItem() {
@@ -172,6 +147,28 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             this.originalPlanedItem = null;
         }
         this.dialogItem = {opened: false};
+    }
+
+    public getPartnersChanges(selectedPlanedItem: ChecklistPlanedItem, partnersInfo: PartnerInfo[],
+                              permissions: IBackendPermissions) {
+        let allPartnersChanges = [];
+        const oldData = R.clone(selectedPlanedItem.partners_info);
+        const oldTypePartners = this.getTyperPartnersInfo(selectedPlanedItem.partners_info);
+        const newTypePartners = this.getTyperPartnersInfo(partnersInfo);
+        if (newTypePartners !== oldTypePartners) {
+            const deletedPartners = oldData
+                .filter((pi: PartnerInfo) => pi.id)
+                .map((pi: PartnerInfo) => ({ id: pi.id, _delete: true}));
+            allPartnersChanges = [...deletedPartners];
+        }
+        const partnersChangesObj = this.changes(oldData, partnersInfo, permissions, true, 'partners_info.child');
+        const partnersInfoChanges = Object.keys(partnersChangesObj).map(change => partnersChangesObj[change]);
+        return [...allPartnersChanges, ...partnersInfoChanges].map((partnerInfo) => {
+            if (partnerInfo && partnerInfo.partner && partnerInfo.partner.id) {
+                partnerInfo.partner = partnerInfo.partner.id;
+            }
+            return partnerInfo;
+        });
     }
 
     public getTyperPartnersInfo(partnersInfo: PartnerInfo[]) {
@@ -292,15 +289,11 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             'selected' : '';
     }
 
-    public isTypeSpecifyDetails(type: string, value: string) {
-        return type === value;
-    }
-
     public changeOutcomeFilter({ detail }: CustomEvent) {
         const { selectedItem } = detail;
         if (selectedItem) {
             this.removeQueryParams('cp_output');
-            this.filteredConfigs = this.getConfigsByCpOutcome(selectedItem.id);
+            this.filteredConfigs = this.getConfigsByOutcome(selectedItem.id);
             this.updateQueryParams({cp_outcome: selectedItem.id});
         } else {
             this.removeQueryParams('cp_outcome');
@@ -310,15 +303,21 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    public getConfigsByCpOutcome(id: number) {
-        return this.cpOutputsConfigs.filter((cpOutputConfig: CpOutputConfig) => cpOutputConfig.cp_output.parent === id);
+    public getConfigsByOutcome(id: number) {
+        return this.cpOutputsConfigs
+            .filter((config: CpOutputConfig) => config.cp_output.parent === id && config.is_monitored);
     }
 
     public getCpOutputOptions(filteredConfigs: CpOutputConfig[]) {
-        return filteredConfigs.map((cpOutputConfig: CpOutputConfig) => ({
-            id: cpOutputConfig.cp_output.id,
-            name: cpOutputConfig.cp_output.name
-        })) || [];
+        return filteredConfigs
+            .map((cpOutputConfig: CpOutputConfig) => ({
+                id: cpOutputConfig.cp_output.id,
+                name: cpOutputConfig.cp_output.name}))
+            .sort((a, b) => {
+                if (a.name < b.name) { return -1; }
+                if (a.name > b.name) { return 1; }
+                return 0;
+            }) || [];
     }
 
     public changeOutputFilter({ detail }: CustomEvent) {
@@ -355,17 +354,19 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 return ~this.selectedCategories.indexOf(item.category);
             });
         }
-        // this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
-        //     Polymer.Async.timeOut.after(100), () => {
-        //     });
     }
 
     public disconnectedCallback() {
         super.disconnectedCallback();
+        this.planedItemsSubscriber();
         this.cpOutcomeSubscriber();
         this.cpOutputsConfigsSubscriber();
         this.checklistCategoriesSubscriber();
         this.checklistItemsSubscriber();
+        this.permissionConfigsSubscriber();
+        this.permissionConfigsItemsSubscriber();
+        this.methodsSubscriber();
+        this.typesSubscriber();
     }
 
 }
