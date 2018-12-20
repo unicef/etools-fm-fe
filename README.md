@@ -12,6 +12,7 @@ This an app shell for Unicef eTools apps, a starting point based on Polymer 3, R
 Check `package.json` `scripts` for more...
 
 #### TODO: 
+* Update page header element to use etools-app-selector, countries dropdown, profile menu and refresh data button
 * Improve documentation
 * Update tests
 * Test build
