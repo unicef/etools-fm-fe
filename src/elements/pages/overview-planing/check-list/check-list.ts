@@ -16,6 +16,10 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
 
     public static get is() { return 'check-list'; }
 
+    public initStarLoad() {
+        this.isFilterActive = false;
+    }
+
     public connectedCallback() {
         super.connectedCallback();
 
@@ -51,7 +55,6 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId, this.cpOutputsConfigs);
                 this.cpOutputConfig = this.getConfigById(cpOutputId, this.filteredConfigs);
                 this.changeOutputConfig(this.cpOutputConfig);
-
                 this.startLoad();
             });
 
@@ -301,6 +304,12 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     }
 
     public changeOutcomeFilter({ detail }: CustomEvent) {
+        if (!this.isFiltersActive) {
+            if (!this.queryParams.cp_output) {
+                this.isFilterActive = true;
+            }
+            return;
+        }
         const { selectedItem } = detail;
         if (selectedItem) {
             this.removeQueryParams('cp_output');
@@ -312,6 +321,24 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         if (this.queryParams.cp_output) {
             this.startLoad();
         }
+    }
+
+    public changeOutputFilter({ detail }: CustomEvent) {
+        if (!this.isFilterActive) {
+            this.isFilterActive = true;
+            return;
+        }
+        const { selectedItem } = detail;
+        if (selectedItem) {
+            this.updateQueryParams({cp_output: selectedItem.id});
+            this.cpOutputConfig = this.getConfigById(selectedItem.id, this.filteredConfigs);
+            this.changeOutputConfig(this.cpOutputConfig);
+        } else {
+            this.removeQueryParams('cp_output');
+            this.cpOutputConfig = null;
+            this.partners = [];
+        }
+        this.startLoad();
     }
 
     public getConfigsByOutcome(id: number, configs: CpOutputConfig[]): CpOutputConfig[] {
@@ -329,20 +356,6 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 if (a.name > b.name) { return 1; }
                 return 0;
             }) || [];
-    }
-
-    public changeOutputFilter({ detail }: CustomEvent) {
-        const { selectedItem } = detail;
-        if (selectedItem) {
-            this.updateQueryParams({cp_output: selectedItem.id});
-            this.cpOutputConfig = this.getConfigById(selectedItem.id, this.filteredConfigs);
-            this.changeOutputConfig(this.cpOutputConfig);
-        } else {
-            this.removeQueryParams('cp_output');
-            this.cpOutputConfig = null;
-            this.partners = [];
-        }
-        this.startLoad();
     }
 
     public changeOutputConfig(cpOutputConfig: CpOutputConfig) {
