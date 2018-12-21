@@ -3,6 +3,14 @@
     display: block;
     padding: 0 25px 25px;
 
+    .table-title-block {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 10px 25px;
+    }
+
     .config-info-title {
         border-left: #eee 2px solid;
         padding-left: 15px;

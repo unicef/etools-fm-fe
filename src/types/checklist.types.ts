@@ -23,3 +23,9 @@ type ChecklistPlanedItem = {
     methods: number[],
     partners_info: PartnerInfo[]
 };
+
+type MappedMethodTypes = {
+    name: string,
+    method: number,
+    methodTypes: MethodType[]
+};

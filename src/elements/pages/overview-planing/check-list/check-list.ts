@@ -16,10 +16,6 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
 
     public static get is() { return 'check-list'; }
 
-    public initStarLoad() {
-        this.isFilterActive = false;
-    }
-
     public connectedCallback() {
         super.connectedCallback();
 
@@ -49,10 +45,14 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         this.cpOutputsConfigsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['checklist', 'cpOutputsConfigs'], store),
             (cpOutputsConfigs: CpOutputConfig[]) => {
-                this.cpOutputsConfigs = cpOutputsConfigs || [];
+                if (!cpOutputsConfigs) { return; }
+                this.cpOutputsConfigs = cpOutputsConfigs;
                 const cpOutcomeId = this.queryParams && this.queryParams.cp_outcome;
                 const cpOutputId = this.queryParams && this.queryParams.cp_output;
                 this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId, this.cpOutputsConfigs);
+                if (!this.hasOutputInConfigs(this.filteredConfigs, this.queryParams.cp_output)) {
+                    this.removeQueryParams('cp_output');
+                }
                 this.cpOutputConfig = this.getConfigById(cpOutputId, this.filteredConfigs);
                 this.changeOutputConfig(this.cpOutputConfig);
                 this.startLoad();
@@ -87,11 +87,23 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 this.methods = methods.filter(method => method.is_types_applicable);
             });
 
+        this.globalMethoTypesSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['methodTypes'], store),
+            () => this.dispatchOnStore(loadChecklistMethodTypes()));
+
         this.typesSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['checklist', 'methodTypes'], store),
             (methodTypes: MethodType[]) => {
-                this.methodTypesKIG = methodTypes && methodTypes.filter(item => item.method === 1) || [];
-                this.methodTypesFG = methodTypes && methodTypes.filter(item => item.method === 2) || [];
+                if (!methodTypes) { return; }
+                this.methodTypes = [];
+                this.methods.forEach((method: Method) => {
+                    const types = methodTypes.filter((methodType: MethodType) => methodType.method === method.id);
+                    this.methodTypes.push({
+                        name: method.name,
+                        method: method.id,
+                        methodTypes: types
+                    });
+                });
             });
 
         this.requestSubscriber = this.subscribeOnStore(
@@ -109,6 +121,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     }
 
     public getMethodTypes(methodTypes: MethodType[], method: number) {
+        if (!methodTypes) { return []; }
         const filteredMethodTypes = methodTypes.filter(methodType => methodType.method === method);
         return this._simplifyValue(filteredMethodTypes);
     }
@@ -135,7 +148,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         this.selectedPlanedItem = R.clone(editItem);
         const partnersInfo = R.clone(this.selectedPlanedItem.partners_info);
         this.typePartnersInfo = this.getTyperPartnersInfo(partnersInfo);
-        this.partnersInfo = this.getPartnersInfo(this.typePartnersInfo, partnersInfo);
+        this.partnersInfo = this.initPartnersInfo(this.typePartnersInfo, partnersInfo);
     }
 
     public onFinishItem() {
@@ -198,10 +211,14 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         return partnerInfoType === type;
     }
 
+    public isVisibleStandardUrl(planed: ChecklistPlanedItem[], planedId: number, type: string) {
+        return this.isPartnersInfoType(planed, planedId, type) && this.getAllPartnersUlrColumn(planed, planedId);
+    }
+
     public changeTypeInfo({ detail }: CustomEvent) {
         const {value} = detail;
         const partnersInfo = this.selectedPlanedItem.partners_info;
-        this.partnersInfo = this.getPartnersInfo(value, partnersInfo);
+        this.partnersInfo = this.initPartnersInfo(value, partnersInfo);
     }
 
     public getAllPartnersDetailsColumn(planed: ChecklistPlanedItem[], planedId: number) {
@@ -214,14 +231,14 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         return planedItem && planedItem.partners_info.length && planedItem.partners_info[0].standard_url;
     }
 
-    public getPartnersInfo(type: string, partnersInfo: PartnerInfo[]) {
+    public initPartnersInfo(type: string, partnersInfo: PartnerInfo[]) {
         const isAllPartnersInfo = partnersInfo.some((info: PartnerInfo) => !info.partner);
         if (type === 'all' && !isAllPartnersInfo) { return [{partner: null}]; }
-        if (type === 'each' && isAllPartnersInfo) { return this.createPartnersInfoFromPartners(this.partners); }
+        if (type === 'each' && isAllPartnersInfo) { return this.initPartnersInfoFromPartners(this.partners); }
         return partnersInfo;
     }
 
-    public createPartnersInfoFromPartners(partners: Partner[]) {
+    public initPartnersInfoFromPartners(partners: Partner[]) {
         return partners.map((p: Partner) => ({partner: p}));
     }
 
@@ -233,11 +250,12 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         return checklistPlaned && ~checklistPlaned.methods.indexOf(methodId);
     }
 
-    public selectChecklistMethod(e: any) {
-        if (!e || !e.target || !e.model || !e.model.item) { return; }
-        const methodId = e.model.item.id;
+    public selectChecklistMethod({model, target}: EventModel<MethodType>) {
+        if (!model) { return; }
+        const {item} = model;
+        const methodId = item.id;
         const methods = [...this.selectedPlanedItem.methods];
-        if (e.target.checked) {
+        if (target.checked) {
             this.selectedPlanedItem.methods = [...methods, methodId];
         } else {
             const indexMethod = methods.indexOf(methodId);
@@ -268,20 +286,18 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         window.dispatchEvent(new CustomEvent('location-changed'));
     }
 
-    public selectMethodTypesKIG({ detail }: CustomEvent) {
+    public selectMethodTypes({model, detail}: EventModel<MappedMethodTypes>) {
+        const { item } = model;
         const { selectedItems } = detail;
         if  (!selectedItems || !this.selectedModel) { return; }
-        this.selectedTypesKIG = selectedItems && selectedItems.map((item: MethodType) => item && item.id) || [];
-        this.selectedModel.recommended_method_types = [...this.selectedTypesFG || [], ...this.selectedTypesKIG];
+        const selectedIds = selectedItems.map((selectedItem: MethodType) => selectedItem && selectedItem.id) || [];
+        const recommendedIds = this._simplifyValue(this.selectedModel.recommended_method_types)
+            .filter((methodTypeId: number) => {
+                return !item.methodTypes
+                    .some((itemMethodType: MethodType) => itemMethodType.id === methodTypeId);
+            });
+        this.selectedModel.recommended_method_types = selectedIds.concat(recommendedIds);
     }
-
-    public selectMethodTypesFG({ detail }: CustomEvent) {
-        const { selectedItems } = detail;
-        if  (!selectedItems || !this.selectedModel) { return; }
-        this.selectedTypesFG = selectedItems && selectedItems.map((item: MethodType) => item && item.id) || [];
-        this.selectedModel.recommended_method_types = [...this.selectedTypesKIG || [], ...this.selectedTypesFG];
-    }
-
     public onSelectCategory({model}:  EventModel<ChecklistCategory>) {
         const { item } = model;
         if (!item || !item.id) { return; }
@@ -289,7 +305,6 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         const categoryIndex = this.selectedCategories.indexOf(item.id);
         if (!~categoryIndex) {
             this.selectedCategories = [...this.selectedCategories, item.id];
-            // this.push('selectedCategories', item.id);
         } else if (this.selectedCategories.length > 1) {
             const categories = [...this.selectedCategories];
             categories.splice(categoryIndex, 1);
@@ -303,17 +318,18 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
             'selected' : '';
     }
 
+    public hasOutputInConfigs(configs: CpOutputConfig[], outputId: number) {
+        return configs.some((conf: CpOutputConfig) => (conf.cp_output.id === outputId));
+
+    }
+
     public changeOutcomeFilter({ detail }: CustomEvent) {
-        if (!this.isFiltersActive) {
-            if (!this.queryParams.cp_output) {
-                this.isFilterActive = true;
-            }
-            return;
-        }
         const { selectedItem } = detail;
         if (selectedItem) {
-            this.removeQueryParams('cp_output');
             this.filteredConfigs = this.getConfigsByOutcome(selectedItem.id, this.cpOutputsConfigs);
+            if (!this.hasOutputInConfigs(this.filteredConfigs, this.queryParams.cp_output)) {
+                this.removeQueryParams('cp_output');
+            }
             this.updateQueryParams({cp_outcome: selectedItem.id});
         } else {
             this.removeQueryParams('cp_outcome');
@@ -324,10 +340,6 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
     }
 
     public changeOutputFilter({ detail }: CustomEvent) {
-        if (!this.isFilterActive) {
-            this.isFilterActive = true;
-            return;
-        }
         const { selectedItem } = detail;
         if (selectedItem) {
             this.updateQueryParams({cp_output: selectedItem.id});
@@ -393,6 +405,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
         this.permissionConfigsSubscriber();
         this.permissionConfigsItemsSubscriber();
         this.methodsSubscriber();
+        this.globalMethoTypesSubscriber();
         this.typesSubscriber();
     }
 
