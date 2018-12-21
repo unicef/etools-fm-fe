@@ -21,7 +21,7 @@
                             options="[[cpOutcomes]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
+                            trigger-value-change-event="[[!requestInProcess]]"
                             on-etools-selected-item-changed="changeOutcomeFilter"
                             hide-search allow-outside-scroll
                             min-width="470px"
@@ -37,7 +37,7 @@
                             options="[[getOutputOptions(filteredConfigs)]]"
                             option-label="name"
                             option-value="id"
-                            trigger-value-change-event
+                            trigger-value-change-event="[[!requestInProcess]]"
                             on-etools-selected-item-changed="changeOutputFilter"
                             hide-search allow-outside-scroll
                             data-property="cp_output__in"
@@ -58,14 +58,12 @@
                             <div class="cp-output-find"><iron-icon icon="icons:search"></iron-icon></div>
                         </div>
                         <div class="flex-3 config-info-title layout vertical">
-                            <div class="layout horizontal">
-                                <div class="config-recommended-title">Recommended KI(s) :  </div>
-                                <div class="config-recommended-content">[[getTypesOfMethodsString(cpOutputConfig.recommended_method_types, 1)]]</div>
-                            </div>
-                            <div class="layout horizontal">
-                                <div class="config-recommended-title">Recommended FGD(s) :  </div>
-                                <div class="config-recommended-content">[[getTypesOfMethodsString(cpOutputConfig.recommended_method_types, 2)]]</div>
-                            </div>
+                            <template is="dom-repeat" items="[[methodTypes]]">
+                                <div class="layout horizontal">
+                                    <div class="config-recommended-title">Recommended [[item.name]] :&nbsp;</div>
+                                    <div class="config-recommended-content">[[getTypesOfMethodsString(cpOutputConfig.recommended_method_types, item.method)]]</div>
+                                </div>
+                            </template>
                         </div>
                     </div>
                     <div class="buttons-container">
@@ -134,7 +132,7 @@
                                 </template>
                             </div>
                             <div class="col-data flex-1 layout center-justified">
-                                <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'all')]]">
+                                <template is="dom-if" if="[[isVisibleStandardUrl(planedItems, item.id, 'all')]]">
                                     <a class="link" target="_blank" href$="[[getAllPartnersUlrColumn(planedItems, item.id)]]">
                                         <iron-icon icon="icons:open-in-new"></iron-icon>
                                     </a>
@@ -170,46 +168,28 @@
                 on-confirm-btn-clicked="onFinishEditConfig">
 
             <div class="layout vertical">
-                <div class="container layout vertical">
-                    <etools-dropdown-multi
-                            class="validate-input disabled-as-readonly"
-                            label="Recommended Key Informant"
-                            placeholder="Select"
-                            selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 1)]]"
-                            options="[[methodTypesKIG]]"
-                            option-value="id"
-                            option-label="name"
-                            invalid="{{errors.recommended_method_types}}"
-                            error-message="{{errors.recommended_method_types}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="selectMethodTypesKIG"
-                            allow-outside-scroll
-                            dynamic-align>
-                    </etools-dropdown-multi>
-                    <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
-                </div>
-                <div class="container layout vertical">
-                    <etools-dropdown-multi
-                            class="validate-input disabled-as-readonly"
-                            label="Recommended Focus Group Types"
-                            placeholder="Select"
-                            selected-values="[[getMethodTypes(selectedModel.recommended_method_types, 2)]]"
-                            options="[[methodTypesFG]]"
-                            option-value="id"
-                            option-label="name"
-                            invalid="{{errors.recommended_method_types}}"
-                            error-message="{{errors.recommended_method_types}}"
-                            on-focus="resetFieldError"
-                            on-tap="resetFieldError"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="selectMethodTypesFG"
-                            allow-outside-scroll
-                            dynamic-align>
-                    </etools-dropdown-multi>
-                    <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
-                </div>
+                <template is="dom-repeat" items="[[methodTypes]]">
+                    <div class="container layout vertical">
+                        <etools-dropdown-multi
+                                class="validate-input disabled-as-readonly"
+                                label="Recommended [[item.name]]"
+                                placeholder="Select"
+                                selected-values="[[getMethodTypes(selectedModel.recommended_method_types, item.method)]]"
+                                options="[[item.methodTypes]]"
+                                option-value="id"
+                                option-label="name"
+                                invalid="{{errors.recommended_method_types}}"
+                                error-message="{{errors.recommended_method_types}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                trigger-value-change-event
+                                on-etools-selected-items-changed="selectMethodTypes"
+                                allow-outside-scroll
+                                dynamic-align>
+                        </etools-dropdown-multi>
+                        <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
+                    </div>
+                </template>
             </div>
         </etools-dialog>
 
@@ -247,14 +227,14 @@
                                     class="validate-input disabled-as-readonly"
                                     value="{{partnersInfo.0.specific_details}}"
                                     label="Specify Details To Probe For All Partnerships"
-                                    max-rows="3"
-                                    placeholder="Enter Specify Details To Probe For All Partnerships">
+                                    always-float-label
+                                    max-rows="3">
                             </paper-textarea>
                             <paper-input
                                     class="validate-input disabled-as-readonly"
                                     value="{{partnersInfo.0.standard_url}}"
-                                    label="URL to Standard"
-                                    placeholder="e.g. link to SPHERE, etc.">
+                                    always-float-label
+                                    label="URL to Standard">
                             </paper-input>
                         </template>
                         <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'each')]]">
@@ -267,14 +247,14 @@
                                         class="validate-input disabled-as-readonly"
                                         value="{{item.specific_details}}"
                                         label="Specify Details To Probe"
-                                        max-rows="3"
-                                        placeholder="Enter Specify Details To Probe">
+                                        always-float-label
+                                        max-rows="3">
                                 </paper-textarea>
                                 <paper-input
                                         class="validate-input disabled-as-readonly"
                                         value="{{item.standard_url}}"
-                                        label="URL to Standard"
-                                        placeholder="e.g. link to SPHERE, etc.">
+                                        always-float-label
+                                        label="URL to Standard">
                                 </paper-input>
                             </template>
                         </template>
