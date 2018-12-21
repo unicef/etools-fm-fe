@@ -1,0 +1,33 @@
+<!--import [polymer/polymer-element, etools-dropdown, iron-flex-layout, iron-icons]-->
+
+<!--import [pages-header, redux-mixin, etools-app-config]-->
+
+<dom-module id="co-overview">
+    <template>
+        <!-- inject styles './co-overview.scss'-->
+        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles"></style>
+
+        <app-route route="{{route}}" pattern="/co-overview" active="{{isActive}}"></app-route>
+
+        <paper-card>
+            <div class="layout horizontal">
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[queryParams.cp_outcome]]"
+                            label="CP Outcome"
+                            placeholder="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-item-changed="filterValueChanged"
+                            hide-search allow-outside-scroll>
+                    </etools-dropdown>
+                </div>
+            </div>
+        </paper-card>
+
+    </template>
+
+    <!-- inject scripts './co-overview.ts'-->
+</dom-module>

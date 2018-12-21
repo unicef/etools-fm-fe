@@ -1,7 +1,7 @@
 <!--import [polymer/polymer-element, etools-dropdown, iron-flex-layout, paper-button, iron-icons]-->
 
 <!--import [pages-header, redux-mixin, etools-app-config, month-counter, rationale-tab, plan-by-task,
-            preparation-tab, main-page-styles]-->
+            preparation-tab, co-overview, main-page-styles]-->
 
 <dom-module id="overview-planing">
     <template>
@@ -55,6 +55,7 @@
             <rationale-tab id="rationale" name="rationale" route="{{route}}" selected-year="[[selectedYear]]" year-plan="[[yearPlan]]"></rationale-tab>
             <preparation-tab id="preparation" name="preparation" route="{{route}}"></preparation-tab>
             <plan-by-task id="plan-by-task" name="plan-by-task" route="{{route}}" selected-year="[[selectedYear]]"></plan-by-task>
+            <co-overview id="co-overview" name="co-overview" route="{{route}}"></co-overview>
         </iron-pages>
     </template>
 
