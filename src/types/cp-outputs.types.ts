@@ -73,3 +73,52 @@ type CpOutputConfig = {
     is_priority: boolean;
     partners: Partner[]
 };
+
+type FullReportData = {
+    id: number;
+    name: string;
+    code: string;
+    partners: FullReportPartner[]
+    result_links: FullReportResultLink[]
+    ram_indicators: RamIndicator[]
+};
+
+type FullReportPartner = {
+    id: number;
+    name: string;
+    prog_visit_mr: string;
+    interventions: FullReportIntervention[]
+};
+
+type FullReportIntervention = {
+    pk: number,
+    number: string,
+    title: string;
+    status: string;
+    days_last_visit: string;
+};
+
+type FullReportResultLink = {
+    id: number;
+    intervention: number;
+    cp_output: number;
+    cp_output_name: string;
+    ram_indicators: number[];
+    ram_indicator_names: string[];
+    ll_results: {
+        applied_indicators: []
+        code: string;
+        created: string;
+        id: number;
+        modified: string;
+        name: string;
+        result_link: number;
+    }
+};
+
+type RamIndicator = {
+    ram_indicators: NestedIndicator[];
+    cp_output_name: string;
+};
+
+type NestedIndicator = { indicator_name: string; };

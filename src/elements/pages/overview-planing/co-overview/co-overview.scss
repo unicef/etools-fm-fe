@@ -1,19 +1,70 @@
 :host {
-  position: relative;
-  display: block;
-  padding: 0 25px 25px;
+    position: relative;
+    display: block;
+    padding: 0 25px 25px;
 
-  .filter-dropdown {
-    width: 39%;
-    min-width: 250px;
-    max-width: 450px;
-  }
+    .filter-dropdown {
+        width: 39%;
+        min-width: 250px;
+        max-width: 450px;
+    }
+
+    .cp-output-title {
+        position: relative;
+        border-bottom: 1px solid #9c9c9c;
+        padding: 24px;
+        font-size: 16px;
+
+        iron-icon {
+            margin-left: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        iron-icon.flag-icon {
+            margin-left: 10px;
+        }
+    }
+
+    .spinner {
+        position: relative;
+        width: 100%;
+        height: 200px;
+    }
+
+    .details-container {
+        position: relative;
+        padding: 10px 25px;
+
+        .cp-indicators {
+            position: relative;
+            margin-bottom: 25px;
+            .line {
+                padding: 5px 15px;
+                &.title {
+                    color: var(--gray-mid);
+                    font-size: 13px;
+                    padding: 8px 15px 2px;
+                }
+                &.gray { background-color: var(--gray-lighter); }
+
+                .target {
+                    width: 100px;
+                    text-align: right
+                }
+            }
+        }
+    }
 }
 
 paper-card {
-  padding: 8px 0;
-  display: block;
-  margin-top: 25px;
-  --paper-card_-_background-color: white;
-  --paper-card_-_margin: 0 24px;
+    padding: 8px 0;
+    display: block;
+    margin-top: 25px;
+    --paper-card_-_background-color: white;
+    --paper-card_-_margin: 0 24px;
+}
+
+paper-card.cp-output-container {
+    padding: 0;
 }
