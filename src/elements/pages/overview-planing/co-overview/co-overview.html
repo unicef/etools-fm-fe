@@ -30,8 +30,8 @@
         <template is="dom-repeat" items="[[filteredConfigs]]" as="cp-config">
             <paper-card class="cp-output-container">
                 <div class="cp-output-title layout horizontal">
-                    <iron-icon icon="expand-less" hidden$="[[isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
-                    <iron-icon icon="expand-more" hidden$="[[!isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
+                    <iron-icon icon="expand-more" hidden$="[[isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
+                    <iron-icon icon="expand-less" hidden$="[[!isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
                     [[cp-config.name]]
                     <a href$="/apd/action-points/list?cp_output=[[cp-config.cp_output.id]]" target="_blank"><iron-icon icon="flag" class="flag-icon"></iron-icon></a>
                 </div>
