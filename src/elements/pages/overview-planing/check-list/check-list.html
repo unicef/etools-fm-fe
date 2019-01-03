@@ -68,6 +68,7 @@
                     </div>
                     <div class="buttons-container">
                         <paper-icon-button
+                                hidden$="[[isReadonlyCollection(permissionsConfigs)]]"
                                 on-tap="openEditConfig"
                                 class="panel-button"
                                 data-type="edit"
@@ -149,7 +150,7 @@
                                 </template>
                             </div>
 
-                            <div class="hover-block">
+                            <div class="hover-block" hidden$="[[isReadonlyCollection(permissionsConfigsItems)]]">
                                 <iron-icon icon="icons:create" on-click="openChecklistItem"></iron-icon>
                             </div>
                         </div>
