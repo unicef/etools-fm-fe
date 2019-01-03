@@ -55,7 +55,9 @@
                     <div class="table-title layout horizontal">
                         <div class="cp-output-name layout center flex-2">
                             [[cpOutputConfig.cp_output.name]]
-                            <div class="cp-output-find"><iron-icon icon="icons:search"></iron-icon></div>
+                            <div class="cp-output-find">
+                                <a href$="/fm/overview-planing/co-overview?cp_outcome=[[queryParams.cp_outcome]]&cp_output=[[queryParams.cp_output]]" target="_blank"><iron-icon icon="icons:search"></iron-icon></a>
+                            </div>
                         </div>
                         <div class="flex-3 config-info-title layout vertical">
                             <template is="dom-repeat" items="[[methodTypes]]">
