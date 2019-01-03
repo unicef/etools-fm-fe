@@ -157,5 +157,9 @@ export const endpoints: Endpoints = {
 
     interventionLocations: {
         template: '/api/v1/field-monitoring/settings/interventions/<%=interventionId%>/locations/?page_size=all'
+    },
+
+    fullReport: {
+        template: '/api/reports/results/<%=id%>/full/'
     }
 };
