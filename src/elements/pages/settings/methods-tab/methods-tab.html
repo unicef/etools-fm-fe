@@ -34,6 +34,7 @@
                 <div class="table-title">[[permissions.title]]</div>
                 <div class="buttons-container">
                     <paper-icon-button
+                            hidden$="[[isReadonlyCollection(permissions)]]"
                             on-tap="openDialog"
                             class="panel-button"
                             data-type="add"
@@ -58,7 +59,7 @@
                         <div class="col-data flex-1 truncate">[[getMethodName(item.method)]]</div>
                         <div class="col-data flex-4">[[item.name]]</div>
 
-                        <div class="hover-block">
+                        <div class="hover-block" hidden$="[[isReadonlyCollection(permissions)]]">
                             <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
                         </div>
 

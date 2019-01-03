@@ -163,7 +163,7 @@
 
                         <div class="col-data w310px"><month-counter count="[[item.plan_by_month]]"></month-counter></div>
 
-                        <div class="hover-block">
+                        <div class="hover-block"  hidden$="[[isReadonlyCollection(permissions)]]">
                             <iron-icon icon="icons:content-copy" on-tap="openDialog" data-type="copy"></iron-icon>
                             <iron-icon icon="icons:create" on-tap="openDialog" data-type="edit"></iron-icon>
                             <iron-icon icon="icons:delete" on-tap="openDialog" data-type="remove"></iron-icon>
