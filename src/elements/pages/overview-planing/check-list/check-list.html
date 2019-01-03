@@ -1,0 +1,267 @@
+<!--import [polymer/polymer-element, paper-card, iron-flex-layout, paper-checkbox, paper-radio-group,
+            paper-radio-button, textarea-max-rows-mixin, paper-input/paper-textarea]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, common-methods, redux-mixin,
+            route-helper-mixin, process-data-mixin]-->
+
+<dom-module id="check-list">
+    <template>
+        <style include="shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors"></style>
+        <!-- inject styles './check-list.scss'-->
+
+        <app-route route="{{route}}" pattern="/checklist" active="{{isActive}}"></app-route>
+
+        <paper-card>
+            <div class="layout horizontal">
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[_simplifyValue(queryParams.cp_outcome)]]"
+                            label="CP Outcome"
+                            placeholder="Select"
+                            options="[[cpOutcomes]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-item-changed="changeOutcomeFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown
+                            selected="[[_simplifyValue(queryParams.cp_output)]]"
+                            label="[[getDescriptorLabel(permissionsConfigs, 'cp_output')]]"
+                            placeholder="Select"
+                            options="[[getOutputOptions(filteredConfigs)]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event="[[!requestInProcess]]"
+                            on-etools-selected-item-changed="changeOutputFilter"
+                            hide-search allow-outside-scroll
+                            data-property="cp_output__in"
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown>
+                </div>
+            </div>
+        </paper-card>
+
+        <template is="dom-if" if="[[cpOutputConfig]]">
+            <paper-card class="table-container">
+                <div class="table-title-block with-bottom-line">
+                    <div class="table-title layout horizontal">
+                        <div class="cp-output-name layout center flex-2">
+                            [[cpOutputConfig.cp_output.name]]
+                            <div class="cp-output-find"><iron-icon icon="icons:search"></iron-icon></div>
+                        </div>
+                        <div class="flex-3 config-info-title layout vertical">
+                            <template is="dom-repeat" items="[[methodTypes]]">
+                                <div class="layout horizontal">
+                                    <div class="config-recommended-title">Recommended [[item.name]] :&nbsp;</div>
+                                    <div class="config-recommended-content">[[getTypesOfMethodsString(cpOutputConfig.recommended_method_types, item.method)]]</div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="buttons-container">
+                        <paper-icon-button
+                                on-tap="openEditConfig"
+                                class="panel-button"
+                                data-type="edit"
+                                icon="create"></paper-icon-button>
+                    </div>
+                </div>
+                <div class="categories-block">
+                    <template is="dom-repeat" items="[[categories]]">
+                        <div class$="category-item [[getSelectedClass(item, selectedCategories)]]"
+                             on-click="onSelectCategory">[[item.name]]
+                        </div>
+                    </template>
+                </div>
+                <etools-data-table-header no-title no-collapse>
+                    <etools-data-table-column class="flex-3" field="related_to_type">
+                        Checklist Item (<iron-icon class="required-item" icon="icons:star"></iron-icon>Required for Programmatic Visits for HACT)
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-4" field="name">
+                        Specific Details to Probe
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-1 layout center-justified" field="url">
+                        <div>URL to</div><div>Standard</div>
+                    </etools-data-table-column>
+                    <etools-data-table-column class="layout center-justified" field="methods">
+                        <div class="layout horizontal center-justified">Methods</div>
+                        <div class="layout horizontal center-justified">
+                            <div class="method-column">Ob</div>
+                            <div class="method-column">Ki</div>
+                            <div class="method-column">FGD</div>
+                            <div class="method-column">M</div>
+                        </div>
+                    </etools-data-table-column>
+                </etools-data-table-header>
+
+                <template is="dom-if" if="[[!filteredChecklistItems.length]]">
+                    <etools-data-table-row no-collapse>
+                        <div slot="row-data" class="layout horizontal editable-row flex">
+                            <div class="col-data flex-3">-</div>
+                            <div class="col-data flex-4">-</div>
+                            <div class="col-data flex-1 layout center-justified">-</div>
+                            <div class="col-data layout center-justified selected-methods-column">-</div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+
+                <template is="dom-repeat" items="[[filteredChecklistItems]]" as="item">
+                    <etools-data-table-row secondary-bg-on-hover no-collapse>
+                        <div slot="row-data" class="layout horizontal editable-row flex">
+                            <div class="col-data flex-3">
+                                <span class="bold-text">[[item.question_number]])&nbsp;</span>
+                                <template is="dom-if" if="[[item.is_required]]">
+                                    <iron-icon class="required-item" icon="icons:star"></iron-icon>
+                                </template>
+                                [[item.question_text]]
+                            </div>
+                            <div class="col-data flex-4">
+                                <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'all')]]">
+                                    <div><span class="bold-text">All Partnerships:</span> [[getAllPartnersDetailsColumn(planedItems, item.id)]]</div>
+                                </template>
+                                <template is="dom-if" if="[[isPartnersInfoType(planedItems, item.id, 'each')]]">
+                                    <div><span class="bold-text">By Partnership:</span> <a class="link view-partnerships" on-click="openChecklistItem">VIEW</a></div>
+                                </template>
+                            </div>
+                            <div class="col-data flex-1 layout center-justified">
+                                <template is="dom-if" if="[[isVisibleStandardUrl(planedItems, item.id, 'all')]]">
+                                    <a class="link" target="_blank" href$="[[getAllPartnersUlrColumn(planedItems, item.id)]]">
+                                        <iron-icon icon="icons:open-in-new"></iron-icon>
+                                    </a>
+                                </template>
+                            </div>
+                            <div class="col-data layout horizontal center-justified">
+                                <template is="dom-repeat" items="[[allMethods]]" as="method">
+                                    <template is="dom-if" if="[[isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
+                                        <iron-icon class="method-check-column" icon="icons:check"></iron-icon>
+                                    </template>
+                                    <template is="dom-if" if="[[!isSelectedChecklistMethod(planedItems, item.id, method.id)]]">
+                                        <div class="not-selected-method"></div>
+                                    </template>
+                                </template>
+                            </div>
+
+                            <div class="hover-block">
+                                <iron-icon icon="icons:create" on-click="openChecklistItem"></iron-icon>
+                            </div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+            </paper-card>
+        </template>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialogEditConfig.opened}}"
+                ok-btn-text="Save"
+                dialog-title="[[getDescriptorLabel(permissionsConfigs, 'recommended_method_types')]]"
+                on-confirm-btn-clicked="onFinishEditConfig">
+
+            <div class="layout vertical">
+                <template is="dom-repeat" items="[[methodTypes]]">
+                    <div class="container layout vertical">
+                        <etools-dropdown-multi
+                                class="validate-input disabled-as-readonly"
+                                label="Recommended [[item.name]]"
+                                placeholder="Select"
+                                selected-values="[[getMethodTypes(selectedModel.recommended_method_types, item.method)]]"
+                                options="[[item.methodTypes]]"
+                                option-value="id"
+                                option-label="name"
+                                invalid="{{errors.recommended_method_types}}"
+                                error-message="{{errors.recommended_method_types}}"
+                                on-focus="resetFieldError"
+                                on-tap="resetFieldError"
+                                trigger-value-change-event
+                                on-etools-selected-items-changed="selectMethodTypes"
+                                allow-outside-scroll
+                                dynamic-align>
+                        </etools-dropdown-multi>
+                        <span class="static-text">If other, add at <a class="link" on-click="goToSettings">Settings</a></span>
+                    </div>
+                </template>
+            </div>
+        </etools-dialog>
+
+        <etools-dialog
+                size="md"
+                no-padding
+                keep-dialog-open
+                opened="{{dialogItem.opened}}"
+                ok-btn-text="Save"
+                dialog-title="[[dialogItem.title]]"
+                on-confirm-btn-clicked="onFinishItem">
+            <div class="content-box">
+                <div class="layout vertical">
+                    <div class="container text-inform">Changing any fields below will be applied to visits in future that have not finalized their checklist.</div>
+                    <div class="container recommend-methods">
+                        <label>Recommend data collection methods:</label>
+                        <div class="methods-list">
+                            <template is="dom-repeat" items="[[allMethods]]">
+                                <div class="method-item">
+                                    <div class="method-name">[[item.name]]</div>
+                                    <paper-checkbox checked="[[isSelectedPlanedMethod(selectedPlanedItem, item.id)]]"
+                                                    on-change="selectChecklistMethod"></paper-checkbox>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="container layout vertical">
+                        <label>Specify details to probe:</label>
+                        <paper-radio-group selected="{{typePartnersInfo}}" on-selected-changed="changeTypeInfo">
+                            <paper-radio-button name="all">For all partnerships</paper-radio-button>
+                            <paper-radio-button name="each">By each partnership</paper-radio-button>
+                        </paper-radio-group>
+                        <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'all')]]">
+                            <paper-textarea
+                                    class="validate-input disabled-as-readonly"
+                                    value="{{partnersInfo.0.specific_details}}"
+                                    label="Specify Details To Probe For All Partnerships"
+                                    always-float-label
+                                    max-rows="3">
+                            </paper-textarea>
+                            <paper-input
+                                    class="validate-input disabled-as-readonly"
+                                    value="{{partnersInfo.0.standard_url}}"
+                                    always-float-label
+                                    label="URL to Standard">
+                            </paper-input>
+                        </template>
+                        <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'each')]]">
+                            <template is="dom-repeat" items="[[partnersInfo]]">
+                                <div class="partner-item">
+                                    <div class="partner-item-number">[[getPartnerInfoNumber(index)]]/[[partnersInfo.length]]</div>
+                                    <div class="partner-item-title">[[item.partner.name]]</div>
+                                </div>
+                                <paper-textarea
+                                        class="validate-input disabled-as-readonly"
+                                        value="{{item.specific_details}}"
+                                        label="Specify Details To Probe"
+                                        always-float-label
+                                        max-rows="3">
+                                </paper-textarea>
+                                <paper-input
+                                        class="validate-input disabled-as-readonly"
+                                        value="{{item.standard_url}}"
+                                        always-float-label
+                                        label="URL to Standard">
+                                </paper-input>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </etools-dialog>
+    </template>
+    <!-- inject scripts './check-list.ts'-->
+</dom-module>
