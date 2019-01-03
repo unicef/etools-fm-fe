@@ -28,6 +28,10 @@ window.FMMixins.PermissionController = (superClass: any) => class extends superC
         return this.getDescriptorFromAll(collection, path, 'label');
     }
 
+    public isReadonlyCollection(collection: IPermissionActions) {
+        return !this.getValidCollection(collection) || (!collection.PUT && !collection.POST);
+    }
+
     public collectionExists(collection: IPermissionActions, path: string, actionType: ActionTypes) {
         return !!this.getFromCollection(collection,  path, actionType);
     }
