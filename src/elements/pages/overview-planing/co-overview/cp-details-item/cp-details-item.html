@@ -1,0 +1,118 @@
+<!--import [polymer/polymer-element, iron-flex-layout, iron-icons, iron-collapse]-->
+
+<!--import [module-styles]-->
+
+<dom-module id="cp-details-item">
+    <template>
+        <!-- inject styles './cp-details-item.scss'-->
+        <style include="iron-flex iron-flex-factors iron-flex-alignment tab-inputs-styles module-styles"></style>
+
+
+        <div class="details-container">
+
+
+            <div class="cp-indicators">
+                <div class="line layout horizontal title title-text">
+                    <div class="indicators flex-auto">CP Indicators</div>
+                    <div class="target flex-none">Target</div>
+                </div>
+
+                <template is="dom-repeat" items="[[getCpIndicators(fullReport.ram_indicators)]]">
+                    <div class$="line layout horizontal [[getBackground(index)]]">
+                        <div class="indicators flex-auto">[[item]]</div>
+                        <div class="target flex-none">--</div>
+                    </div>
+                </template>
+
+                <div class="line layout horizontal empty" hidden$="[[!indicatorsEmpty(fullReport.ram_indicators)]]">
+                    <div class="indicators flex-auto">--</div>
+                    <div class="target flex-none">--</div>
+                </div>
+            </div>
+
+
+            <div class="partners">
+
+                <div class="layout horizontal title-text">
+                    <div class="flex-2 layout horizontal partners-data">
+                        <div class="flex-auto layout horizontal center">Partners</div>
+                        <div class="flex-none w65px layout horizontal center">M.R. Prog. <br>Visits</div>
+                    </div>
+                    <div class="flex-4 layout horizontal">
+                        <div class="flex-none w45px"></div>
+                        <div class="flex-auto layout horizontal center">Partnerships</div>
+                        <div class="flex-none layout horizontal center-center w120px">Days Since Last<br> Site Visit</div>
+                        <div class="flex-none w150px"></div>
+                    </div>
+                </div>
+
+
+
+                <template is="dom-repeat" items="[[fullReport.partners]]" as="partner">
+                    <div class="partner layout horizontal">
+                        <div class="flex-2 layout horizontal partners-data">
+                            <div class="flex-auto truncate" title$="[[partner.name]]">[[partner.name]]</div>
+                            <div class="prog-visits flex-none w65px">[[partner.prog_visit_mr]]</div>
+                        </div>
+                        <div class="flex-4 intervention-data">
+
+                            <template is="dom-repeat" items="[[partner.interventions]]" as="intervention">
+                                <div class="layout horizontal">
+                                    <div class="flex-none w45px layout horizontal center-center">
+                                        <iron-icon icon="expand-more" hidden$="[[intervention.detailsOpened]]" on-tap="toggleDetails"></iron-icon>
+                                        <iron-icon icon="expand-less" hidden$="[[!intervention.detailsOpened]]" on-tap="toggleDetails"></iron-icon>
+                                    </div>
+                                    <div class="flex-auto truncate" title$="[[intervention.number]]">[[intervention.number]]</div>
+                                    <div class="flex-none layout horizontal center-center w120px">[[intervention.days_last_visit]]</div>
+                                    <div class="flex-none w150px layout horizontal links">
+                                        <a href$="/pmp/interventions/[[intervention.pk]]/attachments" target="_blank"><iron-icon icon="folder"></iron-icon></a>
+                                        <a href$="/apd/action-points/list?cp_output=[[cpItem.cp_output.id]]&intervention=[[intervention.pk]]" target="_blank"><iron-icon icon="flag"></iron-icon></a>
+                                        <a href$="/pmp/interventions/[[intervention.pk]]/progress" target="_blank"><iron-icon icon="trending-up"></iron-icon></a>
+                                    </div>
+                                </div>
+
+
+                                <iron-collapse opened="{{intervention.detailsOpened}}">
+                                    <div class="intervention-details">
+                                        <div class="title-text">PD Output / SSFA Expected Result</div>
+                                        <div class="results-text">[[getExpectedResults(intervention.pk, fullReport.result_links)]]</div>
+                                    </div>
+                                </iron-collapse>
+                            </template>
+
+                            <div class="layout horizontal" hidden$="[[!dataIsEmpty(partner.interventions)]]">
+                                <div class="flex-none w45px layout horizontal center-center"></div>
+                                <div class="flex-auto truncate">--</div>
+                                <div class="flex-none layout horizontal center-center w120px">--</div>
+                                <div class="flex-none w150px layout horizontal links"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </template>
+
+
+
+                <div class="partner layout horizontal" hidden$="[[!dataIsEmpty(fullReport.partners)]]">
+                    <div class="flex-2 layout horizontal partners-data">
+                        <div class="flex-auto truncate">--</div>
+                        <div class="prog-visits flex-none w65px">--</div>
+                    </div>
+                    <div class="flex-4 intervention-data">
+                            <div class="layout horizontal">
+                                <div class="flex-none w45px layout horizontal center-center"></div>
+                                <div class="flex-auto truncate">--</div>
+                                <div class="flex-none layout horizontal center-center w120px">--</div>
+                                <div class="flex-none w150px layout horizontal links"></div>
+                            </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </template>
+
+    <!-- inject scripts './cp-details-item.ts'-->
+</dom-module>

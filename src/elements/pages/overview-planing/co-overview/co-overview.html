@@ -1,6 +1,6 @@
 <!--import [polymer/polymer-element, etools-dropdown, iron-flex-layout, iron-icons, iron-collapse, etools-loading]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config]-->
+<!--import [pages-header, redux-mixin, etools-app-config, cp-details-item]-->
 
 <dom-module id="co-overview">
     <template>
@@ -27,40 +27,19 @@
             </div>
         </paper-card>
 
-        <template is="dom-repeat" items="[[filteredConfigs]]">
+        <template is="dom-repeat" items="[[filteredConfigs]]" as="cp-config">
             <paper-card class="cp-output-container">
                 <div class="cp-output-title layout horizontal">
-                    <iron-icon icon="expand-less" hidden$="[[isDetailsOpened(item.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[item.cp_output.id]]"></iron-icon>
-                    <iron-icon icon="expand-more" hidden$="[[!isDetailsOpened(item.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[item.cp_output.id]]"></iron-icon>
-                    [[item.name]]
-                    <iron-icon icon="flag" class="flag-icon"></iron-icon>
+                    <iron-icon icon="expand-less" hidden$="[[isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
+                    <iron-icon icon="expand-more" hidden$="[[!isDetailsOpened(cp-config.cp_output.id, openedConfig)]]" on-tap="toggleDetails" data-config-id$="[[cp-config.cp_output.id]]"></iron-icon>
+                    [[cp-config.name]]
+                    <a href$="/apd/action-points/list?cp_output=[[cp-config.cp_output.id]]" target="_blank"><iron-icon icon="flag" class="flag-icon"></iron-icon></a>
                 </div>
 
-                <iron-collapse opened="[[isDetailsOpened(item.cp_output.id, openedConfig)]]">
-                    <div class="spinner" hidden$="[[detailsAreLoaded(item.cp_output.id, fullReportLoading)]]"><etools-loading active></etools-loading></div>
-                    <template is="dom-if" if="[[detailsAreLoaded(item.cp_output.id, fullReportLoading)]]">
-                        <div class="details-container">
-
-                            <div class="cp-indicators">
-                                <div class="line layout horizontal title">
-                                    <div class="indicators flex-auto">CP Indicators</div>
-                                    <div class="target flex-none">Target</div>
-                                </div>
-
-                                <template is="dom-repeat" items="[[getCpIndicators(item.cp_output.id)]]">
-                                    <div class$="line layout horizontal [[getBackground(index)]]">
-                                        <div class="indicators flex-auto">[[item]]</div>
-                                        <div class="target flex-none">--</div>
-                                    </div>
-                                </template>
-
-                                <div class="line layout horizontal" hidden$="[[!indicatorsEmpty(item.cp_output.id)]]">
-                                    <div class="indicators flex-auto">--</div>
-                                    <div class="target flex-none">--</div>
-                                </div>
-                            </div>
-
-                        </div>
+                <iron-collapse opened="[[isDetailsOpened(cp-config.cp_output.id, openedConfig)]]">
+                    <div class="spinner" hidden$="[[detailsAreLoaded(cp-config.cp_output.id, fullReportLoading)]]"><etools-loading active></etools-loading></div>
+                    <template is="dom-if" if="[[detailsAreLoaded(cp-config.cp_output.id, fullReportLoading)]]">
+                        <cp-details-item cp-item="[[cp-config]]" full-report="[[getFullReport(cp-config.cp_output.id)]]"></cp-details-item>
                     </template>
                 </iron-collapse>
             </paper-card>

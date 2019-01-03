@@ -3,6 +3,11 @@
     display: block;
     padding: 0 25px 25px;
 
+    iron-icon {
+        color: #6a6a6a;
+        cursor: pointer;
+    }
+
     .filter-dropdown {
         width: 39%;
         min-width: 250px;
@@ -30,30 +35,6 @@
         position: relative;
         width: 100%;
         height: 200px;
-    }
-
-    .details-container {
-        position: relative;
-        padding: 10px 25px;
-
-        .cp-indicators {
-            position: relative;
-            margin-bottom: 25px;
-            .line {
-                padding: 5px 15px;
-                &.title {
-                    color: var(--gray-mid);
-                    font-size: 13px;
-                    padding: 8px 15px 2px;
-                }
-                &.gray { background-color: var(--gray-lighter); }
-
-                .target {
-                    width: 100px;
-                    text-align: right
-                }
-            }
-        }
     }
 }
 

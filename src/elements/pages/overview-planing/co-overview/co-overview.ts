@@ -83,6 +83,10 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
 
     public filterValueChanged({ detail }: CustomEvent) {
         const { selectedItem } = detail;
+        if (!selectedItem) {
+            this.removeQueryParams('cp_outcome');
+            return;
+        }
 
         this.updateQueryParams({cp_outcome: selectedItem.id});
         if (!this.configsLoadingInProcess) {
@@ -106,24 +110,6 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
 
     public getFullReport(id: number, ...dataPath: string[]) {
         return R.pathOr(null, ['fullReports', id, ...dataPath], this);
-    }
-
-    public getCpIndicators(id: number): string[] {
-        const indicators = this.getFullReport(id, 'ram_indicators') || [];
-        return R.pipe(
-            R.map((indicator: RamIndicator) => indicator.ram_indicators),
-            R.flatten,
-            R.map((indicator: NestedIndicator) => indicator.indicator_name)
-        )(indicators);
-    }
-
-    public getBackground(index: number) {
-        return index % 2 ? 'gray' : '';
-    }
-
-    public indicatorsEmpty(id: number): boolean {
-        const indicators = this.getCpIndicators(id);
-        return !indicators.length;
     }
 
     private openCpOutput(newCpOutputId: number, oldCpOutputId?: number) {

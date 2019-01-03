@@ -31,7 +31,7 @@ type HTMLElementEvent<T extends HTMLElement> = Event & {
     target: T & {invalid: boolean};
 };
 type EventModel<T> = {
-    model: { item: T };
+    model: { [key: string]: T, parentModel: any };
     target?: any;
 };
 

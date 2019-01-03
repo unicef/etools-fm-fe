@@ -105,15 +105,17 @@ type FullReportResultLink = {
     cp_output_name: string;
     ram_indicators: number[];
     ram_indicator_names: string[];
-    ll_results: {
-        applied_indicators: []
-        code: string;
-        created: string;
-        id: number;
-        modified: string;
-        name: string;
-        result_link: number;
-    }
+    ll_results: LowResult[]
+};
+
+type LowResult = {
+    applied_indicators: []
+    code: string;
+    created: string;
+    id: number;
+    modified: string;
+    name: string;
+    result_link: number;
 };
 
 type RamIndicator = {
