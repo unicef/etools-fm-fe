@@ -19,15 +19,10 @@
                             icon: 'av:playlist-add-check',
                             link: 'overview-planing'
                         }, {
-                            view: 'assign-visits',
-                            name: 'Assign Visits',
-                            icon: 'communication:location-on',
-                            link: 'assign-visits'
-                        }, {
-                            view: 'data-collection',
+                            view: 'visit-and-data-collection',
                             name: 'Visit & Data Collection',
                             icon: 'assignment',
-                            link: 'data-collection'
+                            link: 'visit-and-data-collection'
                         }, {
                             view: 'analysis',
                             name: 'Analysis',

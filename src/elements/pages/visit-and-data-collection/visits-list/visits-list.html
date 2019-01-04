@@ -1,0 +1,19 @@
+<!--import [polymer/polymer-element]-->
+
+<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles]-->
+
+<dom-module id="visits-list">
+    <template>
+        <!-- inject styles './visits-list.scss'-->
+        <style include="main-page-styles"></style>
+
+        <app-route route="{{route}}" pattern="/visits-list" active="{{isActive}}">
+        </app-route>
+
+        <pages-header title="Visits & Data Collection"></pages-header>
+
+        List section
+    </template>
+
+    <!-- inject scripts './visits-list.ts'-->
+</dom-module>
