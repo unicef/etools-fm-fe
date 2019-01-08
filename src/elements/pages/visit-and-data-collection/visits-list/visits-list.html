@@ -1,18 +1,160 @@
-<!--import [polymer/polymer-element]-->
+<!--import [polymer/polymer-element, paper-card, etools-data-table, paper-menu-button, iron-icons, paper-listbox, etools-dropdown/etools-dropdown-multi]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles]-->
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, route-helper-mixin,
+            pages-header, redux-mixin, etools-app-config, main-page-styles]-->
 
 <dom-module id="visits-list">
     <template>
         <!-- inject styles './visits-list.scss'-->
-        <style include="main-page-styles"></style>
+        <style include="main-page-styles shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors iron-flex-alignment"></style>
 
         <app-route route="{{route}}" pattern="/visits-list" active="{{isActive}}">
         </app-route>
 
         <pages-header title="Visits & Data Collection"></pages-header>
 
-        List section
+        <div class="content">
+            <paper-card class="filters-container">
+
+                <template is="dom-repeat" items="[[listFilterOptions]]">
+                    <div class="layout horizontal wrap">
+                        <div class="filter-dropdown" hidden$="[[!item.selected]]">
+                            <etools-dropdown-multi
+                                    selected-values="[[_simplifyValue(queryParams.partner__in)]]"
+                                    label="[[item.name]]"
+                                    placeholder="Select"
+                                    options="[[filterPartners]]"
+                                    option-label="name"
+                                    option-value="id"
+                                    trigger-value-change-event
+                                    on-etools-selected-items-changed="filterValueChanged"
+                                    allow-outside-scroll
+                                    data-property$="[[item.query]]__in"
+                                    min-width$="[[item.minWidth]]"
+                                    horizontal-align="left"
+                                    no-dynamic-align>
+                            </etools-dropdown-multi>
+                        </div>
+                    </div>
+                </template>
+
+
+                <div class="fixed-controls">
+                    <paper-menu-button id="filterMenu" ignore-select horizontal-align="right">
+                        <paper-button class="button" slot="dropdown-trigger">
+                            <iron-icon icon="filter-list"></iron-icon>
+                            Filters
+                        </paper-button>
+                        <paper-listbox slot="dropdown-content" multi>
+                            <template is="dom-repeat" items="[[listFilterOptions]]">
+                                <paper-icon-item on-tap="selectFilter" selected$="[[item.selected]]">
+                                    <iron-icon icon="check" slot="item-icon" hidden$="[[!item.selected]]"></iron-icon>
+                                    <paper-item-body>[[item.name]]</paper-item-body>
+                                </paper-icon-item>
+                            </template>
+                        </paper-listbox>
+                    </paper-menu-button>
+                </div>
+
+            </paper-card>
+
+            <paper-card class="table-container">
+
+                <etools-data-table-header id="listHeader" no-title>
+                    <etools-data-table-column class="w130px">
+                        Reference No.
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-1">
+                        Primary FM
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w130px" field="start_date" sortable>
+                        Start Date
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-2" field="location__name,location_site__name" sortable>
+                        Location & Site
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w130px" field="status" sortable>
+                        Status
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w60px layout center-center" field="tasks__count" sortable>
+                        Tasks
+                    </etools-data-table-column>
+                </etools-data-table-header>
+
+                <template is="dom-repeat" items="[[visits]]">
+                    <etools-data-table-row secondary-bg-on-hover>
+                        <div slot="row-data" class="layout horizontal editable-row">
+
+                            <div class="col-data w130px">
+                                <div class="truncate"><a href$="/fm/visit-and-data-collection/visit-details/[[item.id]]/details">[[item.reference_number]]</a></div>
+                            </div>
+
+                            <div class="col-data flex-1">
+                                <div class="truncate">[[item.primary_field_monitor.name]]</div>
+                            </div>
+
+                            <div class="col-data w130px">
+                                <div class="truncate">[[getFormattedDate(item.start_date)]]</div>
+                            </div>
+
+                            <div class="col-data flex-2">
+                                <div class="truncate">
+                                    <b>[[getLocationPart(item.location.name, 'name')]]</b>
+                                    <span class="location-code">[[getLocationPart(item.location.name, 'code')]]</span>
+                                    <i>[[item.location_site.name]]</i>
+                                </div>
+                            </div>
+
+                            <div class="col-data w130px status-data">
+                                [[item.status]]
+                            </div>
+
+                            <div class="col-data w60px layout center-center">
+                                [[item.tasks.length]]
+                            </div>
+
+                        </div>
+
+                        <div slot="row-data-details">
+                            <div class="details-header layout horizontal">
+                                <div class="w60px">Task</div>
+                                <div class="flex-1 cp-output-name">Cp Output To Be Monitored</div>
+                                <div class="flex-3">Partners Covered</div>
+                            </div>
+                            <template is="dom-repeat" items="[[item.tasks]]" as="task">
+                                <div class="task-line layout horizontal">
+                                    <div class="w60px">[[getIndex(index)]]</div>
+                                    <div class="flex-1 truncate cp-output-name">[[task.cp_output_config.cp_output.name]]</div>
+                                    <div class="flex-3"><a href$="[[task.partner.url]]" target="_blank">[[task.partner.name]]</a></div>
+                                </div>
+                            </template>
+                        </div>
+                    </etools-data-table-row>
+
+                </template>
+
+                <template is="dom-if" if="[[!visits.length]]">
+                    <etools-data-table-row no-collapse>
+                        <div slot="row-data" class="layout horizontal">
+                            <div class="col-data flex-1">-</div>
+                            <div class="col-data flex-1">-</div>
+                            <div class="col-data flex-1">-</div>
+                            <div class="col-data w300px">-</div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+
+                <etools-data-table-footer
+                        page-size="[[queryParams.page_size]]"
+                        page-number="[[queryParams.page]]"
+                        total-results="[[count]]"
+                        visible-range="{{visibleRange}}"
+                        on-page-size-changed="pageSizeSelected"
+                        on-page-number-changed="pageNumberChanged">
+                </etools-data-table-footer>
+            </paper-card>
+        </div>
+
     </template>
 
     <!-- inject scripts './visits-list.ts'-->

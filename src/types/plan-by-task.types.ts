@@ -1,4 +1,5 @@
-type PlaningTask = {
+// tslint:disable-next-line
+interface PlaningTask {
     cp_output_config: CpOutputConfig;
     id: number;
     intervention: Intervention;
@@ -6,4 +7,4 @@ type PlaningTask = {
     location_site: Site;
     partner: Partner;
     plan_by_month: number[];
-};
+}

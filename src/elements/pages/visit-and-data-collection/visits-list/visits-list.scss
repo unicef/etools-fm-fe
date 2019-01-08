@@ -1,0 +1,52 @@
+:host {
+    position: relative;
+    display: block;
+
+    .filters-container {
+        margin-bottom: 25px;
+    }
+
+    .content {
+        position: relative;
+        width: 100%;
+        padding: 25px;
+        box-sizing: border-box;
+
+        paper-card { width: 100%; }
+    }
+
+    etools-data-table-row {
+        --list-row-wrapper-padding: 0;
+    }
+
+    .details-header {
+        font-size: 12px;
+        color: #757575;
+        font-weight: bold;
+    }
+
+    .task-line {
+        border-bottom: 1px solid var(--gray-lighter);
+        line-height: 25px;
+
+        &:last-child { border-bottom: none; }
+
+        .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .cp-output-name { margin-right: 10px; }
+
+    .status-data { text-transform: capitalize; }
+
+    a {
+        color: var(--module-primary);
+        font-weight: 500;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+}
