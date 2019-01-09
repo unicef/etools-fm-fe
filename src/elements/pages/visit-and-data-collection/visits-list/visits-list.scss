@@ -3,7 +3,10 @@
     display: block;
 
     .filters-container {
+        position: relative;
+        min-height: 67px;
         margin-bottom: 25px;
+        padding-right: 11px;
     }
 
     .content {
@@ -26,10 +29,10 @@
     }
 
     .task-line {
-        border-bottom: 1px solid var(--gray-lighter);
+        border-top: 1px solid var(--gray-lighter);
         line-height: 25px;
 
-        &:last-child { border-bottom: none; }
+        &:first-child { border-top: none; }
 
         .truncate {
             white-space: nowrap;
@@ -48,5 +51,21 @@
         font-weight: 500;
         cursor: pointer;
         text-transform: uppercase;
+    }
+
+    .fixed-controls {
+        height: 100%;
+
+        .divider {
+            height: 45px;
+            border-left: 1px solid var(--gray-lighter);
+        }
+
+        paper-button { color: var(--module-primary); }
+        paper-listbox { white-space: nowrap; }
+    }
+
+    .empty-row {
+        padding: 0 24px;
     }
 }

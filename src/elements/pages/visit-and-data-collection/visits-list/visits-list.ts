@@ -1,4 +1,7 @@
 import { loadVisitsList } from '../../../redux-store/effects/visits.effects';
+import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
+import { getEndpoint } from '../../../app-config/app-config';
+import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
 type Filter = {
     name: string;
     query: string;
@@ -7,7 +10,8 @@ type Filter = {
 class VisitsList extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.RouteHelperMixin,
-    FMMixins.ReduxMixin], Polymer.Element) {
+    FMMixins.ReduxMixin,
+    FMMixins.ProcessDataMixin], Polymer.Element) {
     public static get is() { return 'visits-list'; }
 
     public static get properties() {
@@ -17,13 +21,40 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
                 type: Object,
                 value: () => [{
                     name: 'CP Output',
-                    query: 'tasks__cp_output_config'
+                    query: 'tasks__cp_output_config__in',
+                    optionsKey: 'cpOutputsFilter',
+                    label: 'name',
+                    value: 'id'
                 }, {
                     name: 'Partner',
-                    query: 'tasks__partner'
+                    query: 'tasks__partner__in',
+                    optionsKey: 'partnersFilter',
+                    label: 'name',
+                    value: 'id'
                 }, {
-                    name: 'Intervention',
-                    query: 'tasks__intervention'
+                    name: 'Location',
+                    query: 'location__in',
+                    optionsKey: 'locationsFilter',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Status',
+                    query: 'status__in',
+                    optionsKey: 'statusFilter',
+                    label: 'display_name',
+                    value: 'value'
+                }, {
+                    name: 'Team Member',
+                    query: 'team_members__in',
+                    optionsKey: 'teamMembersFilter',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Site',
+                    query: 'location_site__in',
+                    optionsKey: 'sitesFilter',
+                    label: 'name',
+                    value: 'id'
                 }]
             }
         };
@@ -34,11 +65,42 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
 
         this.addEventListener('sort-changed', this.sort);
 
+        const endpoint = getEndpoint('visits');
+        this.dispatchOnStore(loadPermissions(endpoint.url, 'visits'));
+        this.updateFiltersData();
+
         this.visitsListaSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['visitsData', 'list'], store),
             (visits: IListData<Visit>) => {
                 this.visits = visits.results || [];
                 this.count = visits.count;
+            });
+
+        this.filterLocationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'visitLocationsFilter'], store),
+            (locations: Location[]) => { this.locationsFilter = locations; });
+
+        this.filterTeamMembersSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'visitTeamMembersFilter'], store),
+            (teamMembers: IPrimaryFieldMonitor[]) => { this.teamMembersFilter = teamMembers; });
+
+        this.filterPartnersSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'visitPartnersFilter'], store),
+            (partners: Partner[]) => { this.partnersFilter = partners; });
+
+        this.filterCpOutputsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'visitCpOutputsFilter'], store),
+            (cpOutputs: CpOutput[]) => { this.cpOutputsFilter = cpOutputs; });
+
+        this.filterSitesSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'visitSitesFilter'], store),
+            (sites: Site[]) => { this.sitesFilter = sites; });
+
+        this.permissionsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['permissions', 'visits'], store),
+            (permissions: IPermissionActions | undefined) =>  {
+                this.permissions = permissions;
+                this.statusFilter = permissions && this.getDescriptorChoices(permissions, 'status');
             });
     }
 
@@ -48,7 +110,7 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
             page_size: 10,
             tasks__cp_output_config__in: [],
             tasks__partner__in: [],
-            tasks__intervention__in: [],
+            team_members__in: [],
             location__in: [],
             location_site__in: [],
             status__in: []
@@ -101,22 +163,57 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
     public filterValueChanged({ detail, target }: CustomEvent) {
         const { selectedItems } = detail;
         const property = R.path(['dataset', 'property'], target);
+        const optionsKey = R.path(['dataset', 'optionsKey'], target);
+        if (!this[optionsKey]) { return; }
         if (!property) { throw new Error('Filter must contain data property attribute'); }
 
         if (selectedItems) {
-            const values = selectedItems.map((item: any) => item.id);
+            const values = selectedItems.map((item: any) => item.id || item.value);
             this.updateQueryParams({page: 1, [property]: values});
+            if (values.length) { this.toggleFilter(property, true); }
         } else {
             this.updateQueryParams({page: 1, [property]: []});
         }
         this.startLoad();
     }
 
-    public selectFilter({ model }: EventModel<Filter>) {
+    public onFilterSelect({ model }: EventModel<Filter>) {
         const { item } = model;
-        const index = this.listFilterOptions.findIndex((filter: Filter) => filter.query === item.query);
+        this.toggleFilter(item.query);
+    }
+
+    public toggleFilter(filterQuery: string, state?: boolean) {
+        const index = this.listFilterOptions.findIndex((filter: Filter) => filter.query === filterQuery);
+        if (index === -1) { return; }
+
         const currentState = this.get(`listFilterOptions.${index}.selected`);
-        this.set(`listFilterOptions.${index}.selected`, !currentState);
+        const newState = R.is(Boolean, state) ? state : !currentState;
+        if (currentState !== newState) {
+            this.set(`listFilterOptions.${index}.selected`, newState);
+        }
+        if (!newState && this.queryParams[filterQuery] && this.queryParams[filterQuery].length) {
+            this.updateQueryParams({page: 1, [filterQuery]: []});
+        }
+    }
+
+    public getOptions(collectionName: string) {
+        return this[collectionName] || [];
+    }
+
+    public simplifyValue(queryName: string) {
+        return this._simplifyValue(this.queryParams && this.queryParams[queryName]);
+    }
+
+    public getTeamMembers(teamMembers: TeamMember[]) {
+        return teamMembers.map((member: TeamMember) => member.name).join(', ');
+    }
+
+    private updateFiltersData() {
+        this.dispatchOnStore(loadStaticData('visitLocationsFilter', null, true));
+        this.dispatchOnStore(loadStaticData('visitTeamMembersFilter', null, true));
+        this.dispatchOnStore(loadStaticData('visitPartnersFilter', null, true));
+        this.dispatchOnStore(loadStaticData('visitCpOutputsFilter', null, true));
+        this.dispatchOnStore(loadStaticData('visitSitesFilter', null, true));
     }
 
 }

@@ -3,7 +3,7 @@ type Visit = {
     id: number;
     location: ISiteParrentLocation
     location_site: Site
-    primary_field_monitor: PrimaryFieldMonitor;
+    primary_field_monitor: IPrimaryFieldMonitor;
     reference_number: string;
     start_date: string;
     status: string;
@@ -16,10 +16,12 @@ interface IVisitTask extends PlaningTask {
     completed_by_month: number[];
 }
 
-type PrimaryFieldMonitor = {
+interface IPrimaryFieldMonitor {
     id: number;
     name: string;
     last_name: string;
     first_name: string;
     middle_name: string;
-};
+}
+
+type TeamMember = IPrimaryFieldMonitor;
