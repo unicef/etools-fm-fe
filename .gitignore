@@ -6,5 +6,5 @@ dist/
 .idea
 *.sublime-project
 *.sublime-workspace
-src/*.js
+src/**/*.js
 
