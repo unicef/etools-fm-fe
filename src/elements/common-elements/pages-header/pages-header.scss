@@ -36,6 +36,7 @@
         display: flex;
         padding-left: 35px;
     }
+    .tabs-container[hidden] { display: none; }
     //paper-menu.mw-150  {
     //    min-width: 150px;
     //    white-space: nowrap;

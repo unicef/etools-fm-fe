@@ -1,0 +1,21 @@
+<!--import [polymer/polymer-element]-->
+<!--import [visits-list, visit-details]-->
+
+<dom-module id="visit-and-data-collection">
+    <template>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:section"
+                data="{{routeData}}"
+                tail="{{subRoute}}">
+        </app-route>
+
+        <iron-pages selected="[[routeData.section]]" attr-for-selected="name">
+            <visits-list name="visits-list" id="visits-list" route="{{route}}"></visits-list>
+            <visit-details name="visit-details" id="visit-details" route="{{subRoute}}"></visit-details>
+        </iron-pages>
+    </template>
+
+    <!-- inject scripts './visit-and-data-collection.ts'-->
+</dom-module>
