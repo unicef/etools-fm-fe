@@ -1,4 +1,4 @@
-import { loadVisitsList } from '../../../redux-store/effects/visits.effects';
+import { loadPlanedTotal, loadVisitsList, loadVisitsTotalInfo } from '../../../redux-store/effects/visits.effects';
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 import { getEndpoint } from '../../../app-config/app-config';
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
@@ -68,6 +68,8 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
         const endpoint = getEndpoint('visits');
         this.dispatchOnStore(loadPermissions(endpoint.url, 'visits'));
         this.updateFiltersData();
+        this.dispatchOnStore(loadVisitsTotalInfo());
+        this.dispatchOnStore(loadPlanedTotal());
 
         this.visitsListaSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['visitsData', 'list'], store),
@@ -75,6 +77,14 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
                 this.visits = visits.results || [];
                 this.count = visits.count;
             });
+
+        this.visitsTotalSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['visitsData', 'totalInfo'], store),
+            (totalInfo: VisitsTotalPlanned) => this.visitsTotalInfo = totalInfo);
+
+        this.plannedTotalSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['visitsData', 'totalInfoPlanned'], store),
+            (totalInfo: PlannedTotal) => this.plannedTotalInfo = totalInfo);
 
         this.filterLocationsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['staticData', 'visitLocationsFilter'], store),

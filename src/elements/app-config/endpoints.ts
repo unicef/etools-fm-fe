@@ -139,6 +139,10 @@ export const endpoints: Endpoints = {
         url: '/api/v1/field-monitoring/visits/visits/'
     },
 
+    visitsTotalInfo: {
+        url: '/api/v1/field-monitoring/visits/visits/totals/'
+    },
+
     visitPartnersFilter: {
         url: '/api/v1/field-monitoring/visits/visits/partners/?page_size=all'
     },

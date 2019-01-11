@@ -8,7 +8,7 @@
         <style include="main-page-styles"></style>
 
         <app-route route="{{route}}" pattern="/:id/:tab" data="{{routeData}}"></app-route>
-        <pages-header title="Settings" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
+        <pages-header title="Visit details tab" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
         details section for [[routeData.id]]; tab - [[routeData.tab]]
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
 

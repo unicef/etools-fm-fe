@@ -14,6 +14,12 @@
         <pages-header title="Visits & Data Collection"></pages-header>
 
         <div class="content">
+
+            <div class="total-info" hidden$="[[!visitsTotalInfo]]">
+                total of <span class="count">[[visitsTotalInfo.visits]] site visits</span> covering <span class="count">[[visitsTotalInfo.outputs]] outputs</span> in <span class="count">[[visitsTotalInfo.sites]] sites</span>
+                <span class="details" hidden$="[[!plannedTotalInfo]]">(out of [[plannedTotalInfo.cp_outputs]] outputs in [[plannedTotalInfo.sites]] sites in planning)</span>
+            </div>
+
             <paper-card class="filters-container layout horizontal center">
                 <div class="layout horizontal wrap flex-auto">
 

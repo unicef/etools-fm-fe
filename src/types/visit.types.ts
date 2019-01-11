@@ -25,3 +25,15 @@ interface IPrimaryFieldMonitor {
 }
 
 type TeamMember = IPrimaryFieldMonitor;
+
+type VisitsTotalPlanned = {
+    outputs: number;
+    sites: number;
+    visits: number;
+};
+
+type PlannedTotal = {
+    cp_outputs: number;
+    sites: number;
+    tasks: number;
+};
