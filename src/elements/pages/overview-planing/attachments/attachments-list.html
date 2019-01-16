@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-data flex-4 truncate file-link">
                         <iron-icon icon="icons:attachment"></iron-icon>
-                        <a class="file-link" href$="[[item.file]]">[[item.filename]]</a>
+                        <a class="file-link" target="_blank" href$="[[item.file]]">[[item.filename]]</a>
                     </div>
                     <template is="dom-if" if="[[isAllowEdit(permissions)]]">
                         <div class="hover-block">
