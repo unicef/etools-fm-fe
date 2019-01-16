@@ -1,4 +1,4 @@
-<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, process-data-mixin, tab-inputs-styles]-->
+<!--import [polymer/polymer-element, etools-dialog, paper-toggle-button, paper-checkbox, process-data-mixin, tab-inputs-styles]-->
 
 <dom-module id="cp-outputs-tab">
     <template>
@@ -169,15 +169,15 @@
             <div class="container layout vertical">
                 <div class="layout horizontal">
                     <div class="toggle-button-control">
-                        <paper-toggle-button
+                        <paper-checkbox
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_monitored')]]"
-                                checked="{{selectedModel.fm_config.is_monitored}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_monitored}}"></paper-checkbox>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_monitored')]]</span>
                     </div>
                     <div class="toggle-button-control">
-                        <paper-toggle-button
+                        <paper-checkbox
                                 disabled$="[[getReadonlyStatus(permissionsDetails, 'fm_config.is_priority')]]"
-                                checked="{{selectedModel.fm_config.is_priority}}"></paper-toggle-button>
+                                checked="{{selectedModel.fm_config.is_priority}}"></paper-checkbox>
                         <span>[[getDescriptorLabel(permissionsDetails, 'fm_config.is_priority')]]</span>
                     </div>
                 </div>
