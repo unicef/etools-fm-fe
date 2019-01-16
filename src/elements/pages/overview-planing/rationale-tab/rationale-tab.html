@@ -21,6 +21,7 @@
                         Last editeb by [[yearPlan.history.0.by_user_display]] on [[getChangesDate(yearPlan.history.0.created)]]
                     </div>
                     <paper-icon-button
+                            hidden$="[[isReadonlyCollection(permissions)]]"
                             on-tap="openEditDialog"
                             class="panel-button"
                             data-type="edit"

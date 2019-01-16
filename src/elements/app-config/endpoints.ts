@@ -157,5 +157,37 @@ export const endpoints: Endpoints = {
 
     interventionLocations: {
         template: '/api/v1/field-monitoring/settings/interventions/<%=interventionId%>/locations/?page_size=all'
+    },
+
+    fullReport: {
+        template: '/api/reports/results/<%=id%>/full/'
+    },
+
+    visits: {
+        url: '/api/v1/field-monitoring/visits/visits/'
+    },
+
+    visitsTotalInfo: {
+        url: '/api/v1/field-monitoring/visits/visits/totals/'
+    },
+
+    visitPartnersFilter: {
+        url: '/api/v1/field-monitoring/visits/visits/partners/?page_size=all'
+    },
+
+    visitCpOutputsFilter: {
+        url: '/api/v1/field-monitoring/visits/visits/cp-outputs/configs/?page_size=all'
+    },
+
+    visitLocationsFilter: {
+        url: '/api/v1/field-monitoring/visits/visits/locations/?page_size=all'
+    },
+
+    visitTeamMembersFilter: {
+        url: '/api/v1/field-monitoring/visits/visits/team-members/?page_size=all'
+    },
+
+    visitSitesFilter: {
+        url: '/api/v1/field-monitoring/visits/visits/locations/sites?page_size=all'
     }
 };

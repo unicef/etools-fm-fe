@@ -13,6 +13,7 @@
             <div class="table-title">[[permissions.title]]</div>
             <div class="buttons-container">
                 <paper-icon-button
+                        hidden$="[[isReadonlyCollection(permissions)]]"
                         on-tap="openUploadAttachment"
                         class="panel-button"
                         data-type="add"

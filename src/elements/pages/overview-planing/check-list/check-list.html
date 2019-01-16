@@ -55,7 +55,9 @@
                     <div class="table-title layout horizontal">
                         <div class="cp-output-name layout center flex-2">
                             [[cpOutputConfig.cp_output.name]]
-                            <div class="cp-output-find"><iron-icon icon="icons:search"></iron-icon></div>
+                            <div class="cp-output-find">
+                                <a href$="/fm/overview-planing/co-overview?cp_outcome=[[queryParams.cp_outcome]]&cp_output=[[queryParams.cp_output]]" target="_blank"><iron-icon icon="icons:search"></iron-icon></a>
+                            </div>
                         </div>
                         <div class="flex-3 config-info-title layout vertical">
                             <template is="dom-repeat" items="[[methodTypes]]">
@@ -68,6 +70,7 @@
                     </div>
                     <div class="buttons-container">
                         <paper-icon-button
+                                hidden$="[[isReadonlyCollection(permissionsConfigs)]]"
                                 on-tap="openEditConfig"
                                 class="panel-button"
                                 data-type="edit"
@@ -149,7 +152,7 @@
                                 </template>
                             </div>
 
-                            <div class="hover-block">
+                            <div class="hover-block" hidden$="[[isReadonlyCollection(permissionsConfigsItems)]]">
                                 <iron-icon icon="icons:create" on-click="openChecklistItem"></iron-icon>
                             </div>
                         </div>
@@ -200,10 +203,11 @@
                 opened="{{dialogItem.opened}}"
                 ok-btn-text="Save"
                 dialog-title="[[dialogItem.title]]"
+                hide-confirm-btn="[[isReadonlyCollection(permissionsConfigsItems)]]"
                 on-confirm-btn-clicked="onFinishItem">
             <div class="content-box">
                 <div class="layout vertical">
-                    <div class="container text-inform">Changing any fields below will be applied to visits in future that have not finalized their checklist.</div>
+                    <div class="container text-inform" hidden$="[[isReadonlyCollection(permissionsConfigsItems)]]">Changing any fields below will be applied to visits in future that have not finalized their checklist.</div>
                     <div class="container recommend-methods">
                         <label>Recommend data collection methods:</label>
                         <div class="methods-list">
@@ -211,16 +215,16 @@
                                 <div class="method-item">
                                     <div class="method-name">[[item.name]]</div>
                                     <paper-checkbox checked="[[isSelectedPlanedMethod(selectedPlanedItem, item.id)]]"
-                                                    on-change="selectChecklistMethod"></paper-checkbox>
+                                                    on-change="selectChecklistMethod" disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]"></paper-checkbox>
                                 </div>
                             </template>
                         </div>
                     </div>
                     <div class="container layout vertical">
                         <label>Specify details to probe:</label>
-                        <paper-radio-group selected="{{typePartnersInfo}}" on-selected-changed="changeTypeInfo">
-                            <paper-radio-button name="all">For all partnerships</paper-radio-button>
-                            <paper-radio-button name="each">By each partnership</paper-radio-button>
+                        <paper-radio-group selected="{{typePartnersInfo}}" on-selected-changed="changeTypeInfo" disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]">
+                            <paper-radio-button name="all" disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]">For all partnerships</paper-radio-button>
+                            <paper-radio-button name="each" disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]">By each partnership</paper-radio-button>
                         </paper-radio-group>
                         <template is="dom-if" if="[[isPartnerInfoType(typePartnersInfo, 'all')]]">
                             <paper-textarea
@@ -248,13 +252,17 @@
                                         value="{{item.specific_details}}"
                                         label="Specify Details To Probe"
                                         always-float-label
-                                        max-rows="3">
+                                        max-rows="3"
+                                        disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]"
+                                        readonly$="[[isReadonlyCollection(permissionsConfigsItems)]]">
                                 </paper-textarea>
                                 <paper-input
                                         class="validate-input disabled-as-readonly"
                                         value="{{item.standard_url}}"
                                         always-float-label
-                                        label="URL to Standard">
+                                        label="URL to Standard"
+                                        disabled$="[[isReadonlyCollection(permissionsConfigsItems)]]"
+                                        readonly$="[[isReadonlyCollection(permissionsConfigsItems)]]">
                                 </paper-input>
                             </template>
                         </template>

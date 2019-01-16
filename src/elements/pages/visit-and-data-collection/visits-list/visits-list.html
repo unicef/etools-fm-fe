@@ -1,0 +1,183 @@
+<!--import [polymer/polymer-element, paper-card, etools-data-table, paper-menu-button, iron-icons, paper-listbox, etools-dropdown/etools-dropdown-multi]-->
+
+<!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, route-helper-mixin,
+            pages-header, redux-mixin, etools-app-config, main-page-styles, process-data-mixin]-->
+
+<dom-module id="visits-list">
+    <template>
+        <!-- inject styles './visits-list.scss'-->
+        <style include="main-page-styles shared-styles module-styles tab-inputs-styles iron-flex table-styles iron-flex-factors iron-flex-alignment"></style>
+
+        <app-route route="{{route}}" pattern="/visits-list" active="{{isActive}}">
+        </app-route>
+
+        <pages-header title="Visits & Data Collection"></pages-header>
+
+        <div class="content">
+
+            <div class="total-info" hidden$="[[!visitsTotalInfo]]">
+                total of <span class="count">[[visitsTotalInfo.visits]] site visits</span> covering <span class="count">[[visitsTotalInfo.outputs]] outputs</span> in <span class="count">[[visitsTotalInfo.sites]] sites</span>
+                <span class="details" hidden$="[[!plannedTotalInfo]]">(out of [[plannedTotalInfo.cp_outputs]] outputs in [[plannedTotalInfo.sites]] sites in planning)</span>
+            </div>
+
+            <paper-card class="filters-container layout horizontal center">
+                <div class="layout horizontal wrap flex-auto">
+
+
+                    <template is="dom-repeat" items="[[listFilterOptions]]">
+
+                        <div class="filter-dropdown" hidden$="[[!item.selected]]">
+                            <etools-dropdown-multi
+                                    selected-values="[[simplifyValue(item.query, queryParams.tasks__partner__in, queryParams.location__in, queryParams.location_site__in, queryParams.tasks__cp_output_config__in, queryParams.status__in, queryParams.team_members__in)]]"
+                                    label="[[item.name]]"
+                                    placeholder="Select"
+                                    options="[[getOptions(item.optionsKey, cpOutputsFilter, partnersFilter, locationsFilter, statusFilter, sitesFilter, teamMembersFilter)]]"
+                                    option-label="[[item.label]]"
+                                    option-value="[[item.value]]"
+                                    trigger-value-change-event
+                                    on-etools-selected-items-changed="filterValueChanged"
+                                    allow-outside-scroll
+                                    data-property$="[[item.query]]"
+                                    data-options-key$="[[item.optionsKey]]"
+                                    min-width$="[[item.minWidth]]"
+                                    horizontal-align="left"
+                                    no-dynamic-align>
+                            </etools-dropdown-multi>
+                        </div>
+
+                    </template>
+                </div>
+
+                <div class="fixed-controls layout horizontal center-center">
+                    <div class="divider"></div>
+                    <paper-menu-button id="filterMenu" ignore-select horizontal-align="right">
+                        <paper-button class="button" slot="dropdown-trigger">
+                            <iron-icon icon="filter-list"></iron-icon>
+                            Filters
+                        </paper-button>
+                        <paper-listbox slot="dropdown-content" multi>
+                            <template is="dom-repeat" items="[[listFilterOptions]]">
+                                <paper-icon-item on-tap="onFilterSelect" selected$="[[item.selected]]">
+                                    <iron-icon icon="check" slot="item-icon" hidden$="[[!item.selected]]"></iron-icon>
+                                    <paper-item-body>[[item.name]]</paper-item-body>
+                                </paper-icon-item>
+                            </template>
+                        </paper-listbox>
+                    </paper-menu-button>
+                </div>
+
+            </paper-card>
+
+            <paper-card class="table-container">
+
+                <etools-data-table-header id="listHeader" no-title no-collapse="[[!visits.length]]">
+                    <etools-data-table-column class="w130px">
+                        Reference No.
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-1">
+                        Primary FM
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w130px" field="start_date" sortable>
+                        Start Date
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-2" field="location__name,location_site__name" sortable>
+                        Location & Site
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w130px" field="status" sortable>
+                        Status
+                    </etools-data-table-column>
+                    <etools-data-table-column class="flex-1">
+                        Team Members
+                    </etools-data-table-column>
+                    <etools-data-table-column class="w60px layout center-center" field="tasks__count" sortable>
+                        Tasks
+                    </etools-data-table-column>
+                </etools-data-table-header>
+
+                <template is="dom-repeat" items="[[visits]]">
+                    <etools-data-table-row secondary-bg-on-hover>
+                        <div slot="row-data" class="layout horizontal editable-row">
+
+                            <div class="col-data w130px">
+                                <div class="truncate"><a href$="/fm/visit-and-data-collection/visit-details/[[item.id]]/details">[[item.reference_number]]</a></div>
+                            </div>
+
+                            <div class="col-data flex-1">
+                                <div class="truncate">[[item.primary_field_monitor.name]]</div>
+                            </div>
+
+                            <div class="col-data w130px">
+                                <div class="truncate">[[getFormattedDate(item.start_date)]]</div>
+                            </div>
+
+                            <div class="col-data flex-2">
+                                <div class="truncate">
+                                    <b>[[getLocationPart(item.location.name, 'name')]]</b>
+                                    <span class="location-code">[[getLocationPart(item.location.name, 'code')]]</span>
+                                    <i>[[item.location_site.name]]</i>
+                                </div>
+                            </div>
+
+                            <div class="col-data w130px status-data">
+                                [[item.status]]
+                            </div>
+
+                            <div class="col-data flex-1">
+                                [[getTeamMembers(item.team_members)]]
+                            </div>
+
+                            <div class="col-data w60px layout center-center">
+                                [[item.tasks.length]]
+                            </div>
+
+                        </div>
+
+                        <div slot="row-data-details">
+                            <div class="details-header layout horizontal">
+                                <div class="w60px">Task</div>
+                                <div class="flex-1 cp-output-name">Cp Output To Be Monitored</div>
+                                <div class="flex-3">Partners Covered</div>
+                            </div>
+                            <div>
+                                <template is="dom-repeat" items="[[item.tasks]]" as="task">
+                                    <div class="task-line layout horizontal">
+                                        <div class="w60px">[[getIndex(index)]]</div>
+                                        <div class="flex-1 truncate cp-output-name">[[task.cp_output_config.cp_output.name]]</div>
+                                        <div class="flex-3"><a href$="[[task.partner.url]]" target="_blank">[[task.partner.name]]</a></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </etools-data-table-row>
+
+                </template>
+
+                <template is="dom-if" if="[[!visits.length]]">
+                    <etools-data-table-row no-collapse>
+                        <div slot="row-data" class="layout horizontal empty-row">
+                            <div class="col-data w130px">-</div>
+                            <div class="col-data flex-1">-</div>
+                            <div class="col-data w130px">-</div>
+                            <div class="col-data flex-2">-</div>
+                            <div class="col-data w130px">-</div>
+                            <div class="col-data flex-1">-</div>
+                            <div class="col-data w60px layout center-center">-</div>
+                        </div>
+                    </etools-data-table-row>
+                </template>
+
+                <etools-data-table-footer
+                        page-size="[[queryParams.page_size]]"
+                        page-number="[[queryParams.page]]"
+                        total-results="[[count]]"
+                        visible-range="{{visibleRange}}"
+                        on-page-size-changed="pageSizeSelected"
+                        on-page-number-changed="pageNumberChanged">
+                </etools-data-table-footer>
+            </paper-card>
+        </div>
+
+    </template>
+
+    <!-- inject scripts './visits-list.ts'-->
+</dom-module>
