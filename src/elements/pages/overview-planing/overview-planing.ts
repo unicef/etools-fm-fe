@@ -115,6 +115,10 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         const params = this.getQueryString() || '';
         window.open(url + params, '_blank');
     }
+
+    public printPage() {
+        window.print();
+    }
 }
 
 customElements.define(OverviewPlaning.is, OverviewPlaning);
