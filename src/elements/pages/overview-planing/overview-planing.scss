@@ -49,3 +49,25 @@
         padding-right: 15px;
     }
 }
+
+@media print {
+    paper-button {
+        display: none;
+    }
+
+    .year-info {
+        .text {
+            font-size: 8px;
+            font-weight: 100;
+            flex-wrap: nowrap;
+        }
+        .line {
+            display: flex;
+        }
+        .print-text {
+            display: flex;
+            flex: 1;
+            line-height: 1.3;
+        }
+    }
+}

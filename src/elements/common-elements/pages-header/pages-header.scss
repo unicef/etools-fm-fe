@@ -56,8 +56,13 @@
     //
     //paper-menu-button { padding: 0; }
 
-}
+    @media print {
+        .tabs-container {
+            display: none;
+        }
+    }
 
+}
 
 //.side-heading .grey-buttons {
 //    color: var(--gray-mid);
