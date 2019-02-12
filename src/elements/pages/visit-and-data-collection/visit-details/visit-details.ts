@@ -39,8 +39,26 @@ class VisitDetails extends EtoolsMixinFactory.combineMixins([
         // }
     }
 
+    public setSites() {
+        return R.clone(this.selectedSites);
+    }
+
     public connectedCallback() {
         super.connectedCallback();
+
+        this.sitesSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['specificLocations'], store),
+            (sites: IStatedListData<Site> | undefined) => {
+                if (!sites) { return; }
+                this.sites = sites.results || [];
+            });
+
+        this.locationsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'locations'], store),
+            (locations: Location[] | undefined) => {
+                if (!locations) { return; }
+                this.locations = locations;
+            });
     }
 }
 

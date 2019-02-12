@@ -9,7 +9,7 @@
 
         <div class="widget-container">
 
-            <div class="history">
+            <div class="history" hidden$="[[!history.length]]">
                 <template is="dom-repeat" items="[[history]]" as="location">
                     <paper-input
                             label="[[getHistoryInputLabel(location.gateway)]]"
@@ -57,7 +57,7 @@
                         </template>
 
                         <div hidden$="[[hideEmptySitesMessage(currentList, loadingInProcess, history.length)]]">
-                            There is no sites for this location. <br> You can add missing sites in Settings
+                            There is no sites for this location. <br> You can add missing sites in <a class="link" on-click="goToSettings">Settings</a>
                         </div>
 
                         <etools-loading active="[[loadingInProcess]]"></etools-loading>

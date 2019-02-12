@@ -2,6 +2,7 @@ import { loadLocationPath, loadWidgetLocations } from '../../redux-store/effects
 import { getLocationPart } from '../get-location-part';
 import { locationsInvert } from '../../pages/settings/sites-tab/locations-invert';
 import { loadSiteLocations } from '../../redux-store/effects/site-specific-locations.effects';
+import { properties} from './location-widget.properties';
 
 const POLYGON_OPTIONS = {color: '#eddaa3', stroke: false, fillOpacity: 0.8, pane: 'tilePane'};
 
@@ -12,47 +13,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
     public static get is() { return 'location-widget'; }
 
     public static get properties() {
-        return {
-            currentList: {
-                type: String,
-                value: 'level=0'
-            },
-            history: {
-                type: Array,
-                value: () => []
-            },
-            selectedLocation: {
-                type: String,
-                notify: true,
-                value: null
-            },
-            selectedSites: {
-                type: Array,
-                notify: true,
-                value: () => []
-            },
-            widgetLocations: {
-                type: Object,
-                value: () => ({})
-            },
-            locationSearch: {
-                type: String,
-                value: '',
-                observer: 'searchChanged'
-            },
-            listLoading: {
-                type: Boolean,
-                value: false
-            },
-            pathLoading: {
-                type: Boolean,
-                value: false
-            },
-            loadingInProcess: {
-                type: Boolean,
-                computed: 'checkLoading(listLoading, pathLoading, mapInitializationProcess)'
-            }
-        };
+        return properties;
     }
 
     public static get observers() {
@@ -177,19 +138,21 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
 
         this.removeStaticMarkers();
         this.selectedSites = [];
+        this.selectedLocation = null;
+        this.locationSearch = '';
 
         const currentLocation = this.history[index - 1];
         if (!currentLocation) {
+            //return to initial map state
             this.clearMap();
             this.setInitialMapView();
             this.selectPath('level=0');
-            this.selectedLocation = null;
         } else {
             this.selectLocation(currentLocation);
         }
-        this.locationSearch = '';
     }
 
+    //method to restore history if selectedLocation come outside component
     public restoreHistory(locationId: string | null, loading?: boolean) {
         if (!locationId || loading) { return; }
 
@@ -218,7 +181,9 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
             this.selectedSites = [];
             return;
         }
+
         if (!selectedSites.length || currentList !== `sites_for_${selectedLocation}`) { return; }
+
         const sitesList = this.widgetLocations[currentList] || [];
         const missingSites = selectedSites.filter(
             (siteId: number) => sitesList.findIndex((site: Site) => site.id === siteId) === -1
@@ -284,6 +249,11 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
 
     public getLocationPart(location: string = '', partToSelect: string) {
         return getLocationPart(location, partToSelect);
+    }
+
+    public goToSettings() {
+        history.pushState({}, '', '/fm/settings/sites');
+        window.dispatchEvent(new CustomEvent('location-changed'));
     }
 
     private centerAndDrawBorders(location: WidgetLocation) {

@@ -1,17 +1,59 @@
-<!--import [polymer/polymer-element]-->
+<!--import [polymer/polymer-element, paper-card, iron-flex-layout]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles, location-widget]-->
+<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles, location-widget, table-styles, tab-inputs-styles]-->
 
 <dom-module id="visit-details">
     <template>
         <!-- inject styles './visit-details.scss'-->
-        <style include="main-page-styles"></style>
+        <style include="main-page-styles table-styles tab-inputs-styles iron-flex"></style>
 
         <app-route route="{{route}}" pattern="/:id/:tab" data="{{routeData}}"></app-route>
         <pages-header title="Visit details tab" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
         <!--details section for [[routeData.id]]; tab - [[routeData.tab]]-->
 
-        <location-widget selected-location="692" selected-sites="[3, 4]"></location-widget>
+        <div class="container">
+            <paper-card>
+                <div class="layout horizontal location-inputs">
+                    <etools-dropdown
+                            class="without-border"
+                            selected="[[selectedLocation]]"
+                            label="Location"
+                            placeholder="Select Location in Widget"
+                            options="[[locations]]"
+                            option-label="name"
+                            option-value="id"
+                            readonly disabled
+                            min-width="470px">
+                    </etools-dropdown>
+
+
+                    <etools-dropdown-multi
+                            class="without-border"
+                            selected-values="[[setSites(selectedSites.length)]]"
+                            label="Sites"
+                            placeholder="Select Site in Widget"
+                            options="[[sites]]"
+                            option-label="name"
+                            option-value="id"
+                            readonly disabled
+                            min-width="470px">
+                    </etools-dropdown-multi>
+                </div>
+            </paper-card>
+
+            <paper-card class="table-container">
+
+                <div class="table-title-block with-bottom-line">
+                    <div class="table-title">Location Widget Example</div>
+                </div>
+
+                <div class="widget-container">
+                    <location-widget selected-location="{{selectedLocation}}" selected-sites="{{selectedSites}}"></location-widget>
+                </div>
+
+            </paper-card>
+        </div>
+
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
 
         </iron-pages>
