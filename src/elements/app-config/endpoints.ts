@@ -189,5 +189,13 @@ export const endpoints: Endpoints = {
 
     visitSitesFilter: {
         url: '/api/v1/field-monitoring/visits/visits/locations/sites?page_size=all'
+    },
+
+    widgetLocations: {
+        url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
+    },
+
+    widgetLocationPath: {
+        template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
     }
 };

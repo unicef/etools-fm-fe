@@ -31,10 +31,15 @@ type HTMLElementEvent<T extends HTMLElement> = Event & {
     target: T & {invalid: boolean};
 };
 type EventModel<T> = {
-    model: { [key: string]: T, parentModel: any };
+    model: Model<T>;
     target?: any;
     detail?: any;
 };
+
+type Model<T> = {
+    [key: string]: T;
+    parentModel: any;
+}
 
 type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';
 

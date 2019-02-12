@@ -18,6 +18,7 @@ import { planingTasks } from './reducers/plan-by-task.reducer';
 import { checklist } from './reducers/checklist.reducer';
 import { fullReport } from './reducers/co-overview.reducer';
 import { visitsData } from './reducers/visits.reducer';
+import { widgetLocationsStore } from './reducers/widget-locations.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -35,7 +36,8 @@ const red = redux.combineReducers({
     planingTasks,
     checklist,
     fullReport,
-    visitsData
+    visitsData,
+    widgetLocationsStore
 });
 export const store = redux.createStore(
     red,

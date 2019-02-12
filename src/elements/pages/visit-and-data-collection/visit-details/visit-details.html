@@ -1,6 +1,6 @@
 <!--import [polymer/polymer-element]-->
 
-<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles]-->
+<!--import [pages-header, redux-mixin, etools-app-config, main-page-styles, location-widget]-->
 
 <dom-module id="visit-details">
     <template>
@@ -9,7 +9,9 @@
 
         <app-route route="{{route}}" pattern="/:id/:tab" data="{{routeData}}"></app-route>
         <pages-header title="Visit details tab" tab="{{routeData.tab}}" tabs="[[tabs]]"></pages-header>
-        details section for [[routeData.id]]; tab - [[routeData.tab]]
+        <!--details section for [[routeData.id]]; tab - [[routeData.tab]]-->
+
+        <location-widget selected-location="692" selected-sites="[3, 4]"></location-widget>
         <iron-pages selected="[[routeData.tab]]" attr-for-selected="name">
 
         </iron-pages>

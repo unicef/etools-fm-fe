@@ -16,6 +16,7 @@ import { SetInterventionLocations, SetPartnerTasks } from '../../../redux-store/
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 import { AddNotification } from '../../../redux-store/actions/notification.actions';
 import { locationsInvert } from '../../settings/sites-tab/locations-invert';
+import { getLocationPart } from '../../../common-elements/get-location-part';
 
 class PlanByTask extends EtoolsMixinFactory.combineMixins([
     FMMixins.ProcessDataMixin,
@@ -412,15 +413,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public getLocationPart(location: string = '', partToSelect: string) {
-        const splittedLocation = location.match(/(.*)\s\[(.*)]/i) || [];
-        switch (partToSelect) {
-            case 'name':
-                return splittedLocation[1];
-            case 'code':
-                return `[${splittedLocation[2]}]`;
-            default:
-                return location;
-        }
+        return getLocationPart(location, partToSelect);
     }
 
     private clearEditedField(field: string, path: string = field) {

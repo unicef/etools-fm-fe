@@ -1,13 +1,15 @@
 import { Marker } from 'leaflet';
 
-const TILE_LAYER = 'http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+const TILE_LAYER = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+const TILE_LAYER_LABELS = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
 
 window.FMMixins = window.FMMixins || {};
 window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig(superClass) {
     public initMap(element: HTMLElement) {
         L.Icon.Default.imagePath = this.getAbsolutePath('images/');
         this.map = L.map(element);
-        L.tileLayer(TILE_LAYER).addTo(this.map);
+        L.tileLayer(TILE_LAYER, {pane: 'tilePane'}).addTo(this.map);
+        L.tileLayer(TILE_LAYER_LABELS, {pane: 'overlayPane'}).addTo(this.map);
         return this.map;
     }
 
@@ -15,14 +17,19 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
         this.removeStaticMarkers();
         const markers: Marker[] = [];
         R.forEach((data: MarkerDataObj) => {
-            const marker = L.marker(data.coords).addTo(this.map);
-            marker.staticData = data.staticData;
-            if (data.popup) {
-                marker.bindPopup(`<b>${data.popup}</b>`);
-            }
+            const marker = this.createMarker(data);
             markers.push(marker);
         }, markersData);
         this.staticMarkers = markers;
+    }
+
+    public addStaticMarker(markerData: MarkerDataObj) {
+        if (!this.staticMarkers) {
+            this.staticMarkers = [];
+        }
+        const marker = this.createMarker(markerData);
+        this.push('staticMarkers', marker);
+
     }
 
     public removeStaticMarkers() {
@@ -30,7 +37,26 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
             R.forEach((marker: Marker) => {
                 marker.removeFrom(this.map);
             }, this.staticMarkers);
+            this.staticMarkers = [];
         }
+    }
+
+    public removeStaticMarker(dataId: number) {
+        const index = this.staticMarkers.findIndex(({staticData}: any) => staticData && staticData.id === dataId);
+        if (~index) {
+            this.staticMarkers[index].removeFrom(this.map);
+            this.staticMarkers.splice(index, 1);
+        }
+    }
+
+    public markerExists(dataId: number) {
+        return !!(this.staticMarkers && ~this.staticMarkers.findIndex(({staticData}: any) => staticData && staticData.id === dataId));
+    }
+
+    public reCheckMarkers(dataIds: number[]) {
+        const markers = this.staticMarkers || [];
+        const markersForRemove = markers.filter(({staticData}: any) => staticData && !~dataIds.indexOf(staticData.id));
+        markersForRemove.forEach(({staticData}: any) => this.removeStaticMarker(staticData.id));
     }
 
     public addDynamicMarker(cordinates: [number, number]) {
@@ -53,5 +79,15 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
         if (this.dynamicMarker) {
             this.dynamicMarker.removeFrom(this.map);
         }
+    }
+
+    private createMarker(data: MarkerDataObj) {
+        const marker = L.marker(data.coords).addTo(this.map);
+        marker.staticData = data.staticData;
+        if (data.popup) {
+            marker.bindPopup(`<b>${data.popup}</b>`);
+        }
+
+        return marker;
     }
 };

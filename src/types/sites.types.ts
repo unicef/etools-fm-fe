@@ -28,8 +28,13 @@ type LocationGateway = {
 };
 
 type GeojsonPoint = {
-    coordinates: CoordinatesArray
+    coordinates: CoordinatesArray;
     type: 'Point';
+};
+
+type LocationGeometry = {
+    coordinates: [[CoordinatesArray[]]];
+    type: "MultiPolygon";
 };
 
 type CoordinatesArray = [number, number];
@@ -47,4 +52,14 @@ type Workspace = {
     point: GeojsonPoint;
     p_code: string;
     name: string;
+};
+
+type WidgetLocation = {
+    gateway: LocationGateway;
+    geom: LocationGeometry;
+    id: string;
+    is_leaf: boolean;
+    name: string;
+    p_code: string
+    point: GeojsonPoint;
 };

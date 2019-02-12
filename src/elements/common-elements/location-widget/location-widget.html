@@ -1,0 +1,75 @@
+<!--import [polymer/polymer-element, etools-loading, paper-input]-->
+
+<!--import [redux-mixin, etools-app-config, map-mixin]-->
+
+<dom-module id="location-widget">
+    <template>
+        <!-- inject styles './location-widget.scss'-->
+        <style include="main-page-styles map-styles"></style>
+
+        <div class="widget-container">
+
+            <div class="history">
+                <template is="dom-repeat" items="[[history]]" as="location">
+                    <paper-input
+                            label="[[getHistoryInputLabel(location.gateway)]]"
+                            value="[[getLocationPart(location.name, 'name')]]"
+                            readonly
+                            inline>
+                        <div hidden$="[[loadingInProcess]]" slot="suffix" on-tap="removeFromHistory"><span>&#10008;</span></div>
+                    </paper-input>
+                </template>
+            </div>
+
+            <div class="map-and-list">
+                <div id="map"></div>
+                <div class="list">
+                    <paper-input
+                            class="search-input"
+                            type="search"
+                            value="{{locationSearch}}"
+                            placeholder="Search"
+                            readonly="[[loadingInProcess]]"
+                            inline>
+                        <iron-icon icon="search" slot="prefix"></iron-icon>
+                    </paper-input>
+
+                    <div class="locations-list">
+                        <template is="dom-repeat" items="[[getListItems(currentList, loadingInProcess)]]" as="location" id="locationsList" filter="locationsFilter">
+                            <div hidden$="[[!location.geom]]" class="location-line" on-tap="onLocationLineClick">
+                                <div class="location-name">
+                                    <b>[[getLocationPart(location.name, 'name')]]</b>
+                                    <span class="location-code">[[getLocationPart(location.name, 'code')]]</span>
+                                </div>
+                                <div class="gateway-name">[[location.gateway.name]]</div>
+                                <div class="deselect-btn"><span>&#10008;</span></div>
+                            </div>
+
+                            <div hidden$="[[!showSiteLine(location.geom)]]"
+                                 class$="site-line [[getSiteLineClass(location.id, selectedSites.length)]]"
+                                 on-tap="onSiteLineClick" on-mouseenter="onSiteHoverStart" on-mouseleave="onSiteHoverEnd">
+                                <div class="location-name">
+                                    <b>[[location.name]]</b>
+                                </div>
+                                <div class="gateway-name">Site</div>
+                                <div class="deselect-btn"><span>&#10008;</span></div>
+                            </div>
+                        </template>
+
+                        <div hidden$="[[hideEmptySitesMessage(currentList, loadingInProcess, history.length)]]">
+                            There is no sites for this location. <br> You can add missing sites in Settings
+                        </div>
+
+                        <etools-loading active="[[loadingInProcess]]"></etools-loading>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        </iron-pages>
+    </template>
+
+    <!-- inject scripts './location-widget.ts'-->
+</dom-module>

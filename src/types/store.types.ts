@@ -7,10 +7,20 @@ type FMStore = {
     methods: IStatedListData<Method>;
     currentWorkspace: Workspace;
     specificLocations: IStatedListData<Site>;
+    widgetLocationsStore: WidgetLocationsStore;
 };
 
 type StaticData = {
     [dataName: string]: any[]
+};
+
+type WidgetLocationsStore = {
+    loading: boolean;
+    data: WidgetStoreData
+};
+
+type WidgetStoreData = {
+    [query: string]: WidgetLocation[];
 };
 
 type StoreSelectorFunction = (store: FMStore) => any;

@@ -2,6 +2,7 @@ import { loadPlanedTotal, loadVisitsList, loadVisitsTotalInfo } from '../../../r
 import { loadStaticData } from '../../../redux-store/effects/load-static-data.effect';
 import { getEndpoint } from '../../../app-config/app-config';
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
+import { getLocationPart } from '../../../common-elements/get-location-part';
 type Filter = {
     name: string;
     query: string;
@@ -135,15 +136,7 @@ class VisitsList extends EtoolsMixinFactory.combineMixins([
     }
 
     public getLocationPart(location: string = '', partToSelect: string) {
-        const splittedLocation = location.match(/(.*)\s\[(.*)]/i) || [];
-        switch (partToSelect) {
-            case 'name':
-                return splittedLocation[1];
-            case 'code':
-                return `[${splittedLocation[2]}]`;
-            default:
-                return location;
-        }
+        return getLocationPart(location, partToSelect);
     }
 
     public getIndex(index: number): number {
