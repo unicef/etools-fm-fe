@@ -1,3 +1,5 @@
+import { loadVisitDetails } from '../../../redux-store/effects/visit-details.effects';
+
 class VisitDetails extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.RouteHelperMixin,
@@ -37,6 +39,21 @@ class VisitDetails extends EtoolsMixinFactory.combineMixins([
         // if (!path.match(/[^\\/]/g)) {
         //     this.set('route.path', '/visits-list');
         // }
+        if (isNaN(+id)) {
+            this.debounceRedirect = Polymer.Debouncer.debounce(this.debounceRedirect,
+                Polymer.Async.timeOut.after(100), () =>
+                    this.dispatchEvent(new CustomEvent('404', {bubbles: true, composed: true})));
+        } else {
+            this.debounceLoading = Polymer.Debouncer.debounce(
+                this.debounceLoading, Polymer.Async.timeOut.after(100), () => {
+                    this.dispatchOnStore(loadVisitDetails(+id))
+                        .catch((error: Response) => {
+                            if (error.status === 404) {
+                                this.dispatchEvent(new CustomEvent('404', {bubbles: true, composed: true}));
+                            }
+                        });
+                });
+        }
     }
 
     public setSites() {

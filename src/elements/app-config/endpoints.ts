@@ -197,5 +197,9 @@ export const endpoints: Endpoints = {
 
     widgetLocationPath: {
         template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
+    },
+
+    visitDetails: {
+        template: '/api/v1/field-monitoring/visits/visits/<%=visitId%>'
     }
 };

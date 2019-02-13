@@ -2,7 +2,7 @@ import { loadLocationPath, loadWidgetLocations } from '../../redux-store/effects
 import { getLocationPart } from '../get-location-part';
 import { locationsInvert } from '../../pages/settings/sites-tab/locations-invert';
 import { loadSiteLocations } from '../../redux-store/effects/site-specific-locations.effects';
-import { properties} from './location-widget.properties';
+import { properties } from './location-widget.properties';
 
 const POLYGON_OPTIONS = {color: '#eddaa3', stroke: false, fillOpacity: 0.8, pane: 'tilePane'};
 
@@ -143,7 +143,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
 
         const currentLocation = this.history[index - 1];
         if (!currentLocation) {
-            //return to initial map state
+            // return to initial map state
             this.clearMap();
             this.setInitialMapView();
             this.selectPath('level=0');
@@ -152,7 +152,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    //method to restore history if selectedLocation come outside component
+    // method to restore history if selectedLocation come outside component
     public restoreHistory(locationId: string | null, loading?: boolean) {
         if (!locationId || loading) { return; }
 

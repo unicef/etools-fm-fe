@@ -50,7 +50,9 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
     }
 
     public markerExists(dataId: number) {
-        return !!(this.staticMarkers && ~this.staticMarkers.findIndex(({staticData}: any) => staticData && staticData.id === dataId));
+        return !!(this.staticMarkers && ~this.staticMarkers.findIndex(
+            ({staticData}: any) => staticData && staticData.id === dataId)
+        );
     }
 
     public reCheckMarkers(dataIds: number[]) {
@@ -79,6 +81,10 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
         if (this.dynamicMarker) {
             this.dynamicMarker.removeFrom(this.map);
         }
+    }
+
+    public invalidateSize() {
+        return this.map && this.map.invalidateSize();
     }
 
     private createMarker(data: MarkerDataObj) {
