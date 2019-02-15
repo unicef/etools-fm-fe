@@ -220,6 +220,23 @@
             .w310px { width: 310px; }
             .w330px { width: 330px; }
 
+
+            .widget-dropdown {
+                display: flex;
+                align-items: center;
+                padding: 14px 19px;
+                margin: 0 12px;
+                color: var(--module-primary);
+                background-color: var(--gray-06);
+                text-transform: uppercase;
+                font-weight: 500;
+                font-size: 16px;
+
+                span,
+                iron-icon.toggle-btn { cursor: pointer; }
+            }
+
+
             @media print {
                 paper-icon-button {
                     display: none;

@@ -42,7 +42,8 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
     }
 
     public removeStaticMarker(dataId: number) {
-        const index = this.staticMarkers.findIndex(({staticData}: any) => staticData && staticData.id === dataId);
+        const markers = this.staticMarkers || [];
+        const index = markers.findIndex(({staticData}: any) => staticData && staticData.id === dataId);
         if (~index) {
             this.staticMarkers[index].removeFrom(this.map);
             this.staticMarkers.splice(index, 1);
@@ -50,7 +51,9 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
     }
 
     public markerExists(dataId: number) {
-        return !!(this.staticMarkers && ~this.staticMarkers.findIndex(({staticData}: any) => staticData && staticData.id === dataId));
+        return !!(this.staticMarkers && ~this.staticMarkers.findIndex(
+            ({staticData}: any) => staticData && staticData.id === dataId)
+        );
     }
 
     public reCheckMarkers(dataIds: number[]) {
@@ -79,6 +82,10 @@ window.FMMixins.MapMixin = (superClass: any) => class extends FMMixins.AppConfig
         if (this.dynamicMarker) {
             this.dynamicMarker.removeFrom(this.map);
         }
+    }
+
+    public invalidateSize() {
+        return this.map && this.map.invalidateSize();
     }
 
     private createMarker(data: MarkerDataObj) {

@@ -19,6 +19,7 @@ import { checklist } from './reducers/checklist.reducer';
 import { fullReport } from './reducers/co-overview.reducer';
 import { visitsData } from './reducers/visits.reducer';
 import { widgetLocationsStore } from './reducers/widget-locations.reducer';
+import { visitDetails } from './reducers/visit-details.reducer';
 
 const red = redux.combineReducers({
     initialization,
@@ -37,7 +38,8 @@ const red = redux.combineReducers({
     checklist,
     fullReport,
     visitsData,
-    widgetLocationsStore
+    widgetLocationsStore,
+    visitDetails
 });
 export const store = redux.createStore(
     red,

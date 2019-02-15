@@ -12,10 +12,20 @@ export const properties = {
         notify: true,
         value: null
     },
+    selectedSite: {
+        type: Number,
+        notify: true,
+        value: null,
+        observer: 'selectedSiteChanged'
+    },
     selectedSites: {
         type: Array,
         notify: true,
         value: () => []
+    },
+    multipleSites: {
+        type: Boolean,
+        value: true
     },
     widgetLocations: {
         type: Object,
