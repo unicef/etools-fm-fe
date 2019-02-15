@@ -18,7 +18,10 @@ const INITIAL = {
 export function visitDetails(state = INITIAL, action: VisitDetailsActions) {
     switch (action.type) {
         case SET_CURRENT_VISIT:
-            return Object.assign({}, state, {currentVisitId: action.visitId});
+            const newState = action.visitId === state.currentVisitId ?
+                null :
+                {currentVisitId: action.visitId, data: null, permissions: null};
+            return Object.assign({}, state, newState);
 
         case SET_VISIT_DATA:
             if (state.currentVisitId !== action.visitId) { return state; }
