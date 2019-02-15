@@ -11,6 +11,18 @@
 
         <app-route route="{{route}}" pattern="/rationale" active="{{isActive}}"></app-route>
 
+        <div class="filter-dropdown">
+            <etools-dropdown class="year-dropdown"
+                             selected="{{selectedYear}}"
+                             label="Year"
+                             placeholder$="Select Year"
+                             options="[[yearOptions]]"
+                             option-label="label"
+                             option-value="value"
+                             trigger-value-change-event
+                             on-etools-selected-item-changed="onYearSelected"
+                             hide-search allow-outside-scroll></etools-dropdown>
+        </div>
 
         <paper-card class="table-container">
 

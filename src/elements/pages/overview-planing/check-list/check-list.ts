@@ -50,7 +50,7 @@ class CheckList extends EtoolsMixinFactory.combineMixins([
                 const cpOutcomeId = this.queryParams && this.queryParams.cp_outcome;
                 const cpOutputId = this.queryParams && this.queryParams.cp_output;
                 this.filteredConfigs = this.getConfigsByOutcome(cpOutcomeId, this.cpOutputsConfigs);
-                if (!this.hasOutputInConfigs(this.filteredConfigs, this.queryParams.cp_output)) {
+                if (!this.hasOutputInConfigs(this.filteredConfigs, cpOutputId)) {
                     this.removeQueryParams('cp_output');
                 }
                 this.cpOutputConfig = this.getConfigById(cpOutputId, this.filteredConfigs);

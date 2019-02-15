@@ -3,6 +3,18 @@
     display: block;
     padding: 0 25px 25px;
 
+    .table-container {
+        margin-top: 0;
+    }
+
+    .table-title-block {
+        height: 65px;
+    }
+
+    .table-title-block.with-bottom-line {
+        padding-bottom: 10px;
+    }
+
     .location-code { margin: 0 10px 0 5px; }
 
     .container:not(.first) {
@@ -100,6 +112,68 @@
         }
         .line .value { text-transform: uppercase; }
     }
+    .fixed-controls {
+        height: 100%;
+
+        .divider {
+            height: 45px;
+            border-left: 1px solid var(--gray-lighter);
+        }
+
+        paper-button { color: var(--module-primary); }
+        paper-listbox { white-space: nowrap; }
+    }
+
+    .year-dropdown {
+        flex: none;
+        min-width: auto;
+        width: 105px;
+    }
+
+
+    .month-counter {
+        margin: 10px 0;
+    }
+    .month-counter:nth-of-type(2) {
+        margin-top: -5px;
+        margin-bottom: 10px;
+    }
+
+    .month-counter .total-count {
+        padding: 0 8px;
+        margin: 0 5px;
+        line-height: 24px;
+        height: 24px;
+        box-shadow: var(--gray-50) 0 0 0 1px;
+    }
+
+    .year-info {
+        color: #727272;
+
+        .text {
+            line-height: 24px;
+            padding-top: 19px;
+            font-weight: 500;
+            text-transform: uppercase;
+            flex-wrap: wrap;
+            letter-spacing: 0.03em;
+        }
+
+        span.amount {
+            color: #FFF;
+            background-color: #727272;
+            padding: 0 8px;
+            margin: 0 5px;
+        }
+
+        .month-counter {
+            margin: 0;
+        }
+
+        .month-counter .total-count {
+            margin-right: 14px;
+        }
+    }
 }
 
 paper-card {
@@ -108,4 +182,19 @@ paper-card {
     margin-top: 25px;
     --paper-card_-_background-color: white;
     --paper-card_-_margin: 0 24px;
+}
+
+@media print {
+    paper-button {
+        display: none;
+    }
+
+    .year-info {
+        align-items: center;
+
+        .text {
+            font-size: 12px;
+            flex-wrap: nowrap;
+        }
+    }
 }

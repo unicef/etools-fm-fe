@@ -9,6 +9,10 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
 
     public static get properties() {
         return {
+            selectedYear: {
+                type: Number,
+                observer: 'setYear'
+            },
             route: {
                 type: Object,
                 notify: true
@@ -57,17 +61,12 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
 
     public connectedCallback() {
         super.connectedCallback();
-        const currentYear = new Date().getFullYear();
-        this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
 
+        const currentYear = new Date().getFullYear();
         const queryString = this.getQueryString();
         const queryParams = this.decodeParams(queryString);
         const yearFromParams = queryParams && queryParams.year;
         this.selectedYear = yearFromParams || currentYear;
-
-        this.yearPlanSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['yearPlan', 'data'], store),
-            (yearPlan: YearPlan) => { this.yearPlan = yearPlan; });
 
         this.logIssueAllowSubscribe = this.subscribeOnStore(
             (store: FMStore) => R.path(['permissions', 'logIssues'], store),
@@ -83,12 +82,15 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
         this.yearPlanSubscriber();
     }
 
-    public checkTab(tabName: string, ...showIn: string[]): boolean {
-        return !!~showIn.indexOf(tabName);
+    public setYear(year: number) {
+        this._debounceLoadYearPlan = Polymer.Debouncer.debounce(this._debounceLoadYearPlan,
+            Polymer.Async.timeOut.after(100), () => {
+                if (year) { this.dispatchOnStore(loadYearPlan(year)); }
+            });
     }
 
-    public onYearSelected() {
-        this.dispatchOnStore(loadYearPlan(this.selectedYear));
+    public checkTab(tabName: string, ...showIn: string[]): boolean {
+        return !!~showIn.indexOf(tabName);
     }
 
     public checkAddBtn(tabName: string) {
@@ -104,10 +106,6 @@ class OverviewPlaning extends EtoolsMixinFactory.combineMixins([
     public addBtnClick() {
         const tab = this.shadowRoot.querySelector(`#${this.routeData.tab}`);
         tab.dispatchEvent(new CustomEvent('add-new', {bubbles: true, composed: true}));
-    }
-
-    public getPlural(count: number): string {
-        return !count || +count > 1 ? 's' : '';
     }
 
     public exportData() {

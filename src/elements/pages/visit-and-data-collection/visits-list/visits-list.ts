@@ -3,10 +3,6 @@ import { loadStaticData } from '../../../redux-store/effects/load-static-data.ef
 import { getEndpoint } from '../../../app-config/app-config';
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
 import { getLocationPart } from '../../../common-elements/get-location-part';
-type Filter = {
-    name: string;
-    query: string;
-};
 
 class VisitsList extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,

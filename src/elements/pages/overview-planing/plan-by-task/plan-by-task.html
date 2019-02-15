@@ -1,4 +1,4 @@
-<!--import [polymer/polymer-element, etools-dropdown, etools-dropdown/etools-dropdown-multi,iron-flex-layout,
+<!--import [polymer/polymer-element, etools-dropdown, etools-dropdown/etools-dropdown-multi, iron-flex-layout,
             iron-icons/notification-icons]-->
 
 <!--import [shared-styles, module-styles, tab-inputs-styles, table-styles, redux-mixin, etools-app-config, month-counter,
@@ -12,91 +12,19 @@
         <app-route route="{{route}}" pattern="/plan-by-task" active="{{isActive}}"></app-route>
 
 
-        <paper-card>
-            <div class="layout horizontal wrap">
+        <paper-card class="layout horizontal center">
+            <div class="layout horizontal wrap flex-auto">
                 <div class="filter-dropdown">
-                    <etools-dropdown-multi
-                            selected-values="[[_simplifyValue(queryParams.cp_output_config__cp_output__parent__in)]]"
-                            label="CP Outcome"
-                            placeholder="Select"
-                            options="[[cpOutcomes]]"
-                            option-label="name"
-                            option-value="id"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="filterValueChanged"
-                            allow-outside-scroll
-                            data-property="cp_output_config__cp_output__parent__in"
-                            min-width="470px"
-                            horizontal-align="left"
-                            no-dynamic-align>
-                    </etools-dropdown-multi>
-                </div>
-                <div class="filter-dropdown">
-                    <etools-dropdown-multi
-                            selected-values="[[_simplifyValue(queryParams.cp_output_config__in)]]"
-                            label="[[getDescriptorLabel(permissions, 'cp_output_config.cp_output')]]"
-                            placeholder="Select"
-                            options="[[cpOutputConfigs]]"
-                            option-label="name"
-                            option-value="id"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="filterValueChanged"
-                            allow-outside-scroll
-                            data-property="cp_output_config__in"
-                            min-width="450px"
-                            horizontal-align="left"
-                            no-dynamic-align>
-                    </etools-dropdown-multi>
-                </div>
-                <div class="filter-dropdown">
-                    <etools-dropdown-multi
-                            selected-values="[[_simplifyValue(queryParams.partner__in)]]"
-                            label="[[getDescriptorLabel(permissions, 'partner')]]"
-                            placeholder="Select"
-                            options="[[filterPartners]]"
-                            option-label="name"
-                            option-value="id"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="filterValueChanged"
-                            allow-outside-scroll
-                            data-property="partner__in"
-                            min-width="400px"
-                            horizontal-align="left"
-                            no-dynamic-align>
-                    </etools-dropdown-multi>
-                </div>
-                <div class="filter-dropdown">
-                    <etools-dropdown-multi
-                            selected-values="[[_simplifyValue(queryParams.location__in)]]"
-                            label="[[getDescriptorLabel(permissions, 'location')]]"
-                            placeholder="Select"
-                            options="[[filterLocations]]"
-                            option-label="name"
-                            option-value="id"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="filterValueChanged"
-                            allow-outside-scroll
-                            data-property="location__in"
-                            min-width="400px"
-                            horizontal-align="left"
-                            no-dynamic-align>
-                    </etools-dropdown-multi>
-                </div>
-                <div class="filter-dropdown">
-                    <etools-dropdown-multi
-                            selected-values="[[_simplifyValue(queryParams.location_site__in)]]"
-                            label="[[getDescriptorLabel(permissions, 'location_site')]]"
-                            placeholder="Select"
-                            options="[[filterSites]]"
-                            option-label="name"
-                            option-value="id"
-                            trigger-value-change-event
-                            on-etools-selected-items-changed="filterValueChanged"
-                            allow-outside-scroll
-                            data-property="location_site__in"
-                            horizontal-align="left"
-                            no-dynamic-align>
-                    </etools-dropdown-multi>
+                    <etools-dropdown class="year-dropdown"
+                                     selected="{{selectedYear}}"
+                                     label="Year"
+                                     placeholder$="Select Year"
+                                     options="[[yearOptions]]"
+                                     option-label="label"
+                                     option-value="value"
+                                     trigger-value-change-event
+                                     on-etools-selected-item-changed="onYearSelected"
+                                     hide-search allow-outside-scroll></etools-dropdown>
                 </div>
                 <div class="toggle-button-control">
                     <paper-toggle-button
@@ -105,14 +33,69 @@
                             data-property="cp_output_config__is_priority"></paper-toggle-button>
                     <span>Show Priority Only</span>
                 </div>
+                <template is="dom-repeat" items="[[listFilterOptions]]">
+                    <div class="filter-dropdown" hidden$="[[!item.selected]]">
+                        <etools-dropdown-multi
+                                selected-values="[[simplifyValue(item.query)]]"
+                                label="[[item.name]]"
+                                placeholder="Select"
+                                options="[[getOptions(item.optionsKey, cpOutcomes, cpOutputConfigs, filterPartners, filterLocations, filterSites, sections)]]"
+                                option-label="[[item.label]]"
+                                option-value="[[item.value]]"
+                                trigger-value-change-event
+                                on-etools-selected-items-changed="filterValueChanged"
+                                allow-outside-scroll
+                                data-property$="[[item.query]]"
+                                data-options-key$="[[item.optionsKey]]"
+                                min-width$="[[item.minWidth]]"
+                                horizontal-align="left"
+                                no-dynamic-align>
+                        </etools-dropdown-multi>
+                    </div>
+
+                </template>
+            </div>
+            <div class="fixed-controls layout horizontal center-center">
+                <div class="divider"></div>
+                <paper-menu-button id="filterMenu" ignore-select horizontal-align="right">
+                    <paper-button class="button" slot="dropdown-trigger">
+                        <iron-icon icon="filter-list"></iron-icon>
+                        Filters
+                    </paper-button>
+                    <paper-listbox slot="dropdown-content" multi>
+                        <template is="dom-repeat" items="[[listFilterOptions]]">
+                            <paper-icon-item on-tap="onFilterSelect" selected$="[[item.selected]]">
+                                <iron-icon icon="check" slot="item-icon" hidden$="[[!item.selected]]"></iron-icon>
+                                <paper-item-body>[[item.name]]</paper-item-body>
+                            </paper-icon-item>
+                        </template>
+                    </paper-listbox>
+                </paper-menu-button>
             </div>
         </paper-card>
 
+        <div class="layout horizontal toggle-button-control end-justified toggle-button-control">
+            <paper-toggle-button
+                    checked="[[value]]"
+                    on-checked-changed="showCompletedChanged"></paper-toggle-button>
+            <span>Show Completed</span>
+        </div>
 
         <paper-card class="table-container">
-
             <div class="table-title-block with-bottom-line">
-                <div class="table-title">[[visibleRange.0]] - [[visibleRange.1]] of [[count]] monitoring tasks to show</div>
+                <div class="year-info horizontal layout flex-auto">
+                    <div class="text print-text layout horizontal flex-auto">
+                        total planned: <span class="amount">[[yearPlan.total_planned.tasks]]</span>
+                        task[[getPlural(yearPlan.total_planned.tasks)]] covering <span class="amount">[[yearPlan.total_planned.cp_outputs]]</span>
+                        output[[getPlural(yearPlan.total_planned.cp_outputs)]] in <span class="amount">[[yearPlan.total_planned.sites]]</span>
+                        site[[getPlural(yearPlan.total_planned.sites)]]
+                    </div>
+                    <div class="text print-text">Total by Month:</div>
+                    <div class="layout horizontal end month-counter">
+                        <month-counter show-titles count="[[yearPlan.tasks_by_month]]"></month-counter>
+                        <div class="total-count">[[calcCompleted(yearPlan.tasks_by_month)]]</div>
+                    </div>
+                </div>
             </div>
 
             <etools-data-table-header id="listHeader"
@@ -129,7 +112,7 @@
                     <!--[[getDescriptorLabel(permissions, 'location')]] & [[getDescriptorLabel(permissions, 'location_site')]]-->
                     Location & Site
                 </etools-data-table-column>
-                <etools-data-table-column class="w310px" field="plan">
+                <etools-data-table-column class="w330px" field="plan">
                     <div class="tasks-per-month-title">
                         Planned <div>#</div>, Completed <div class="completed">#</div> Number of Tasks Per Month
                     </div>
@@ -161,7 +144,20 @@
                             </div>
                         </div>
 
-                        <div class="col-data w310px"><month-counter count="[[item.plan_by_month]]"></month-counter></div>
+                        <div class="col-data w330px">
+                            <div class$="layout vertical">
+                                <div class="layout horizontal month-counter">
+                                    <month-counter count="[[item.plan_by_month]]"></month-counter>
+                                    <div class="total-count">[[calcCompleted(item.plan_by_month)]]</div>
+                                </div>
+                                <template is="dom-if" if="[[showCompleted]]">
+                                    <div class="layout horizontal month-counter">
+                                        <month-counter count="[[item.plan_by_month]]"></month-counter>
+                                        <div class="total-count">[[calcCompleted(item.plan_by_month)]]</div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
 
                         <div class="hover-block"  hidden$="[[isReadonlyCollection(permissions)]]">
                             <iron-icon icon="icons:content-copy" on-tap="openDialog" data-type="copy"></iron-icon>
@@ -236,6 +232,30 @@
                             on-etools-selected-item-changed="setEditedValue"
                             data-fieldname="cp_output_config"
                             trigger-value-change-event allow-outside-scroll dynamic-align></etools-dropdown>
+                </div>
+
+                <div class="container layout horizontal">
+                    <etools-dropdown-multi
+                            class="validate-input disabled-as-readonly flex"
+                            label="[[getDescriptorLabel(permissions, 'sections')]]"
+                            placeholder="[[getPlaceholder(permissions, 'sections', 'Select')]]"
+                            selected-values="[[_simplifyValue(selectedModel.sections)]]"
+                            options="[[sections]]"
+                            option-value="id"
+                            option-label="name"
+                            required$="[[getRequiredStatus(permissions, 'sections')]]"
+                            disabled$="[[isReadonlyField(permissions, 'sections', sections, dialog.type)]]"
+                            readonly$="[[isReadonlyField(permissions, 'sections', sections, dialog.type)]]"
+                            invalid="{{errors.sections}}"
+                            error-message="{{errors.sections}}"
+                            on-focus="resetFieldError"
+                            on-tap="resetFieldError"
+                            trigger-value-change-event
+                            data-fieldname="sections"
+                            on-etools-selected-items-changed="setSelections"
+                            allow-outside-scroll
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
                 </div>
 
                 <div class="container layout horizontal">

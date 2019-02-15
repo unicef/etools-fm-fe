@@ -56,6 +56,17 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         this.startLoad();
     }
 
+    public changeSectionFilter({ detail }: CustomEvent) {
+        const { selectedItems } = detail;
+        if (selectedItems) {
+            const values = selectedItems.map((item: Section) => item.id);
+            this.updateQueryParams({sections__in: values});
+        } else {
+            this.updateQueryParams({page: 1, sections__in: []});
+        }
+        this.startLoad();
+    }
+
     public _changeOutcomeFilter({ detail }: CustomEvent) {
         const { selectedItems } = detail;
         if (selectedItems) {
@@ -91,7 +102,11 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
                 this.count = cpOutputs.count;
             });
 
-        this.cpOutcomeSubscriber = this.subscribeOnStore(
+        this.cpSectionsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'sections'], store),
+            (sections: Section[]) => { this.sections = sections || []; });
+
+        this.cpGPSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['staticData', 'governmentPartners'], store),
             (partners: Partner[]) => { this.governmentPartners = partners || []; });
 
@@ -135,6 +150,8 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
 
     public disconnectedCallback() {
         super.disconnectedCallback();
+        this.cpGPSubscriber();
+        this.cpSectionsSubscriber();
         this.cpOutputsSubscriber();
         this.cpOutcomeSubscriber();
         this.permissionListSubscriber();
@@ -151,6 +168,7 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         if (!item.fm_config) { item.fm_config = {} as FmConfig; }
         this.originalData =  R.clone(item);
         if (item.fm_config.government_partners === undefined) { item.fm_config.government_partners = []; }
+        if (item.fm_config.sections === undefined) { item.fm_config.sections = []; }
         if (item.fm_config.is_monitored === undefined) { item.fm_config.is_monitored = false; }
         this.selectedModel = R.clone(item);
 
@@ -162,6 +180,12 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         if (!this.selectedModel || !this.selectedModel.fm_config) { return; }
         const { selectedItems } = detail;
         this.selectedModel.fm_config.government_partners = selectedItems;
+    }
+
+    public _selectedEditItemSections({detail}: CustomEvent) {
+        if (!this.selectedModel || !this.selectedModel.fm_config) { return; }
+        const { selectedItems } = detail;
+        this.selectedModel.fm_config.sections = selectedItems;
     }
 
     public _openPartners({ model }: EventModel<CpOutput>) {

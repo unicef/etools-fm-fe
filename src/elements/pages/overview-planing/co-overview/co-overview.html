@@ -24,6 +24,22 @@
                             hide-search allow-outside-scroll>
                     </etools-dropdown>
                 </div>
+                <div class="filter-dropdown">
+                    <etools-dropdown-multi
+                            selected-values="[[queryParams.sections__in]]"
+                            label="Sections"
+                            placeholder="Select"
+                            options="[[sections]]"
+                            option-label="name"
+                            option-value="id"
+                            trigger-value-change-event
+                            on-etools-selected-items-changed="changeSectionFilter"
+                            hide-search allow-outside-scroll
+                            min-width="470px"
+                            horizontal-align="left"
+                            no-dynamic-align>
+                    </etools-dropdown-multi>
+                </div>
             </div>
         </paper-card>
 

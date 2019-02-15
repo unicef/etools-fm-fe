@@ -16,12 +16,13 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
         return {
             selectedYear: {
                 type: Number,
-                observer: 'setYear'
+                notify: true
             }
         };
     }
 
-    public setYear(year: number) {
+    public onYearSelected({detail}: CustomEvent) {
+        const year = detail.selectedItem.value;
         if (year) {
             const endpoint = getEndpoint('yearPlan', { year });
             this.dispatchOnStore(loadPermissions(endpoint.url, 'yearPlan'));
@@ -56,6 +57,9 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
 
     public connectedCallback() {
         super.connectedCallback();
+
+        const currentYear = new Date().getFullYear();
+        this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
 
         this.permissionSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['permissions', 'yearPlan'], store),

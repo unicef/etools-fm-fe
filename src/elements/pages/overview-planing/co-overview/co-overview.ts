@@ -32,6 +32,10 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
             (store: FMStore) => R.path(['staticData', 'cpOutcomes'], store),
             (cpOutcomes: CpOutcome[]) => { this.cpOutcomes = cpOutcomes || []; });
 
+        this.sectionsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'sections'], store),
+            (sections: Section[]) => { this.sections = sections || []; });
+
         this.cpConfigsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['staticData', 'cpOutputsConfigs'], store),
             (cpOConfigs: CpOutputConfig[] | undefined) => {
@@ -66,8 +70,15 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
     }
 
     public finishLoad() {
-        this.filteredConfigs = this.cpOutputConfigs.filter(
-            (config: CpOutputConfig) => config.cp_output.parent === R.path(['queryParams', 'cp_outcome'], this));
+        const cpOutcome = R.path(['queryParams', 'cp_outcome'], this);
+        const sections = R.path(['queryParams', 'sections__in'], this);
+        this.filteredConfigs = this.cpOutputConfigs.filter((config: CpOutputConfig) => {
+            const hasCpOutcome = config.cp_output.parent === cpOutcome;
+            const hasSomeSections = config.sections.some((section: Section) => {
+                return sections && !!~sections.findIndex((sectionId: string) => +sectionId === section.id);
+            });
+            return sections && sections.length ? hasSomeSections && hasCpOutcome : hasCpOutcome;
+        });
 
         const cpOutput = +R.path(['queryParams', 'cp_output'], this);
         const exists = cpOutput && this.filteredConfigs.find(
@@ -92,6 +103,17 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
         if (!this.configsLoadingInProcess) {
             this.startLoad();
         }
+    }
+
+    public changeSectionFilter({ detail }: CustomEvent) {
+        const { selectedItems } = detail;
+        if (selectedItems) {
+            const values = selectedItems.map((item: Section) => item.id);
+            this.updateQueryParams({sections__in: values});
+        } else {
+            this.updateQueryParams({sections__in: []});
+        }
+        this.startLoad();
     }
 
     public toggleDetails({ target }: CustomEvent) {

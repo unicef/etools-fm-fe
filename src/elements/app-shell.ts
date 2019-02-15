@@ -35,7 +35,7 @@ class AppShell extends EtoolsMixinFactory.combineMixins([
                 type: Array,
                 value: () => [
                     'methods', 'locations', 'cpOutcomes', 'monitoredCpOutputs',
-                    'governmentPartners', 'currentWorkspace', 'siteLocations',
+                    'governmentPartners', 'sections', 'currentWorkspace', 'siteLocations',
                     'monitoredPartners', 'checklistCategories', 'checklistItems'
                 ]
             }

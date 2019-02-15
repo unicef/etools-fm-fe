@@ -117,6 +117,12 @@ export const endpoints: Endpoints = {
         cacheTableName: 'governmentPartners'
     },
 
+    sections: {
+        url: '/api/v2/reports/sections',
+        exp: 2 * 60 * 60 * 1000, // 2h
+        cacheTableName: 'sections'
+    },
+
     monitoredPartners: {
         url: '/api/v1/field-monitoring/settings/cp-outputs/partners/?page_size=all',
         exp: 2 * 60 * 60 * 1000, // 2h

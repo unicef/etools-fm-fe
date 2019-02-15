@@ -48,3 +48,8 @@ type MarkerDataObj = {
     staticData?: any;
     popup?: string
 };
+
+type Filter = {
+    name: string;
+    query: string;
+};

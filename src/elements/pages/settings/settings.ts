@@ -23,7 +23,7 @@ class Settings extends EtoolsMixinFactory.combineMixins([
             }
         };
     }
-
+    
     public static get observers() {
         return [
             '_routeChanged(route.path)'

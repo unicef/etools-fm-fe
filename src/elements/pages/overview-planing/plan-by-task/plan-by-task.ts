@@ -1,3 +1,4 @@
+/* tslint:disable:max-file-line-count */
 import { getEndpoint } from '../../../app-config/app-config';
 import { loadPermissions } from '../../../redux-store/effects/load-permissions.effect';
 import { loadCpOutputsConfigs } from '../../../redux-store/effects/cp-outputs.effect';
@@ -30,7 +31,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         return {
             selectedYear: {
                 type: Number,
-                observer: 'setYear'
+                notify: true
             },
             selectedModel: {
                 type: Object,
@@ -61,14 +62,61 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
             enableLocationSelect: {
                 type: Boolean,
                 computed: 'setEnableLocationSelect(selectedModel.partner, selectedModel.intervention)'
+            },
+            listFilterOptions: {
+                type: Object,
+                value: () => [{
+                    name: 'CP Outcome',
+                    query: 'cp_output_config__cp_output__parent__in',
+                    optionsKey: 'cpOutcomes',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'CP Output',
+                    query: 'cp_output_config__in',
+                    optionsKey: 'cpOutputConfigs',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Partner',
+                    query: 'partner__in',
+                    optionsKey: 'filterPartners',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Location',
+                    query: 'location__in',
+                    optionsKey: 'filterLocations',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Location Site',
+                    query: 'location_site__in',
+                    optionsKey: 'filterSites',
+                    label: 'name',
+                    value: 'id'
+                }, {
+                    name: 'Sections',
+                    query: 'sections__in',
+                    optionsKey: 'sections',
+                    label: 'name',
+                    value: 'id'
+                }]
             }
         };
     }
 
     public connectedCallback() {
         super.connectedCallback();
+        const currentYear = new Date().getFullYear();
+        this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
+
         this.addEventListener('add-new', () => this.openDialog({} as EventModel<PlaningTask>));
         this.addEventListener('sort-changed', this.sort);
+
+        this.yearPlanSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['yearPlan', 'data'], store),
+            (yearPlan: YearPlan) => { this.yearPlan = yearPlan; });
 
         this.methodsSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['staticData', 'cpOutputsConfigs'], store),
@@ -78,6 +126,10 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
                     (config: CpOutputConfig) => ({...config, name: config.cp_output.name})
                 );
             });
+
+        this.sectionsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['staticData', 'sections'], store),
+            (sections: Section[]) => { this.sections = sections || []; });
 
         this.tasksCountSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['planingTasks', 'count'], store),
@@ -152,7 +204,9 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public disconnectedCallback() {
         super.disconnectedCallback();
+        this.yearPlanSubscriber();
         this.methodsSubscriber();
+        this.sectionsSubscriber();
         this.planingTasksSubscriber();
         this.partnerTasksSubscriber();
         this.permissionsSubscriber();
@@ -165,13 +219,13 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         this.removeEventListener('sort-changed', this.sort);
     }
 
-    public setYear(year: number) {
+    public onYearSelected({detail}: CustomEvent) {
+        const year = detail.selectedItem.value;
         if (year && this.isActive) {
             this.updateQueryParams({ year });
         } else if (year && this.queryParams) {
             this.queryParams.year = year;
         }
-
         if (year) {
             const endpoint = getEndpoint('planingTasks', {year});
             this.dispatchOnStore(loadPermissions(endpoint.url, 'planingTasks'));
@@ -182,11 +236,51 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
     }
 
+    public getPlural(count: number): string {
+        return !count || +count > 1 ? 's' : '';
+    }
+
+    public simplifyValue(queryName: string) {
+        return this._simplifyValue(this.queryParams && this.queryParams[queryName]);
+    }
+
+    public onFilterSelect({ model }: EventModel<Filter>) {
+        const { item } = model;
+        this.toggleFilter(item.query);
+    }
+
+    public toggleFilter(filterQuery: string, state?: boolean) {
+        const index = this.listFilterOptions.findIndex((filter: Filter) => filter.query === filterQuery);
+        if (index === -1) { return; }
+
+        const currentState = this.get(`listFilterOptions.${index}.selected`);
+        const newState = R.is(Boolean, state) ? state : !currentState;
+        if (currentState !== newState) {
+            this.set(`listFilterOptions.${index}.selected`, newState);
+        }
+        if (!newState && this.queryParams[filterQuery] && this.queryParams[filterQuery].length) {
+            this.updateQueryParams({page: 1, [filterQuery]: []});
+        }
+    }
+
+    public showCompletedChanged({ detail }: CustomEvent) {
+        const { value } = detail;
+        this.showCompleted = value;
+    }
+
+    public getOptions(collectionName: string) {
+        return this[collectionName] || [];
+    }
+
     public getInitQueryParams(): QueryParams {
         return {
-            page: 1, page_size: 10, cp_output_config__cp_output__parent__in: [],
-            cp_output_config__in: [], partner__in: [], location__in: [],
-            location_site__in: [], year: this.selectedYear
+            page: 1, page_size: 10,
+            cp_output_config__cp_output__parent__in: [],
+            cp_output_config__in: [],
+            partner__in: [],
+            location__in: [],
+            location_site__in: [],
+            year: this.selectedYear
         };
     }
 
@@ -204,7 +298,7 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public finishLoad() {
         this._debounceLoadData = Polymer.Debouncer.debounce(this._debounceLoadData,
-            Polymer.Async.timeOut.after(100), () => {
+            Polymer.Async.timeOut.after(300), () => {
                 this.dispatchOnStore(new RunGlobalLoading({type: 'planingTasks', message: 'Loading Data...'}));
                 this.dispatchOnStore(loadPlaningTasks(this.selectedYear, this.queryParams))
                     .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'planingTasks'})));
@@ -307,6 +401,12 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
         }
     }
 
+    public setSelections({detail}: CustomEvent) {
+        if (!this.selectedModel) { return; }
+        const { selectedItems } = detail;
+        this.selectedModel.sections = this._simplifyValue(selectedItems);
+    }
+
     public setInterventionsList(partner: number, output: CpOutputConfig) {
         if (!partner || !output) {
             return [];
@@ -389,20 +489,20 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
     }
 
     public filterValueChanged({ detail, target }: CustomEvent) {
-        const { selectedItems, selectedItem, value } = detail;
+        const { selectedItems } = detail;
         const property = R.path(['dataset', 'property'], target);
+        const optionsKey = R.path(['dataset', 'optionsKey'], target);
+        if (!this[optionsKey]) { return; }
         if (!property) { throw new Error('Filter must contain data property attribute'); }
 
-        if (selectedItems) {
-            const values = selectedItems.map((item: any) => item.id);
-            this.updateQueryParams({page: 1, [property]: values});
-        } else if (selectedItem || value) {
-            this.updateQueryParams({page: 1, [property]: value || selectedItem.id});
-        } else if (value === false) {
-            this.removeQueryParams(property);
+        const values = selectedItems && selectedItems.map((item: any) => item.id || item.value) || [];
+
+        if (values.length) {
+            this.toggleFilter(property, true);
         } else {
-            this.updateQueryParams({page: 1, [property]: []});
+            return;
         }
+        this.updateQueryParams({page: 1, [property]: values});
         this.startLoad();
     }
 
@@ -414,6 +514,10 @@ class PlanByTask extends EtoolsMixinFactory.combineMixins([
 
     public getLocationPart(location: string = '', partToSelect: string) {
         return getLocationPart(location, partToSelect);
+    }
+
+    public calcCompleted(plan: number[]): number {
+        return plan.reduce((value: number, next: number) => value + next);
     }
 
     private clearEditedField(field: string, path: string = field) {

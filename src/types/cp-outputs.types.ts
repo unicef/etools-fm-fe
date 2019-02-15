@@ -5,6 +5,11 @@ type CpOutput = {
     interventions: Intervention[];
 };
 
+type Section = {
+    id: number,
+    name: string
+};
+
 type Partner = {
     id: number,
     name: string
@@ -17,7 +22,8 @@ type CpOutcome = {
 
 type FmConfig = {
     cp_output: number,
-    government_partners: Partner[] | []
+    government_partners: Partner[] | [],
+    sections: Section[] | [],
     id: number,
     is_monitored: boolean,
     is_priority: boolean
@@ -71,7 +77,8 @@ type CpOutputConfig = {
     id: number;
     is_monitored: boolean;
     is_priority: boolean;
-    partners: Partner[]
+    partners: Partner[],
+    sections: Section[]
 };
 
 type FullReportData = {

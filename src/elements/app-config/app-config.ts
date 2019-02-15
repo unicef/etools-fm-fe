@@ -60,6 +60,7 @@ window.FMMixins.AppConfig = Polymer.dedupingMixin((baseClass: any) => class Conf
             methods: 'id',
             cpOutcomes: 'id',
             governmentPartners: 'id',
+            sections: 'id',
             monitoredPartners: 'id',
             monitoredCpOutputs: 'id',
             locations: 'id'

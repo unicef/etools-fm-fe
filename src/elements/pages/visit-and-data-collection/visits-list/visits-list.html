@@ -28,7 +28,7 @@
 
                         <div class="filter-dropdown" hidden$="[[!item.selected]]">
                             <etools-dropdown-multi
-                                    selected-values="[[simplifyValue(item.query, queryParams.tasks__partner__in, queryParams.location__in, queryParams.location_site__in, queryParams.tasks__cp_output_config__in, queryParams.status__in, queryParams.team_members__in)]]"
+                                    selected-values="[[simplifyValue(item.query)]]"
                                     label="[[item.name]]"
                                     placeholder="Select"
                                     options="[[getOptions(item.optionsKey, cpOutputsFilter, partnersFilter, locationsFilter, statusFilter, sitesFilter, teamMembersFilter)]]"
