@@ -1,3 +1,6 @@
+import { loadVisitDetails } from '../../../redux-store/effects/visit-details.effects';
+import { RunGlobalLoading, StopGlobalLoading } from '../../../redux-store/actions/global-loading.actions';
+
 class VisitDetails extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.RouteHelperMixin,
@@ -26,39 +29,37 @@ class VisitDetails extends EtoolsMixinFactory.combineMixins([
 
     public static get observers() {
         return [
-            '_routeChanged(route.path, routeData.id)'
+            '_routeChanged(routeData.id, route.prefix)'
         ];
     }
 
-    public _routeChanged(path: string, id: number) {
+    public _routeChanged(id: number) {
         const prefix = R.pathOr('', ['route', 'prefix'], this);
         if (!~prefix.indexOf('visit-details')) { return; }
-        console.log(path, id);
-        // if (!path.match(/[^\\/]/g)) {
-        //     this.set('route.path', '/visits-list');
-        // }
-    }
-
-    public setSites() {
-        return R.clone(this.selectedSites);
+        const currentVisitId = this.getFromStore('visitDetails.currentVisitId');
+        if (isNaN(+id)) {
+            this.redirectToNotFound();
+        } else if (+id !== +currentVisitId) {
+            this.debounceLoading = Polymer.Debouncer.debounce(
+                this.debounceLoading, Polymer.Async.timeOut.after(100), () => {
+                    this.dispatchOnStore(new RunGlobalLoading({type: 'visit-data', message: 'Loading Visit Data...'}));
+                    this.dispatchOnStore(loadVisitDetails(+id))
+                        .catch((error: Response) => {
+                            if (error.status === 404) { this.redirectToNotFound(); }
+                        })
+                        .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'visit-data'})));
+                });
+        }
     }
 
     public connectedCallback() {
         super.connectedCallback();
+    }
 
-        this.sitesSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['specificLocations'], store),
-            (sites: IStatedListData<Site> | undefined) => {
-                if (!sites) { return; }
-                this.sites = sites.results || [];
-            });
-
-        this.locationsSubscriber = this.subscribeOnStore(
-            (store: FMStore) => R.path(['staticData', 'locations'], store),
-            (locations: Location[] | undefined) => {
-                if (!locations) { return; }
-                this.locations = locations;
-            });
+    private redirectToNotFound() {
+        this.debounceRedirect = Polymer.Debouncer.debounce(this.debounceRedirect,
+            Polymer.Async.timeOut.after(100), () =>
+                this.dispatchEvent(new CustomEvent('404', {bubbles: true, composed: true})));
     }
 }
 

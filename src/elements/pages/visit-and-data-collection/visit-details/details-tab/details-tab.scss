@@ -1,0 +1,35 @@
+:host {
+    position: relative;
+
+    .details-tab {
+        width: 100%;
+        padding: 24px;
+        box-sizing: border-box;
+
+        .details {
+            padding-right: 22px;
+        }
+
+        paper-card {
+            width: 100%;
+            margin-bottom: 22px;
+
+            &.status-card { width: 200px; }
+        }
+
+        .widget-container {
+            position: relative;
+            border: solid 1px var(--gray-06);
+            margin: 0 12px;
+        }
+
+        .details-form {
+            padding: 15px 12px;
+
+        }
+    }
+}
+
+*[hidden] {
+    display: none !important;
+}

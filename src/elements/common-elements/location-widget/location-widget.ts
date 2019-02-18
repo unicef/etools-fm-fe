@@ -2,7 +2,7 @@ import { loadLocationPath, loadWidgetLocations } from '../../redux-store/effects
 import { getLocationPart } from '../get-location-part';
 import { locationsInvert } from '../../pages/settings/sites-tab/locations-invert';
 import { loadSiteLocations } from '../../redux-store/effects/site-specific-locations.effects';
-import { properties} from './location-widget.properties';
+import { properties } from './location-widget.properties';
 
 const POLYGON_OPTIONS = {color: '#eddaa3', stroke: false, fillOpacity: 0.8, pane: 'tilePane'};
 
@@ -106,6 +106,11 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         const { location }: Model<Site> = model || {};
         const index = this.selectedSites.findIndex((id: number) => id === location.id);
 
+        if (!~index && !this.multipleSites) {
+            this.removeStaticMarkers();
+            this.selectedSites.splice(0);
+        }
+
         if (!~index) {
             this.push('selectedSites', location.id);
             const coords = R.clone(location.point.coordinates).reverse();
@@ -113,6 +118,22 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         } else {
             this.splice('selectedSites', index, 1);
             this.removeStaticMarker(location.id);
+        }
+
+        if (!this.multipleSites) {
+            const id = !~index ? location.id : null;
+            this.set('selectedSite', id);
+        }
+    }
+
+    public selectedSiteChanged(site: number | null) {
+        if (this.multipleSites) { return; }
+
+        const exist = this.selectedSites.findIndex((id: number) => id === site);
+        if (!site && this.selectedSites.length) {
+            this.set('selectedSites', []);
+        } else if (site && !~exist) {
+            this.set('selectedSites', [site]);
         }
     }
 
@@ -138,12 +159,13 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
 
         this.removeStaticMarkers();
         this.selectedSites = [];
+        this.selectedSite = null;
         this.selectedLocation = null;
         this.locationSearch = '';
 
         const currentLocation = this.history[index - 1];
         if (!currentLocation) {
-            //return to initial map state
+            // return to initial map state
             this.clearMap();
             this.setInitialMapView();
             this.selectPath('level=0');
@@ -152,7 +174,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         }
     }
 
-    //method to restore history if selectedLocation come outside component
+    // method to restore history if selectedLocation come outside component
     public restoreHistory(locationId: string | null, loading?: boolean) {
         if (!locationId || loading) { return; }
 
@@ -193,6 +215,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
             console.warn(`This sites are missing in list: ${missingSites}. They will be removed from selected`);
             this.selectedSites = selectedSites.filter((siteId: number) => !~missingSites.indexOf(siteId));
             missingSites.forEach((siteId: number) => this.removeStaticMarker(siteId));
+            this.selectedSite = null;
         }
 
         this.selectedSites.forEach((siteId: number) => {
@@ -254,6 +277,15 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
     public goToSettings() {
         history.pushState({}, '', '/fm/settings/sites');
         window.dispatchEvent(new CustomEvent('location-changed'));
+    }
+
+    public updateMap() {
+        this.invalidateSize();
+
+        const location = this.getLastLocation();
+        if (location) {
+            this.centerAndDrawBorders(location);
+        }
     }
 
     private centerAndDrawBorders(location: WidgetLocation) {

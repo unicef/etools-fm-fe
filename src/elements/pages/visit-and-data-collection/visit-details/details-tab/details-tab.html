@@ -1,0 +1,80 @@
+<!--import [polymer/polymer-element, paper-card, iron-flex-layout, iron-icons/maps-icons, iron-collapse]-->
+
+<!--import [redux-mixin, main-page-styles, location-widget, table-styles, tab-inputs-styles]-->
+
+<dom-module id="details-tab">
+    <template>
+        <!-- inject styles './details-tab.scss'-->
+        <style include="main-page-styles table-styles tab-inputs-styles iron-flex iron-flex-alignment"></style>
+
+        <div class="details-tab layout horizontal start">
+
+            <div class="details flex-auto">
+                <paper-card>
+
+                    <div class="table-title-block with-bottom-line">
+                        <div class="table-title">Visit Details</div>
+                    </div>
+
+
+                   <div class="details-form">
+
+                       <div class="widget-dropdown">
+                           <div class="flex-auto">
+                               <span class=" layout horizontal center" on-tap="widgetToggle"><iron-icon icon="maps:map"></iron-icon>
+                               Select Location/Site with Widget</span>
+                           </div>
+                           <iron-icon icon="expand-less" class="flex-none toggle-btn" hidden$="[[!widgetOpened]]" on-tap="widgetToggle"></iron-icon>
+                           <iron-icon icon="expand-more" class="flex-none toggle-btn" hidden$="[[widgetOpened]]" on-tap="widgetToggle"></iron-icon>
+                       </div>
+                       <iron-collapse opened="[[widgetOpened]]">
+                           <div class="widget-container">
+                               <location-widget
+                                       id="locationWidget"
+                                       selected-location="{{visit.location.id}}"
+                                       multiple-sites="[[multipleSites]]"
+                                       selected-site="{{visit.location_site.id}}"></location-widget>
+                           </div>
+                       </iron-collapse>
+
+                       <div class="layout horizontal location-inputs">
+                           <etools-dropdown
+                                   class="without-border"
+                                   selected="[[visit.location.id]]"
+                                   label="Location"
+                                   placeholder="Select Location in Widget"
+                                   options="[[locations]]"
+                                   option-label="name"
+                                   option-value="id"
+                                   readonly disabled
+                                   min-width="470px">
+                           </etools-dropdown>
+
+
+                           <etools-dropdown
+                                   class="without-border"
+                                   selected="[[visit.location_site.id]]"
+                                   label="Site"
+                                   placeholder="Select Site in Widget"
+                                   options="[[sites]]"
+                                   option-label="name"
+                                   option-value="id"
+                                   readonly disabled
+                                   min-width="470px">
+                           </etools-dropdown>
+                       </div>
+                   </div>
+                </paper-card>
+
+            </div>
+
+            <paper-card class="status-card flex-none">
+                <div class="table-title-block with-bottom-line">
+                    <div class="table-title">Status</div>
+                </div>
+            </paper-card>
+        </div>
+    </template>
+
+    <!-- inject scripts './details-tab.ts'-->
+</dom-module>
