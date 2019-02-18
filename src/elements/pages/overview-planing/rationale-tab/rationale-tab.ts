@@ -61,6 +61,10 @@ class RationaleTab extends EtoolsMixinFactory.combineMixins([
         const currentYear = new Date().getFullYear();
         this.yearOptions = [currentYear, currentYear + 1].map(year => ({label: year, value: year}));
 
+        this.yearPlanSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['yearPlan', 'data'], store),
+            (yearPlan: YearPlan) => { this.yearPlan = yearPlan; });
+
         this.permissionSubscriber = this.subscribeOnStore(
             (store: FMStore) => R.path(['permissions', 'yearPlan'], store),
             (permissions: IBackendPermissions) => { this.permissions = permissions; });

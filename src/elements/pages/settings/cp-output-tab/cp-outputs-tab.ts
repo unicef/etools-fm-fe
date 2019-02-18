@@ -21,7 +21,8 @@ class CpOutputsTab extends EtoolsMixinFactory.combineMixins([
         return {
             page: 1,
             page_size: 10,
-            parent__in: []
+            parent__in: [],
+            sections__in: []
         };
     }
 

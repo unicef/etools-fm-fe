@@ -5,6 +5,7 @@ import { loadFullReport } from '../../../redux-store/effects/co-overview.effects
 class CoOverview extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.RouteHelperMixin,
+    FMMixins.ProcessDataMixin,
     FMMixins.ReduxMixin], Polymer.Element) {
     public static get is() { return 'co-overview'; }
 
@@ -56,6 +57,12 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
 
     public disconnectedCallback() {
         super.disconnectedCallback();
+    }
+
+    public getInitQueryParams() {
+        return {
+            sections__in: []
+        };
     }
 
     public initStarLoad() {
