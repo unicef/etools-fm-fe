@@ -1,7 +1,7 @@
 class DetailsTab extends EtoolsMixinFactory.combineMixins([
     FMMixins.AppConfig,
     FMMixins.RouteHelperMixin,
-    FMMixins.ReduxMixin], Polymer.Element) {
+    FMMixins.ReduxMixin, FMMixins.PermissionController], Polymer.Element) {
     public static get is() { return 'details-tab'; }
 
     public static get properties() {
@@ -26,6 +26,14 @@ class DetailsTab extends EtoolsMixinFactory.combineMixins([
                 if (!visit) { return; }
                 this.originalData = R.clone(visit);
                 this.visit = R.clone(visit);
+            });
+
+        this.visitPermissionsSubscriber = this.subscribeOnStore(
+            (store: FMStore) => R.path(['visitDetails', 'permissions'], store),
+            (visitPermissions: IPermissionActions | undefined) => {
+                if (!visitPermissions) { return; }
+                this.permissions = R.clone(visitPermissions);
+                console.log(visitPermissions)
             });
 
         this.sitesSubscriber = this.subscribeOnStore(

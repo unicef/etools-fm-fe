@@ -4,6 +4,7 @@ import {
     STOP_VISIT_DETAILS_LOADING, STOP_VISIT_OPTIONS_LOADING,
     VisitDetailsActions
 } from '../actions/visit-details.actions';
+import { managePermissions } from './permissions.reducer';
 
 const INITIAL = {
     permissions: null,
@@ -29,7 +30,7 @@ export function visitDetails(state = INITIAL, action: VisitDetailsActions) {
 
         case SET_VISIT_OPTIONS:
             if (state.currentVisitId !== action.visitId) { return state; }
-            return Object.assign({}, state, {permissions: action.permissions});
+            return Object.assign({}, state, {permissions: managePermissions(action.permissions)});
 
         case START_VISIT_DETAILS_LOADING:
             const detailsLoadingStart = Object.assign({}, state.loading, {detailsLoading: true});

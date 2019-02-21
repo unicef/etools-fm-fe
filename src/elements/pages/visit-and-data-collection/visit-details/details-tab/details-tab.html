@@ -1,6 +1,7 @@
 <!--import [polymer/polymer-element, paper-card, iron-flex-layout, iron-icons/maps-icons, iron-collapse]-->
 
-<!--import [redux-mixin, main-page-styles, location-widget, table-styles, tab-inputs-styles]-->
+<!--import [redux-mixin, main-page-styles, location-widget, table-styles, tab-inputs-styles, route-helper-mixin,
+            etools-app-config, status-tree]-->
 
 <dom-module id="details-tab">
     <template>
@@ -72,6 +73,8 @@
                 <div class="table-title-block with-bottom-line">
                     <div class="table-title">Status</div>
                 </div>
+
+                <status-tree statuses="[[getDescriptorChoices(permissions, 'status')]]" visit-data="[[visit]]"></status-tree>
             </paper-card>
         </div>
     </template>
