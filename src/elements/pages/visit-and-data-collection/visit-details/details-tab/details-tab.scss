@@ -6,6 +6,7 @@
         padding: 24px;
         box-sizing: border-box;
 
+        .row { margin-top: 30px; }
         .details {
             padding-right: 22px;
         }
@@ -27,9 +28,25 @@
             padding: 15px 12px;
 
         }
+
+        .radio-group {
+            padding-right: 45px;
+            font-size: 17px;
+            span { margin: 0 17px; }
+        }
+    }
+
+    .action-button {
+        position: relative;
+        padding: 21px;
+        border-top: solid 1px var(--gray-light);
     }
 }
 
 *[hidden] {
     display: none !important;
+}
+
+paper-radio-button {
+    --calculated-paper-radio-button-size: 20px;
 }
