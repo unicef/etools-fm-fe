@@ -207,5 +207,9 @@ export const endpoints: Endpoints = {
 
     visitDetails: {
         template: '/api/v1/field-monitoring/visits/visits/<%=visitId%>'
+    },
+
+    sers: {
+        url: '/api/v1/field-monitoring/visits/users/?user_type'
     }
 };

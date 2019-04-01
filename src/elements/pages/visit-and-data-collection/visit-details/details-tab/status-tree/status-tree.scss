@@ -1,0 +1,63 @@
+:host {
+    position: relative;
+    display: block;
+
+    .statuses-container { padding: 12px 0; }
+
+    .status-box {
+        position: relative;
+        padding: 8px 24px;
+        box-sizing: border-box;
+        color: var(--gray-mid);
+
+        .status-state {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background-color: var(--gray-light);
+            font-size: 13px;
+            color: #fff;
+
+            iron-icon {
+                display: none;
+                width: 18px;
+                height: 18px;
+            }
+
+            iron-icon[icon="cancel"] {
+                width: 25px;
+                height: 25px;
+                color: #000000;
+            }
+        }
+
+        &.active {
+            color: var(--gray-darkest);
+            font-weight: bold;
+            .status-state {
+                background-color: var(--module-success);
+                iron-icon[icon="check"] { display: block; }
+                span { display: none; }
+            }
+        }
+
+        &.cancelled {
+            .status-state {
+                background-color: transparent;
+                iron-icon[icon="check"] { display: none; }
+                iron-icon[icon="cancel"] { display: block; }
+            }
+        }
+    }
+
+    .divider {
+        position: relative;
+        height: 40px;
+        width: 11px;
+        border-right: solid 1px var(--gray-mid);
+        margin-left: 24px;
+
+        &:first-child { display: none; }
+    }
+}

@@ -37,3 +37,8 @@ type PlannedTotal = {
     sites: number;
     tasks: number;
 };
+
+type StatusOption = {
+    display_name: string;
+    value: string;
+};

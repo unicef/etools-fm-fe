@@ -166,9 +166,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         const currentLocation = this.history[index - 1];
         if (!currentLocation) {
             // return to initial map state
-            this.clearMap();
-            this.setInitialMapView();
-            this.selectPath('level=0');
+            this.resetMapAndHistory();
         } else {
             this.selectLocation(currentLocation);
         }
@@ -191,6 +189,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
         if (!currentLocation.is_leaf) {
             console.warn('Selected Location must be low level!');
             this.selectedLocation = null;
+            this.resetMapAndHistory();
             return;
         }
 
@@ -201,6 +200,7 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
     public checkSelectedSites(selectedSites: number[], selectedLocation: string, currentList: string) {
         if (selectedSites.length && !selectedLocation) {
             this.selectedSites = [];
+            this.selectedSite = null;
             return;
         }
 
@@ -325,6 +325,15 @@ class LocationWidget extends EtoolsMixinFactory.combineMixins([
             this.polygone.removeFrom(this.map);
             this.polygone = null;
         }
+    }
+
+    private resetMapAndHistory() {
+        // return to initial map state
+        this.clearMap();
+        this.setInitialMapView();
+        this.selectPath('level=0');
+        this.removeStaticMarkers();
+        this.history = [];
     }
 
     private setInitialMapView() {

@@ -1,0 +1,29 @@
+<!--import [polymer/polymer-element, iron-flex-layout, iron-icon]-->
+
+<!--import [main-page-styles]-->
+
+<dom-module id="status-tree">
+    <template>
+        <!-- inject styles './status-tree.scss'-->
+        <style include="main-page-styles iron-flex iron-flex-alignment"></style>
+
+        <div class="statuses-container">
+            <template is="dom-repeat" items="[[statuses]]" as="status" filter="filterStatuses" id="statuses">
+
+                <div class="divider"></div>
+
+                <div class$="status-box layout horizontal center [[getStatusClass(status, visitData)]]">
+                    <div class="status-state  layout horizontal center-center">
+                        <span>[[getStatusIndex(index)]]</span>
+                        <iron-icon icon="check"></iron-icon>
+                        <iron-icon icon="cancel"></iron-icon>
+                    </div>
+
+                    [[status.display_name]]
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <!-- inject scripts './status-tree.ts'-->
+</dom-module>

@@ -17,7 +17,7 @@ class CoOverview extends EtoolsMixinFactory.combineMixins([
             },
             fullReports: {
                 type: Object,
-                value: () => ({5: {test: 'Hello world'}})
+                value: () => ({})
             },
             fullReportLoading: {
                 type: Array,

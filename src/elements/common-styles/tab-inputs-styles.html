@@ -212,11 +212,11 @@
                 --paper-input-container-focus-color: var(--module-primary);
             }
 
-            etools-dropdown-multi[readonly], etools-dropdown-multi[disabled].disabled-as-readonly,
-            etools-dropdown[readonly], etools-dropdown[disabled].disabled-as-readonly,
-            paper-textarea[readonly], paper-textarea[disabled].disabled-as-readonly,
-            paper-dropdown-menu[readonly], paper-dropdown-menu[disabled].disabled-as-readonly,
-            paper-input[readonly], paper-input[disabled].disabled-as-readonly {
+            etools-dropdown-multi[readonly]:not(.datepicker), etools-dropdown-multi[disabled].disabled-as-readonly,
+            etools-dropdown[readonly]:not(.datepicker), etools-dropdown[disabled].disabled-as-readonly,
+            paper-textarea[readonly]:not(.datepicker), paper-textarea[disabled].disabled-as-readonly,
+            paper-dropdown-menu[readonly]:not(.datepicker), paper-dropdown-menu[disabled].disabled-as-readonly,
+            paper-input[readonly]:not(.datepicker), paper-input[disabled].disabled-as-readonly {
                 --paper-input-container: #{'{
                     opacity: 1 !important;
                 }'};
@@ -256,17 +256,22 @@
 
             etools-dropdown-multi.required:not([disabled]),
             etools-dropdown-multi[required]:not([disabled]),
+            etools-dropdown-multi[required].readonly-required,
 
             etools-dropdown.required:not([disabled]),
             etools-dropdown[required]:not([disabled]),
+            etools-dropdown[required].readonly-required,
 
             paper-dropdown-menu.required:not([disabled]),
             paper-dropdown-menu[required]:not([disabled]),
+            paper-dropdown-menu[required].readonly-required,
 
             paper-textarea.required:not([disabled]),
             paper-textarea[required]:not([disabled]),
+            paper-textarea[required].readonly-required,
 
             paper-input.required:not([disabled]),
+            paper-input[required].readonly-required,
             paper-input[required]:not([disabled]) {
                 --paper-input-container-label: #{'{
                     background: url("/fm/images/required.svg") no-repeat 98% 14%/7px;

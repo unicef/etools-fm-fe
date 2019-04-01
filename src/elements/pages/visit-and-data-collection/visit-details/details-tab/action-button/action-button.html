@@ -1,0 +1,40 @@
+<!--import [polymer/polymer-element, iron-flex-layout, iron-icon, iron-icons, paper-button, paper-menu-button,
+            paper-icon-button, paper-icon-button]-->
+
+<!--import [main-page-styles]-->
+
+<dom-module id="action-button">
+    <template>
+        <!-- inject styles './action-button.scss'-->
+        <style include="main-page-styles iron-flex iron-flex-alignment"></style>
+
+        <paper-button
+                raised
+                hidden$="[[!actions.length]]"
+                on-tap="btnClicked"
+                class$="main-action status-tab-button"
+                with-menu$="[[showOtherActions(actions.length)]]">
+
+            <span class="main-action text">[[setButtonText(actions.0)]]</span>
+
+            <template is="dom-if" if="{{showOtherActions(actions.length)}}">
+                <paper-menu-button dynamic-align opened="{{statusBtnMenuOpened}}" class="option-button">
+                    <paper-icon-button icon="expand-more" slot="dropdown-trigger" class="option-button"></paper-icon-button>
+
+                    <div slot="dropdown-content">
+                        <template is="dom-repeat" items="[[actions]]" filter="filterActions" class="other-btns-template" as="action">
+                            <div class="other-options" on-click="closeMenu" action-code$="[[action.code]]">
+                                <iron-icon icon="[[setIcon(action, icons)]]" class="option-icon"></iron-icon>
+                                <span>{{setButtonText(action)}}</span>
+                            </div>
+                        </template>
+                    </div>
+
+                </paper-menu-button>
+            </template>
+
+        </paper-button>
+    </template>
+
+    <!-- inject scripts './action-button.ts'-->
+</dom-module>

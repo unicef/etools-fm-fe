@@ -1,6 +1,8 @@
-<!--import [polymer/polymer-element, paper-card, iron-flex-layout, iron-icons/maps-icons, iron-collapse]-->
+<!--import [polymer/polymer-element, paper-card, iron-flex-layout, iron-icons/maps-icons, iron-collapse, etools-datepicker,
+            paper-radio-group, paper-radio-button]-->
 
-<!--import [redux-mixin, main-page-styles, location-widget, table-styles, tab-inputs-styles]-->
+<!--import [redux-mixin, main-page-styles, location-widget, table-styles, tab-inputs-styles, route-helper-mixin,
+            etools-app-config, status-tree, action-button, common-methods]-->
 
 <dom-module id="details-tab">
     <template>
@@ -17,53 +19,138 @@
                     </div>
 
 
-                   <div class="details-form">
+                    <div class="details-form row">
 
-                       <div class="widget-dropdown">
-                           <div class="flex-auto">
-                               <span class=" layout horizontal center" on-tap="widgetToggle"><iron-icon icon="maps:map"></iron-icon>
+                        <div class="widget-dropdown">
+                            <div class="flex-auto">
+                               <span class=" layout horizontal center" on-tap="widgetToggle"><iron-icon
+                                       icon="maps:map"></iron-icon>
                                Select Location/Site with Widget</span>
-                           </div>
-                           <iron-icon icon="expand-less" class="flex-none toggle-btn" hidden$="[[!widgetOpened]]" on-tap="widgetToggle"></iron-icon>
-                           <iron-icon icon="expand-more" class="flex-none toggle-btn" hidden$="[[widgetOpened]]" on-tap="widgetToggle"></iron-icon>
-                       </div>
-                       <iron-collapse opened="[[widgetOpened]]">
-                           <div class="widget-container">
-                               <location-widget
-                                       id="locationWidget"
-                                       selected-location="{{visit.location.id}}"
-                                       multiple-sites="[[multipleSites]]"
-                                       selected-site="{{visit.location_site.id}}"></location-widget>
-                           </div>
-                       </iron-collapse>
+                            </div>
+                            <iron-icon icon="expand-less" class="flex-none toggle-btn" hidden$="[[!widgetOpened]]"
+                                       on-tap="widgetToggle"></iron-icon>
+                            <iron-icon icon="expand-more" class="flex-none toggle-btn" hidden$="[[widgetOpened]]"
+                                       on-tap="widgetToggle"></iron-icon>
+                        </div>
 
-                       <div class="layout horizontal location-inputs">
-                           <etools-dropdown
-                                   class="without-border"
-                                   selected="[[visit.location.id]]"
-                                   label="Location"
-                                   placeholder="Select Location in Widget"
-                                   options="[[locations]]"
-                                   option-label="name"
-                                   option-value="id"
-                                   readonly disabled
-                                   min-width="470px">
-                           </etools-dropdown>
+                        <div class="widget-container">
+                            <iron-collapse opened="[[widgetOpened]]">
+                                <location-widget
+                                        id="locationWidget"
+                                        selected-location="{{visit.location.id}}"
+                                        multiple-sites="[[multipleSites]]"
+                                        selected-site="{{visit.location_site.id}}"></location-widget>
+                            </iron-collapse>
+
+                            <div class="layout horizontal location-inputs">
+                                <etools-dropdown
+                                        class="without-border readonly-required"
+                                        selected="[[visit.location.id]]"
+                                        label="Location To Be Visited"
+                                        placeholder="Select Location in Widget"
+                                        options="[[locations]]"
+                                        option-label="name"
+                                        option-value="id"
+                                        readonly disabled required
+                                        min-width="470px">
+                                </etools-dropdown>
 
 
-                           <etools-dropdown
-                                   class="without-border"
-                                   selected="[[visit.location_site.id]]"
-                                   label="Site"
-                                   placeholder="Select Site in Widget"
-                                   options="[[sites]]"
-                                   option-label="name"
-                                   option-value="id"
-                                   readonly disabled
-                                   min-width="470px">
-                           </etools-dropdown>
-                       </div>
-                   </div>
+                                <etools-dropdown
+                                        class="without-border readonly-required"
+                                        selected="[[visit.location_site.id]]"
+                                        label="Site To Be Visited"
+                                        placeholder="Select Site in Widget"
+                                        options="[[sites]]"
+                                        option-label="name"
+                                        option-value="id"
+                                        readonly disabled
+                                        min-width="470px">
+                                </etools-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="layout horizontal row">
+                            <paper-input
+                                    class="datepicker flex-auto"
+                                    value="[[displayDate(visit.start_date)]]"
+                                    readonly
+                                    label="[[getDescriptorLabel(permissions, 'start_date')]]"
+                                    placeholder="[[getPlaceholder(permissions, 'start_date', 'Select')]]"
+                                    on-mousedown="openDatepicker"
+                                    data-date-picker="start_date">
+                                <etools-datepicker slot="prefix"
+                                                   id="start_date"
+                                                   is-disabled="[[getReadonlyStatus(permissions, 'start_date')]]"
+                                                   no-init
+                                                   min-date="[[getMinStartDate(permissions)]]"
+                                                   max-date="[[getMaxStartDate(startDateMax)]]"
+                                                   pretty-date="{{visit.start_date}}"
+                                                   date="{{endDateLimit}}"
+                                                   format="YYYY-MM-DD"></etools-datepicker>
+                            </paper-input>
+
+                            <paper-input
+                                    class="datepicker flex-auto"
+                                    value="[[displayDate(visit.end_date)]]"
+                                    readonly
+                                    label="[[getDescriptorLabel(permissions, 'end_date')]]"
+                                    placeholder="[[getPlaceholder(permissions, 'end_date', 'Select')]]"
+                                    on-mousedown="openDatepicker"
+                                    data-date-picker="end_date">
+                                <etools-datepicker slot="prefix"
+                                                   id="end_date"
+                                                   is-disabled="[[getReadonlyStatus(permissions, 'end_date')]]"
+                                                   no-init
+                                                   min-date="[[endDateLimit]]"
+                                                   pretty-date="{{visit.end_date}}"
+                                                   date="{{startDateMax}}"
+                                                   format="YYYY-MM-DD"></etools-datepicker>
+                            </paper-input>
+
+                            <div class="layout horizontal flex-none center-center radio-group">
+                                <span>Primary Field Monitor is</span>
+                                <paper-radio-group
+                                        selected="{{visit.visit_type}}">
+
+                                    <paper-radio-button name="staff">
+                                        Staff
+                                    </paper-radio-button>
+
+                                    <paper-radio-button name="tpm">
+                                        Third Party Monitor
+                                    </paper-radio-button>
+                                </paper-radio-group>
+                            </div>
+                        </div>
+
+                        <div class="layout horizontal row">
+                            <etools-dropdown
+                                    class="flex-1"
+                                    selected-value="[[visit.primary_field_monitor]]"
+                                    label="[[getDescriptorLabel(permissions, 'primary_field_monitor')]]"
+                                    placeholder="[[getPlaceholder(permissions, 'primary_field_monitor', 'Select')]]"
+                                    options="[[]]"
+                                    option-label="name"
+                                    option-value="id"
+                                    readonly disabled
+                                    min-width="470px">
+                            </etools-dropdown>
+
+                            <etools-dropdown-multi
+                                    class="flex-3"
+                                    selected="[[visit.team_members]]"
+                                    label="[[getDescriptorLabel(permissions, 'team_members')]]"
+                                    placeholder="[[getPlaceholder(permissions, 'team_members', 'Select')]]"
+                                    options="[[]]"
+                                    option-label="name"
+                                    option-value="id"
+                                    readonly disabled
+                                    min-width="470px">
+                            </etools-dropdown-multi>
+                        </div>
+
+                    </div>
                 </paper-card>
 
             </div>
@@ -71,6 +158,12 @@
             <paper-card class="status-card flex-none">
                 <div class="table-title-block with-bottom-line">
                     <div class="table-title">Status</div>
+                </div>
+
+                <status-tree statuses="[[getDescriptorChoices(permissions, 'status')]]" visit-data="[[visit]]"></status-tree>
+
+                <div class="action-button">
+                    <action-button actions="[[permissions.allowed_actions]]"></action-button>
                 </div>
             </paper-card>
         </div>

@@ -16,7 +16,7 @@ export function permissions(state = INITIAL, action: PermissionsActions) {
     }
 }
 
-function managePermissions(backendPermissions: IBackendPermissions): IPermissionActions {
+export function managePermissions(backendPermissions: IBackendPermissions): IPermissionActions {
     const actions: IBackendPermissionActions = backendPermissions.actions;
     const title: string = backendPermissions.name;
 

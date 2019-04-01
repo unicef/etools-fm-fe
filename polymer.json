@@ -4,6 +4,7 @@
   "fragments": [
     "src/build-elements/pages/overview-planing/overview-planing.html",
     "src/build-elements/pages/settings/settings.html",
+    "src/build-elements/pages/visit-and-data-collection/visit-and-data-collection.html",
     "src/build-elements/pages/not-found-page-view/not-found-page-view.html"
   ],
   "sources": [
