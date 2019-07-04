@@ -1,4 +1,4 @@
-import {PolymerElement, html} from '@polymer/polymer';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element';
 import '@polymer/iron-icons/communication-icons';
 
 /* eslint-disable max-len */
