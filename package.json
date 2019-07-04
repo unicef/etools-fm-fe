@@ -1,11 +1,12 @@
 {
-  "name": "pwa-starter-kit",
+  "name": "etools-apps-base-shell",
+  "description": "Etools Apps Base - starting point for etools apps - based on PWA starter kit",
   "version": "0.9.0",
   "contributors": [
-    "The Polymer Authors"
+    "eTools Team"
   ],
   "license": "BSD-3-Clause",
-  "repository": "Polymer/pwa-starter-kit",
+  "repository": "https://github.com/unicef-polymer/etools-frontend-template",
   "scripts": {
     "start": "gulp serve",
     "build": "tsc && npm run build:prpl-server && npm run build:static",

@@ -9,10 +9,12 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "outDir": "src"
   },
   "include": [
-    "src/**/*.ts"
+    "src_ts/**/*.ts"
   ],
   "exclude": []
 }

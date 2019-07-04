@@ -4,6 +4,7 @@ import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
+import '../../common/support-btn';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import {store, RootState} from "../../../store";
@@ -36,6 +37,10 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
 
         #menuButton {
           display: block;
+          color: var(--header-color);
+        }
+
+        support-btn{
           color: var(--header-color);
         }
 
@@ -87,6 +92,8 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
         <div class="content-align">
           <!--<countries-dropdown id="countries" countries="[[countries]]"-->
                               <!--current-country="[[profile.country]]"></countries-dropdown>-->
+
+          <support-btn></support-btn> 
 
           <!--<etools-profile-dropdown-->
               <!--sections="[[allSections]]"-->
