@@ -1,10 +1,11 @@
 import {html} from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
-import './menu/styles/app-drawer-styles.js';
+import {appDrawerStyles} from './menu/styles/app-drawer-styles';
 
 export const AppShellStyles = html`
-<style include="app-drawer-styles">
+${appDrawerStyles}
+<style>
   :host {
     display: block;
   }

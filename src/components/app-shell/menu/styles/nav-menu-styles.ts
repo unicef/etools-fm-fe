@@ -1,9 +1,8 @@
-import '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/polymer-element';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
-const documentContainer: HTMLTemplateElement = document.createElement('template');
-documentContainer.innerHTML = `<dom-module id="nav-menu-styles">
-  <template>
+// language=HTML
+export const navMenuStyles = html`
     <style>
       *[hidden] {
         display: none !important;
@@ -170,7 +169,4 @@ documentContainer.innerHTML = `<dom-module id="nav-menu-styles">
         position: relative;
       }
     </style>
-  </template>
-</dom-module>`;
-
-document.head.appendChild(documentContainer.content);
+`;
