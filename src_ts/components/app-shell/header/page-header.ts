@@ -1,16 +1,17 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
-import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners';
+import '@polymer/polymer/lib/elements/dom-if';
+import '@polymer/iron-flex-layout/iron-flex-layout';
+import '@polymer/app-layout/app-toolbar/app-toolbar';
+import '@polymer/paper-icon-button/paper-icon-button';
 import '../../common/support-btn';
 
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../store';
 
-import {isProductionServer, isStagingServer} from '../../../config/config.js';
+import {isProductionServer, isStagingServer} from '../../../config/config';
 import {updateDrawerState} from '../../../actions/app';
+import {property} from '@polymer/decorators/lib/decorators';
 
 /**
  * page header element
@@ -109,11 +110,8 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
     `;
   }
 
-  public static get properties() {
-    return {
-      _isStaging: Boolean
-    };
-  }
+  @property({type: Boolean})
+  _isStaging: boolean = false;
 
   // @ts-ignore
   private _isStaging: boolean = false;

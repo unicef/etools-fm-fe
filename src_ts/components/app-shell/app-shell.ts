@@ -35,7 +35,7 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 
 import {AppShellStyles} from './app-shell-styles';
 
-import {AppMenuMixin} from './menu/mixins/app-menu-mixin.js';
+import AppMenuMixin from './menu/mixins/app-menu-mixin';
 
 import './menu/app-menu.js';
 import './header/page-header.js';

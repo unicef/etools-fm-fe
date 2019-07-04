@@ -1,106 +1,104 @@
-import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element';
+import {property} from '@polymer/decorators/lib/decorators';
+import {Constructor} from '../../../../types/globals';
 
 /**
  * App menu functionality mixin
  * @polymer
  * @mixinFunction
  */
-export const AppMenuMixin = dedupingMixin((superClass: any) => class extends superClass {
+function AppMenuMixin<T extends Constructor<PolymerElement>>(baseClass: T) {
+  return class AppMenuMixinClass extends baseClass {
 
-  public static get properties() {
-    return {
-      smallMenu: {
-        type: Boolean
+    @property({type: Boolean})
+    smallMenu: boolean = false;
+
+    public connectedCallback() {
+      super.connectedCallback();
+      this._initMenuListeners();
+      this._initMenuSize();
+    }
+
+    public disconnectedCallback() {
+      super.disconnectedCallback();
+      this._removeMenuListeners();
+    }
+
+    private _initMenuListeners(): void {
+      this._toggleSmallMenu = this._toggleSmallMenu.bind(this);
+      this._resizeMainLayout = this._resizeMainLayout.bind(this);
+      this._toggleDrawer = this._toggleDrawer.bind(this);
+
+      this.addEventListener('toggle-small-menu', this._toggleSmallMenu);
+      this.addEventListener('resize-main-layout', this._resizeMainLayout);
+      this.addEventListener('drawer', this._toggleDrawer);
+    }
+
+    private _removeMenuListeners(): void {
+      this.removeEventListener('toggle-small-menu', this._toggleSmallMenu);
+      this.removeEventListener('resize-main-layout', this._resizeMainLayout);
+      this.removeEventListener('drawer', this._toggleDrawer);
+    }
+
+    private _initMenuSize(): void {
+      this.set('smallMenu', this._isSmallMenuActive());
+    }
+
+    private _isSmallMenuActive(): boolean {
+      /**
+       * etoolsPmpSmallMenu localStorage value must be 0 or 1
+       */
+      const menuTypeStoredVal: string | null = localStorage.getItem('etoolsAppSmallMenuIsActive');
+      if (!menuTypeStoredVal) {
+        return false;
       }
-    };
-  }
-
-  public smallMenu: boolean = false;
-
-  public connectedCallback() {
-    super.connectedCallback();
-    this._initMenuListeners();
-    this._initMenuSize();
-  }
-
-  public disconnectedCallback() {
-    super.disconnectedCallback();
-    this._removeMenuListeners();
-  }
-
-  private _initMenuListeners(): void {
-    this._toggleSmallMenu = this._toggleSmallMenu.bind(this);
-    this._resizeMainLayout = this._resizeMainLayout.bind(this);
-    this._toggleDrawer = this._toggleDrawer.bind(this);
-
-    this.addEventListener('toggle-small-menu', this._toggleSmallMenu);
-    this.addEventListener('resize-main-layout', this._resizeMainLayout);
-    this.addEventListener('drawer', this._toggleDrawer);
-  }
-
-  private _removeMenuListeners(): void {
-    this.removeEventListener('toggle-small-menu', this._toggleSmallMenu);
-    this.removeEventListener('resize-main-layout', this._resizeMainLayout);
-    this.removeEventListener('drawer', this._toggleDrawer);
-  }
-
-  private _initMenuSize(): void {
-    this.set('smallMenu', this._isSmallMenuActive());
-  }
-
-  private _isSmallMenuActive(): boolean {
-    /**
-     * etoolsPmpSmallMenu localStorage value must be 0 or 1
-     */
-    const menuTypeStoredVal: string | null = localStorage.getItem('etoolsAppSmallMenuIsActive');
-    if (!menuTypeStoredVal) {
-      return false;
+      return !!parseInt(menuTypeStoredVal, 10);
     }
-    return !!parseInt(menuTypeStoredVal, 10);
-  }
 
-  private _toggleSmallMenu(e: Event): void {
-    e.stopImmediatePropagation();
-    this.set('smallMenu', !this.smallMenu);
-    this._smallMenuValueChanged(this.smallMenu);
-  }
-
-  protected _resizeMainLayout(e: Event) {
-    e.stopImmediatePropagation();
-    this._updateDrawerStyles();
-    this._notifyLayoutResize();
-  }
-
-  private _smallMenuValueChanged(newVal: boolean) {
-    const localStorageVal: number = newVal ? 1 : 0;
-    localStorage.setItem('etoolsAppSmallMenuIsActive', String(localStorageVal));
-  }
-
-  private _updateDrawerStyles(): void {
-    const drawerLayout = this.$.layout;
-    if (drawerLayout) {
-      drawerLayout.updateStyles();
+    private _toggleSmallMenu(e: Event): void {
+      e.stopImmediatePropagation();
+      this.set('smallMenu', !this.smallMenu);
+      this._smallMenuValueChanged(this.smallMenu);
     }
-    const drawer = this.$.drawer;
-    if (drawer) {
-      drawer.updateStyles();
-    }
-  }
 
-  private _notifyLayoutResize(): void {
-    const layout = this.$.layout;
-    if (layout) {
-      layout.notifyResize();
+    protected _resizeMainLayout(e: Event) {
+      e.stopImmediatePropagation();
+      this._updateDrawerStyles();
+      this._notifyLayoutResize();
     }
-    const headerLayout = this.$.appHeadLayout;
-    if (headerLayout) {
-      headerLayout.notifyResize();
+
+    private _smallMenuValueChanged(newVal: boolean) {
+      const localStorageVal: number = newVal ? 1 : 0;
+      localStorage.setItem('etoolsAppSmallMenuIsActive', String(localStorageVal));
     }
-  }
 
-  private _toggleDrawer(): void {
-    this.$.drawer.toggle();
-  }
+    private _updateDrawerStyles(): void {
+      const drawerLayout = this.$.layout;
+      if (drawerLayout) {
+        drawerLayout.updateStyles();
+      }
+      const drawer = this.$.drawer;
+      if (drawer) {
+        drawer.updateStyles();
+      }
+    }
 
-});
+    private _notifyLayoutResize(): void {
+      const layout = this.$.layout;
+      if (layout) {
+        layout.notifyResize();
+      }
+      const headerLayout = this.$.appHeadLayout;
+      if (headerLayout) {
+        headerLayout.notifyResize();
+      }
+    }
+
+    private _toggleDrawer(): void {
+      this.$.drawer.toggle();
+    }
+  };
+}
+
+export default AppMenuMixin;
 
