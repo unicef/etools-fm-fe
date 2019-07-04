@@ -52,7 +52,7 @@ export const AppMenuMixin = dedupingMixin((superClass: any) => class extends sup
     /**
      * etoolsPmpSmallMenu localStorage value must be 0 or 1
      */
-    let menuTypeStoredVal: string | null = localStorage.getItem('etoolsAppSmallMenuIsActive');
+    const menuTypeStoredVal: string | null = localStorage.getItem('etoolsAppSmallMenuIsActive');
     if (!menuTypeStoredVal) {
       return false;
     }
@@ -72,27 +72,27 @@ export const AppMenuMixin = dedupingMixin((superClass: any) => class extends sup
   }
 
   private _smallMenuValueChanged(newVal: boolean) {
-    let localStorageVal: number = newVal ? 1 : 0;
+    const localStorageVal: number = newVal ? 1 : 0;
     localStorage.setItem('etoolsAppSmallMenuIsActive', String(localStorageVal));
   }
 
   private _updateDrawerStyles(): void {
-    let drawerLayout = this.$.layout;
+    const drawerLayout = this.$.layout;
     if (drawerLayout) {
       drawerLayout.updateStyles();
     }
-    let drawer = this.$.drawer;
+    const drawer = this.$.drawer;
     if (drawer) {
       drawer.updateStyles();
     }
   }
 
   private _notifyLayoutResize(): void {
-    let layout = this.$.layout;
+    const layout = this.$.layout;
     if (layout) {
       layout.notifyResize();
     }
-    let headerLayout = this.$.appHeadLayout;
+    const headerLayout = this.$.appHeadLayout;
     if (headerLayout) {
       headerLayout.notifyResize();
     }

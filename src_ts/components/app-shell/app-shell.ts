@@ -9,15 +9,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 // import { LitElement, html, property, PropertyValues } from '@polymer/lit-element';
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import { setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
-import {installRouter} from "pwa-helpers/router.js";
-import {navigate} from "../../actions/app.js";
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
+import {installRouter} from 'pwa-helpers/router.js';
+import {navigate} from '../../actions/app.js';
 
 // This element is connected to the Redux store.
-import { store, RootState } from '../../store.js';
+import {store, RootState} from '../../store.js';
 
 // These are the actions needed by this element.
 import {
@@ -38,8 +38,8 @@ import {AppShellStyles} from './app-shell-styles';
 import {AppMenuMixin} from './menu/mixins/app-menu-mixin.js';
 
 import './menu/app-menu.js';
-import './header/page-header.js'
-import './footer/page-footer.js'
+import './header/page-header.js';
+import './footer/page-footer.js';
 
 import './app-theme.js';
 
@@ -104,9 +104,9 @@ class AppShell extends connect(store)(AppMenuMixin(PolymerElement) as any) {
 
   public connectedCallback() {
     super.connectedCallback();
-    installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installMediaQueryWatcher(`(min-width: 460px)`,
-        () => store.dispatch(updateDrawerState(false)));
+      () => store.dispatch(updateDrawerState(false)));
   }
 
   public stateChanged(state: RootState) {

@@ -1,7 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
 // These are the shared styles needed by this element.
-import { SharedStyles } from '../styles/shared-styles.js';
+import {SharedStyles} from '../styles/shared-styles.js';
 
 class PageNotFound extends PolymerElement {
 

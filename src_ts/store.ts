@@ -10,8 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 declare global {
   interface Window {
-    process?: Object;
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    process?: Record<string, any>;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose; // eslint-disable-line
   }
 }
 
@@ -23,11 +23,11 @@ import {
   Reducer,
   StoreEnhancer
 } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
+import thunk, {ThunkMiddleware} from 'redux-thunk';
+import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer.js';
 
-import app, { AppState } from './reducers/app.js';
-import { AppAction } from './actions/app.js';
+import app, {AppState} from './reducers/app.js';
+import {AppAction} from './actions/app.js';
 
 // Overall state extends static states and partials lazy states.
 export interface RootState {

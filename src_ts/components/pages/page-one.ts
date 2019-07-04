@@ -1,7 +1,7 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-styles/element-styles/paper-material-styles.js';
 
-import { SharedStyles } from '../styles/shared-styles.js';
+import {SharedStyles} from '../styles/shared-styles.js';
 /**
  * @polymer
  * @customElement

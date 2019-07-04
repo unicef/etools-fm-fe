@@ -1,15 +1,15 @@
-const PROD_DOMAIN: string = 'etools.unicef.org';
-const STAGING_DOMAIN: string = 'etools-staging.unicef.org';
-const DEV_DOMAIN: string = 'etools-dev.unicef.org';
-const DEMO_DOMAIN: string = 'etools-demo.unicef.org';
+const PROD_DOMAIN = 'etools.unicef.org';
+const STAGING_DOMAIN = 'etools-staging.unicef.org';
+const DEV_DOMAIN = 'etools-dev.unicef.org';
+const DEMO_DOMAIN = 'etools-demo.unicef.org';
 
 export const isProductionServer = () => {
-  let location = window.location.href;
+  const location = window.location.href;
   return location.indexOf(PROD_DOMAIN) > -1;
 };
 
 export const isStagingServer = () => {
-  let location = window.location.href;
+  const location = window.location.href;
   return location.indexOf(STAGING_DOMAIN) > -1;
 };
 

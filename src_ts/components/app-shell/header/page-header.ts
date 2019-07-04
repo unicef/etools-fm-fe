@@ -1,4 +1,4 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
@@ -6,11 +6,11 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '../../common/support-btn';
 
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import {store, RootState} from "../../../store";
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {store} from '../../../store';
 
 import {isProductionServer, isStagingServer} from '../../../config/config.js';
-import {updateDrawerState} from "../../../actions/app";
+import {updateDrawerState} from '../../../actions/app';
 
 /**
  * page header element
@@ -125,9 +125,9 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
   }
 
   // @ts-ignore
-  public stateChanged(state: RootState) {
-    // TODO
-  }
+  // public stateChanged(state: RootState) {
+  //   // TODO
+  // }
 
   public menuBtnClicked() {
     store.dispatch(updateDrawerState(true));
