@@ -2,6 +2,7 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-styles/element-styles/paper-material-styles.js';
 
 import {SharedStyles} from '../styles/shared-styles.js';
+import {fireEvent} from "../utils/fire-custom-event";
 /**
  * @polymer
  * @customElement
@@ -26,6 +27,13 @@ class PageOne extends PolymerElement {
         </p>
       </section>
     `;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
+    fireEvent(this, 'toast', {text: 'Notification test 1', showCloseBtn: true});
+    fireEvent(this, 'toast', {text: 'Notification test 2', showCloseBtn: true});
   }
 
 }

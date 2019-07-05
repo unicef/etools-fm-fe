@@ -42,6 +42,7 @@ import './footer/page-footer.js';
 import './app-theme.js';
 import {property} from '@polymer/decorators/lib/decorators';
 import {AppMenuHelper} from './menu/app-menu-helper';
+import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
 
 // Gesture events like tap and track generated from touch will not be
 // preventable, allowing for better scrolling performance.
@@ -99,7 +100,8 @@ class AppShell extends connect(store)(PolymerElement) {
   @property({type: Boolean})
   smallMenu: boolean = false;
 
-  private appMenuHelper: AppMenuHelper = {} as AppMenuHelper;
+  private appMenuHelper = {} as AppMenuHelper;
+  private appToastsNotificationsHelper = {} as ToastNotificationHelper;
 
   public connectedCallback() {
     super.connectedCallback();
@@ -107,6 +109,10 @@ class AppShell extends connect(store)(PolymerElement) {
     this.appMenuHelper = new AppMenuHelper(this as PolymerElement);
     this.appMenuHelper.initMenuListeners();
     this.appMenuHelper.initMenuSize();
+
+    // init toasts notifications queue
+    this.appToastsNotificationsHelper = new ToastNotificationHelper(this as PolymerElement);
+    this.appToastsNotificationsHelper.addToastNotificationListeners();
 
     installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installMediaQueryWatcher(`(min-width: 460px)`,
@@ -117,6 +123,8 @@ class AppShell extends connect(store)(PolymerElement) {
     super.disconnectedCallback();
     // use app menu helper object and remove small menu event listeners
     this.appMenuHelper.removeMenuListeners();
+    // remove toasts notifications listeners
+    this.appToastsNotificationsHelper.removeToastNotificationListeners();
   }
 
   public stateChanged(state: RootState) {
