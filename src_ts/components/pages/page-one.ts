@@ -6,6 +6,8 @@ import {SharedStyles} from '../styles/shared-styles.js';
 import '../layout/page-content-header';
 import {property} from '@polymer/decorators';
 import '../layout/etools-tabs';
+import {fireEvent} from "../utils/fire-custom-event";
+
 
 /**
  * @polymer
@@ -53,8 +55,8 @@ class PageOne extends PolymerElement {
     `;
   }
 
-  @property({type: Array})
-  pageTabs = [
+ @property({type: Array})
+ pageTabs = [
     {
       tab: 'tab1',
       tabLabel: 'Tab1',
@@ -68,6 +70,13 @@ class PageOne extends PolymerElement {
 
     }
   ];
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
+    fireEvent(this, 'toast', {text: 'Notification test 1', showCloseBtn: true});
+    fireEvent(this, 'toast', {text: 'Notification test 2', showCloseBtn: true});
+  }
 
 }
 

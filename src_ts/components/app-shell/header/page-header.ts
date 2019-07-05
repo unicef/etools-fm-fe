@@ -113,9 +113,6 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
   @property({type: Boolean})
   _isStaging: boolean = false;
 
-  // @ts-ignore
-  private _isStaging: boolean = false;
-
   public connectedCallback() {
     super.connectedCallback();
     this._setBgColor();
