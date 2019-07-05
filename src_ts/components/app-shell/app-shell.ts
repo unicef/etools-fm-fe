@@ -35,13 +35,13 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 
 import {AppShellStyles} from './app-shell-styles';
 
-import AppMenuMixin from './menu/mixins/app-menu-mixin';
-
 import './menu/app-menu.js';
 import './header/page-header.js';
 import './footer/page-footer.js';
 
 import './app-theme.js';
+import {property} from '@polymer/decorators/lib/decorators';
+import {AppMenuHelper} from './menu/app-menu-helper';
 
 // Gesture events like tap and track generated from touch will not be
 // preventable, allowing for better scrolling performance.
@@ -49,7 +49,7 @@ setPassiveTouchGestures(true);
 
 setRootPath('/');
 
-class AppShell extends connect(store)(AppMenuMixin(PolymerElement) as any) {
+class AppShell extends connect(store)(PolymerElement) {
 
   public static get template() {
     // main template
@@ -90,23 +90,33 @@ class AppShell extends connect(store)(AppMenuMixin(PolymerElement) as any) {
     `;
   }
 
-  public static get properties() {
-    return {
-      _drawerOpened: Boolean,
-      _page: String
-    };
-  }
+  @property({type: Boolean})
+  _drawerOpened: boolean = false;
 
-  // @ts-ignore
-  private _page: string = '';
-  // @ts-ignore
-  private _drawerOpened: boolean = false;
+  @property({type: Boolean})
+  _page: string = '';
+
+  @property({type: Boolean})
+  smallMenu: boolean = false;
+
+  private appMenuHelper: AppMenuHelper = {} as AppMenuHelper;
 
   public connectedCallback() {
     super.connectedCallback();
+    // init app menu helper object and set small menu event listeners
+    this.appMenuHelper = new AppMenuHelper(this as PolymerElement);
+    this.appMenuHelper.initMenuListeners();
+    this.appMenuHelper.initMenuSize();
+
     installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installMediaQueryWatcher(`(min-width: 460px)`,
       () => store.dispatch(updateDrawerState(false)));
+  }
+
+  public disconnectedCallback() {
+    super.disconnectedCallback();
+    // use app menu helper object and remove small menu event listeners
+    this.appMenuHelper.removeMenuListeners();
   }
 
   public stateChanged(state: RootState) {
