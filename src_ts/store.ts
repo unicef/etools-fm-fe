@@ -19,7 +19,7 @@ import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer.js';
 import app, {AppState} from './reducers/app.js';
 import {AppAction} from './actions/app.js';
 
-import {UserDataAction} from './actions/user.js';
+import {UserAction} from './actions/user.js';
 import {UserState} from './reducers/user.js';
 
 // Overall state extends static states and partials lazy states.
@@ -28,7 +28,9 @@ export interface RootState {
   user?: UserState;
 }
 
-export type RootAction = AppAction | UserDataAction; // could be more than one action AppAction | OtherAppAction ...
+// could be more than one action AppAction | OtherAppAction ...
+// TODO: remove any and find a way to fix generated ts-lint errors
+export type RootAction = AppAction | UserAction | any;
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.

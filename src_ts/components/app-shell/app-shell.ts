@@ -45,9 +45,6 @@ import {ToastNotificationHelper} from '../common/toast-notifications/toast-notif
 import user from '../../reducers/user';
 import {ROOT_PATH} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
-// Gesture events like tap and track generated from touch will not be
-// preventable, allowing for better scrolling performance.
-setPassiveTouchGestures(true);
 
 setRootPath(ROOT_PATH);
 
@@ -114,6 +111,9 @@ class AppShell extends connect(store)(PolymerElement) {
 
   constructor() {
     super();
+    // Gesture events like tap and track generated from touch will not be
+    // preventable, allowing for better scrolling performance.
+    setPassiveTouchGestures(true);
     // init toasts notifications queue
     this.appToastsNotificationsHelper = new ToastNotificationHelper(this as PolymerElement);
     this.appToastsNotificationsHelper.addToastNotificationListeners();
@@ -145,7 +145,11 @@ class AppShell extends connect(store)(PolymerElement) {
   public stateChanged(state: RootState) {
     this._page = state.app!.page;
     this._drawerOpened = state.app!.drawerOpened;
-    console.log(state);
+  }
+
+  // TODO: just for testing...
+  public getState() {
+    console.log(store.getState());
   }
 
   protected _isActivePage(_page: string, expectedPageName: string): boolean {

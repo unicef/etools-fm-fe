@@ -10,19 +10,15 @@
 
 import {Action, ActionCreator} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-import {RootState} from '../store.js';
+import {RootState} from '../store';
 import {ROOT_PATH} from '../config/config';
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
 
-export interface AppActionUpdatePage extends Action<'UPDATE_PAGE'> {
-  page: string;
-}
+export interface AppActionUpdatePage extends Action<'UPDATE_PAGE'> {page: string};
+export interface AppActionUpdateDrawerState extends Action<'UPDATE_DRAWER_STATE'> {opened: boolean};
 
-export interface AppActionUpdateDrawerState extends Action<'UPDATE_DRAWER_STATE'> {
-  opened: boolean;
-}
 export type AppAction = AppActionUpdatePage | AppActionUpdateDrawerState;
 
 type ThunkResult = ThunkAction<void, RootState, undefined, AppAction>;
