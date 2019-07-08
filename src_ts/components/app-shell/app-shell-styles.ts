@@ -9,16 +9,15 @@ ${appDrawerStyles}
   :host {
     display: block;
   }
-    
+
   app-header-layout {
     position: relative;
   }
-    
+
   .main-content {
     @apply --layout-flex;
-    padding: 24px;
   }
-  
+
   .page {
     display: none;
   }
@@ -26,6 +25,6 @@ ${appDrawerStyles}
   .page[active] {
     display: block;
   }
-    
+
 </style>
 `;
