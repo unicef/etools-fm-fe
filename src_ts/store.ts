@@ -28,7 +28,7 @@ export interface RootState {
   user?: UserState;
 }
 
-export type RootAction = AppAction | UserDataAction | any; // could be more than one action AppAction | OtherAppAction ...
+export type RootAction = AppAction | UserDataAction; // could be more than one action AppAction | OtherAppAction ...
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.

@@ -5,17 +5,17 @@ import {RootState} from "../store";
 
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 
-export interface IUpdateUserActionData extends Action<'UPDATE_USER_DATA'> {
-  userData: IEtoolsUserModel;
+export interface IUpdateUserActionData extends Action {
+  data: IEtoolsUserModel;
 }
 
 export type UserDataAction = IUpdateUserActionData;
 // @ts-ignore - for now
 type ThunkResult = ThunkAction<void, RootState, undefined, UserDataAction>;
 
-export const updateUserData: ActionCreator<IUpdateUserActionData> = (userData: IEtoolsUserModel) => {
+export const updateUserData: ActionCreator<IUpdateUserActionData> = (data: IEtoolsUserModel) => {
   return {
     type: UPDATE_USER_DATA,
-    userData: userData
+    data: data
   };
 };
