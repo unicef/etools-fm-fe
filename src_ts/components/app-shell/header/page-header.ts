@@ -4,6 +4,7 @@ import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
+import '@unicef-polymer/etools-app-selector/etools-app-selector';
 import '../../common/support-btn';
 
 import {connect} from 'pwa-helpers/connect-mixin.js';
@@ -82,7 +83,7 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
       <app-toolbar sticky class="content-align">
         <paper-icon-button id="menuButton" icon="menu" on-tap="menuBtnClicked"></paper-icon-button>
         <div class="titlebar content-align">
-          <!--<etools-app-selector id="selector"></etools-app-selector>-->
+          <etools-app-selector id="selector"></etools-app-selector>
           <img id="app-logo" src$="[[rootPath]]../../../../images/etools-logo-color-white.svg">
           <dom-if if="[[_isStaging]]">
             <template>

@@ -9,7 +9,7 @@ import {GenericObject} from '../../../types/globals';
 export class ToastNotificationHelper {
 
   private appShellEl: PolymerElement;
-  private _toast: EtoolsToast;
+  private readonly _toast: EtoolsToast;
   private _toastQueue: GenericObject[] = [];
   private TOAST_EL_ID: string = 'toastNotificationQueueEl';
 

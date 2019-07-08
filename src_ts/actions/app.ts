@@ -11,6 +11,7 @@
 import {Action, ActionCreator} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from '../store.js';
+import {ROOT_PATH} from '../config/config';
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
@@ -61,7 +62,7 @@ export const updateDrawerState: ActionCreator<AppActionUpdateDrawerState> = (ope
 
 export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch) => {
   // Extract the page name from path.
-  const page = path === '/' ? 'page-one' : path.slice(1);
+  const page = path === ROOT_PATH ? 'page-one' : path.slice(1);
 
   // Any other info you might want to extract from the path (like page type),
   // you can do here

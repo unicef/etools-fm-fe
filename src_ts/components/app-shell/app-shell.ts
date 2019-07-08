@@ -14,17 +14,16 @@ import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/s
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 import {installRouter} from 'pwa-helpers/router.js';
-import {navigate} from '../../actions/app.js';
 
 // This element is connected to the Redux store.
-import {store, RootState} from '../../store.js';
+import {store, RootState} from '../../store';
 
 // These are the actions needed by this element.
 import {
-  // navigate,
+  navigate,
   // updateOffline,
   updateDrawerState
-} from '../../actions/app.js';
+} from '../../actions/app';
 
 // These are the elements needed by this element.
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
@@ -43,13 +42,23 @@ import './app-theme.js';
 import {property} from '@polymer/decorators/lib/decorators';
 import {AppMenuHelper} from './menu/app-menu-helper';
 import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
-
+import user from '../../reducers/user';
+import {ROOT_PATH} from '../../config/config';
+import {getCurrentUserData} from '../user/user-actions';
 // Gesture events like tap and track generated from touch will not be
 // preventable, allowing for better scrolling performance.
 setPassiveTouchGestures(true);
 
-setRootPath('/');
+setRootPath(ROOT_PATH);
 
+store.addReducers({
+  user
+});
+
+/**
+ * @customElement
+ * @polymer
+ */
 class AppShell extends connect(store)(PolymerElement) {
 
   public static get template() {
@@ -103,6 +112,13 @@ class AppShell extends connect(store)(PolymerElement) {
   private appMenuHelper = {} as AppMenuHelper;
   private appToastsNotificationsHelper = {} as ToastNotificationHelper;
 
+  constructor() {
+    super();
+    // init toasts notifications queue
+    this.appToastsNotificationsHelper = new ToastNotificationHelper(this as PolymerElement);
+    this.appToastsNotificationsHelper.addToastNotificationListeners();
+  }
+
   public connectedCallback() {
     super.connectedCallback();
     // init app menu helper object and set small menu event listeners
@@ -110,13 +126,12 @@ class AppShell extends connect(store)(PolymerElement) {
     this.appMenuHelper.initMenuListeners();
     this.appMenuHelper.initMenuSize();
 
-    // init toasts notifications queue
-    this.appToastsNotificationsHelper = new ToastNotificationHelper(this as PolymerElement);
-    this.appToastsNotificationsHelper.addToastNotificationListeners();
-
     installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installMediaQueryWatcher(`(min-width: 460px)`,
       () => store.dispatch(updateDrawerState(false)));
+
+    // TODO: just testing...
+    getCurrentUserData();
   }
 
   public disconnectedCallback() {
@@ -130,6 +145,7 @@ class AppShell extends connect(store)(PolymerElement) {
   public stateChanged(state: RootState) {
     this._page = state.app!.page;
     this._drawerOpened = state.app!.drawerOpened;
+    console.log(state);
   }
 
   protected _isActivePage(_page: string, expectedPageName: string): boolean {
