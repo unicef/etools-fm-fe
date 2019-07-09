@@ -1,4 +1,5 @@
 import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 
@@ -6,9 +7,14 @@ import {SharedStyles} from '../styles/shared-styles';
 import '../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
 import '../common/layout/etools-tabs';
-import {fireEvent} from '../utils/fire-custom-event';
 import {pageContentHeaderSlottedStyles} from '../common/layout/page-content-header/page-content-header-slotted-styles';
 import '../common/layout/status/etools-status';
+import {pageLayoutStyles} from '../styles/page-layout-styles';
+
+import './psea-engagements/engagement-details';
+import './psea-engagements/engagement-questionnaires';
+import {GenericObject} from "../../types/globals";
+
 /**
  * @polymer
  * @customElement
@@ -19,18 +25,14 @@ class PageOne extends PolymerElement {
     // main template
     // language=HTML
     return html`
-      ${SharedStyles} ${pageContentHeaderSlottedStyles}
-      <style include="paper-material-styles">
-        #page-content {
-          margin: 24px;
-        }
-      </style>
+      ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles}
+      <style include="paper-material-styles"></style>
 
       <etools-status></etools-status>
 
       <page-content-header with-tabs-visible>
       
-        <h1 slot="page-title">Page title</h1>
+        <h1 slot="page-title">[[engagement.title]]</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
           <paper-button raised>Action 1</paper-button>
@@ -39,21 +41,17 @@ class PageOne extends PolymerElement {
 
         <etools-tabs slot="tabs"
                      tabs="[[pageTabs]]"
-                     active-tab="tab1"
-                     on-iron-select="_handleTabSelectAction"></etools-tabs>
+                     active-tab="{{activeTab}}"></etools-tabs>
       </page-content-header>
-
-
-      <section id="page-content" class="paper-material" elevation="1">
-        <h1>Page 1</h1>
-        <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-        a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-        but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the
-        1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-        publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
+      
+      <section class="paper-material page-content" elevation="1">
+        <template is="dom-if" if="[[isActiveTab(activeTab, 'details')]]">
+          <engagement-details></engagement-details>
+        </template>
+        
+        <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires‎')]]">
+          <engagement-questionnaires></engagement-questionnaires>
+        </template>
       </section>
     `;
   }
@@ -61,27 +59,33 @@ class PageOne extends PolymerElement {
   @property({type: Array})
   pageTabs = [
     {
-      tab: 'tab1',
-      tabLabel: 'Tab1',
+      tab: 'details',
+      tabLabel: 'Details',
       hidden: false
 
     },
     {
-      tab: 'tab2',
-      tabLabel: 'Tab2',
+      tab: 'questionnaires‎',
+      tabLabel: 'Questionnaires‎',
       hidden: false
     }
   ];
 
+  @property({type: String})
+  activeTab: string = 'details';
+
+  @property({type: Object})
+  engagement: GenericObject = {
+    title: 'Engagement title'
+  };
+
   connectedCallback(): void {
     super.connectedCallback();
-    fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
-    fireEvent(this, 'toast', {text: 'Notification test 1', showCloseBtn: true});
-    fireEvent(this, 'toast', {text: 'Notification test 2', showCloseBtn: true});
+    // fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
   }
 
-  _handleTabSelectAction(e: CustomEvent) {
-    console.log('tab selected...', e.detail);
+  isActiveTab(tab: string, expectedTab: string): boolean {
+    return tab === expectedTab;
   }
 
 }
