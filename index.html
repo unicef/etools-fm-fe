@@ -108,10 +108,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       * {
         outline: none;
       }
+
+      #loading-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(35,57,68, 0.15);
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        align-content: center;
+        justify-content: center;
+      }
+
+      #loading-animation img {
+        width: 200px;
+        margin: 8px;
+      }
+      #loading-animation span {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
-    <app-shell appTitle="my app"></app-shell>
+    <app-shell appTitle="my app">
+      <div id="loading-animation">
+        <span>
+          <img src="images/etools-logo-color-white.svg" alt="UNICEF Logo">
+          <img src="images/loading.svg" alt="loading animation">
+        </span>
+      </div>
+    </app-shell>
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
