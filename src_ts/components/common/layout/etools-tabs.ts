@@ -1,6 +1,6 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
-import {timeOut} from '@polymer/polymer/lib/utils/async.js';
-import {Debouncer} from '@polymer/polymer/lib/utils/debounce.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import {timeOut} from '@polymer/polymer/lib/utils/async';
+import {Debouncer} from '@polymer/polymer/lib/utils/debounce';
 
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-tabs/paper-tabs';
@@ -8,6 +8,7 @@ import '@polymer/paper-tabs/paper-tab';
 import {PaperTabsElement}  from '@polymer/paper-tabs';
 
 import {property} from '@polymer/decorators';
+
 
 /**
  * @polymer
@@ -44,7 +45,7 @@ class EtoolsTabs extends PolymerElement {
         }
 
         paper-tab .tab-content {
-          color: var(--dark-secondary-text-color);
+          color: var(--secondary-text-color);
           text-transform: uppercase;
         }
 

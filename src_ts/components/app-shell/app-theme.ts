@@ -19,11 +19,14 @@ documentContainer.innerHTML = `
         --nonprod-text-warn-color: #e6e600;
         
         --dark-divider-color: rgba(0, 0, 0, 0.12);
+        --darker-divider-color: #9D9D9D;
         
         --dark-icon-color: rgba(0, 0, 0, 0.65);
         --light-icon-color: rgba(255, 255, 255, 1);
         
         --side-bar-scrolling: visible;
+        
+        --success-color: #72c300;
       }
     </style>
   </custom-style>`;

@@ -1,14 +1,14 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
-import '@polymer/paper-styles/element-styles/paper-material-styles.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 
-import {SharedStyles} from '../styles/shared-styles.js';
-import '../layout/page-content-header';
+import {SharedStyles} from '../styles/shared-styles';
+import '../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
-import '../layout/etools-tabs';
-import {fireEvent} from "../utils/fire-custom-event";
-
-
+import '../common/layout/etools-tabs';
+import {fireEvent} from '../utils/fire-custom-event';
+import {pageContentHeaderSlottedStyles} from '../common/layout/page-content-header/page-content-header-slotted-styles';
+import '../common/layout/status/etools-status';
 /**
  * @polymer
  * @customElement
@@ -19,27 +19,30 @@ class PageOne extends PolymerElement {
     // main template
     // language=HTML
     return html`
+      ${SharedStyles} ${pageContentHeaderSlottedStyles}
       <style include="paper-material-styles">
         #page-content {
           margin: 24px;
         }
       </style>
-      ${SharedStyles}
+
+      <etools-status></etools-status>
 
       <page-content-header with-tabs-visible>
-        <div slot="page-title">
-          Page title
-        </div>
+      
+        <h1 slot="page-title">Page title</h1>
 
-        <div slot="title-row-actions" class="content-header-actions export-options">
-          <paper-button raised>Action</paper-button>
+        <div slot="title-row-actions" class="content-header-actions">
+          <paper-button raised>Action 1</paper-button>
+          <paper-button raised>Action 2</paper-button>
         </div>
 
         <etools-tabs slot="tabs"
-                      tabs="[[pageTabs]]"
-                      active-tab="tab1"
-                      on-iron-select="_handleTabSelectAction"></etools-tabs>
+                     tabs="[[pageTabs]]"
+                     active-tab="tab1"
+                     on-iron-select="_handleTabSelectAction"></etools-tabs>
       </page-content-header>
+
 
       <section id="page-content" class="paper-material" elevation="1">
         <h1>Page 1</h1>
@@ -55,8 +58,8 @@ class PageOne extends PolymerElement {
     `;
   }
 
- @property({type: Array})
- pageTabs = [
+  @property({type: Array})
+  pageTabs = [
     {
       tab: 'tab1',
       tabLabel: 'Tab1',
@@ -67,7 +70,6 @@ class PageOne extends PolymerElement {
       tab: 'tab2',
       tabLabel: 'Tab2',
       hidden: false
-
     }
   ];
 
@@ -76,6 +78,10 @@ class PageOne extends PolymerElement {
     fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
     fireEvent(this, 'toast', {text: 'Notification test 1', showCloseBtn: true});
     fireEvent(this, 'toast', {text: 'Notification test 2', showCloseBtn: true});
+  }
+
+  _handleTabSelectAction(e: CustomEvent) {
+    console.log('tab selected...', e.detail);
   }
 
 }

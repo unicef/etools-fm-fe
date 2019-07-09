@@ -5,7 +5,7 @@ import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@unicef-polymer/etools-app-selector/etools-app-selector';
-import '../../common/support-btn';
+import '../../common/layout/support-btn';
 
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../store';

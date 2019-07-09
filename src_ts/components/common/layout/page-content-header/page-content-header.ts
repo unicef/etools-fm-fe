@@ -28,6 +28,15 @@ class PageContentHeader extends PolymerElement {
           padding: 0 24px;
           min-height: 85px;
           border-bottom: 1px solid var(--darker-divider-color);
+          
+          --page-title: {
+            margin: 0;
+            font-weight: normal;
+            text-transform: capitalize;
+            font-size: 24px;
+            line-height: 1.3;
+            min-height: 31px;
+          }
         }
 
         :host([with-tabs-visible]) {
