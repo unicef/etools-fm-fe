@@ -3,23 +3,23 @@ import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 
-import {SharedStyles} from '../styles/shared-styles';
-import '../common/layout/page-content-header/page-content-header';
+import {SharedStyles} from '../../styles/shared-styles';
+import '../../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
-import '../common/layout/etools-tabs';
-import {pageContentHeaderSlottedStyles} from '../common/layout/page-content-header/page-content-header-slotted-styles';
-import '../common/layout/status/etools-status';
-import {pageLayoutStyles} from '../styles/page-layout-styles';
+import '../../common/layout/etools-tabs';
+import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import '../../common/layout/status/etools-status';
+import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
-import './psea-engagements/engagement-details';
-import './psea-engagements/engagement-questionnaires';
-import {GenericObject} from "../../types/globals";
+import {GenericObject} from '../../../types/globals';
+import {connect} from "pwa-helpers/connect-mixin";
+import {RootState, store} from "../../../redux/store";
 
 /**
  * @polymer
  * @customElement
  */
-class PageOne extends PolymerElement {
+class EngagementTabs extends connect(store)(PolymerElement) {
 
   public static get template() {
     // main template
@@ -79,15 +79,20 @@ class PageOne extends PolymerElement {
     title: 'Engagement title'
   };
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    // fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
-  }
-
   isActiveTab(tab: string, expectedTab: string): boolean {
     return tab === expectedTab;
   }
 
+  public stateChanged(state: RootState) {
+    // update page route data
+    if (state.app!.routeDetails.routeName === 'engagements' && state.app!.routeDetails.subRouteName) {
+      this.activeTab = state.app!.routeDetails.subRouteName as string;
+
+      // TODO: check why tabs components are not rendered... might need to make the imports here
+      // split routesLazyLoadComponents in 2 categories: mainPages and subPages
+    }
+  }
+
 }
 
-window.customElements.define('page-one', PageOne);
+window.customElements.define('engagement-tabs', EngagementTabs);

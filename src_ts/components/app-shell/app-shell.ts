@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-// import { LitElement, html, property, PropertyValues } from '@polymer/lit-element';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
 import {connect} from 'pwa-helpers/connect-mixin.js';
@@ -16,14 +15,14 @@ import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 import {installRouter} from 'pwa-helpers/router.js';
 
 // This element is connected to the Redux store.
-import {store, RootState} from '../../store';
+import {store, RootState} from '../../redux/store';
 
 // These are the actions needed by this element.
 import {
   navigate,
   // updateOffline,
   updateDrawerState
-} from '../../actions/app';
+} from '../../redux/actions/app';
 
 // These are the elements needed by this element.
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
@@ -42,9 +41,11 @@ import './app-theme.js';
 import {property} from '@polymer/decorators/lib/decorators';
 import {AppMenuHelper} from './menu/app-menu-helper';
 import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
-import user from '../../reducers/user';
+import user from '../../redux/reducers/user';
 import {ROOT_PATH} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
+import {EtoolsRouter} from "../../routing/routes";
+import {TRouteMatchDetails} from "../../routing/router";
 
 setRootPath(ROOT_PATH);
 
@@ -72,7 +73,7 @@ class AppShell extends connect(store)(PolymerElement) {
                   swipe-open="[[narrow]]" small-menu$="[[smallMenu]]">
         <!-- App main menu(left sidebar) -->
         <app-menu root-path="[[rootPath]]"
-                  selected-option="[[_page]]"
+                  selected-option="[[_mainPage]]"
                   small-menu$="[[smallMenu]]"></app-menu>
       </app-drawer>
 
@@ -85,9 +86,10 @@ class AppShell extends connect(store)(PolymerElement) {
 
         <!-- Main content -->
         <main role="main" class="main-content">
-          <page-one class="page" active$="[[_isActivePage(_page, 'page-one')]]"></page-one>
-          <page-two class="page" active$="[[_isActivePage(_page, 'page-two')]]"></page-two>
-          <page-not-found class="page" active$="[[_isActivePage(_page, 'page-not-found')]]"></page-not-found>
+          <engagements-list class="page" active$="[[_isActivePage(_subPage, 'engagements_list')]]"></engagements-list>
+          <engagement-tabs class="page" active$="[[_isActivePage(_subPage, 'engagements_*', 1)]]"></engagement-tabs>
+          <page-two class="page" active$="[[_isActivePage(_subPage, 'page-two')]]"></page-two>
+          <page-not-found class="page" active$="[[_isActivePage(_subPage, 'page-not-found')]]"></page-not-found>
         </main>
 
         <page-footer></page-footer>
@@ -100,8 +102,14 @@ class AppShell extends connect(store)(PolymerElement) {
   @property({type: Boolean})
   _drawerOpened: boolean = false;
 
-  @property({type: Boolean})
-  _page: string = '';
+  @property({type: Object})
+  _routeDetails: TRouteMatchDetails = {} as TRouteMatchDetails;
+
+  @property({type: String})
+  _mainPage: string = ''; // routeName
+
+  @property({type: String, computed: '_computeSubPage(_routeDetails.routeName, _routeDetails.subRouteName)'})
+  _subPage: string = ''; // routeName_sub_page
 
   @property({type: Boolean})
   smallMenu: boolean = false;
@@ -126,7 +134,8 @@ class AppShell extends connect(store)(PolymerElement) {
     this.appMenuHelper.initMenuListeners();
     this.appMenuHelper.initMenuSize();
 
-    installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installRouter(location => store.dispatch(
+        navigate(decodeURIComponent(location.pathname + location.search))));
     installMediaQueryWatcher(`(min-width: 460px)`,
       () => store.dispatch(updateDrawerState(false)));
 
@@ -143,7 +152,8 @@ class AppShell extends connect(store)(PolymerElement) {
   }
 
   public stateChanged(state: RootState) {
-    this._page = state.app!.page;
+    this._routeDetails = state.app!.routeDetails;
+    this._mainPage = state.app!.routeDetails!.routeName;
     this._drawerOpened = state.app!.drawerOpened;
   }
 
@@ -152,8 +162,25 @@ class AppShell extends connect(store)(PolymerElement) {
     console.log(store.getState());
   }
 
-  protected _isActivePage(_page: string, expectedPageName: string): boolean {
-    return _page === expectedPageName;
+  // Testing router (from console)
+  public getRouter() {
+    return EtoolsRouter;
+  }
+
+  protected _isActivePage(pageName: string, expectedPageName: string, hasSubPages?: boolean): boolean {
+    if (hasSubPages) {
+      expectedPageName = expectedPageName.slice(0, -1);
+      return pageName.indexOf(expectedPageName) === 0;
+    }
+    return pageName === expectedPageName;
+  }
+
+  protected _computeSubPage(routeName: string, subRouteName: string) {
+    let sPage: string = routeName;
+    if (subRouteName) {
+      sPage += `_${subRouteName}`; // no need to know sub page here (ti can be found in _routeDetails)
+    }
+    return sPage;
   }
 }
 

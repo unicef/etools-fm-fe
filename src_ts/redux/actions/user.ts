@@ -1,8 +1,8 @@
 import {Action, ActionCreator} from 'redux';
-import {IEtoolsUserModel} from '../components/user/user-model';
+import {IEtoolsUserModel} from '../../components/user/user-model';
 // import {ThunkAction} from 'redux-thunk';
 // import {RootState} from '../store';
-import {GenericObject} from '../types/globals';
+import {GenericObject} from '../../types/globals';
 
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const UPDATE_USER_PERMISSIONS = 'UPDATE_USER_PERMISSIONS';

@@ -8,10 +8,10 @@ import '@unicef-polymer/etools-app-selector/etools-app-selector';
 import '../../common/layout/support-btn';
 
 import {connect} from 'pwa-helpers/connect-mixin.js';
-import {store} from '../../../store';
+import {store} from '../../../redux/store';
 
 import {isProductionServer, isStagingServer} from '../../../config/config';
-import {updateDrawerState} from '../../../actions/app';
+import {updateDrawerState} from '../../../redux/actions/app';
 import {property} from '@polymer/decorators/lib/decorators';
 
 /**

@@ -54,12 +54,12 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
                        selectable="a"
                        role="navigation">
 
-          <a class="nav-menu-item" menu-name="page-one" href$="[[rootPath]]page-one">
+          <a class="nav-menu-item" menu-name="page-one" href$="[[rootPath]]engagements">
             <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Page One
+              Engagements
             </paper-tooltip>
-            <div class="name">Page One</div>
+            <div class="name">Engagements</div>
           </a>
 
           <a class="nav-menu-item" menu-name="page-two" href$="[[rootPath]]page-two">

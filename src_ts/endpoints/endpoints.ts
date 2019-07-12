@@ -1,4 +1,4 @@
-import {GenericObject} from "../../types/globals";
+import {GenericObject} from "../types/globals";
 import {etoolsEndpoints} from './endpoints-list';
 
 const generateUrlFromTemplate = (tmpl: string, data: object | undefined) => {

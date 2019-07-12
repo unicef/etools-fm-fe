@@ -1,8 +1,11 @@
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 
+/**
+ * @customElement
+ * @polymer
+ */
 class EngagementQuestionnaires extends PolymerElement {
 
-  // Define optional shadow DOM template
   static get template() {
     // language=HTML
     return html`
