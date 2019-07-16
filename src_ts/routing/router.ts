@@ -94,9 +94,6 @@ export class Router {
   }
 
   navigate(path?: string, navigateCallback?: (() => void) | null) {
-    if (path) {
-      console.log(this.root + Router.clearSlashes(path));
-    }
     path = path ? (this.root + Router.clearSlashes(path)) : '';
     history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {

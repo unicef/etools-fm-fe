@@ -23,7 +23,6 @@ EtoolsRouter
         })
     .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
         (params: TRouteCallbackParams): TRouteMatchDetails => {
-          console.log('engagements details page', params);
           return {
             routeName: 'engagements',
             subRouteName: params.matchDetails[2], // tab name
@@ -36,7 +35,6 @@ EtoolsRouter
         })
     .addRoute(new RegExp(`^page-not-found$`),
         (params: TRouteCallbackParams): TRouteMatchDetails => {
-          console.log('page not found', params);
           return {
             routeName: 'page-not-found',
             subRouteName: null,
@@ -47,7 +45,6 @@ EtoolsRouter
         })
     .addRoute(new RegExp(`^page-two$`),
     (params: TRouteCallbackParams): TRouteMatchDetails => {
-      console.log('page two', params);
       return {
         routeName: 'page-two',
         subRouteName: null,

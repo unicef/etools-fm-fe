@@ -101,7 +101,6 @@ class EngagementTabs extends connect(store)(PolymerElement) {
       // page load, tab init, component is gonna be imported in loadPageComponents action
       return;
     }
-    console.log(newTabName, oldTabName);
     if (newTabName !== oldTabName) {
       // go to new tab
       updateAppLocation(
