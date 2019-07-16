@@ -5,12 +5,12 @@ import {ROOT_PATH} from '../../config/config';
 import {
   DEFAULT_ROUTE,
   EtoolsRouter,
-  needsRedirectToList,
   ROUTE_404,
-  routesLazyLoadComponents,
   updateAppLocation
 } from '../../routing/routes';
 import {TRouteMatchDetails} from '../../routing/router';
+import {componentsLazyLoadConfig} from '../../routing/component-lazy-load-config';
+import {needsRedirectToList} from '../../routing/subpage-redirect';
 
 export const UPDATE_ROUTE_DETAILS = 'UPDATE_ROUTE_DETAILS';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
@@ -44,9 +44,9 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteMatc
     routeImportsPathsKey += `_${routeDetails.subRouteName}`;
   }
 
-  const filesToImport: string[] = routesLazyLoadComponents[routeImportsPathsKey];
+  const filesToImport: string[] = componentsLazyLoadConfig[routeImportsPathsKey];
   if (!filesToImport || filesToImport.length === 0) {
-    throw new Error('No file imports configuration found (routesLazyLoadComponents)!');
+    throw new Error('No file imports configuration found (componentsLazyLoadConfig)!');
   }
 
   const importBase: string = '../../'; // relative to current file
