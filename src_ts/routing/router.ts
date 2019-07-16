@@ -83,7 +83,7 @@ export class Router {
       let match = locationPath.match(this.routes[i].regex);
       if (match) {
         const routeParams: TRouteCallbackParams = {
-          matchDetails: match.slice(0),
+          matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),
           queryParams: this.buildQueryParams(qs)
         };
         routeDetails = this.routes[i].handler.bind({}, routeParams)();
@@ -94,8 +94,11 @@ export class Router {
   }
 
   navigate(path?: string, navigateCallback?: (() => void) | null) {
-    path = path ? path : '';
-    history.pushState(null, '', this.root + Router.clearSlashes(path));
+    if (path) {
+      console.log(this.root + Router.clearSlashes(path));
+    }
+    path = path ? (this.root + Router.clearSlashes(path)) : '';
+    history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {
       navigateCallback();
     }

@@ -14,6 +14,7 @@ import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {GenericObject} from '../../../types/globals';
 import {connect} from "pwa-helpers/connect-mixin";
 import {RootState, store} from "../../../redux/store";
+import {updateAppLocation} from "../../../routing/routes";
 
 /**
  * @polymer
@@ -49,7 +50,7 @@ class EngagementTabs extends connect(store)(PolymerElement) {
           <engagement-details></engagement-details>
         </template>
         
-        <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires‎')]]">
+        <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires')]]">
           <engagement-questionnaires></engagement-questionnaires>
         </template>
       </section>
@@ -62,20 +63,20 @@ class EngagementTabs extends connect(store)(PolymerElement) {
       tab: 'details',
       tabLabel: 'Details',
       hidden: false
-
     },
     {
-      tab: 'questionnaires‎',
+      tab: 'questionnaires',
       tabLabel: 'Questionnaires‎',
       hidden: false
     }
   ];
 
-  @property({type: String})
+  @property({type: String, observer: 'tabChanged'})
   activeTab: string = 'details';
 
   @property({type: Object})
   engagement: GenericObject = {
+    id: null,
     title: 'Engagement title'
   };
 
@@ -85,11 +86,26 @@ class EngagementTabs extends connect(store)(PolymerElement) {
 
   public stateChanged(state: RootState) {
     // update page route data
-    if (state.app!.routeDetails.routeName === 'engagements' && state.app!.routeDetails.subRouteName) {
+    if (state.app!.routeDetails.routeName === 'engagements' &&
+        state.app!.routeDetails.subRouteName !== 'list') {
       this.activeTab = state.app!.routeDetails.subRouteName as string;
+      const engagementId = state.app!.routeDetails.params!.engagementId;
+      if (engagementId) {
+        this.engagement.id = engagementId;
+      }
+    }
+  }
 
-      // TODO: check why tabs components are not rendered... might need to make the imports here
-      // split routesLazyLoadComponents in 2 categories: mainPages and subPages
+  tabChanged(newTabName: string, oldTabName: string | undefined) {
+    if (oldTabName === undefined) {
+      // page load, tab init, component is gonna be imported in loadPageComponents action
+      return;
+    }
+    console.log(newTabName, oldTabName);
+    if (newTabName !== oldTabName) {
+      // go to new tab
+      updateAppLocation(
+          `engagements/${this.engagement.id}/${newTabName}`, true);
     }
   }
 

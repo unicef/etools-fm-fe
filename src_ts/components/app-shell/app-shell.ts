@@ -72,8 +72,7 @@ class AppShell extends connect(store)(PolymerElement) {
                   opened="[[_drawerOpened]]"
                   swipe-open="[[narrow]]" small-menu$="[[smallMenu]]">
         <!-- App main menu(left sidebar) -->
-        <app-menu root-path="[[rootPath]]"
-                  selected-option="[[_mainPage]]"
+        <app-menu selected-option="[[_mainPage]]"
                   small-menu$="[[smallMenu]]"></app-menu>
       </app-drawer>
 
@@ -86,10 +85,12 @@ class AppShell extends connect(store)(PolymerElement) {
 
         <!-- Main content -->
         <main role="main" class="main-content">
-          <engagements-list class="page" active$="[[_isActivePage(_subPage, 'engagements_list')]]"></engagements-list>
-          <engagement-tabs class="page" active$="[[_isActivePage(_subPage, 'engagements_*', 1)]]"></engagement-tabs>
-          <page-two class="page" active$="[[_isActivePage(_subPage, 'page-two')]]"></page-two>
-          <page-not-found class="page" active$="[[_isActivePage(_subPage, 'page-not-found')]]"></page-not-found>
+          <engagements-list class="page" 
+              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'list')]]"></engagements-list>
+          <engagement-tabs class="page" 
+              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'details|questionnaires')]]"></engagement-tabs>
+          <page-two class="page" active$="[[_isActivePage(_mainPage, 'page-two')]]"></page-two>
+          <page-not-found class="page" active$="[[_isActivePage(_mainPage, 'page-not-found')]]"></page-not-found>
         </main>
 
         <page-footer></page-footer>
@@ -108,8 +109,8 @@ class AppShell extends connect(store)(PolymerElement) {
   @property({type: String})
   _mainPage: string = ''; // routeName
 
-  @property({type: String, computed: '_computeSubPage(_routeDetails.routeName, _routeDetails.subRouteName)'})
-  _subPage: string = ''; // routeName_sub_page
+  @property({type: String})
+  _subPage: string | null = null; // subRouteName
 
   @property({type: Boolean})
   smallMenu: boolean = false;
@@ -154,6 +155,7 @@ class AppShell extends connect(store)(PolymerElement) {
   public stateChanged(state: RootState) {
     this._routeDetails = state.app!.routeDetails;
     this._mainPage = state.app!.routeDetails!.routeName;
+    this._subPage = state.app!.routeDetails!.subRouteName;
     this._drawerOpened = state.app!.drawerOpened;
   }
 
@@ -167,20 +169,16 @@ class AppShell extends connect(store)(PolymerElement) {
     return EtoolsRouter;
   }
 
-  protected _isActivePage(pageName: string, expectedPageName: string, hasSubPages?: boolean): boolean {
-    if (hasSubPages) {
-      expectedPageName = expectedPageName.slice(0, -1);
-      return pageName.indexOf(expectedPageName) === 0;
+  protected _isActivePage(pageName: string, expectedPageName: string,
+                          currentSubPageName: string, expectedSubPageNames?: string): boolean {
+    if (pageName !== expectedPageName) {
+      return false;
     }
-    return pageName === expectedPageName;
-  }
-
-  protected _computeSubPage(routeName: string, subRouteName: string) {
-    let sPage: string = routeName;
-    if (subRouteName) {
-      sPage += `_${subRouteName}`; // no need to know sub page here (ti can be found in _routeDetails)
+    if (currentSubPageName && expectedSubPageNames) {
+      const subPages: string[] = expectedSubPageNames.split('|');
+      return subPages.indexOf(currentSubPageName) > -1;
     }
-    return sPage;
+    return true;
   }
 }
 

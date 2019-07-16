@@ -43,11 +43,12 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteMatc
   if (routeDetails.subRouteName) {
     routeImportsPathsKey += `_${routeDetails.subRouteName}`;
   }
+
   const filesToImport: string[] = routesLazyLoadComponents[routeImportsPathsKey];
-  if (filesToImport.length === 0) {
+  if (!filesToImport || filesToImport.length === 0) {
     throw new Error('No file imports configuration found (routesLazyLoadComponents)!');
   }
-  console.log(filesToImport);
+
   const importBase: string = '../../'; // relative to current file
   filesToImport.forEach((filePath: string) => {
     import(importBase + filePath).then(() => {
@@ -87,9 +88,7 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch)
   const routeDetails: TRouteMatchDetails | null = EtoolsRouter.checkRouteDetails(path);
   /**
    * TODO:
-   *  - EtoolsRouter.checkRouteDetails(page) === null => redirect to not-found-page
-   *  - connect page to redux but do not update any page details unless page name is checked
-   *  - import tab component too in loadPageComponents action
+   *  - import tab component too in loadPageComponents action ????
    *  - create template page with detail about routing (including tabs subpages navigation), creating a new page
    */
   dispatch(loadPageComponents(routeDetails));

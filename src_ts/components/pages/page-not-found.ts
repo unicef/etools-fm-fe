@@ -1,7 +1,7 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html, PolymerElement} from '@polymer/polymer/polymer-element';
 
 // These are the shared styles needed by this element.
-import {SharedStyles} from '../styles/shared-styles.js';
+import {SharedStyles} from '../styles/shared-styles';
 
 class PageNotFound extends PolymerElement {
 
@@ -19,4 +19,4 @@ class PageNotFound extends PolymerElement {
   }
 }
 
-window.customElements.define('page-not-found-404', PageNotFound);
+window.customElements.define('page-not-found', PageNotFound);

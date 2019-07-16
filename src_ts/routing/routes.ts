@@ -3,7 +3,7 @@ import {store} from '../redux/store';
 import {navigate} from '../redux/actions/app';
 import {ROOT_PATH} from "../config/config";
 
-export type TRoutesLazyLoadComponents = {
+export type TRoutesLazyLoadComponentsPath = {
   [key: string]: string[]
 };
 
@@ -44,7 +44,18 @@ EtoolsRouter
             queryParams: null,
             params: null
           };
-        });
+        })
+    .addRoute(new RegExp(`^page-two$`),
+    (params: TRouteCallbackParams): TRouteMatchDetails => {
+      console.log('page two', params);
+      return {
+        routeName: 'page-two',
+        subRouteName: null,
+        path: params.matchDetails[0],
+        queryParams: null,
+        params: null
+      };
+    });
 
 /**
  * Utility used to update location based on routes and dispatch navigate action (optional)
@@ -74,7 +85,7 @@ export const needsRedirectToList = (path: string): undefined | string => {
 };
 
 // each key from this object is computed from routeName_routeSubPage (if subRoute exists)
-export const routesLazyLoadComponents: TRoutesLazyLoadComponents = {
+export const routesLazyLoadComponents: TRoutesLazyLoadComponentsPath = {
 
   engagements_list: [
       'components/pages/engagements/engagements-list.js'
