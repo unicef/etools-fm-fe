@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-// import { LitElement, html, property, PropertyValues } from '@polymer/lit-element';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
 import {connect} from 'pwa-helpers/connect-mixin.js';
@@ -16,14 +15,14 @@ import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 import {installRouter} from 'pwa-helpers/router.js';
 
 // This element is connected to the Redux store.
-import {store, RootState} from '../../store';
+import {store, RootState} from '../../redux/store';
 
 // These are the actions needed by this element.
 import {
   navigate,
   // updateOffline,
   updateDrawerState
-} from '../../actions/app';
+} from '../../redux/actions/app';
 
 // These are the elements needed by this element.
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
@@ -42,9 +41,11 @@ import './app-theme.js';
 import {property} from '@polymer/decorators/lib/decorators';
 import {AppMenuHelper} from './menu/app-menu-helper';
 import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
-import user from '../../reducers/user';
+import user from '../../redux/reducers/user';
 import {ROOT_PATH} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
+import {EtoolsRouter} from "../../routing/routes";
+import {TRouteDetails} from "../../routing/router";
 
 setRootPath(ROOT_PATH);
 
@@ -71,8 +72,7 @@ class AppShell extends connect(store)(PolymerElement) {
                   opened="[[_drawerOpened]]"
                   swipe-open="[[narrow]]" small-menu$="[[smallMenu]]">
         <!-- App main menu(left sidebar) -->
-        <app-menu root-path="[[rootPath]]"
-                  selected-option="[[_page]]"
+        <app-menu selected-option="[[_mainPage]]"
                   small-menu$="[[smallMenu]]"></app-menu>
       </app-drawer>
 
@@ -85,9 +85,12 @@ class AppShell extends connect(store)(PolymerElement) {
 
         <!-- Main content -->
         <main role="main" class="main-content">
-          <page-one class="page" active$="[[_isActivePage(_page, 'page-one')]]"></page-one>
-          <page-two class="page" active$="[[_isActivePage(_page, 'page-two')]]"></page-two>
-          <page-not-found class="page" active$="[[_isActivePage(_page, 'page-not-found')]]"></page-not-found>
+          <engagements-list class="page" 
+              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'list')]]"></engagements-list>
+          <engagement-tabs class="page" 
+              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'details|questionnaires')]]"></engagement-tabs>
+          <page-two class="page" active$="[[_isActivePage(_mainPage, 'page-two')]]"></page-two>
+          <page-not-found class="page" active$="[[_isActivePage(_mainPage, 'page-not-found')]]"></page-not-found>
         </main>
 
         <page-footer></page-footer>
@@ -100,8 +103,14 @@ class AppShell extends connect(store)(PolymerElement) {
   @property({type: Boolean})
   _drawerOpened: boolean = false;
 
-  @property({type: Boolean})
-  _page: string = '';
+  @property({type: Object})
+  _routeDetails: TRouteDetails = {} as TRouteDetails;
+
+  @property({type: String})
+  _mainPage: string = ''; // routeName
+
+  @property({type: String})
+  _subPage: string | null = null; // subRouteName
 
   @property({type: Boolean})
   smallMenu: boolean = false;
@@ -126,7 +135,8 @@ class AppShell extends connect(store)(PolymerElement) {
     this.appMenuHelper.initMenuListeners();
     this.appMenuHelper.initMenuSize();
 
-    installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installRouter(location => store.dispatch(
+        navigate(decodeURIComponent(location.pathname + location.search))));
     installMediaQueryWatcher(`(min-width: 460px)`,
       () => store.dispatch(updateDrawerState(false)));
 
@@ -143,7 +153,9 @@ class AppShell extends connect(store)(PolymerElement) {
   }
 
   public stateChanged(state: RootState) {
-    this._page = state.app!.page;
+    this._routeDetails = state.app!.routeDetails;
+    this._mainPage = state.app!.routeDetails!.routeName;
+    this._subPage = state.app!.routeDetails!.subRouteName;
     this._drawerOpened = state.app!.drawerOpened;
   }
 
@@ -152,8 +164,29 @@ class AppShell extends connect(store)(PolymerElement) {
     console.log(store.getState());
   }
 
-  protected _isActivePage(_page: string, expectedPageName: string): boolean {
-    return _page === expectedPageName;
+  // Testing router (from console)
+  public getRouter() {
+    return EtoolsRouter;
+  }
+
+  protected _isActiveMainPage(currentPageName: string, expectedPageName: string): boolean {
+    return currentPageName === expectedPageName;
+  }
+
+  protected _isActiveSubPage(currentSubPageName: string, expectedSubPageNames: string): boolean {
+    const subPages: string[] = expectedSubPageNames.split('|');
+    return subPages.indexOf(currentSubPageName) > -1;
+  }
+
+  protected _isActivePage(pageName: string, expectedPageName: string,
+                          currentSubPageName: string, expectedSubPageNames?: string): boolean {
+    if (!this._isActiveMainPage(pageName, expectedPageName)) {
+      return false;
+    }
+    if (currentSubPageName && expectedSubPageNames) {
+      return this._isActiveSubPage(currentSubPageName, expectedSubPageNames);
+    }
+    return true;
   }
 }
 

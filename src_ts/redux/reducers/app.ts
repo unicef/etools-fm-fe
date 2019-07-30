@@ -10,27 +10,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import {Reducer} from 'redux';
 import {
-  UPDATE_PAGE,
+  UPDATE_ROUTE_DETAILS,
   UPDATE_DRAWER_STATE
 } from '../actions/app';
 import {RootAction} from '../store';
+import {TRouteDetails} from '../../routing/router';
 
 export interface AppState {
-  page: string;
+  routeDetails: TRouteDetails;
   drawerOpened: boolean;
 }
 
 const INITIAL_STATE: AppState = {
-  page: '',
+  routeDetails: {} as TRouteDetails,
   drawerOpened: false
 };
 
 const app: Reducer<AppState, RootAction> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UPDATE_PAGE:
+    case UPDATE_ROUTE_DETAILS:
       return {
         ...state,
-        page: action.page
+        routeDetails: action.routeDetails
       };
     case UPDATE_DRAWER_STATE:
       return {

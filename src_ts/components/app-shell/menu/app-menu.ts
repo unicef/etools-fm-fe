@@ -5,9 +5,10 @@ import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/paper-ripple/paper-ripple.js';
+import {property} from '@polymer/decorators/lib/decorators';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
-import {fireEvent} from '../../utils/fire-custom-event.js';
+import {fireEvent} from '../../utils/fire-custom-event';
 
 /**
  * PMP main menu
@@ -51,15 +52,14 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
       <div class="nav-menu">
         <iron-selector selected="[[selectedOption]]"
                        attr-for-selected="menu-name"
-                       selectable="a"
                        role="navigation">
 
-          <a class="nav-menu-item" menu-name="page-one" href$="[[rootPath]]page-one">
+          <a class="nav-menu-item" menu-name="engagements" href$="[[rootPath]]engagements">
             <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Page One
+              Engagements
             </paper-tooltip>
-            <div class="name">Page One</div>
+            <div class="name">Engagements</div>
           </a>
 
           <a class="nav-menu-item" menu-name="page-two" href$="[[rootPath]]page-two">
@@ -106,21 +106,11 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
     `;
   }
 
-  public static get properties() {
-    return {
-      selectedOption: String,
-      rootPath: String,
-      smallMenu: {
-        type: Boolean,
-        reflectToAttribute: true,
-        observer: '_menuSizeChange'
-      }
-    };
-  }
+  @property({type: String})
+  selectedOption: string = '';
 
-  public selectedOption: string = '';
-  public rootPath: string = '';
-  public smallMenu: boolean = false;
+  @property({type: Boolean, reflectToAttribute: true, observer: '_menuSizeChange'})
+  smallMenu: boolean = false;
 
   // @ts-ignore
   private _menuSizeChange(newVal: boolean, oldVal: boolean): void {

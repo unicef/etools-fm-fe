@@ -3,23 +3,24 @@ import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 
-import {SharedStyles} from '../styles/shared-styles';
-import '../common/layout/page-content-header/page-content-header';
+import {SharedStyles} from '../../styles/shared-styles';
+import '../../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
-import '../common/layout/etools-tabs';
-import {pageContentHeaderSlottedStyles} from '../common/layout/page-content-header/page-content-header-slotted-styles';
-import '../common/layout/status/etools-status';
-import {pageLayoutStyles} from '../styles/page-layout-styles';
+import '../../common/layout/etools-tabs';
+import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import '../../common/layout/status/etools-status';
+import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
-import './psea-engagements/engagement-details';
-import './psea-engagements/engagement-questionnaires';
-import {GenericObject} from "../../types/globals";
+import {GenericObject} from '../../../types/globals';
+import {connect} from "pwa-helpers/connect-mixin";
+import {RootState, store} from "../../../redux/store";
+import {updateAppLocation} from "../../../routing/routes";
 
 /**
  * @polymer
  * @customElement
  */
-class PageOne extends PolymerElement {
+class EngagementTabs extends connect(store)(PolymerElement) {
 
   public static get template() {
     // main template
@@ -49,7 +50,7 @@ class PageOne extends PolymerElement {
           <engagement-details></engagement-details>
         </template>
         
-        <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires‎')]]">
+        <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires')]]">
           <engagement-questionnaires></engagement-questionnaires>
         </template>
       </section>
@@ -62,32 +63,51 @@ class PageOne extends PolymerElement {
       tab: 'details',
       tabLabel: 'Details',
       hidden: false
-
     },
     {
-      tab: 'questionnaires‎',
+      tab: 'questionnaires',
       tabLabel: 'Questionnaires‎',
       hidden: false
     }
   ];
 
-  @property({type: String})
+  @property({type: String, observer: 'tabChanged'})
   activeTab: string = 'details';
 
   @property({type: Object})
   engagement: GenericObject = {
+    id: null,
     title: 'Engagement title'
   };
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    // fireEvent(this, 'toast', {text: 'Page one loaded', showCloseBtn: false});
-  }
 
   isActiveTab(tab: string, expectedTab: string): boolean {
     return tab === expectedTab;
   }
 
+  public stateChanged(state: RootState) {
+    // update page route data
+    if (state.app!.routeDetails.routeName === 'engagements' &&
+        state.app!.routeDetails.subRouteName !== 'list') {
+      this.activeTab = state.app!.routeDetails.subRouteName as string;
+      const engagementId = state.app!.routeDetails.params!.engagementId;
+      if (engagementId) {
+        this.engagement.id = engagementId;
+      }
+    }
+  }
+
+  tabChanged(newTabName: string, oldTabName: string | undefined) {
+    if (oldTabName === undefined) {
+      // page load, tab init, component is gonna be imported in loadPageComponents action
+      return;
+    }
+    if (newTabName !== oldTabName) {
+      // go to new tab
+      updateAppLocation(
+          `engagements/${this.engagement.id}/${newTabName}`, true);
+    }
+  }
+
 }
 
-window.customElements.define('page-one', PageOne);
+window.customElements.define('engagement-tabs', EngagementTabs);

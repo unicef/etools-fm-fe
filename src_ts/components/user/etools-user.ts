@@ -3,8 +3,8 @@ import EtoolsAjaxRequestMixin from '@unicef-polymer/etools-ajax/etools-ajax-requ
 import {property} from '@polymer/decorators/lib/decorators';
 import {IEtoolsUserModel} from './user-model';
 import {connect} from 'pwa-helpers/connect-mixin';
-import {RootState, store} from '../../store';
-import {getEndpoint} from '../../config/endpoints/endpoints';
+import {RootState, store} from '../../redux/store';
+import {getEndpoint} from '../../endpoints/endpoints';
 import {GenericObject} from "../../types/globals";
 
 const PROFILE_ENDPOINT: string = 'userProfile';
