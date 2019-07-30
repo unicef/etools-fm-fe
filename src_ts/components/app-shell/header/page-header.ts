@@ -84,7 +84,7 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
         <paper-icon-button id="menuButton" icon="menu" on-tap="menuBtnClicked"></paper-icon-button>
         <div class="titlebar content-align">
           <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src$="[[rootPath]]../../../../images/etools-logo-color-white.svg">
+          <img id="app-logo" src$="[[rootPath]]images/etools-logo-color-white.svg">
           <dom-if if="[[_isStaging]]">
             <template>
               <div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>

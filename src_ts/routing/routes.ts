@@ -1,8 +1,9 @@
 import {Router, TRouteCallbackParams, TRouteDetails} from './router';
 import {store} from '../redux/store';
 import {navigate} from '../redux/actions/app';
+import {ROOT_PATH} from '../config/config';
 
-export const EtoolsRouter = new Router();
+export const EtoolsRouter = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
 
 EtoolsRouter

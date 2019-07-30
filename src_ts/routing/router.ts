@@ -31,7 +31,7 @@ export class Router {
   }
 
   constructor(rootPath?: string) {
-    this.root = rootPath ? ('/' + Router.clearSlashes(rootPath) + '/') : '/';
+    this.root = (rootPath && rootPath !== '/') ? ('/' + Router.clearSlashes(rootPath) + '/') : '/';
   }
 
   getLocationPath(path?: string): string {
