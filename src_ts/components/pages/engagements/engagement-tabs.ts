@@ -12,9 +12,9 @@ import '../../common/layout/status/etools-status';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
 import {GenericObject} from '../../../types/globals';
-import {connect} from "pwa-helpers/connect-mixin";
-import {RootState, store} from "../../../redux/store";
-import {updateAppLocation} from "../../../routing/routes";
+import {connect} from 'pwa-helpers/connect-mixin';
+import {RootState, store} from '../../../redux/store';
+import {updateAppLocation} from '../../../routing/routes';
 
 /**
  * @polymer

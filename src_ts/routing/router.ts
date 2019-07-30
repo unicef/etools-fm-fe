@@ -37,8 +37,13 @@ export class Router {
   getLocationPath(path?: string): string {
     path = path || decodeURI(location.pathname + location.search);
     // remove root path
-    path = this.root !== '/' ? path.replace(this.root, '') : path;
-    return Router.clearSlashes(path);
+    if (path.indexOf(this.root) === 0) {
+      // remove root only if it is the first
+      path = path.replace(this.root, '');
+    }
+    // remove ending slash
+    path = path.replace(/\/$/, '');
+    return path;
   }
 
   isRouteAdded(regex: RegExp | null): boolean {
@@ -100,8 +105,12 @@ export class Router {
     return routeDetails;
   }
 
+  prepareLocationPath(path: string): string {
+    return (path.indexOf(this.root) === -1) ? (this.root + Router.clearSlashes(path)) : path;
+  }
+
   navigate(path?: string, navigateCallback?: (() => void) | null) {
-    path = path ? (this.root + Router.clearSlashes(path)) : '';
+    path = path ? this.prepareLocationPath(path) : '';
     history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {
       navigateCallback();
