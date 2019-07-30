@@ -7,39 +7,39 @@ export const EtoolsRouter = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
 
 EtoolsRouter
-    .addRoute(new RegExp('^engagements\/list'),
-        (params: TRouteCallbackParams): TRouteDetails => {
-          return {
-            routeName: 'engagements',
-            subRouteName: 'list',
-            path: params.matchDetails[0],
-            queryParams: params.queryParams,
-            params: null
-          };
-        })
-    .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
-        (params: TRouteCallbackParams): TRouteDetails => {
-          return {
-            routeName: 'engagements',
-            subRouteName: params.matchDetails[2], // tab name
-            path: params.matchDetails[0],
-            queryParams: params.queryParams,
-            params: {
-              engagementId: params.matchDetails[1]
-            }
-          };
-        })
-    .addRoute(new RegExp(`^page-not-found$`),
-        (params: TRouteCallbackParams): TRouteDetails => {
-          return {
-            routeName: 'page-not-found',
-            subRouteName: null,
-            path: params.matchDetails[0],
-            queryParams: null,
-            params: null
-          };
-        })
-    .addRoute(new RegExp(`^page-two$`),
+  .addRoute(new RegExp('^engagements\/list'),
+    (params: TRouteCallbackParams): TRouteDetails => {
+      return {
+        routeName: 'engagements',
+        subRouteName: 'list',
+        path: params.matchDetails[0],
+        queryParams: params.queryParams,
+        params: null
+      };
+    })
+  .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
+    (params: TRouteCallbackParams): TRouteDetails => {
+      return {
+        routeName: 'engagements',
+        subRouteName: params.matchDetails[2], // tab name
+        path: params.matchDetails[0],
+        queryParams: params.queryParams,
+        params: {
+          engagementId: params.matchDetails[1]
+        }
+      };
+    })
+  .addRoute(new RegExp(`^page-not-found$`),
+    (params: TRouteCallbackParams): TRouteDetails => {
+      return {
+        routeName: 'page-not-found',
+        subRouteName: null,
+        path: params.matchDetails[0],
+        queryParams: null,
+        params: null
+      };
+    })
+  .addRoute(new RegExp(`^page-two$`),
     (params: TRouteCallbackParams): TRouteDetails => {
       return {
         routeName: 'page-two',
