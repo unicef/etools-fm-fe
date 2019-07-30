@@ -5,7 +5,7 @@ import {Router} from "./router";
 export const redirectToListSubpageList = [
   'engagements'
 ];
-export const needsRedirectToList = (path: string): undefined | string => {
+export const getRedirectToListPath = (path: string): undefined | string => {
   path = path.replace(ROOT_PATH, '');
   const route: string = Router.clearSlashes(path);
   const redirectTo: string | undefined = redirectToListSubpageList.find((r: string) => r === route);

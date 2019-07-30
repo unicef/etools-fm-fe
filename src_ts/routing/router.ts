@@ -10,7 +10,7 @@ export type TRouteCallbackParams = {
   queryParams: TRouteQueryParams;
 };
 
-export type TRouteMatchDetails = {
+export type TRouteDetails = {
   routeName: string;
   subRouteName: string | null;
   path: string;
@@ -23,7 +23,7 @@ export type TRouteMatchDetails = {
  *  - check for app valid routes and get route details, like name, params or queryParams,
  */
 export class Router {
-  routes: {regex: RegExp | string, handler: (params: TRouteCallbackParams) => TRouteMatchDetails}[] = [];
+  routes: {regex: RegExp | string, handler: (params: TRouteCallbackParams) => TRouteDetails}[] = [];
   root: string = '/';
 
   static clearSlashes(path: string): string {
@@ -47,7 +47,7 @@ export class Router {
     return !!route;
   }
 
-  addRoute(regex: RegExp | null, handler: (params: TRouteCallbackParams) => TRouteMatchDetails): Router {
+  addRoute(regex: RegExp | null, handler: (params: TRouteCallbackParams) => TRouteDetails): Router {
     if (!this.isRouteAdded(regex)) { // prevent adding the same route multiple times
       this.routes.push({regex: regex === null ? '' : regex, handler: handler});
     }
@@ -66,10 +66,17 @@ export class Router {
     return qParams;
   }
 
-  checkRouteDetails(path?: string): TRouteMatchDetails | null {
-    let routeDetails: TRouteMatchDetails | null = null;
+  /**
+   * This method will match the given path/current location to a registered route.
+   * If no route is matched it will return null.
+   * If a match is found, based on route regex and match callback, it will return a TRouteDetails object with
+   * details about this route: name, sub-route name (if any), route params, query params, route path.
+   * @param path
+   */
+  getRouteDetails(path?: string): TRouteDetails | null {
+    let routeDetails: TRouteDetails | null = null;
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
-    console.log('Router.checkRouteDetails.locationPath: ', locationPath);
+    console.log('Router.getRouteDetails.locationPath: ', locationPath);
 
     const qsStartIndex: number = locationPath.indexOf('?');
     let qs: string = '';

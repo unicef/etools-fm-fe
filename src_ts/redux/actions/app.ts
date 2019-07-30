@@ -8,9 +8,9 @@ import {
   ROUTE_404,
   updateAppLocation
 } from '../../routing/routes';
-import {TRouteMatchDetails} from '../../routing/router';
-import {componentsLazyLoadConfig} from '../../routing/component-lazy-load-config';
-import {needsRedirectToList} from '../../routing/subpage-redirect';
+import {TRouteDetails} from '../../routing/router';
+import {getFilePathsToImport} from '../../routing/component-lazy-load-config';
+import {getRedirectToListPath} from '../../routing/subpage-redirect';
 
 export const UPDATE_ROUTE_DETAILS = 'UPDATE_ROUTE_DETAILS';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
@@ -30,7 +30,7 @@ const updateStoreRouteDetails: ActionCreator<AppActionUpdateRouteDetails> = (rou
   };
 };
 
-const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteMatchDetails) => (dispatch) => {
+const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteDetails) => (dispatch) => {
   console.log('loadPageComponents', routeDetails);
   if (!routeDetails) {
     // invalid route => redirect to 404 page
@@ -38,18 +38,9 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteMatc
     return;
   }
 
-  // start importing components (lazy loading
-  let routeImportsPathsKey: string = routeDetails.routeName;
-  if (routeDetails.subRouteName) {
-    routeImportsPathsKey += `_${routeDetails.subRouteName}`;
-  }
-
-  const filesToImport: string[] = componentsLazyLoadConfig[routeImportsPathsKey];
-  if (!filesToImport || filesToImport.length === 0) {
-    throw new Error('No file imports configuration found (componentsLazyLoadConfig)!');
-  }
-
   const importBase: string = '../../'; // relative to current file
+  // start importing components (lazy loading)
+  const filesToImport: string[] = getFilePathsToImport(routeDetails);
   filesToImport.forEach((filePath: string) => {
     import(importBase + filePath).then(() => {
       console.log(`component: ${filePath} has been loaded... yey!`);
@@ -79,13 +70,13 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch)
   }
 
   // some routes need redirect to subRoute list
-  const redirectPath: string | undefined =  needsRedirectToList(path);
+  const redirectPath: string | undefined =  getRedirectToListPath(path);
   if (redirectPath) {
     updateAppLocation(redirectPath, true);
     return;
   }
 
-  const routeDetails: TRouteMatchDetails | null = EtoolsRouter.checkRouteDetails(path);
+  const routeDetails: TRouteDetails | null = EtoolsRouter.getRouteDetails(path);
   /**
    * TODO:
    *  - import tab component too in loadPageComponents action ????

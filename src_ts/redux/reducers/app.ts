@@ -14,15 +14,15 @@ import {
   UPDATE_DRAWER_STATE
 } from '../actions/app';
 import {RootAction} from '../store';
-import {TRouteMatchDetails} from '../../routing/router';
+import {TRouteDetails} from '../../routing/router';
 
 export interface AppState {
-  routeDetails: TRouteMatchDetails;
+  routeDetails: TRouteDetails;
   drawerOpened: boolean;
 }
 
 const INITIAL_STATE: AppState = {
-  routeDetails: {} as TRouteMatchDetails,
+  routeDetails: {} as TRouteDetails,
   drawerOpened: false
 };
 

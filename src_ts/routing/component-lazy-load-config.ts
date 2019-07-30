@@ -1,3 +1,5 @@
+import {TRouteDetails} from './router';
+
 export type TRoutesLazyLoadComponentsPath = {
   [key: string]: string[]
 };
@@ -22,4 +24,17 @@ export const componentsLazyLoadConfig: TRoutesLazyLoadComponentsPath = {
     'components/pages/page-two.js'
   ]
 
+};
+
+export const getFilePathsToImport = (routeDetails: TRouteDetails): string[] => {
+  let routeImportsPathsKey: string = routeDetails.routeName;
+  if (routeDetails.subRouteName) {
+    routeImportsPathsKey += `_${routeDetails.subRouteName}`;
+  }
+
+  const filesToImport: string[] = componentsLazyLoadConfig[routeImportsPathsKey];
+  if (!filesToImport || filesToImport.length === 0) {
+    throw new Error('No file imports configuration found (componentsLazyLoadConfig)!');
+  }
+  return filesToImport;
 };
