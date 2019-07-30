@@ -169,14 +169,22 @@ class AppShell extends connect(store)(PolymerElement) {
     return EtoolsRouter;
   }
 
+  protected _isActiveMainPage(currentPageName: string, expectedPageName: string): boolean {
+    return currentPageName === expectedPageName;
+  }
+
+  protected _isActiveSubPage(currentSubPageName: string, expectedSubPageNames: string): boolean {
+    const subPages: string[] = expectedSubPageNames.split('|');
+    return subPages.indexOf(currentSubPageName) > -1;
+  }
+
   protected _isActivePage(pageName: string, expectedPageName: string,
                           currentSubPageName: string, expectedSubPageNames?: string): boolean {
-    if (pageName !== expectedPageName) {
+    if (!this._isActiveMainPage(pageName, expectedPageName)) {
       return false;
     }
     if (currentSubPageName && expectedSubPageNames) {
-      const subPages: string[] = expectedSubPageNames.split('|');
-      return subPages.indexOf(currentSubPageName) > -1;
+      return this._isActiveSubPage(currentSubPageName, expectedSubPageNames);
     }
     return true;
   }
