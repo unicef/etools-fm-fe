@@ -1,13 +1,13 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import EtoolsAjaxRequestMixin from '@unicef-polymer/etools-ajax/etools-ajax-request-mixin';
 import {property} from '@polymer/decorators/lib/decorators';
-import {IEtoolsUserModel} from './user-model';
+import {EtoolsUserModel} from './user-model';
 import {connect} from 'pwa-helpers/connect-mixin';
 import {RootState, store} from '../../redux/store';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {GenericObject} from "../../types/globals";
+import {GenericObject} from '../../types/globals';
 
-const PROFILE_ENDPOINT: string = 'userProfile';
+const PROFILE_ENDPOINT = 'userProfile';
 
 /**
  * @customElement
@@ -17,7 +17,7 @@ const PROFILE_ENDPOINT: string = 'userProfile';
 export class EtoolsUser extends connect(store)(EtoolsAjaxRequestMixin(PolymerElement)) {
 
   @property({type: Object, notify: true})
-  userData: IEtoolsUserModel | null = null;
+  userData: EtoolsUserModel | null = null;
 
   private profileEndpoint = getEndpoint(PROFILE_ENDPOINT);
 
@@ -31,7 +31,7 @@ export class EtoolsUser extends connect(store)(EtoolsAjaxRequestMixin(PolymerEle
       console.log(response);
     }).catch((error: GenericObject) => {
       console.log(error);
-    })
+    });
   }
 
 }

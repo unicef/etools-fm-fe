@@ -14,15 +14,16 @@ import {
   UPDATE_DRAWER_STATE
 } from '../actions/app';
 import {RootAction} from '../store';
-import {TRouteMatchDetails} from '../../routing/router';
+import {RouteDetails} from '../../routing/router';
 
 export interface AppState {
-  routeDetails: TRouteMatchDetails;
+  routeDetails: RouteDetails;
   drawerOpened: boolean;
 }
 
 const INITIAL_STATE: AppState = {
-  routeDetails: {} as TRouteMatchDetails,
+  // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
+  routeDetails: {} as RouteDetails,
   drawerOpened: false
 };
 

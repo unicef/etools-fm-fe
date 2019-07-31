@@ -1,29 +1,29 @@
-export type TRouteQueryParam = {[key: string]: string};
-export type TRouteParams = {[key: string]: number | string};
+export interface RouteQueryParam {[key: string]: string}
+export interface RouteParams {[key: string]: number | string}
 
-export type TRouteQueryParams = {
-  [key: string]: string
-};
+export interface RouteQueryParams {
+  [key: string]: string;
+}
 
-export type TRouteCallbackParams = {
+export interface RouteCallbackParams {
   matchDetails: string[];
-  queryParams: TRouteQueryParams;
-};
+  queryParams: RouteQueryParams;
+}
 
-export type TRouteMatchDetails = {
+export interface RouteDetails {
   routeName: string;
   subRouteName: string | null;
   path: string;
-  queryParams: TRouteQueryParam | null;
-  params: TRouteParams | null;
-};
+  queryParams: RouteQueryParam | null;
+  params: RouteParams | null;
+}
 /**
  * Simple router that will help with:
  *  - registering app routes
  *  - check for app valid routes and get route details, like name, params or queryParams,
  */
 export class Router {
-  routes: {regex: RegExp | string, handler: (params: TRouteCallbackParams) => TRouteMatchDetails}[] = [];
+  routes: {regex: RegExp | string; handler: (params: RouteCallbackParams) => RouteDetails}[] = [];
   root: string = '/';
 
   static clearSlashes(path: string): string {
@@ -31,14 +31,19 @@ export class Router {
   }
 
   constructor(rootPath?: string) {
-    this.root = rootPath ? ('/' + Router.clearSlashes(rootPath) + '/') : '/';
+    this.root = (rootPath && rootPath !== '/') ? ('/' + Router.clearSlashes(rootPath) + '/') : '/';
   }
 
   getLocationPath(path?: string): string {
     path = path || decodeURI(location.pathname + location.search);
     // remove root path
-    path = this.root !== '/' ? path.replace(this.root, '') : path;
-    return Router.clearSlashes(path);
+    if (path.indexOf(this.root) === 0) {
+      // remove root only if it is the first
+      path = path.replace(this.root, '');
+    }
+    // remove ending slash
+    path = path.replace(/\/$/, '');
+    return path;
   }
 
   isRouteAdded(regex: RegExp | null): boolean {
@@ -47,17 +52,18 @@ export class Router {
     return !!route;
   }
 
-  addRoute(regex: RegExp | null, handler: (params: TRouteCallbackParams) => TRouteMatchDetails): Router {
+  addRoute(regex: RegExp | null, handler: (params: RouteCallbackParams) => RouteDetails): Router {
     if (!this.isRouteAdded(regex)) { // prevent adding the same route multiple times
       this.routes.push({regex: regex === null ? '' : regex, handler: handler});
     }
     return this;
   }
 
-  buildQueryParams(paramsStr: string): TRouteQueryParams {
-    let qParams: TRouteQueryParams = {} as TRouteQueryParams;
+  buildQueryParams(paramsStr: string): RouteQueryParams {
+    // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
+    const qParams: RouteQueryParams = {} as RouteQueryParams;
     if (paramsStr) {
-      let qs: string[] = paramsStr.split('&');
+      const qs: string[] = paramsStr.split('&');
       qs.forEach((qp: string) => {
         const qParam = qp.split('=');
         qParams[qParam[0] as string] = qParam[1];
@@ -66,13 +72,20 @@ export class Router {
     return qParams;
   }
 
-  checkRouteDetails(path?: string): TRouteMatchDetails | null {
-    let routeDetails: TRouteMatchDetails | null = null;
+  /**
+   * This method will match the given path/current location to a registered route.
+   * If no route is matched it will return null.
+   * If a match is found, based on route regex and match callback, it will return a TRouteDetails object with
+   * details about this route: name, sub-route name (if any), route params, query params, route path.
+   * @param path
+   */
+  getRouteDetails(path?: string): RouteDetails | null {
+    let routeDetails: RouteDetails | null = null;
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
-    console.log('Router.checkRouteDetails.locationPath: ', locationPath);
+    console.log('Router.getRouteDetails.locationPath: ', locationPath);
 
     const qsStartIndex: number = locationPath.indexOf('?');
-    let qs: string = '';
+    let qs = '';
     if (qsStartIndex > -1) {
       const loc = locationPath.split('?');
       locationPath = loc[0];
@@ -80,9 +93,9 @@ export class Router {
     }
 
     for (let i = 0; i < this.routes.length; i++) {
-      let match = locationPath.match(this.routes[i].regex);
+      const match = locationPath.match(this.routes[i].regex);
       if (match) {
-        const routeParams: TRouteCallbackParams = {
+        const routeParams: RouteCallbackParams = {
           matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),
           queryParams: this.buildQueryParams(qs)
         };
@@ -93,8 +106,12 @@ export class Router {
     return routeDetails;
   }
 
+  prepareLocationPath(path: string): string {
+    return (path.indexOf(this.root) === -1) ? (this.root + Router.clearSlashes(path)) : path;
+  }
+
   navigate(path?: string, navigateCallback?: (() => void) | null) {
-    path = path ? (this.root + Router.clearSlashes(path)) : '';
+    path = path ? this.prepareLocationPath(path) : '';
     history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {
       navigateCallback();

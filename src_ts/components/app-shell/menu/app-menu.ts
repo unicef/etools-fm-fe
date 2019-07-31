@@ -110,7 +110,7 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
   selectedOption: string = '';
 
   @property({type: Boolean, reflectToAttribute: true, observer: '_menuSizeChange'})
-  smallMenu: string = '';
+  smallMenu: boolean = false;
 
   // @ts-ignore
   private _menuSizeChange(newVal: boolean, oldVal: boolean): void {

@@ -44,8 +44,8 @@ import {ToastNotificationHelper} from '../common/toast-notifications/toast-notif
 import user from '../../redux/reducers/user';
 import {ROOT_PATH} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
-import {EtoolsRouter} from "../../routing/routes";
-import {TRouteMatchDetails} from "../../routing/router";
+import {EtoolsRouter} from '../../routing/routes';
+import {RouteDetails} from '../../routing/router';
 
 setRootPath(ROOT_PATH);
 
@@ -88,7 +88,8 @@ class AppShell extends connect(store)(PolymerElement) {
           <engagements-list class="page" 
               active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'list')]]"></engagements-list>
           <engagement-tabs class="page" 
-              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'details|questionnaires')]]"></engagement-tabs>
+              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'details|questionnaires')]]">
+          </engagement-tabs>
           <page-two class="page" active$="[[_isActivePage(_mainPage, 'page-two')]]"></page-two>
           <page-not-found class="page" active$="[[_isActivePage(_mainPage, 'page-not-found')]]"></page-not-found>
         </main>
@@ -104,7 +105,7 @@ class AppShell extends connect(store)(PolymerElement) {
   _drawerOpened: boolean = false;
 
   @property({type: Object})
-  _routeDetails: TRouteMatchDetails = {} as TRouteMatchDetails;
+  _routeDetails!: RouteDetails;
 
   @property({type: String})
   _mainPage: string = ''; // routeName
@@ -115,8 +116,8 @@ class AppShell extends connect(store)(PolymerElement) {
   @property({type: Boolean})
   smallMenu: boolean = false;
 
-  private appMenuHelper = {} as AppMenuHelper;
-  private appToastsNotificationsHelper = {} as ToastNotificationHelper;
+  private appMenuHelper!: AppMenuHelper;
+  private appToastsNotificationsHelper!: ToastNotificationHelper;
 
   constructor() {
     super();
@@ -136,7 +137,7 @@ class AppShell extends connect(store)(PolymerElement) {
     this.appMenuHelper.initMenuSize();
 
     installRouter(location => store.dispatch(
-        navigate(decodeURIComponent(location.pathname + location.search))));
+      navigate(decodeURIComponent(location.pathname + location.search))));
     installMediaQueryWatcher(`(min-width: 460px)`,
       () => store.dispatch(updateDrawerState(false)));
 
@@ -169,14 +170,22 @@ class AppShell extends connect(store)(PolymerElement) {
     return EtoolsRouter;
   }
 
+  protected _isActiveMainPage(currentPageName: string, expectedPageName: string): boolean {
+    return currentPageName === expectedPageName;
+  }
+
+  protected _isActiveSubPage(currentSubPageName: string, expectedSubPageNames: string): boolean {
+    const subPages: string[] = expectedSubPageNames.split('|');
+    return subPages.indexOf(currentSubPageName) > -1;
+  }
+
   protected _isActivePage(pageName: string, expectedPageName: string,
-                          currentSubPageName: string, expectedSubPageNames?: string): boolean {
-    if (pageName !== expectedPageName) {
+    currentSubPageName: string, expectedSubPageNames?: string): boolean {
+    if (!this._isActiveMainPage(pageName, expectedPageName)) {
       return false;
     }
     if (currentSubPageName && expectedSubPageNames) {
-      const subPages: string[] = expectedSubPageNames.split('|');
-      return subPages.indexOf(currentSubPageName) > -1;
+      return this._isActiveSubPage(currentSubPageName, expectedSubPageNames);
     }
     return true;
   }

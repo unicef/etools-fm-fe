@@ -18,7 +18,7 @@ class EngagementQuestionnaires extends PolymerElement {
   }
 
   static get properties() {
-    return {}
+    return {};
   }
 
   constructor() {
@@ -26,7 +26,7 @@ class EngagementQuestionnaires extends PolymerElement {
   }
 
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
   }
 
   disconnectedCallback() {

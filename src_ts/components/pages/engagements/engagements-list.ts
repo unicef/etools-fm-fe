@@ -6,7 +6,7 @@ import {SharedStyles} from '../../styles/shared-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
 import {pageContentHeaderSlottedStyles} from
-      '../../common/layout/page-content-header/page-content-header-slotted-styles';
+  '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
 import {GenericObject} from '../../../types/globals';
