@@ -45,7 +45,7 @@ import user from '../../redux/reducers/user';
 import {ROOT_PATH} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
 import {EtoolsRouter} from '../../routing/routes';
-import {TRouteDetails} from '../../routing/router';
+import {RouteDetails} from '../../routing/router';
 
 setRootPath(ROOT_PATH);
 
@@ -105,7 +105,7 @@ class AppShell extends connect(store)(PolymerElement) {
   _drawerOpened: boolean = false;
 
   @property({type: Object})
-  _routeDetails!: TRouteDetails;
+  _routeDetails!: RouteDetails;
 
   @property({type: String})
   _mainPage: string = ''; // routeName

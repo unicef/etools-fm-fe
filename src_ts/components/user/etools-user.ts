@@ -1,7 +1,7 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import EtoolsAjaxRequestMixin from '@unicef-polymer/etools-ajax/etools-ajax-request-mixin';
 import {property} from '@polymer/decorators/lib/decorators';
-import {IEtoolsUserModel} from './user-model';
+import {EtoolsUserModel} from './user-model';
 import {connect} from 'pwa-helpers/connect-mixin';
 import {RootState, store} from '../../redux/store';
 import {getEndpoint} from '../../endpoints/endpoints';
@@ -17,7 +17,7 @@ const PROFILE_ENDPOINT = 'userProfile';
 export class EtoolsUser extends connect(store)(EtoolsAjaxRequestMixin(PolymerElement)) {
 
   @property({type: Object, notify: true})
-  userData: IEtoolsUserModel | null = null;
+  userData: EtoolsUserModel | null = null;
 
   private profileEndpoint = getEndpoint(PROFILE_ENDPOINT);
 

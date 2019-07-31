@@ -1,21 +1,21 @@
-export interface TRouteQueryParam {[key: string]: string}
-export interface TRouteParams {[key: string]: number | string}
+export interface RouteQueryParam {[key: string]: string}
+export interface RouteParams {[key: string]: number | string}
 
-export interface TRouteQueryParams {
+export interface RouteQueryParams {
   [key: string]: string;
 }
 
-export interface TRouteCallbackParams {
+export interface RouteCallbackParams {
   matchDetails: string[];
-  queryParams: TRouteQueryParams;
+  queryParams: RouteQueryParams;
 }
 
-export interface TRouteDetails {
+export interface RouteDetails {
   routeName: string;
   subRouteName: string | null;
   path: string;
-  queryParams: TRouteQueryParam | null;
-  params: TRouteParams | null;
+  queryParams: RouteQueryParam | null;
+  params: RouteParams | null;
 }
 /**
  * Simple router that will help with:
@@ -23,7 +23,7 @@ export interface TRouteDetails {
  *  - check for app valid routes and get route details, like name, params or queryParams,
  */
 export class Router {
-  routes: {regex: RegExp | string; handler: (params: TRouteCallbackParams) => TRouteDetails}[] = [];
+  routes: {regex: RegExp | string; handler: (params: RouteCallbackParams) => RouteDetails}[] = [];
   root: string = '/';
 
   static clearSlashes(path: string): string {
@@ -52,16 +52,16 @@ export class Router {
     return !!route;
   }
 
-  addRoute(regex: RegExp | null, handler: (params: TRouteCallbackParams) => TRouteDetails): Router {
+  addRoute(regex: RegExp | null, handler: (params: RouteCallbackParams) => RouteDetails): Router {
     if (!this.isRouteAdded(regex)) { // prevent adding the same route multiple times
       this.routes.push({regex: regex === null ? '' : regex, handler: handler});
     }
     return this;
   }
 
-  buildQueryParams(paramsStr: string): TRouteQueryParams {
+  buildQueryParams(paramsStr: string): RouteQueryParams {
     // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
-    const qParams: TRouteQueryParams = {} as TRouteQueryParams;
+    const qParams: RouteQueryParams = {} as RouteQueryParams;
     if (paramsStr) {
       const qs: string[] = paramsStr.split('&');
       qs.forEach((qp: string) => {
@@ -79,8 +79,8 @@ export class Router {
    * details about this route: name, sub-route name (if any), route params, query params, route path.
    * @param path
    */
-  getRouteDetails(path?: string): TRouteDetails | null {
-    let routeDetails: TRouteDetails | null = null;
+  getRouteDetails(path?: string): RouteDetails | null {
+    let routeDetails: RouteDetails | null = null;
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
     console.log('Router.getRouteDetails.locationPath: ', locationPath);
 
@@ -95,7 +95,7 @@ export class Router {
     for (let i = 0; i < this.routes.length; i++) {
       const match = locationPath.match(this.routes[i].regex);
       if (match) {
-        const routeParams: TRouteCallbackParams = {
+        const routeParams: RouteCallbackParams = {
           matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),
           queryParams: this.buildQueryParams(qs)
         };

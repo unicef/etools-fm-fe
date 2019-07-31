@@ -8,7 +8,7 @@ import {
   ROUTE_404,
   updateAppLocation
 } from '../../routing/routes';
-import {TRouteDetails} from '../../routing/router';
+import {RouteDetails} from '../../routing/router';
 import {getFilePathsToImport} from '../../routing/component-lazy-load-config';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
 
@@ -30,7 +30,7 @@ const updateStoreRouteDetails: ActionCreator<AppActionUpdateRouteDetails> = (rou
   };
 };
 
-const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: TRouteDetails) => (dispatch) => {
+const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: RouteDetails) => (dispatch) => {
   console.log('loadPageComponents', routeDetails);
   if (!routeDetails) {
     // invalid route => redirect to 404 page
@@ -77,10 +77,9 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch)
     return;
   }
 
-  const routeDetails: TRouteDetails | null = EtoolsRouter.getRouteDetails(path);
+  const routeDetails: RouteDetails | null = EtoolsRouter.getRouteDetails(path);
   /**
    * TODO:
-   *  - import tab component too in loadPageComponents action ????
    *  - create template page with detail about routing (including tabs subpages navigation), creating a new page
    */
   dispatch(loadPageComponents(routeDetails));

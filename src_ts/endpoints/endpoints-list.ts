@@ -1,15 +1,15 @@
-export interface IEtoolsEndpoint {
+export interface EtoolsEndpoint {
   url?: string;
   template?: string;
   exp?: any;
   cachingKey?: string;
   cacheTableName?: string;
 }
-export interface IEtoolsEndpoints {
-  [key: string]: IEtoolsEndpoint;
+export interface EtoolsEndpoints {
+  [key: string]: EtoolsEndpoint;
 }
 
-export const etoolsEndpoints: IEtoolsEndpoints = {
+export const etoolsEndpoints: EtoolsEndpoints = {
   userProfile: {
     url: 'http://localhost:8082/api/v3/users/profile/'
   }

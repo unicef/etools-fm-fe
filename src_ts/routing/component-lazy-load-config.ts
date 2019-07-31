@@ -1,10 +1,10 @@
-import {TRouteDetails} from './router';
+import {RouteDetails} from './router';
 
-export interface TRoutesLazyLoadComponentsPath {
+export interface RoutesLazyLoadComponentsPath {
   [key: string]: string[];
 }
 // each key from this object is computed from routeName_routeSubPage (if subRoute exists)
-export const componentsLazyLoadConfig: TRoutesLazyLoadComponentsPath = {
+export const componentsLazyLoadConfig: RoutesLazyLoadComponentsPath = {
 
   'engagements_list': [
     'components/pages/engagements/engagements-list.js'
@@ -26,7 +26,7 @@ export const componentsLazyLoadConfig: TRoutesLazyLoadComponentsPath = {
 
 };
 
-export const getFilePathsToImport = (routeDetails: TRouteDetails): string[] => {
+export const getFilePathsToImport = (routeDetails: RouteDetails): string[] => {
   let routeImportsPathsKey: string = routeDetails.routeName;
   if (routeDetails.subRouteName) {
     routeImportsPathsKey += `_${routeDetails.subRouteName}`;

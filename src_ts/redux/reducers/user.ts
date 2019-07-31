@@ -1,11 +1,11 @@
 import {Reducer} from 'redux';
 import {UPDATE_USER_DATA, UPDATE_USER_PERMISSIONS} from '../actions/user';
-import {IEtoolsUserModel} from '../../components/user/user-model';
+import {EtoolsUserModel} from '../../components/user/user-model';
 import {RootAction} from '../store';
 import {GenericObject} from '../../types/globals';
 
 export interface UserState {
-  data: IEtoolsUserModel | null;
+  data: EtoolsUserModel | null;
   permissions: GenericObject | null;
 }
 

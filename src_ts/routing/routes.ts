@@ -1,4 +1,4 @@
-import {Router, TRouteCallbackParams, TRouteDetails} from './router';
+import {Router, RouteCallbackParams, RouteDetails} from './router';
 import {store} from '../redux/store';
 import {navigate} from '../redux/actions/app';
 import {ROOT_PATH} from '../config/config';
@@ -8,7 +8,7 @@ const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter
   .addRoute(new RegExp('^engagements/list'),
-    (params: TRouteCallbackParams): TRouteDetails => {
+    (params: RouteCallbackParams): RouteDetails => {
       return {
         routeName: 'engagements',
         subRouteName: 'list',
@@ -18,7 +18,7 @@ EtoolsRouter
       };
     })
   .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
-    (params: TRouteCallbackParams): TRouteDetails => {
+    (params: RouteCallbackParams): RouteDetails => {
       return {
         routeName: 'engagements',
         subRouteName: params.matchDetails[2], // tab name
@@ -30,7 +30,7 @@ EtoolsRouter
       };
     })
   .addRoute(new RegExp(`^page-not-found$`),
-    (params: TRouteCallbackParams): TRouteDetails => {
+    (params: RouteCallbackParams): RouteDetails => {
       return {
         routeName: 'page-not-found',
         subRouteName: null,
@@ -40,7 +40,7 @@ EtoolsRouter
       };
     })
   .addRoute(new RegExp(`^page-two$`),
-    (params: TRouteCallbackParams): TRouteDetails => {
+    (params: RouteCallbackParams): RouteDetails => {
       return {
         routeName: 'page-two',
         subRouteName: null,
