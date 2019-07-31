@@ -5,9 +5,9 @@ import {IEtoolsUserModel} from './user-model';
 import {connect} from 'pwa-helpers/connect-mixin';
 import {RootState, store} from '../../redux/store';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {GenericObject} from "../../types/globals";
+import {GenericObject} from '../../types/globals';
 
-const PROFILE_ENDPOINT: string = 'userProfile';
+const PROFILE_ENDPOINT = 'userProfile';
 
 /**
  * @customElement
@@ -31,7 +31,7 @@ export class EtoolsUser extends connect(store)(EtoolsAjaxRequestMixin(PolymerEle
       console.log(response);
     }).catch((error: GenericObject) => {
       console.log(error);
-    })
+    });
   }
 
 }

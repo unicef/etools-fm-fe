@@ -4,10 +4,10 @@ import {navigate} from '../redux/actions/app';
 import {ROOT_PATH} from '../config/config';
 
 export const EtoolsRouter = new Router(ROOT_PATH);
-const routeParamRegex: string = '([^\\/?#=+]+)';
+const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter
-  .addRoute(new RegExp('^engagements\/list'),
+  .addRoute(new RegExp('^engagements/list'),
     (params: TRouteCallbackParams): TRouteDetails => {
       return {
         routeName: 'engagements',
@@ -59,10 +59,10 @@ export const updateAppLocation = (newLocation: string, dispatchNavigation: boole
   if (dispatchNavigation) {
     navigationCallback = () => {
       store.dispatch(navigate(decodeURIComponent(_newLocation)));
-    }
+    };
   }
   EtoolsRouter.navigate(_newLocation, navigationCallback);
 };
 
-export const ROUTE_404: string = '/page-not-found';
-export const DEFAULT_ROUTE: string = '/engagements/list';
+export const ROUTE_404 = '/page-not-found';
+export const DEFAULT_ROUTE = '/engagements/list';

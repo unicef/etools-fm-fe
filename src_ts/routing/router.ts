@@ -1,29 +1,29 @@
-export type TRouteQueryParam = {[key: string]: string};
-export type TRouteParams = {[key: string]: number | string};
+export interface TRouteQueryParam {[key: string]: string}
+export interface TRouteParams {[key: string]: number | string}
 
-export type TRouteQueryParams = {
-  [key: string]: string
-};
+export interface TRouteQueryParams {
+  [key: string]: string;
+}
 
-export type TRouteCallbackParams = {
+export interface TRouteCallbackParams {
   matchDetails: string[];
   queryParams: TRouteQueryParams;
-};
+}
 
-export type TRouteDetails = {
+export interface TRouteDetails {
   routeName: string;
   subRouteName: string | null;
   path: string;
   queryParams: TRouteQueryParam | null;
   params: TRouteParams | null;
-};
+}
 /**
  * Simple router that will help with:
  *  - registering app routes
  *  - check for app valid routes and get route details, like name, params or queryParams,
  */
 export class Router {
-  routes: {regex: RegExp | string, handler: (params: TRouteCallbackParams) => TRouteDetails}[] = [];
+  routes: {regex: RegExp | string; handler: (params: TRouteCallbackParams) => TRouteDetails}[] = [];
   root: string = '/';
 
   static clearSlashes(path: string): string {
@@ -60,9 +60,10 @@ export class Router {
   }
 
   buildQueryParams(paramsStr: string): TRouteQueryParams {
-    let qParams: TRouteQueryParams = {} as TRouteQueryParams;
+    // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
+    const qParams: TRouteQueryParams = {} as TRouteQueryParams;
     if (paramsStr) {
-      let qs: string[] = paramsStr.split('&');
+      const qs: string[] = paramsStr.split('&');
       qs.forEach((qp: string) => {
         const qParam = qp.split('=');
         qParams[qParam[0] as string] = qParam[1];
@@ -84,7 +85,7 @@ export class Router {
     console.log('Router.getRouteDetails.locationPath: ', locationPath);
 
     const qsStartIndex: number = locationPath.indexOf('?');
-    let qs: string = '';
+    let qs = '';
     if (qsStartIndex > -1) {
       const loc = locationPath.split('?');
       locationPath = loc[0];
@@ -92,7 +93,7 @@ export class Router {
     }
 
     for (let i = 0; i < this.routes.length; i++) {
-      let match = locationPath.match(this.routes[i].regex);
+      const match = locationPath.match(this.routes[i].regex);
       if (match) {
         const routeParams: TRouteCallbackParams = {
           matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),

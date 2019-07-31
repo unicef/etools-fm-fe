@@ -7,8 +7,8 @@ import {GenericObject} from '../../types/globals';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const UPDATE_USER_PERMISSIONS = 'UPDATE_USER_PERMISSIONS';
 
-export interface UserActionUpdate extends Action<'UPDATE_USER_DATA'> {data: IEtoolsUserModel};
-export interface UserActionUpdatePermissions extends Action<'UPDATE_USER_PERMISSIONS'> {permissions: GenericObject};
+export interface UserActionUpdate extends Action<'UPDATE_USER_DATA'> {data: IEtoolsUserModel}
+export interface UserActionUpdatePermissions extends Action<'UPDATE_USER_PERMISSIONS'> {permissions: GenericObject}
 
 export type UserAction = UserActionUpdate | UserActionUpdatePermissions;
 // @ts-ignore - for now

@@ -7,7 +7,8 @@ import {SharedStyles} from '../../styles/shared-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import {property} from '@polymer/decorators';
 import '../../common/layout/etools-tabs';
-import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import {pageContentHeaderSlottedStyles}
+  from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import '../../common/layout/status/etools-status';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
@@ -104,7 +105,7 @@ class EngagementTabs extends connect(store)(PolymerElement) {
     if (newTabName !== oldTabName) {
       // go to new tab
       updateAppLocation(
-          `engagements/${this.engagement.id}/${newTabName}`, true);
+        `engagements/${this.engagement.id}/${newTabName}`, true);
     }
   }
 

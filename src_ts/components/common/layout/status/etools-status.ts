@@ -14,7 +14,7 @@ export interface IEtoolsStatusItem {
 
 export interface IEtoolsStatus extends IEtoolsStatusItem {
   // some statuses may share the same position
-  statusOptions?: IEtoolsStatusItem[]
+  statusOptions?: IEtoolsStatusItem[];
 }
 
 /**
@@ -139,7 +139,7 @@ class EtoolsStatus extends PolymerElement {
       displayStatuses = statuses.map((s: IEtoolsStatus, index: number) => {
         if (s.statusOptions && s.statusOptions.length > 0) {
           const aStatus: IEtoolsStatus | undefined = s.statusOptions
-              .find((st: IEtoolsStatus) => st.status === activeStatus);
+            .find((st: IEtoolsStatus) => st.status === activeStatus);
           // return the active status from a list of statuses that can share the same position
           // if active status is not in this list, return first IEtoolsStatusItem
           if (aStatus) {

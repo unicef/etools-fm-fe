@@ -22,6 +22,7 @@ export interface AppState {
 }
 
 const INITIAL_STATE: AppState = {
+  // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
   routeDetails: {} as TRouteDetails,
   drawerOpened: false
 };

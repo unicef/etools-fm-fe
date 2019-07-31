@@ -1,6 +1,6 @@
 // define here main routes that need redirect to list subRoute
-import {ROOT_PATH} from "../config/config";
-import {Router} from "./router";
+import {ROOT_PATH} from '../config/config';
+import {Router} from './router';
 
 export const redirectToListSubpageList = [
   'engagements'

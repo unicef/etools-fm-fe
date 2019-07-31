@@ -23,7 +23,7 @@ export class AppMenuHelper {
     this.drawerLayout = this.appShellEl.shadowRoot!.querySelector('#layout') as AppDrawerLayoutElement;
     this.drawer = this.appShellEl.shadowRoot!.querySelector('#drawer') as AppDrawerElement;
     this.appHeaderLayout = this.appShellEl.shadowRoot!
-        .querySelector('#appHeadLayout') as AppHeaderLayoutElement;
+      .querySelector('#appHeadLayout') as AppHeaderLayoutElement;
   }
 
   public initMenuListeners(): void {
