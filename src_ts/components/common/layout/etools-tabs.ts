@@ -31,7 +31,7 @@ class EtoolsTabs extends PolymerElement {
         }
 
         :host([border-bottom]) {
-          border-bottom: 1px solid var(--darker-divider-color);
+          border-bottom: 1px solid var(--dark-divider-color);
         }
 
         paper-tabs {

@@ -30,7 +30,7 @@ class EtoolsStatus extends PolymerElement {
         :host {
           @apply --layout-horizontal;
           @apply --layout-center;
-          border-bottom: 1px solid var(--darker-divider-color);
+          border-bottom: 1px solid var(--dark-divider-color);
           padding: 24px;
           background-color: var(--primary-background-color);
         }
