@@ -7,14 +7,14 @@ import {property} from '@polymer/decorators/lib/decorators';
 import '@polymer/iron-icons/iron-icons';
 import {completedStatusIcon} from './status-icons';
 
-export interface IEtoolsStatusItem {
+export interface EtoolsStatusItem {
   status?: string;
   label?: string;
 }
 
-export interface IEtoolsStatus extends IEtoolsStatusItem {
+export interface EtoolsStatusModel extends EtoolsStatusItem {
   // some statuses may share the same position
-  statusOptions?: IEtoolsStatusItem[]
+  statusOptions?: EtoolsStatusItem[];
 }
 
 /**
@@ -30,7 +30,7 @@ class EtoolsStatus extends PolymerElement {
         :host {
           @apply --layout-horizontal;
           @apply --layout-center;
-          border-bottom: 1px solid var(--darker-divider-color);
+          border-bottom: 1px solid var(--dark-divider-color);
           padding: 24px;
           background-color: var(--primary-background-color);
         }
@@ -91,7 +91,7 @@ class EtoolsStatus extends PolymerElement {
   }
 
   @property({type: Array, computed: 'filterStatuses(statuses, activeStatus)'})
-  filteredStatuses: IEtoolsStatusItem[] = [];
+  filteredStatuses: EtoolsStatusItem[] = [];
 
   @property({type: String})
   activeStatus: string = 'submitted-accepted';
@@ -101,7 +101,7 @@ class EtoolsStatus extends PolymerElement {
 
   // init with a default list of statuses (for testing)
   @property({type: Array})
-  statuses: IEtoolsStatus[] = [
+  statuses: EtoolsStatusModel[] = [
     {
       status: 'draft',
       label: 'Draft'
@@ -133,13 +133,13 @@ class EtoolsStatus extends PolymerElement {
    * @param statuses
    * @param activeStatus
    */
-  filterStatuses(statuses: IEtoolsStatus[], activeStatus: string): IEtoolsStatusItem[] {
-    let displayStatuses: IEtoolsStatusItem[] = [];
+  filterStatuses(statuses: EtoolsStatusModel[], activeStatus: string): EtoolsStatusItem[] {
+    let displayStatuses: EtoolsStatusItem[] = [];
     if (statuses.length > 0) {
-      displayStatuses = statuses.map((s: IEtoolsStatus, index: number) => {
+      displayStatuses = statuses.map((s: EtoolsStatusModel, index: number) => {
         if (s.statusOptions && s.statusOptions.length > 0) {
-          const aStatus: IEtoolsStatus | undefined = s.statusOptions
-              .find((st: IEtoolsStatus) => st.status === activeStatus);
+          const aStatus: EtoolsStatusModel | undefined = s.statusOptions
+            .find((st: EtoolsStatusModel) => st.status === activeStatus);
           // return the active status from a list of statuses that can share the same position
           // if active status is not in this list, return first IEtoolsStatusItem
           if (aStatus) {

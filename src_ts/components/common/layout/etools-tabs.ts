@@ -5,7 +5,7 @@ import {Debouncer} from '@polymer/polymer/lib/utils/debounce';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
-import {PaperTabsElement}  from '@polymer/paper-tabs';
+import {PaperTabsElement} from '@polymer/paper-tabs';
 
 import {property} from '@polymer/decorators';
 
@@ -31,7 +31,7 @@ class EtoolsTabs extends PolymerElement {
         }
 
         :host([border-bottom]) {
-          border-bottom: 1px solid var(--darker-divider-color);
+          border-bottom: 1px solid var(--dark-divider-color);
         }
 
         paper-tabs {

@@ -27,8 +27,8 @@ class PageContentHeader extends PolymerElement {
           background-color: var(--primary-background-color);
           padding: 0 24px;
           min-height: 85px;
-          border-bottom: 1px solid var(--darker-divider-color);
-          
+          border-bottom: 1px solid var(--dark-divider-color);
+
           --page-title: {
             margin: 0;
             font-weight: normal;

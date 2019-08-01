@@ -12,13 +12,13 @@ export const navMenuStyles = html`
         height: 100%;
         overflow-y: var(--side-bar-scrolling);
         overflow-x: hidden;
-        border-right: 1px solid var(--dark-divider-color);
+        border-right: 1px solid var(--light-divider-color);
       }
-  
+
       :host([small-menu]) {
         overflow-x: visible;
       }
-  
+
       @media (max-height: 600px) {
         paper-tooltip {
           display: none;
@@ -27,14 +27,14 @@ export const navMenuStyles = html`
           overflow-x: hidden;
         }
       }
-  
+
       .menu-header,
       :host([small-menu]) .menu-header .ripple-wrapper.main,
       .nav-menu-item {
         @apply --layout-horizontal;
         @apply --layout-center;
       }
-  
+
       .menu-header {
         @apply --layout-justified;
         background-color: var(--primary-color);
@@ -45,7 +45,7 @@ export const navMenuStyles = html`
         line-height: 18px;
         text-transform: uppercase;
       }
-  
+
       :host([small-menu]) .menu-header {
         padding: 0;
       }
@@ -53,14 +53,14 @@ export const navMenuStyles = html`
         width: 60px;
         height: 60px;
       }
-  
+
       :host([small-menu]) .menu-header,
       .nav-menu-item.section-title,
       :host([small-menu]) .nav-menu-item,
       :host([small-menu]) .menu-header .ripple-wrapper.main {
         @apply --layout-center-justified;
       }
-  
+
       :host([small-menu]) #app-name,
       :host #menu-header-top-icon,
       :host([small-menu]) .nav-menu-item .name,
@@ -74,7 +74,7 @@ export const navMenuStyles = html`
       :host(:not([small-menu])) #minimize-menu {
         display: block;
       }
-  
+
       .menu-header paper-icon-button {
         --paper-icon-button: {
           width: 24px;
@@ -82,20 +82,20 @@ export const navMenuStyles = html`
           padding: 0;
         }
       }
-  
+
       #menu-header-top-icon,
       #minimize-menu {
         cursor: pointer;
       }
-  
+
       #menu-header-top-icon {
         --iron-icon-height: 36px;
         --iron-icon-width: 36px;
       }
-  
+
       .divider {
         margin: 8px 0;
-        border-bottom: 1px solid var(--dark-divider-color);
+        border-bottom: 1px solid var(--light-divider-color);
       }
       .nav-menu {
         @apply --layout-vertical;
@@ -106,7 +106,7 @@ export const navMenuStyles = html`
       .nav-menu, .nav-menu iron-selector[role="navigation"] {
         @apply --layout-flex;
       }
-  
+
       .nav-menu-item {
         width: 100%;
         font-size: 14px;
@@ -117,51 +117,51 @@ export const navMenuStyles = html`
         text-decoration: none;
         text-transform: capitalize;
       }
-  
+
       .nav-menu-item.section-title {
         color: var(--primary-text-color);
         font-size: 13px;
         font-weight: 500;
         text-transform: none;
-        border-top: 1px solid var(--dark-divider-color);
+        border-top: 1px solid var(--light-divider-color);
       }
-  
+
       :host([small-menu]) .nav-menu-item.section-title {
         height: 0;
       }
-  
+
       .nav-menu-item.iron-selected {
         background-color: var(--secondary-background-color);
       }
-  
+
       .nav-menu-item.iron-selected:active {
-        background-color: var(--dark-divider-color);
+        background-color: var(--light-divider-color);
       }
-  
+
       .nav-menu-item .name {
         margin-left: 16px;
         color: var(--primary-text-color);
       }
-  
+
       .nav-menu-item iron-icon {
         margin: 0 16px;
         color: var(--dark-icon-color);
       }
-  
+
       :host([small-menu]) .nav-menu-item iron-icon {
         margin: 0;
       }
-  
+
       .nav-menu-item.iron-selected .name,
       .nav-menu-item.iron-selected iron-icon {
         color: var(--primary-color);
       }
-  
+
       .nav-menu-item.lighter-item .name,
       .nav-menu-item.lighter-item iron-icon {
         color: var(--secondary-text-color);
       }
-  
+
       .last-one {
         margin-bottom: 18px;
       }

@@ -1,5 +1,5 @@
 // TODO: improve this user model
-export interface IEtoolsUserModel {
+export interface EtoolsUserModel {
   countries_available: object[];
   groups: object[];
   country: object;
