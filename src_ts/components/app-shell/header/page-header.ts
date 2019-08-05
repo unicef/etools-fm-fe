@@ -1,5 +1,3 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element';
-import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners';
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
@@ -12,17 +10,17 @@ import {store} from '../../../redux/store';
 
 import {isProductionServer, isStagingServer} from '../../../config/config';
 import {updateDrawerState} from '../../../redux/actions/app';
-import {property} from '@polymer/decorators/lib/decorators';
+import {customElement, LitElement, html, property} from 'lit-element';
 
 /**
  * page header element
- * @polymer
+ * @LitElement
  * @customElement
- * @appliesMixin GestureEventListeners
  */
-class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
+@customElement('page-header')
+export class PageHeader extends connect(store)(LitElement) {
 
-  public static get template() {
+  public render() {
     // main template
     // language=HTML
     return html`        
@@ -30,7 +28,7 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
         app-toolbar {
           padding: 0 16px 0 0;
           height: 60px;
-          background-color: var(--header-bg-color);
+          background-color: ${this.headerColor};
         }
 
         .titlebar {
@@ -81,15 +79,11 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
       </style>
       
       <app-toolbar sticky class="content-align">
-        <paper-icon-button id="menuButton" icon="menu" on-tap="menuBtnClicked"></paper-icon-button>
+        <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
         <div class="titlebar content-align">
           <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src$="[[rootPath]]images/etools-logo-color-white.svg">
-          <dom-if if="[[_isStaging]]">
-            <template>
-              <div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>
-            </template>
-          </dom-if>
+          <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg">
+          ${this.isStaging ? html`<div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>` : ''}
         </div>
         <div class="content-align">
           <!--<countries-dropdown id="countries" countries="[[countries]]"-->
@@ -112,12 +106,15 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
   }
 
   @property({type: Boolean})
-  _isStaging: boolean = false;
+  public isStaging: boolean = false;
+
+  public rootPath: string = '';
+  public headerColor: string = 'var(--header-bg-color)';
 
   public connectedCallback() {
     super.connectedCallback();
-    this._setBgColor();
-    this._isStaging = isStagingServer();
+    this.setBgColor();
+    this.isStaging = isStagingServer();
   }
 
   // @ts-ignore
@@ -130,12 +127,10 @@ class PageHeader extends connect(store)(GestureEventListeners(PolymerElement)) {
     // fireEvent(this, 'drawer');
   }
 
-  public _setBgColor() {
+  private setBgColor() {
     // If not production environment, changing header color to red
     if (!isProductionServer()) {
-      this.updateStyles({'--header-bg-color': 'var(--nonprod-header-color)'});
+      this.headerColor = 'var(--nonprod-header-color)';
     }
   }
 }
-
-window.customElements.define('page-header', PageHeader);

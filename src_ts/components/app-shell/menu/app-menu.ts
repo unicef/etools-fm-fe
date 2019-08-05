@@ -1,24 +1,23 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
-import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/paper-ripple/paper-ripple.js';
-import {property} from '@polymer/decorators/lib/decorators';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '../../utils/fire-custom-event';
+import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
+import {customElement, html, LitElement, property} from 'lit-element';
 
 /**
- * PMP main menu
- * @polymer
+ * main menu
+ * @LitElement
  * @customElement
- * @appliesMixin GestureEventListeners
  */
-class AppMenu extends GestureEventListeners(PolymerElement) {
+@customElement('app-menu')
+export class AppMenu extends LitElement {
 
-  public static get template() {
+  public render() {
     // main template
     // language=HTML
     return html`
@@ -33,7 +32,7 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
         <span class="ripple-wrapper main">
         <iron-icon id="menu-header-top-icon"
                    icon="assignment-ind"
-                   on-tap="_toggleSmallMenu"></iron-icon>
+                    @tap="${() => this._toggleSmallMenu()}"></iron-icon>
         <paper-ripple class="circle" center></paper-ripple>
       </span>
 
@@ -44,17 +43,18 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
         <span class="ripple-wrapper">
         <iron-icon id="minimize-menu"
                    icon="chevron-left"
-                   on-tap="_toggleSmallMenu"></iron-icon>
+                    @tap="${() => this._toggleSmallMenu()}"></iron-icon>
         <paper-ripple class="circle" center></paper-ripple>
       </span>
       </div>
 
       <div class="nav-menu">
-        <iron-selector selected="[[selectedOption]]"
+        <iron-selector .selected="${this.selectedOption}"
                        attr-for-selected="menu-name"
+                       selectable="a"
                        role="navigation">
 
-          <a class="nav-menu-item" menu-name="engagements" href$="[[rootPath]]engagements">
+          <a class="nav-menu-item" menu-name="engagements" href="${this.rootPath + 'engagements'}">
             <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
               Engagements
@@ -62,7 +62,7 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
             <div class="name">Engagements</div>
           </a>
 
-          <a class="nav-menu-item" menu-name="page-two" href$="[[rootPath]]page-two">
+          <a class="nav-menu-item" menu-name="page-two" href="${this.rootPath + 'page-two'}">
             <iron-icon id="page2-icon" icon="extension"></iron-icon>
             <paper-tooltip for="page2-icon" position="right">
               Page Two
@@ -106,24 +106,20 @@ class AppMenu extends GestureEventListeners(PolymerElement) {
     `;
   }
 
+  @property({type: String, attribute: 'selected-option'})
+  public selectedOption: string = '';
+
   @property({type: String})
-  selectedOption: string = '';
+  public rootPath: string = '';
 
-  @property({type: Boolean, reflectToAttribute: true, observer: '_menuSizeChange'})
-  smallMenu: boolean = false;
+  @property({type: Boolean, attribute: 'small-menu'})
+  public smallMenu: boolean = false;
 
-  // @ts-ignore
-  private _menuSizeChange(newVal: boolean, oldVal: boolean): void {
-    if (newVal !== oldVal) {
-      setTimeout(() => fireEvent(this, 'resize-main-layout'));
-    }
+  public _toggleSmallMenu(): void {
+    this.smallMenu = !this.smallMenu;
+    const localStorageVal: number = this.smallMenu ? 1 : 0;
+    localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
+    fireEvent(this, 'toggle-small-menu', {value: this.smallMenu});
   }
 
-  // @ts-ignore
-  private _toggleSmallMenu(e: Event): void {
-    e.stopImmediatePropagation();
-    fireEvent(this, 'toggle-small-menu');
-  }
 }
-
-window.customElements.define('app-menu', AppMenu);
