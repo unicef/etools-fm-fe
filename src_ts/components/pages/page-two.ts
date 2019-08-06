@@ -1,13 +1,17 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-styles/element-styles/paper-material-styles.js';
 
-import { SharedStyles } from '../styles/shared-styles.js';
+import { SharedStyles } from '../styles/shared-styles';
+import { store } from '../../redux/store';
+import { routeDetailsSelector } from '../../redux/selectors/app.selectors';
+import { Unsubscribe } from 'redux';
 
 /**
  * @polymer
  * @customElement
  */
 class PageTwo extends PolymerElement {
+    private unsubscribe$!: Unsubscribe;
 
     public static get template(): HTMLTemplateElement {
         // main template
@@ -35,6 +39,18 @@ class PageTwo extends PolymerElement {
             </p>
           </section>
     `;
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.unsubscribe$ = store.subscribe(routeDetailsSelector((details: IRouteDetails) => {
+            console.log(details);
+        }));
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.unsubscribe$();
     }
 
 }

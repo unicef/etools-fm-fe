@@ -88,7 +88,7 @@ export class PageHeader extends connect(store)(LitElement) {
             <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
             <div class="titlebar content-align">
               <etools-app-selector id="selector"></etools-app-selector>
-              <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg">
+              <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg" alt="eTools">
               ${this.isStaging ? html`<div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>` : ''}
             </div>
             <div class="content-align">

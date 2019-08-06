@@ -7,7 +7,7 @@ export const EtoolsRouter: Router = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
 
 EtoolsRouter
-    .addRoute(new RegExp('^engagements/list'),
+    .addRoute(new RegExp('^engagements/list$'),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
                 routeName: 'engagements',
