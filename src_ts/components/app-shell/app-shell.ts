@@ -1,13 +1,9 @@
 /**
 @license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+Copyright (c) 2019 The eTools Project Authors. All rights reserved.
 */
-import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
+
+import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings.js';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 import {installRouter} from 'pwa-helpers/router.js';
@@ -29,6 +25,11 @@ import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 
+import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
+import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
+import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
+import {customElement, html, LitElement, property, query} from 'lit-element';
+
 import {AppShellStyles} from './app-shell-styles';
 
 import './menu/app-menu.js';
@@ -38,16 +39,10 @@ import './footer/page-footer.js';
 import './app-theme.js';
 import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
 import user from '../../redux/reducers/user';
-import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../config/config';
+import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
 import {EtoolsRouter} from '../../routing/routes';
 import {RouteDetails} from '../../routing/router';
-import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
-import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
-import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
-import {customElement, html, LitElement, property, query} from 'lit-element'
-
-setRootPath(ROOT_PATH);
 
 store.addReducers({
   user
@@ -140,7 +135,7 @@ export class AppShell extends connect(store)(LitElement) {
     const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
     if (!menuTypeStoredVal) {
       this.smallMenu = false;
-    } else  {
+    } else {
       this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
     }
   }

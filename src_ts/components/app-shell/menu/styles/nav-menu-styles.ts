@@ -1,7 +1,6 @@
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import {html} from 'lit-element';
 
-
 // language=HTML
 export const navMenuStyles = html`
     <style>

@@ -1,4 +1,3 @@
-import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
@@ -8,7 +7,7 @@ import '../../common/layout/support-btn';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
-import {isProductionServer, isStagingServer} from '../../../config/config';
+import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/config';
 import {updateDrawerState} from '../../../redux/actions/app';
 import {customElement, LitElement, html, property} from 'lit-element';
 
@@ -82,7 +81,7 @@ export class PageHeader extends connect(store)(LitElement) {
         <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
         <div class="titlebar content-align">
           <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg">
+          <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg" alt="eTools">
           ${this.isStaging ? html`<div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>` : ''}
         </div>
         <div class="content-align">
@@ -108,7 +107,10 @@ export class PageHeader extends connect(store)(LitElement) {
   @property({type: Boolean})
   public isStaging: boolean = false;
 
-  public rootPath: string = '';
+  @property({type: String})
+  rootPath: string = ROOT_PATH;
+
+  @property({type: String})
   public headerColor: string = 'var(--header-bg-color)';
 
   public connectedCallback() {

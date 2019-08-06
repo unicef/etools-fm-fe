@@ -1,22 +1,29 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element';
+import {customElement, html, LitElement, property} from 'lit-element';
 
 // These are the shared styles needed by this element.
 import {SharedStyles} from '../styles/shared-styles';
+import {ROOT_PATH} from '../../config/config';
 
-class PageNotFound extends PolymerElement {
+/**
+ * @customElement
+ * @LitElement
+ */
+@customElement('page-not-found')
+export class PageNotFound extends LitElement {
 
-  public static get template() {
+  render() {
     return html`
       <style include="paper-material-styles"></style>
       ${SharedStyles}
       <section class="paper-material" elevation="1">
         <h2>Oops! You hit a 404</h2>
         <p>The page you're looking for doesn't seem to exist. Head back
-           <a href$="[[rootPath]]">home</a> and try again?
+           <a href="${this.rootPath}">home</a> and try again?
         </p>
       </section>
     `;
   }
-}
 
-window.customElements.define('page-not-found', PageNotFound);
+  @property({type: String})
+  rootPath: string = ROOT_PATH;
+}

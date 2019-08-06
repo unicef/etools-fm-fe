@@ -6,7 +6,7 @@ import '@polymer/paper-ripple/paper-ripple.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '../../utils/fire-custom-event';
-import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
+import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
 import {customElement, html, LitElement, property} from 'lit-element';
 
 /**
@@ -110,7 +110,7 @@ export class AppMenu extends LitElement {
   public selectedOption: string = '';
 
   @property({type: String})
-  public rootPath: string = '';
+  rootPath: string = ROOT_PATH;
 
   @property({type: Boolean, attribute: 'small-menu'})
   public smallMenu: boolean = false;
