@@ -1,4 +1,3 @@
-// import { select } from './create-selectors';
-// import { IRootState } from '../../types/app.state.type';
+import { select } from './create-selectors';
 
-// export const appPageSelector: Selector<string> = select<string>((store: IRootState) => store.router.activeRoute);
+export const routeDetailsSelector: Selector<IRouteDetails> = select<IRouteDetails>((store: IRootState) => store.app.routeDetails);

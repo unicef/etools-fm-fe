@@ -1,5 +1,4 @@
 import '@polymer/iron-flex-layout/iron-flex-layout';
-
 import { appDrawerStyles } from './menu/styles/app-drawer-styles';
 import { html, TemplateResult } from 'lit-element';
 

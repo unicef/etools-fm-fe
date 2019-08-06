@@ -7,7 +7,7 @@
  Code distributed by Google as part of the polymer project is also
  subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
-import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
+import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installRouter } from 'pwa-helpers/router.js';
@@ -32,7 +32,7 @@ import './footer/page-footer.js';
 
 import './app-theme.js';
 import { ToastNotificationHelper } from '../common/toast-notifications/toast-notification-helper';
-import { ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY } from '../../config/config';
+import { SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY } from '../../config/config';
 import { getCurrentUserData } from '../../redux/effects/user.effects';
 import { AppDrawerLayoutElement } from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import { AppHeaderLayoutElement } from '@polymer/app-layout/app-header-layout/app-header-layout';
@@ -41,8 +41,6 @@ import { customElement, html, LitElement, property, query, TemplateResult } from
 import { navigate } from '../../redux/effects/app.effects';
 import { userData } from '../../redux/reducers/user';
 import { UpdateDrawerState } from '../../redux/actions/app';
-
-setRootPath(ROOT_PATH);
 
 store.addReducers({
     userData

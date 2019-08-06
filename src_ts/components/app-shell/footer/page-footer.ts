@@ -1,5 +1,6 @@
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import { customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { ROOT_PATH } from '../../../config/config';
 
 /**
  * page footer element
@@ -9,7 +10,7 @@ import { customElement, html, LitElement, TemplateResult } from 'lit-element';
 @customElement('page-footer')
 export class PageFooter extends LitElement {
 
-  public rootPath: string = '';
+  public rootPath: string = ROOT_PATH;
 
   public render(): TemplateResult {
     // main template

@@ -1,3 +1,10 @@
+interface IRootState {
+    app: IAppState;
+    user: IUserState;
+}
+
+type StoreSelectorFunction<T> = (store: IRootState) => T;
+
 interface IAppState {
     routeDetails: IRouteDetails;
     drawerOpened: boolean;

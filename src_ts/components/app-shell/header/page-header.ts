@@ -8,7 +8,7 @@ import '../../common/layout/support-btn';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../../../redux/store';
 
-import { isProductionServer, isStagingServer } from '../../../config/config';
+import { isProductionServer, isStagingServer, ROOT_PATH } from '../../../config/config';
 import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { UpdateDrawerState } from '../../../redux/actions/app';
 
@@ -23,7 +23,7 @@ export class PageHeader extends connect(store)(LitElement) {
     @property({ type: Boolean })
     public isStaging: boolean = false;
 
-    public rootPath: string = '';
+    public rootPath: string = ROOT_PATH;
     public headerColor: string = 'var(--header-bg-color)';
 
     public render(): TemplateResult {
