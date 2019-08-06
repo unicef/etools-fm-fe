@@ -4,8 +4,27 @@
 * and whose constructor function accepts an arbitrary number of parameters of any type
 * On the type level, a class can be represented as a newable function
 */
-export type Constructor<T> = new(...args: any[]) => T;
+type Constructor<T> = new(...args: any[]) => T;
 
-export interface GenericObject {
-  [key: string]: any;
+type GenericObject = {
+    [key: string]: any;
+};
+
+type PageTab = {
+    tab: string;
+    tabLabel: string;
+    hidden: boolean;
+};
+
+interface IEtoolsEndpoint {
+    url?: string;
+    template?: string;
+    exp?: any;
+    cachingKey?: string;
+    cacheTableName?: string;
 }
+interface IEtoolsEndpoints {
+    [key: string]: IEtoolsEndpoint;
+}
+
+type Callback = (...args: any) => void;

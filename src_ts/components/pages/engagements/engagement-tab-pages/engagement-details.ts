@@ -1,4 +1,4 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element';
 
 /**
  * @customElement
@@ -6,16 +6,16 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element';
  */
 class EngagementDetails extends PolymerElement {
 
-  static get template() {
-    // language=HTML
-    return html`
-      <style>
-        /* CSS rules for your element */
-      </style>
+    public static get template(): HTMLTemplateElement {
+        // language=HTML
+        return html`
+            <style>
+                /* CSS rules for your element */
+            </style>
 
-      PSEA engagement details here
-    `;
-  }
+            PSEA engagement details here
+        `;
+    }
 
 }
 

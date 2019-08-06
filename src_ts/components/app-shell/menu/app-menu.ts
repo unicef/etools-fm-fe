@@ -4,10 +4,10 @@ import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/paper-ripple/paper-ripple.js';
 
-import {navMenuStyles} from './styles/nav-menu-styles';
-import {fireEvent} from '../../utils/fire-custom-event';
-import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
-import {customElement, html, LitElement, property} from 'lit-element';
+import { navMenuStyles } from './styles/nav-menu-styles';
+import { fireEvent } from '../../utils/fire-custom-event';
+import { SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY } from '../../../config/config';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 
 /**
  * main menu
@@ -17,10 +17,19 @@ import {customElement, html, LitElement, property} from 'lit-element';
 @customElement('app-menu')
 export class AppMenu extends LitElement {
 
-  public render() {
-    // main template
-    // language=HTML
-    return html`
+    @property({ type: String, attribute: 'selected-option' })
+    public selectedOption: string = '';
+
+    @property({ type: String })
+    public rootPath: string = '';
+
+    @property({ type: Boolean, attribute: 'small-menu' })
+    public smallMenu: boolean = false;
+
+    public render(): TemplateResult {
+        // main template
+        // language=HTML
+        return html`
         ${navMenuStyles}
 
       <div class="menu-header">
@@ -69,7 +78,7 @@ export class AppMenu extends LitElement {
             </paper-tooltip>
             <div class="name">Page Two</div>
           </a>
-          
+
         </iron-selector>
 
         <div class="nav-menu-item section-title">
@@ -104,22 +113,13 @@ export class AppMenu extends LitElement {
 
       </div>
     `;
-  }
+    }
 
-  @property({type: String, attribute: 'selected-option'})
-  public selectedOption: string = '';
-
-  @property({type: String})
-  public rootPath: string = '';
-
-  @property({type: Boolean, attribute: 'small-menu'})
-  public smallMenu: boolean = false;
-
-  public _toggleSmallMenu(): void {
-    this.smallMenu = !this.smallMenu;
-    const localStorageVal: number = this.smallMenu ? 1 : 0;
-    localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
-    fireEvent(this, 'toggle-small-menu', {value: this.smallMenu});
-  }
+    public _toggleSmallMenu(): void {
+        this.smallMenu = !this.smallMenu;
+        const localStorageVal: number = this.smallMenu ? 1 : 0;
+        localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
+        fireEvent(this, 'toggle-small-menu', { value: this.smallMenu });
+    }
 
 }

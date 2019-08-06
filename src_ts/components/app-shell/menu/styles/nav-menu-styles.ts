@@ -1,9 +1,8 @@
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import {html} from 'lit-element';
-
+import { html, TemplateResult } from 'lit-element';
 
 // language=HTML
-export const navMenuStyles = html`
+export const navMenuStyles: TemplateResult = html`
     <style>
       *[hidden] {
         display: none !important;

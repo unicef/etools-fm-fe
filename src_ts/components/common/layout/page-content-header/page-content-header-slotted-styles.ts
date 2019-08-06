@@ -1,4 +1,4 @@
-import {html} from '@polymer/polymer/polymer-element.js';
+import { html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
 /**
@@ -7,12 +7,12 @@ import '@polymer/iron-flex-layout/iron-flex-layout.js';
  */
 
 // language=HTML
-export const pageContentHeaderSlottedStyles = html`
-  <style>
-    .content-header-actions {
-      @apply --layout-horizontal;
-      @apply --layout-end;
-    }
-    
-    /* TODO: add more styles as needed */
-  </style>`;
+export const pageContentHeaderSlottedStyles: HTMLTemplateElement = html`
+    <style>
+        .content-header-actions {
+            @apply --layout-horizontal;
+            @apply --layout-end;
+        }
+
+        /* TODO: add more styles as needed */
+    </style>`;

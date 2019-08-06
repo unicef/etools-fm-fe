@@ -1,6 +1,6 @@
-import {html} from '@polymer/polymer/polymer-element';
+import { html } from '@polymer/polymer/polymer-element';
 // language=HTML
-export const pageLayoutStyles = html`
+export const pageLayoutStyles: HTMLTemplateElement = html`
   <style>
     .page-content {
       margin: 24px;

@@ -1,10 +1,9 @@
 import '@polymer/iron-flex-layout/iron-flex-layout';
 
-import {appDrawerStyles} from './menu/styles/app-drawer-styles';
-import {html} from 'lit-element';
+import { appDrawerStyles } from './menu/styles/app-drawer-styles';
+import { html, TemplateResult } from 'lit-element';
 
-
-export const AppShellStyles = html`
+export const AppShellStyles: TemplateResult = html`
 ${appDrawerStyles}
 <style>
   :host {

@@ -1,29 +1,16 @@
-import {Action, ActionCreator} from 'redux';
-import {EtoolsUserModel} from '../../components/user/user-model';
-// import {ThunkAction} from 'redux-thunk';
-// import {RootState} from '../store';
-import {GenericObject} from '../../types/globals';
+export enum UserActionTypes {
+    UPDATE_USER_DATA = '[User Action]: UPDATE_USER_DATA',
+    UPDATE_USER_PERMISSIONS = '[User Action]: UPDATE_USER_PERMISSIONS'
+}
 
-export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
-export const UPDATE_USER_PERMISSIONS = 'UPDATE_USER_PERMISSIONS';
+export class UpdateUserData {
+    public readonly type: UserActionTypes.UPDATE_USER_DATA = UserActionTypes.UPDATE_USER_DATA;
+    public constructor(public data: IEtoolsUserModel) {}
+}
 
-export interface UserActionUpdate extends Action<'UPDATE_USER_DATA'> {data: EtoolsUserModel}
-export interface UserActionUpdatePermissions extends Action<'UPDATE_USER_PERMISSIONS'> {permissions: GenericObject}
+export class UpdateUserPermissions {
+    public readonly type: UserActionTypes.UPDATE_USER_PERMISSIONS = UserActionTypes.UPDATE_USER_PERMISSIONS;
+    public constructor(public permissions: GenericObject) {}
+}
 
-export type UserAction = UserActionUpdate | UserActionUpdatePermissions;
-// @ts-ignore - for now
-// type ThunkResult = ThunkAction<void, RootState, undefined, UserAction>;
-
-export const updateUserData: ActionCreator<UserActionUpdate> = (data: EtoolsUserModel) => {
-  return {
-    type: UPDATE_USER_DATA,
-    data
-  };
-};
-
-export const updateUserPermissions: ActionCreator<UserActionUpdatePermissions> = (permissions: GenericObject) => {
-  return {
-    type: UPDATE_USER_PERMISSIONS,
-    permissions
-  };
-};
+export type UserAction = UpdateUserData | UpdateUserPermissions;

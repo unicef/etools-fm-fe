@@ -1,13 +1,10 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import EtoolsAjaxRequestMixin from '@unicef-polymer/etools-ajax/etools-ajax-request-mixin';
-import {property} from '@polymer/decorators/lib/decorators';
-import {EtoolsUserModel} from './user-model';
-import {connect} from 'pwa-helpers/connect-mixin';
-import {RootState, store} from '../../redux/store';
-import {getEndpoint} from '../../endpoints/endpoints';
-import {GenericObject} from '../../types/globals';
-
-const PROFILE_ENDPOINT = 'userProfile';
+import { property } from '@polymer/decorators/lib/decorators';
+import { connect } from 'pwa-helpers/connect-mixin';
+import { store } from '../../redux/store';
+import { getEndpoint } from '../../endpoints/endpoints';
+import { PROFILE_ENDPOINT } from '../../endpoints/endpoints-list';
 
 /**
  * @customElement
@@ -16,23 +13,23 @@ const PROFILE_ENDPOINT = 'userProfile';
  */
 export class EtoolsUser extends connect(store)(EtoolsAjaxRequestMixin(PolymerElement)) {
 
-  @property({type: Object, notify: true})
-  userData: EtoolsUserModel | null = null;
+    @property({ type: Object, notify: true })
+    public userData: IEtoolsUserModel | null = null;
 
-  private profileEndpoint = getEndpoint(PROFILE_ENDPOINT);
+    private profileEndpoint: IEtoolsEndpoint = getEndpoint(PROFILE_ENDPOINT);
 
-  public stateChanged(state: RootState) {
-    this.userData = state.user!.data;
-    console.log('[EtoolsUser]: store user data', state.user!.data);
-  }
+    public stateChanged(state: IRootState): void {
+        this.userData = state.user!.data;
+        console.log('[EtoolsUser]: store user data', state.user!.data);
+    }
 
-  public getUserData() {
-    this.sendRequest({endpoint: this.profileEndpoint}).then((response: GenericObject) => {
-      console.log(response);
-    }).catch((error: GenericObject) => {
-      console.log(error);
-    });
-  }
+    public getUserData(): void {
+        this.sendRequest({ endpoint: this.profileEndpoint }).then((response: GenericObject) => {
+            console.log(response);
+        }).catch((error: GenericObject) => {
+            console.log(error);
+        });
+    }
 
 }
 

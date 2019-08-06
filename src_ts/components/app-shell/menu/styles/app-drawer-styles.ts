@@ -1,7 +1,7 @@
-import {html} from 'lit-element';
+import { html, TemplateResult } from 'lit-element';
 
 // language=HTML
-export const appDrawerStyles = html`
+export const appDrawerStyles: TemplateResult = html`
   <style>
     /** app-drawer-layout and app-drawer are using the same width variable, we need to apply it only at parent level*/
     app-drawer-layout:not([small-menu]) {

@@ -1,4 +1,4 @@
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 /**
  * @customElement
@@ -6,32 +6,16 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
  */
 class EngagementQuestionnaires extends PolymerElement {
 
-  static get template() {
-    // language=HTML
-    return html`
-      <style>
-        /* CSS rules for your element */
-      </style>
+    public static get template(): HTMLTemplateElement {
+        // language=HTML
+        return html`
+            <style>
+                /* CSS rules for your element */
+            </style>
 
-      Questionnaires tab content...
-    `;
-  }
-
-  static get properties() {
-    return {};
-  }
-
-  constructor() {
-    super();
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-  }
+            Questionnaires tab content...
+        `;
+    }
 
 }
 

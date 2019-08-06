@@ -1,7 +1,7 @@
 import '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/custom-style.js';
 
-const documentContainer = document.createElement('template');
+const documentContainer: any = document.createElement('template');
 documentContainer.innerHTML = `
   <custom-style>
     <style>

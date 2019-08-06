@@ -1,7 +1,7 @@
-export const fireEvent = (el: HTMLElement, eventName: string, eventDetail?: object) => {
-  el.dispatchEvent(new CustomEvent(eventName, {
-    detail: eventDetail,
-    bubbles: true,
-    composed: true
-  }));
-};
+export function fireEvent(el: HTMLElement, eventName: string, detail?: any): void {
+    el.dispatchEvent(new CustomEvent(eventName, {
+        detail,
+        bubbles: true,
+        composed: true
+    }));
+}

@@ -5,12 +5,12 @@ import '@polymer/paper-icon-button/paper-icon-button';
 import '@unicef-polymer/etools-app-selector/etools-app-selector';
 import '../../common/layout/support-btn';
 
-import {connect} from 'pwa-helpers/connect-mixin.js';
-import {store} from '../../../redux/store';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+import { store } from '../../../redux/store';
 
-import {isProductionServer, isStagingServer} from '../../../config/config';
-import {updateDrawerState} from '../../../redux/actions/app';
-import {customElement, LitElement, html, property} from 'lit-element';
+import { isProductionServer, isStagingServer } from '../../../config/config';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { UpdateDrawerState } from '../../../redux/actions/app';
 
 /**
  * page header element
@@ -20,117 +20,112 @@ import {customElement, LitElement, html, property} from 'lit-element';
 @customElement('page-header')
 export class PageHeader extends connect(store)(LitElement) {
 
-  public render() {
-    // main template
-    // language=HTML
-    return html`        
-      <style>
-        app-toolbar {
-          padding: 0 16px 0 0;
-          height: 60px;
-          background-color: ${this.headerColor};
-        }
+    @property({ type: Boolean })
+    public isStaging: boolean = false;
 
-        .titlebar {
-          color: var(--header-color);
-        }
+    public rootPath: string = '';
+    public headerColor: string = 'var(--header-bg-color)';
 
-        #menuButton {
-          display: block;
-          color: var(--header-color);
-        }
+    public render(): TemplateResult {
+        // main template
+        // language=HTML
+        return html`
+          <style>
+            app-toolbar {
+              padding: 0 16px 0 0;
+              height: 60px;
+              background-color: ${this.headerColor};
+            }
 
-        support-btn{
-          color: var(--header-color);
-        }
+            .titlebar {
+              color: var(--header-color);
+            }
 
-        .titlebar {
-          @apply --layout-flex;
-          font-size: 28px;
-          font-weight: 300;
-        }
+            #menuButton {
+              display: block;
+              color: var(--header-color);
+            }
 
-        .titlebar img {
-          width: 34px;
-          margin: 0 8px 0 24px;
-        }
+            support-btn{
+              color: var(--header-color);
+            }
 
-        .content-align {
-          @apply --layout-horizontal;
-          @apply --layout-center;
-        }
+            .titlebar {
+              @apply --layout-flex;
+              font-size: 28px;
+              font-weight: 300;
+            }
 
-        #app-logo {
-          height: 32px;
-          width: auto;
-        }
+            .titlebar img {
+              width: 34px;
+              margin: 0 8px 0 24px;
+            }
 
-        .envWarning {
-          color: var(--nonprod-text-warn-color);
-          font-weight: 700;
-          font-size: 18px;
-        }
+            .content-align {
+              @apply --layout-horizontal;
+              @apply --layout-center;
+            }
 
-        @media (min-width: 850px) {
-          #menuButton {
-            display: none;
-          }
-        }
-      </style>
-      
-      <app-toolbar sticky class="content-align">
-        <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
-        <div class="titlebar content-align">
-          <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg">
-          ${this.isStaging ? html`<div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>` : ''}
-        </div>
-        <div class="content-align">
-          <!--<countries-dropdown id="countries" countries="[[countries]]"-->
-                              <!--current-country="[[profile.country]]"></countries-dropdown>-->
+            #app-logo {
+              height: 32px;
+              width: auto;
+            }
 
-          <support-btn></support-btn> 
+            .envWarning {
+              color: var(--nonprod-text-warn-color);
+              font-weight: 700;
+              font-size: 18px;
+            }
 
-          <!--<etools-profile-dropdown-->
-              <!--sections="[[allSections]]"-->
-              <!--offices="[[allOffices]]"-->
-              <!--users="[[allUsers]]"-->
-              <!--profile="{{profile}}"-->
-              <!--on-save-profile="_saveProfile"-->
-              <!--on-sign-out="_signOut"></etools-profile-dropdown>-->
+            @media (min-width: 850px) {
+              #menuButton {
+                display: none;
+              }
+            }
+          </style>
 
-          <!--<paper-icon-button id="refresh" icon="refresh" on-tap="_openDataRefreshDialog"></paper-icon-button>-->
-        </div>
-      </app-toolbar>
+          <app-toolbar sticky class="content-align">
+            <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
+            <div class="titlebar content-align">
+              <etools-app-selector id="selector"></etools-app-selector>
+              <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg">
+              ${this.isStaging ? html`<div class="envWarning"> - STAGING TESTING ENVIRONMENT</div>` : ''}
+            </div>
+            <div class="content-align">
+              <!--<countries-dropdown id="countries" countries="[[countries]]"-->
+                                  <!--current-country="[[profile.country]]"></countries-dropdown>-->
+
+              <support-btn></support-btn>
+
+              <!--<etools-profile-dropdown-->
+                  <!--sections="[[allSections]]"-->
+                  <!--offices="[[allOffices]]"-->
+                  <!--users="[[allUsers]]"-->
+                  <!--profile="{{profile}}"-->
+                  <!--on-save-profile="_saveProfile"-->
+                  <!--on-sign-out="_signOut"></etools-profile-dropdown>-->
+
+              <!--<paper-icon-button id="refresh" icon="refresh" on-tap="_openDataRefreshDialog"></paper-icon-button>-->
+            </div>
+          </app-toolbar>
     `;
-  }
-
-  @property({type: Boolean})
-  public isStaging: boolean = false;
-
-  public rootPath: string = '';
-  public headerColor: string = 'var(--header-bg-color)';
-
-  public connectedCallback() {
-    super.connectedCallback();
-    this.setBgColor();
-    this.isStaging = isStagingServer();
-  }
-
-  // @ts-ignore
-  // public stateChanged(state: RootState) {
-  //   // TODO
-  // }
-
-  public menuBtnClicked() {
-    store.dispatch(updateDrawerState(true));
-    // fireEvent(this, 'drawer');
-  }
-
-  private setBgColor() {
-    // If not production environment, changing header color to red
-    if (!isProductionServer()) {
-      this.headerColor = 'var(--nonprod-header-color)';
     }
-  }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.setBgColor();
+        this.isStaging = isStagingServer();
+    }
+
+    public menuBtnClicked(): void {
+        store.dispatch(new UpdateDrawerState(true));
+        // fireEvent(this, 'drawer');
+    }
+
+    private setBgColor(): void {
+        // If not production environment, changing header color to red
+        if (!isProductionServer()) {
+            this.headerColor = 'var(--nonprod-header-color)';
+        }
+    }
 }
