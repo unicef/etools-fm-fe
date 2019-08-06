@@ -1,11 +1,9 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element';
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 
 import { SharedStyles } from '../../styles/shared-styles';
 import '../../common/layout/page-content-header/page-content-header';
-import { property } from '@polymer/decorators';
 import '../../common/layout/etools-tabs';
 import { pageContentHeaderSlottedStyles }
     from '../../common/layout/page-content-header/page-content-header-slotted-styles';
@@ -15,47 +13,14 @@ import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { store } from '../../../redux/store';
 import { updateAppLocation } from '../../../routing/routes';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 
 /**
  * @polymer
  * @customElement
  */
-class EngagementTabs extends connect(store)(PolymerElement) {
-
-    public static get template(): HTMLTemplateElement {
-        // main template
-        // language=HTML
-        return html`
-              ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles}
-              <style include="paper-material-styles"></style>
-
-              <etools-status></etools-status>
-
-              <page-content-header with-tabs-visible>
-
-                <h1 slot="page-title">[[engagement.title]]</h1>
-
-                <div slot="title-row-actions" class="content-header-actions">
-                  <paper-button raised>Action 1</paper-button>
-                  <paper-button raised>Action 2</paper-button>
-                </div>
-
-                <etools-tabs slot="tabs"
-                             tabs="[[pageTabs]]"
-                             active-tab="{{activeTab}}"></etools-tabs>
-              </page-content-header>
-
-              <section class="paper-material page-content" elevation="1">
-                <template is="dom-if" if="[[isActiveTab(activeTab, 'details')]]">
-                  <engagement-details></engagement-details>
-                </template>
-
-                <template is="dom-if" if="[[isActiveTab(activeTab, 'questionnaires')]]">
-                  <engagement-questionnaires></engagement-questionnaires>
-                </template>
-              </section>
-    `;
-    }
+@customElement('engagement-tabs')
+export class EngagementTabs extends connect(store)(LitElement) {
 
     @property({ type: Array })
     public pageTabs: PageTab[] = [
@@ -71,14 +36,49 @@ class EngagementTabs extends connect(store)(PolymerElement) {
         }
     ];
 
-    @property({ type: String, observer: 'tabChanged' })
-    public activeTab: string = 'details';
+    @property({ type: String })
+    public activeTab: string = '';
 
     @property({ type: Object })
     public engagement: GenericObject = {
         id: null,
         title: 'Engagement title'
     };
+
+    public render(): TemplateResult {
+        // main template
+        // language=HTML
+        return html`
+              ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles}
+                <style>
+                   .paper-material {
+                        @apply --paper-material;
+                        @apply --paper-material-elevation-1;
+                    }
+                </style>
+
+              <etools-status></etools-status>
+
+              <page-content-header with-tabs-visible>
+
+                <h1 slot="page-title">${this.engagement.title}</h1>
+
+                <div slot="title-row-actions" class="content-header-actions">
+                  <paper-button raised>Action 1</paper-button>
+                  <paper-button raised>Action 2</paper-button>
+                </div>
+
+                <etools-tabs slot="tabs"
+                             .tabs="${this.pageTabs}"
+                             @iron-select="${({ detail }: any) => this.test(detail.item)}"
+                             active-tab="${this.activeTab}"></etools-tabs>
+              </page-content-header>
+
+              <section class="paper-material page-content" elevation="1">
+                    ${this.getTab(this.activeTab)}
+              </section>
+    `;
+    }
 
     public isActiveTab(tab: string, expectedTab: string): boolean {
         return tab === expectedTab;
@@ -88,7 +88,9 @@ class EngagementTabs extends connect(store)(PolymerElement) {
         // update page route data
         if (state.app.routeDetails.routeName === 'engagements' &&
             state.app.routeDetails.subRouteName !== 'list') {
+            const oldTab: string = this.activeTab;
             this.activeTab = state.app.routeDetails.subRouteName as string;
+            this.tabChanged(this.activeTab, oldTab);
             const engagementId: string | number = state.app.routeDetails.params!.engagementId;
             if (engagementId) {
                 this.engagement.id = engagementId;
@@ -97,7 +99,7 @@ class EngagementTabs extends connect(store)(PolymerElement) {
     }
 
     public tabChanged(newTabName: string, oldTabName: string | undefined): void {
-        if (oldTabName === undefined) {
+        if (!oldTabName) {
             // page load, tab init, component is gonna be imported in loadPageComponents action
             return;
         }
@@ -108,6 +110,19 @@ class EngagementTabs extends connect(store)(PolymerElement) {
         }
     }
 
-}
+    public getTab(tabName: string): TemplateResult | '' {
+        if (tabName === 'details') {
+            return html`<engagement-details></engagement-details>`;
+        } else if (tabName === 'questionnaires') {
+            return html`<engagement-questionnaires></engagement-questionnaires>`;
+        } else {
+            return '';
+        }
+    }
 
-window.customElements.define('engagement-tabs', EngagementTabs);
+    public test(selectedTab: HTMLElement): void {
+        const tabName: string = selectedTab.getAttribute('name') || '';
+        this.tabChanged(tabName, this.activeTab);
+    }
+
+}

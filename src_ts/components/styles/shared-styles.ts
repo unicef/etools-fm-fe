@@ -1,6 +1,6 @@
-import { html } from '@polymer/polymer/polymer-element.js';
+import { html, TemplateResult } from 'lit-element';
 
-export const SharedStyles: HTMLTemplateElement = html`
+export const SharedStyles: TemplateResult = html`
 <style>
   :host {
     display: block;

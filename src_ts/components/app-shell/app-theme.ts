@@ -1,10 +1,11 @@
 import '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/custom-style.js';
+import '@polymer/paper-styles/element-styles/paper-material-styles';
 
 const documentContainer: any = document.createElement('template');
 documentContainer.innerHTML = `
   <custom-style>
-    <style>
+    <style include="paper-material-styles">
       html {
         --primary-color: #0099ff;
         --primary-background-color: #FFFFFF;

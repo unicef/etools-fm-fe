@@ -1,19 +1,20 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-styles/element-styles/paper-material-styles.js';
 
 import { SharedStyles } from '../styles/shared-styles';
 import { store } from '../../redux/store';
 import { routeDetailsSelector } from '../../redux/selectors/app.selectors';
 import { Unsubscribe } from 'redux';
+import { customElement, html, LitElement, TemplateResult } from 'lit-element';
 
 /**
- * @polymer
+ * @LitElement
  * @customElement
  */
-class PageTwo extends PolymerElement {
+@customElement('page-two')
+export class PageTwo extends LitElement {
     private unsubscribe$!: Unsubscribe;
 
-    public static get template(): HTMLTemplateElement {
+    public render(): TemplateResult {
         // main template
         // language=HTML
         /* tslint:disable:max-line-length */
@@ -54,5 +55,3 @@ class PageTwo extends PolymerElement {
     }
 
 }
-
-window.customElements.define('page-two', PageTwo);

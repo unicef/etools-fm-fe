@@ -1,4 +1,4 @@
-import { html } from '@polymer/polymer/polymer-element.js';
+import { html, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
 /**
@@ -7,7 +7,7 @@ import '@polymer/iron-flex-layout/iron-flex-layout.js';
  */
 
 // language=HTML
-export const pageContentHeaderSlottedStyles: HTMLTemplateElement = html`
+export const pageContentHeaderSlottedStyles: TemplateResult = html`
     <style>
         .content-header-actions {
             @apply --layout-horizontal;
