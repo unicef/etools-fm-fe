@@ -1,19 +1,19 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element';
 import {EtoolsToast} from './etools-toast';
 import './etools-toast'; // element loaded (if not, etools-toast will not render)
 import {GenericObject} from '../../../types/globals';
+import {LitElement} from 'lit-element';
 
 /**
  * Toasts notification messages queue utility class
  */
 export class ToastNotificationHelper {
 
-  private appShellEl: PolymerElement;
+  private appShellEl: LitElement;
   private readonly _toast: EtoolsToast;
   private _toastQueue: GenericObject[] = [];
   private TOAST_EL_ID: string = 'toastNotificationQueueEl';
 
-  constructor(appShellEl: PolymerElement) {
+  constructor(appShellEl: LitElement) {
     this.appShellEl = appShellEl;
     const toast = document.querySelector(this.TOAST_EL_ID) as EtoolsToast;
     this._toast = toast ? toast : this.createToastNotificationElement();

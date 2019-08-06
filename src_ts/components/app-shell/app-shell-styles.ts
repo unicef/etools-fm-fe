@@ -1,7 +1,8 @@
-import {html} from '@polymer/polymer/polymer-element.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@polymer/iron-flex-layout/iron-flex-layout';
 
 import {appDrawerStyles} from './menu/styles/app-drawer-styles';
+import {html} from 'lit-element';
+
 
 export const AppShellStyles = html`
 ${appDrawerStyles}

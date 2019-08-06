@@ -7,8 +7,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {setPassiveTouchGestures, setRootPath} from '@polymer/polymer/lib/utils/settings.js';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
@@ -38,14 +36,16 @@ import './header/page-header.js';
 import './footer/page-footer.js';
 
 import './app-theme.js';
-import {property} from '@polymer/decorators/lib/decorators';
-import {AppMenuHelper} from './menu/app-menu-helper';
 import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
 import user from '../../redux/reducers/user';
-import {ROOT_PATH} from '../../config/config';
+import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../config/config';
 import {getCurrentUserData} from '../user/user-actions';
 import {EtoolsRouter} from '../../routing/routes';
 import {RouteDetails} from '../../routing/router';
+import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
+import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
+import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
+import {customElement, html, LitElement, property, query} from 'lit-element'
 
 setRootPath(ROOT_PATH);
 
@@ -55,25 +55,28 @@ store.addReducers({
 
 /**
  * @customElement
- * @polymer
+ * @LitElement
  */
-class AppShell extends connect(store)(PolymerElement) {
+@customElement('app-shell')
+export class AppShell extends connect(store)(LitElement) {
 
-  public static get template() {
+  public render() {
     // main template
     // language=HTML
     return html`
     ${AppShellStyles}
    
     <app-drawer-layout id="layout" responsive-width="850px"
-                       fullbleed narrow="{{narrow}}" small-menu$="[[smallMenu]]">
+                       fullbleed ?narrow="${this.narrow}" ?small-menu="${this.smallMenu}">
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" transition-duration="350" 
-                  opened="[[_drawerOpened]]"
-                  swipe-open="[[narrow]]" small-menu$="[[smallMenu]]">
+                  @app-drawer-transitioned="${this.onDrawerToggle}"
+                  ?opened="${this.drawerOpened}"
+                  ?swipe-open="${this.narrow}" ?small-menu="${this.smallMenu}">
         <!-- App main menu(left sidebar) -->
-        <app-menu selected-option="[[_mainPage]]"
-                  small-menu$="[[smallMenu]]"></app-menu>
+        <app-menu selected-option="${this.mainPage}"
+                  @toggle-small-menu="${(e: CustomEvent) => this.toggleMenu(e)}"
+                  ?small-menu="${this.smallMenu}"></app-menu>
       </app-drawer>
 
       <!-- Main content -->
@@ -86,12 +89,12 @@ class AppShell extends connect(store)(PolymerElement) {
         <!-- Main content -->
         <main role="main" class="main-content">
           <engagements-list class="page" 
-              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'list')]]"></engagements-list>
+              ?active="${this.isActivePage(this.mainPage, 'engagements', this.subPage, 'list')}"></engagements-list>
           <engagement-tabs class="page" 
-              active$="[[_isActivePage(_mainPage, 'engagements', _subPage, 'details|questionnaires')]]">
+              ?active="${this.isActivePage(this.mainPage, 'engagements', this.subPage, 'details|questionnaires')}">
           </engagement-tabs>
-          <page-two class="page" active$="[[_isActivePage(_mainPage, 'page-two')]]"></page-two>
-          <page-not-found class="page" active$="[[_isActivePage(_mainPage, 'page-not-found')]]"></page-not-found>
+          <page-two class="page" ?active="${this.isActivePage(this.mainPage, 'page-two')}"></page-two>
+          <page-not-found class="page" ?active="${this.isActivePage(this.mainPage, 'page-not-found')}"></page-not-found>
         </main>
 
         <page-footer></page-footer>
@@ -102,21 +105,27 @@ class AppShell extends connect(store)(PolymerElement) {
   }
 
   @property({type: Boolean})
-  _drawerOpened: boolean = false;
-
-  @property({type: Object})
-  _routeDetails!: RouteDetails;
-
-  @property({type: String})
-  _mainPage: string = ''; // routeName
-
-  @property({type: String})
-  _subPage: string | null = null; // subRouteName
+  public narrow = true;
 
   @property({type: Boolean})
-  smallMenu: boolean = false;
+  public drawerOpened: boolean = false;
 
-  private appMenuHelper!: AppMenuHelper;
+  @property({type: Object})
+  public routeDetails!: RouteDetails;
+
+  @property({type: String})
+  public mainPage: string = ''; // routeName
+
+  @property({type: String})
+  public subPage: string | null = null; // subRouteName
+
+  @property({type: Boolean})
+  public smallMenu: boolean = false;
+
+  @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
+  @query('#drawer') private drawer!: AppDrawerElement;
+  @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
+
   private appToastsNotificationsHelper!: ToastNotificationHelper;
 
   constructor() {
@@ -125,16 +134,19 @@ class AppShell extends connect(store)(PolymerElement) {
     // preventable, allowing for better scrolling performance.
     setPassiveTouchGestures(true);
     // init toasts notifications queue
-    this.appToastsNotificationsHelper = new ToastNotificationHelper(this as PolymerElement);
+    this.appToastsNotificationsHelper = new ToastNotificationHelper(this);
     this.appToastsNotificationsHelper.addToastNotificationListeners();
+
+    const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
+    if (!menuTypeStoredVal) {
+      this.smallMenu = false;
+    } else  {
+      this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
+    }
   }
 
   public connectedCallback() {
     super.connectedCallback();
-    // init app menu helper object and set small menu event listeners
-    this.appMenuHelper = new AppMenuHelper(this as PolymerElement);
-    this.appMenuHelper.initMenuListeners();
-    this.appMenuHelper.initMenuSize();
 
     installRouter(location => store.dispatch(
       navigate(decodeURIComponent(location.pathname + location.search))));
@@ -147,17 +159,15 @@ class AppShell extends connect(store)(PolymerElement) {
 
   public disconnectedCallback() {
     super.disconnectedCallback();
-    // use app menu helper object and remove small menu event listeners
-    this.appMenuHelper.removeMenuListeners();
     // remove toasts notifications listeners
     this.appToastsNotificationsHelper.removeToastNotificationListeners();
   }
 
   public stateChanged(state: RootState) {
-    this._routeDetails = state.app!.routeDetails;
-    this._mainPage = state.app!.routeDetails!.routeName;
-    this._subPage = state.app!.routeDetails!.subRouteName;
-    this._drawerOpened = state.app!.drawerOpened;
+    this.routeDetails = state.app!.routeDetails;
+    this.mainPage = state.app!.routeDetails!.routeName;
+    this.subPage = state.app!.routeDetails!.subRouteName;
+    this.drawerOpened = state.app!.drawerOpened;
   }
 
   // TODO: just for testing...
@@ -170,25 +180,45 @@ class AppShell extends connect(store)(PolymerElement) {
     return EtoolsRouter;
   }
 
-  protected _isActiveMainPage(currentPageName: string, expectedPageName: string): boolean {
+  public onDrawerToggle() {
+    if (this.drawerOpened !== this.drawer.opened) {
+      store.dispatch(updateDrawerState(this.drawer.opened));
+    }
+  }
+
+  public toggleMenu(e: CustomEvent) {
+    this.smallMenu = e.detail.value;
+    this._updateDrawerStyles();
+    this._notifyLayoutResize();
+  }
+
+  private _updateDrawerStyles(): void {
+    this.drawerLayout.updateStyles();
+    this.drawer.updateStyles();
+  }
+
+  private _notifyLayoutResize(): void {
+    this.drawerLayout.notifyResize();
+    this.appHeaderLayout.notifyResize();
+  }
+
+  protected isActiveMainPage(currentPageName: string, expectedPageName: string): boolean {
     return currentPageName === expectedPageName;
   }
 
-  protected _isActiveSubPage(currentSubPageName: string, expectedSubPageNames: string): boolean {
+  protected isActiveSubPage(currentSubPageName: string, expectedSubPageNames: string): boolean {
     const subPages: string[] = expectedSubPageNames.split('|');
     return subPages.indexOf(currentSubPageName) > -1;
   }
 
-  protected _isActivePage(pageName: string, expectedPageName: string,
-    currentSubPageName: string, expectedSubPageNames?: string): boolean {
-    if (!this._isActiveMainPage(pageName, expectedPageName)) {
+  protected isActivePage(pageName: string, expectedPageName: string,
+    currentSubPageName?: string | null, expectedSubPageNames?: string): boolean {
+    if (!this.isActiveMainPage(pageName, expectedPageName)) {
       return false;
     }
     if (currentSubPageName && expectedSubPageNames) {
-      return this._isActiveSubPage(currentSubPageName, expectedSubPageNames);
+      return this.isActiveSubPage(currentSubPageName, expectedSubPageNames);
     }
     return true;
   }
 }
-
-window.customElements.define('app-shell', AppShell);
