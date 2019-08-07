@@ -4,6 +4,14 @@
   "sources": [
     "images/**/*"
   ],
+  "fragments": [
+    "src/components/pages/page-not-found.js",
+    "src/components/pages/page-two.js",
+    "src/components/pages/engagements/engagements-list.js",
+    "src/components/pages/engagements/engagement-tabs.js",
+    "src/components/pages/engagements/engagement-tab-pages/engagement-details.js",
+    "src/components/pages/engagements/engagement-tab-pages/engagement-questionnaires.js"
+  ],
   "extraDependencies": [
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
