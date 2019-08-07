@@ -4,7 +4,7 @@ const DEV_DOMAIN: string = 'etools-dev.unicef.org';
 const DEMO_DOMAIN: string = 'etools-demo.unicef.org';
 
 export const SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY: string = 'etoolsAppSmallMenuIsActive';
-export const ROOT_PATH: string = window.location.port !== '8080' ? '/fm/' : '/';
+export const ROOT_PATH: string = '/fm/';
 
 export function isProductionServer(): boolean {
     const location: string = window.location.href;
