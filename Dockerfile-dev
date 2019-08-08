@@ -8,3 +8,4 @@ RUN npm install -g gulp
 RUN npm install -g typescript
 
 WORKDIR /code
+CMD ["npm", "start"]
