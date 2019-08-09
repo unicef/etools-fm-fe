@@ -41,6 +41,8 @@ import { customElement, html, LitElement, property, query, TemplateResult } from
 import { navigate } from '../../redux/effects/app.effects';
 import { userData } from '../../redux/reducers/user';
 import { UpdateDrawerState } from '../../redux/actions/app';
+import { locationsDataSelector } from '../../redux/selectors/static-data.selectors';
+import { loadStaticData } from '../../redux/effects/load-static-data.effect';
 
 store.addReducers({
     userData
@@ -92,6 +94,11 @@ export class AppShell extends connect(store)(LitElement) {
         } else {
             this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
         }
+
+        store.subscribe(locationsDataSelector((locations?: any[]) => {
+            console.log(locations);
+        }));
+        store.dispatch<AsyncEffect>(loadStaticData('locations'));
     }
 
     public connectedCallback(): void {
