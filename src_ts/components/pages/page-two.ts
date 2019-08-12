@@ -4,7 +4,9 @@ import { SharedStyles } from '../styles/shared-styles';
 import { store } from '../../redux/store';
 import { routeDetailsSelector } from '../../redux/selectors/app.selectors';
 import { Unsubscribe } from 'redux';
-import { customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { elevationStyles } from '../styles/lit-styles/elevation-styles';
+import { pageLayoutStyles } from '../styles/page-layout-styles';
 
 /**
  * @LitElement
@@ -14,14 +16,17 @@ import { customElement, html, LitElement, TemplateResult } from 'lit-element';
 export class PageTwo extends LitElement {
     private unsubscribe$!: Unsubscribe;
 
+    public static get styles(): CSSResultArray {
+        return [elevationStyles];
+    }
+
     public render(): TemplateResult {
         // main template
         // language=HTML
         /* tslint:disable:max-line-length */
         return html`
-          <style include="paper-material-styles"></style>
-          ${SharedStyles}
-          <section class="paper-material" elevation="1">
+          ${SharedStyles} ${pageLayoutStyles}
+          <section class="elevation page-content" elevation="1">
             <h1>Page2</h1>
             <p>
             Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical

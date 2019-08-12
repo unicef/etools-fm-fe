@@ -1,17 +1,20 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { property } from '@polymer/decorators';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 
 /**
- * @polymer
+ * @LitElement
  * @customElement
  */
-class PageContentHeader extends PolymerElement {
+@customElement('page-content-header')
+export class PageContentHeader extends LitElement {
     public static get is(): string {
         return 'page-content-header';
     }
 
-    public static get template(): HTMLTemplateElement {
+    @property({ type: Boolean, reflect: true })
+    public withTabsVisible: boolean = false;
+
+    public render(): TemplateResult {
         // language=HTML
         return html`
             <style>
@@ -91,9 +94,4 @@ class PageContentHeader extends PolymerElement {
         `;
     }
 
-    @property({ type: Boolean, reflectToAttribute: true })
-    public withTabsVisible: boolean = false;
-
 }
-
-window.customElements.define(PageContentHeader.is, PageContentHeader);

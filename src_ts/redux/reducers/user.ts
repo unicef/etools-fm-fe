@@ -6,7 +6,7 @@ const INITIAL_USER_DATA: IUserState = {
     permissions: null
 };
 
-export const userData: Reducer<IUserState, any> = (state: IUserState = INITIAL_USER_DATA, action: UserAction) => {
+export const user: Reducer<IUserState, any> = (state: IUserState = INITIAL_USER_DATA, action: UserAction) => {
     switch (action.type) {
         case UserActionTypes.UPDATE_USER_DATA:
             return {

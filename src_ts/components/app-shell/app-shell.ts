@@ -39,11 +39,11 @@ import { AppHeaderLayoutElement } from '@polymer/app-layout/app-header-layout/ap
 import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
 import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 import { navigate } from '../../redux/effects/app.effects';
-import { userData } from '../../redux/reducers/user';
+import { user } from '../../redux/reducers/user';
 import { UpdateDrawerState } from '../../redux/actions/app';
 
 store.addReducers({
-    userData
+    user
 });
 
 /**

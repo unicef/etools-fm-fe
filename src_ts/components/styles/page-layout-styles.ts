@@ -5,5 +5,9 @@ export const pageLayoutStyles: TemplateResult = html`
     .page-content {
       margin: 24px;
     }
+
+    .page-content.filters {
+        padding: 8px 24px;
+    }
   </style>
 `;

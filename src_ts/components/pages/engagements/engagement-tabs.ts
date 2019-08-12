@@ -13,7 +13,8 @@ import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { store } from '../../../redux/store';
 import { updateAppLocation } from '../../../routing/routes';
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
 
 /**
  * @polymer
@@ -41,9 +42,13 @@ export class EngagementTabs extends connect(store)(LitElement) {
 
     @property({ type: Object })
     public engagement: GenericObject = {
-        id: null,
+        id: 23,
         title: 'Engagement title'
     };
+
+    public static get styles(): CSSResultArray {
+        return [elevationStyles];
+    }
 
     public render(): TemplateResult {
         // main template
@@ -74,7 +79,7 @@ export class EngagementTabs extends connect(store)(LitElement) {
                              active-tab="${this.activeTab}"></etools-tabs>
               </page-content-header>
 
-              <section class="paper-material page-content" elevation="1">
+              <section class="elevation page-content" elevation="1">
                     ${this.getTab(this.activeTab)}
               </section>
     `;
