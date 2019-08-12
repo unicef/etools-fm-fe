@@ -11,6 +11,7 @@ import { lazyReducerEnhancer, LazyStore } from 'pwa-helpers/lazy-reducer-enhance
 
 import app from './reducers/app.js';
 import actionsMiddleware from './actions-middleware';
+import { staticData } from './reducers/static-data.reducer';
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.
@@ -33,7 +34,7 @@ export const store: IStore = createStore(
 );
 
 // Initially loaded reducers.
-store.addReducers({ app });
+store.addReducers({ app, staticData });
 
 /**
  * IMPORTANT!

@@ -46,6 +46,7 @@
     "@unicef-polymer/etools-dropdown": "^3.0.0-rc.1",
     "@unicef-polymer/etools-profile-dropdown": "4.0.1-rc.1",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "dexie": "^2.0.4",
     "lit-element": "^2.2.0",
     "lodash-es": "^4.17.11",
     "moment": "^2.24.0",

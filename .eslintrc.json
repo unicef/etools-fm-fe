@@ -30,6 +30,8 @@
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
     "indent": "off",
     "block-spacing": "off",
+    "prefer-promise-reject-errors": "off",
+    "no-case-declarations": "off",
     "object-curly-spacing": ["error", "always"],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
