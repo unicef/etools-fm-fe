@@ -15,8 +15,9 @@ import { customElement, html, LitElement, property, TemplateResult } from 'lit-e
 import { UpdateDrawerState } from '../../../redux/actions/app';
 import { pageHeaderStyles } from './page-header-styles';
 import { isEmpty } from 'lodash-es';
-import { updateCurrentUserData } from '../../user/user-actions';
 import { fireEvent } from '../../utils/fire-custom-event';
+import { updateCurrentUserData } from '../../../redux/effects/user.effects';
+import { userDataSelector, userSelector } from '../../../redux/selectors/user.selectors';
 
 /**
  * page header element
@@ -60,6 +61,23 @@ export class PageHeader extends connect(store)(LitElement) {
 
     @property({ type: Array })
     public editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
+
+    public constructor() {
+        super();
+        store.subscribe(userDataSelector((userDataState: GenericObject) => {
+            if (!userDataState.error) {
+                this.showSaveNotification();
+            }
+        }));
+        store.subscribe(userSelector((userState: IUserState) => {
+            if (!isEmpty(userState.error)) {
+                this.showSaveNotification('Profile data not saved. Save profile error!');
+            }
+            if (!userState.isRequest && !userState.error) {
+                this.profileSaveLoadingMsgDisplay(false);
+            }
+        }));
+    }
 
     public render(): TemplateResult {
         // main template
@@ -118,13 +136,7 @@ export class PageHeader extends connect(store)(LitElement) {
             return;
         }
         this.profileSaveLoadingMsgDisplay();
-        updateCurrentUserData(modifiedFields).then(() => {
-            this.showSaveNotification();
-        }).catch(() => {
-            this.showSaveNotification('Profile data not saved. Save profile error!');
-        }).then(() => {
-            this.profileSaveLoadingMsgDisplay(false);
-        });
+        store.dispatch<AsyncEffect>(updateCurrentUserData(modifiedFields));
     }
 
     public menuBtnClicked(): void {

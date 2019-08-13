@@ -1,16 +1,18 @@
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../../../redux/store';
-import '@unicef-polymer/etools-dropdown/etools-dropdown.js';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import { logError } from '@unicef-polymer/etools-behaviors/etools-logging';
-import { EtoolsDropdownEl } from '@unicef-polymer/etools-dropdown/etools-dropdown.js';
+import { EtoolsDropdownEl } from '@unicef-polymer/etools-dropdown/etools-dropdown';
 import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 
 // import EndpointsMixin from '../../endpoints/endpoints-mixin.js';
 import { fireEvent } from '../../utils/fire-custom-event';
 import { countriesDropdownStyles } from './countries-dropdown-styles';
-import { changeCurrentUserCountry } from '../../user/user-actions';
+import { changeCurrentUserCountry } from '../../../redux/effects/country.effects';
+import { countrySelector } from '../../../redux/selectors/country.selectors';
 import { DEFAULT_ROUTE, updateAppLocation } from '../../../routing/routes';
 import { ROOT_PATH } from '../../../config/config';
+import { isEmpty } from 'lodash-es';
 
 /**
  * @LitElement
@@ -32,6 +34,19 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     public userData!: IEtoolsUserModel;
 
     @query('#countrySelector') private countryDropdown!: EtoolsDropdownEl;
+
+    public constructor() {
+        super();
+        store.subscribe(countrySelector((countryState: IRequestState) => {
+            this.changeRequestStatus(countryState.isRequest);
+            if (!countryState.isRequest && !countryState.error) {
+                this.handleChangedCountry();
+            }
+            if (!countryState.isRequest && !isEmpty(countryState.error)) {
+                this.handleCountryChangeError(countryState.error);
+            }
+        }));
+    }
 
     public render(): TemplateResult {
         // main template
@@ -84,13 +99,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
 
     }
 
-    protected showCountrySelector(countries: any): void {
-        if (Array.isArray(countries) && (countries.length > 1)) {
-            this.countrySelectorVisible = true;
-        }
-    }
-
-    protected countrySelected(e: CustomEvent): void {
+    public countrySelected(e: CustomEvent): void {
         if (!e.detail.selectedItem) {
             return;
         }
@@ -103,27 +112,31 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         }
     }
 
+    protected showCountrySelector(countries: any): void {
+        if (Array.isArray(countries) && (countries.length > 1)) {
+            this.countrySelectorVisible = true;
+        }
+    }
+
     protected triggerCountryChangeRequest(selectedCountryId: number): void {
-        fireEvent(this, 'global-loading', {
+        store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId));
+    }
+
+    protected changeRequestStatus(isRequest: boolean): void {
+        const detail: any = isRequest ? {
             message: 'Please wait while country data is changing...',
             active: true,
             loadingSource: 'country-change'
-        });
-        changeCurrentUserCountry(selectedCountryId).then(() => {
-            // country change req returns 204
-            // redirect to default page
-            // TODO: clear all cached data related to old country
-            updateAppLocation(DEFAULT_ROUTE);
-            // force page reload to load all data specific to the new country
-            document.location.assign(window.location.origin + ROOT_PATH);
-        }).catch((error: any) => {
-            this.handleCountryChangeError(error);
-        }).then(() => {
-            fireEvent(this, 'global-loading', {
-                active: false,
-                loadingSource: 'country-change'
-            });
-        });
+        } : {
+            active: false,
+            loadingSource: 'country-change'
+        };
+        fireEvent(this, 'global-loading', detail);
+    }
+
+    protected handleChangedCountry(): void {
+        updateAppLocation(DEFAULT_ROUTE);
+        document.location.assign(window.location.origin + ROOT_PATH);
     }
 
     protected handleCountryChangeError(error: any): void {

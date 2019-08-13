@@ -2,6 +2,7 @@ export const PROFILE_ENDPOINT: string = 'userProfile';
 export const CP_OUTCOMES_ENDPOINT: string = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT: string = 'locations';
 export const CHANGE_COUNTRY: string = 'changeCountry';
+export const UNICEF_USER: string = 'unicefUsers';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -21,6 +22,11 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     },
     [CHANGE_COUNTRY]: {
         url: '/api/v3/users/changecountry/'
+    },
+    [UNICEF_USER]: {
+        url: '/api/v3/users/?verbosity=minimal',
+        exp: 60 * 60 * 1000, // 1h
+        cachingKey: 'unicefUsers'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

@@ -39,13 +39,15 @@ import { AppHeaderLayoutElement } from '@polymer/app-layout/app-header-layout/ap
 import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
 import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 import { navigate } from '../../redux/effects/app.effects';
-import { user } from '../../redux/reducers/user';
 import { UpdateDrawerState } from '../../redux/actions/app';
 import { locationsDataSelector } from '../../redux/selectors/static-data.selectors';
 import { loadStaticData } from '../../redux/effects/load-static-data.effect';
+import { user } from '../../redux/reducers/user.reducer';
+import { country } from '../../redux/reducers/country.reducer';
 
 store.addReducers({
-    user
+    user,
+    country
 });
 
 /**
@@ -109,8 +111,7 @@ export class AppShell extends connect(store)(LitElement) {
         installMediaQueryWatcher(`(min-width: 460px)`,
             () => store.dispatch(new UpdateDrawerState(false)));
 
-        // TODO: just testing...
-        getCurrentUserData();
+        store.dispatch<AsyncEffect>(getCurrentUserData());
     }
 
     public disconnectedCallback(): void {

@@ -1,6 +1,7 @@
 interface IRootState {
     app: IAppState;
     user: IUserState;
+    country: IRequestState;
     staticData: IStaticDataState;
 }
 
@@ -11,7 +12,12 @@ interface IAppState {
     drawerOpened: boolean;
 }
 
-interface IUserState {
+interface IRequestState {
+    isRequest: boolean;
+    error: GenericObject | null;
+}
+
+interface IUserState extends IRequestState {
     data: IEtoolsUserModel | null;
     permissions: GenericObject | null;
 }
