@@ -1,112 +1,83 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element';
-import { timeOut } from '@polymer/polymer/lib/utils/async';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce';
-
+ import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
-import { PaperTabsElement } from '@polymer/paper-tabs';
-
-import { property } from '@polymer/decorators';
 
 /**
- * @polymer
+ * @LitElement
  * @customElement
  */
-export class EtoolsTabs extends PolymerElement {
 
-    public static get template(): HTMLTemplateElement {
+@customElement('etools-tabs')
+export class EtoolsTabs extends LitElement {
+
+    @property({ type: String })
+    public activeTab: string = '';
+
+    @property({ type: Array })
+    public tabs!: GenericObject[];
+
+    public render(): TemplateResult {
         // main template
         // language=HTML
         return html`
-            <style>
-                *[hidden] {
-                    display: none !important;
-                }
-
-                :host {
-                    @apply --layout-horizontal;
-                    @apply --layout-start-justified;
-                }
-
-                :host([border-bottom]) {
-                    border-bottom: 1px solid var(--dark-divider-color);
-                }
-
-                paper-tabs {
-                    --paper-tabs-selection-bar-color: var(--primary-color);
-                }
-
-                paper-tab[link],
-                paper-tab {
-                    --paper-tab-ink: var(--primary-color);
-                    padding: 0 24px;
-                }
-
-                paper-tab .tab-content {
-                    color: var(--secondary-text-color);
-                    text-transform: uppercase;
-                }
-
-                paper-tab.iron-selected .tab-content {
-                    color: var(--primary-color);
-                }
-
-                @media print {
-                    :host {
-                        display: none;
-                    }
-                }
-            </style>
-
-            <paper-tabs id="tabs"
-                        selected="{{activeTab}}"
-                        attr-for-selected="name"
-                        noink
-                        on-iron-select="_handleTabSelection">
-
-                <template is="dom-repeat" items="[[tabs]]">
-                    <paper-tab name$="[[item.tab]]" link hidden$="[[item.hidden]]">
-          <span class="tab-content">
-            [[item.tabLabel]]
-            <template is="dom-if" if="[[item.showTabCounter]]" restamp>
-              ([[item.counter]])
-            </template>
-          </span>
-                    </paper-tab>
-                </template>
-
-            </paper-tabs>
-        `;
-    }
-
-    @property({ type: String, notify: true })
-    public activeTab: string | null = null;
-
-    @property({ type: Array })
-    public tabs: PageTab[] = [];
-
-    private _debouncer: Debouncer | null = null;
-
-    public static get observers(): string[] {
-        return [
-            'notifyTabsResize(tabs.*)'
-        ];
-    }
-
-    public _handleTabSelection(): void {
-        this.notifyTabsResize();
-    }
-
-    public notifyTabsResize(tabsChange?: any): void {
-        if (!tabsChange) {
-            return;
+      <style>
+        *[hidden] {
+          display: none !important;
         }
 
-        this._debouncer = Debouncer.debounce(this._debouncer,
-            timeOut.after(50), () => (this.$.tabs as PaperTabsElement).notifyResize());
+        :host {
+          @apply --layout-horizontal;
+          @apply --layout-start-justified;
+        }
+
+        :host([border-bottom]) {
+          border-bottom: 1px solid var(--dark-divider-color);
+        }
+
+        paper-tabs {
+          --paper-tabs-selection-bar-color: var(--primary-color);
+        }
+
+        paper-tab[link],
+        paper-tab {
+          --paper-tab-ink: var(--primary-color);
+          padding: 0 24px;
+        }
+
+        paper-tab .tab-content {
+          color: var(--secondary-text-color);
+          text-transform: uppercase;
+        }
+
+        paper-tab.iron-selected .tab-content {
+          color: var(--primary-color);
+        }
+
+        @media print {
+          :host {
+            display: none;
+          }
+        }
+      </style>
+
+      <paper-tabs id="tabs"
+                  selected="${this.activeTab}"
+                  attr-for-selected="name"
+                  noink>
+      ${this.tabs.map((item: GenericObject) => this.getTabHtml(item))}
+      </paper-tabs>
+    `;
+    }
+
+    public getTabHtml(item: any): TemplateResult {
+        return html`
+    <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
+    <span class="tab-content">
+        ${item.tabLabel} ${item.showTabCounter ? html`(item.counter)` : ''}
+    </span>
+    </paper-tab>
+    `;
     }
 
 }
-
-window.customElements.define('etools-tabs', EtoolsTabs);

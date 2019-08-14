@@ -1,9 +1,5 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/lib/elements/dom-repeat';
-import '@polymer/polymer/lib/elements/dom-if';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout';
-import { property } from '@polymer/decorators/lib/decorators';
-
 import '@polymer/iron-icons/iron-icons';
 import { completedStatusIcon } from './status-icons';
 
@@ -18,80 +14,16 @@ export interface IEtoolsStatusModel extends IEtoolsStatusItem {
 }
 
 /**
+ * @LitElement
  * @customElement
- * @polymer
  */
-class EtoolsStatus extends PolymerElement {
 
-    public static get template(): HTMLTemplateElement {
-        // language=HTML
-        return html`
-          <style>
-            :host {
-              @apply --layout-horizontal;
-              @apply --layout-center;
-              border-bottom: 1px solid var(--dark-divider-color);
-              padding: 24px;
-              background-color: var(--primary-background-color);
-            }
+@customElement('etools-status')
+export class EtoolsStatus extends LitElement {
 
-            .status {
-              @apply --layout-horizontal;
-              @apply --layout-center;
-              color: var(--secondary-text-color);
-              font-size: 16px;
-            }
-
-            .status:not(:last-of-type)::after {
-              content: '';
-              display: inline-block;
-              vertical-align: middle;
-              width: 40px;
-              height: 0;
-              margin: 0 24px;
-              border-top: 1px solid var(--secondary-text-color);
-            }
-
-            .status .icon {
-              display: inline-block;
-              text-align: center;
-              width: 24px;
-              height: 24px;
-              border-radius: 50%;
-              color: #fff;
-              background-color: var(--secondary-text-color);
-              margin-right: 8px;
-              font-size: 14px;
-              line-height: 24px;
-            }
-
-            .status.active .icon {
-              background-color: var(--primary-color);
-            }
-
-            .status.completed .icon {
-              background-color: var(--success-color);
-              fill: #ffffff;
-            }
-          </style>
-          <template is="dom-repeat" items="[[filteredStatuses]]">
-            <div class$="status [[getStatusClasses(index, activeStatusIndex)]]">
-              <span class="icon">
-                <template is="dom-if" if="[[!isCompleted(index, activeStatusIndex)]]" restamp>
-                  [[getBaseOneIndex(index)]]
-                </template>
-                <template is="dom-if" if="[[isCompleted(index, activeStatusIndex)]]" restamp>
-                  ${completedStatusIcon}
-                </template>
-              </span>
-              <span class="label">[[item.label]]</span>
-            </div>
-          </template>
-    `;
+    public get filteredStatuses(): IEtoolsStatusItem[] {
+        return this.filterStatuses(this.statuses, this.activeStatus);
     }
-
-    @property({ type: Array, computed: 'filterStatuses(statuses, activeStatus)' })
-    public filteredStatuses: IEtoolsStatusItem[] = [];
 
     @property({ type: String })
     public activeStatus: string = 'submitted-accepted';
@@ -127,6 +59,73 @@ class EtoolsStatus extends PolymerElement {
             label: 'Completed'
         }
     ];
+
+    public render(): TemplateResult {
+        // language=HTML
+        return html`
+      <style>
+        :host {
+          @apply --layout-horizontal;
+          @apply --layout-center;
+          border-bottom: 1px solid var(--dark-divider-color);
+          padding: 24px;
+          background-color: var(--primary-background-color);
+        }
+
+        .status {
+          @apply --layout-horizontal;
+          @apply --layout-center;
+          color: var(--secondary-text-color);
+          font-size: 16px;
+        }
+
+        .status:not(:last-of-type)::after {
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          width: 40px;
+          height: 0;
+          margin: 0 24px;
+          border-top: 1px solid var(--secondary-text-color);
+        }
+
+        .status .icon {
+          display: inline-block;
+          text-align: center;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          color: #fff;
+          background-color: var(--secondary-text-color);
+          margin-right: 8px;
+          font-size: 14px;
+          line-height: 24px;
+        }
+
+        .status.active .icon {
+          background-color: var(--primary-color);
+        }
+
+        .status.completed .icon {
+          background-color: var(--success-color);
+          fill: #ffffff;
+        }
+      </style>
+       ${this.filteredStatuses.map((item: any, index: number) => this.getStatusHtml(item, index))}
+    `;
+    }
+
+    public getStatusHtml(item: any, index: number): TemplateResult {
+        const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
+        return html`
+    <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
+      <span class="icon">
+          ${completed ? html`${completedStatusIcon}` : html`${this.getBaseOneIndex(index)}`}
+      </span>
+      <span class="label">${item.label}</span>
+    </div>
+    `;
+    }
 
     /**
      * Filter statuses list and prepare the ones that will be displayed
@@ -182,5 +181,3 @@ class EtoolsStatus extends PolymerElement {
     }
 
 }
-
-window.customElements.define('etools-status', EtoolsStatus);

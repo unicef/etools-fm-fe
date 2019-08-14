@@ -28,6 +28,33 @@ documentContainer.innerHTML = `
         --side-bar-scrolling: visible;
 
         --success-color: #72c300;
+        --error-color: #ea4022;
+
+        --primary-shade-of-green: #1A9251;
+        --primary-shade-of-red: #E32526;
+
+        --epc-header: {
+          background-color: var( --primary-background-color);
+          border-bottom: 1px groove var(--dark-divider-color);
+        }
+        --epc-header-color: var(--primary-text-color);
+        --ecp-header-title: {
+          padding: 0 0;
+          text-align: left;
+        }
+        --paper-input-container-label: {
+          font-weight: 600;
+        }
+
+        --paper-checkbox-checked-color: var(--primary-color);
+        --paper-checkbox-unchecked-color: var(--secondary-text-color);
+        --paper-radio-button-checked-color: var(--primary-color);
+        --paper-radio-button-unchecked-color: var(--secondary-text-color);
+
+        --esmm-external-wrapper: {
+          width: 100%;
+          margin: 0;
+        };
       }
     </style>
   </custom-style>`;
