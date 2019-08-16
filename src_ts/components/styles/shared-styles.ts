@@ -35,5 +35,24 @@ export const SharedStyles: TemplateResult = html`
     padding: 18px 24px;
     background-color: var(--primary-background-color);
   }
+
+  .toggle-button-control {
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                margin: 0 16px;
+                align-self: center;
+                padding: 18px 0 18px 10px;
+            }
+
+            .toggle-button-control span {
+                padding: 0 12px;
+                font-size: 16px;
+            }
+
+            .toggle-button-control paper-checkbox {
+                --paper-checkbox-label: {
+                    padding-left: 0;
+                }
+            }
 </style>
 `;

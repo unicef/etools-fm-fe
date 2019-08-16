@@ -34,8 +34,8 @@ export class AppMenu extends LitElement {
 
       <div class="menu-header">
       <span id="app-name">
-        Frontend <br>
-        Template
+        Field <br>
+        Monitoring
       </span>
 
         <span class="ripple-wrapper main">
@@ -46,7 +46,7 @@ export class AppMenu extends LitElement {
       </span>
 
         <paper-tooltip for="menu-header-top-icon" position="right">
-          Frontend Template
+          Field Monitoring
         </paper-tooltip>
 
         <span class="ripple-wrapper">
@@ -69,6 +69,14 @@ export class AppMenu extends LitElement {
               Engagements
             </paper-tooltip>
             <div class="name">Engagements</div>
+          </a>
+
+          <a class="nav-menu-item" menu-name="settings" href="${this.rootPath + 'settings'}">
+            <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
+            <paper-tooltip for="page1-icon" position="right">
+              Settings
+            </paper-tooltip>
+            <div class="name">Settings</div>
           </a>
 
           <a class="nav-menu-item" menu-name="page-two" href="${this.rootPath + 'page-two'}">

@@ -56,8 +56,8 @@ export class Router {
         return routeDetails;
     }
 
-    public navigate(path?: string, navigateCallback?: (() => void) | null): this {
-        path = path ? this.prepareLocationPath(path) : '';
+    public navigate(path?: string, queryParams?: IRouteQueryParams, navigateCallback?: (() => void) | null): this {
+        path = path ? this.prepareLocationPath(path, queryParams) : '';
         history.pushState(null, '', path);
         if (typeof navigateCallback === 'function') {
             navigateCallback();
@@ -65,8 +65,10 @@ export class Router {
         return this;
     }
 
-    public prepareLocationPath(path: string): string {
-        return (path.indexOf(this.root) === -1) ? (this.root + Router.clearSlashes(path)) : path;
+    public prepareLocationPath(path: string, queryParams: IRouteQueryParams = {}): string {
+        const preparedPath: string = (path.indexOf(this.root) === -1) ? (this.root + Router.clearSlashes(path)) : path;
+        const queryString: string = this.encodeParams(queryParams);
+        return `${preparedPath}${ queryString ? '?' + queryString : '' }`;
     }
 
     private getLocationPath(path?: string): string {
@@ -87,16 +89,56 @@ export class Router {
         return Boolean(route);
     }
 
-    private buildQueryParams(paramsStr: string): IRouteQueryParams {
-        // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
-        const qParams: IRouteQueryParams = {} as IRouteQueryParams;
-        if (paramsStr) {
-            const qs: string[] = paramsStr.split('&');
-            qs.forEach((qp: string) => {
-                const qParam: string[] = qp.split('=');
-                qParams[qParam[0] as string] = qParam[1];
-            });
+    private buildQueryParams(qs: string): IRouteQueryParams {
+        const params: IRouteQueryParams = {};
+        qs = (qs || '').replace(/^\?/, '').replace(/\+/g, '%20');
+        const paramList: string[] = qs.split('&');
+        for (let i: number = 0; i < paramList.length; i++) {
+            const param: string[] = paramList[i].split('=');
+            if (param[0]) {
+                const key: string = decodeURIComponent(param[0]);
+                const value: string = decodeURIComponent(param[1] || '');
+                if (this.isArrayParam(param)) {
+                    const valueItems: string[] = value.split(',');
+                    params[key] = valueItems.map((item: string) => {
+                        return !Number.isNaN(+item) ? +item : item;
+                    });
+                } else if (!Number.isNaN(+value)) {
+                    params[key] = +value;
+                } else {
+                    params[key] = value;
+                }
+            }
         }
-        return qParams;
+        return params;
+    }
+
+    private isArrayParam(param: any): boolean {
+        return param[0].endsWith('__in') || param[1] && !!~param[1].indexOf(',');
+    }
+
+    /**
+     * Get query string from query params object
+     * @param {QueryParams} params
+     * @returns {string}
+     */
+    private encodeParams(params: QueryParams): string {
+        const encodedParams: string[] = [];
+        const keys: string[] = Object.keys(params);
+
+        for (let i: number = 0; i < keys.length; i++) {
+            const key: string = keys[i];
+            const value: any = params[key];
+            const encodedKey: string = encodeURIComponent(key);
+            if (value) {
+                const encodedValue: string = Array.isArray(value) ?
+                    value.map((param: any) => (encodeURIComponent(param.toString()))).join(',') :
+                    encodeURIComponent(value.toString());
+                if (encodedValue) {
+                    encodedParams.push(`${encodedKey}=${encodedValue}`);
+                }
+            }
+        }
+        return encodedParams.join('&');
     }
 }

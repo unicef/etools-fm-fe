@@ -3,6 +3,7 @@ interface IRootState {
     user: IUserState;
     country: IRequestState;
     staticData: IStaticDataState;
+    specificLocations: ISpecificLocationsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -24,6 +25,13 @@ interface IUserState extends IRequestState {
 
 interface IStaticDataState {
     locations?: any[];
+    currentWorkspace?: any;
+}
+
+interface ISpecificLocationsState {
+    updateInProcess: null | boolean;
+    errors: null | GenericObject;
+    data: null | IStatedListData<Site>;
 }
 
 type Selector<T> = (onChange: (state: T) => void) => Callback;

@@ -6,8 +6,8 @@
 */
 type Constructor<T> = new(...args: any[]) => T;
 
-type GenericObject = {
-    [key: string]: any;
+type GenericObject<T = any> = {
+    [key: string]: T;
 };
 
 type PageTab = {
@@ -23,8 +23,29 @@ interface IEtoolsEndpoint {
     cachingKey?: string;
     cacheTableName?: string;
 }
+
+interface IResultEndpoint extends IEtoolsEndpoint {
+    url: string;
+}
+
 interface IEtoolsEndpoints {
     [key: string]: IEtoolsEndpoint;
 }
 
 type Callback = (...args: any) => void;
+
+type RequestMethod = 'POST' | 'PATCH' | 'DELETE' | 'OPTIONS';
+
+type DialogData = {
+    title?: string;
+    confirm?: string;
+    type?: 'add' | 'edit' | 'remove';
+    theme?: string;
+    opened: boolean;
+};
+
+type MarkerDataObj = {
+    coords: [number, number];
+    staticData?: any;
+    popup?: string;
+};

@@ -2,6 +2,7 @@ import { Router } from './router';
 import { store } from '../redux/store';
 import { ROOT_PATH } from '../config/config';
 import { navigate } from '../redux/effects/app.effects';
+import { UpdateQueryParams } from '../redux/actions/app';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
@@ -27,6 +28,16 @@ EtoolsRouter
                 params: {
                     engagementId: params.matchDetails[1]
                 }
+            };
+        })
+    .addRoute(new RegExp(`^settings\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'settings',
+                subRouteName: params.matchDetails[1], // tab name
+                path: params.matchDetails[0],
+                queryParams: params.queryParams,
+                params: null
             };
         })
     .addRoute(new RegExp(`^page-not-found$`),
@@ -61,7 +72,30 @@ export function updateAppLocation(newLocation: string, dispatchNavigation: boole
             store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
         };
     }
-    EtoolsRouter.navigate(_newLocation, navigationCallback);
+    EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
+}
+
+export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate: boolean = true): void {
+    const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
+    const path: string = details && details.path || '';
+    const queryParams: IRouteQueryParams | null = details && details.queryParams;
+    const computed: IRouteQueryParams = Object.assign({}, queryParams, newQueryParams);
+    const resultParams: IRouteQueryParams = {};
+
+    for (const key in computed) {
+        const value: any = computed[key];
+        if (value !== null) {
+            resultParams[key] = value;
+        }
+    }
+
+    let navigationCallback: (() => void) | null = null;
+    if (dispatchUpdate) {
+        navigationCallback = () => {
+            store.dispatch(new UpdateQueryParams(resultParams));
+        };
+    }
+    EtoolsRouter.navigate(path, resultParams, navigationCallback);
 }
 
 export const ROUTE_404: string = '/page-not-found';

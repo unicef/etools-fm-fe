@@ -35,10 +35,10 @@ import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
 import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 import { navigate } from '../../redux/effects/app.effects';
 import { UpdateDrawerState } from '../../redux/actions/app';
-import { locationsDataSelector } from '../../redux/selectors/static-data.selectors';
 import { loadStaticData } from '../../redux/effects/load-static-data.effect';
 import { user } from '../../redux/reducers/user.reducer';
 import { country } from '../../redux/reducers/country.reducer';
+import { CURRENT_WORKSPACE, LOCATIONS_ENDPOINT } from '../../endpoints/endpoints-list';
 
 store.addReducers({
     user,
@@ -92,10 +92,8 @@ export class AppShell extends connect(store)(LitElement) {
             this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
         }
 
-        store.subscribe(locationsDataSelector((locations?: any[]) => {
-            console.log(locations);
-        }));
-        store.dispatch<AsyncEffect>(loadStaticData('locations'));
+        store.dispatch<AsyncEffect>(loadStaticData(LOCATIONS_ENDPOINT));
+        store.dispatch<AsyncEffect>(loadStaticData(CURRENT_WORKSPACE));
     }
 
     public connectedCallback(): void {
@@ -169,6 +167,7 @@ export class AppShell extends connect(store)(LitElement) {
                         <engagement-tabs class="page"
                           ?active="${this.isActivePage(this.mainPage, 'engagements', this.subPage, 'details|questionnaires')}">
                         </engagement-tabs>
+                        <fm-settings class="page" ?active="${this.isActivePage(this.mainPage, 'settings', this.subPage, 'sites')}"></fm-settings>
                         <page-two class="page" ?active="${this.isActivePage(this.mainPage, 'page-two')}"></page-two>
                         <page-not-found class="page" ?active="${this.isActivePage(this.mainPage, 'page-not-found')}">
                         </page-not-found>

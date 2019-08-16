@@ -17,17 +17,15 @@ function generateUrlFromTemplate(tmpl: string, data: object | undefined): string
     return tmpl;
 }
 
-export function getEndpoint(endpointName: string, data?: GenericObject): IEtoolsEndpoint {
+export function getEndpoint(endpointName: string, data?: GenericObject): IResultEndpoint {
     const endpoint: IEtoolsEndpoint = etoolsEndpoints[endpointName];
     const baseSite: string = window.location.origin;
 
     if (endpoint && endpoint.template) {
         endpoint.url = baseSite + generateUrlFromTemplate(endpoint.template, data);
-    } else {
-        if (endpoint.url!.indexOf(baseSite) === -1) {
-            endpoint.url = baseSite + endpoint.url;
-        }
+    } else if (endpoint.url!.indexOf(baseSite) === -1) {
+        endpoint.url = baseSite + endpoint.url;
     }
 
-    return endpoint;
+    return endpoint as IResultEndpoint;
 }
