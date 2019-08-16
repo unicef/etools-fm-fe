@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { customElement, html, LitElement, query, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-toast/paper-toast';
 import '@polymer/paper-button/paper-button';
@@ -15,7 +15,8 @@ export class EtoolsToast extends LitElement {
 
     public fitInto: object | null = null;
 
-    private toast: PaperToastElement | null = null;
+    @query('#toast') public toast!: PaperToastElement;
+
     private confirmBtn: PaperButtonElement | null = null;
 
     public render(): TemplateResult {
@@ -77,7 +78,7 @@ export class EtoolsToast extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
         setTimeout(() => {
-            this.toast = this.shadowRoot!.querySelector('#toast') as PaperToastElement;
+            // this.toast = this.shadowRoot!.querySelector('#toast') as PaperToastElement;
             if (this.toast) {
                 this.toastLabelEl = this.toast!.shadowRoot!.querySelector('#label');
             }

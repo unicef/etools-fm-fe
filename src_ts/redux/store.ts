@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import { lazyReducerEnhancer, LazyStore } from 'pwa-helpers/lazy-reducer-enhancer.js';
 
 import app from './reducers/app.js';
-import actionsMiddleware from './actions-middleware';
+import { actionsMiddleware, asyncActionMiddleware } from './middleware';
 import { staticData } from './reducers/static-data.reducer';
 
 // Sets up a Chrome extension for time travel debugging.
@@ -30,7 +30,7 @@ export const store: IStore = createStore(
     (state: any) => state,
     devCompose(
         lazyReducerEnhancer(combineReducers),
-        applyMiddleware(thunk, actionsMiddleware))
+        applyMiddleware(thunk, actionsMiddleware, asyncActionMiddleware))
 );
 
 // Initially loaded reducers.

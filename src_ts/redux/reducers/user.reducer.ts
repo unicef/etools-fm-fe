@@ -1,5 +1,5 @@
-import { Reducer } from 'redux';
-import { UserAction, UserActionTypes } from '../actions/user.actions';
+import { AnyAction, Reducer } from 'redux';
+import { UserActionTypes } from '../actions/user.actions';
 
 const INITIAL_USER_DATA: IUserState = {
     data: null,
@@ -8,35 +8,26 @@ const INITIAL_USER_DATA: IUserState = {
     error: {}
 };
 
-export const user: Reducer<IUserState, any> = (state: IUserState = INITIAL_USER_DATA, action: UserAction) => {
+export const user: Reducer<IUserState, any> = (state: IUserState = INITIAL_USER_DATA, action: AnyAction) => {
     switch (action.type) {
-        case UserActionTypes.UPDATE_USER_DATA:
-            return {
-                ...state,
-                data: action.data
-            };
-        case UserActionTypes.UPDATE_USER_PERMISSIONS:
-            return {
-                ...state,
-                permissions: action.permissions
-            };
-        case UserActionTypes.START_UPDATE_USER_DATA:
+        case UserActionTypes.USER_DATA_REQUEST:
             return {
                 ...state,
                 isRequest: true,
                 error: null
             };
-        case UserActionTypes.FINISH_UPDATE_USER_DATA:
+        case UserActionTypes.USER_DATA_SUCCESS:
             return {
                 ...state,
                 isRequest: false,
+                data: action.payload,
                 error: null
             };
-        case UserActionTypes.ERROR_UPDATE_USER_DATA:
+        case UserActionTypes.USER_DATA_FAILURE:
             return {
                 ...state,
                 isRequest: false,
-                error: action.error
+                error: action.payload
             };
         default:
             return state;
