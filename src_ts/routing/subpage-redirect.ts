@@ -2,12 +2,13 @@
 import { ROOT_PATH } from '../config/config';
 import { Router } from './router';
 
-export const redirectToListSubpageList: string[] = [
-    'engagements'
-];
+const redirectsList: GenericObject = {
+    'engagements': 'engagements/list',
+    'settings': 'settings/sites'
+};
 export function getRedirectToListPath(path: string): undefined | string {
     path = path.replace(ROOT_PATH, '');
     const route: string = Router.clearSlashes(path);
-    const redirectTo: string | undefined = redirectToListSubpageList.find((r: string) => r === route);
-    return redirectTo ? `${ROOT_PATH}${redirectTo}/list` : undefined;
+    const redirectTo: string | undefined = redirectsList[route];
+    return redirectTo ? `${ROOT_PATH}${redirectTo}` : undefined;
 }

@@ -32,6 +32,8 @@
     "block-spacing": "off",
     "prefer-promise-reject-errors": "off",
     "no-case-declarations": "off",
+    "no-invalid-this": "off",
+    "guard-for-in": "off",
     "object-curly-spacing": ["error", "always"],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
@@ -54,6 +56,7 @@
     "EtoolsPmpApp": true,
     "EtoolsRequestCacheDb": true,
     "ShadyCSS": true,
-    "Set": true
+    "Set": true,
+    "L": true
   }
 }

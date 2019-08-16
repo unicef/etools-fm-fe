@@ -1,8 +1,12 @@
-export const PROFILE_ENDPOINT: string = 'userProfile';
-export const CP_OUTCOMES_ENDPOINT: string = 'cpOutcomes';
-export const LOCATIONS_ENDPOINT: string = 'locations';
-export const CHANGE_COUNTRY: string = 'changeCountry';
-export const UNICEF_USER: string = 'unicefUsers';
+export const PROFILE_ENDPOINT: 'userProfile' = 'userProfile';
+export const CP_OUTCOMES_ENDPOINT: 'cpOutcomes' = 'cpOutcomes';
+export const LOCATIONS_ENDPOINT: 'locations' = 'locations';
+export const CHANGE_COUNTRY: 'changeCountry' = 'changeCountry';
+export const UNICEF_USER: 'unicefUsers' = 'unicefUsers';
+export const SITES_EXPORT: 'unicefUsers' = 'unicefUsers';
+export const SITES_LIST: 'siteLocations' = 'siteLocations';
+export const SITE_DETAILS: 'siteLocationsDetails' = 'siteLocationsDetails';
+export const CURRENT_WORKSPACE: 'currentWorkspace' = 'currentWorkspace';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -27,6 +31,22 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         url: '/api/v3/users/?verbosity=minimal',
         exp: 60 * 60 * 1000, // 1h
         cachingKey: 'unicefUsers'
+    },
+
+    [SITES_EXPORT]: {
+        url: '/api/v1/field-monitoring/settings/sites/export/'
+    },
+
+    [SITES_LIST]: {
+        url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
+    },
+
+    [SITE_DETAILS]: {
+        template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
+    },
+
+    [CURRENT_WORKSPACE]: {
+        url: '/api/v1/field-monitoring/settings/locations/country/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

@@ -37,7 +37,7 @@ export const navMenuStyles: TemplateResult = html`
 
       .menu-header {
         @apply --layout-justified;
-        background-color: var(--primary-color);
+        background-color: var(--module-color);
         color: white;
         min-height: 60px;
         padding: 0 16px;

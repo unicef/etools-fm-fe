@@ -7,6 +7,7 @@ documentContainer.innerHTML = `
   <custom-style>
     <style include="paper-material-styles">
       html {
+        --module-color: #F5A65B;
         --primary-color: #0099ff;
         --primary-background-color: #FFFFFF;
         --secondary-background-color: #eeeeee;

@@ -20,11 +20,12 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
     // start importing components (lazy loading)
     const filesToImport: string[] = getFilePathsToImport(routeDetails);
     filesToImport.forEach((filePath: string) => {
-        import(importBase + filePath).then(() => {
-            console.log(`component: ${filePath} has been loaded... yey!`);
-        }).catch((importError: any) => {
-            console.log('component import failed...', importError);
-        });
+        import(importBase + filePath);
+            // .then(() => {
+            //     console.log(`component: ${filePath} has been loaded... yey!`);
+            // }).catch((importError: any) => {
+            //     console.log('component import failed...', importError);
+            // });
     });
 
     // add page details to redux store, to be used in other components

@@ -6,7 +6,7 @@ interface IRouteParams {
 }
 
 interface IRouteQueryParams {
-    [key: string]: string;
+    [key: string]: any;
 }
 
 interface IRouteCallbackParams {

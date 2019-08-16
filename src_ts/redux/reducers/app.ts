@@ -13,6 +13,12 @@ const app: Reducer<IAppState, any> = (state: IAppState = INITIAL_STATE, action: 
                 ...state,
                 routeDetails: action.routeDetails
             };
+        case AppActionTypes.UPDATE_QUERY_PARAMS:
+            const routeDetails: IRouteDetails = { ...state.routeDetails, queryParams: action.queryParams };
+            return {
+                ...state,
+                routeDetails
+            };
         case AppActionTypes.UPDATE_DRAWER_STATE:
             return {
                 ...state,
