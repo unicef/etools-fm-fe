@@ -12,6 +12,7 @@ interface IRouteQueryParams {
 interface IRouteCallbackParams {
     matchDetails: string[];
     queryParams: IRouteQueryParams;
+    queryParamsString: string | null;
 }
 
 interface IRouteDetails {
@@ -19,6 +20,7 @@ interface IRouteDetails {
     subRouteName: string | null;
     path: string;
     queryParams: IRouteQueryParam | null;
+    queryParamsString: string | null;
     params: IRouteParams | null;
 }
 

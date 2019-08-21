@@ -47,7 +47,8 @@ export class Router {
             if (match) {
                 const routeParams: IRouteCallbackParams = {
                     matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),
-                    queryParams: this.buildQueryParams(qs)
+                    queryParams: this.buildQueryParams(qs),
+                    queryParamsString: qs
                 };
                 routeDetails = this.routes[i].handler.bind({}, routeParams)();
                 break;

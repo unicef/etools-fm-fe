@@ -4,7 +4,7 @@ import { Router } from './router';
 
 const redirectsList: GenericObject = {
     'engagements': 'engagements/list',
-    'settings': 'settings/sites'
+    'settings': 'settings/questions'
 };
 export function getRedirectToListPath(path: string): undefined | string {
     path = path.replace(ROOT_PATH, '');

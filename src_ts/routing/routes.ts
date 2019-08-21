@@ -15,6 +15,7 @@ EtoolsRouter
                 subRouteName: 'list',
                 path: params.matchDetails[0],
                 queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
                 params: null
             };
         })
@@ -25,6 +26,7 @@ EtoolsRouter
                 subRouteName: params.matchDetails[2], // tab name
                 path: params.matchDetails[0],
                 queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
                 params: {
                     engagementId: params.matchDetails[1]
                 }
@@ -37,6 +39,7 @@ EtoolsRouter
                 subRouteName: params.matchDetails[1], // tab name
                 path: params.matchDetails[0],
                 queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
                 params: null
             };
         })
@@ -47,6 +50,7 @@ EtoolsRouter
                 subRouteName: null,
                 path: params.matchDetails[0],
                 queryParams: null,
+                queryParamsString: null,
                 params: null
             };
         })
@@ -57,6 +61,7 @@ EtoolsRouter
                 subRouteName: null,
                 path: params.matchDetails[0],
                 queryParams: null,
+                queryParamsString: null,
                 params: null
             };
         });

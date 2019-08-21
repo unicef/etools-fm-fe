@@ -80,7 +80,6 @@ export class SitesTabComponent extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        // @ts-ignore
         this.currentWorkspaceUnsubscribe = store.subscribe(
             currentWorkspaceSelector((workspace: Workspace | undefined) => {
                 if (!workspace) { return; }
@@ -90,14 +89,14 @@ export class SitesTabComponent extends LitElement {
         this.routeUnsubscribe = store.subscribe(routeDetailsSelector(({ routeName, subRouteName, queryParams }: IRouteDetails) => {
             if (routeName !== 'settings' || subRouteName !== 'sites') { return; }
 
-            const paramsAreValid: boolean = this.checkParams(queryParams);
+            const paramsAreValid: boolean = this.checkParams(queryParams, true);
             if (paramsAreValid) {
                 this.queryParams = queryParams;
             }
 
             if (!this.sitesObjects) {
                 this.debouncedLoading();
-            } else {
+            } else if (paramsAreValid) {
                 this.refreshData();
             }
         }));
@@ -105,8 +104,11 @@ export class SitesTabComponent extends LitElement {
         this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
                 if (!sites) { return; }
                 this.sitesObjects = sites;
-                this.refreshData();
-                this.renderMarkers();
+                const paramsAreValid: boolean = this.checkParams(this.queryParams);
+                if (paramsAreValid) {
+                    this.refreshData();
+                    this.renderMarkers();
+                }
         }));
 
         this.updateSiteLocationUnsubscribe = store.subscribe(sitesUpdateSelector( (updateInProcess: boolean | null) => {
@@ -140,12 +142,12 @@ export class SitesTabComponent extends LitElement {
         this.updateSiteLocationUnsubscribe();
     }
 
-    public checkParams(params?: IRouteQueryParams | null): boolean {
-        if (!params || !params.page || !params.page_size) {
+    public checkParams(params?: IRouteQueryParams | null, update?: boolean): boolean {
+        const invalid: boolean = !params || !params.page || !params.page_size;
+        if (invalid && update) {
             updateQueryParams({ page: 1, page_size: 10 });
-            return false;
         }
-        return true;
+        return !invalid;
     }
 
     public getActiveClass(isActive: boolean): string {
@@ -266,8 +268,8 @@ export class SitesTabComponent extends LitElement {
 
     public changeShowInactive({ detail }: CustomEvent): void {
         // prevent updating during initialization
-        if (!this.sitesObjects) { return; }
         const checked: boolean = detail.value;
+        if (!this.sitesObjects || checked === null || checked === undefined) { return; }
         if (checked) {
             updateQueryParams({ show_inactive: checked, page: 1 });
         } else {
@@ -280,7 +282,8 @@ export class SitesTabComponent extends LitElement {
         // prevent updating during initialization
         if (!this.sitesObjects) { return; }
         const { value } = detail;
-        if (value === null || value === undefined) { return; }
+        const currentValue: number | string = this.queryParams && this.queryParams.search || 0;
+        if (value === null || value === currentValue || value === undefined) { return; }
 
         if (!value.length) { updateQueryParams({ search: null }); }
         if (value.length > 1) { updateQueryParams({ search: value, page: 1 }); }

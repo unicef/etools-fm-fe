@@ -25,7 +25,7 @@ export function template(this: SitesTabComponent): TemplateResult {
                 <paper-input
                         class="search-input"
                         type="search"
-                        .value="${this.queryParams && this.queryParams.search || ''}"
+                        .value="${this.queryParams && this.queryParams.search}"
                         placeholder="${ translate('SITES.PLACEHOLDERS.SEARCH') }"
                         @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
                         inline>
@@ -33,7 +33,7 @@ export function template(this: SitesTabComponent): TemplateResult {
                 </paper-input>
 
                 <div class="toggle-button-control">
-                    <paper-toggle-button .checked="${this.queryParams && this.queryParams.show_inactive || false}" @checked-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"></paper-toggle-button>
+                    <paper-toggle-button .checked="${this.queryParams && this.queryParams.show_inactive}" @checked-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"></paper-toggle-button>
                     <span>${ translate('SITES.SHOW_INACTIVE') }</span>
                 </div>
             </div>
@@ -107,8 +107,8 @@ export function template(this: SitesTabComponent): TemplateResult {
             ` : '' }
 
             <etools-data-table-footer
-                    .pageSize="${this.queryParams && this.queryParams.page_size || 0}"
-                    .pageNumber="${this.queryParams && this.queryParams.page || 0}"
+                    .pageSize="${this.queryParams && this.queryParams.page_size || undefined}"
+                    .pageNumber="${this.queryParams && this.queryParams.page || undefined}"
                     .totalResults="${this.count}"
                     @page-size-changed="${(event: CustomEvent) => this.pageSizeSelected(event)}"
                     @page-number-changed="${(event: CustomEvent) => this.pageNumberChanged(event)}">

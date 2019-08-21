@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
@@ -12,25 +12,30 @@ import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
 import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
 import { addTranslates, ENGLISH } from '../../../localization/localisation';
 import { SITES_TRANSLATES } from '../../../localization/en/settings-page/sites.translates';
+import { EtoolsRouter, updateAppLocation } from '../../../routing/routes';
 
 store.addReducers({ specificLocations });
 addTranslates(ENGLISH, [SITES_TRANSLATES]);
+
+const PAGE: string = 'settings';
+const SITES_TAB: string = 'sites';
+const QUESTIONS_TAB: string = 'questions';
 
 @customElement('fm-settings')
 export class FmSettingsComponent extends LitElement {
     public pageTabs: PageTab[] = [
         {
-            tab: 'sites',
-            tabLabel: 'Sites',
+            tab: QUESTIONS_TAB,
+            tabLabel: 'Questions',
             hidden: false
         }, {
-            tab: 'other',
-            tabLabel: 'Other',
+            tab: SITES_TAB,
+            tabLabel: 'Sites',
             hidden: false
         }
     ];
 
-    public activeTab: string = 'sites';
+    @property() public activeTab: string = QUESTIONS_TAB;
 
     public render(): TemplateResult | void {
         return html`
@@ -38,7 +43,7 @@ export class FmSettingsComponent extends LitElement {
             <page-content-header with-tabs-visible>
                  <h1 slot="page-title">Settings</h1>
 
-                 <div slot="title-row-actions" class="content-header-actions">
+                 <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
                      <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
                         <iron-icon icon="file-download"></iron-icon>Export
                      </paper-button>
@@ -47,43 +52,43 @@ export class FmSettingsComponent extends LitElement {
                  <etools-tabs id="tabs" slot="tabs"
                              .tabs="${this.pageTabs}"
                              @iron-select="${({ detail }: any) => this.onSelect(detail.item)}"
-                             .active-tab="${this.activeTab}"></etools-tabs>
+                             .activeTab="${this.activeTab}"></etools-tabs>
             </page-content-header>
 
-            <sites-tab></sites-tab>
+            ${ this.getTabElement() }
         `;
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
         store.subscribe(routeDetailsSelector(({ routeName, subRouteName }: IRouteDetails) => {
-            if (routeName !== 'settings') { return; }
-            const oldTab: string = this.activeTab;
+            if (routeName !== PAGE) { return; }
             this.activeTab = subRouteName as string;
-            this.tabChanged(this.activeTab, oldTab);
         }));
-    }
-
-    public tabChanged(newTabName: string, oldTabName: string | undefined): void {
-        if (!oldTabName) {
-            // page load, tab init, component is gonna be imported in loadPageComponents action
-            return;
-        }
-        if (newTabName !== oldTabName) {
-            // go to new tab
-            // updateAppLocation(
-            //     `engagements/${this.engagement.id}/${newTabName}`, true);
-        }
     }
 
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
-        this.tabChanged(tabName, this.activeTab);
+        updateAppLocation(`${PAGE}/${tabName}`);
+    }
+
+    public getTabElement(): TemplateResult {
+        switch (this.activeTab) {
+            case SITES_TAB:
+                return html`<sites-tab></sites-tab>`;
+            case QUESTIONS_TAB:
+                return html`<questions-tab></questions-tab>`;
+            default:
+                return html`Tab Not Found`;
+        }
     }
 
     public exportData(): void {
         const url: string = getEndpoint(SITES_EXPORT).url;
-        const params: string = ''; // this.getQueryString()
+        const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
+        const params: string = routeDetails && routeDetails.queryParamsString ?
+            `?${routeDetails.queryParamsString}` :
+            '';
         window.open(url + params, '_blank');
     }
 
