@@ -103,10 +103,10 @@ export class Router {
                     params[key] = valueItems.map((item: string) => {
                         return !Number.isNaN(+item) ? +item : item;
                     });
-                } else if (!Number.isNaN(+value)) {
+                } else if (value && !Number.isNaN(+value)) {
                     params[key] = +value;
                 } else {
-                    params[key] = value;
+                    params[key] = value || true;
                 }
             }
         }
@@ -130,13 +130,15 @@ export class Router {
             const key: string = keys[i];
             const value: any = params[key];
             const encodedKey: string = encodeURIComponent(key);
-            if (value) {
-                const encodedValue: string = Array.isArray(value) ?
-                    value.map((param: any) => (encodeURIComponent(param.toString()))).join(',') :
-                    encodeURIComponent(value.toString());
-                if (encodedValue) {
-                    encodedParams.push(`${encodedKey}=${encodedValue}`);
-                }
+            if (!value) { continue; }
+
+            const encodedValue: string = Array.isArray(value) ?
+                value.map((param: any) => (encodeURIComponent(param.toString()))).join(',') :
+                encodeURIComponent(value.toString());
+            if (value === true) {
+                encodedParams.push(`${encodedKey}`);
+            } else if (encodedValue) {
+                encodedParams.push(`${encodedKey}=${encodedValue}`);
             }
         }
         return encodedParams.join('&');

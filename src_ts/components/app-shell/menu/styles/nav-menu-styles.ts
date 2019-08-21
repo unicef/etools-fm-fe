@@ -154,7 +154,7 @@ export const navMenuStyles: TemplateResult = html`
 
       .nav-menu-item.iron-selected .name,
       .nav-menu-item.iron-selected iron-icon {
-        color: var(--primary-color);
+        color: var(--module-color);
       }
 
       .nav-menu-item.lighter-item .name,

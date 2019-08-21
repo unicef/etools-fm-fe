@@ -63,29 +63,31 @@ export class AppMenu extends LitElement {
                        selectable="a"
                        role="navigation">
 
+            <a class="nav-menu-item" menu-name="settings" href="${this.rootPath + 'settings'}">
+                <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
+                <paper-tooltip for="page1-icon" position="right">
+                  Settings
+                </paper-tooltip>
+                <div class="name">Settings</div>
+            </a>
+
+           <!-- remove this pages latter-->
           <a class="nav-menu-item" menu-name="engagements" href="${this.rootPath + 'engagements'}">
             <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Engagements
+              Engagements(test)
             </paper-tooltip>
-            <div class="name">Engagements</div>
-          </a>
-
-          <a class="nav-menu-item" menu-name="settings" href="${this.rootPath + 'settings'}">
-            <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              Settings
-            </paper-tooltip>
-            <div class="name">Settings</div>
+            <div class="name">Engagements(test)</div>
           </a>
 
           <a class="nav-menu-item" menu-name="page-two" href="${this.rootPath + 'page-two'}">
             <iron-icon id="page2-icon" icon="extension"></iron-icon>
             <paper-tooltip for="page2-icon" position="right">
-              Page Two
+              Page Two(test)
             </paper-tooltip>
-            <div class="name">Page Two</div>
+            <div class="name">Page Two(test)</div>
           </a>
+          <!--End remove-->
 
         </iron-selector>
 

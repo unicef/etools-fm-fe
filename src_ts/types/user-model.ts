@@ -1,7 +1,7 @@
 // TODO: improve this user model
 interface IEtoolsUserModel {
     countries_available: object[];
-    groups: object[];
+    groups: UserGroup[];
     country: object;
     country_override: number;
     email: string;
@@ -23,3 +23,9 @@ interface IEtoolsUserModel {
 
     [key: string]: any;
 }
+
+type UserGroup = {
+    id: string;
+    name: string;
+    permissions: number[];
+};

@@ -22,6 +22,10 @@ export const SitesTabStyles: TemplateResult = html`
             }
         }
 
+        .search-input {
+            width: 260px;
+        }
+
         .sites-list {
             position: relative;
             flex: auto;
@@ -52,7 +56,7 @@ export const SitesTabStyles: TemplateResult = html`
 
         #map {
             position: relative;
-            width: calc(100% - 12px);
+            width: calc(100% - 24px);
             height: 400px;
             margin: 12px;
             z-index: 0;
@@ -78,6 +82,10 @@ export const SitesTabStyles: TemplateResult = html`
 
         etools-data-table-header {
             --data-table-header: padding: 0 0 0 24px;;
+        }
+
+        .editable-row .hover-block {
+            padding: 0 20px;
         }
     </style>
 `;

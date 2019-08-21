@@ -4,28 +4,40 @@ import { store } from '../../../../redux/store';
 import { Unsubscribe } from 'redux';
 import { sitesSelector, sitesUpdateSelector } from '../../../../redux/selectors/site-specific-locations.selectors';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
-import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
+import {
+    addSiteLocation,
+    loadSiteLocations,
+    removeSiteLocation, updateSiteLocation
+} from '../../../../redux/effects/site-specific-locations.effects';
 import { currentWorkspaceSelector } from '../../../../redux/selectors/static-data.selectors';
 import { updateQueryParams } from '../../../../routing/routes';
 import { locationsInvert } from './locations-invert';
 import { IMarker, MapHelper } from '../../../common/map-mixin';
-import { LatLngTuple, LeafletEvent, LeafletMouseEvent } from 'leaflet';
+import { LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent } from 'leaflet';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { debounce } from '../../../utils/debouncer';
-
+import { equals } from 'ramda';
+import { fireEvent } from '../../../utils/fire-custom-event';
+import { getDifference } from '../../../utils/objects-diff';
+import { translate } from '../../../../localization/localisation';
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 
 @customElement('sites-tab')
 export class SitesTabComponent extends LitElement {
     public defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
-    public savingInProcess: boolean | null = null;
     public errors: GenericObject | null = null;
     public count: number = 0;
-    @property() public sites: IGroupedSites[] = [];
     public selectedModel: EditedSite | null = null;
-    public currentCoords: string | null = null;
     public queryParams: IRouteQueryParam | null = null;
+    public readonly statusOptions: SiteStatusOption[] = [
+        { id: 0, value: false, display_name: translate('SITES.STATUS.INACTIVE') },
+        { id: 1, value: true, display_name: translate('SITES.STATUS.ACTIVE') }
+    ];
+
     @property() public dialog: DialogData | null = { opened: false };
+    @property() public savingInProcess: boolean | null = null;
+    @property() public sites: IGroupedSites[] = [];
+    @property() public currentCoords: string | null = null;
 
     protected originalData: EditedSite | null = null;
 
@@ -38,8 +50,16 @@ export class SitesTabComponent extends LitElement {
     @query('#dialog') private readonly dialogElement!: HTMLElement;
 
     private readonly dialogTexts: GenericObject<DialogData> = {
-        add: { title: 'Add Site Specific Location', confirm: 'Add', type: 'add', theme: 'default', opened: false },
-        edit: { title: 'Edit Site Specific Location', confirm: 'Save', type: 'edit', theme: 'default', opened: false },
+        add: {
+            title: translate('SITES.ADD_SL'),
+            confirm: translate('MAIN.BUTTONS.ADD'),
+            type: 'add', theme: 'default', opened: false
+        },
+        edit: {
+            title: translate('SITES.EDIT_SL'),
+            confirm: translate('MAIN.BUTTONS.SAVE'),
+            type: 'edit', theme: 'default', opened: false
+        },
         remove: { type: 'remove', theme: 'confirmation', opened: false }
     };
     private MapHelper: MapHelper;
@@ -60,6 +80,7 @@ export class SitesTabComponent extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
+        // @ts-ignore
         this.currentWorkspaceUnsubscribe = store.subscribe(
             currentWorkspaceSelector((workspace: Workspace | undefined) => {
                 if (!workspace) { return; }
@@ -85,7 +106,7 @@ export class SitesTabComponent extends LitElement {
                 if (!sites) { return; }
                 this.sitesObjects = sites;
                 this.refreshData();
-                // this.renderMarkers();
+                this.renderMarkers();
         }));
 
         this.updateSiteLocationUnsubscribe = store.subscribe(sitesUpdateSelector( (updateInProcess: boolean | null) => {
@@ -94,7 +115,10 @@ export class SitesTabComponent extends LitElement {
 
                 this.errors = store.getState().specificLocations.errors;
                 if (this.errors && this.errors.point) {
-                    // this.dispatchOnStore(new AddNotification('Please, select correct location on map'));
+                    fireEvent(this, 'toast', {
+                        text: 'Please, select correct location on map',
+                        showCloseBtn: false
+                    });
                 }
                 if (this.errors) { return; }
 
@@ -144,14 +168,48 @@ export class SitesTabComponent extends LitElement {
         return active ? 1 : 0;
     }
 
-    public saveSite(): void {}
+    public updateModelValue(fieldName: keyof EditedSite, value: any): void {
+        if (!this.selectedModel) { return; }
+        this.selectedModel[fieldName] = value;
+    }
+    public saveSite(): void {
+        if (!this.selectedModel || !this.dialog) { return; }
+        if (this.dialog.type === 'remove') {
+            store.dispatch<AsyncEffect>(removeSiteLocation(this.selectedModel.id as number));
+            return;
+        }
 
-    public openDialog(event: MouseEvent): void {
+        const { lat, lng }: LatLng =
+            this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng() || {} as LatLng;
+        if (lat && lng) {
+            this.selectedModel.point = {
+                type: 'Point',
+                coordinates: [lng, lat]
+            };
+        }
+
+        const equalOrIsDeleteDialog: boolean = equals(this.originalData, this.selectedModel);
+        if (equalOrIsDeleteDialog) {
+            this.dialog = null;
+            return;
+        }
+
+        switch (this.dialog.type) {
+            case 'add':
+                store.dispatch<AsyncEffect>(addSiteLocation(this.selectedModel as Site));
+                break;
+            case 'edit':
+                const changes: Site = getDifference(this.originalData, this.selectedModel, true) as Site;
+                store.dispatch<AsyncEffect>(updateSiteLocation(this.selectedModel.id as number, changes));
+                break;
+        }
+    }
+
+    public openDialog(event: MouseEvent, model: EditedSite = { is_active: true }): void {
         const icon: HTMLElement = event.target as HTMLElement;
         const dialogType: string | undefined = icon.dataset.type;
         if (!dialogType) { return; }
 
-        const model: EditedSite = (event as any).model && (event as any).model.site || { is_active: true };
         const texts: DialogData = this.dialogTexts[dialogType] || {};
         this.selectedModel = { ...model };
         this.originalData = { ...model };
@@ -189,6 +247,9 @@ export class SitesTabComponent extends LitElement {
     public pageNumberChanged({ detail }: CustomEvent): void {
         // prevent updating during initialization
         if (!this.sitesObjects) { return; }
+        const newValue: string | number = detail.value;
+        const currentValue: number | string = this.queryParams && this.queryParams.page || 0;
+        if (+newValue === +currentValue) { return; }
         updateQueryParams({ page: detail.value });
         this.refreshData();
     }
@@ -196,6 +257,9 @@ export class SitesTabComponent extends LitElement {
     public pageSizeSelected({ detail }: CustomEvent): void {
         // prevent updating during initialization
         if (!this.sitesObjects) { return; }
+        const newValue: string | number = detail.value;
+        const currentValue: number | string = this.queryParams && this.queryParams.page_size || 0;
+        if (+newValue === +currentValue) { return; }
         updateQueryParams({ page_size: detail.value });
         this.refreshData();
     }
@@ -213,6 +277,8 @@ export class SitesTabComponent extends LitElement {
     }
 
     public searchKeyDown({ detail }: CustomEvent): void {
+        // prevent updating during initialization
+        if (!this.sitesObjects) { return; }
         const { value } = detail;
         if (value === null || value === undefined) { return; }
 
@@ -224,7 +290,7 @@ export class SitesTabComponent extends LitElement {
     public resetData(event: CustomEvent): void {
         if (event.target !== this.dialogElement) { return; }
         this.dialog = null;
-        // this.resetInputs();
+        this.resetInputs();
         this.selectedModel = {};
         this.errors = null;
 
@@ -288,7 +354,9 @@ export class SitesTabComponent extends LitElement {
             this.currentCoords = null;
         } else {
             const { lat, lng } = this.MapHelper.dynamicMarker.getLatLng();
-            this.currentCoords = `Latitude ${lat.toFixed(6)}     Longitude ${lng.toFixed(6)}`;
+            this.currentCoords =
+                `${ translate('MAIN.LATITUDE') } ${lat.toFixed(6)}` +
+                `     ${ translate('MAIN.LONGITUDE') } ${lng.toFixed(6)}`;
         }
     }
 
@@ -299,6 +367,14 @@ export class SitesTabComponent extends LitElement {
             return { coords, staticData: site, popup: site.name };
         });
         this.MapHelper.setStaticMarkers(sitesCoords);
+    }
+
+    private resetInputs(): void {
+        const elements: any[] = this.shadowRoot!.querySelectorAll('.validate-input') as any;
+        for (const element of elements) {
+            element.invalid = false;
+            element.value = '';
+        }
     }
 
     public static get styles(): CSSResult[] {

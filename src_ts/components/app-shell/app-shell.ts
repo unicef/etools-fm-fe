@@ -39,11 +39,17 @@ import { loadStaticData } from '../../redux/effects/load-static-data.effect';
 import { user } from '../../redux/reducers/user.reducer';
 import { country } from '../../redux/reducers/country.reducer';
 import { CURRENT_WORKSPACE, LOCATIONS_ENDPOINT } from '../../endpoints/endpoints-list';
+import { addTranslates, ENGLISH, useLanguage } from '../../localization/localisation';
+import { MAIN_TRANSLATES } from '../../localization/en/main.translates';
+import { currentUser } from '../../redux/selectors/user.selectors';
+import { setUserGroups } from '../../config/permissions';
 
 store.addReducers({
     user,
     country
 });
+useLanguage(ENGLISH);
+addTranslates(ENGLISH, MAIN_TRANSLATES);
 
 /**
  * @customElement
@@ -94,6 +100,11 @@ export class AppShell extends connect(store)(LitElement) {
 
         store.dispatch<AsyncEffect>(loadStaticData(LOCATIONS_ENDPOINT));
         store.dispatch<AsyncEffect>(loadStaticData(CURRENT_WORKSPACE));
+
+        store.subscribe(currentUser((userData: IEtoolsUserModel | null) => {
+            if (!userData) { return; }
+            setUserGroups(userData.groups);
+        }));
     }
 
     public connectedCallback(): void {

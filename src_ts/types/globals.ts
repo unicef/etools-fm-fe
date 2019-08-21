@@ -10,6 +10,10 @@ type GenericObject<T = any> = {
     [key: string]: T;
 };
 
+type TranslateObject = {
+    [key: string]: string | TranslateObject;
+};
+
 type PageTab = {
     tab: string;
     tabLabel: string;

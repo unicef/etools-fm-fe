@@ -62,7 +62,7 @@
     "no-var-keyword": true,
     "use-isnan": true,
     "cyclomatic-complexity": [
-      true,
+      false,
       20
     ],
     "max-classes-per-file": [

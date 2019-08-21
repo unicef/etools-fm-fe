@@ -10,8 +10,11 @@ import { SITES_EXPORT } from '../../../endpoints/endpoints-list';
 import { store } from '../../../redux/store';
 import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
 import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
+import { addTranslates, ENGLISH } from '../../../localization/localisation';
+import { SITES_TRANSLATES } from '../../../localization/en/settings-page/sites.translates';
 
 store.addReducers({ specificLocations });
+addTranslates(ENGLISH, [SITES_TRANSLATES]);
 
 @customElement('fm-settings')
 export class FmSettingsComponent extends LitElement {

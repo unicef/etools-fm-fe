@@ -84,7 +84,7 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
 
     for (const key in computed) {
         const value: any = computed[key];
-        if (value !== null) {
+        if (value) {
             resultParams[key] = value;
         }
     }
