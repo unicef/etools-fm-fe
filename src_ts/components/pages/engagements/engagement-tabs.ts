@@ -1,6 +1,7 @@
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
+import '@unicef-polymer/etools-dialog/etools-dialog';
 
 import { SharedStyles } from '../../styles/shared-styles';
 import '../../common/layout/page-content-header/page-content-header';
@@ -15,6 +16,9 @@ import { store } from '../../../redux/store';
 import { updateAppLocation } from '../../../routing/routes';
 import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
+import { IDialogResponse, openDialog } from '../../utils/dialog';
+import './testDialog';
+import { ITestDialogRequest, ITestDialogResponse } from './testDialog';
 
 /**
  * @polymer
@@ -46,6 +50,9 @@ export class EngagementTabs extends connect(store)(LitElement) {
         title: 'Engagement title'
     };
 
+    @property({ type: Boolean })
+    public testOpen: boolean = false;
+
     public static get styles(): CSSResultArray {
         return [elevationStyles];
     }
@@ -69,7 +76,7 @@ export class EngagementTabs extends connect(store)(LitElement) {
                 <h1 slot="page-title">${this.engagement.title}</h1>
 
                 <div slot="title-row-actions" class="content-header-actions">
-                  <paper-button raised>Action 1</paper-button>
+                  <paper-button raised @tap="${() => this.onTestDialog()}">Action 1</paper-button>
                   <paper-button raised>Action 2</paper-button>
                 </div>
 
@@ -87,6 +94,16 @@ export class EngagementTabs extends connect(store)(LitElement) {
 
     public isActiveTab(tab: string, expectedTab: string): boolean {
         return tab === expectedTab;
+    }
+
+    public onTestDialog(): void {
+        openDialog<ITestDialogRequest, ITestDialogResponse>({
+                dialog: 'test-dialog',
+                data: { test: 'is work' }
+            })
+            .then((detail: IDialogResponse<ITestDialogResponse>) => {
+                console.log(detail);
+            });
     }
 
     public stateChanged(state: IRootState): void {
