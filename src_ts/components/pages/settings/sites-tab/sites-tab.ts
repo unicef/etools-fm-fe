@@ -86,20 +86,9 @@ export class SitesTabComponent extends LitElement {
                 this.defaultMapCenter = workspace.point && workspace.point.coordinates || DEFAULT_COORDINATES;
             }));
 
-        this.routeUnsubscribe = store.subscribe(routeDetailsSelector(({ routeName, subRouteName, queryParams }: IRouteDetails) => {
-            if (routeName !== 'settings' || subRouteName !== 'sites') { return; }
-
-            const paramsAreValid: boolean = this.checkParams(queryParams, true);
-            if (paramsAreValid) {
-                this.queryParams = queryParams;
-            }
-
-            if (!this.sitesObjects) {
-                this.debouncedLoading();
-            } else if (paramsAreValid) {
-                this.refreshData();
-            }
-        }));
+        this.routeUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false));
+        const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+        this.onRouteChange(currentRoute);
 
         this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
                 if (!sites) { return; }
@@ -112,6 +101,8 @@ export class SitesTabComponent extends LitElement {
         }));
 
         this.updateSiteLocationUnsubscribe = store.subscribe(sitesUpdateSelector( (updateInProcess: boolean | null) => {
+                if (this.savingInProcess === updateInProcess) { return; }
+
                 this.savingInProcess = updateInProcess;
                 if (updateInProcess !== false) { return; }
 
@@ -140,6 +131,23 @@ export class SitesTabComponent extends LitElement {
         this.routeUnsubscribe();
         this.currentWorkspaceUnsubscribe();
         this.updateSiteLocationUnsubscribe();
+    }
+
+    public onRouteChange({ routeName, subRouteName, queryParams }: IRouteDetails): void {
+        if (routeName !== 'settings' || subRouteName !== 'sites') { return; }
+
+        const paramsAreValid: boolean = this.checkParams(queryParams, true);
+        if (paramsAreValid) {
+            this.queryParams = queryParams;
+        } else {
+            return;
+        }
+
+        if (!this.sitesObjects) {
+            this.debouncedLoading();
+        } else {
+            this.refreshData();
+        }
     }
 
     public checkParams(params?: IRouteQueryParams | null, update?: boolean): boolean {

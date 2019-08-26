@@ -41,7 +41,7 @@ export function useLanguage(language: string): void | never {
     selectedLanguage = language;
 }
 
-export function translate(path: string, data?: TranslateObject): string {
+export function translate(path: string, data?: GenericObject): string {
     if (!selectedLanguage) {
         console.warn('Language is not selected!');
     }

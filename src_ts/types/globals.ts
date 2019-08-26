@@ -53,3 +53,31 @@ type MarkerDataObj = {
     staticData?: any;
     popup?: string;
 };
+
+type TableInformation = {
+    start: number;
+    end: number;
+    count: number;
+};
+
+type EtoolsCategory = {
+    id: number;
+    name: string;
+};
+
+type EtoolsSection = {
+    id: string;
+    created: string;
+    modified: string;
+    name: string;
+    description: string;
+    alternate_id: null | string;
+    alternate_name: string;
+    dashboard: boolean;
+    color: string;
+};
+
+type EtoolsMethod = {
+    id: number;
+    name: string;
+};

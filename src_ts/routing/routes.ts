@@ -89,7 +89,8 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
 
     for (const key in computed) {
         const value: any = computed[key];
-        if (value) {
+        const removeParam: boolean = !value || (Array.isArray(value) && !value.length);
+        if (!removeParam) {
             resultParams[key] = value;
         }
     }

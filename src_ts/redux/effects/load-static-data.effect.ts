@@ -18,11 +18,12 @@ export function loadStaticData(dataName: keyof IStaticDataState, params?: any, r
                 } else {
                     dispatch(new AddStaticData(dataName, staticData));
                 }
+                return data;
             })
             .catch((error: any) => {
                 console.error(`Can not load static data "${dataName}". Reason: request error.`);
                 console.error(error);
-                return Promise.resolve();
+                return Promise.resolve([]);
             });
     };
 }

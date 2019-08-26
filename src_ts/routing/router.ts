@@ -72,6 +72,31 @@ export class Router {
         return `${preparedPath}${ queryString ? '?' + queryString : '' }`;
     }
 
+    /**
+     * Get query string from query params object
+     * @param {QueryParams} params
+     * @returns {string}
+     */
+    public encodeParams(params: QueryParams): string {
+        const encodedParams: string[] = [];
+        const keys: string[] = Object.keys(params);
+
+        for (let i: number = 0; i < keys.length; i++) {
+            const key: string = keys[i];
+            const value: any = params[key];
+            const encodedKey: string = encodeURIComponent(key);
+            if (!value) { continue; }
+
+            const encodedValue: string = Array.isArray(value) ?
+                value.map((param: any) => (encodeURIComponent(param.toString()))).join(',') :
+                encodeURIComponent(value.toString());
+            if (encodedValue) {
+                encodedParams.push(`${encodedKey}=${encodedValue}`);
+            }
+        }
+        return encodedParams.join('&');
+    }
+
     private getLocationPath(path?: string): string {
         path = path || decodeURI(location.pathname + location.search);
         // remove root path
@@ -106,6 +131,8 @@ export class Router {
                     });
                 } else if (value && !Number.isNaN(+value)) {
                     params[key] = +value;
+                } else if (value === 'true') {
+                    params[key] = true;
                 } else {
                     params[key] = value || true;
                 }
@@ -116,32 +143,5 @@ export class Router {
 
     private isArrayParam(param: any): boolean {
         return param[0].endsWith('__in') || param[1] && !!~param[1].indexOf(',');
-    }
-
-    /**
-     * Get query string from query params object
-     * @param {QueryParams} params
-     * @returns {string}
-     */
-    private encodeParams(params: QueryParams): string {
-        const encodedParams: string[] = [];
-        const keys: string[] = Object.keys(params);
-
-        for (let i: number = 0; i < keys.length; i++) {
-            const key: string = keys[i];
-            const value: any = params[key];
-            const encodedKey: string = encodeURIComponent(key);
-            if (!value) { continue; }
-
-            const encodedValue: string = Array.isArray(value) ?
-                value.map((param: any) => (encodeURIComponent(param.toString()))).join(',') :
-                encodeURIComponent(value.toString());
-            if (value === true) {
-                encodedParams.push(`${encodedKey}`);
-            } else if (encodedValue) {
-                encodedParams.push(`${encodedKey}=${encodedValue}`);
-            }
-        }
-        return encodedParams.join('&');
     }
 }

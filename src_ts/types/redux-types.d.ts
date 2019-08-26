@@ -4,6 +4,7 @@ interface IRootState {
     country: IRequestState;
     staticData: IStaticDataState;
     specificLocations: ISpecificLocationsState;
+    questions: IQuestionsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -26,6 +27,9 @@ interface IUserState extends IRequestState {
 interface IStaticDataState {
     locations?: any[];
     currentWorkspace?: any;
+    categories: EtoolsCategory[];
+    sections: EtoolsSection[];
+    methods: EtoolsMethod[];
 }
 
 interface ISpecificLocationsState {
@@ -34,6 +38,12 @@ interface ISpecificLocationsState {
     data: null | IStatedListData<Site>;
 }
 
-type Selector<T> = (onChange: (state: T) => void) => Callback;
+interface IQuestionsState {
+    updateInProcess: null | boolean;
+    error: null | GenericObject;
+    data: null | IListData<Question>;
+}
+
+type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
 
 type AsyncEffect = any;

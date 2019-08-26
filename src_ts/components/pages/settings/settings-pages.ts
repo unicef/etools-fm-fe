@@ -10,12 +10,14 @@ import { SITES_EXPORT } from '../../../endpoints/endpoints-list';
 import { store } from '../../../redux/store';
 import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
 import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
+import { questions } from '../../../redux/reducers/questions.reducer';
 import { addTranslates, ENGLISH } from '../../../localization/localisation';
 import { SITES_TRANSLATES } from '../../../localization/en/settings-page/sites.translates';
+import { QUESTIONS_TRANSLATES } from '../../../localization/en/settings-page/question.translates';
 import { EtoolsRouter, updateAppLocation } from '../../../routing/routes';
 
-store.addReducers({ specificLocations });
-addTranslates(ENGLISH, [SITES_TRANSLATES]);
+store.addReducers({ specificLocations, questions });
+addTranslates(ENGLISH, [SITES_TRANSLATES, QUESTIONS_TRANSLATES]);
 
 const PAGE: string = 'settings';
 const SITES_TAB: string = 'sites';
@@ -69,6 +71,7 @@ export class FmSettingsComponent extends LitElement {
 
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
+        if (this.activeTab === tabName) { return; }
         updateAppLocation(`${PAGE}/${tabName}`);
     }
 

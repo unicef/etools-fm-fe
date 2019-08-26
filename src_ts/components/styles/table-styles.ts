@@ -19,6 +19,10 @@ export const TableStyles: TemplateResult = html`
             text-overflow: ellipsis;
             font-size: 18px;
         }
+        .table-title-block .table-title.counter {
+            font-size: 20px;
+            font-weight: 500;
+        }
 
         .table-title-block .buttons-container {
             position: relative;

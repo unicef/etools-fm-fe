@@ -1,8 +1,8 @@
 export function debounce(fn: Callback, time: number): Callback {
     let timeout: NodeJS.Timeout;
 
-    return () => {
+    return (...args: any[]) => {
         clearTimeout(timeout);
-        timeout = setTimeout(fn, time);
+        timeout = setTimeout(() => fn(...args), time);
     };
 }

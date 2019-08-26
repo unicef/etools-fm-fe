@@ -15,7 +15,8 @@ export const engagementsFilters: IEtoolsFilter[] = [
     filterKey: 'q',
     type: EtoolsFilterTypes.Search,
     selectedValue: '',
-    selected: true
+    selected: true,
+    defaultValue: ''
   },
   {
     filterName: 'Staff Member',
@@ -26,7 +27,8 @@ export const engagementsFilters: IEtoolsFilter[] = [
     selected: true,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false
+    disabled: false,
+    defaultValue: []
   },
   {
     filterName: 'Status',
@@ -37,7 +39,8 @@ export const engagementsFilters: IEtoolsFilter[] = [
     selected: true,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false
+    disabled: false,
+    defaultValue: []
   },
   {
     filterName: 'Unicef Focal Point',
@@ -48,7 +51,8 @@ export const engagementsFilters: IEtoolsFilter[] = [
     selected: true,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false
+    disabled: false,
+    defaultValue: []
   },
   {
     filterName: 'Partner Org',
@@ -59,14 +63,16 @@ export const engagementsFilters: IEtoolsFilter[] = [
     selected: true,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false
+    disabled: false,
+    defaultValue: []
   },
   {
     filterName: 'Assessment Date',
     filterKey: 'assessment_date',
     type: EtoolsFilterTypes.Date,
     selectedValue: null,
-    selected: false
+    selected: false,
+    defaultValue: null
   }
 ];
 
