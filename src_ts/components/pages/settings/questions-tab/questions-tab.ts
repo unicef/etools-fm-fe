@@ -17,11 +17,12 @@ import { mapFilters } from '../../../utils/filters-mapping';
 import { questionsFilters } from './questions-tab.filters';
 
 type Serialized = {
-    id: number;
+    id: number | string;
     name: string;
+    [key: string]: any;
 };
 
-const ANSWER_TYPES: GenericObject[] = [
+const ANSWER_TYPES: AnswerTypeOption[] = [
     { value: 'text', display_name: translate(`QUESTIONS.ANSWER_TYPE.TEXT`) },
     { value: 'number', display_name: translate(`QUESTIONS.ANSWER_TYPE.NUMBER`) },
     { value: 'bool', display_name: translate(`QUESTIONS.ANSWER_TYPE.BOOL`) },
@@ -76,6 +77,8 @@ export class QuestionsTabComponent extends LitElement {
         const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
         this.onRouteChange(currentRoute);
 
+        this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
+
         this.initFilters();
     }
 
@@ -103,9 +106,8 @@ export class QuestionsTabComponent extends LitElement {
         updateQueryParams({ [paramName]: newValue });
     }
 
-    public filtersChanged(details: any): void {
-        console.log('filtersChanged', details);
-        updateQueryParams(details);
+    public changeSort({ field, direction }: SortDetails): void {
+        updateQueryParams({ ordering: `${ direction === 'desc' ? '-' : '' }${ field }` });
     }
 
     public serializeName<T extends Serialized>(id: number, collection: T[]): string {

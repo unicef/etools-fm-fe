@@ -81,3 +81,8 @@ type EtoolsMethod = {
     id: number;
     name: string;
 };
+
+type SortDetails = {
+    field: string;
+    direction: 'asc' | 'desc';
+};

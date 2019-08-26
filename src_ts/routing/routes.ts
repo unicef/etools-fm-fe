@@ -3,6 +3,7 @@ import { store } from '../redux/store';
 import { ROOT_PATH } from '../config/config';
 import { navigate } from '../redux/effects/app.effects';
 import { UpdateQueryParams } from '../redux/actions/app';
+import { equals } from 'ramda';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
@@ -94,6 +95,9 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
             resultParams[key] = value;
         }
     }
+
+    const newParamsEqualsCurrent: boolean = equals(queryParams, resultParams);
+    if (newParamsEqualsCurrent) { return; }
 
     let navigationCallback: (() => void) | null = null;
     if (dispatchUpdate) {

@@ -17,7 +17,10 @@ export const QUESTIONS_TRANSLATES: TranslateObject = {
             'METHODS': 'Collection Methods',
             'ANSWER_TYPE': 'Measurement Type',
             'CATEGORY': 'Group',
-            'IS_ACTIVE': 'Active'
+            'IS_ACTIVE': 'Active',
+            'SECTIONS': 'Sections',
+            'IS_HACT': 'Counts towards HACT',
+            'ANSWER_OPTIONS': 'Reporting Details'
         },
         'DETAILS': {
             '1': 'Sections',

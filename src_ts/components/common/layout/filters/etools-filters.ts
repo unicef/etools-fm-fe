@@ -2,6 +2,7 @@ import {
   CSSResultArray,
   customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
+import { repeat } from 'lit-html/directives/repeat';
 import { etoolsFiltersStyles } from './etools-filters-styles';
 
 import '@polymer/iron-icons/iron-icons';
@@ -141,34 +142,27 @@ export class EtoolsFilters extends LitElement {
     `;
   }
 
-  public get selectedFiltersTmpl(): TemplateResult[] {
-    const tmpl: any[] = [];
-    this.filters
-      .filter((f: IEtoolsFilter) => f.selected)
-      .forEach((f: IEtoolsFilter) => {
-        let filterHtml: TemplateResult | null = null;
-        switch (f.type) {
-          case EtoolsFilterTypes.Search:
-            filterHtml = this.getSearchTmpl(f);
-            break;
-          case EtoolsFilterTypes.Dropdown:
-            filterHtml = this.getDropdownTmpl(f);
-            break;
-          case EtoolsFilterTypes.DropdownMulti:
-            filterHtml = this.getDropdownMultiTmpl(f);
-            break;
-          case EtoolsFilterTypes.Date:
-            filterHtml = this.getDateTmpl(f);
-            break;
-          case EtoolsFilterTypes.Toggle:
-            filterHtml = this.getToggleTmpl(f);
-            break;
+  public get selectedFiltersTmpl(): TemplateResult {
+    return html`${repeat(
+        this.filters.filter((f: IEtoolsFilter) => f.selected),
+        (filter: IEtoolsFilter) => filter.filterKey,
+        (filter: IEtoolsFilter) => {
+          switch (filter.type) {
+            case EtoolsFilterTypes.Search:
+              return this.getSearchTmpl(filter);
+            case EtoolsFilterTypes.Dropdown:
+              return this.getDropdownTmpl(filter);
+            case EtoolsFilterTypes.DropdownMulti:
+              return this.getDropdownMultiTmpl(filter);
+            case EtoolsFilterTypes.Date:
+              return this.getDateTmpl(filter);
+            case EtoolsFilterTypes.Toggle:
+              return this.getToggleTmpl(filter);
+            default:
+              return html``;
+          }
         }
-        if (filterHtml) {
-          tmpl.push(filterHtml);
-        }
-      });
-    return tmpl;
+    )}`;
   }
 
   public get filterMenuOptions(): TemplateResult[] {

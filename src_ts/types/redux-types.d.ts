@@ -27,9 +27,9 @@ interface IUserState extends IRequestState {
 interface IStaticDataState {
     locations?: any[];
     currentWorkspace?: any;
-    categories: EtoolsCategory[];
-    sections: EtoolsSection[];
-    methods: EtoolsMethod[];
+    categories?: EtoolsCategory[];
+    sections?: EtoolsSection[];
+    methods?: EtoolsMethod[];
 }
 
 interface ISpecificLocationsState {

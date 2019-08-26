@@ -18,5 +18,6 @@ export const QuestionsTabStyles: TemplateResult = html`
         .question-filters-section {
             padding: 0 30px;
         }
+        .row-details-content div.image img { width: 15px; }
     </style>
 `;
