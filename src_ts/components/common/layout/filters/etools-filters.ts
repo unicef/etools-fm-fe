@@ -32,6 +32,7 @@ export interface IEtoolsFilter {
   selected: boolean; // flag filter as selected from filters menu
   selectedValue: any;
   disabled?: boolean;
+  defaultValue: any;
   selectionOptions?: any[]; // used only by dropdowns
   minWidth?: string; // used only by dropdowns
   hideSearch?: boolean; // used only by dropdowns
