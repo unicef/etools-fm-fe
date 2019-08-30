@@ -11,10 +11,10 @@ import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors'
 import { debounce } from '../../../utils/debouncer';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
 import { CATEGORIES, METHODS, SECTIONS } from '../../../../endpoints/endpoints-list';
-import { translate } from '../../../../localization/localisation';
 import { IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
 import { mapFilters } from '../../../utils/filters-mapping';
-import { questionsFilters } from './questions-tab.filters';
+import { ANSWER_TYPES, LEVELS, questionsFilters } from './questions-tab.filters';
+import { IDialogResponse, openDialog } from '../../../utils/dialog';
 
 type Serialized = {
     id: number | string;
@@ -22,23 +22,10 @@ type Serialized = {
     [key: string]: any;
 };
 
-const ANSWER_TYPES: AnswerTypeOption[] = [
-    { value: 'text', display_name: translate(`QUESTIONS.ANSWER_TYPE.TEXT`) },
-    { value: 'number', display_name: translate(`QUESTIONS.ANSWER_TYPE.NUMBER`) },
-    { value: 'bool', display_name: translate(`QUESTIONS.ANSWER_TYPE.BOOL`) },
-    { value: 'likert_scale', display_name: translate(`QUESTIONS.ANSWER_TYPE.LIKERT_SCALE`) }
-];
-
-const LEVELS: GenericObject[] = [
-    { value: 'partner', display_name: translate(`QUESTIONS.LEVEL.PARTNER`) },
-    { value: 'output', display_name: translate(`QUESTIONS.LEVEL.OUTPUT`) },
-    { value: 'intervention', display_name: translate(`QUESTIONS.LEVEL.INTERVENTION`) }
-];
-
 @customElement('questions-tab')
 export class QuestionsTabComponent extends LitElement {
 
-    @property() public questionsList: Question[] = [];
+    @property() public questionsList: IQuestion[] = [];
     @property() public filters: IEtoolsFilter[] | null = null;
     public count: number = 0;
     public queryParams: IRouteQueryParam | null = null;
@@ -67,7 +54,7 @@ export class QuestionsTabComponent extends LitElement {
             // .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
         }, 100);
 
-        this.questionsDataUnsubscribe = store.subscribe(questionsListData((data: IListData<Question> | null) => {
+        this.questionsDataUnsubscribe = store.subscribe(questionsListData((data: IListData<IQuestion> | null) => {
             if (!data) { return; }
             this.count = data.count;
             this.questionsList = data.results;
@@ -116,6 +103,24 @@ export class QuestionsTabComponent extends LitElement {
         return item ? item.name : '';
     }
 
+    public openPopup(question?: IQuestion): void {
+        openDialog<IQuestion | undefined>({
+            dialog: 'question-popup',
+            data: question
+        }).then(({ confirmed }: IDialogResponse<any>) => {
+            if (!confirmed) { return; }
+
+            if (!question) {
+                // update params, it will load questions list is subscriber
+                updateQueryParams({ page: 1 });
+            } else {
+                // refresh current list
+                const currentParams: IRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
+                store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
+            }
+        });
+    }
+
     private onRouteChange({ routeName, subRouteName, queryParams }: IRouteDetails): void {
         if (routeName !== 'settings' || subRouteName !== 'questions') { return; }
 
@@ -127,21 +132,26 @@ export class QuestionsTabComponent extends LitElement {
     }
 
     private initFilters(): void {
-        Promise.all([
-            store.dispatch<AsyncEffect>(loadStaticData(METHODS)),
-            store.dispatch<AsyncEffect>(loadStaticData(SECTIONS)),
-            store.dispatch<AsyncEffect>(loadStaticData(CATEGORIES))
-        ]).then(([methods__in, sections__in, category__in]: [EtoolsMethod[], EtoolsSection[], EtoolsCategory[]]) => {
-            this.methods = methods__in;
-            this.sections = sections__in;
-            this.categories = category__in;
-            const optionsCollection: GenericObject = {
-                methods__in, sections__in, category__in,
-                level__in: LEVELS,
-                answer_type__in: ANSWER_TYPES
-            };
-            const initialValues: GenericObject = (store.getState() as IRootState).app.routeDetails.queryParams || {};
-            this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);
+        const staticData: IStaticDataState = (store.getState() as IRootState).staticData;
+        const { methods, sections, categories } = staticData;
+
+        const methodsPromise: Promise<EtoolsMethod[]> = methods ? Promise.resolve(methods) : store.dispatch<AsyncEffect>(loadStaticData(METHODS));
+        const sectionsPromise: Promise<EtoolsSection[]> = sections ? Promise.resolve(sections) : store.dispatch<AsyncEffect>(loadStaticData(SECTIONS));
+        const categoriesPromise: Promise<EtoolsCategory[]> = categories ? Promise.resolve(categories) : store.dispatch<AsyncEffect>(loadStaticData(CATEGORIES));
+
+        Promise
+            .all([methodsPromise, sectionsPromise, categoriesPromise])
+            .then(([methods__in, sections__in, category__in]: [EtoolsMethod[], EtoolsSection[], EtoolsCategory[]]) => {
+                this.methods = methods__in;
+                this.sections = sections__in;
+                this.categories = category__in;
+                const optionsCollection: GenericObject = {
+                    methods__in, sections__in, category__in,
+                    level__in: LEVELS,
+                    answer_type__in: ANSWER_TYPES
+                };
+                const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
+                this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);
         });
     }
 

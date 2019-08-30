@@ -1,14 +1,26 @@
 export const QUESTIONS_TRANSLATES: TranslateObject = {
     'QUESTIONS': {
-        'PLACEHOLDERS': {},
+        'EDIT_POPUP_TITLE': 'Edit Question',
+        'ADD_POPUP_TITLE': 'Add Question',
+        'PLACEHOLDERS': {
+            'QUESTION': 'Enter Question Text',
+            'SECTIONS': 'Select Sections',
+            'METHODS': 'Select Collection Methods',
+            'CATEGORY': 'Select Group',
+            'LEVEL': 'Select Question Target Level',
+            'ANSWER_TYPE': 'Select Answer Type',
+            'SCALE_SIZE': 'Select Scale Size'
+        },
         'LABELS': {
+            'QUESTION': 'Question',
             'LEVEL': 'Question Target Level',
             'SECTIONS': 'Sections',
             'METHODS': 'Collection Methods',
             'CATEGORY': 'Group',
             'ANSWER_TYPE': 'Answer Type',
             'IS_HACT': 'Counts towards HACT',
-            'IS_ACTIVE': 'Is Active'
+            'IS_ACTIVE': 'Is Active',
+            'SCALE_SIZE': 'Scale Size'
         },
         'TABLE_CAPTION': '<%start%> - <%end%> of <%count%> Questions to show',
         'COLUMNS': {

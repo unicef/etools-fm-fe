@@ -10,8 +10,8 @@ export interface IEtoolsDialogResponse {
 export interface IDialogResponse<R> extends IEtoolsDialogResponse {
     response?: R;
 }
-
-export function openDialog<D, R>({ dialog, data }: IDialog<D>): Promise<IDialogResponse<R>> {
+// you need to fire 'response' event on dialog close!
+export function openDialog<D, R = any>({ dialog, data }: IDialog<D>): Promise<IDialogResponse<R>> {
     return new Promise((resolve: (detail: IDialogResponse<R>) => any, reject: (e: Error) => any) => {
         const dialogElement: HTMLElement & { data: D } = document.createElement(dialog) as HTMLElement & { data: D };
         const body: HTMLBodyElement | null = document.querySelector('body');

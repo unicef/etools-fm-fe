@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
+import './question-popup/question-popup';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionsTabComponent } from './questions-tab';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
@@ -11,6 +12,7 @@ import { QuestionsTabStyles } from './question-tab.styles';
 import { translate } from '../../../../localization/localisation';
 import { updateQueryParams } from '../../../../routing/routes';
 import { ROOT_PATH } from '../../../../config/config';
+import { hasPermission, Permissions } from '../../../../config/permissions';
 
 export function template(this: QuestionsTabComponent): TemplateResult {
     return html`
@@ -24,6 +26,14 @@ export function template(this: QuestionsTabComponent): TemplateResult {
 
                 <div class="table-title-block with-bottom-line">
                     <div class="table-title counter">${ translate('QUESTIONS.TABLE_CAPTION', this.tableInformation) }</div>
+                    <div class="buttons-container">
+                        <paper-icon-button
+                                @tap="${() => this.openPopup()}"
+                                class="panel-button"
+                                ?hidden="${ !hasPermission(Permissions.EDIT_QUESTIONS) }"
+                                data-type="add"
+                                icon="add-box"></paper-icon-button>
+                    </div>
                 </div>
 
                 <etools-data-table-header no-title ?no-collapse="${!this.questionsList.length}">
@@ -63,7 +73,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                         '' }
 
                 ${
-                    this.questionsList.map((question: Question) => html`
+                    this.questionsList.map((question: IQuestion) => html`
                         <etools-data-table-row secondary-bg-on-hover>
                             <div slot="row-data" class="layout horizontal editable-row flex">
                                 <div class="col-data flex-2 truncate">${ question.text || '-' }</div>
@@ -72,6 +82,8 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                                 <div class="col-data flex-1 truncated">${ translate(`QUESTIONS.ANSWER_TYPE.${question.answer_type.toUpperCase()}`) || '-' }</div>
                                 <div class="col-data flex-1 truncated">${ this.serializeName(question.category, this.categories) || '-' }</div>
                                 <div class="col-data w45px flex-none truncate"><img src="${ROOT_PATH}images/${ question.is_active ? 'icon-check' : 'red-close' }.svg"></div>
+                                <div class="hover-block" ?hidden="${ !hasPermission(Permissions.EDIT_QUESTIONS) }"><iron-icon icon="icons:create" @tap="${ () => this.openPopup(question) }"></iron-icon>
+                            </div>
                             </div>
                             <div slot="row-data-details" class="layout horizontal">
                                 <div class="row-details-content w160px">

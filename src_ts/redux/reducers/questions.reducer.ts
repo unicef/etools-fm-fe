@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { QuestionActions, QuestionsAtionTupes } from '../actions/questions.actions';
 
 const INITIAL_STATE: IQuestionsState = {
-    error: null,
+    error: {},
     data: null,
     updateInProcess: null
 };

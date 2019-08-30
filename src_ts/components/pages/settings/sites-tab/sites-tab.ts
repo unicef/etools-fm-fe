@@ -182,6 +182,7 @@ export class SitesTabComponent extends LitElement {
         if (!this.selectedModel) { return; }
         this.selectedModel[fieldName] = value;
     }
+
     public saveSite(): void {
         if (!this.selectedModel || !this.dialog) { return; }
         if (this.dialog.type === 'remove') {
@@ -209,7 +210,7 @@ export class SitesTabComponent extends LitElement {
                 store.dispatch<AsyncEffect>(addSiteLocation(this.selectedModel as Site));
                 break;
             case 'edit':
-                const changes: Site = getDifference(this.originalData, this.selectedModel, true) as Site;
+                const changes: Site = getDifference(this.originalData, this.selectedModel, { toRequest: true }) as Site;
                 store.dispatch<AsyncEffect>(updateSiteLocation(this.selectedModel.id as number, changes));
                 break;
         }

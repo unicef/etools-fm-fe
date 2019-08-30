@@ -1,6 +1,24 @@
 import { EtoolsFilterTypes, IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
 import { translate } from '../../../../localization/localisation';
 
+export const TEXT_TYPE: 'text' = 'text';
+export const NUMBER_TYPE: 'number' = 'number';
+export const BOOLEAN_TYPE: 'bool' = 'bool';
+export const SCALE_TYPE: 'likert_scale' = 'likert_scale';
+
+export const ANSWER_TYPES: AnswerTypeOption[] = [
+    { value: TEXT_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.TEXT`) },
+    { value: NUMBER_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.NUMBER`) },
+    { value: BOOLEAN_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.BOOL`) },
+    { value: SCALE_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.LIKERT_SCALE`) }
+];
+
+export const LEVELS: DefaultDropdownOption<string>[] = [
+    { value: 'partner', display_name: translate(`QUESTIONS.LEVEL.PARTNER`) },
+    { value: 'output', display_name: translate(`QUESTIONS.LEVEL.OUTPUT`) },
+    { value: 'intervention', display_name: translate(`QUESTIONS.LEVEL.INTERVENTION`) }
+];
+
 export const questionsFilters: IEtoolsFilter[] = [
     {
         filterName: translate('QUESTIONS.LABELS.LEVEL'),

@@ -119,7 +119,6 @@ export function template(this: SitesTabComponent): TemplateResult {
                 size="md"
                 id="dialog"
                 .theme="${this.dialog && this.dialog.theme}"
-                .backdrop="${false}"
                 no-padding
                 .opened="${this.dialog && this.dialog.opened}"
                 .dialogTitle="${this.dialog && this.dialog.title}"

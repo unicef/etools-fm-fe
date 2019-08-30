@@ -6,12 +6,12 @@ export enum QuestionsAtionTupes {
 
 export class SetQuestionsList {
     public readonly type: QuestionsAtionTupes.SET_QUESTIONS_LIST = QuestionsAtionTupes.SET_QUESTIONS_LIST;
-    public constructor(public payload: IListData<Question>) {}
+    public constructor(public payload: IListData<IQuestion>) {}
 }
 
 export class SetQuestionUpdateState {
     public readonly type: QuestionsAtionTupes.SET_QUESTION_UPDATE_STATE = QuestionsAtionTupes.SET_QUESTION_UPDATE_STATE;
-    public constructor(public payload: boolean) {}
+    public constructor(public payload: boolean | null) {}
 }
 
 export class SetQuestionUpdateError {

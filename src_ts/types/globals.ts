@@ -86,3 +86,8 @@ type SortDetails = {
     field: string;
     direction: 'asc' | 'desc';
 };
+
+type DefaultDropdownOption<T = number> = {
+    value: T;
+    display_name: string;
+};

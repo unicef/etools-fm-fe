@@ -8,3 +8,9 @@ interface IEtoolsRequest {
     abortRequestByKey(key: any): void;
     abortActiveRequest(activeReqMapObj: any): void;
 }
+
+type DataComparisonOptions = {
+    toRequest?: boolean;
+    nestedFields?: string[];
+    strongComparison?: boolean;
+};
