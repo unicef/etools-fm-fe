@@ -70,6 +70,13 @@ export class AppMenu extends LitElement {
                 </paper-tooltip>
                 <div class="name">Settings</div>
             </a>
+            <a class="nav-menu-item" menu-name="plan" href="${this.rootPath + 'plan'}">
+                <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
+                <paper-tooltip for="page1-icon" position="right">
+                  Plan
+                </paper-tooltip>
+                <div class="name">Plan</div>
+            </a>
 
            <!-- remove this pages latter-->
           <a class="nav-menu-item" menu-name="engagements" href="${this.rootPath + 'engagements'}">

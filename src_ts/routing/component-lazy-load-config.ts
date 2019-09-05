@@ -22,6 +22,16 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
         'components/pages/settings/settings-pages.js',
         'components/pages/settings/sites-tab/sites-tab.js'
     ],
+    'plan_rationale': [
+        'components/pages/plan/plan-page.js'
+    ],
+    'plan_issue-tracker': [
+        'components/pages/plan/plan-page.js',
+        'components/pages/plan/issue-tracker-tab/issue-tracker-tab.js'
+    ],
+    'plan_templates': [
+        'components/pages/plan/plan-page.js'
+    ],
     'settings_questions': [
         'components/pages/settings/settings-pages.js',
         'components/pages/settings/questions-tab/questions-tab.js'

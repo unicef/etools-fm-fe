@@ -179,6 +179,7 @@ export class AppShell extends connect(store)(LitElement) {
                           ?active="${this.isActivePage(this.mainPage, 'engagements', this.subPage, 'details|questionnaires')}">
                         </engagement-tabs>
                         <fm-settings class="page" ?active="${this.isActivePage(this.mainPage, 'settings', this.subPage, 'sites|questions')}"></fm-settings>
+                        <plan-page class="page" ?active="${this.isActivePage(this.mainPage, 'plan', this.subPage, 'rationale|issue-tracker|templates')}"></plan-page>
                         <page-two class="page" ?active="${this.isActivePage(this.mainPage, 'page-two')}"></page-two>
                         <page-not-found class="page" ?active="${this.isActivePage(this.mainPage, 'page-not-found')}">
                         </page-not-found>

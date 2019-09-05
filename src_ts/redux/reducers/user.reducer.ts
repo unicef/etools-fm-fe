@@ -3,7 +3,6 @@ import { UserActionTypes } from '../actions/user.actions';
 
 const INITIAL_USER_DATA: IUserState = {
     data: null,
-    permissions: null,
     isRequest: false,
     error: {}
 };
