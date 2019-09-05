@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { QuestionActions, QuestionsAtionTupes } from '../actions/questions.actions';
+import { QuestionActions, QuestionsAtionTypes } from '../actions/questions.actions';
 
 const INITIAL_STATE: IQuestionsState = {
     error: {},
@@ -9,11 +9,11 @@ const INITIAL_STATE: IQuestionsState = {
 
 export const questions: Reducer<IQuestionsState, any> = (state: IQuestionsState = INITIAL_STATE, action: QuestionActions) => {
     switch (action.type) {
-        case QuestionsAtionTupes.SET_QUESTIONS_LIST:
+        case QuestionsAtionTypes.SET_QUESTIONS_LIST:
             return { ...state, data: action.payload };
-        case QuestionsAtionTupes.SET_QUESTION_UPDATE_STATE:
+        case QuestionsAtionTypes.SET_QUESTION_UPDATE_STATE:
             return { ...state, updateInProcess: action.payload };
-        case QuestionsAtionTupes.SET_QUESTION_UPDATE_ERROR:
+        case QuestionsAtionTypes.SET_QUESTION_UPDATE_ERROR:
             return { ...state, error: action.payload };
         default:
             return state;

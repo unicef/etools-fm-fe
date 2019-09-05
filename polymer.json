@@ -10,6 +10,10 @@
     "src/components/pages/settings/sites-tab/sites-tab.js",
     "src/components/pages/settings/questions-tab/questions-tab.js",
 
+    "src/components/pages/plan/plan-page.js",
+    "src/components/pages/plan/templates-tab/templates-tab.js",
+
+
     "src/components/pages/page-two.js",
     "src/components/pages/engagements/engagements-list.js",
     "src/components/pages/engagements/engagement-tabs.js",

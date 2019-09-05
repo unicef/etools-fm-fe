@@ -98,6 +98,12 @@ export const SharedStyles: TemplateResult = html`
                 --paper-checkbox-label-color: var(--gray-mid);
             }
 
+             paper-checkbox.nolabel {
+                --paper-checkbox-label: {
+                    padding-left: 0;
+                };
+             }
+
             paper-radio-button {
                 --paper-radio-button-unchecked-color: var(--gray-mid);
                 --paper-radio-button-checked-color: var(--module-primary);

@@ -9,9 +9,12 @@ import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import { addTranslates, ENGLISH } from '../../../localization/localisation';
-import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
+import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templates-tab.translates';
+import { questionTemplates } from '../../../redux/reducers/templates.reducer';
+// import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
 
-addTranslates(ENGLISH, [ISSUE_TRACKER_TRANSLATES]);
+store.addReducers({ questionTemplates });
+addTranslates(ENGLISH, [TEMPLATES_TRANSLATES]);
 
 const PAGE: string = 'plan';
 
@@ -72,7 +75,7 @@ export class PlanPage extends LitElement {
                 return html`Issue Tracker`;
                 // return html`<issue-tracker-tab></issue-tracker-tab>`;
             case TEMPLATES_TAB:
-                return html`Templates`;
+                return html`<templates-tab></templates-tab>`;
             default:
                 return html`Tab Not Found`;
         }
@@ -80,6 +83,7 @@ export class PlanPage extends LitElement {
 
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
+        if (this.activeTab === tabName) { return; }
         updateAppLocation(`${PAGE}/${tabName}`);
     }
 }

@@ -12,6 +12,8 @@ export const QUESTIONS_DETAILS: 'questionsDetails' = 'questionsDetails';
 export const CATEGORIES: 'categories' = 'categories';
 export const SECTIONS: 'sections' = 'sections';
 export const METHODS: 'methods' = 'methods';
+export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
+export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -78,6 +80,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
         exp: 24 * 60 * 60 * 1000, // 1 hour
         cacheTableName: 'cpOutcomes'
+    },
+
+    [QUESTION_TEMPLATES]: {
+        template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/'
+    },
+
+    [QUESTION_TEMPLATES_WITH_TARGET]: {
+        template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/target/<%=target%>/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

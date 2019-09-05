@@ -5,6 +5,7 @@ interface IRootState {
     staticData: IStaticDataState;
     specificLocations: ISpecificLocationsState;
     questions: IQuestionsState;
+    questionTemplates: IQuestionTemplatesState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -40,7 +41,11 @@ interface ISpecificLocationsState {
 interface IQuestionsState {
     updateInProcess: null | boolean;
     error: null | GenericObject;
-    data: null | IListData<Question>;
+    data: null | IListData<IQuestion>;
+}
+
+interface IQuestionTemplatesState {
+    data: null | IListData<IQuestionTemplate>;
 }
 
 interface IIssueTrackerState extends IRequestState {

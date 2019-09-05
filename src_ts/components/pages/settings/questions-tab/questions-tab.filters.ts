@@ -6,6 +6,10 @@ export const NUMBER_TYPE: 'number' = 'number';
 export const BOOLEAN_TYPE: 'bool' = 'bool';
 export const SCALE_TYPE: 'likert_scale' = 'likert_scale';
 
+export const PARTNER: 'partner' = 'partner';
+export const OUTPUT: 'output' = 'output';
+export const INTERVENTION: 'intervention' = 'intervention';
+
 export const ANSWER_TYPES: AnswerTypeOption[] = [
     { value: TEXT_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.TEXT`) },
     { value: NUMBER_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.NUMBER`) },
@@ -14,9 +18,9 @@ export const ANSWER_TYPES: AnswerTypeOption[] = [
 ];
 
 export const LEVELS: DefaultDropdownOption<string>[] = [
-    { value: 'partner', display_name: translate(`QUESTIONS.LEVEL.PARTNER`) },
-    { value: 'output', display_name: translate(`QUESTIONS.LEVEL.OUTPUT`) },
-    { value: 'intervention', display_name: translate(`QUESTIONS.LEVEL.INTERVENTION`) }
+    { value: PARTNER, display_name: translate(`LEVELS_OPTIONS.PARTNER`) },
+    { value: OUTPUT, display_name: translate(`LEVELS_OPTIONS.OUTPUT`) },
+    { value: INTERVENTION, display_name: translate(`LEVELS_OPTIONS.INTERVENTION`) }
 ];
 
 export const questionsFilters: IEtoolsFilter[] = [

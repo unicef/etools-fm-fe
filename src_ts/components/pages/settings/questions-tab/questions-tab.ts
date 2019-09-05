@@ -75,9 +75,9 @@ export class QuestionsTabComponent extends LitElement {
         this.routeDetailsUnsubscribe();
     }
 
-    public checkParams(params?: IRouteQueryParams | null, update?: boolean): boolean {
+    public checkParams(params?: IRouteQueryParams | null): boolean {
         const invalid: boolean = !params || !params.page || !params.page_size;
-        if (invalid && update) {
+        if (invalid) {
             updateQueryParams({ page: 1, page_size: 10 });
         }
         return !invalid;
@@ -109,7 +109,6 @@ export class QuestionsTabComponent extends LitElement {
             data: question
         }).then(({ confirmed }: IDialogResponse<any>) => {
             if (!confirmed) { return; }
-
             if (!question) {
                 // update params, it will load questions list is subscriber
                 updateQueryParams({ page: 1 });
@@ -124,7 +123,7 @@ export class QuestionsTabComponent extends LitElement {
     private onRouteChange({ routeName, subRouteName, queryParams }: IRouteDetails): void {
         if (routeName !== 'settings' || subRouteName !== 'questions') { return; }
 
-        const paramsAreValid: boolean = this.checkParams(queryParams, true);
+        const paramsAreValid: boolean = this.checkParams(queryParams);
         if (paramsAreValid) {
             this.queryParams = queryParams;
             this.debouncedLoading(this.queryParams);
