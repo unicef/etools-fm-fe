@@ -17,7 +17,7 @@ import { pageHeaderStyles } from './page-header-styles';
 import { isEmpty } from 'lodash-es';
 import { fireEvent } from '../../utils/fire-custom-event';
 import { updateCurrentUserData } from '../../../redux/effects/user.effects';
-import { userDataSelector, userSelector } from '../../../redux/selectors/user.selectors';
+import { currentUser, userSelector } from '../../../redux/selectors/user.selectors';
 
 /**
  * page header element
@@ -64,8 +64,8 @@ export class PageHeader extends connect(store)(LitElement) {
 
     public constructor() {
         super();
-        store.subscribe(userDataSelector((userDataState: GenericObject) => {
-            if (!userDataState.error) {
+        store.subscribe(currentUser((userDataState: IEtoolsUserModel | null) => {
+            if (!userDataState) {
                 this.showSaveNotification();
             }
         }));

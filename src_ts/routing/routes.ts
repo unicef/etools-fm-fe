@@ -44,6 +44,17 @@ EtoolsRouter
                 params: null
             };
         })
+    .addRoute(new RegExp(`^plan\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'plan',
+                subRouteName: params.matchDetails[1], // tab name
+                path: params.matchDetails[0],
+                queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
+                params: null
+            };
+        })
     .addRoute(new RegExp(`^page-not-found$`),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {

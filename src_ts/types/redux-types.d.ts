@@ -21,7 +21,6 @@ interface IRequestState {
 
 interface IUserState extends IRequestState {
     data: IEtoolsUserModel | null;
-    permissions: GenericObject | null;
 }
 
 interface IStaticDataState {
@@ -42,6 +41,10 @@ interface IQuestionsState {
     updateInProcess: null | boolean;
     error: null | GenericObject;
     data: null | IListData<Question>;
+}
+
+interface IIssueTrackerState extends IRequestState {
+    data: null | IListData<LogIssue>;
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
