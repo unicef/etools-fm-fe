@@ -73,7 +73,12 @@ export const TableStyles: TemplateResult = html`
              align-items: center;
              min-width: 0;
              overflow: hidden;
+            margin-right: 5px;
          }
+
+        .col-data:last-child { margin-right: 0; }
+
+        .col-data.edited-col { cursor: pointer; }
 
         .col-data .two-line-truncate {
             height: 38px;

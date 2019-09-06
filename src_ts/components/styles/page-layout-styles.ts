@@ -69,6 +69,7 @@ export const pageLayoutStyles: TemplateResult = html`
     .w160px { width: 160px; }
     .w180px { width: 180px; }
     .w200px { width: 200px; }
+    .w210px { width: 210px; }
     .w300px { width: 300px; }
     .w310px { width: 310px; }
     .w330px { width: 330px; }

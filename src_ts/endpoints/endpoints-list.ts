@@ -12,6 +12,8 @@ export const QUESTIONS_DETAILS: 'questionsDetails' = 'questionsDetails';
 export const CATEGORIES: 'categories' = 'categories';
 export const SECTIONS: 'sections' = 'sections';
 export const METHODS: 'methods' = 'methods';
+export const PARTNERS: 'methods' = 'methods';
+export const CP_OUTPUTS: 'methods' = 'methods';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 
