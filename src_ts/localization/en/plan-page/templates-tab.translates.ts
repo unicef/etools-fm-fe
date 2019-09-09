@@ -14,6 +14,8 @@ export const TEMPLATES_TRANSLATES: TranslateObject = {
             'DETAILS': 'Specific Details to Probe',
             'TEXT': 'Checklist Item',
             'METHODS': 'Methods'
-        }
+        },
+        'DETAIL_INPUT_PLACEHOLDER': 'Enter Specific Details to Probe',
+        'ADD_DETAIL': 'Add Detail'
     }
 };

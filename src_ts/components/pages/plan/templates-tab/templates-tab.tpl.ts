@@ -36,34 +36,40 @@ export function template(this: TemplatesTabComponent): TemplateResult {
 
               <div class="filter">
                   <etools-dropdown ?hidden="${ !this.queryParams || this.queryParams.level !== PARTNER }"
-                                   .options="${[]}"
+                                   .options="${ this.partners }"
+                                   .selected="${ this.getSelectedTarget(PARTNER, this.partners) }"
+                                   @etools-selected-item-changed="${ ({ detail }: CustomEvent) => this.onTargetChanged(detail.selectedItem) }"
                                    trigger-value-change-event
-                                   hide-search
+                                   enable-none-option
                                    label="${ translate('TEMPLATES.FILTERS.PARTNER_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.PARTNER_PLACEHOLDER') }"
                                    .minWidth="160px"
-                                   option-label="display_name"
-                                   option-value="value"></etools-dropdown>
+                                   option-label="name"
+                                   option-value="id"></etools-dropdown>
 
                   <etools-dropdown ?hidden="${ !this.queryParams || this.queryParams.level !== OUTPUT }"
-                                   .options="${[]}"
+                                   .options="${ this.outputs }"
+                                   .selected="${ this.getSelectedTarget(OUTPUT, this.outputs) }"
+                                   @etools-selected-item-changed="${ ({ detail }: CustomEvent) => this.onTargetChanged(detail.selectedItem) }"
                                    trigger-value-change-event
-                                   hide-search
+                                   enable-none-option
                                    label="${ translate('TEMPLATES.FILTERS.OUTPUT_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.OUTPUT_PLACEHOLDER') }"
                                    .minWidth="160px"
-                                   option-label="display_name"
-                                   option-value="value"></etools-dropdown>
+                                   option-label="name"
+                                   option-value="id"></etools-dropdown>
 
                   <etools-dropdown ?hidden="${ !this.queryParams || this.queryParams.level !== INTERVENTION }"
-                                   .options="${[]}"
+                                   .options="${ this.interventions }"
+                                   .selected="${ this.getSelectedTarget(INTERVENTION, this.interventions) }"
+                                   @etools-selected-item-changed="${ ({ detail }: CustomEvent) => this.onTargetChanged(detail.selectedItem) }"
                                    trigger-value-change-event
-                                   hide-search
+                                   enable-none-option
                                    label="${ translate('TEMPLATES.FILTERS.INTERVENTION_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.INTERVENTION_PLACEHOLDER') }"
                                    .minWidth="160px"
-                                   option-label="display_name"
-                                   option-value="value"></etools-dropdown>
+                                   option-label="name"
+                                   option-value="id"></etools-dropdown>
               </div>
           </section>
 
@@ -77,14 +83,14 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                   <paper-input id="details-input"
                                .value="${ this.editedDetails.details }"
                                no-label-float
-                               placeholder="Enter SD t P"
+                               placeholder="${ translate('TEMPLATES.DETAIL_INPUT_PLACEHOLDER') }"
                                @keyup="${ (event: KeyboardEvent) => this.onDetailsKeyUp(event) }"
                                @blur="${ () => this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details) }"></paper-input>
               </div>
 
 
               <!-- Spinner -->
-              <etools-loading ?active="${ this.listLoadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
+              <etools-loading ?active="${ this.loadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
 
               <!-- Table Header -->
@@ -133,7 +139,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                           <div class="col-data flex-2 truncate ${ hasPermission(Permissions.EDIT_QUESTION_TEMPLATES) ? 'edited-col' : '' }"
                                @click="${ ({ currentTarget }: CustomEvent) => this.showDetailsInput(currentTarget as HTMLElement, questionTemplate.id, questionTemplate.template && questionTemplate.template.specific_details) }">
                               ${ questionTemplate.template && questionTemplate.template.specific_details ||
-                                                    ( hasPermission(Permissions.EDIT_QUESTION_TEMPLATES) ? html`<span class="detail-placeholder">Add Detail</span>` : '-' ) }
+                                                    ( hasPermission(Permissions.EDIT_QUESTION_TEMPLATES) ? html`<span class="detail-placeholder">${ translate('TEMPLATES.ADD_DETAIL') }</span>` : '-' ) }
                           </div>
 
                           <!-- Question Methods -->

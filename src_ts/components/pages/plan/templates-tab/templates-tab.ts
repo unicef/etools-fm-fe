@@ -10,7 +10,7 @@ import { debounce } from '../../../utils/debouncer';
 import { fireEvent } from '../../../utils/fire-custom-event';
 import { loadQuestionTemplates } from '../../../../redux/effects/templates.effects';
 import { questionTemplatesListData } from '../../../../redux/selectors/templates.selectors';
-import { METHODS, QUESTION_TEMPLATES, QUESTION_TEMPLATES_WITH_TARGET } from '../../../../endpoints/endpoints-list';
+import { QUESTION_TEMPLATES, QUESTION_TEMPLATES_WITH_TARGET } from '../../../../endpoints/endpoints-list';
 import { getEndpoint } from '../../../../endpoints/endpoints';
 import { request } from '../../../../endpoints/request';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
@@ -19,9 +19,6 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
 const ESCAPE: 27 = 27;
-const STATIC_DATA_NAMES: GenericObject = {
-    methods: METHODS
-};
 
 @customElement('templates-tab')
 export class TemplatesTabComponent extends LitElement {
@@ -31,8 +28,11 @@ export class TemplatesTabComponent extends LitElement {
     @property() public editedDetails: GenericObject = { opened: false };
     @property() public additionalDataLoading: boolean = false;
     public count: number = 0;
+    public partners!: EtoolsPartner[];
+    public interventions!: any[];
+    public outputs!: EtoolsCpOutput[];
 
-    public get loadingInProcess(): boolean {
+    @property() public get loadingInProcess(): boolean {
         return this.additionalDataLoading || this.listLoadingInProcess;
     }
 
@@ -83,8 +83,22 @@ export class TemplatesTabComponent extends LitElement {
     }
 
     public onLevelChanged(level: string): void {
+        this.loadAdditionalData(`${level}s` as 'interventions' | 'outputs' | 'partners');
         if (this.queryParams && this.queryParams.level === level) { return; }
-        updateQueryParams({ level });
+        updateQueryParams({ level, target: null });
+    }
+
+    public onTargetChanged(selectedItem: GenericObject | null): void {
+        const id: number | null = selectedItem && +selectedItem.id;
+        const currentTarget: number | null = this.queryParams && +this.queryParams.target || null;
+        if (currentTarget === id) { return; }
+        updateQueryParams({ target: id });
+    }
+
+    public getSelectedTarget(forLevel: string, collection: any): string | number | undefined {
+        const { level, target }: IRouteQueryParams = this.queryParams || {};
+        // we need to check that options collection is loaded already. Otherwise value-change-event will be triggered with selectedItem as null
+        return Boolean(collection) && target && level === forLevel ? target : undefined;
     }
 
     public changePageParam(newValue: string | number, paramName: string): void {
@@ -188,7 +202,7 @@ export class TemplatesTabComponent extends LitElement {
         return !invalid;
     }
 
-    private loadAdditionalData(dataName: 'methods'): void {
+    private loadAdditionalData(dataName: 'methods' | 'interventions' | 'outputs' | 'partners'): void {
         if (this[dataName]) { return; }
         const staticData: IStaticDataState = (store.getState() as IRootState).staticData;
         const data: any = staticData[dataName];
@@ -196,7 +210,8 @@ export class TemplatesTabComponent extends LitElement {
             this[dataName] = data;
         } else {
             this.additionalDataLoading = true;
-            store.dispatch<AsyncEffect>(loadStaticData(STATIC_DATA_NAMES[dataName]))
+            store.dispatch<AsyncEffect>(loadStaticData(dataName))
+                .then((fetchedData: any) => this[dataName] = fetchedData)
                 .finally(() => this.additionalDataLoading = false);
         }
     }

@@ -12,8 +12,9 @@ export const QUESTIONS_DETAILS: 'questionsDetails' = 'questionsDetails';
 export const CATEGORIES: 'categories' = 'categories';
 export const SECTIONS: 'sections' = 'sections';
 export const METHODS: 'methods' = 'methods';
-export const PARTNERS: 'methods' = 'methods';
-export const CP_OUTPUTS: 'methods' = 'methods';
+export const PARTNERS: 'partners' = 'partners';
+export const INTERVENTIONS: 'interventions' = 'interventions';
+export const CP_OUTPUTS: 'outputs' = 'outputs';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 
@@ -33,13 +34,33 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         exp: 25 * 60 * 60 * 1000, // 25h
         cacheTableName: 'locations'
     },
+
     [CHANGE_COUNTRY]: {
         url: '/api/v3/users/changecountry/'
     },
+
     [UNICEF_USER]: {
         url: '/api/v3/users/?verbosity=minimal',
         exp: 60 * 60 * 1000, // 1h
         cachingKey: 'unicefUsers'
+    },
+
+    [PARTNERS]: {
+        url: '/api/v2/partners/',
+        exp: 60 * 60 * 1000, // 1h
+        cachingKey: 'partners'
+    },
+
+    [CP_OUTPUTS]: {
+        url: '/api/v2/reports/results/?result_type=output',
+        exp: 60 * 60 * 1000, // 1h
+        cachingKey: 'cpOutputs'
+    },
+
+    [INTERVENTIONS]: {
+        url: '/api/v2/partners/interventions/',
+        exp: 60 * 60 * 1000, // 1h
+        cachingKey: 'interventions'
     },
 
     [SITES_EXPORT]: {
