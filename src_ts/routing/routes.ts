@@ -9,30 +9,30 @@ export const EtoolsRouter: Router = new Router(ROOT_PATH);
 const routeParamRegex: string = '([^\\/?#=+]+)';
 
 EtoolsRouter
-    .addRoute(new RegExp('^engagements/list$'),
-        (params: IRouteCallbackParams): IRouteDetails => {
-            return {
-                routeName: 'engagements',
-                subRouteName: 'list',
-                path: params.matchDetails[0],
-                queryParams: params.queryParams,
-                queryParamsString: params.queryParamsString,
-                params: null
-            };
-        })
-    .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
-        (params: IRouteCallbackParams): IRouteDetails => {
-            return {
-                routeName: 'engagements',
-                subRouteName: params.matchDetails[2], // tab name
-                path: params.matchDetails[0],
-                queryParams: params.queryParams,
-                queryParamsString: params.queryParamsString,
-                params: {
-                    engagementId: params.matchDetails[1]
-                }
-            };
-        })
+    // .addRoute(new RegExp('^engagements/list$'),
+    //     (params: IRouteCallbackParams): IRouteDetails => {
+    //         return {
+    //             routeName: 'engagements',
+    //             subRouteName: 'list',
+    //             path: params.matchDetails[0],
+    //             queryParams: params.queryParams,
+    //             queryParamsString: params.queryParamsString,
+    //             params: null
+    //         };
+    //     })
+    // .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
+    //     (params: IRouteCallbackParams): IRouteDetails => {
+    //         return {
+    //             routeName: 'engagements',
+    //             subRouteName: params.matchDetails[2], // tab name
+    //             path: params.matchDetails[0],
+    //             queryParams: params.queryParams,
+    //             queryParamsString: params.queryParamsString,
+    //             params: {
+    //                 engagementId: params.matchDetails[1]
+    //             }
+    //         };
+    //     })
     .addRoute(new RegExp(`^settings\\/${routeParamRegex}$`),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
@@ -55,21 +55,32 @@ EtoolsRouter
                 params: null
             };
         })
-    .addRoute(new RegExp(`^page-not-found$`),
+    .addRoute(new RegExp(`^activities$`),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
-                routeName: 'page-not-found',
-                subRouteName: null,
+                routeName: 'activities',
+                subRouteName: null, // tab name
+                path: params.matchDetails[0],
+                queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
+                params: null
+            };
+        })
+    .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'analyze',
+                subRouteName: params.matchDetails[1],
                 path: params.matchDetails[0],
                 queryParams: null,
                 queryParamsString: null,
                 params: null
             };
         })
-    .addRoute(new RegExp(`^page-two$`),
+    .addRoute(new RegExp(`^page-not-found$`),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
-                routeName: 'page-two',
+                routeName: 'page-not-found',
                 subRouteName: null,
                 path: params.matchDetails[0],
                 queryParams: null,
@@ -120,4 +131,4 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
 }
 
 export const ROUTE_404: string = '/page-not-found';
-export const DEFAULT_ROUTE: string = '/engagements/list';
+export const DEFAULT_ROUTE: string = '/settings/questions';

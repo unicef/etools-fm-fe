@@ -1,7 +1,7 @@
 /**
  * TODO: this file will be removed after engagements list API is ready
  */
-import { IEtoolsPaginator } from '../../../common/layout/etools-table/pagination/paginator';
+import { IEtoolsPaginator } from '../../../components/common/layout/etools-table/pagination/paginator';
 
 const ratings: string[] = ['Low', 'High', 'Medium'];
 const statuses: string[] = ['Assigned', 'Submitted', 'Rejected'];

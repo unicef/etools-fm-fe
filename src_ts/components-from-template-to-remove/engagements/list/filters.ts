@@ -1,4 +1,4 @@
-import { EtoolsFilterTypes, IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
+import { EtoolsFilterTypes, IEtoolsFilter } from '../../../components/common/layout/filters/etools-filters';
 
 export const defaultSelectedFilters: GenericObject = {
   q: '',

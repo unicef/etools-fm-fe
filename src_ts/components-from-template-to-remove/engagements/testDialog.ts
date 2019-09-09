@@ -1,6 +1,6 @@
 import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
-import { fireEvent } from '../../utils/fire-custom-event';
-import { IDialogResponse, IEtoolsDialogResponse } from '../../utils/dialog';
+import { fireEvent } from '../../components/utils/fire-custom-event';
+import { IDialogResponse, IEtoolsDialogResponse } from '../../components/utils/dialog';
 
 export interface ITestDialogRequest {
     test: string;

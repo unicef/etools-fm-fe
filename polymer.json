@@ -13,12 +13,9 @@
     "src/components/pages/plan/plan-page.js",
     "src/components/pages/plan/templates-tab/templates-tab.js",
 
+    "src/components/pages/activities-and-data-collection/activities-page.js",
 
-    "src/components/pages/page-two.js",
-    "src/components/pages/engagements/engagements-list.js",
-    "src/components/pages/engagements/engagement-tabs.js",
-    "src/components/pages/engagements/engagement-tab-pages/engagement-details.js",
-    "src/components/pages/engagements/engagement-tab-pages/engagement-questionnaires.js"
+    "src/components/pages/analyze/analyze-page.js"
   ],
   "extraDependencies": [
     "manifest.json",

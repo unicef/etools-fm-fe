@@ -1,5 +1,6 @@
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/maps-icons.js';
+import '@polymer/iron-icons/av-icons.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/paper-ripple/paper-ripple.js';
@@ -63,6 +64,8 @@ export class AppMenu extends LitElement {
                        selectable="a"
                        role="navigation">
 
+
+            <!-- Sidebar item - SETTINGS -->
             <a class="nav-menu-item" menu-name="settings" href="${this.rootPath + 'settings'}">
                 <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
                 <paper-tooltip for="page1-icon" position="right">
@@ -70,31 +73,37 @@ export class AppMenu extends LitElement {
                 </paper-tooltip>
                 <div class="name">Settings</div>
             </a>
+
+
+            <!-- Sidebar item - PLANING -->
             <a class="nav-menu-item" menu-name="plan" href="${this.rootPath + 'plan'}">
-                <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
+                <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
                 <paper-tooltip for="page1-icon" position="right">
                   Plan
                 </paper-tooltip>
                 <div class="name">Plan</div>
             </a>
 
-           <!-- remove this pages latter-->
-          <a class="nav-menu-item" menu-name="engagements" href="${this.rootPath + 'engagements'}">
-            <iron-icon id="page1-icon" icon="accessibility"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              Engagements(test)
-            </paper-tooltip>
-            <div class="name">Engagements(test)</div>
-          </a>
 
-          <a class="nav-menu-item" menu-name="page-two" href="${this.rootPath + 'page-two'}">
-            <iron-icon id="page2-icon" icon="extension"></iron-icon>
-            <paper-tooltip for="page2-icon" position="right">
-              Page Two(test)
-            </paper-tooltip>
-            <div class="name">Page Two(test)</div>
-          </a>
-          <!--End remove-->
+            <!-- Sidebar item - DATA COLLECTION -->
+            <a class="nav-menu-item" menu-name="activities" href="${this.rootPath + 'activities'}">
+                <iron-icon id="page1-icon" icon="assignment"></iron-icon>
+                <paper-tooltip for="page1-icon" position="right">
+                  Collect
+                </paper-tooltip>
+                <div class="name">Collect</div>
+            </a>
+
+
+            <!-- Sidebar item - ANALYSIS -->
+            <a class="nav-menu-item" menu-name="analyze" href="${this.rootPath + 'analyze'}">
+                <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
+                <paper-tooltip for="page1-icon" position="right">
+                  Analyze
+                </paper-tooltip>
+                <div class="name">Analyze</div>
+            </a>
+
 
         </iron-selector>
 

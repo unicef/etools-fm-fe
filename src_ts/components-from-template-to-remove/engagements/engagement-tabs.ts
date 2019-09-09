@@ -3,8 +3,8 @@ import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/paper-button/paper-button';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 
-import { SharedStyles } from '../../styles/shared-styles';
-import '../../common/layout/page-content-header/page-content-header';
+import { SharedStyles } from '../../components/styles/shared-styles';
+import '../../components/common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import { pageContentHeaderSlottedStyles }
     from '../../common/layout/page-content-header/page-content-header-slotted-styles';

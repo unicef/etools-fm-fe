@@ -1,10 +1,10 @@
 import '@polymer/paper-button/paper-button';
 import { CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin';
-import { store } from '../../../redux/store';
+import { store } from '../../redux/store';
 
-import { SharedStyles } from '../../styles/shared-styles';
-import '../../common/layout/page-content-header/page-content-header';
+import { SharedStyles } from '../../components/styles/shared-styles';
+import '../../components/common/layout/page-content-header/page-content-header';
 import { pageContentHeaderSlottedStyles }
   from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 
