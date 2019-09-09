@@ -27,6 +27,7 @@ export class QuestionsTabComponent extends LitElement {
 
     @property() public questionsList: IQuestion[] = [];
     @property() public filters: IEtoolsFilter[] | null = null;
+    @property() public listLoadingInProcess: boolean = false;
     public count: number = 0;
     public queryParams: IRouteQueryParam | null = null;
     public categories: EtoolsCategory[] = [];
@@ -48,17 +49,17 @@ export class QuestionsTabComponent extends LitElement {
     public constructor() {
         super();
         this.debouncedLoading = debounce((params: IRouteQueryParam) => {
-            // this.dispatchOnStore(new RunGlobalLoading({type: 'specificLocations', message: 'Loading Data...'}));
+            this.listLoadingInProcess = true;
             store.dispatch<AsyncEffect>(loadQuestions(params))
-                .catch(() => fireEvent(this, 'toast', { text: 'Can not load Questions List' }));
-            // .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
+                .catch(() => fireEvent(this, 'toast', { text: 'Can not load Questions List' }))
+                .then(() => this.listLoadingInProcess = false);
         }, 100);
 
         this.questionsDataUnsubscribe = store.subscribe(questionsListData((data: IListData<IQuestion> | null) => {
             if (!data) { return; }
             this.count = data.count;
             this.questionsList = data.results;
-        }));
+        }, false));
 
         this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false));
         const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
@@ -90,7 +91,9 @@ export class QuestionsTabComponent extends LitElement {
     public changePageParam(newValue: string | number, paramName: string): void {
         const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
         if (+newValue === +currentValue) { return; }
-        updateQueryParams({ [paramName]: newValue });
+        const newParams: IRouteQueryParams = { [paramName]: newValue };
+        if (paramName === 'page_size') { newParams.page = 1; }
+        updateQueryParams(newParams);
     }
 
     public changeSort({ field, direction }: SortDetails): void {

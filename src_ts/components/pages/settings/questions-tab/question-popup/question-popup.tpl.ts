@@ -91,6 +91,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                                 trigger-value-change-event
                                 label="${ translate('QUESTIONS.LABELS.CATEGORY') }"
                                 placeholder="${ translate('QUESTIONS.PLACEHOLDERS.CATEGORY') }"
+                                required
                                 .options="${ this.categories }"
                                 option-label="name"
                                 option-value="id"

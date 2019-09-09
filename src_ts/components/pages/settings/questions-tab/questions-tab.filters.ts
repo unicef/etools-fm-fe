@@ -11,10 +11,10 @@ export const OUTPUT: 'output' = 'output';
 export const INTERVENTION: 'intervention' = 'intervention';
 
 export const ANSWER_TYPES: AnswerTypeOption[] = [
-    { value: TEXT_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.TEXT`) },
-    { value: NUMBER_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.NUMBER`) },
-    { value: BOOLEAN_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.BOOL`) },
-    { value: SCALE_TYPE, display_name: translate(`QUESTIONS.ANSWER_TYPE.LIKERT_SCALE`) }
+    { value: TEXT_TYPE, display_name: translate(`ANSWER_TYPE_OPTIONS.TEXT`) },
+    { value: NUMBER_TYPE, display_name: translate(`ANSWER_TYPE_OPTIONS.NUMBER`) },
+    { value: BOOLEAN_TYPE, display_name: translate(`ANSWER_TYPE_OPTIONS.BOOL`) },
+    { value: SCALE_TYPE, display_name: translate(`ANSWER_TYPE_OPTIONS.LIKERT_SCALE`) }
 ];
 
 export const LEVELS: DefaultDropdownOption<string>[] = [

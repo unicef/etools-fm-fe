@@ -38,6 +38,7 @@ export class SitesTabComponent extends LitElement {
     @property() public savingInProcess: boolean | null = null;
     @property() public sites: IGroupedSites[] = [];
     @property() public currentCoords: string | null = null;
+    @property() public listLoadingInProcess: boolean = false;
 
     protected originalData: EditedSite | null = null;
 
@@ -68,9 +69,9 @@ export class SitesTabComponent extends LitElement {
         super();
         this.MapHelper = new MapHelper();
         this.debouncedLoading = debounce(() => {
-            // this.dispatchOnStore(new RunGlobalLoading({type: 'specificLocations', message: 'Loading Data...'}));
-            store.dispatch<AsyncEffect>(loadSiteLocations());
-            // .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
+            this.listLoadingInProcess = true;
+            store.dispatch<AsyncEffect>(loadSiteLocations())
+            .then(() => this.listLoadingInProcess = false);
         }, 100);
     }
 
@@ -271,7 +272,7 @@ export class SitesTabComponent extends LitElement {
         const newValue: string | number = detail.value;
         const currentValue: number | string = this.queryParams && this.queryParams.page_size || 0;
         if (+newValue === +currentValue) { return; }
-        updateQueryParams({ page_size: detail.value });
+        updateQueryParams({ page_size: detail.value, page: 1 });
         this.refreshData();
     }
 

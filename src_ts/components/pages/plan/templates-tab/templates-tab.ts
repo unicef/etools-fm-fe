@@ -104,6 +104,8 @@ export class TemplatesTabComponent extends LitElement {
     public changePageParam(newValue: string | number, paramName: string): void {
         const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
         if (+newValue === +currentValue) { return; }
+        const newParams: IRouteQueryParams = { [paramName]: newValue };
+        if (paramName === 'page_size') { newParams.page = 1; }
         updateQueryParams({ [paramName]: newValue });
     }
 

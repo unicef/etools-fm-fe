@@ -24,6 +24,9 @@ export function template(this: QuestionsTabComponent): TemplateResult {
 
             <section class="elevation page-content table-container question-table-section" elevation="1">
 
+                <!-- Spinner -->
+                <etools-loading ?active="${ this.listLoadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
+
                 <div class="table-title-block with-bottom-line">
                     <div class="table-title counter">${ translate('QUESTIONS.TABLE_CAPTION', this.tableInformation) }</div>
                     <div class="buttons-container">
@@ -37,22 +40,22 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 </div>
 
                 <etools-data-table-header no-title ?no-collapse="${!this.questionsList.length}">
-                    <etools-data-table-column class="flex-2" field="text" sortable>
+                    <etools-data-table-column class="flex-2 col-data" field="text" sortable>
                         ${ translate('QUESTIONS.COLUMNS.TEXT') }
                     </etools-data-table-column>
-                    <etools-data-table-column class="flex-1" field="level" sortable>
+                    <etools-data-table-column class="flex-1 col-data" field="level" sortable>
                         ${ translate('QUESTIONS.COLUMNS.LEVEL') }
                     </etools-data-table-column>
-                    <etools-data-table-column class="flex-1">
+                    <etools-data-table-column class="flex-1 col-data">
                         ${ translate('QUESTIONS.COLUMNS.METHODS') }
                     </etools-data-table-column>
-                    <etools-data-table-column class="flex-1" field="answer_type" sortable>
+                    <etools-data-table-column class="flex-1 col-data" field="answer_type" sortable>
                         ${ translate('QUESTIONS.COLUMNS.ANSWER_TYPE') }
                     </etools-data-table-column>
-                    <etools-data-table-column class="flex-1" field="category__name" sortable>
+                    <etools-data-table-column class="flex-1 col-data" field="category__name" sortable>
                         ${ translate('QUESTIONS.COLUMNS.CATEGORY') }
                     </etools-data-table-column>
-                    <etools-data-table-column class="w45px flex-none" field="is_active" sortable>
+                    <etools-data-table-column class="w45px flex-none col-data" field="is_active" sortable>
                         ${ translate('QUESTIONS.COLUMNS.IS_ACTIVE') }
                     </etools-data-table-column>
                 </etools-data-table-header>
@@ -61,12 +64,12 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                         html`
                         <etools-data-table-row no-collapse>
                             <div slot="row-data" class="layout horizontal editable-row flex">
-                                <div class="col-data flex-2 truncate">-</div>
-                                <div class="col-data flex-1 truncate">-</div>
-                                <div class="col-data flex-1 truncate">-</div>
-                                <div class="col-data flex-1 truncate">-</div>
-                                <div class="col-data flex-1 truncate">-</div>
-                                <div class="col-data w45px flex-none truncate">-</div>
+                                <div class="col-data flex-2">-</div>
+                                <div class="col-data flex-1">-</div>
+                                <div class="col-data flex-1">-</div>
+                                <div class="col-data flex-1">-</div>
+                                <div class="col-data flex-1">-</div>
+                                <div class="col-data w45px flex-none">-</div>
                             </div>
                         </etools-data-table-row>
                         ` :
@@ -76,11 +79,11 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                     this.questionsList.map((question: IQuestion) => html`
                         <etools-data-table-row secondary-bg-on-hover>
                             <div slot="row-data" class="layout horizontal editable-row flex">
-                                <div class="col-data flex-2 truncate">${ question.text || '-' }</div>
-                                <div class="col-data flex-1 truncated">${ translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-' }</div>
-                                <div class="col-data flex-1 truncated">${ question.methods.map((method: number) => this.serializeName(method, this.methods)).join(', ') || '-' }</div>
-                                <div class="col-data flex-1 truncated">${ translate(`QUESTIONS.ANSWER_TYPE.${question.answer_type.toUpperCase()}`) || '-' }</div>
-                                <div class="col-data flex-1 truncated">${ this.serializeName(question.category, this.categories) || '-' }</div>
+                                <div class="col-data flex-2">${ question.text || '-' }</div>
+                                <div class="col-data flex-1">${ translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-' }</div>
+                                <div class="col-data flex-1"><div class="truncate">${ question.methods.map((method: number) => this.serializeName(method, this.methods)).join(', ') || '-' }</div></div>
+                                <div class="col-data flex-1">${ translate(`ANSWER_TYPE_OPTIONS.${question.answer_type.toUpperCase()}`) || '-' }</div>
+                                <div class="col-data flex-1"><div class="truncate">${ this.serializeName(question.category, this.categories) || '-' }</div></div>
                                 <div class="col-data w45px flex-none truncate"><img src="${ROOT_PATH}images/${ question.is_active ? 'icon-check' : 'red-close' }.svg"></div>
                                 <div class="hover-block" ?hidden="${ !hasPermission(Permissions.EDIT_QUESTIONS) }"><iron-icon icon="icons:create" @tap="${ () => this.openPopup(question) }"></iron-icon>
                             </div>

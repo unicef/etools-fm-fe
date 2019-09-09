@@ -41,6 +41,9 @@ export function template(this: SitesTabComponent): TemplateResult {
 
          <section class="elevation page-content sites-table-section" elevation="1">
 
+            <!-- Spinner -->
+            <etools-loading ?active="${ this.listLoadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
+
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">${ translate('SITES.TABLE_CAPTION') }</div>
                 <div class="buttons-container">
@@ -55,13 +58,13 @@ export function template(this: SitesTabComponent): TemplateResult {
 
             <etools-data-table-header id="listHeader"
                                       no-collapse no-title>
-                <etools-data-table-column class="w30">
+                <etools-data-table-column class="w30 col-data">
                     ${ translate('SITES.COLUMNS.ADMIN_LEVEL') }
                 </etools-data-table-column>
-                <etools-data-table-column class="w90px layout center-center">
+                <etools-data-table-column class="w90px col-data layout center-center">
                     ${ translate('SITES.COLUMNS.STATUS') }
                 </etools-data-table-column>
-                <etools-data-table-column class="w150px">
+                <etools-data-table-column class="flex-auto col-data">
                     ${ translate('SITES.COLUMNS.NAME') }
                 </etools-data-table-column>
             </etools-data-table-header>

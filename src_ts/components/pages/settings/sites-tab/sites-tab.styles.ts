@@ -81,7 +81,9 @@ export const SitesTabStyles: TemplateResult = html`
         }
 
         etools-data-table-header {
-            --data-table-header: padding: 0 0 0 24px;;
+            --data-table-header: {
+                padding: 0 0 0 24px;
+            };
         }
 
         .editable-row .hover-block {

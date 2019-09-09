@@ -43,12 +43,6 @@ export const QUESTIONS_TRANSLATES: TranslateObject = {
             'PARTNER': 'Partner',
             'OUTPUT': 'Output',
             'INTERVENTION': 'PD/SSFA'
-        },
-        'ANSWER_TYPE': {
-            'TEXT': 'Text',
-            'NUMBER': 'Number',
-            'BOOL': 'Boolean',
-            'LIKERT_SCALE': 'Likert Scale'
         }
     }
 };
