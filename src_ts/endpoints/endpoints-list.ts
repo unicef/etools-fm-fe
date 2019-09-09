@@ -17,6 +17,7 @@ export const INTERVENTIONS: 'interventions' = 'interventions';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
+export const RATIONALE: 'rationale' = 'rationale';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -111,6 +112,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [QUESTION_TEMPLATES_WITH_TARGET]: {
         template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/target/<%=target%>/'
+    },
+
+    [RATIONALE]: {
+        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

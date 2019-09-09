@@ -16,7 +16,8 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
 
     // Planing pages
     'plan_rationale': [
-        'components/pages/plan/plan-page.js'
+        'components/pages/plan/plan-page.js',
+        'components/pages/plan/rationale-tab/rationale-tab.js'
     ],
     'plan_issue-tracker': [
         'components/pages/plan/plan-page.js'

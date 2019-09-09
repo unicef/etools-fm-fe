@@ -11,10 +11,12 @@ import '../../common/layout/etools-tabs';
 import { addTranslates, ENGLISH } from '../../../localization/localisation';
 import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templates-tab.translates';
 import { questionTemplates } from '../../../redux/reducers/templates.reducer';
+import { rationale } from '../../../redux/reducers/rationale.reducer';
+import { RATIONALE_TRANSLATES } from '../../../localization/en/plan-page/rationale-tab.translates';
 // import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
 
-store.addReducers({ questionTemplates });
-addTranslates(ENGLISH, [TEMPLATES_TRANSLATES]);
+store.addReducers({ questionTemplates, rationale });
+addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES]);
 
 const PAGE: string = 'plan';
 
@@ -70,7 +72,7 @@ export class PlanPage extends LitElement {
     public getTabElement(): TemplateResult {
         switch (this.activeTab) {
             case RATIONALE_TAB:
-                return html`Rationale`;
+                return html`<rationale-tab></rationale-tab>`;
             case ISSUE_TRACKER_TAB:
                 return html`Issue Tracker`;
                 // return html`<issue-tracker-tab></issue-tracker-tab>`;

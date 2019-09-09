@@ -6,6 +6,7 @@ interface IRootState {
     specificLocations: ISpecificLocationsState;
     questions: IQuestionsState;
     questionTemplates: IQuestionTemplatesState;
+    rationale: IRationaleState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -45,6 +46,12 @@ interface IQuestionsState {
     updateInProcess: null | boolean;
     error: null | GenericObject;
     data: null | IListData<IQuestion>;
+}
+
+interface IRationaleState {
+    updateInProcess: null | boolean;
+    error: null | GenericObject;
+    data: null | IRationale;
 }
 
 interface IQuestionTemplatesState {
