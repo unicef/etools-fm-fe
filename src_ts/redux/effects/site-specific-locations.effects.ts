@@ -30,7 +30,7 @@ export function loadSiteLocations(): (dispatch: Dispatch) => Promise<void> {
     };
 }
 
-export function updateSiteLocation(id: number, siteLocation: Site): (dispatch: Dispatch) => Promise<void> {
+export function updateSiteLocation(id: number, siteLocation: EditedSite): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
         const endpoint: IResultEndpoint = getEndpoint(SITE_DETAILS, { id });
         return startRequest(dispatch, endpoint.url, 'PATCH', siteLocation);

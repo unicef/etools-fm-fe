@@ -88,7 +88,7 @@ export class AppShell extends connect(store)(LitElement) {
         // preventable, allowing for better scrolling performance.
         setPassiveTouchGestures(true);
         // init toasts notifications queue
-        this.appToastsNotificationsHelper = new ToastNotificationHelper(this);
+        this.appToastsNotificationsHelper = new ToastNotificationHelper();
         this.appToastsNotificationsHelper.addToastNotificationListeners();
 
         const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);

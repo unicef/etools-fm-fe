@@ -65,3 +65,8 @@ type WidgetLocation = {
     p_code: string;
     point: GeojsonPoint;
 };
+
+type SitesPopupData = {
+    sitesObjects: Site[];
+    model?: Site;
+};
