@@ -2,6 +2,7 @@ import '@unicef-polymer/etools-data-table';
 import '@unicef-polymer/etools-dropdown';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-input';
+import '@polymer/paper-input/paper-textarea';
 import { TemplatesTabComponent } from './templates-tab';
 import { html, TemplateResult } from 'lit-element';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
@@ -80,12 +81,13 @@ export function template(this: TemplatesTabComponent): TemplateResult {
 
               <!-- Input for Specific Details with dynamic position -->
               <div class="details-input elevation" elevation="2" ?hidden="${ !this.editedDetails.opened }" style="${ this.getDetailsInputStyles() }">
-                  <paper-input id="details-input"
+                  <paper-textarea id="details-input"
                                .value="${ this.editedDetails.details }"
+                               max-rows="3"
                                no-label-float
                                placeholder="${ translate('TEMPLATES.DETAIL_INPUT_PLACEHOLDER') }"
-                               @keyup="${ (event: KeyboardEvent) => this.onDetailsKeyUp(event) }"
-                               @blur="${ () => this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details) }"></paper-input>
+                               @keydown="${ (event: KeyboardEvent) => this.onDetailsKeyDown(event) }"
+                               @blur="${ () => this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details) }"></paper-textarea>
               </div>
 
 

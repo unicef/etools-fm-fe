@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-dropdown';
 import '@polymer/paper-checkbox';
+import '@polymer/paper-input/paper-textarea';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionPopupComponent } from './question-popup';
 import { translate } from '../../../../../localization/localisation';
@@ -34,18 +35,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
             <div class="container layout vertical">
 
-                <paper-input
+                <paper-textarea
                             class="validate-input disabled-as-readonly flex-7"
                             .value="${ this.editedQuestion.text }"
                             @value-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('text', detail.value) }"
-                            maxlength="100"
+                            max-rows="3"
                             required
                             label="${ translate('QUESTIONS.LABELS.QUESTION') }"
                             placeholder="${ translate('QUESTIONS.PLACEHOLDERS.QUESTION') }"
                             ?invalid="${ this.errors && this.errors.text }"
                             .errorMessage="${ this.errors && this.errors.text }"
                             @focus="${ () => this.resetFieldError('text') }"
-                            @tap="${ () => this.resetFieldError('text') }"></paper-input>
+                            @tap="${ () => this.resetFieldError('text') }"></paper-textarea>
 
                 <etools-dropdown-multi
                             class="validate-input disabled-as-readonly flex-2"

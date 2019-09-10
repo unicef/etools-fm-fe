@@ -1,4 +1,4 @@
-import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { customElement, LitElement, property, PropertyValues, queryAll, TemplateResult } from 'lit-element';
 import { template } from './question-popup.tpl';
 import { fireEvent } from '../../../../utils/fire-custom-event';
 import { store } from '../../../../../redux/store';
@@ -8,6 +8,8 @@ import { clone } from 'ramda';
 import { addQuestion, updateQuestion } from '../../../../../redux/effects/questions.effects';
 import { Unsubscribe } from 'redux';
 import { questionUpdate } from '../../../../../redux/selectors/questions.selectors';
+import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
+import { setTextareasMaxHeight } from '../../../../utils/textarea-max-rows-helper';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends LitElement {
@@ -15,6 +17,7 @@ export class QuestionPopupComponent extends LitElement {
     public savingInProcess: boolean = false;
     @property() public dialogOpened: boolean = true;
     @property() public errors: GenericObject = {};
+    @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
 
     public readonly sections: EtoolsSection[] = (store.getState() as IRootState).staticData.sections || [];
     public readonly methods: EtoolsMethod[] = (store.getState() as IRootState).staticData.methods || [];
@@ -169,6 +172,11 @@ export class QuestionPopupComponent extends LitElement {
 
     public onClose(): void {
         fireEvent(this, 'response', { confirmed: false });
+    }
+
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties);
+        setTextareasMaxHeight(this.textareas);
     }
 
     private changeOptionsOnTypeChange(type: string): void {

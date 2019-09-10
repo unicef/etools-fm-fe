@@ -1,4 +1,4 @@
-import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { customElement, LitElement, property, PropertyValues, queryAll, TemplateResult } from 'lit-element';
 import { template } from './rationale-popup.tpl';
 import { clone } from 'ramda';
 import { store } from '../../../../../redux/store';
@@ -7,6 +7,8 @@ import { Unsubscribe } from 'redux';
 import { rationaleUpdate } from '../../../../../redux/selectors/rationale.selectors';
 import { getDifference } from '../../../../utils/objects-diff';
 import { updateRationale } from '../../../../../redux/effects/rationale.effects';
+import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
+import { setTextareasMaxHeight } from '../../../../utils/textarea-max-rows-helper';
 
 @customElement('rationale-popup')
 export class RationalePopupComponent extends LitElement {
@@ -14,6 +16,7 @@ export class RationalePopupComponent extends LitElement {
     @property() public errors: GenericObject = {};
     public savingInProcess: boolean = false;
     public editedModel: Partial<IRationale> = {};
+    @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
 
     private originalData: IRationale | null = null;
     private selectedYear: number | undefined;
@@ -90,5 +93,10 @@ export class RationalePopupComponent extends LitElement {
 
     public updateModelValue(fieldName: keyof IRationale, value: any): void {
         this.editedModel[fieldName] = value;
+    }
+
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties);
+        setTextareasMaxHeight(this.textareas);
     }
 }

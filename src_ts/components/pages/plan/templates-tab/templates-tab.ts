@@ -1,4 +1,13 @@
-import { CSSResult, customElement, LitElement, property, query, TemplateResult } from 'lit-element';
+import {
+    CSSResult,
+    customElement,
+    LitElement,
+    property,
+    PropertyValues,
+    query,
+    queryAll,
+    TemplateResult
+} from 'lit-element';
 import { template } from './templates-tab.tpl';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { updateQueryParams } from '../../../../routing/routes';
@@ -15,6 +24,8 @@ import { getEndpoint } from '../../../../endpoints/endpoints';
 import { request } from '../../../../endpoints/request';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
 import { hasPermission, Permissions } from '../../../../config/permissions';
+import { setTextareasMaxHeight } from '../../../utils/textarea-max-rows-helper';
+import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
@@ -27,6 +38,7 @@ export class TemplatesTabComponent extends LitElement {
     @property() public listLoadingInProcess: boolean = false;
     @property() public editedDetails: GenericObject = { opened: false };
     @property() public additionalDataLoading: boolean = false;
+    @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
     public count: number = 0;
     public partners!: EtoolsPartner[];
     public interventions!: any[];
@@ -155,9 +167,9 @@ export class TemplatesTabComponent extends LitElement {
             });
     }
 
-    public onDetailsKeyUp(event: KeyboardEvent): void {
+    public onDetailsKeyDown(event: KeyboardEvent): void {
         this.editedDetails.details = this.detailsInput.value;
-        if (event.keyCode === ENTER) {
+        if (event.keyCode === ENTER && !event.shiftKey) {
             this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details);
         } else if (event.keyCode === ESCAPE) {
             this.editedDetails = { opened: false };
@@ -171,6 +183,11 @@ export class TemplatesTabComponent extends LitElement {
             .filter<EtoolsMethod>((method: EtoolsMethod | undefined): method is EtoolsMethod => method !== undefined)
             .map(({ name }: EtoolsMethod) => name)
             .join(', ');
+    }
+
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties);
+        setTextareasMaxHeight(this.textareas);
     }
 
     private requestTemplateUpdate(id: number, questionTemplate: Partial<QuestionTemplateItem>): Promise<IQuestionTemplate> {
