@@ -5,24 +5,11 @@ export const RationaleStyles: TemplateResult = html`
         :host {
             position: relative;
             display: block;
-            padding: 0 25px 25px;
         }
 
         .rationale-table-section {
             padding: 0;
         }
-
-        .container:not(:first-of-type) {
-            padding-top: 0;
-        }
-
-        .helper-text {
-            padding: 0 12px;
-            margin-top: -6px;
-            font-size: 12px;
-        }
-
-        .numeric-input { width: 170px; }
 
         .history-info {
             color: var(--gray-light);
@@ -32,10 +19,14 @@ export const RationaleStyles: TemplateResult = html`
             letter-spacing: 0.04em;
         }
 
+        .year-dropdown-container {
+            padding: 16px 20px 0;
+        }
+
         .year-dropdown {
             flex: none;
             min-width: auto;
-            width: 50px;
+            width: 110px;
         }
 
         .text-control {

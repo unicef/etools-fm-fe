@@ -105,7 +105,7 @@ export class SitesPopupComponent extends LitElement {
         }
 
         const site: EditedSite = this.originalData !== null ?
-            getDifference<EditedSite>(this.originalData, this.selectedModel, { toRequest: true, nestedFields: ['options'] }) :
+            getDifference<EditedSite>(this.originalData, this.selectedModel, { toRequest: true }) :
             this.selectedModel;
         const isEmpty: boolean = !Object.keys(site).length;
 

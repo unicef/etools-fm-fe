@@ -3,7 +3,9 @@ import '@polymer/paper-icon-button/paper-icon-button';
 import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 
 import { etoolsTableStyles } from './etools-table-styles';
+// @ts-ignore
 import { fireEvent } from '../../../utils/fire-custom-event';
+// @ts-ignore
 import { prettyDate } from '../../../utils/date-utility';
 import { IEtoolsPaginator } from './pagination/paginator';
 import './pagination/etools-pagination';

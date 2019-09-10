@@ -15,7 +15,7 @@ export function template(this: RationaleTabComponent): TemplateResult {
         ${SharedStyles} ${pageLayoutStyles} ${RationaleStyles}
         ${FlexLayoutClasses} ${TableStyles} ${TabInputsStyles}
 
-        <div class="filter-dropdown">
+        <div class="year-dropdown-container">
             <etools-dropdown class="year-dropdown"
                              .selected="${ this.selectedYear }"
                              label="${ translate('RATIONALE.YEAR_DRD_LABEL') }"
@@ -29,6 +29,8 @@ export function template(this: RationaleTabComponent): TemplateResult {
         </div>
 
         <section class="elevation page-content table-container rationale-table-section" elevation="1">
+
+            <etools-loading ?active="${ this.loadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
             <div class="table-title-block with-bottom-line">
                 <div class="table-title">${ translate('RATIONALE.TITLE') }</div>

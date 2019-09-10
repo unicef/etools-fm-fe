@@ -1,6 +1,7 @@
 /**
  * TODO: this file will be removed after engagements list API is ready
  */
+// @ts-ignore
 import { IEtoolsPaginator } from '../../../components/common/layout/etools-table/pagination/paginator';
 
 const ratings: string[] = ['Low', 'High', 'Medium'];

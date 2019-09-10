@@ -14,3 +14,8 @@ type RationaleHistoryItem = {
     by_user_display: string;
     action: string;
 };
+
+type RationaleModalData = {
+    model?: IRationale;
+    year?: number;
+};

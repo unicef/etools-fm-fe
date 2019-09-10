@@ -33,7 +33,7 @@ interface IStaticDataState {
     methods?: EtoolsMethod[];
     partners?: EtoolsPartner[];
     interventions?: any[];
-    outputs: EtoolsCpOutput[];
+    outputs?: EtoolsCpOutput[];
 }
 
 interface ISpecificLocationsState {

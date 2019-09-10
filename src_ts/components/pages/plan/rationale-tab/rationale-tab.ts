@@ -1,3 +1,4 @@
+import './rationale-popup/rationale-popup';
 import { CSSResult, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { template } from './rationale-tab.tpl';
 import { store } from '../../../../redux/store';
@@ -9,11 +10,12 @@ import { fireEvent } from '../../../utils/fire-custom-event';
 import { loadRationale } from '../../../../redux/effects/rationale.effects';
 import { rationaleData } from '../../../../redux/selectors/rationale.selectors';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { openDialog } from '../../../utils/dialog';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
     public selectedYear: number | undefined;
-    public loadingInProcess: boolean = false;
+    @property() public loadingInProcess: boolean = false;
     @property() public yearPlan: IRationale | undefined;
     public readonly yearOptions: { label: number; value: number }[];
 
@@ -70,7 +72,12 @@ export class RationaleTabComponent extends LitElement {
         return isEmptyValue ? '...' : value as string;
     }
 
-    public openPopup(): void {}
+    public openPopup(): void {
+        openDialog<RationaleModalData | undefined>({
+            dialog: 'rationale-popup',
+            data: { year: this.selectedYear, model: this.yearPlan }
+        });
+    }
 
     private onRouteChange({ routeName, subRouteName, queryParams }: IRouteDetails): void {
         if (routeName !== 'plan' || subRouteName !== 'rationale') { return; }

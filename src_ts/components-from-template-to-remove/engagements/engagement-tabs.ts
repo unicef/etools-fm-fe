@@ -7,15 +7,21 @@ import { SharedStyles } from '../../components/styles/shared-styles';
 import '../../components/common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import { pageContentHeaderSlottedStyles }
+// @ts-ignore
     from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import '../../common/layout/status/etools-status';
+// @ts-ignore
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
 
 import { connect } from 'pwa-helpers/connect-mixin';
+// @ts-ignore
 import { store } from '../../../redux/store';
+// @ts-ignore
 import { updateAppLocation } from '../../../routing/routes';
 import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+// @ts-ignore
 import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
+// @ts-ignore
 import { IDialogResponse, openDialog } from '../../utils/dialog';
 import './testDialog';
 import { ITestDialogRequest, ITestDialogResponse } from './testDialog';

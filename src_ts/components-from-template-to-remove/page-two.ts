@@ -1,11 +1,16 @@
 import '@polymer/paper-styles/element-styles/paper-material-styles.js';
 
+// @ts-ignore
 import { SharedStyles } from '../styles/shared-styles';
+// @ts-ignore
 import { store } from '../../redux/store';
+// @ts-ignore
 import { routeDetailsSelector } from '../../redux/selectors/app.selectors';
 import { Unsubscribe } from 'redux';
 import { CSSResultArray, customElement, html, LitElement, TemplateResult } from 'lit-element';
+// @ts-ignore
 import { elevationStyles } from '../styles/lit-styles/elevation-styles';
+// @ts-ignore
 import { pageLayoutStyles } from '../styles/page-layout-styles';
 
 /**

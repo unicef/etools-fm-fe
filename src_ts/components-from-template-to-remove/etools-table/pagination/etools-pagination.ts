@@ -5,6 +5,7 @@ import '@polymer/paper-item/paper-item';
 import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { etoolsPaginationStyles } from './etools-pagination-style';
 import { IEtoolsPaginator } from './paginator';
+// @ts-ignore
 import { fireEvent } from '../../../../utils/fire-custom-event';
 
 /**
