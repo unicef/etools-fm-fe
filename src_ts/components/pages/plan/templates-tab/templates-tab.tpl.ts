@@ -86,6 +86,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                max-rows="3"
                                no-label-float
                                placeholder="${ translate('TEMPLATES.DETAIL_INPUT_PLACEHOLDER') }"
+                               @keyup="${ () => this.onDetailsKeyUp() }"
                                @keydown="${ (event: KeyboardEvent) => this.onDetailsKeyDown(event) }"
                                @blur="${ () => this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details) }"></paper-textarea>
               </div>

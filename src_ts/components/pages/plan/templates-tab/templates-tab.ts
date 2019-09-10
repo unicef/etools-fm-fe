@@ -168,12 +168,17 @@ export class TemplatesTabComponent extends LitElement {
     }
 
     public onDetailsKeyDown(event: KeyboardEvent): void {
-        this.editedDetails.details = this.detailsInput.value;
         if (event.keyCode === ENTER && !event.shiftKey) {
             this.updateTemplate(this.editedDetails.id, 'specific_details', this.editedDetails.details);
+            event.preventDefault();
         } else if (event.keyCode === ESCAPE) {
             this.editedDetails = { opened: false };
+            event.preventDefault();
         }
+    }
+
+    public onDetailsKeyUp(): void {
+        this.editedDetails.details = this.detailsInput.value;
     }
 
     public serializeMethods(methodsIds: number[]): string {
