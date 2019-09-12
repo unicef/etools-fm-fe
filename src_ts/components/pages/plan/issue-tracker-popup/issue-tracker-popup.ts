@@ -1,0 +1,242 @@
+import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { Unsubscribe } from 'redux';
+import { clone } from 'ramda';
+import { store } from '../../../../redux/store';
+import { fireEvent } from '../../../utils/fire-custom-event';
+import { issueTrackerUpdate } from '../../../../redux/selectors/issue-tracker.selectors';
+import { getDifference } from '../../../utils/objects-diff';
+import { createLogIssue, updateLogIssue } from '../../../../redux/effects/issue-tracker.effects';
+import { outputsDataSelector, partnersDataSelector } from '../../../../redux/selectors/static-data.selectors';
+import { sitesSelector } from '../../../../redux/selectors/site-specific-locations.selectors';
+import { locationsInvert } from '../../settings/sites-tab/locations-invert';
+import { template } from './issue-tracker-popup.tpl';
+import { PaperRadioButtonElement } from '@polymer/paper-radio-button/paper-radio-button';
+
+@customElement('issue-tracker-popup')
+export class IssueTrackerPopup extends LitElement {
+    public isNew: boolean = false;
+    public isRequest: boolean = false;
+    public isReadOnly: boolean = false;
+
+    public relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
+
+    @property()
+    public relatedToType: RelatedType = 'cp_output';
+
+    @property({ type: Array })
+    public outputs: EtoolsCpOutput[] = [];
+
+    @property({ type: Array })
+    public partners: EtoolsPartner[] = [];
+
+    @property({ type: Array })
+    public locations: IGroupedSites[] = [];
+
+    @property({ type: Array })
+    public locationSites: Site[] = [];
+
+    @property() public dialogOpened: boolean = true;
+    @property() public errors: GenericObject = {};
+
+    @property() public editedData: Partial<LogIssue> = {};
+    public originalData: LogIssue | null = null;
+
+    @property({ type: Array })
+    public currentFiles: AttachmentFile[] = [];
+
+    @property({ type: Array })
+    public originalFiles: AttachmentFile[] = [];
+
+    private readonly updateUnsubscribe: Unsubscribe;
+    private readonly sitesUnsubscribe: Unsubscribe;
+    private readonly outputsUnsubscribe!: Unsubscribe;
+    private readonly partnersUnsubscribe!: Unsubscribe;
+
+    public set data(data: LogIssue) {
+        this.isNew = (!data);
+        if (this.isNew) {
+            this.editedData.status = 'new';
+            return;
+        }
+        this.editedData = { ...this.editedData, ...data };
+        this.relatedToType = this.editedData.related_to_type || 'cp_output';
+        this.originalData = clone(data);
+        const files: AttachmentFile[] = data.attachments
+            .map((attachment: Attachment) => this.transformAttachmentToFile(attachment));
+        this.originalFiles = clone(files);
+        this.currentFiles = clone(files);
+    }
+
+    public constructor() {
+        super();
+        this.updateUnsubscribe = store.subscribe(issueTrackerUpdate((isRequest: boolean | null) => {
+            // set updating state for spinner
+            this.isRequest = Boolean(isRequest);
+            if (isRequest) { return; }
+
+            // check errors on update(create) complete
+            this.errors = store.getState().issueTracker.error;
+            if (this.errors && Object.keys(this.errors).length) { return; }
+
+            // close popup if update(create) was successful
+            this.dialogOpened = false;
+            fireEvent(this, 'response', { confirmed: true });
+        }, false));
+
+        this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
+            if (!sites) { return; }
+            this.locations = locationsInvert(sites);
+        }));
+
+        this.outputsUnsubscribe = store.subscribe(outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
+            if (!outputs) { return; }
+            this.outputs = outputs;
+        }));
+        this.partnersUnsubscribe = store.subscribe(partnersDataSelector((partners: EtoolsPartner[] | undefined) => {
+            if (!partners) { return; }
+            this.partners = partners;
+        }));
+    }
+
+    public onClose(): void {
+        fireEvent(this, 'response', { confirmed: false });
+    }
+
+    public processRequest(): void {
+        if (!this.validate()) { return; }
+        if (this.isNew) {
+            this.createIssue();
+        } else {
+            this.updateIssue();
+        }
+    }
+
+    public validate(): boolean {
+        const type: RelatedType = this.relatedToType;
+        if (type === 'cp_output' && !this.editedData.cp_output ) {
+            this.errors = {...this.errors, ...{cp_output: 'Cp Output is not provided'}};
+            return false;
+        }
+        if (type === 'partner' && !this.editedData.partner ) {
+            this.errors = {...this.errors, ...{partner: 'Partner is not provided'}};
+            return false;
+        }
+        if (type === 'location') {
+            if (!this.editedData.location) {
+                this.errors = {...this.errors, ...{location: 'Location is not provided'}};
+                return false;
+            }
+            if (!this.editedData.location_site) {
+                this.errors = {...this.errors, ...{location_site: 'Location Site is not provided'}};
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public resetData(target: EventTarget | null): void {
+        if (this.shadowRoot && target !== this.shadowRoot.querySelector('#dialog')) { return; }
+        this.errors = {};
+    }
+
+    public createIssue(): void {
+        if (!this.editedData) { return; }
+        const attachments: Attachment[] = this.currentFiles.map((file: AttachmentFile) => ({ file: file.raw }));
+        store.dispatch<AsyncEffect>(createLogIssue(this.editedData, attachments));
+    }
+
+    public updateIssue(): void {
+        if (!this.editedData) { return; }
+        const data: Partial<LogIssue> = getDifference<any>(
+            this.originalData,
+            this.editedData,
+            { toRequest: true, nestedFields: ['options'] });
+        const newFiles: Attachment[] = this.getNewFiles(this.currentFiles);
+        const deletedFiles: Attachment[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
+        const changedFiles: Attachment[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
+        const isChanged: boolean = !!Object.keys(data).length;
+        if (!this.editedData.id || !isChanged && !newFiles.length && !deletedFiles.length && !changedFiles.length) {
+            this.dialogOpened = false;
+            this.onClose();
+            return;
+        }
+        store.dispatch<AsyncEffect>(updateLogIssue(this.editedData.id, data, newFiles, deletedFiles, changedFiles));
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.updateUnsubscribe();
+        this.sitesUnsubscribe();
+        this.outputsUnsubscribe();
+        this.partnersUnsubscribe();
+    }
+
+    public render(): TemplateResult {
+        return template.call(this);
+    }
+
+    public resetFieldError(fieldName: string): void {
+        if (!this.errors) { return; }
+        delete this.errors[fieldName];
+        this.performUpdate();
+    }
+
+    public updateModelValue(fieldName: keyof LogIssue, value: any): void {
+        if (!this.editedData) { return; }
+        // sets values from inputs to model, refactor arrays with objects to ids arrays
+        this.editedData[fieldName] = !Array.isArray(value) ?
+            value :
+            value.map((item: any) => item.id);
+    }
+
+    public changeRelatedType(item: PaperRadioButtonElement): void {
+        const type: RelatedType = item.get('name');
+        this.relatedToType = type;
+        this.editedData.related_to_type = type;
+    }
+
+    public setLocation(value: any): void {
+        this.updateModelValue('location', value);
+        const locationId: string | undefined = this.editedData && this.editedData.location as unknown as string;
+        if (!locationId) { return; }
+        const location: IGroupedSites | undefined = this.locations.find((item: ISiteParrentLocation) => item.id === locationId);
+        this.locationSites = location && location.sites || [];
+    }
+
+    private getChangedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Attachment[] {
+        return originalFiles
+            .filter((originalFile: AttachmentFile) =>
+                currentFiles.some((currentFile: AttachmentFile) =>
+                    currentFile.id === originalFile.id && !!currentFile.raw && !currentFile.path))
+            .map((originalFile: AttachmentFile) => (this.transformFileToAttachment(originalFile)));
+    }
+
+    private getNewFiles(currentFiles: AttachmentFile[]): Attachment[] {
+        return currentFiles
+            .filter((currentFile: AttachmentFile) => (!currentFile.id))
+            .map((currentFile: AttachmentFile) => (this.transformFileToAttachment(currentFile)));
+    }
+
+    private getDeletedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Attachment[] {
+        return originalFiles
+            .filter((originalFile: AttachmentFile) =>
+                !currentFiles.some((currentFile: AttachmentFile) => currentFile.id === originalFile.id))
+            .map((originalFile: AttachmentFile) => this.transformFileToAttachment(originalFile));
+    }
+
+    private transformFileToAttachment(file: AttachmentFile): Attachment {
+        const attachment: Attachment = { file: file.raw ? file.raw : file.path };
+        if (file.id) { attachment.id = file.id; }
+        if (file.file_name) { attachment.filename = file.file_name; }
+        return attachment;
+    }
+
+    private transformAttachmentToFile(attachment: Attachment): AttachmentFile {
+        const file: AttachmentFile = {
+            id: attachment.id,
+            file_name: attachment.filename || ''
+        };
+        if (attachment.file && typeof attachment.file === 'string') { file.path = attachment.file; }
+        return file;
+    }
+}

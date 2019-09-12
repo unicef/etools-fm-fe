@@ -5,6 +5,7 @@ interface IRootState {
     staticData: IStaticDataState;
     specificLocations: ISpecificLocationsState;
     questions: IQuestionsState;
+    issueTracker: IIssueTrackerState;
     questionTemplates: IQuestionTemplatesState;
     rationale: IRationaleState;
 }
@@ -17,7 +18,7 @@ interface IAppState {
 }
 
 interface IRequestState {
-    isRequest: boolean;
+    isRequest: { [key: string]: boolean };
     error: GenericObject | null;
 }
 

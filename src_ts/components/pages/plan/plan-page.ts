@@ -13,10 +13,12 @@ import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templat
 import { questionTemplates } from '../../../redux/reducers/templates.reducer';
 import { rationale } from '../../../redux/reducers/rationale.reducer';
 import { RATIONALE_TRANSLATES } from '../../../localization/en/plan-page/rationale-tab.translates';
-// import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
+import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
+import { issueTracker } from '../../../redux/reducers/issue-tracker.reducer';
+import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
 
-store.addReducers({ questionTemplates, rationale });
-addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES]);
+store.addReducers({ questionTemplates, rationale, issueTracker, specificLocations });
+addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES, ISSUE_TRACKER_TRANSLATES]);
 
 const PAGE: string = 'plan';
 
@@ -74,8 +76,7 @@ export class PlanPage extends LitElement {
             case RATIONALE_TAB:
                 return html`<rationale-tab></rationale-tab>`;
             case ISSUE_TRACKER_TAB:
-                return html`Issue Tracker`;
-                // return html`<issue-tracker-tab></issue-tracker-tab>`;
+                return html`<issue-tracker-tab></issue-tracker-tab>`;
             case TEMPLATES_TAB:
                 return html`<templates-tab></templates-tab>`;
             default:

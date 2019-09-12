@@ -2,7 +2,9 @@ import { AnyAction, Reducer } from 'redux';
 import { CountryActionTypes } from '../actions/country.actions';
 
 const INIT_COUNTRY_STATE: IRequestState = {
-    isRequest: false,
+    isRequest: {
+        get: false
+    },
     error: {}
 };
 
@@ -11,19 +13,19 @@ export const country: Reducer<IRequestState, any> = (state: IRequestState = INIT
         case CountryActionTypes.CHANGE_COUNTRY_REQUEST:
             return {
                 ...state,
-                isRequest: true,
+                isRequest: { ...state.isRequest, get: true },
                 error: null
             };
         case CountryActionTypes.CHANGE_COUNTRY_SUCCESS:
             return {
                 ...state,
-                isRequest: false,
+                isRequest: { ...state.isRequest, get: false },
                 error: null
             };
         case CountryActionTypes.CHANGE_COUNTRY_FAILURE:
             return {
                 ...state,
-                isRequest: false,
+                isRequest: { ...state.isRequest, get: false },
                 error: action.payload
             };
         default:

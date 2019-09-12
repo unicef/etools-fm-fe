@@ -1,6 +1,6 @@
 import { equals } from 'ramda';
 
-function simplifyValue(value: any): any {
+export function simplifyValue(value: any): any {
     if (Array.isArray(value)) { return value.map((obj: any) => obj && obj.hasOwnProperty('id') && obj.id || obj); }
     if (value && value.hasOwnProperty('id')) { return value.id; }
     return value;

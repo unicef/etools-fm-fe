@@ -15,6 +15,9 @@ export const METHODS: 'methods' = 'methods';
 export const PARTNERS: 'partners' = 'partners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
+export const LOG_ISSUES: 'logIssues' = 'logIssues';
+export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
+export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 export const RATIONALE: 'rationale' = 'rationale';
@@ -116,6 +119,18 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [RATIONALE]: {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
+    },
+
+    [LOG_ISSUES]: {
+        url: '/api/v1/field-monitoring/settings/log-issues/'
+    },
+
+    [LOG_ISSUES_DETAILS]: {
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/'
+    },
+
+    [LOG_ISSUES_ATTACHMENTS]: {
+        url: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

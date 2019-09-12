@@ -38,7 +38,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     public constructor() {
         super();
         store.subscribe(countrySelector((countryState: IRequestState) => {
-            this.changeRequestStatus(countryState.isRequest);
+            this.changeRequestStatus(countryState.isRequest.get);
             if (!countryState.isRequest && !countryState.error) {
                 this.handleChangedCountry();
             }
