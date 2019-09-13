@@ -133,8 +133,7 @@ export class IssueTrackerTabComponent extends LitElement {
                item.cp_output ? item.cp_output.name : '';
     }
 
-    public  openViewDialog(): void {
-    }
+    public openViewDialog(): void {}
 
     public isAllowEdit(logIssue: LogIssue): boolean {
         // todo permission

@@ -15,7 +15,7 @@ export const ISSUE_TRACKER_TRANSLATES: TranslateObject = {
         'STATUS': 'Status',
         'STATUSES': {
             'NEW': 'New',
-            'PAST': 'Past',
+            'PAST': 'Past'
         },
         'PLACEHOLDER': {
             'CP_OUTPUT': 'Select CP Output',

@@ -114,20 +114,20 @@ export class IssueTrackerPopup extends LitElement {
     public validate(): boolean {
         const type: RelatedType = this.relatedToType;
         if (type === 'cp_output' && !this.editedData.cp_output ) {
-            this.errors = {...this.errors, ...{cp_output: 'Cp Output is not provided'}};
+            this.errors = { ...this.errors, ...{ cp_output: 'Cp Output is not provided' } };
             return false;
         }
         if (type === 'partner' && !this.editedData.partner ) {
-            this.errors = {...this.errors, ...{partner: 'Partner is not provided'}};
+            this.errors = { ...this.errors, ...{ partner: 'Partner is not provided' } };
             return false;
         }
         if (type === 'location') {
             if (!this.editedData.location) {
-                this.errors = {...this.errors, ...{location: 'Location is not provided'}};
+                this.errors = { ...this.errors, ...{ location: 'Location is not provided' } };
                 return false;
             }
             if (!this.editedData.location_site) {
-                this.errors = {...this.errors, ...{location_site: 'Location Site is not provided'}};
+                this.errors = { ...this.errors, ...{ location_site: 'Location Site is not provided' } };
                 return false;
             }
         }
@@ -141,6 +141,7 @@ export class IssueTrackerPopup extends LitElement {
 
     public createIssue(): void {
         if (!this.editedData) { return; }
+        // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
         const attachments: Attachment[] = this.currentFiles.map((file: AttachmentFile) => ({ file: file.raw }));
         store.dispatch<AsyncEffect>(createLogIssue(this.editedData, attachments));
     }
@@ -152,6 +153,7 @@ export class IssueTrackerPopup extends LitElement {
             this.editedData,
             { toRequest: true, nestedFields: ['options'] });
         const newFiles: Attachment[] = this.getNewFiles(this.currentFiles);
+        // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
         const deletedFiles: Attachment[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
         const changedFiles: Attachment[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
         const isChanged: boolean = !!Object.keys(data).length;

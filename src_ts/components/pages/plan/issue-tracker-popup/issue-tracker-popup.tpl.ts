@@ -4,7 +4,8 @@ import { translate } from '../../../../localization/localisation';
 import { repeat } from 'lit-html/directives/repeat';
 import { ISSUE_STATUSES } from '../issue-tracker-tab/issue-tracker-tab';
 import '@unicef-polymer/etools-dialog/etools-dialog';
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-upload/etools-upload-multi';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
@@ -193,6 +194,8 @@ ${IssueTrackerPopupStyles}
                 @value-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('issue', detail.value) }"
                 @focus="${ () => this.resetFieldError('issue') }"
                 @tap="${ () => this.resetFieldError('issue') }"></paper-textarea>
+
+        <etools-upload .autoUpload="${ false }"></etools-upload>
 
     </div>
 

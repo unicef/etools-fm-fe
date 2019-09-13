@@ -28,25 +28,25 @@ export const issueTracker: Reducer<IIssueTrackerState, any> = (state: IIssueTrac
         case IssueTrackerActions.ISSUE_TRACKER_DATA_FAILURE:
             return {
                 ...state,
-                isRequest: { ...state.isRequest,  get: false },
+                isRequest: { ...state.isRequest, get: false },
                 error: action.payload
             };
         case IssueTrackerActions.ISSUE_TRACKER_UPDATE_REQUEST:
             return {
                 ...state,
-                isRequest: { ...state.isRequest,  update: true },
+                isRequest: { ...state.isRequest, update: true },
                 error: null
             };
         case IssueTrackerActions.ISSUE_TRACKER_UPDATE_SUCCESS:
             return {
                 ...state,
-                isRequest: { ...state.isRequest,  update: false },
+                isRequest: { ...state.isRequest, update: false },
                 error: null
             };
         case IssueTrackerActions.ISSUE_TRACKER_UPDATE_FAILURE:
             return {
                 ...state,
-                isRequest: { ...state.isRequest,  update: false },
+                isRequest: { ...state.isRequest, update: false },
                 error: action.payload
             };
         default:

@@ -130,7 +130,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     },
 
     [LOG_ISSUES_ATTACHMENTS]: {
-        url: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
+        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',
