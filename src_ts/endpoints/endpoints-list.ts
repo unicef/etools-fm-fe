@@ -21,6 +21,7 @@ export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachme
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 export const RATIONALE: 'rationale' = 'rationale';
+export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -131,6 +132,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [LOG_ISSUES_ATTACHMENTS]: {
         template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
+    },
+
+    [ACTIVITIES_LIST]: {
+        template: '/api/v1/field-monitoring/planning/activities/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',

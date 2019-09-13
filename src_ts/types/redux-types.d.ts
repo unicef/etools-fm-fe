@@ -8,6 +8,7 @@ interface IRootState {
     issueTracker: IIssueTrackerState;
     questionTemplates: IQuestionTemplatesState;
     rationale: IRationaleState;
+    activities: IActivitiesState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -57,6 +58,10 @@ interface IRationaleState {
 
 interface IQuestionTemplatesState {
     data: null | IListData<IQuestionTemplate>;
+}
+
+interface IActivitiesState {
+    listData: null | IListData<IListActivity>;
 }
 
 interface IIssueTrackerState extends IRequestState {
