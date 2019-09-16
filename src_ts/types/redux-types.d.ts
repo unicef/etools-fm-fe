@@ -9,6 +9,7 @@ interface IRootState {
     questionTemplates: IQuestionTemplatesState;
     rationale: IRationaleState;
     activities: IActivitiesState;
+    attachmentsList: IAttachmentsListState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -56,6 +57,12 @@ interface IRationaleState {
     data: null | IRationale;
 }
 
+interface IAttachmentsListState {
+    rationale_attachments: null | IListData<Attachment>;
+    updateInProcess: null | boolean;
+    error: GenericObject;
+}
+
 interface IQuestionTemplatesState {
     data: null | IListData<IQuestionTemplate>;
 }
@@ -69,5 +76,6 @@ interface IIssueTrackerState extends IRequestState {
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
+type DynamicSelector<T> = (onChange: (state: T) => void, path?: string[], initialize?: boolean) => Callback;
 
 type AsyncEffect = any;

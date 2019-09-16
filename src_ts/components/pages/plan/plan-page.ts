@@ -16,8 +16,9 @@ import { RATIONALE_TRANSLATES } from '../../../localization/en/plan-page/rationa
 import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
 import { issueTracker } from '../../../redux/reducers/issue-tracker.reducer';
 import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
+import { attachmentsList } from '../../../redux/reducers/attachments-list.reducer';
 
-store.addReducers({ questionTemplates, rationale, issueTracker, specificLocations });
+store.addReducers({ questionTemplates, rationale, issueTracker, specificLocations, attachmentsList });
 addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES, ISSUE_TRACKER_TRANSLATES]);
 
 const PAGE: string = 'plan';

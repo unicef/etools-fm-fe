@@ -159,5 +159,27 @@ export const SharedStyles: TemplateResult = html`
                     opacity: 1;
                 };
             }
+
+        etools-dialog .container {
+            padding: 14px;
+        }
+
+        etools-dialog {
+            --etools-dialog-confirmation-content: {
+                        min-height: 0;
+                        margin-top: 0;
+                        margin-right: 0;
+                    };
+
+        --etools-dialog-content: {
+                    width: 100%;
+                    max-width: 100% !important;
+
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    display: block;
+                    margin-top: 0;
+                };
+        }
 </style>
 `;

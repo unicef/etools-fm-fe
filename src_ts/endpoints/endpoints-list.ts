@@ -22,6 +22,7 @@ export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 export const RATIONALE: 'rationale' = 'rationale';
 export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
+export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -63,7 +64,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     },
 
     [INTERVENTIONS]: {
-        url: '/api/v2/partners/interventions/',
+        url: '/api/v2/interventions/',
         exp: 60 * 60 * 1000, // 1h
         cachingKey: 'interventions'
     },
@@ -120,6 +121,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [RATIONALE]: {
         template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
+    },
+
+    [RATIONALE_ATTACHMENTS]: {
+        url: '/api/v1/field-monitoring/settings/attachments/'
     },
 
     [LOG_ISSUES]: {

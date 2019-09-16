@@ -1,4 +1,5 @@
 import '@unicef-polymer/etools-dropdown';
+import '../../../common/attachmants-list/attachments-list';
 import { html, TemplateResult } from 'lit-element';
 import { RationaleTabComponent } from './rationale-tab';
 import { hasPermission, Permissions } from '../../../../config/permissions';
@@ -9,6 +10,7 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { RationaleStyles } from './rationale.styles';
+import { RATIONALE_ATTACHMENTS } from '../../../../endpoints/endpoints-list';
 
 export function template(this: RationaleTabComponent): TemplateResult {
     return html`
@@ -75,5 +77,7 @@ export function template(this: RationaleTabComponent): TemplateResult {
             </div>
 
         </section>
+
+        <attachments-list endpoint-name="${ RATIONALE_ATTACHMENTS }"></attachments-list>
     `;
 }

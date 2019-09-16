@@ -1,8 +1,12 @@
 type Attachment = {
-    id?: number;
-    filename?: string;
-    file_type?: number;
-    file?: string | File | null;
+    id: number;
+    filename: string;
+    file_type: number;
+    file: string | File | null;
+    hyperlink: string;
+    created: string;
+    modified: string;
+    uploaded_by: null;
 };
 
 type AttachmentFile = {
@@ -11,3 +15,14 @@ type AttachmentFile = {
     path?: string | null;
     raw?: File;
 };
+
+interface IRemmoveAttachmentPopupData {
+    id: number;
+    endpointName: string;
+}
+
+interface IAttachmentPopupData {
+    editedAttachment?: Attachment;
+    attachmentTypes: DefaultDropdownOption[];
+    endpointName: string;
+}
