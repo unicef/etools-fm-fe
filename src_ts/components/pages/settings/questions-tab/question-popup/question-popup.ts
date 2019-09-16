@@ -2,7 +2,6 @@ import { customElement, LitElement, property, PropertyValues, queryAll, Template
 import { template } from './question-popup.tpl';
 import { fireEvent } from '../../../../utils/fire-custom-event';
 import { store } from '../../../../../redux/store';
-import { ANSWER_TYPES, BOOLEAN_TYPE, LEVELS, SCALE_TYPE } from '../questions-tab.filters';
 import { getDifference } from '../../../../utils/objects-diff';
 import { clone } from 'ramda';
 import { addQuestion, updateQuestion } from '../../../../../redux/effects/questions.effects';
@@ -10,6 +9,7 @@ import { Unsubscribe } from 'redux';
 import { questionUpdate } from '../../../../../redux/selectors/questions.selectors';
 import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
 import { setTextareasMaxHeight } from '../../../../utils/textarea-max-rows-helper';
+import { ANSWER_TYPES, BOOLEAN_TYPE, LEVELS, SCALE_TYPE } from '../../../../common/dropdown-options';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends LitElement {

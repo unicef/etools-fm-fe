@@ -10,11 +10,11 @@ import { TableStyles } from '../../../styles/table-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
-import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../settings/questions-tab/questions-tab.filters';
 import { TemplatesSttyles } from './templates-tab.styles';
 import { translate } from '../../../../localization/localisation';
 import { PaperCheckboxElement } from '@polymer/paper-checkbox/paper-checkbox';
 import { hasPermission, Permissions } from '../../../../config/permissions';
+import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-options';
 
 export function template(this: TemplatesTabComponent): TemplateResult {
     return html`

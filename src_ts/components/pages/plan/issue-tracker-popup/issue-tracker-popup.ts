@@ -142,7 +142,7 @@ export class IssueTrackerPopup extends LitElement {
     public createIssue(): void {
         if (!this.editedData) { return; }
         // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-        const attachments: Attachment[] = this.currentFiles.map((file: AttachmentFile) => ({ file: file.raw }));
+        const attachments: Partial<Attachment>[] = this.currentFiles.map((file: AttachmentFile) => ({ file: file.raw }));
         store.dispatch<AsyncEffect>(createLogIssue(this.editedData, attachments));
     }
 
@@ -152,10 +152,10 @@ export class IssueTrackerPopup extends LitElement {
             this.originalData,
             this.editedData,
             { toRequest: true, nestedFields: ['options'] });
-        const newFiles: Attachment[] = this.getNewFiles(this.currentFiles);
+        const newFiles: Partial<Attachment>[] = this.getNewFiles(this.currentFiles);
         // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-        const deletedFiles: Attachment[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
-        const changedFiles: Attachment[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
+        const deletedFiles: Partial<Attachment>[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
+        const changedFiles: Partial<Attachment>[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
         const isChanged: boolean = !!Object.keys(data).length;
         if (!this.editedData.id || !isChanged && !newFiles.length && !deletedFiles.length && !changedFiles.length) {
             this.dialogOpened = false;
@@ -205,7 +205,7 @@ export class IssueTrackerPopup extends LitElement {
         this.locationSites = location && location.sites || [];
     }
 
-    private getChangedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Attachment[] {
+    private getChangedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Partial<Attachment>[] {
         return originalFiles
             .filter((originalFile: AttachmentFile) =>
                 currentFiles.some((currentFile: AttachmentFile) =>
@@ -213,21 +213,21 @@ export class IssueTrackerPopup extends LitElement {
             .map((originalFile: AttachmentFile) => (this.transformFileToAttachment(originalFile)));
     }
 
-    private getNewFiles(currentFiles: AttachmentFile[]): Attachment[] {
+    private getNewFiles(currentFiles: AttachmentFile[]): Partial<Attachment>[] {
         return currentFiles
             .filter((currentFile: AttachmentFile) => (!currentFile.id))
             .map((currentFile: AttachmentFile) => (this.transformFileToAttachment(currentFile)));
     }
 
-    private getDeletedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Attachment[] {
+    private getDeletedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Partial<Attachment>[] {
         return originalFiles
             .filter((originalFile: AttachmentFile) =>
                 !currentFiles.some((currentFile: AttachmentFile) => currentFile.id === originalFile.id))
             .map((originalFile: AttachmentFile) => this.transformFileToAttachment(originalFile));
     }
 
-    private transformFileToAttachment(file: AttachmentFile): Attachment {
-        const attachment: Attachment = { file: file.raw ? file.raw : file.path };
+    private transformFileToAttachment(file: AttachmentFile): Partial<Attachment> {
+        const attachment: Partial<Attachment> = { file: file.raw ? file.raw : file.path };
         if (file.id) { attachment.id = file.id; }
         if (file.file_name) { attachment.filename = file.file_name; }
         return attachment;

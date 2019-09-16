@@ -13,8 +13,9 @@ import { loadStaticData } from '../../../../redux/effects/load-static-data.effec
 import { CATEGORIES, METHODS, SECTIONS } from '../../../../endpoints/endpoints-list';
 import { IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
 import { mapFilters } from '../../../utils/filters-mapping';
-import { ANSWER_TYPES, LEVELS, questionsFilters } from './questions-tab.filters';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
+import { ANSWER_TYPES, LEVELS } from '../../../common/dropdown-options';
+import { questionsFilters } from './questions-tab.filters';
 
 type Serialized = {
     id: number | string;

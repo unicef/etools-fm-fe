@@ -11,7 +11,6 @@ import {
 import { template } from './templates-tab.tpl';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { updateQueryParams } from '../../../../routing/routes';
-import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../settings/questions-tab/questions-tab.filters';
 import { Unsubscribe } from 'redux';
 import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
@@ -26,6 +25,7 @@ import { loadStaticData } from '../../../../redux/effects/load-static-data.effec
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { setTextareasMaxHeight } from '../../../utils/textarea-max-rows-helper';
 import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
+import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-options';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
