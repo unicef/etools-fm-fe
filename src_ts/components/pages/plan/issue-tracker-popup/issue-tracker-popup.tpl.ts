@@ -5,7 +5,6 @@ import { repeat } from 'lit-html/directives/repeat';
 import { ISSUE_STATUSES } from '../issue-tracker-tab/issue-tracker-tab';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@unicef-polymer/etools-upload/etools-upload-multi';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
@@ -17,6 +16,8 @@ import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 import { simplifyValue } from '../../../utils/objects-diff';
+import '../../../common/file-components/file-select-input';
+import '../../../common/file-components/file-select-button';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
     // main template
@@ -195,7 +196,16 @@ ${IssueTrackerPopupStyles}
                 @focus="${ () => this.resetFieldError('issue') }"
                 @tap="${ () => this.resetFieldError('issue') }"></paper-textarea>
 
-        <etools-upload .autoUpload="${ false }"></etools-upload>
+        <div>
+            ${repeat(this.currentFiles, (file: AttachmentFile) => html`
+                <file-select-input
+                    .fileId="${ file.id }"
+                    .fileName="${ file.file_name }"
+                    .fileUrl="${ file.path }"
+                    @file-selected="${ ({ detail }: CustomEvent<File>) => console.log(detail)}"></file-select-input>
+            `)}
+            <file-select-button @file-selected="${ ({ detail }: CustomEvent) => this.onAddFile(detail)}"></file-select-button>
+        </div>
 
     </div>
 

@@ -205,6 +205,13 @@ export class IssueTrackerPopup extends LitElement {
         this.locationSites = location && location.sites || [];
     }
 
+    public onAddFile(file: File): void {
+        this.currentFiles = [...this.currentFiles, ...[{
+            file_name: file.name,
+            raw: file
+        }]];
+    }
+
     private getChangedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Partial<Attachment>[] {
         return originalFiles
             .filter((originalFile: AttachmentFile) =>
