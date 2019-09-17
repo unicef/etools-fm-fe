@@ -203,7 +203,7 @@ ${IssueTrackerPopupStyles}
                     .fileId="${ attachment.id }"
                     .fileName="${ attachment.filename }"
                     .fileData="${ attachment.file }"
-                    @file-deleted="${ (event: CustomEvent<SelectedFile>) => this.onDeleteFile(event)}"
+                    @file-deleted="${ ({ detail }: CustomEvent<SelectedFile>) => this.onDeleteFile(detail)}"
                     @file-selected="${ ({ detail }: CustomEvent<SelectedFile>) => this.onChangeFile(detail)}"></file-select-input>
             `)}
             <file-select-button @file-selected="${ ({ detail }: CustomEvent) => this.onAddFile(detail)}"></file-select-button>

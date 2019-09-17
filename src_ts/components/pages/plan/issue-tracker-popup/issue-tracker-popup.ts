@@ -218,12 +218,12 @@ export class IssueTrackerPopup extends LitElement {
         }]];
     }
 
-    public onDeleteFile({ detail, currentTarget }: CustomEvent<SelectedFile>): void {
+    public onDeleteFile({ id }: SelectedFile): void {
         const indexAttachment: number = this.currentFiles
-            .findIndex((nextAttachment: Partial<Attachment>) => nextAttachment.id === detail.id);
+            .findIndex((nextAttachment: Partial<Attachment>) => nextAttachment.id === id);
         if (~indexAttachment) {
             this.currentFiles.splice(indexAttachment, 1);
-            (currentTarget as HTMLElement).remove();
+            this.currentFiles = [...this.currentFiles];
         }
     }
 
