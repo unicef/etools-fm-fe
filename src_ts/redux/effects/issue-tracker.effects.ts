@@ -1,6 +1,11 @@
 import { IAsyncAction } from '../middleware';
 import { getEndpoint } from '../../endpoints/endpoints';
-import { LOG_ISSUES, LOG_ISSUES_ATTACHMENTS, LOG_ISSUES_DETAILS } from '../../endpoints/endpoints-list';
+import {
+    LOG_ISSUES,
+    LOG_ISSUES_ATTACHMENTS,
+    LOG_ISSUES_ATTACHMENTS_DETAILS,
+    LOG_ISSUES_DETAILS
+} from '../../endpoints/endpoints-list';
 import { request } from '../../endpoints/request';
 import { IssueTrackerActions } from '../actions/issue-tracker.actions';
 import { EtoolsRouter } from '../../routing/routes';
@@ -90,7 +95,7 @@ function addAttachment(logIssueId: number, file: Partial<Attachment>): Promise<a
 
 function updateAttachment(logIssueId: number, file: Partial<Attachment>): Promise<any> {
     if (!file || !file.id) { throw new Error('Incorrect file for update'); }
-    const endpoint: IResultEndpoint = getEndpoint('logIssuesAttachmentsDetails', {
+    const endpoint: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS_DETAILS, {
         logIssueId,
         attachmentId: file.id
     });
@@ -105,7 +110,7 @@ function updateAttachment(logIssueId: number, file: Partial<Attachment>): Promis
 
 function deleteAttachment(logIssueId: number, file: Partial<Attachment>): Promise<any> {
     if (!file || !file.id) { throw new Error('Incorrect file for deleting'); }
-    const endpoint: IResultEndpoint = getEndpoint('logIssuesAttachmentsDetails', {
+    const endpoint: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS_DETAILS, {
         logIssueId,
         attachmentId: file.id
     });

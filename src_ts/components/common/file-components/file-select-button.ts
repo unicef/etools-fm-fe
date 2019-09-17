@@ -15,6 +15,11 @@ export class FileSelectButton extends LitElement {
                     color: var(--primary-color);
                     min-width: 130px;
                     font-weight: 700;
+                    padding: 8px 0;
+                    margin: 0;
+                }
+                iron-icon {
+                    margin-right: 8px;
                 }
             </style>
             <input id="file" hidden type="file" @change="${ () => this.fileSelected()}">

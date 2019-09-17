@@ -11,6 +11,7 @@ import { sitesSelector } from '../../../../redux/selectors/site-specific-locatio
 import { locationsInvert } from '../../settings/sites-tab/locations-invert';
 import { template } from './issue-tracker-popup.tpl';
 import { PaperRadioButtonElement } from '@polymer/paper-radio-button/paper-radio-button';
+import { SelectedFile } from '../../../common/file-components/file-select-input';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends LitElement {
@@ -42,10 +43,10 @@ export class IssueTrackerPopup extends LitElement {
     public originalData: LogIssue | null = null;
 
     @property({ type: Array })
-    public currentFiles: AttachmentFile[] = [];
+    public currentFiles: Partial<Attachment>[] = [];
 
     @property({ type: Array })
-    public originalFiles: AttachmentFile[] = [];
+    public originalFiles: Attachment[] = [];
 
     private readonly updateUnsubscribe: Unsubscribe;
     private readonly sitesUnsubscribe: Unsubscribe;
@@ -61,10 +62,8 @@ export class IssueTrackerPopup extends LitElement {
         this.editedData = { ...this.editedData, ...data };
         this.relatedToType = this.editedData.related_to_type || 'cp_output';
         this.originalData = clone(data);
-        const files: AttachmentFile[] = data.attachments
-            .map((attachment: Attachment) => this.transformAttachmentToFile(attachment));
-        this.originalFiles = clone(files);
-        this.currentFiles = clone(files);
+        this.originalFiles = clone(data.attachments);
+        this.currentFiles = clone(data.attachments);
     }
 
     public constructor() {
@@ -142,8 +141,7 @@ export class IssueTrackerPopup extends LitElement {
     public createIssue(): void {
         if (!this.editedData) { return; }
         // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-        const attachments: Partial<Attachment>[] = this.currentFiles.map((file: AttachmentFile) => ({ file: file.raw }));
-        store.dispatch<AsyncEffect>(createLogIssue(this.editedData, attachments));
+        store.dispatch<AsyncEffect>(createLogIssue(this.editedData, this.currentFiles));
     }
 
     public updateIssue(): void {
@@ -154,8 +152,8 @@ export class IssueTrackerPopup extends LitElement {
             { toRequest: true, nestedFields: ['options'] });
         const newFiles: Partial<Attachment>[] = this.getNewFiles(this.currentFiles);
         // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-        const deletedFiles: Partial<Attachment>[] = this.getDeletedFiles(this.originalFiles, this.currentFiles);
-        const changedFiles: Partial<Attachment>[] = this.getChangedFiles(this.originalFiles, this.currentFiles);
+        const deletedFiles: Partial<Attachment>[] = this.getDeletedFiles(this.currentFiles, this.originalFiles);
+        const changedFiles: Partial<Attachment>[] = this.getChangedFiles(this.currentFiles);
         const isChanged: boolean = !!Object.keys(data).length;
         if (!this.editedData.id || !isChanged && !newFiles.length && !deletedFiles.length && !changedFiles.length) {
             this.dialogOpened = false;
@@ -205,47 +203,44 @@ export class IssueTrackerPopup extends LitElement {
         this.locationSites = location && location.sites || [];
     }
 
+    public onChangeFile({ id, file }: SelectedFile): void {
+        const indexAttachment: number = this.currentFiles
+            .findIndex((nextAttachment: Partial<Attachment>) => nextAttachment.id === id);
+        if (~indexAttachment) {
+            this.currentFiles.splice(indexAttachment, 1, { id, file });
+        }
+    }
+
     public onAddFile(file: File): void {
         this.currentFiles = [...this.currentFiles, ...[{
-            file_name: file.name,
-            raw: file
+            filename: file.name,
+            file
         }]];
     }
 
-    private getChangedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Partial<Attachment>[] {
-        return originalFiles
-            .filter((originalFile: AttachmentFile) =>
-                currentFiles.some((currentFile: AttachmentFile) =>
-                    currentFile.id === originalFile.id && !!currentFile.raw && !currentFile.path))
-            .map((originalFile: AttachmentFile) => (this.transformFileToAttachment(originalFile)));
+    public onDeleteFile({ detail, currentTarget }: CustomEvent<SelectedFile>): void {
+        const indexAttachment: number = this.currentFiles
+            .findIndex((nextAttachment: Partial<Attachment>) => nextAttachment.id === detail.id);
+        if (~indexAttachment) {
+            this.currentFiles.splice(indexAttachment, 1);
+            (currentTarget as HTMLElement).remove();
+        }
     }
 
-    private getNewFiles(currentFiles: AttachmentFile[]): Partial<Attachment>[] {
+    private getChangedFiles(currentFiles: Partial<Attachment>[]): Partial<Attachment>[] {
         return currentFiles
-            .filter((currentFile: AttachmentFile) => (!currentFile.id))
-            .map((currentFile: AttachmentFile) => (this.transformFileToAttachment(currentFile)));
+            .filter((attachment: Partial<Attachment>) =>
+                attachment.id && !(typeof attachment.file === 'string' || attachment.file instanceof String));
     }
 
-    private getDeletedFiles(originalFiles: AttachmentFile[], currentFiles: AttachmentFile[]): Partial<Attachment>[] {
+    private getNewFiles(currentFiles: Partial<Attachment>[]): Partial<Attachment>[] {
+        return currentFiles
+            .filter((currentFile: Partial<Attachment>) => (!currentFile.id));
+    }
+
+    private getDeletedFiles(currentFiles: Partial<Attachment>[], originalFiles: Attachment[]): Partial<Attachment>[] {
         return originalFiles
-            .filter((originalFile: AttachmentFile) =>
-                !currentFiles.some((currentFile: AttachmentFile) => currentFile.id === originalFile.id))
-            .map((originalFile: AttachmentFile) => this.transformFileToAttachment(originalFile));
-    }
-
-    private transformFileToAttachment(file: AttachmentFile): Partial<Attachment> {
-        const attachment: Partial<Attachment> = { file: file.raw ? file.raw : file.path };
-        if (file.id) { attachment.id = file.id; }
-        if (file.file_name) { attachment.filename = file.file_name; }
-        return attachment;
-    }
-
-    private transformAttachmentToFile(attachment: Attachment): AttachmentFile {
-        const file: AttachmentFile = {
-            id: attachment.id,
-            file_name: attachment.filename || ''
-        };
-        if (attachment.file && typeof attachment.file === 'string') { file.path = attachment.file; }
-        return file;
+            .filter((originalFile: Partial<Attachment>) =>
+                !currentFiles.some((currentFile: Partial<Attachment>) => currentFile.id === originalFile.id));
     }
 }

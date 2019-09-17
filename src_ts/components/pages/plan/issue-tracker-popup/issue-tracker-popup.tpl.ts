@@ -18,6 +18,7 @@ import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 import { simplifyValue } from '../../../utils/objects-diff';
 import '../../../common/file-components/file-select-input';
 import '../../../common/file-components/file-select-button';
+import { SelectedFile } from '../../../common/file-components/file-select-input';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
     // main template
@@ -197,12 +198,13 @@ ${IssueTrackerPopupStyles}
                 @tap="${ () => this.resetFieldError('issue') }"></paper-textarea>
 
         <div>
-            ${repeat(this.currentFiles, (file: AttachmentFile) => html`
+            ${repeat(this.currentFiles, (attachment: Partial<Attachment>) => html`
                 <file-select-input
-                    .fileId="${ file.id }"
-                    .fileName="${ file.file_name }"
-                    .fileUrl="${ file.path }"
-                    @file-selected="${ ({ detail }: CustomEvent<File>) => console.log(detail)}"></file-select-input>
+                    .fileId="${ attachment.id }"
+                    .fileName="${ attachment.filename }"
+                    .fileData="${ attachment.file }"
+                    @file-deleted="${ (event: CustomEvent<SelectedFile>) => this.onDeleteFile(event)}"
+                    @file-selected="${ ({ detail }: CustomEvent<SelectedFile>) => this.onChangeFile(detail)}"></file-select-input>
             `)}
             <file-select-button @file-selected="${ ({ detail }: CustomEvent) => this.onAddFile(detail)}"></file-select-button>
         </div>

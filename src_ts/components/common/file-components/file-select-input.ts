@@ -1,8 +1,8 @@
 import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 
-type SelectedFile = {
+export type SelectedFile = {
     id?: number;
-    file: File;
+    file?: File;
 };
 
 @customElement('file-select-input')
@@ -15,7 +15,7 @@ export class FileSelectInput extends LitElement {
     public fileName: string = '';
 
     @property({ type: String })
-    public fileUrl: string = '';
+    public fileData?: string | File | null;
 
     @property({ type: Boolean })
     public hasDelete: boolean = true;
@@ -95,11 +95,12 @@ export class FileSelectInput extends LitElement {
                 <paper-button class="download-button" @tap="${ () => this.downloadFile() }">
                     <iron-icon icon="cloud-download" class="dw-icon"></iron-icon>
                     Download
-                </paper-button>
-                ${ this.hasDelete ? html`
-                    <paper-button class="delete-button" @tap="${ () => this.deleteFile() }">Delete</paper-button>` :
-                    ''}` :
+                </paper-button>` :
                 '' }
+            ${ this.hasFileData && this.hasDelete ?
+            html`
+                <paper-button class="delete-button" @tap="${ () => this.deleteFile() }">Delete</paper-button>` :
+            ''}
         </div>
         `;
     }
@@ -107,9 +108,8 @@ export class FileSelectInput extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.fileName) { this.fileName = ''; }
-        if (!this.fileUrl) { this.fileUrl = ''; }
-        if (!this.hasFileName && this.hasFileUrl) {
-            this.fileName = this.fileUrl.split('?')[0].split('/').pop() || '';
+        if (!this.hasFileName && typeof this.fileData === 'string') {
+            this.fileName = this.fileData.split('?')[0].split('/').pop() || '';
         }
     }
 
@@ -118,32 +118,28 @@ export class FileSelectInput extends LitElement {
     }
 
     public downloadFile(): void {
-        if (!this.isStoredFile) { return; }
-        this.link.href = this.fileUrl;
-        this.link.click();
-        window.URL.revokeObjectURL(this.fileUrl);
-    }
-
-    public deleteFile(): void {
-        this.fileName = '';
-        this.fileUrl = '';
-        this.dispatchEvent(new CustomEvent('file-deleted', {
-            detail: { id: this.fileId },
-            bubbles: true,
-            composed: true
-        }));
+        if (typeof this.fileData === 'string') {
+            this.link.href = this.fileData;
+            this.link.click();
+            window.URL.revokeObjectURL(this.fileData);
+        }
     }
 
     public get hasFileName(): boolean {
         return !!this.fileName && !!this.fileName.trim().length;
     }
 
-    public get hasFileUrl(): boolean {
-        return !!this.fileUrl && !!this.fileUrl.trim().length;
+    public get hasFileData(): boolean {
+        return !!this.fileData &&
+            typeof this.fileData === 'string' ||
+            this.fileData instanceof String ||
+            this.fileData instanceof File;
     }
 
     public get isStoredFile(): boolean {
-        return !!this.fileId && this.hasFileUrl;
+        return !!this.fileId &&
+            typeof this.fileData === 'string' ||
+            this.fileData instanceof String;
     }
 
     public fileSelected(): void {
@@ -151,10 +147,22 @@ export class FileSelectInput extends LitElement {
         if (fileList) {
             const file: File = fileList[0];
             this.fileName = file.name;
-            this.fileUrl = '';
+            this.fileData = file;
             const detail: SelectedFile = this.fileId ? { id: this.fileId, file } : { file };
             this.dispatchEvent(new CustomEvent<SelectedFile>('file-selected', {
                 detail,
+                bubbles: true,
+                composed: true
+            }));
+        }
+    }
+
+    public deleteFile(): void {
+        this.fileName = '';
+        this.fileData = null;
+        if (this.fileId) {
+            this.dispatchEvent(new CustomEvent<SelectedFile>('file-deleted', {
+                detail: { id: this.fileId },
                 bubbles: true,
                 composed: true
             }));
