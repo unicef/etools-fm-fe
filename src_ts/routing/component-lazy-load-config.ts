@@ -6,11 +6,11 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
 
     // Settings pages
     'settings_sites': [
-        'components/pages/settings/settings-pages.js',
+        'components/pages/settings/settings-page.js',
         'components/pages/settings/sites-tab/sites-tab.js'
     ],
     'settings_questions': [
-        'components/pages/settings/settings-pages.js',
+        'components/pages/settings/settings-page.js',
         'components/pages/settings/questions-tab/questions-tab.js'
     ],
 

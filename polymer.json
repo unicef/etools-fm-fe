@@ -13,6 +13,7 @@
     "src/components/pages/plan/plan-page.js",
     "src/components/pages/plan/templates-tab/templates-tab.js",
     "src/components/pages/plan/rationale-tab/rationale-tab.js",
+    "src/components/pages/plan/issue-tracker-tab/issue-tracker-tab.js",
 
     "src/components/pages/activities-and-data-collection/activities-page.js",
 

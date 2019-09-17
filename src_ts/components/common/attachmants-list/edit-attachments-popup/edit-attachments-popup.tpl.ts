@@ -46,8 +46,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
                             allow-outside-scroll
                             dynamic-align></etools-dropdown>
                 <div class="file-upload-container">
-                    <etools-upload .autoUpload="${ false }" .showDeleteBtn="${ false }" .fileUrl="${ this.editedAttachment.file }" style="display: none"></etools-upload>
-                    <file-selector .fileUrl="${ this.editedAttachment.file }"></file-selector>
+                    <etools-upload .autoUpload="${ false }" .showDeleteBtn="${ false }" .fileUrl="${ this.editedAttachment.file }"></etools-upload>
                 </div>
             </div>
 
