@@ -70,7 +70,7 @@ export class PageHeader extends connect(store)(LitElement) {
             }
         }));
         store.subscribe(userSelector((userState: IUserState) => {
-            if (!isEmpty(userState.error)) {
+            if (userState.error && !isEmpty(userState.error)) {
                 this.showSaveNotification('Profile data not saved. Save profile error!');
             }
             if (!userState.isRequest && !userState.error) {

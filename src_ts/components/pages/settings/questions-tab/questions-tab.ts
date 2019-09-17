@@ -113,14 +113,13 @@ export class QuestionsTabComponent extends LitElement {
             data: question
         }).then(({ confirmed }: IDialogResponse<any>) => {
             if (!confirmed) { return; }
-            if (!question) {
-                // update params, it will load questions list is subscriber
-                updateQueryParams({ page: 1 });
-            } else {
-                // refresh current list
-                const currentParams: IRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
-                store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
-            }
+
+            // we need to refresh current list if this was edit popup or params wasn't updated
+            // For update params it will load questions list in subscriber
+            const needToRefresh: boolean = Boolean(question) || !updateQueryParams({ page: 1 });
+            if (!needToRefresh) { return; }
+            const currentParams: IRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
+            store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
         });
     }
 

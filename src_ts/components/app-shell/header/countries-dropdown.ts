@@ -42,7 +42,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
             if (!countryState.isRequest && !countryState.error) {
                 this.handleChangedCountry();
             }
-            if (!countryState.isRequest && !isEmpty(countryState.error)) {
+            if (!countryState.isRequest && countryState.error && !isEmpty(countryState.error)) {
                 this.handleCountryChangeError(countryState.error);
             }
         }));

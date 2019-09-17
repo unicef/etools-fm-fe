@@ -103,7 +103,7 @@ export function updateAppLocation(newLocation: string, dispatchNavigation: boole
     EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate: boolean = true): void {
+export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate: boolean = true): boolean {
     const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
     const path: string = details && details.path || '';
     const queryParams: IRouteQueryParams | null = details && details.queryParams;
@@ -119,7 +119,7 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
     }
 
     const newParamsEqualsCurrent: boolean = equals(queryParams, resultParams);
-    if (newParamsEqualsCurrent) { return; }
+    if (newParamsEqualsCurrent) { return false; }
 
     let navigationCallback: (() => void) | null = null;
     if (dispatchUpdate) {
@@ -128,6 +128,7 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
         };
     }
     EtoolsRouter.navigate(path, resultParams, navigationCallback);
+    return true;
 }
 
 export const ROUTE_404: string = '/page-not-found';

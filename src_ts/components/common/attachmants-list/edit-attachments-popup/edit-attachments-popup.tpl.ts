@@ -1,5 +1,4 @@
 import '@unicef-polymer/etools-upload/etools-upload';
-import '../../file-selector/file-selector';
 import { EditAttachmentsPopupComponent } from './edit-attachments-popup';
 import { html, TemplateResult } from 'lit-element';
 import { SharedStyles } from '../../../styles/shared-styles';
