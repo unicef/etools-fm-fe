@@ -33,7 +33,7 @@ ${IssueTrackerPopupStyles}
         keep-dialog-open
         ?opened="${ this.dialogOpened }"
         .okBtnText="${ translate(this.isNew ? 'MAIN.BUTTONS.ADD' : 'MAIN.BUTTONS.SAVE') }"
-        ?hideConfirmBtn="${ this.isReadOnly }"
+        .hideConfirmBtn="${ this.isReadOnly }"
         dialog-title="${ translate('ISSUE_TRACKER.POPUP_TITLE') }"
         @iron-overlay-closed="${({ target }: CustomEvent) => this.resetData(target)}"
         @confirm-btn-clicked="${() => this.processRequest()}">
@@ -203,10 +203,13 @@ ${IssueTrackerPopupStyles}
                     .fileId="${ attachment.id }"
                     .fileName="${ attachment.filename }"
                     .fileData="${ attachment.file }"
+                    ?isReadonly="${ this.isReadOnly }"
                     @file-deleted="${ ({ detail }: CustomEvent<SelectedFile>) => this.onDeleteFile(detail)}"
                     @file-selected="${ ({ detail }: CustomEvent<SelectedFile>) => this.onChangeFile(detail)}"></file-select-input>
             `)}
-            <file-select-button @file-selected="${ ({ detail }: CustomEvent) => this.onAddFile(detail)}"></file-select-button>
+            ${ this.isReadOnly ? '' : html`
+                <file-select-button @file-selected="${ ({ detail }: CustomEvent) => this.onAddFile(detail)}"></file-select-button>
+            `}
         </div>
 
     </div>

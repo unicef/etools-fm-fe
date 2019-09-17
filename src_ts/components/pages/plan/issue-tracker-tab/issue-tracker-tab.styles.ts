@@ -21,5 +21,10 @@ export const IssueTrackerTabStyles: TemplateResult = html`
         .filter:not(:last-of-type) {
             margin-right: 16px;
         }
+        .files-column {
+            color: var(--module-primary);
+            cursor: pointer;
+            font-weight: 500;
+        }
     </style>
 `;

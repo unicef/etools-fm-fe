@@ -44,7 +44,7 @@ export class IssueTrackerTabComponent extends LitElement {
     @property({ type: Array })
     public locations: IGroupedSites[] = [];
 
-    public queryParams: IRouteQueryParam | null = null;
+    public queryParams: GenericObject | null = null;
     private readonly debouncedLoading: Callback;
 
     private routeUnsubscribe!: Unsubscribe;
@@ -133,7 +133,13 @@ export class IssueTrackerTabComponent extends LitElement {
                item.cp_output ? item.cp_output.name : '';
     }
 
-    public openViewDialog(): void {}
+    public openViewDialog(issue?: LogIssue): void {
+        openDialog<LogIssue | undefined>({
+            dialog: 'issue-tracker-popup',
+            data: issue,
+            readonly: true
+        }).then(() => {});
+    }
 
     public isAllowEdit(logIssue: LogIssue): boolean {
         // todo permission
@@ -211,21 +217,28 @@ export class IssueTrackerTabComponent extends LitElement {
     }
 
     public onOutputsChanged(items: EtoolsCpOutput[]): void {
+        const currentValue: number[] = this.queryParams && this.queryParams.cp_output__in || [];
         const ids: number[] = items.length > 0 ? items.map((item: EtoolsCpOutput) => (item.id)) : [];
+        if (JSON.stringify(currentValue) === JSON.stringify(ids)) { return; }
         updateQueryParams({ cp_output__in: ids });
     }
 
     public onPartnersChanged(items: EtoolsPartner[]): void {
+        const currentValue: number[] = this.queryParams && this.queryParams.partner__in || [];
         const ids: number[] = items.length > 0 ? items.map((item: EtoolsPartner) => (item.id)) : [];
+        if (JSON.stringify(currentValue) === JSON.stringify(ids)) { return; }
         updateQueryParams({ partner__in: ids });
     }
 
     public onLocationsChanged(items: IGroupedSites[]): void {
+        const currentValue: string[] = this.queryParams && this.queryParams.location_site__in || [];
         const ids: string[] = items.length > 0 ? items.map((item: IGroupedSites) => (item.id)) : [];
+        if (JSON.stringify(currentValue) === JSON.stringify(ids)) { return; }
         updateQueryParams({ location_site__in: ids });
     }
 
     public changeShowOnlyNew(value: boolean): void {
+        if (value === undefined ) { return; }
         if (value) {
             updateQueryParams({ status: 'new' });
         } else {

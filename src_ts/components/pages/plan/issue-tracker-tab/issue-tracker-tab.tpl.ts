@@ -12,6 +12,7 @@ import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-data-table';
 import '@unicef-polymer/etools-dropdown';
 import { prettyDate } from '../../../utils/date-utility';
+import { simplifyValue } from '../../../utils/objects-diff';
 
 export function template(this: IssueTrackerTabComponent): TemplateResult {
     // main template
@@ -27,7 +28,7 @@ ${FlexLayoutClasses} ${TableStyles}
             .options="${this.outputs}"
             option-label="name"
             option-value="id"
-            .selectedValues="${ this.queryParams && this.queryParams.cp_output__in || [] }"
+            .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.cp_output__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onOutputsChanged(detail.selectedItems) }"
             hide-search
@@ -39,7 +40,7 @@ ${FlexLayoutClasses} ${TableStyles}
             .options="${this.partners}"
             option-label="short_name"
             option-value="id"
-            .selectedValues="${ this.queryParams && this.queryParams.partner__in || [] }"
+            .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.partner__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onPartnersChanged(detail.selectedItems) }"
             hide-search
@@ -51,7 +52,7 @@ ${FlexLayoutClasses} ${TableStyles}
             .options="${this.locations}"
             option-label="name"
             option-value="id"
-            .selectedValues="${ this.queryParams && this.queryParams.location_site__in || [] }"
+            .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.location_site__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onLocationsChanged(detail.selectedItems) }"
             hide-search
@@ -119,7 +120,7 @@ ${FlexLayoutClasses} ${TableStyles}
                 </div>
                 <div class="col-data flex-1">
                     ${logIssue.attachments.length ? html`
-                        <div class="files-column" @click="${() => this.openViewDialog()}">
+                        <div class="files-column" @click="${() => this.openViewDialog(logIssue)}">
                             ${logIssue.attachments.length} FILES
                         </div> ` : ''}
                 </div>

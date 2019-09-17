@@ -53,6 +53,10 @@ export class IssueTrackerPopup extends LitElement {
     private readonly outputsUnsubscribe!: Unsubscribe;
     private readonly partnersUnsubscribe!: Unsubscribe;
 
+    public set readonly(value: boolean) {
+        this.isReadOnly = value;
+    }
+
     public set data(data: LogIssue) {
         this.isNew = (!data);
         if (this.isNew) {
