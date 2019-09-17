@@ -12,7 +12,7 @@ import { changeCurrentUserCountry } from '../../../redux/effects/country.effects
 import { countrySelector } from '../../../redux/selectors/country.selectors';
 import { DEFAULT_ROUTE, updateAppLocation } from '../../../routing/routes';
 import { ROOT_PATH } from '../../../config/config';
-import { isEmpty } from 'lodash-es';
+import { isEmpty } from 'ramda';
 
 /**
  * @LitElement

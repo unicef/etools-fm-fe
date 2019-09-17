@@ -14,7 +14,7 @@ import { isProductionServer, isStagingServer, ROOT_PATH } from '../../../config/
 import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { UpdateDrawerState } from '../../../redux/actions/app';
 import { pageHeaderStyles } from './page-header-styles';
-import { isEmpty } from 'lodash-es';
+import { isEmpty } from 'ramda';
 import { fireEvent } from '../../utils/fire-custom-event';
 import { updateCurrentUserData } from '../../../redux/effects/user.effects';
 import { currentUser, userSelector } from '../../../redux/selectors/user.selectors';

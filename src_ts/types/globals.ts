@@ -6,8 +6,6 @@
 */
 type Constructor<T> = new(...args: any[]) => T;
 
-declare const moment: any;
-
 type GenericObject<T = any> = {
     [key: string]: T;
 };

@@ -1,5 +1,5 @@
 import { logWarn } from '@unicef-polymer/etools-behaviors/etools-logging.js';
-declare const moment: any;
+import moment from 'moment';
 
 export function isValidDate(date: any): boolean {
   return !(date instanceof Date) ? false : (date.toString() !== 'Invalid Date');
@@ -10,7 +10,7 @@ export function prettyDate(dateString: string, format?: string, placeholder: str
   return (!date) ? (placeholder ? placeholder : '') : _utcDate(date, format);
 }
 
-function _utcDate(date: any, format?: string): '' | Response {
+function _utcDate(date: any, format?: string): string {
   return (!date) ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
 }
 

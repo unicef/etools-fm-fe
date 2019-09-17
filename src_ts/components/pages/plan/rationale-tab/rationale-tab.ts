@@ -11,6 +11,7 @@ import { loadRationale } from '../../../../redux/effects/rationale.effects';
 import { rationaleData } from '../../../../redux/selectors/rationale.selectors';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { openDialog } from '../../../utils/dialog';
+import moment from 'moment';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -63,7 +64,6 @@ export class RationaleTabComponent extends LitElement {
     }
 
     public getChangesDate(date?: string): string {
-        // @ts-ignore
         return date ? moment(date).format('DD MMM YYYY') : '';
     }
 
