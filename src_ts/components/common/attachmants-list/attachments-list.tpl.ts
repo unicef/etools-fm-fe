@@ -35,7 +35,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                             @tap="${() => this.openPopup()}"
                             class="panel-button"
                             ?hidden="${ !hasPermission(Permissions.EDIT_RATIONALE) }"
-                            icon="create"></paper-icon-button>
+                            icon="add"></paper-icon-button>
                 </div>
 
             </div>

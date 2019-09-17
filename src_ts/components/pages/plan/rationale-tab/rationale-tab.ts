@@ -11,7 +11,6 @@ import { loadRationale } from '../../../../redux/effects/rationale.effects';
 import { rationaleData } from '../../../../redux/selectors/rationale.selectors';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { openDialog } from '../../../utils/dialog';
-import moment from 'moment';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {

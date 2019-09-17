@@ -7,7 +7,6 @@ import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
 import { IDialogResponse, openDialog } from '../../utils/dialog';
 import { Unsubscribe } from 'redux';
 import { debounce } from '../../utils/debouncer';
-import moment from 'moment';
 
 const FILE_TYPES: DefaultDropdownOption[] = [{ display_name: 'SOP', value: 34 }, { display_name: 'Other', value: 35 }];
 

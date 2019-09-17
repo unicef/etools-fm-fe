@@ -1,4 +1,5 @@
 import '@unicef-polymer/etools-upload/etools-upload';
+import '../../file-selector/file-selector';
 import { EditAttachmentsPopupComponent } from './edit-attachments-popup';
 import { html, TemplateResult } from 'lit-element';
 import { SharedStyles } from '../../../styles/shared-styles';
@@ -45,7 +46,8 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
                             allow-outside-scroll
                             dynamic-align></etools-dropdown>
                 <div class="file-upload-container">
-                    <etools-upload .autoUpload="${ false }" .showDeleteBtn="${ false }" .fileUrl="${ this.editedAttachment.file }"></etools-upload>
+                    <etools-upload .autoUpload="${ false }" .showDeleteBtn="${ false }" .fileUrl="${ this.editedAttachment.file }" style="display: none"></etools-upload>
+                    <file-selector .fileUrl="${ this.editedAttachment.file }"></file-selector>
                 </div>
             </div>
 

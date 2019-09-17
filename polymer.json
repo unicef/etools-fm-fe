@@ -21,6 +21,9 @@
   "extraDependencies": [
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/web-animations-js/web-animations-next-lite.min.js",
+    "node_modules/leaflet/dist/leaflet.js",
+    "node_modules/moment/min/moment.min.js",
     "push-manifest.json"
   ],
   "builds": [

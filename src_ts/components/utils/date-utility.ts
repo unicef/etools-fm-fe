@@ -1,5 +1,4 @@
 import { logWarn } from '@unicef-polymer/etools-behaviors/etools-logging.js';
-import moment from 'moment';
 
 export function isValidDate(date: any): boolean {
   return !(date instanceof Date) ? false : (date.toString() !== 'Invalid Date');
