@@ -58,3 +58,45 @@ type EtoolsPartner = {
     hidden: boolean;
     basis_for_risk_rating: string;
 };
+
+type EtoolsIntervention = {
+    id: number;
+    number: string;
+    document_type: string;
+    partner_name: string;
+    status: string;
+    title: string;
+    start: string;
+    end: string;
+    frs_total_frs_amt: null;
+    unicef_cash: string;
+    cso_contribution: string;
+    country_programme: number;
+    frs_earliest_start_date: null;
+    frs_latest_end_date: null;
+    sections: [];
+    section_names: [];
+    cp_outputs: number[];
+    unicef_focal_points: [];
+    frs_total_intervention_amt: null;
+    frs_total_outstanding_amt: null;
+    offices: [];
+    actual_amount: null;
+    offices_names: [];
+    total_unicef_budget: string;
+    total_budget: string;
+    metadata: {
+        migrated: boolean;
+        old_status: string;
+    };
+    flagged_sections: [];
+    budget_currency: string;
+    fr_currencies_are_consistent: null;
+    all_currencies_are_consistent: null;
+    fr_currency: string;
+    multi_curr_flag: boolean;
+    location_p_codes: string[];
+    donors: [];
+    donor_codes: [];
+    grants: [];
+};

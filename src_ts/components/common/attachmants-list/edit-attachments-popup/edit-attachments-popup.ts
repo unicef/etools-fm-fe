@@ -1,8 +1,7 @@
-import { customElement, LitElement, property, query, TemplateResult } from 'lit-element';
+import { customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { fireEvent } from '../../../utils/fire-custom-event';
 import { clone } from 'ramda';
 import { template } from './edit-attachments-popup.tpl';
-import { EtoolsUpload } from '@unicef-polymer/etools-upload/etools-upload';
 import { store } from '../../../../redux/store';
 import { addAttachmentToList, updateListAttachment } from '../../../../redux/effects/attachments-list.effects';
 import { listAttachmentUpdate } from '../../../../redux/selectors/attachments-list.selectors';
@@ -15,8 +14,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
     @property() public attachmentTypes: DefaultDropdownOption[] = [];
     @property() public errors: GenericObject = {};
     public savingInProcess: boolean = false;
-
-    @query('etools-upload') private readonly fileUploader!: EtoolsUpload;
+    public selectedFile: File | null = null;
 
     private originalData: Attachment | null = null;
     private endpointName!: string;
@@ -60,9 +58,8 @@ export class EditAttachmentsPopupComponent extends LitElement {
     }
 
     public processRequest(): void {
-        const file: object | null | undefined = this.fileUploader.rawFile;
         // validate if file is selected for new attachments
-        if (!this.editedAttachment.id && !file) {
+        if (!this.editedAttachment.id && !this.selectedFile) {
             fireEvent(this, 'toast', {
                 text: 'Please, select correct file',
                 showCloseBtn: false
@@ -72,7 +69,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
 
         // compose new attachment data
         const data: Partial<Attachment> = {};
-        if (file) { data.file = file as File; }
+        if (this.selectedFile) { data.file = this.selectedFile; }
         const typeChanged: boolean =
             Boolean(this.originalData && this.editedAttachment.file_type !== this.originalData.file_type);
         if (!this.originalData && this.editedAttachment.file_type || typeChanged) {

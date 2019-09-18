@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-upload/etools-upload';
+import '../../file-components/file-select-input';
 import { EditAttachmentsPopupComponent } from './edit-attachments-popup';
 import { html, TemplateResult } from 'lit-element';
 import { SharedStyles } from '../../../styles/shared-styles';
@@ -11,7 +11,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
     return html`
         ${SharedStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
         <style>
-            .file-upload-container { padding: 0 12px; }
+            .file-upload-container { padding: 20px 0 0; }
         </style>
 
         <etools-dialog
@@ -45,7 +45,11 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
                             allow-outside-scroll
                             dynamic-align></etools-dropdown>
                 <div class="file-upload-container">
-                    <etools-upload .autoUpload="${ false }" .showDeleteBtn="${ false }" .fileUrl="${ this.editedAttachment.file }"></etools-upload>
+                    <file-select-input
+                            .fileData="${ this.editedAttachment.file }"
+                            @file-selected="${ (event: CustomEvent) => this.selectedFile = event.detail.file }"
+                            .hasDelete="${ false }"
+                            .fileId="${ this.editedAttachment.id }"></file-select-input>
                 </div>
             </div>
 

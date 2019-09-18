@@ -13,8 +13,10 @@ export function loadAttachmentsList(endpointName: string): (dispatch: Dispatch) 
         if (!url) {
             throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
         }
-        return request<IListData<Attachment>>(url, { method: 'GET' })
-            .then((response: IListData<Attachment>) => { dispatch(new SetAttachmentsList({ data: response, name: endpointName })); });
+        return request<IListData<Attachment> | Attachment[]>(url, { method: 'GET' })
+            .then((response: IListData<Attachment> | Attachment[]) => {
+                dispatch(new SetAttachmentsList({ data: response, name: endpointName }));
+            });
     };
 }
 

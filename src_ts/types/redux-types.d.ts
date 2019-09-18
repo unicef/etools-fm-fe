@@ -35,7 +35,7 @@ interface IStaticDataState {
     sections?: EtoolsSection[];
     methods?: EtoolsMethod[];
     partners?: EtoolsPartner[];
-    interventions?: any[];
+    interventions?: EtoolsIntervention[];
     outputs?: EtoolsCpOutput[];
 }
 
@@ -58,7 +58,7 @@ interface IRationaleState {
 }
 
 interface IAttachmentsListState {
-    rationale_attachments: null | IListData<Attachment>;
+    rationale_attachments: null | Attachment[];
     updateInProcess: null | boolean;
     error: GenericObject;
 }

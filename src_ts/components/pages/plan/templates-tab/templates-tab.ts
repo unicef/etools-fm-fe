@@ -41,7 +41,7 @@ export class TemplatesTabComponent extends LitElement {
     @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
     public count: number = 0;
     public partners!: EtoolsPartner[];
-    public interventions!: any[];
+    public interventions!: EtoolsIntervention[];
     public outputs!: EtoolsCpOutput[];
 
     @property() public get loadingInProcess(): boolean {

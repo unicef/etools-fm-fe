@@ -6,7 +6,7 @@ export enum AttachmentsActionTypes {
 
 export class SetAttachmentsList {
     public readonly type: AttachmentsActionTypes.SET_ATTACHMENTS_LIST = AttachmentsActionTypes.SET_ATTACHMENTS_LIST;
-    public constructor(public payload: { name: string; data: IListData<Attachment> }) {}
+    public constructor(public payload: { name: string; data: IListData<Attachment> | Attachment[] }) {}
 }
 
 export class SetAttachmentsUpdateState {

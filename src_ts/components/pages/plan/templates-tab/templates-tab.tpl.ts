@@ -69,7 +69,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                    label="${ translate('TEMPLATES.FILTERS.INTERVENTION_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.INTERVENTION_PLACEHOLDER') }"
                                    .minWidth="160px"
-                                   option-label="name"
+                                   option-label="title"
                                    option-value="id"></etools-dropdown>
               </div>
           </section>

@@ -53,6 +53,8 @@ export class FileSelectInput extends LitElement {
                 white-space: nowrap;
             }
             .file-icon {
+                width: 24px;
+                flex: none;
                 color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
             }
             .delete-button {
@@ -135,21 +137,16 @@ export class FileSelectInput extends LitElement {
     }
 
     public get hasFileData(): boolean {
-        return !!this.fileData &&
-            typeof this.fileData === 'string' ||
-            this.fileData instanceof String ||
-            this.fileData instanceof File;
+        return Boolean(this.fileData) || typeof this.fileData === 'string';
     }
 
     public get isStoredFile(): boolean {
-        return !!this.fileId &&
-            typeof this.fileData === 'string' ||
-            this.fileData instanceof String;
+        return Boolean(this.fileId) && typeof this.fileData === 'string';
     }
 
     public fileSelected(): void {
         const fileList: FileList | null = this.fileInput.files;
-        if (fileList && !fileList.length) {
+        if (fileList && fileList.length) {
             const file: File = fileList[0];
             this.fileName = file.name;
             this.fileData = file;
