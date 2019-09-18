@@ -44,10 +44,9 @@ ${IssueTrackerPopupStyles}
     <div class="container layout vertical">
         <div class="layout horizontal center">
 
-            <div class="layout vertical related-to-type">
+            <div class="layout vertical related-to-type flex-2">
                 <label id="related-to-type">${ translate('ISSUE_TRACKER.RELATED_TO_TYPE')}</label>
                 <paper-radio-group
-                        class="flex-2"
                         selected="${ this.relatedToType }"
                          @iron-select="${({ detail }: CustomEvent) => this.changeRelatedType(detail.item)}"
                         ?disabled="${ this.isReadOnly }">
@@ -77,7 +76,7 @@ ${IssueTrackerPopupStyles}
                     @focus="${ () => this.resetFieldError('status') }"
                     @tap="${ () => this.resetFieldError('status') }"
                     @etools-selected-item-changed="${({ detail }: CustomEvent) =>
-                        this.updateModelValue('status', detail.selectedItem.value)}"
+                        this.updateModelValue('status', detail.selectedItem && detail.selectedItem.value)}"
                     trigger-value-change-event
                     hide-search
                     allow-outside-scroll></etools-dropdown>
@@ -102,7 +101,7 @@ ${IssueTrackerPopupStyles}
                         @focus="${ () => this.resetFieldError('partner') }"
                         @tap="${ () => this.resetFieldError('partner') }"
                         @etools-selected-item-changed="${({ detail }: CustomEvent) =>
-                            this.updateModelValue('partner', detail.selectedItem.id)}"
+                            this.updateModelValue('partner', detail.selectedItem && detail.selectedItem.id)}"
                         hide-search
                         allow-outside-scroll>
                 </etools-dropdown>
@@ -115,7 +114,7 @@ ${IssueTrackerPopupStyles}
                         class="validate-input disabled-as-readonly flex"
                         .selected="${ simplifyValue(this.editedData.cp_output) }"
                         @etools-selected-item-changed="${({ detail }: CustomEvent) =>
-                            this.updateModelValue('cp_output', detail.selectedItem.id)}"
+                            this.updateModelValue('cp_output', detail.selectedItem && detail.selectedItem.id)}"
                         label="${ translate('ISSUE_TRACKER.CP_OUTPUT') }"
                         placeholder="${ translate('ISSUE_TRACKER.PLACEHOLDER.CP_OUTPUT') }"
                         .options=${ this.outputs }
@@ -154,7 +153,7 @@ ${IssueTrackerPopupStyles}
                         @focus="${ () => this.resetFieldError('location') }"
                         @tap="${ () => this.resetFieldError('location') }"
                         @etools-selected-item-changed="${({ detail }: CustomEvent) =>
-                            this.setLocation(detail.selectedItem.id)}"
+                            this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
                         hide-search
                         allow-outside-scroll>
                 </etools-dropdown>
@@ -166,7 +165,6 @@ ${IssueTrackerPopupStyles}
                         .options=${ this.locationSites }
                         option-label="name"
                         option-value="id"
-                        required
                         ?disabled="${ this.isReadOnly }"
                         ?readonly="${ this.isReadOnly }"
                         ?invalid="${ this.errors && this.errors.location_site }"
@@ -175,7 +173,7 @@ ${IssueTrackerPopupStyles}
                         @focus="${ () => this.resetFieldError('location_site') }"
                         @tap="${ () => this.resetFieldError('location_site') }"
                         @etools-selected-item-changed="${({ detail }: CustomEvent) =>
-                            this.updateModelValue('location_site', detail.selectedItem.id)}"
+                            this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
                         hide-search
                         allow-outside-scroll>
                 </etools-dropdown>

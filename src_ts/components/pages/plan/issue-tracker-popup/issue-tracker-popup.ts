@@ -129,10 +129,6 @@ export class IssueTrackerPopup extends LitElement {
                 this.errors = { ...this.errors, ...{ location: 'Location is not provided' } };
                 return false;
             }
-            if (!this.editedData.location_site) {
-                this.errors = { ...this.errors, ...{ location_site: 'Location Site is not provided' } };
-                return false;
-            }
         }
         return true;
     }
@@ -196,7 +192,13 @@ export class IssueTrackerPopup extends LitElement {
     public changeRelatedType(item: PaperRadioButtonElement): void {
         const type: RelatedType = item.get('name');
         this.relatedToType = type;
-        this.editedData.related_to_type = type;
+        if (type !== this.editedData.related_to_type) {
+            this.editedData.partner = null;
+            this.editedData.cp_output = null;
+            this.editedData.location = null;
+            this.editedData.location_site = null;
+            this.editedData.related_to_type = type;
+        }
     }
 
     public setLocation(value: any): void {

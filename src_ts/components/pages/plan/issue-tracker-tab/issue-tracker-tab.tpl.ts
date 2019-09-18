@@ -79,7 +79,7 @@ ${FlexLayoutClasses} ${TableStyles}
 
     <etools-data-table-header no-title ?no-collapse="${!this.logIssues.length}">
         <etools-data-table-column class="flex-1" field="related_to_type">
-            ${translate('ISSUE_TRACKER.RELATED_TO')}f
+            ${translate('ISSUE_TRACKER.RELATED_TO')}
         </etools-data-table-column>
         <etools-data-table-column class="flex-2" field="name" sortable>
             ${translate('ISSUE_TRACKER.NAME')}
@@ -109,7 +109,7 @@ ${FlexLayoutClasses} ${TableStyles}
             <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-1">
                     <span class="truncate">
-                        ${translate(`ISSUE_TRACKER.RELATED_TYPE.${this.getRelatedType(logIssue)}`)}
+                        ${translate(`ISSUE_TRACKER.RELATED_TYPE.${(logIssue.related_to_type as string).toUpperCase()}`)}
                     </span>
                 </div>
                 <div class="col-data flex-2">
@@ -129,10 +129,10 @@ ${FlexLayoutClasses} ${TableStyles}
                     ${ translate(`ISSUE_TRACKER.STATUSES.${logIssue.status.toUpperCase()}`)}
                 </div>
 
-                ${this.isAllowEdit(logIssue) ? html`
+                ${ hasPermission(Permissions.EDIT_LOG_ISSUES) ? html`
                     <div class="hover-block">
                         <iron-icon icon="icons:create" @click="${() => this.openLogIssue(logIssue)}"></iron-icon>
-                    </div>` : ''}
+                    </div>` : '' }
             </div>
 
             <div slot="row-data-details" class="layout horizontal">

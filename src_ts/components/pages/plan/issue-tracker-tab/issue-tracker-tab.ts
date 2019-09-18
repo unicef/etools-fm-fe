@@ -122,11 +122,6 @@ export class IssueTrackerTabComponent extends LitElement {
         return !invalid;
     }
 
-    public getRelatedType(item: LogIssue): string {
-        return item.partner ? 'PARTNER' :
-               item.location_site ? 'LOCATION' : 'CP_OUTPUT';
-    }
-
     public getName(item: LogIssue): string {
         return item.partner ? item.partner.name :
                item.location && item.location_site ? `${item.location.name} - ${item.location_site.name}` :

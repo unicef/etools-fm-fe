@@ -1,10 +1,10 @@
 type LogIssue = {
     id?: number;
     related_to_type?: RelatedType;
-    partner?: Partner;
-    cp_output?: CpOutput;
-    location?: ISiteParrentLocation;
-    location_site?: Site;
+    partner?: Partner | null;
+    cp_output?: CpOutput | null;
+    location?: ISiteParrentLocation | null;
+    location_site?: Site | null;
     status: IssueStatus;
     issue: string;
     attachments: [];
