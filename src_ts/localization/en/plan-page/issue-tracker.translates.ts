@@ -10,7 +10,7 @@ export const ISSUE_TRACKER_TRANSLATES: TranslateObject = {
         'RELATED_TYPE': {
             'CP_OUTPUT': 'Cp Output',
             'PARTNER': 'Partner',
-            'LOCATION': 'Location or Site'
+            'LOCATION': 'Location/Site'
         },
         'STATUS': 'Status',
         'STATUSES': {
