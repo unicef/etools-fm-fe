@@ -52,7 +52,7 @@ ${FlexLayoutClasses} ${TableStyles}
             .options="${this.locations}"
             option-label="name"
             option-value="id"
-            .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.location_site__in) || [] }"
+            .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.location__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onLocationsChanged(detail.selectedItems) }"
             hide-search

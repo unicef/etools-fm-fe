@@ -226,10 +226,10 @@ export class IssueTrackerTabComponent extends LitElement {
     }
 
     public onLocationsChanged(items: IGroupedSites[]): void {
-        const currentValue: string[] = this.queryParams && this.queryParams.location_site__in || [];
+        const currentValue: string[] = this.queryParams && this.queryParams.location__in || [];
         const ids: string[] = items.length > 0 ? items.map((item: IGroupedSites) => (item.id)) : [];
         if (JSON.stringify(currentValue) === JSON.stringify(ids)) { return; }
-        updateQueryParams({ location_site__in: ids });
+        updateQueryParams({ location__in: ids });
     }
 
     public changeShowOnlyNew(value: boolean): void {
