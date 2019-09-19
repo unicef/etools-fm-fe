@@ -55,6 +55,7 @@ export class PageContentHeader extends LitElement {
                     @apply --layout-center;
                     margin: 30px 0 0;
                     padding: 0 24px;
+                    height: 36px;
                 }
 
                 .title-row h1 {
