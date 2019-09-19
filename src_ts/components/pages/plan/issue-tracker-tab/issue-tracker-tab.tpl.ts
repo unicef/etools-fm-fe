@@ -31,8 +31,10 @@ ${FlexLayoutClasses} ${TableStyles}
             .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.cp_output__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onOutputsChanged(detail.selectedItems) }"
-            hide-search
-            .minWidth="160px"></etools-dropdown-multi></div>
+            .minWidth="160px"
+            .autoWidth="${ true }"
+            horizontal-align="left"
+            no-dynamic-align></div>
     <div class="filter">
         <etools-dropdown-multi
             label="${ translate('ISSUE_TRACKER.PARTNER') }"
@@ -43,8 +45,10 @@ ${FlexLayoutClasses} ${TableStyles}
             .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.partner__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onPartnersChanged(detail.selectedItems) }"
-            hide-search
-            .minWidth="160px"></etools-dropdown-multi></div>
+            min-width="160px"
+            .autoWidth="${ true }"
+            horizontal-align="left"
+            no-dynamic-align></etools-dropdown-multi></div>
     <div>
         <etools-dropdown-multi
             label="${ translate('ISSUE_TRACKER.LOCATION_SITE') }"
@@ -55,8 +59,10 @@ ${FlexLayoutClasses} ${TableStyles}
             .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.location__in) || [] }"
             trigger-value-change-event
             @etools-selected-items-changed="${ ({ detail }: CustomEvent) => this.onLocationsChanged(detail.selectedItems) }"
-            hide-search
-            .minWidth="160px"></etools-dropdown-multi></div>
+            .minWidth="160px"
+            .autoWidth="${ true }"
+            horizontal-align="left"
+            no-dynamic-align></etools-dropdown-multi></div>
     <div class="toggle-button-control filter">
         <paper-toggle-button
             .checked="${this.queryParams && this.queryParams.status}"

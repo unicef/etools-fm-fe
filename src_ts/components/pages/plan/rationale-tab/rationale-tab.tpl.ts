@@ -38,8 +38,10 @@ export function template(this: RationaleTabComponent): TemplateResult {
                 <div class="table-title">${ translate('RATIONALE.TITLE') }</div>
                 <div class="buttons-container">
 
-                    <div class="history-info" hidden$="[[!yearPlan.history.length]]">
-                        Last edited by ${ this.yearPlan && this.yearPlan.history[0].by_user_display } on ${ this.getChangesDate(this.yearPlan && this.yearPlan.history[0].created) }</div>
+                    ${ this.yearPlan && this.yearPlan.history[0] ? html`
+                        <div class="history-info">
+                        Last edited by ${ this.yearPlan.history[0].by_user_display } on ${ this.getChangesDate(this.yearPlan.history[0].created) }</div>
+                    ` : ''}
 
                     <paper-icon-button
                             @tap="${() => this.openPopup()}"

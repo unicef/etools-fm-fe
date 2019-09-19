@@ -31,6 +31,8 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                    label="${ translate('TEMPLATES.FILTERS.LEVEL_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.LEVEL_PLACEHOLDER') }"
                                    .minWidth="160px"
+                                   horizontal-align="left"
+                                   no-dynamic-align
                                    option-label="display_name"
                                    option-value="value"></etools-dropdown>
               </div>
@@ -45,6 +47,9 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                    label="${ translate('TEMPLATES.FILTERS.PARTNER_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.PARTNER_PLACEHOLDER') }"
                                    .minWidth="160px"
+                                   .autoWidth="${ true }"
+                                   horizontal-align="left"
+                                   no-dynamic-align
                                    option-label="name"
                                    option-value="id"></etools-dropdown>
 
@@ -57,6 +62,9 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                    label="${ translate('TEMPLATES.FILTERS.OUTPUT_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.OUTPUT_PLACEHOLDER') }"
                                    .minWidth="160px"
+                                   .autoWidth="${ true }"
+                                   horizontal-align="left"
+                                   no-dynamic-align
                                    option-label="name"
                                    option-value="id"></etools-dropdown>
 
@@ -69,6 +77,9 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                                    label="${ translate('TEMPLATES.FILTERS.INTERVENTION_LABEL') }"
                                    placeholder="${ translate('TEMPLATES.FILTERS.INTERVENTION_PLACEHOLDER') }"
                                    .minWidth="160px"
+                                   .autoWidth="${ true }"
+                                   horizontal-align="left"
+                                   no-dynamic-align
                                    option-label="title"
                                    option-value="id"></etools-dropdown>
               </div>
