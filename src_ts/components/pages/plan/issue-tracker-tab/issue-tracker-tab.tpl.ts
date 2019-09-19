@@ -40,7 +40,7 @@ ${FlexLayoutClasses} ${TableStyles}
             label="${ translate('ISSUE_TRACKER.PARTNER') }"
             placeholder="${ translate('ISSUE_TRACKER.PARTNER') }"
             .options="${this.partners}"
-            option-label="short_name"
+            option-label="name"
             option-value="id"
             .selectedValues="${ this.queryParams && simplifyValue(this.queryParams.partner__in) || [] }"
             trigger-value-change-event
