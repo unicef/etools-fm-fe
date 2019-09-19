@@ -37,6 +37,7 @@ interface IStaticDataState {
     partners?: EtoolsPartner[];
     interventions?: EtoolsIntervention[];
     outputs?: EtoolsCpOutput[];
+    users?: User[];
 }
 
 interface ISpecificLocationsState {

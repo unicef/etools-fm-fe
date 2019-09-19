@@ -149,5 +149,11 @@ export const TableStyles: TemplateResult = html`
 
         etools-dialog etools-loading { font-size: 14px; }
 
+        a.link-cell {
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--module-primary);
+        }
+
     </style>
 `;

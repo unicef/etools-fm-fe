@@ -100,3 +100,13 @@ type EtoolsIntervention = {
     donor_codes: [];
     grants: [];
 };
+
+type User = {
+    id: number;
+    name: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    user_type: string;
+    tpm_partner: null;
+};

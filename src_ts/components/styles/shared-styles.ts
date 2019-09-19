@@ -181,5 +181,9 @@ export const SharedStyles: TemplateResult = html`
                     margin-top: 0;
                 };
         }
+
+        .filters-section {
+            padding: 0 30px;
+        }
 </style>
 `;

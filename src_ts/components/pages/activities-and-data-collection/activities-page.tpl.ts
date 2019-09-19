@@ -6,10 +6,12 @@ import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { buttonsStyles } from '../../styles/button-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '@unicef-polymer/etools-data-table';
+import '../../common/layout/filters/etools-filters';
 import { translate } from '../../../localization/localisation';
 import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
 import { TableStyles } from '../../styles/table-styles';
 import { ActivitiesListStyles } from './activities-page.styles';
+import { updateQueryParams } from '../../../routing/routes';
 
 export function template(this: ActivitiesPageComponent): TemplateResult {
     return html`
@@ -20,6 +22,10 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
             <h1 slot="page-title">Activities</h1>
         </page-content-header>
 
+        <section class="elevation page-content table-container filters-section" elevation="1">
+                <etools-filters .filters="${this.filters || []}" @filter-change="${ (event: CustomEvent) => updateQueryParams(event.detail) }"></etools-filters>
+        </section>
+
         <!-- Table -->
         <section class="elevation page-content table-container activities-table-section" elevation="1">
 
@@ -29,25 +35,25 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
 
             <!-- Table Header -->
             <etools-data-table-header no-title no-collapse>
-                <etools-data-table-column class="col-data flex-none w120px">
+                <etools-data-table-column class="col-data flex-none w130px">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER') }
                 </etools-data-table-column>
-                <etools-data-table-column class="col-data flex-none w100px">
+                <etools-data-table-column class="col-data flex-none w110px">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.START_DATE') }
                 </etools-data-table-column>
                 <etools-data-table-column class="col-data flex-1">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE') }
                 </etools-data-table-column>
-                <etools-data-table-column class="col-data flex-none w80px">
+                <etools-data-table-column class="col-data flex-none w90px">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.ACTIVITY_TYPE') }
                 </etools-data-table-column>
                 <etools-data-table-column class="col-data flex-2">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS') }
                 </etools-data-table-column>
-                <etools-data-table-column class="col-data flex-none w60px">
+                <etools-data-table-column class="col-data flex-none w80px">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT') }
                 </etools-data-table-column>
-                <etools-data-table-column class="col-data flex-none w80px">
+                <etools-data-table-column class="col-data flex-none w100px">
                     ${ translate('ACTIVITIES_LIST.COLUMNS.STATUS') }
                 </etools-data-table-column>
             </etools-data-table-header>
@@ -57,13 +63,13 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
             ${ !this.activitiesList.length ? html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
-                        <div class="col-data flex-none w120px">-</div>
-                        <div class="col-data flex-none w100px">-</div>
+                        <div class="col-data flex-none w130px">-</div>
+                        <div class="col-data flex-none w110px">-</div>
                         <div class="col-data flex-1">-</div>
-                        <div class="col-data flex-none w80px">-</div>
+                        <div class="col-data flex-none w90px">-</div>
                         <div class="col-data flex-2">-</div>
-                        <div class="col-data flex-none w60px">-</div>
                         <div class="col-data flex-none w80px">-</div>
+                        <div class="col-data flex-none w100px">-</div>
                     </div>
                 </etools-data-table-row>
             ` : '' }
@@ -72,13 +78,13 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
             ${ this.activitiesList.map((activity: IListActivity) => html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
-                        <div class="col-data flex-none w120px">${ activity.reference_number }</div>
-                        <div class="col-data flex-none w100px">${ activity.start_date }</div>
+                        <div class="col-data flex-none w130px"><a class="link-cell" href="${ `${ this.rootPath }activity/${ activity.id }/details/` }">${ activity.reference_number }</a></div>
+                        <div class="col-data flex-none w110px">${ this.formatDate(activity.start_date) }</div>
                         <div class="col-data flex-1">${ activity.location.name } ${ activity.location_site ? `[${activity.location_site}]` : '' }</div>
-                        <div class="col-data flex-none w80px">${ activity.activity_type }</div>
+                        <div class="col-data flex-none w90px">${ this.serializeName(activity.activity_type, this.activityTypes, 'display_name', 'value') || '-' }</div>
                         <div class="col-data flex-2">-</div>
-                        <div class="col-data flex-none w60px">${ activity.checklists_count }</div>
-                        <div class="col-data flex-none w80px">${ activity.status }</div>
+                        <div class="col-data flex-none w80px">${ activity.checklists_count }</div>
+                        <div class="col-data flex-none w100px">${ this.serializeName(activity.status, this.activityStatuses, 'display_name', 'value') }</div>
                     </div>
                 </etools-data-table-row>
             `) }

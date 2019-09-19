@@ -12,6 +12,12 @@ import { fireEvent } from '../../utils/fire-custom-event';
 import { loadActivitiesList } from '../../../redux/effects/activities.effects';
 import { activities } from '../../../redux/reducers/activities.reducer';
 import { activitiesListData } from '../../../redux/selectors/activities.selectors';
+import { ROOT_PATH } from '../../../config/config';
+import { ACTIVITY_STATUSES, ACTIVITY_TYPES } from '../../common/dropdown-options';
+import { IEtoolsFilter } from '../../common/layout/filters/etools-filters';
+import { loadStaticData } from '../../../redux/effects/load-static-data.effect';
+import { mapFilters } from '../../utils/filters-mapping';
+import { activitiesListFilters } from './activities-page.filters';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({ activities });
@@ -20,8 +26,13 @@ store.addReducers({ activities });
 export class ActivitiesPageComponent extends LitElement {
     @property() public loadingInProcess: boolean = false;
     @property() public queryParams: IRouteQueryParam | null = null;
+    @property() public rootPath: string = ROOT_PATH;
+    @property() public filters: IEtoolsFilter[] | null = null;
     public activitiesList: IListActivity[] = [];
     public count: number = 0;
+
+    public activityTypes: DefaultDropdownOption<string>[] = ACTIVITY_TYPES;
+    public activityStatuses: DefaultDropdownOption<string>[] = ACTIVITY_STATUSES;
 
     private readonly routeDetailsUnsubscribe: Unsubscribe;
     private readonly activitiesDataUnsubscribe: Unsubscribe;
@@ -47,6 +58,8 @@ export class ActivitiesPageComponent extends LitElement {
             this.count = data.count;
             this.activitiesList = data.results;
         }, false));
+
+        this.initFilters();
     }
 
     public render(): TemplateResult {
@@ -67,6 +80,21 @@ export class ActivitiesPageComponent extends LitElement {
         updateQueryParams({ [paramName]: newValue });
     }
 
+    public formatDate(date: string | null): string {
+        return date ? moment(date).format('DD MMM YYYY') : '-';
+    }
+
+    public serializeName(
+        id: number | string,
+        collection: GenericObject[],
+        labelField: string = 'name',
+        valueField: string = 'id'
+    ): string {
+        if (!id || !collection) { return ''; }
+        const item: GenericObject | undefined = collection.find((collectionItem: GenericObject) => `${ collectionItem[valueField] }` === `${ id }`);
+        return item ? item[labelField] : '';
+    }
+
     private onRouteChange({ routeName, queryParams }: IRouteDetails): void {
         if (routeName !== 'activities') { return; }
 
@@ -84,6 +112,33 @@ export class ActivitiesPageComponent extends LitElement {
             updateQueryParams({ page, page_size });
         }
         return !invalid;
+    }
+
+    private initFilters(): void {
+        const storeState: IRootState = store.getState();
+        const { locations, partners, interventions, outputs, users } = storeState.staticData;
+        // const sites: Site[] | null = storeState.specificLocations &&
+        //     storeState.specificLocations.data && storeState.specificLocations.data.results;
+
+        const partnersPromise: Promise<EtoolsPartner[]> = partners ? Promise.resolve(partners) : store.dispatch<AsyncEffect>(loadStaticData('partners'));
+        const outputsPromise: Promise<EtoolsCpOutput[]> = outputs ? Promise.resolve(outputs) : store.dispatch<AsyncEffect>(loadStaticData('outputs'));
+        const interventionsPromise: Promise<EtoolsIntervention[]> = interventions ? Promise.resolve(interventions) : store.dispatch<AsyncEffect>(loadStaticData('interventions'));
+        const locationsPromise: Promise<any[]> = locations ? Promise.resolve(locations) : store.dispatch<AsyncEffect>(loadStaticData('locations'));
+        const usersPromise: Promise<User[]> = users ? Promise.resolve(users) : store.dispatch<AsyncEffect>(loadStaticData('users'));
+
+        Promise
+            .all([partnersPromise, outputsPromise, interventionsPromise, locationsPromise, usersPromise])
+            .then(([partners__in, cp_outputs__in, interventions__in, location__in, usersData]: any) => {
+                const optionsCollection: GenericObject = {
+                    partners__in, cp_outputs__in, interventions__in, location__in,
+                    activity_type: ACTIVITY_TYPES,
+                    status__in: ACTIVITY_STATUSES,
+                    team_members__in: usersData,
+                    person_responsible__in: usersData
+                };
+                const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
+                this.filters = mapFilters(activitiesListFilters, optionsCollection, initialValues);
+            });
     }
 
     public static get styles(): CSSResult[] {

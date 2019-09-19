@@ -23,6 +23,21 @@ export const MAIN_TRANSLATES: TranslateObject = {
         'BOOL': 'Boolean',
         'LIKERT_SCALE': 'Likert Scale'
     },
+    'ACTIVITY_TYPES': {
+        'STAFF': 'Staff',
+        'TPM': 'TPM'
+    },
+    'ACTIVITY_STATUSES': {
+        'DRAFT': 'Draft',
+        'CHECKLIST': 'Checklist',
+        'REVIEW': 'Review',
+        'ASSIGNED': 'Assigned',
+        'DATA_COLLECTION': 'Data Collection',
+        'REPORT_FINALIZATION': 'Report Finalization',
+        'SUBMITTED': 'Submitted',
+        'COMPLETED': 'Completed',
+        'CANCELLED': 'Cancelled'
+    },
     'ATTACHMENTS_LIST': {
         'TITLE': 'Attachments',
         'EDIT_POPUP_TITLE': 'Edit Attachment',

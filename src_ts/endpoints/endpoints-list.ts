@@ -24,10 +24,17 @@ export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'qu
 export const RATIONALE: 'rationale' = 'rationale';
 export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
+export const USERS: 'users' = 'users';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
         url: '/api/v3/users/profile/'
+    },
+
+    [USERS]: {
+        url: '/api/v1/field-monitoring/planning/users/?page_size=all',
+        exp: 60 * 60 * 1000, // 1 hour
+        cacheTableName: 'users'
     },
 
     [CP_OUTCOMES_ENDPOINT]: {
