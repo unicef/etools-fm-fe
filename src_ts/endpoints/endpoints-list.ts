@@ -125,7 +125,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     },
 
     [RATIONALE_ATTACHMENTS]: {
-        url: '/api/v1/field-monitoring/settings/attachments/?page_size=all'
+        url: '/api/v1/field-monitoring/settings/attachments/'
     },
 
     [LOG_ISSUES]: {

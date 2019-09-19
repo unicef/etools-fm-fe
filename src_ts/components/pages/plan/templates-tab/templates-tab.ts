@@ -37,7 +37,6 @@ export class TemplatesTabComponent extends LitElement {
     @property() public queryParams: IRouteQueryParam | null = null;
     @property() public listLoadingInProcess: boolean = false;
     @property() public editedDetails: GenericObject = { opened: false };
-    @property() public additionalDataLoading: boolean = false;
     @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
     public count: number = 0;
     public partners!: EtoolsPartner[];
@@ -47,6 +46,13 @@ export class TemplatesTabComponent extends LitElement {
     @property() public get loadingInProcess(): boolean {
         return this.additionalDataLoading || this.listLoadingInProcess;
     }
+    public get additionalDataLoading(): boolean {
+        return Boolean(this.additionalDataLoadingCount);
+    }
+    public set additionalDataLoading(state: boolean) {
+        const counterModification: 1 | -1 = state ? 1 : -1;
+        this.additionalDataLoadingCount += counterModification;
+    }
 
     @query('#details-input') private detailsInput!: HTMLInputElement;
 
@@ -54,6 +60,7 @@ export class TemplatesTabComponent extends LitElement {
     private readonly questionTemplatesDataUnsubscribe: Unsubscribe;
     private readonly debouncedLoading: Callback;
     private methods!: EtoolsMethod[];
+    @property() private additionalDataLoadingCount: number = 0;
 
     public constructor() {
         super();
