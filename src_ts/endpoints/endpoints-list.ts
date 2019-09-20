@@ -13,6 +13,7 @@ export const CATEGORIES: 'categories' = 'categories';
 export const SECTIONS: 'sections' = 'sections';
 export const METHODS: 'methods' = 'methods';
 export const PARTNERS: 'partners' = 'partners';
+export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
@@ -63,6 +64,12 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         url: '/api/v2/partners/',
         exp: 60 * 60 * 1000, // 1h
         cachingKey: 'partners'
+    },
+
+    [TPM_PARTNERS]: {
+        url: '/api/tpm/partners/?page_size=all',
+        exp: 60 * 60 * 1000, // 1h
+        cachingKey: 'tpm_partners'
     },
 
     [CP_OUTPUTS]: {

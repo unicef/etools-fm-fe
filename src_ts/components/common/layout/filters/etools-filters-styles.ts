@@ -60,6 +60,7 @@ export const etoolsFiltersStyles: CSSResult = css`
   }
 
   #filters .filter.date {
+      white-space: nowrap;
     --paper-input-container: {
       width: 182px;
     };

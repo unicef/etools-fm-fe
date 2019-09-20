@@ -14,19 +14,24 @@ import { activities } from '../../../redux/reducers/activities.reducer';
 import { activitiesListData } from '../../../redux/selectors/activities.selectors';
 import { ROOT_PATH } from '../../../config/config';
 import { ACTIVITY_STATUSES, ACTIVITY_TYPES } from '../../common/dropdown-options';
-import { IEtoolsFilter } from '../../common/layout/filters/etools-filters';
+import { EtoolsFilterTypes, IEtoolsFilter } from '../../common/layout/filters/etools-filters';
 import { loadStaticData } from '../../../redux/effects/load-static-data.effect';
 import { mapFilters } from '../../utils/filters-mapping';
 import { activitiesListFilters } from './activities-page.filters';
+import { staticDataDynamic } from '../../../redux/selectors/static-data.selectors';
+import { sitesSelector } from '../../../redux/selectors/site-specific-locations.selectors';
+import { loadSiteLocations } from '../../../redux/effects/site-specific-locations.effects';
+import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
-store.addReducers({ activities });
+store.addReducers({ activities, specificLocations });
 
 @customElement('activities-page')
 export class ActivitiesPageComponent extends LitElement {
     @property() public loadingInProcess: boolean = false;
     @property() public queryParams: IRouteQueryParam | null = null;
     @property() public rootPath: string = ROOT_PATH;
+    @property() public filtersLoading: boolean = false;
     @property() public filters: IEtoolsFilter[] | null = null;
     public activitiesList: IListActivity[] = [];
     public count: number = 0;
@@ -37,6 +42,10 @@ export class ActivitiesPageComponent extends LitElement {
     private readonly routeDetailsUnsubscribe: Unsubscribe;
     private readonly activitiesDataUnsubscribe: Unsubscribe;
     private readonly debouncedLoading: Callback;
+    private readonly filtersData: GenericObject = {
+        activity_type: ACTIVITY_TYPES,
+        status__in: ACTIVITY_STATUSES
+    };
 
     public constructor() {
         super();
@@ -53,6 +62,7 @@ export class ActivitiesPageComponent extends LitElement {
         const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
         this.onRouteChange(currentRoute);
 
+        // set activitiesList on store data changes
         this.activitiesDataUnsubscribe = store.subscribe(activitiesListData((data: IListData<IListActivity> | null) => {
             if (!data) { return; }
             this.count = data.count;
@@ -115,30 +125,70 @@ export class ActivitiesPageComponent extends LitElement {
     }
 
     private initFilters(): void {
+        this.filtersLoading = true;
+
+        // subscribe on sites data
+        const subscriber: Unsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
+            if (!sites) { return; }
+            this.filtersData['location_site__in'] = sites;
+            this.setFilters(() => subscriber());
+        }));
+
+        // subscribe on static data
+        activitiesListFilters.forEach((filter: IEtoolsFilter) => {
+            if (!filter.selectionOptionsEndpoint) { return; }
+            this.subscribeOnFilterData(filter.selectionOptionsEndpoint, filter.filterKey);
+        });
+
+        this.loadDataForFilters();
+    }
+
+    private subscribeOnFilterData(dataPath: string, filterKey: string): void {
+        const subscriber: Unsubscribe = store.subscribe(staticDataDynamic((data: any[] | undefined) => {
+            if (!data) { return; }
+            this.filtersData[filterKey] = data;
+            this.setFilters(() => subscriber());
+        }, [dataPath]));
+    }
+
+    private loadDataForFilters(): void {
         const storeState: IRootState = store.getState();
-        const { locations, partners, interventions, outputs, users } = storeState.staticData;
-        // const sites: Site[] | null = storeState.specificLocations &&
-        //     storeState.specificLocations.data && storeState.specificLocations.data.results;
+        if (!storeState.specificLocations.data) {
+            store.dispatch<AsyncEffect>(loadSiteLocations());
+        }
 
-        const partnersPromise: Promise<EtoolsPartner[]> = partners ? Promise.resolve(partners) : store.dispatch<AsyncEffect>(loadStaticData('partners'));
-        const outputsPromise: Promise<EtoolsCpOutput[]> = outputs ? Promise.resolve(outputs) : store.dispatch<AsyncEffect>(loadStaticData('outputs'));
-        const interventionsPromise: Promise<EtoolsIntervention[]> = interventions ? Promise.resolve(interventions) : store.dispatch<AsyncEffect>(loadStaticData('interventions'));
-        const locationsPromise: Promise<any[]> = locations ? Promise.resolve(locations) : store.dispatch<AsyncEffect>(loadStaticData('locations'));
-        const usersPromise: Promise<User[]> = users ? Promise.resolve(users) : store.dispatch<AsyncEffect>(loadStaticData('users'));
+        // we don't need to load locations. they are loaded in appShell
+        const {
+            partners = 'partners',
+            interventions = 'interventions',
+            outputs = 'outputs',
+            users = 'users',
+            tpmPartners = 'tpmPartners'
+        } = storeState.staticData;
 
-        Promise
-            .all([partnersPromise, outputsPromise, interventionsPromise, locationsPromise, usersPromise])
-            .then(([partners__in, cp_outputs__in, interventions__in, location__in, usersData]: any) => {
-                const optionsCollection: GenericObject = {
-                    partners__in, cp_outputs__in, interventions__in, location__in,
-                    activity_type: ACTIVITY_TYPES,
-                    status__in: ACTIVITY_STATUSES,
-                    team_members__in: usersData,
-                    person_responsible__in: usersData
-                };
-                const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
-                this.filters = mapFilters(activitiesListFilters, optionsCollection, initialValues);
-            });
+        // if data isn't loaded it will be fallback to string and we need to run AsyncEffect
+        [partners, interventions, outputs, users, tpmPartners].forEach((data: any) => {
+            if (typeof data === 'string') { store.dispatch<AsyncEffect>(loadStaticData(data as keyof IStaticDataState)); }
+        });
+    }
+
+    private setFilters(unsubscribe?: Unsubscribe): void {
+        if (unsubscribe) {
+            // unsubscribe after method initialization complete
+            setTimeout(unsubscribe, 0);
+        }
+        // check that data for all dropdowns is loaded
+        const allDataLoaded: boolean = activitiesListFilters.every((filter: IEtoolsFilter) =>
+            filter.type !== EtoolsFilterTypes.Dropdown &&
+            filter.type !== EtoolsFilterTypes.DropdownMulti ||
+            Boolean(this.filtersData[filter.filterKey]));
+
+        if (!allDataLoaded) { return; }
+
+        const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
+        this.filters = mapFilters(activitiesListFilters, this.filtersData, initialValues);
+
+        this.filtersLoading = false;
     }
 
     public static get styles(): CSSResult[] {

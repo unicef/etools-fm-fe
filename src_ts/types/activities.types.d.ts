@@ -13,4 +13,13 @@ interface IListActivity {
     end_date: null | string;
     checklists_count: number;
     status: string;
+    team_members: ActivityTeamMember[];
 }
+
+type ActivityTeamMember = {
+    id: number;
+    name: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+};

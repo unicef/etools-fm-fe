@@ -9,7 +9,7 @@ export function mapFilters(
         const property: string = filter.filterKey;
         return {
             ...filter,
-            selectionOptions: options[property] || [],
+            selectionOptions: options[property] || filter.selectionOptions || [],
             selectedValue: values[property] || filter.defaultValue,
             selected: Boolean(values[property])
         };

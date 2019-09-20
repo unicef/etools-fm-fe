@@ -23,7 +23,10 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
         </page-content-header>
 
         <section class="elevation page-content table-container filters-section" elevation="1">
-                <etools-filters .filters="${this.filters || []}" @filter-change="${ (event: CustomEvent) => updateQueryParams(event.detail) }"></etools-filters>
+                <etools-filters
+                        .filterLoadingInProcess="${ this.filtersLoading }"
+                        .filters="${this.filters || []}"
+                        @filter-change="${ (event: CustomEvent) => updateQueryParams({ ...event.detail, page: 1 }) }"></etools-filters>
         </section>
 
         <!-- Table -->
@@ -80,9 +83,9 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
                     <div slot="row-data" class="layout horizontal editable-row flex">
                         <div class="col-data flex-none w130px"><a class="link-cell" href="${ `${ this.rootPath }activity/${ activity.id }/details/` }">${ activity.reference_number }</a></div>
                         <div class="col-data flex-none w110px">${ this.formatDate(activity.start_date) }</div>
-                        <div class="col-data flex-1">${ activity.location.name } ${ activity.location_site ? `[${activity.location_site}]` : '' }</div>
+                        <div class="col-data flex-1">${ activity.location && activity.location.name } ${ activity.location_site ? `[${activity.location_site}]` : '' }</div>
                         <div class="col-data flex-none w90px">${ this.serializeName(activity.activity_type, this.activityTypes, 'display_name', 'value') || '-' }</div>
-                        <div class="col-data flex-2">-</div>
+                        <div class="col-data flex-2">${ activity.team_members && activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ') || '-' }</div>
                         <div class="col-data flex-none w80px">${ activity.checklists_count }</div>
                         <div class="col-data flex-none w100px">${ this.serializeName(activity.status, this.activityStatuses, 'display_name', 'value') }</div>
                     </div>

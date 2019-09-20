@@ -29,12 +29,13 @@ interface IUserState extends IRequestState {
 }
 
 interface IStaticDataState {
-    locations?: any[];
+    locations?: EtoolsLightLocation[];
     currentWorkspace?: any;
     categories?: EtoolsCategory[];
     sections?: EtoolsSection[];
     methods?: EtoolsMethod[];
     partners?: EtoolsPartner[];
+    tpmPartners?: EtoolsTPMPartner[];
     interventions?: EtoolsIntervention[];
     outputs?: EtoolsCpOutput[];
     users?: User[];

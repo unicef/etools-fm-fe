@@ -59,6 +59,22 @@ type EtoolsPartner = {
     basis_for_risk_rating: string;
 };
 
+type EtoolsTPMPartner = {
+    blocked: boolean;
+    vision_synced: boolean;
+    street_address: string;
+    email: string;
+    city: string;
+    country: string;
+    hidden: boolean;
+    name: string;
+    vendor_number: string;
+    postal_code: string;
+    phone_number: string;
+    deleted_flag: boolean;
+    id: number;
+};
+
 type EtoolsIntervention = {
     id: number;
     number: string;
@@ -109,4 +125,17 @@ type User = {
     last_name: string;
     user_type: string;
     tpm_partner: null;
+};
+
+type EtoolsLightLocation = {
+    id: string;
+    name: string;
+    p_code: string;
+    gateway: {
+        id: number;
+        created: string;
+        modified: string;
+        name: string;
+        admin_level: null;
+    };
 };

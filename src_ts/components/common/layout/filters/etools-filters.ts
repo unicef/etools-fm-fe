@@ -1,6 +1,6 @@
 import {
   CSSResultArray,
-  customElement, html, LitElement, property, TemplateResult
+  customElement, html, LitElement, property, query, TemplateResult
 } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
 import { etoolsFiltersStyles } from './etools-filters-styles';
@@ -17,6 +17,8 @@ import '@polymer/paper-item/paper-item-body';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
+import { translate } from '../../../../localization/localisation';
+import { PaperMenuButton } from '@polymer/paper-menu-button/paper-menu-button';
 
 export enum EtoolsFilterTypes {
   Search,
@@ -39,13 +41,29 @@ export interface IEtoolsFilter {
   hideSearch?: boolean; // used only by dropdowns
   optionValue?: string; // used only by dropdowns
   optionLabel?: string; // used only by dropdowns
+  selectionOptionsEndpoint?: string;
 }
 
 @customElement('etools-filters')
 export class EtoolsFilters extends LitElement {
 
   @property({ type: Object })
-  public filters: IEtoolsFilter[] = [];
+  public _filters: IEtoolsFilter[] = [];
+  public set filters(filters: IEtoolsFilter[]) {
+    if (this.paperButton && filters.length) {
+      // close dropdown to recalculate dropdown height
+      this.paperButton.close();
+    }
+    this._filters = filters;
+  }
+  public get filters(): IEtoolsFilter[] {
+    return this._filters;
+  }
+
+  @property()
+  public filterLoadingInProcess: boolean = false;
+
+  @query('#filterMenu') public paperButton!: PaperMenuButton;
 
   private lastSelectedValues: any = null;
 
@@ -74,7 +92,7 @@ export class EtoolsFilters extends LitElement {
       <etools-dropdown
           class="filter"
           label="${f.filterName}"
-          placeholder="&#8212;"
+          placeholder="Select"
           ?disabled="${f.disabled}"
           .options="${f.selectionOptions}"
           .optionValue="${f.optionValue ? f.optionValue : 'value'}"
@@ -192,6 +210,11 @@ export class EtoolsFilters extends LitElement {
               color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
             }
           }
+
+          .spinner-container {
+            padding: 21px 14px 14px;
+            white-space: nowrap;
+          }
         </style>
         <div id="filters">
           ${this.selectedFiltersTmpl}
@@ -203,15 +226,20 @@ export class EtoolsFilters extends LitElement {
               <iron-icon icon="filter-list"></iron-icon>
               Filters
             </paper-button>
-            <div slot="dropdown-content" class="clear-all-filters">
-              <paper-button @tap="${this.clearAllFilterValues}"
-                            class="secondary-btn">
-                CLEAR ALL
-              </paper-button>
+            ${ !this.filterLoadingInProcess ? html`
+              <div slot="dropdown-content" class="clear-all-filters">
+                <paper-button @tap="${this.clearAllFilterValues}"
+                              class="secondary-btn">
+                  CLEAR ALL
+                </paper-button>
+              </div>
+              <paper-listbox slot="dropdown-content" multi>
+                ${this.filterMenuOptions}
+              </paper-listbox>
+            ` : '' }
+            <div slot="dropdown-content" ?hidden="${ !this.filterLoadingInProcess }" class="spinner-container">
+                <etools-loading no-overlay active loading-text="${ translate('MAIN.LOADING_FILTERS_DATA') }"></etools-loading>
             </div>
-            <paper-listbox slot="dropdown-content" multi>
-              ${this.filterMenuOptions}
-            </paper-listbox>
           </paper-menu-button>
         </div>
     `;
@@ -225,7 +253,7 @@ export class EtoolsFilters extends LitElement {
       f.selectedValue = this.getFilterEmptyValue(f.type);
     });
     // repaint
-    this.requestUpdate();
+    this.requestUpdate().then(() => this.fireFiltersChangeEvent());
   }
 
   public selectFilter(e: CustomEvent): void {

@@ -1,6 +1,14 @@
 import { EtoolsFilterTypes, IEtoolsFilter } from '../../common/layout/filters/etools-filters';
 import { addTranslates, ENGLISH, translate } from '../../../localization/localisation';
 import { ACTIVITIES_LIST_TRANSLATES } from '../../../localization/en/activities-and-data-collection/activities-list.translates';
+import {
+    CP_OUTPUTS,
+    INTERVENTIONS,
+    LOCATIONS_ENDPOINT,
+    PARTNERS,
+    TPM_PARTNERS,
+    USERS
+} from '../../../endpoints/endpoints-list';
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 
 export const activitiesListFilters: IEtoolsFilter[] = [
@@ -27,9 +35,10 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: TPM_PARTNERS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
         filterKey: 'team_members__in',
@@ -40,9 +49,10 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: USERS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.PERSON_RESPONSIBLE'),
         filterKey: 'person_responsible__in',
@@ -53,33 +63,35 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: USERS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION'),
         filterKey: 'location__in',
         type: EtoolsFilterTypes.DropdownMulti,
         selectionOptions: [],
         selectedValue: [],
-        optionValue: 'value',
-        optionLabel: 'display_name',
+        optionValue: 'id',
+        optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: LOCATIONS_ENDPOINT
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.SITE'),
         filterKey: 'location_site__in',
         type: EtoolsFilterTypes.DropdownMulti,
         selectionOptions: [],
         selectedValue: [],
-        optionValue: 'value',
-        optionLabel: 'display_name',
+        optionValue: 'id',
+        optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
         defaultValue: []
     }, {
@@ -92,9 +104,10 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: PARTNERS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
         filterKey: 'interventions__in',
@@ -105,9 +118,10 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'title',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: INTERVENTIONS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
         filterKey: 'cp_outputs__in',
@@ -118,9 +132,10 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         optionLabel: 'name',
         selected: false,
         minWidth: '350px',
-        hideSearch: true,
+        hideSearch: false,
         disabled: false,
-        defaultValue: []
+        defaultValue: [],
+        selectionOptionsEndpoint: CP_OUTPUTS
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.STATUS'),
         filterKey: 'status__in',
@@ -136,14 +151,14 @@ export const activitiesListFilters: IEtoolsFilter[] = [
         defaultValue: []
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
-        filterKey: 'start_date__lte',
+        filterKey: 'start_date__gte',
         type: EtoolsFilterTypes.Date,
         selectedValue: false,
         defaultValue: false,
         selected: false
     }, {
         filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE'),
-        filterKey: 'start_date__lte',
+        filterKey: 'end_date__lte',
         type: EtoolsFilterTypes.Date,
         selectedValue: false,
         defaultValue: false,

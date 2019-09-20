@@ -2,6 +2,7 @@ export const MAIN_TRANSLATES: TranslateObject = {
     'MAIN': {
         'SAVING_DATA_IN_PROCESS': 'Saving Data',
         'LOADING_DATA_IN_PROCESS': 'Loading Data',
+        'LOADING_FILTERS_DATA': 'Loading Filters',
         'REMOVING_DATA_IN_PROCESS': 'Deleting Data',
         'EMPTY_FIELD': 'Empty Field',
         'LATITUDE': 'Latitude',
