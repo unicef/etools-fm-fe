@@ -7,10 +7,6 @@ export const RationaleStyles: TemplateResult = html`
             display: block;
         }
 
-        .rationale-table-section {
-            padding: 0;
-        }
-
         .history-info {
             color: var(--gray-light);
             font-size: 13px;
@@ -47,9 +43,6 @@ export const RationaleStyles: TemplateResult = html`
             padding: 0 14px 14px 14px;
         }
 
-        .rational-view {
-            padding: 14px 10px 0;
-        }
         paper-card {
             padding: 8px 0;
             display: block;

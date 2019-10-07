@@ -26,39 +26,14 @@ export class EtoolsStatus extends LitElement {
     }
 
     @property({ type: String })
-    public activeStatus: string = 'submitted-accepted';
+    public activeStatus!: string;
 
     @property({ type: Number })
     public activeStatusIndex: number = 0;
 
     // init with a default list of statuses (for testing)
     @property({ type: Array })
-    public statuses: IEtoolsStatusModel[] = [
-        {
-            status: 'draft',
-            label: 'Draft'
-        },
-        {
-            status: 'submitted-accepted',
-            label: 'Submitted/Accepted'
-        },
-        {
-            statusOptions: [ // some statuses may share the same position
-                {
-                    status: 'report-submitted',
-                    label: 'Report submitted'
-                },
-                {
-                    status: 'rejected',
-                    label: 'Rejected'
-                }
-            ]
-        },
-        {
-            status: 'completed',
-            label: 'Completed'
-        }
-    ];
+    public statuses: IEtoolsStatusModel[] = [];
 
     public render(): TemplateResult {
         // language=HTML
@@ -67,31 +42,35 @@ export class EtoolsStatus extends LitElement {
         :host {
           @apply --layout-horizontal;
           @apply --layout-center;
+          @apply --layout-wrap;
           border-bottom: 1px solid var(--dark-divider-color);
-          padding: 24px;
+          padding: 24px 24px 0;
           background-color: var(--primary-background-color);
         }
 
         .status {
           @apply --layout-horizontal;
           @apply --layout-center;
+          @apply --layout-flex-auto;
           color: var(--secondary-text-color);
           font-size: 16px;
+          padding-bottom: 24px;
+          max-width: 260px;
         }
 
         .status:not(:last-of-type)::after {
           content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 40px;
+          @apply --layout-horizontal;
+          @apply --layout-flex-auto;
           height: 0;
           margin: 0 24px;
           border-top: 1px solid var(--secondary-text-color);
         }
 
         .status .icon {
-          display: inline-block;
-          text-align: center;
+          @apply --layout-horizontal;
+          @apply --layout-center-center;
+          flex: 0 0 24px;
           width: 24px;
           height: 24px;
           border-radius: 50%;
@@ -99,7 +78,6 @@ export class EtoolsStatus extends LitElement {
           background-color: var(--secondary-text-color);
           margin-right: 8px;
           font-size: 14px;
-          line-height: 24px;
         }
 
         .status.active .icon {
@@ -117,6 +95,7 @@ export class EtoolsStatus extends LitElement {
 
     public getStatusHtml(item: any, index: number): TemplateResult {
         const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
+        // language=HTML
         return html`
     <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
       <span class="icon">

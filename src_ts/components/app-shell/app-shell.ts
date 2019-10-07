@@ -20,6 +20,7 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 
 import { AppShellStyles } from './app-shell-styles';
+import { RouterStyles } from './router-style';
 
 import './menu/app-menu.js';
 import './header/page-header.js';
@@ -148,7 +149,7 @@ export class AppShell extends connect(store)(LitElement) {
         // main template
         // language=HTML
         return html`
-            ${AppShellStyles}
+            ${AppShellStyles} ${RouterStyles}
 
             <app-drawer-layout id="layout" responsive-width="850px"
                        fullbleed ?narrow="${this.narrow}" ?small-menu="${this.smallMenu}">

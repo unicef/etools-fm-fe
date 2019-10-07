@@ -17,13 +17,5 @@ ${appDrawerStyles}
     @apply --layout-flex;
   }
 
-  .page {
-    display: none;
-  }
-
-  .page[active] {
-    display: block;
-  }
-
 </style>
 `;

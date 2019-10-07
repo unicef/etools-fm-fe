@@ -10,6 +10,7 @@ export enum Permissions {
     EDIT_LOG_ISSUES = 'EDIT_LOG_ISSUES',
     EDIT_QUESTIONS = 'EDIT_QUESTIONS',
     EDIT_QUESTION_TEMPLATES = 'EDIT_QUESTION_TEMPLATES',
+    EDIT_VISIT_DETAILS = 'EDIT_VISIT_DETAILS',
     // Test permissions
     READONLY_TEST_PERMISSION = 'READONLY_TEST_PERMISSION',
     PME_TEST_PERMISSION = 'PME_TEST_PERMISSION',
@@ -23,7 +24,8 @@ const PERMISSIONS_MAP: { [key: string]: Set<Permissions>} = {
         Permissions.EDIT_LOG_ISSUES,
         Permissions.EDIT_RATIONALE,
         Permissions.EDIT_QUESTIONS,
-        Permissions.EDIT_QUESTION_TEMPLATES
+        Permissions.EDIT_QUESTION_TEMPLATES,
+        Permissions.EDIT_VISIT_DETAILS
     ]),
     [FM_USER]: new Set([
         Permissions.FM_USER_TEST_PERMISSION,

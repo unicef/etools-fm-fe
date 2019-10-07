@@ -10,7 +10,7 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { SitesTabStyles } from './sites-tab.styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { leafletStyles } from '../../../styles/leaflet-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { translate } from '../../../../localization/localisation';
@@ -19,7 +19,7 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 export function template(this: SitesTabComponent): TemplateResult {
     return html`
         ${SharedStyles} ${pageLayoutStyles} ${SitesTabStyles}
-        ${FlexLayoutClasses} ${TableStyles} ${leafletStyles} ${TabInputsStyles}
+        ${FlexLayoutClasses} ${CardStyles} ${leafletStyles} ${TabInputsStyles}
        <section class="elevation page-content filters" elevation="1">
             <div class="layout horizontal">
                 <paper-input
@@ -44,8 +44,8 @@ export function template(this: SitesTabComponent): TemplateResult {
             <!-- Spinner -->
             <etools-loading ?active="${ this.listLoadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
-            <div class="table-title-block with-bottom-line">
-                <div class="table-title">${ translate('SITES.TABLE_CAPTION') }</div>
+            <div class="card-title-box with-bottom-line">
+                <div class="card-title">${ translate('SITES.TABLE_CAPTION') }</div>
                 <div class="buttons-container">
                     <paper-icon-button
                             @tap="${() => this.openDialog()}"

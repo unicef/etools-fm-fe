@@ -59,5 +59,9 @@ export const buttonsStyles: TemplateResult = html`
       color: var(--error-btn-color, #FFFFFF);
       background-color: var(--error-btn-bg-color, var(--error-color));
     }
+    paper-button.green {
+      color: white;
+      background-color: var(--green-color);
+    }
   </style>
 `;

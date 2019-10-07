@@ -4,7 +4,7 @@ import '@polymer/paper-input/paper-textarea';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionPopupComponent } from './question-popup';
 import { translate } from '../../../../../localization/localisation';
-import { TableStyles } from '../../../../styles/table-styles';
+import { CardStyles } from '../../../../styles/card-styles';
 import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { SharedStyles } from '../../../../styles/shared-styles';
@@ -16,7 +16,7 @@ import { BOOLEAN_TYPE, SCALE_TYPE } from '../../../../common/dropdown-options';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${TableStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
+        ${SharedStyles} ${CardStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
         ${QuestionPopupStyles}
 
         <etools-dialog

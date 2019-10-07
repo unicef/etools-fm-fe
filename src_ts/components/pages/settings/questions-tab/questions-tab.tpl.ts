@@ -4,7 +4,7 @@ import './question-popup/question-popup';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionsTabComponent } from './questions-tab';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
@@ -17,18 +17,18 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 export function template(this: QuestionsTabComponent): TemplateResult {
     return html`
             ${SharedStyles} ${pageLayoutStyles} ${QuestionsTabStyles}
-            ${FlexLayoutClasses} ${TableStyles} ${TabInputsStyles}
-            <section class="elevation page-content table-container question-filters-section" elevation="1">
+            ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
+            <section class="elevation page-content card-container question-filters-section" elevation="1">
                 <etools-filters .filters="${this.filters || []}" @filter-change="${ (event: CustomEvent) => updateQueryParams(event.detail) }"></etools-filters>
             </section>
 
-            <section class="elevation page-content table-container question-table-section" elevation="1">
+            <section class="elevation page-content card-container question-table-section" elevation="1">
 
                 <!-- Spinner -->
                 <etools-loading ?active="${ this.listLoadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
-                <div class="table-title-block with-bottom-line">
-                    <div class="table-title counter">${ translate('QUESTIONS.TABLE_CAPTION', this.tableInformation) }</div>
+                <div class="card-title-box with-bottom-line">
+                    <div class="card-title counter">${ translate('QUESTIONS.TABLE_CAPTION', this.tableInformation) }</div>
                     <div class="buttons-container">
                         <paper-icon-button
                                 @tap="${() => this.openPopup()}"

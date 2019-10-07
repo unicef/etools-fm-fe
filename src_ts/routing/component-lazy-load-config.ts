@@ -28,9 +28,16 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
         'components/pages/plan/templates-tab/templates-tab.js'
     ],
 
-    // Activities and data collection pages
-    'activities': [
-        'components/pages/activities-and-data-collection/activities-page.js'
+    'activities_list': [
+        'components/pages/activities-and-data-collection/activities-page.js',
+        'components/pages/activities-and-data-collection/activities-list/activities-list.js'
+    ],
+
+    'activities_item': [
+        'components/pages/activities-and-data-collection/activities-page.js',
+        'components/pages/activities-and-data-collection/activity-item/activity-item.js',
+        'components/pages/activities-and-data-collection/activity-item/activity-details-tab.js',
+        'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js'
     ],
 
     // Analyze pages

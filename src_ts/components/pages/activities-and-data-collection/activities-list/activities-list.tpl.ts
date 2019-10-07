@@ -1,28 +1,30 @@
-import { ActivitiesPageComponent } from './activities-page';
+import { ActivitiesListComponent } from './activities-list';
 import { html, TemplateResult } from 'lit-element';
-import { SharedStyles } from '../../styles/shared-styles';
-import { pageContentHeaderSlottedStyles } from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import { pageLayoutStyles } from '../../styles/page-layout-styles';
-import { buttonsStyles } from '../../styles/button-styles';
-import '../../common/layout/page-content-header/page-content-header';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { buttonsStyles } from '../../../styles/button-styles';
 import '@unicef-polymer/etools-data-table';
-import '../../common/layout/filters/etools-filters';
-import { translate } from '../../../localization/localisation';
-import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
-import { TableStyles } from '../../styles/table-styles';
-import { ActivitiesListStyles } from './activities-page.styles';
-import { updateQueryParams } from '../../../routing/routes';
+import '../../../common/layout/filters/etools-filters';
+import { translate } from '../../../../localization/localisation';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { ActivitiesListStyles } from './activities-list.styles';
+import { updateQueryParams } from '../../../../routing/routes';
 
-export function template(this: ActivitiesPageComponent): TemplateResult {
+export function template(this: ActivitiesListComponent): TemplateResult {
     return html`
         ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles}
-        ${buttonsStyles} ${FlexLayoutClasses} ${TableStyles} ${ActivitiesListStyles}
+        ${buttonsStyles} ${FlexLayoutClasses} ${CardStyles} ${ActivitiesListStyles}
 
         <page-content-header with-tabs-visible>
             <h1 slot="page-title">Activities</h1>
+            <div slot="title-row-actions" class="content-header-actions">
+                <paper-button class="create-new" @tap="${ () => this.goNew()}">Create New</paper-button>
+            </div>
         </page-content-header>
 
-        <section class="elevation page-content table-container filters-section" elevation="1">
+        <section class="elevation page-content card-container filters-section" elevation="1">
                 <etools-filters
                         .filterLoadingInProcess="${ this.filtersLoading }"
                         .filters="${this.filters || []}"
@@ -30,7 +32,7 @@ export function template(this: ActivitiesPageComponent): TemplateResult {
         </section>
 
         <!-- Table -->
-        <section class="elevation page-content table-container activities-table-section" elevation="1">
+        <section class="elevation page-content card-container activities-table-section" elevation="1">
 
             <!-- Spinner -->
             <etools-loading ?active="${ this.loadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>

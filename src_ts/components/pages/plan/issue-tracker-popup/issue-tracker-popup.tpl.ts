@@ -10,7 +10,7 @@ import '@polymer/paper-input/paper-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import { SharedStyles } from '../../../styles/shared-styles';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
@@ -24,7 +24,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
     // main template
     // language=HTML
     return html`
-${SharedStyles} ${TableStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
+${SharedStyles} ${CardStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
 ${IssueTrackerPopupStyles}
 <etools-dialog
         id="dialog"

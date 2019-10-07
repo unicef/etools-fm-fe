@@ -1,9 +1,9 @@
 import { html, TemplateResult } from 'lit-element';
 
 // language=HTML
-export const TableStyles: TemplateResult = html`
+export const CardStyles: TemplateResult = html`
     <style>
-        .table-title-block {
+        .card-title-box {
             position: relative;
             display: flex;
             align-items: center;
@@ -11,20 +11,20 @@ export const TableStyles: TemplateResult = html`
             padding: 0 10px 0 25px;
         }
 
-        .table-title-block.with-bottom-line { border-bottom: 1px solid #9c9c9c; }
-        .table-title-block .table-title {
+        .card-title-box.with-bottom-line { border-bottom: 1px solid #9c9c9c; }
+        .card-title-box .card-title {
             flex: auto;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             font-size: 18px;
         }
-        .table-title-block .table-title.counter {
+        .card-title-box .card-title.counter {
             font-size: 20px;
             font-weight: 500;
         }
 
-        .table-title-block .buttons-container {
+        .card-title-box .buttons-container {
             position: relative;
             display: flex;
             align-items: center;
@@ -32,13 +32,17 @@ export const TableStyles: TemplateResult = html`
 
         }
 
-        .table-title-block .panel-button {
+        .card-title-box .panel-button {
             opacity: 0.45;
             transition: 0.15s;
         }
 
-        .table-title-block .panel-button:hover  {
+        .card-title-box .panel-button:hover  {
             opacity: 0.57;
+        }
+
+        .card-content {
+            padding: 0 10px;
         }
 
         .editable-row {
@@ -131,7 +135,7 @@ export const TableStyles: TemplateResult = html`
             padding: 5px 0;
         }
 
-        paper-card.table-container {
+        .card-container {
             padding: 0;
         }
 

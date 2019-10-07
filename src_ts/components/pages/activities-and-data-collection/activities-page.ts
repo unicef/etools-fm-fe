@@ -1,197 +1,46 @@
-import { CSSResult, customElement, LitElement, property, TemplateResult } from 'lit-element';
-import { template } from './activities-page.tpl';
-import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
+import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import '../../common/layout/page-content-header/page-content-header';
 import { addTranslates, ENGLISH } from '../../../localization/localisation';
 import { ACTIVITIES_LIST_TRANSLATES } from '../../../localization/en/activities-and-data-collection/activities-list.translates';
-import { Unsubscribe } from 'redux';
+import { ACTIVITY_ITEM_TRANSLATES } from '../../../localization/en/activities-and-data-collection/activity-item.translates';
 import { store } from '../../../redux/store';
-import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
-import { updateQueryParams } from '../../../routing/routes';
-import { debounce } from '../../utils/debouncer';
-import { fireEvent } from '../../utils/fire-custom-event';
-import { loadActivitiesList } from '../../../redux/effects/activities.effects';
 import { activities } from '../../../redux/reducers/activities.reducer';
-import { activitiesListData } from '../../../redux/selectors/activities.selectors';
-import { ROOT_PATH } from '../../../config/config';
-import { ACTIVITY_STATUSES, ACTIVITY_TYPES } from '../../common/dropdown-options';
-import { EtoolsFilterTypes, IEtoolsFilter } from '../../common/layout/filters/etools-filters';
-import { loadStaticData } from '../../../redux/effects/load-static-data.effect';
-import { mapFilters } from '../../utils/filters-mapping';
-import { activitiesListFilters } from './activities-page.filters';
-import { staticDataDynamic } from '../../../redux/selectors/static-data.selectors';
-import { sitesSelector } from '../../../redux/selectors/site-specific-locations.selectors';
-import { loadSiteLocations } from '../../../redux/effects/site-specific-locations.effects';
-import { specificLocations } from '../../../redux/reducers/site-specific-locations.reducer';
+import { SharedStyles } from '../../styles/shared-styles';
+import { pageContentHeaderSlottedStyles } from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import { pageLayoutStyles } from '../../styles/page-layout-styles';
+import { buttonsStyles } from '../../styles/button-styles';
+import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
+import { RouterStyles } from '../../app-shell/router-style';
 
-addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
-store.addReducers({ activities, specificLocations });
+addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES, ACTIVITY_ITEM_TRANSLATES]);
+store.addReducers({ activities });
+
+const PAGE: string = 'activities';
+
+const LIST_ROUTE: string = 'list';
+const ITEM_ROUTE: string = 'item';
 
 @customElement('activities-page')
 export class ActivitiesPageComponent extends LitElement {
-    @property() public loadingInProcess: boolean = false;
-    @property() public queryParams: IRouteQueryParam | null = null;
-    @property() public rootPath: string = ROOT_PATH;
-    @property() public filtersLoading: boolean = false;
-    @property() public filters: IEtoolsFilter[] | null = null;
-    public activitiesList: IListActivity[] = [];
-    public count: number = 0;
+    @property() public subRoute: string = LIST_ROUTE;
+    public render(): TemplateResult | void {
+        return html`
+            ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles} ${buttonsStyles} ${RouterStyles}
 
-    public activityTypes: DefaultDropdownOption<string>[] = ACTIVITY_TYPES;
-    public activityStatuses: DefaultDropdownOption<string>[] = ACTIVITY_STATUSES;
-
-    private readonly routeDetailsUnsubscribe: Unsubscribe;
-    private readonly activitiesDataUnsubscribe: Unsubscribe;
-    private readonly debouncedLoading: Callback;
-    private readonly filtersData: GenericObject = {
-        activity_type: ACTIVITY_TYPES,
-        status__in: ACTIVITY_STATUSES
-    };
-
-    public constructor() {
-        super();
-        // List loading request
-        this.debouncedLoading = debounce((params: IRouteQueryParam) => {
-            this.loadingInProcess = true;
-            store.dispatch<AsyncEffect>(loadActivitiesList(params))
-                .catch(() => fireEvent(this, 'toast', { text: 'Can not load Activities List' }))
-                .then(() => this.loadingInProcess = false);
-        }, 100);
-
-        // route params listener
-        this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false));
-        const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
-        this.onRouteChange(currentRoute);
-
-        // set activitiesList on store data changes
-        this.activitiesDataUnsubscribe = store.subscribe(activitiesListData((data: IListData<IListActivity> | null) => {
-            if (!data) { return; }
-            this.count = data.count;
-            this.activitiesList = data.results;
-        }, false));
-
-        this.initFilters();
+            <activities-list class="page" ?active="${this.isActivePage(this.subRoute, LIST_ROUTE)}"></activities-list>
+            <activity-item class="page" ?active="${this.isActivePage(this.subRoute, ITEM_ROUTE)}"></activity-item>
+        `;
     }
 
-    public render(): TemplateResult {
-        return template.call(this);
-    }
-
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.routeDetailsUnsubscribe();
-        this.activitiesDataUnsubscribe();
-    }
-
-    public changePageParam(newValue: string | number, paramName: string): void {
-        const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
-        if (+newValue === +currentValue) { return; }
-        const newParams: IRouteQueryParams = { [paramName]: newValue };
-        if (paramName === 'page_size') { newParams.page = 1; }
-        updateQueryParams({ [paramName]: newValue });
-    }
-
-    public formatDate(date: string | null): string {
-        return date ? moment(date).format('DD MMM YYYY') : '-';
-    }
-
-    public serializeName(
-        id: number | string,
-        collection: GenericObject[],
-        labelField: string = 'name',
-        valueField: string = 'id'
-    ): string {
-        if (!id || !collection) { return ''; }
-        const item: GenericObject | undefined = collection.find((collectionItem: GenericObject) => `${ collectionItem[valueField] }` === `${ id }`);
-        return item ? item[labelField] : '';
-    }
-
-    private onRouteChange({ routeName, queryParams }: IRouteDetails): void {
-        if (routeName !== 'activities') { return; }
-
-        const paramsAreValid: boolean = this.checkParams(queryParams);
-        if (paramsAreValid) {
-            this.queryParams = queryParams;
-            this.debouncedLoading(this.queryParams);
-        }
-    }
-
-    private checkParams(params?: IRouteQueryParams | null): boolean {
-        const invalid: boolean = !params || !params.page || !params.page_size;
-        if (invalid) {
-            const { page = 1, page_size = 10 } = params || {};
-            updateQueryParams({ page, page_size });
-        }
-        return !invalid;
-    }
-
-    private initFilters(): void {
-        this.filtersLoading = true;
-
-        // subscribe on sites data
-        const subscriber: Unsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
-            if (!sites) { return; }
-            this.filtersData['location_site__in'] = sites;
-            this.setFilters(() => subscriber());
+    public connectedCallback(): void {
+        super.connectedCallback();
+        store.subscribe(routeDetailsSelector(({ routeName, subRouteName }: IRouteDetails) => {
+            if (routeName !== PAGE) { return; }
+            this.subRoute = subRouteName as string;
         }));
-
-        // subscribe on static data
-        activitiesListFilters.forEach((filter: IEtoolsFilter) => {
-            if (!filter.selectionOptionsEndpoint) { return; }
-            this.subscribeOnFilterData(filter.selectionOptionsEndpoint, filter.filterKey);
-        });
-
-        this.loadDataForFilters();
     }
 
-    private subscribeOnFilterData(dataPath: string, filterKey: string): void {
-        const subscriber: Unsubscribe = store.subscribe(staticDataDynamic((data: any[] | undefined) => {
-            if (!data) { return; }
-            this.filtersData[filterKey] = data;
-            this.setFilters(() => subscriber());
-        }, [dataPath]));
-    }
-
-    private loadDataForFilters(): void {
-        const storeState: IRootState = store.getState();
-        if (!storeState.specificLocations.data) {
-            store.dispatch<AsyncEffect>(loadSiteLocations());
-        }
-
-        // we don't need to load locations. they are loaded in appShell
-        const {
-            partners = 'partners',
-            interventions = 'interventions',
-            outputs = 'outputs',
-            users = 'users',
-            tpmPartners = 'tpmPartners'
-        } = storeState.staticData;
-
-        // if data isn't loaded it will be fallback to string and we need to run AsyncEffect
-        [partners, interventions, outputs, users, tpmPartners].forEach((data: any) => {
-            if (typeof data === 'string') { store.dispatch<AsyncEffect>(loadStaticData(data as keyof IStaticDataState)); }
-        });
-    }
-
-    private setFilters(unsubscribe?: Unsubscribe): void {
-        if (unsubscribe) {
-            // unsubscribe after method initialization complete
-            setTimeout(unsubscribe, 0);
-        }
-        // check that data for all dropdowns is loaded
-        const allDataLoaded: boolean = activitiesListFilters.every((filter: IEtoolsFilter) =>
-            filter.type !== EtoolsFilterTypes.Dropdown &&
-            filter.type !== EtoolsFilterTypes.DropdownMulti ||
-            Boolean(this.filtersData[filter.filterKey]));
-
-        if (!allDataLoaded) { return; }
-
-        const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
-        this.filters = mapFilters(activitiesListFilters, this.filtersData, initialValues);
-
-        this.filtersLoading = false;
-    }
-
-    public static get styles(): CSSResult[] {
-        return [elevationStyles];
+    public isActivePage(currentRoute: string, expectedRoute: string): boolean {
+        return currentRoute === expectedRoute;
     }
 }

@@ -6,7 +6,7 @@ import '@polymer/paper-input/paper-textarea';
 import { TemplatesTabComponent } from './templates-tab';
 import { html, TemplateResult } from 'lit-element';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
@@ -19,9 +19,9 @@ import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-
 export function template(this: TemplatesTabComponent): TemplateResult {
     return html`
           ${SharedStyles} ${pageLayoutStyles} ${TemplatesSttyles}
-          ${FlexLayoutClasses} ${TableStyles} ${TabInputsStyles}
+          ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
 
-          <section class="filters-container elevation page-content table-container question-filters-section layout horizontal" elevation="1">
+          <section class="filters-container elevation page-content card-container question-filters-section layout horizontal" elevation="1">
               <div class="filter">
                   <etools-dropdown .options="${LEVELS}"
                                    .selected="${ this.queryParams && this.queryParams.level || undefined }"
@@ -87,7 +87,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
 
 
           <!-- Table -->
-          <section class="elevation page-content table-container templates-table-section" elevation="1" ?hidden="${ !this.queryParams || !this.queryParams.level }">
+          <section class="elevation page-content card-container templates-table-section" elevation="1" ?hidden="${ !this.queryParams || !this.queryParams.level }">
 
 
               <!-- Input for Specific Details with dynamic position -->

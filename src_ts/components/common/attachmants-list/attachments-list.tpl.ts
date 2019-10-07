@@ -5,7 +5,7 @@ import './remove-attachment-popup/remove-attachment-popup';
 import { AttachmentsListComponent } from './attachments-list';
 import { html, TemplateResult } from 'lit-element';
 import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
-import { TableStyles } from '../../styles/table-styles';
+import { CardStyles } from '../../styles/card-styles';
 import { SharedStyles } from '../../styles/shared-styles';
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { translate } from '../../../localization/localisation';
@@ -14,7 +14,7 @@ import { hasPermission, Permissions } from '../../../config/permissions';
 export function template(this: AttachmentsListComponent): TemplateResult {
     return html`
         ${SharedStyles} ${pageLayoutStyles}
-        ${FlexLayoutClasses} ${TableStyles}
+        ${FlexLayoutClasses} ${CardStyles}
         <style>
             .attachments-list-table-section {
                 position: relative;
@@ -22,14 +22,14 @@ export function template(this: AttachmentsListComponent): TemplateResult {
              }
         </style>
 
-        <section class="elevation page-content table-container attachments-list-table-section" elevation="1">
+        <section class="elevation page-content card-container attachments-list-table-section" elevation="1">
 
             <etools-loading ?active="${ this.loadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
             <!-- TITLE with ADD ATTACHMENT button -->
-            <div class="table-title-block with-bottom-line">
+            <div class="card-title-box with-bottom-line">
 
-                <div class="table-title">${ translate('ATTACHMENTS_LIST.TITLE') }</div>
+                <div class="card-title">${ translate('ATTACHMENTS_LIST.TITLE') }</div>
                 <div class="buttons-container">
                     <paper-icon-button
                             @tap="${() => this.openPopup()}"

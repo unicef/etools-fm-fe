@@ -5,7 +5,7 @@ import { RationaleTabComponent } from './rationale-tab';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
@@ -13,9 +13,10 @@ import { RationaleStyles } from './rationale.styles';
 import { RATIONALE_ATTACHMENTS } from '../../../../endpoints/endpoints-list';
 
 export function template(this: RationaleTabComponent): TemplateResult {
+    // language=HTML
     return html`
         ${SharedStyles} ${pageLayoutStyles} ${RationaleStyles}
-        ${FlexLayoutClasses} ${TableStyles} ${TabInputsStyles}
+        ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
 
         <div class="year-dropdown-container">
             <etools-dropdown class="year-dropdown"
@@ -30,12 +31,12 @@ export function template(this: RationaleTabComponent): TemplateResult {
                              hide-search allow-outside-scroll></etools-dropdown>
         </div>
 
-        <section class="elevation page-content table-container rationale-table-section" elevation="1">
+        <section class="elevation page-content card-container" elevation="1">
 
             <etools-loading ?active="${ this.loadingInProcess }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
 
-            <div class="table-title-block with-bottom-line">
-                <div class="table-title">${ translate('RATIONALE.TITLE') }</div>
+            <div class="card-title-box with-bottom-line">
+                <div class="card-title">${ translate('RATIONALE.TITLE') }</div>
                 <div class="buttons-container">
 
                     ${ this.yearPlan && this.yearPlan.history[0] ? html`
@@ -51,7 +52,7 @@ export function template(this: RationaleTabComponent): TemplateResult {
                 </div>
             </div>
 
-            <div class="container layout vertical rational-view">
+            <div class="layout vertical card-content">
                 <div class="text-control">
                     <label>${ translate('RATIONALE.LABELS.PRIORITIZATION') }</label>
                     <div class="value">${ this.formatValue(this.yearPlan && this.yearPlan.prioritization_criteria) }</div>

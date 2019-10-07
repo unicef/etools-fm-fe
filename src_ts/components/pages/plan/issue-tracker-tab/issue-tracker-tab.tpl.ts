@@ -4,7 +4,7 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { IssueTrackerTabStyles } from './issue-tracker-tab.styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TableStyles } from '../../../styles/table-styles';
+import { CardStyles } from '../../../styles/card-styles';
 import { translate } from '../../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { repeat } from 'lit-html/directives/repeat';
@@ -19,7 +19,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
     // language=HTML
     return html`
 ${SharedStyles} ${pageLayoutStyles} ${IssueTrackerTabStyles}
-${FlexLayoutClasses} ${TableStyles}
+${FlexLayoutClasses} ${CardStyles}
 <section class="elevation page-content filters layout horizontal" elevation="1">
     <div class="filter">
         <etools-dropdown-multi
@@ -70,9 +70,9 @@ ${FlexLayoutClasses} ${TableStyles}
         <span>${ translate('ISSUE_TRACKER.IS_NEW') }</span>
     </div>
 </section>
-<section class="elevation page-content table-container issue-tracker-table-section" elevation="1">
-    <div class="table-title-block with-bottom-line">
-        <div class="table-title counter">${ translate('ISSUE_TRACKER.TABLE_CAPTION', this.tableInformation) }</div>
+<section class="elevation page-content card-container issue-tracker-table-section" elevation="1">
+    <div class="card-title-box with-bottom-line">
+        <div class="card-title counter">${ translate('ISSUE_TRACKER.TABLE_CAPTION', this.tableInformation) }</div>
         <div class="buttons-container">
             <paper-icon-button
                 @tap="${() => this.openLogIssue()}"

@@ -59,11 +59,33 @@ EtoolsRouter
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
                 routeName: 'activities',
-                subRouteName: null, // tab name
+                subRouteName: 'list',
                 path: params.matchDetails[0],
                 queryParams: params.queryParams,
                 queryParamsString: params.queryParamsString,
                 params: null
+            };
+        })
+    .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'activities',
+                subRouteName: 'item',
+                path: params.matchDetails[0],
+                queryParams: null,
+                queryParamsString: null,
+                params: { id: params.matchDetails[1] }
+            };
+        })
+    .addRoute(new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'activities',
+                subRouteName: 'item',
+                path: params.matchDetails[0],
+                queryParams: null,
+                queryParamsString: null,
+                params: { id: params.matchDetails[1], tab: params.matchDetails[2] }
             };
         })
     .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`),
