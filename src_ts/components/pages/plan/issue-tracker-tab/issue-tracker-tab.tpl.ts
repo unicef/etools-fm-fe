@@ -1,10 +1,5 @@
 import { html, TemplateResult } from 'lit-html';
 import { IssueTrackerTabComponent } from './issue-tracker-tab';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { IssueTrackerTabStyles } from './issue-tracker-tab.styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
 import { translate } from '../../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { repeat } from 'lit-html/directives/repeat';
@@ -18,8 +13,6 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
     // main template
     // language=HTML
     return html`
-${SharedStyles} ${pageLayoutStyles} ${IssueTrackerTabStyles}
-${FlexLayoutClasses} ${CardStyles}
 <section class="elevation page-content filters layout horizontal" elevation="1">
     <div class="filter">
         <etools-dropdown-multi

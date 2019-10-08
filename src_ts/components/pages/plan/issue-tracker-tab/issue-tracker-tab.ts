@@ -1,4 +1,4 @@
-import { CSSResult, customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { debounce } from '../../../utils/debouncer';
 import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
@@ -17,6 +17,10 @@ import { loadStaticData } from '../../../../redux/effects/load-static-data.effec
 import { outputsDataSelector, partnersDataSelector } from '../../../../redux/selectors/static-data.selectors';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
 import '../issue-tracker-popup/issue-tracker-popup';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { IssueTrackerTabStyles } from './issue-tracker-tab.styles';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
     { value: 'new', display_name: 'New' },
@@ -193,8 +197,8 @@ export class IssueTrackerTabComponent extends LitElement {
         return { start, end, count: this.count };
     }
 
-    public static get styles(): CSSResult[] {
-        return [elevationStyles];
+    public static get styles(): CSSResultArray {
+        return [elevationStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
     }
 
     public render(): TemplateResult {

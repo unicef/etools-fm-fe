@@ -4,17 +4,11 @@ import './edit-attachments-popup/edit-attachments-popup';
 import './remove-attachment-popup/remove-attachment-popup';
 import { AttachmentsListComponent } from './attachments-list';
 import { html, TemplateResult } from 'lit-element';
-import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
-import { CardStyles } from '../../styles/card-styles';
-import { SharedStyles } from '../../styles/shared-styles';
-import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { translate } from '../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../config/permissions';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${pageLayoutStyles}
-        ${FlexLayoutClasses} ${CardStyles}
         <style>
             .attachments-list-table-section {
                 position: relative;

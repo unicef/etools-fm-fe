@@ -1,4 +1,4 @@
-import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { fireEvent } from '../../../utils/fire-custom-event';
 import { clone } from 'ramda';
 import { template } from './edit-attachments-popup.tpl';
@@ -6,6 +6,10 @@ import { store } from '../../../../redux/store';
 import { addAttachmentToList, updateListAttachment } from '../../../../redux/effects/attachments-list.effects';
 import { listAttachmentUpdate } from '../../../../redux/selectors/attachments-list.selectors';
 import { Unsubscribe } from 'redux';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends LitElement {
@@ -46,6 +50,10 @@ export class EditAttachmentsPopupComponent extends LitElement {
             this.dialogOpened = false;
             fireEvent(this, 'response', { confirmed: true });
         }, false));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, TabInputsStyles];
     }
 
     public render(): TemplateResult {

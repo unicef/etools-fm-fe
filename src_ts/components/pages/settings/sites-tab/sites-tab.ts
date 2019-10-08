@@ -13,6 +13,13 @@ import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { debounce } from '../../../utils/debouncer';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
 import './sites-popup/sites-popup';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
+import { leafletStyles } from '../../../styles/leaflet-styles';
+import { SitesTabStyles } from './sites-tab.styles';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends LitElement {
@@ -202,6 +209,7 @@ export class SitesTabComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
+            SitesTabStyles, leafletStyles];
     }
 }

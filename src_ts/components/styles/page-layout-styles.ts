@@ -1,13 +1,12 @@
-import { html, TemplateResult } from 'lit-element';
-// language=HTML
-export const pageLayoutStyles: TemplateResult = html`
-  <style>
+import { css, CSSResult } from 'lit-element';
+// language=CSS
+export const pageLayoutStyles: CSSResult = css`
     .page-content {
-      margin: 24px;
+    margin: 24px;
     }
 
     .page-content.filters {
-        padding: 8px 24px;
+    padding: 8px 24px;
     }
 
     .pr-25 { padding-right: 25px !important; }
@@ -73,5 +72,4 @@ export const pageLayoutStyles: TemplateResult = html`
     .w300px { width: 300px; }
     .w310px { width: 310px; }
     .w330px { width: 330px; }
-  </style>
 `;

@@ -8,7 +8,7 @@ import '@polymer/paper-ripple/paper-ripple.js';
 import { navMenuStyles } from './styles/nav-menu-styles';
 import { fireEvent } from '../../utils/fire-custom-event';
 import { ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY } from '../../../config/config';
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 
 /**
  * main menu
@@ -27,12 +27,14 @@ export class AppMenu extends LitElement {
     @property({ type: Boolean, attribute: 'small-menu' })
     public smallMenu: boolean = false;
 
+    public static get styles(): CSSResult {
+        return navMenuStyles;
+    }
+
     public render(): TemplateResult {
         // main template
         // language=HTML
         return html`
-        ${navMenuStyles}
-
       <div class="menu-header">
       <span id="app-name">
         Field <br>

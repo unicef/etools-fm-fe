@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
@@ -39,9 +39,12 @@ export class FmSettingsComponent extends LitElement {
 
     @property() public activeTab: string = QUESTIONS_TAB;
 
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+    }
+
     public render(): TemplateResult | void {
         return html`
-            ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles} ${buttonsStyles}
             <page-content-header with-tabs-visible>
                  <h1 slot="page-title">Settings</h1>
 

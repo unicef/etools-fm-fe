@@ -4,21 +4,12 @@ import '@polymer/paper-input/paper-textarea';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionPopupComponent } from './question-popup';
 import { translate } from '../../../../../localization/localisation';
-import { CardStyles } from '../../../../styles/card-styles';
-import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { SharedStyles } from '../../../../styles/shared-styles';
-import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
 import { repeat } from 'lit-html/directives/repeat';
 import { PaperCheckboxElement } from '@polymer/paper-checkbox/paper-checkbox';
-import { QuestionPopupStyles } from './question-popup.styles';
 import { BOOLEAN_TYPE, SCALE_TYPE } from '../../../../common/dropdown-options';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${CardStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
-        ${QuestionPopupStyles}
-
         <etools-dialog
                 size="md" keep-dialog-open ?opened="${ this.dialogOpened }"
                 dialog-title="${ translate(this.editedQuestion.id ?

@@ -1,4 +1,12 @@
-import { customElement, LitElement, property, PropertyValues, queryAll, TemplateResult } from 'lit-element';
+import {
+    CSSResultArray,
+    customElement,
+    LitElement,
+    property,
+    PropertyValues,
+    queryAll,
+    TemplateResult
+} from 'lit-element';
 import { template } from './rationale-popup.tpl';
 import { clone } from 'ramda';
 import { store } from '../../../../../redux/store';
@@ -9,6 +17,11 @@ import { getDifference } from '../../../../utils/objects-diff';
 import { updateRationale } from '../../../../../redux/effects/rationale.effects';
 import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
 import { setTextareasMaxHeight } from '../../../../utils/textarea-max-rows-helper';
+import { SharedStyles } from '../../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../../styles/card-styles';
+import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
 
 @customElement('rationale-popup')
 export class RationalePopupComponent extends LitElement {
@@ -47,6 +60,10 @@ export class RationalePopupComponent extends LitElement {
             this.dialogOpened = false;
             fireEvent(this, 'response', { confirmed: true });
         }, false));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles];
     }
 
     public render(): TemplateResult {

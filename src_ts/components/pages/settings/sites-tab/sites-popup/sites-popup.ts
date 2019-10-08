@@ -1,4 +1,4 @@
-import { customElement, LitElement, property, query, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, LitElement, property, query, TemplateResult } from 'lit-element';
 import { template } from './sites-popup.tpl';
 import { Unsubscribe } from 'redux';
 import { clone } from 'ramda';
@@ -14,6 +14,13 @@ import { getDifference } from '../../../../utils/objects-diff';
 import { MapHelper } from '../../../../common/map-mixin';
 import { translate } from '../../../../../localization/localisation';
 import { currentWorkspaceSelector } from '../../../../../redux/selectors/static-data.selectors';
+import { SharedStyles } from '../../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../../styles/card-styles';
+import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
+import { leafletStyles } from '../../../../styles/leaflet-styles';
+import { SitesTabStyles } from '../sites-tab.styles';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 
@@ -74,6 +81,11 @@ export class SitesPopupComponent extends LitElement {
                 if (!workspace) { return; }
                 this.defaultMapCenter = workspace.point && workspace.point.coordinates || DEFAULT_COORDINATES;
             }));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles, leafletStyles,
+            SitesTabStyles];
     }
 
     public render(): TemplateResult {

@@ -1,17 +1,10 @@
 import '@polymer/paper-input/paper-textarea';
 import { RationalePopupComponent } from './rationale-popup';
 import { html, TemplateResult } from 'lit-element';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../../styles/card-styles';
-import { SharedStyles } from '../../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
 import { translate } from '../../../../../localization/localisation';
 
 export function template(this: RationalePopupComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${CardStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
-
         <style>
             .helper-text {
                 padding: 0 12px;

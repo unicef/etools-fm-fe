@@ -16,6 +16,12 @@ import { mapFilters } from '../../../utils/filters-mapping';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
 import { ANSWER_TYPES, LEVELS } from '../../../common/dropdown-options';
 import { questionsFilters } from './questions-tab.filters';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
+import { QuestionsTabStyles } from './question-tab.styles';
 
 type Serialized = {
     id: number | string;
@@ -158,6 +164,7 @@ export class QuestionsTabComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
+            QuestionsTabStyles];
     }
 }

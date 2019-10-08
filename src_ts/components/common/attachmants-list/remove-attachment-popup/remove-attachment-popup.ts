@@ -1,10 +1,14 @@
-import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { template } from './remove-attachment-popup.tpl';
 import { fireEvent } from '../../../utils/fire-custom-event';
 import { store } from '../../../../redux/store';
 import { listAttachmentUpdate } from '../../../../redux/selectors/attachments-list.selectors';
 import { Unsubscribe } from 'redux';
 import { deleteListAttachment } from '../../../../redux/effects/attachments-list.effects';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 
 @customElement('remove-attachment-popup')
 export class RemoveAttachmentPopupComponent extends LitElement {
@@ -36,6 +40,10 @@ export class RemoveAttachmentPopupComponent extends LitElement {
             this.dialogOpened = false;
             fireEvent(this, 'response', { confirmed: true });
         }, false));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, TabInputsStyles];
     }
 
     public render(): TemplateResult {

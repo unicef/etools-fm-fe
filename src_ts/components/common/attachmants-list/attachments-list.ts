@@ -7,6 +7,10 @@ import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
 import { IDialogResponse, openDialog } from '../../utils/dialog';
 import { Unsubscribe } from 'redux';
 import { debounce } from '../../utils/debouncer';
+import { SharedStyles } from '../../styles/shared-styles';
+import { pageLayoutStyles } from '../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
+import { CardStyles } from '../../styles/card-styles';
 
 const FILE_TYPES: DefaultDropdownOption[] = [{ display_name: 'SOP', value: 34 }, { display_name: 'Other', value: 35 }];
 
@@ -83,6 +87,6 @@ export class AttachmentsListComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
     }
 }

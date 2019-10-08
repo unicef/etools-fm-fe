@@ -1,4 +1,4 @@
-import { customElement, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { Unsubscribe } from 'redux';
 import { clone } from 'ramda';
 import { store } from '../../../../redux/store';
@@ -12,6 +12,12 @@ import { locationsInvert } from '../../settings/sites-tab/locations-invert';
 import { template } from './issue-tracker-popup.tpl';
 import { PaperRadioButtonElement } from '@polymer/paper-radio-button/paper-radio-button';
 import { SelectedFile } from '../../../common/file-components/file-select-input';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
+import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends LitElement {
@@ -169,6 +175,11 @@ export class IssueTrackerPopup extends LitElement {
         this.sitesUnsubscribe();
         this.outputsUnsubscribe();
         this.partnersUnsubscribe();
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
+            IssueTrackerPopupStyles];
     }
 
     public render(): TemplateResult {

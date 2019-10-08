@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { css, CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/iron-icons/iron-icons';
 import { completedStatusIcon } from './status-icons';
@@ -35,60 +35,63 @@ export class EtoolsStatus extends LitElement {
     @property({ type: Array })
     public statuses: IEtoolsStatusModel[] = [];
 
+    public static get styles(): CSSResult {
+        // language=CSS
+        return css`
+            :host {
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                @apply --layout-wrap;
+                border-bottom: 1px solid var(--dark-divider-color);
+                padding: 24px 24px 0;
+                background-color: var(--primary-background-color);
+            }
+
+            .status {
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                @apply --layout-flex-auto;
+                color: var(--secondary-text-color);
+                font-size: 16px;
+                padding-bottom: 24px;
+                max-width: 260px;
+            }
+
+            .status:not(:last-of-type)::after {
+                content: '';
+                @apply --layout-horizontal;
+                @apply --layout-flex-auto;
+                height: 0;
+                margin: 0 24px;
+                border-top: 1px solid var(--secondary-text-color);
+            }
+
+            .status .icon {
+                @apply --layout-horizontal;
+                @apply --layout-center-center;
+                flex: 0 0 24px;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                color: #fff;
+                background-color: var(--secondary-text-color);
+                margin-right: 8px;
+                font-size: 14px;
+            }
+
+            .status.active .icon {
+                background-color: var(--primary-color);
+            }
+
+            .status.completed .icon {
+                background-color: var(--success-color);
+                fill: #ffffff;
+            }`;
+    }
+
     public render(): TemplateResult {
         // language=HTML
         return html`
-      <style>
-        :host {
-          @apply --layout-horizontal;
-          @apply --layout-center;
-          @apply --layout-wrap;
-          border-bottom: 1px solid var(--dark-divider-color);
-          padding: 24px 24px 0;
-          background-color: var(--primary-background-color);
-        }
-
-        .status {
-          @apply --layout-horizontal;
-          @apply --layout-center;
-          @apply --layout-flex-auto;
-          color: var(--secondary-text-color);
-          font-size: 16px;
-          padding-bottom: 24px;
-          max-width: 260px;
-        }
-
-        .status:not(:last-of-type)::after {
-          content: '';
-          @apply --layout-horizontal;
-          @apply --layout-flex-auto;
-          height: 0;
-          margin: 0 24px;
-          border-top: 1px solid var(--secondary-text-color);
-        }
-
-        .status .icon {
-          @apply --layout-horizontal;
-          @apply --layout-center-center;
-          flex: 0 0 24px;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          color: #fff;
-          background-color: var(--secondary-text-color);
-          margin-right: 8px;
-          font-size: 14px;
-        }
-
-        .status.active .icon {
-          background-color: var(--primary-color);
-        }
-
-        .status.completed .icon {
-          background-color: var(--success-color);
-          fill: #ffffff;
-        }
-      </style>
        ${this.filteredStatuses.map((item: any, index: number) => this.getStatusHtml(item, index))}
     `;
     }

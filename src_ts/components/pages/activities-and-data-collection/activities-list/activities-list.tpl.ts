@@ -1,21 +1,14 @@
 import { ActivitiesListComponent } from './activities-list';
 import { html, TemplateResult } from 'lit-element';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { buttonsStyles } from '../../../styles/button-styles';
 import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
 import { translate } from '../../../../localization/localisation';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
 import { ActivitiesListStyles } from './activities-list.styles';
 import { updateQueryParams } from '../../../../routing/routes';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles}
-        ${buttonsStyles} ${FlexLayoutClasses} ${CardStyles} ${ActivitiesListStyles}
+        ${ActivitiesListStyles}
 
         <page-content-header with-tabs-visible>
             <h1 slot="page-title">Activities</h1>

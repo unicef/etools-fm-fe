@@ -1,8 +1,6 @@
-import { html, TemplateResult } from 'lit-element';
+import { css, CSSResult } from 'lit-element';
 
-export const RouterStyles: TemplateResult = html`
-<style>
-
+export const RouterStyles: CSSResult = css`
     .page {
         display: none;
     }
@@ -10,6 +8,4 @@ export const RouterStyles: TemplateResult = html`
     .page[active] {
         display: block;
     }
-
-</style>
 `;

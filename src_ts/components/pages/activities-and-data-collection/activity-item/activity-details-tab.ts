@@ -2,10 +2,10 @@ import { CSSResult, customElement, html, LitElement, property, TemplateResult } 
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { CardStyles } from '../../../styles/card-styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {
@@ -17,7 +17,6 @@ export class ActivityDetailsTab extends LitElement {
     // language=HTML
     public render(): TemplateResult {
         return html`
-        ${SharedStyles} ${pageLayoutStyles} ${CardStyles} ${FlexLayoutClasses}
         <section class="elevation card-container page-content" elevation="1">
             <div class="card-title-box with-bottom-line">
                 <div class="card-title">${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}</div>
@@ -46,6 +45,6 @@ export class ActivityDetailsTab extends LitElement {
 }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
     }
 }

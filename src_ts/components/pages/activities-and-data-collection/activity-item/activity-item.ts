@@ -1,17 +1,17 @@
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { updateAppLocation } from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
 import '../../../common/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import { IEtoolsStatusModel } from '../../../common/layout/status/etools-status';
 import { RouterStyles } from '../../../app-shell/router-style';
-import { SharedStyles } from '../../../styles/shared-styles';
 import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { buttonsStyles } from '../../../styles/button-styles';
 import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 import { translate } from '../../../../localization/localisation';
+import { SharedStyles } from '../../../styles/shared-styles';
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
@@ -63,11 +63,13 @@ export class NewActivityComponent extends LitElement {
         }));
     }
 
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
+    }
+
     public render(): TemplateResult {
         // language=HTML
         return html`
-        ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles} ${buttonsStyles} ${RouterStyles}
-
         <etools-status .statuses="${ STATUSES }"></etools-status>
         <page-content-header with-tabs-visible>
             <h1 slot="page-title">${ !this.activityId ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityId}</h1>

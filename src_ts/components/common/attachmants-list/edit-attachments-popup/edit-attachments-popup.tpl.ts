@@ -1,15 +1,10 @@
 import '../../file-components/file-select-input';
 import { EditAttachmentsPopupComponent } from './edit-attachments-popup';
 import { html, TemplateResult } from 'lit-element';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { translate } from '../../../../localization/localisation';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
         <style>
             .file-upload-container { padding: 20px 0 0; }
         </style>

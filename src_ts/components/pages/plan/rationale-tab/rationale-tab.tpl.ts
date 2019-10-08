@@ -4,20 +4,11 @@ import { html, TemplateResult } from 'lit-element';
 import { RationaleTabComponent } from './rationale-tab';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
-import { RationaleStyles } from './rationale.styles';
 import { RATIONALE_ATTACHMENTS } from '../../../../endpoints/endpoints-list';
 
 export function template(this: RationaleTabComponent): TemplateResult {
     // language=HTML
     return html`
-        ${SharedStyles} ${pageLayoutStyles} ${RationaleStyles}
-        ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
-
         <div class="year-dropdown-container">
             <etools-dropdown class="year-dropdown"
                              .selected="${ this.selectedYear }"

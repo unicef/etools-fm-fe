@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { store } from '../../../redux/store';
 import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
 import { updateAppLocation } from '../../../routing/routes';
@@ -57,9 +57,12 @@ export class PlanPage extends LitElement {
         }));
     }
 
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+    }
+
     public render(): TemplateResult {
         return html`
-        ${SharedStyles} ${pageContentHeaderSlottedStyles} ${pageLayoutStyles} ${buttonsStyles}
         <page-content-header with-tabs-visible>
                  <h1 slot="page-title">Plan</h1>
 

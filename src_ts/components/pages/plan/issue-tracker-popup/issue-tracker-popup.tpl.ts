@@ -9,12 +9,6 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { CardStyles } from '../../../styles/card-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 import { simplifyValue } from '../../../utils/objects-diff';
 import '../../../common/file-components/file-select-input';
 import '../../../common/file-components/file-select-button';
@@ -24,8 +18,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
     // main template
     // language=HTML
     return html`
-${SharedStyles} ${CardStyles} ${pageLayoutStyles} ${FlexLayoutClasses} ${TabInputsStyles}
-${IssueTrackerPopupStyles}
 <etools-dialog
         id="dialog"
         size="md"

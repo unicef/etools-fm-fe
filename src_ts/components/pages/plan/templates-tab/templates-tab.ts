@@ -1,5 +1,5 @@
 import {
-    CSSResult,
+    CSSResultArray,
     customElement,
     LitElement,
     property,
@@ -26,6 +26,12 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 import { setTextareasMaxHeight } from '../../../utils/textarea-max-rows-helper';
 import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
 import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-options';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
+import { TemplatesStyles } from './templates-tab.styles';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
@@ -247,8 +253,9 @@ export class TemplatesTabComponent extends LitElement {
         }
     }
 
-    public static get styles(): CSSResult[] {
-        return [elevationStyles];
+    public static get styles(): CSSResultArray {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
+            TemplatesStyles];
     }
 
 }

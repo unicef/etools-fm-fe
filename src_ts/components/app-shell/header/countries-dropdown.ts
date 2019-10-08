@@ -7,7 +7,6 @@ import { customElement, html, LitElement, property, query, TemplateResult } from
 
 // import EndpointsMixin from '../../endpoints/endpoints-mixin.js';
 import { fireEvent } from '../../utils/fire-custom-event';
-import { countriesDropdownStyles } from './countries-dropdown-styles';
 import { changeCurrentUserCountry } from '../../../redux/effects/country.effects';
 import { countrySelector } from '../../../redux/selectors/country.selectors';
 import { DEFAULT_ROUTE, updateAppLocation } from '../../../routing/routes';
@@ -52,7 +51,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         // main template
         // language=HTML
         return html`
-      ${countriesDropdownStyles}
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown id="countrySelector"
                        .selected="${this.currentCountry.id}"

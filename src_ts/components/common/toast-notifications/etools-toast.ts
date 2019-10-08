@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, query, TemplateResult } from 'lit-element';
+import { css, CSSResult, customElement, html, LitElement, query, TemplateResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-toast/paper-toast';
 import '@polymer/paper-button/paper-button';
@@ -23,56 +23,58 @@ export class EtoolsToast extends LitElement {
         // main template
         // language=HTML
         return html`
-      <style>
-        .toast-dismiss-btn {
-          --paper-button: {
-            padding: 8px;
-            min-width: 16px;
-            margin: 0 -8px 0 24px;
-          };
-        }
+            <paper-toast id="toast"
+                       class="toast-general-style"
+                       @iron-overlay-closed="${() => this.toastClosed()}">
+            <paper-button id="confirmBtn"
+                          @tap="${() => this.confirmToast()}"
+                          class="toast-dismiss-btn-general-style">
+              Ok
+            </paper-button>
+            </paper-toast>`;
+    }
 
-        .toast-dismiss-btn-general-style {
-          text-transform: uppercase;
-          color: var(--primary-color);
-        }
+    public static get styles(): CSSResult {
+        // language=CSS
+        return css`
+            .toast-dismiss-btn {
+                --paper-button: {
+                    padding: 8px;
+                    min-width: 16px;
+                    margin: 0 -8px 0 24px;
+                };
+            }
 
-        .toast-dismiss-btn-multi-line {
-          --paper-button: {
-            padding: 8px;
-            min-width: 16px;
-            margin: 16px -8px -8px 0;
-            @apply --layout-self-end;
-          };
-        }
+            .toast-dismiss-btn-general-style {
+                text-transform: uppercase;
+                color: var(--primary-color);
+            }
 
-        .toast-general-style {
-          max-width: 568px !important;
-          min-height: 40px;
-          max-height: 70vh !important;
-        }
+            .toast-dismiss-btn-multi-line {
+                --paper-button: {
+                    padding: 8px;
+                    min-width: 16px;
+                    margin: 16px -8px -8px 0;
+                    @apply --layout-self-end;
+                };
+            }
 
-        .toast {
-          @apply --layout-horizontal;
-          @apply --layout-center;
-          justify-content: space-between;
-        }
+            .toast-general-style {
+                max-width: 568px !important;
+                min-height: 40px;
+                max-height: 70vh !important;
+            }
 
-        .toast-multi-line {
-          @apply --layout-vertical;
-          text-align: justify;
-        }
-      </style>
-      <paper-toast id="toast"
-                   class="toast-general-style"
-                   @iron-overlay-closed="${() => this.toastClosed()}">
-        <paper-button id="confirmBtn"
-                      @tap="${() => this.confirmToast()}"
-                      class="toast-dismiss-btn-general-style">
-          Ok
-        </paper-button>
-      </paper-toast>
-    `;
+            .toast {
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                justify-content: space-between;
+            }
+
+            .toast-multi-line {
+                @apply --layout-vertical;
+                text-align: justify;
+            }`;
     }
 
     public connectedCallback(): void {

@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit-element';
+import { css, CSSResult } from 'lit-element';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
 /**
@@ -6,13 +6,10 @@ import '@polymer/iron-flex-layout/iron-flex-layout.js';
  * (styling slotted content, using ::slotted will not work on Edge)
  */
 
-// language=HTML
-export const pageContentHeaderSlottedStyles: TemplateResult = html`
-    <style>
-        .content-header-actions {
-            @apply --layout-horizontal;
-            @apply --layout-end;
-        }
-
-        /* TODO: add more styles as needed */
-    </style>`;
+// language=CSS
+export const pageContentHeaderSlottedStyles: CSSResult = css`
+    .content-header-actions {
+        @apply --layout-horizontal;
+        @apply --layout-end;
+    }
+`;

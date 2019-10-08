@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
+import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 
 export type SelectedFile = {
     id?: number;
@@ -29,9 +29,9 @@ export class FileSelectInput extends LitElement {
     @query('#link')
     public link!: HTMLLinkElement;
 
-    public render(): TemplateResult {
-        return html`
-        <style>
+    public static get styles(): CSSResult {
+        // language=CSS
+        return css`
             .file-selector-container {
                 display: flex;
                 flex-flow: row;
@@ -76,7 +76,12 @@ export class FileSelectInput extends LitElement {
                 margin: 0 0;
                 padding: 0 0;
             }
-        </style>
+        `;
+    }
+
+    public render(): TemplateResult {
+        // language=HTML
+        return html`
         <div class="file-selector-container">
             <input id="file" hidden type="file" @change="${ () => this.fileSelected()}">
             <a id="link" target="_blank" hidden></a>

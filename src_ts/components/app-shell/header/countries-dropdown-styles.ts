@@ -1,57 +1,53 @@
-import { html, TemplateResult } from 'lit-element';
+import { css, CSSResult } from 'lit-element';
 
-// language=HTML
-export const countriesDropdownStyles: TemplateResult = html`
-  <style>
-
+// language=CSS
+export const countriesDropdownStyles: CSSResult = css`
     *[hidden] {
-      display: none !important;
+        display: none !important;
     }
 
     :host {
-      display: block;
+        display: block;
     }
 
     :host(:hover) {
-      cursor: pointer;
+        cursor: pointer;
     }
 
     etools-dropdown {
-      width: 160px;
+        width: 160px;
 
-      --paper-listbox: {
-        max-height: 600px;
-      };
+        --paper-listbox: {
+            max-height: 600px;
+        };
 
-      --esmm-icons: {
-        color: var(--header-color);
-        cursor: pointer;
-      };
+        --esmm-icons: {
+            color: var(--header-color);
+            cursor: pointer;
+        };
 
-      --paper-input-container-underline: {
-        display: none;
-      };
+        --paper-input-container-underline: {
+            display: none;
+        };
 
-      --paper-input-container-underline-focus: {
-        display: none;
-      };
+        --paper-input-container-underline-focus: {
+            display: none;
+        };
 
-      --paper-input-container-underline-disabled: {
-        display: none;
-      };
+        --paper-input-container-underline-disabled: {
+            display: none;
+        };
 
-      --paper-input-container-input: {
-        color: var(--header-color);
-        cursor: pointer;
-        min-height: 24px;
-        text-align: right;
-        line-height: 21px; /* for IE */
-      };
+        --paper-input-container-input: {
+            color: var(--header-color);
+            cursor: pointer;
+            min-height: 24px;
+            text-align: right;
+            line-height: 21px; /* for IE */
+        };
 
-      --paper-menu-button-dropdown: {
-        max-height: 380px;
-      };
+        --paper-menu-button-dropdown: {
+            max-height: 380px;
+        };
     }
-  </style>
-
 `;

@@ -17,12 +17,11 @@ export class PageNotFound extends LitElement {
     public rootPath: string = ROOT_PATH;
 
     public static get styles(): CSSResultArray {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles];
     }
 
     public render(): TemplateResult {
     return html`
-          ${SharedStyles} ${pageLayoutStyles}
           <section class="page-content elevation" elevation="1">
             <h2>Oops! You hit a 404</h2>
             <p>The page you're looking for doesn't seem to exist. Head back

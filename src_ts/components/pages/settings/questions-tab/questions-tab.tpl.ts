@@ -3,12 +3,6 @@ import '../../../common/layout/filters/etools-filters';
 import './question-popup/question-popup';
 import { html, TemplateResult } from 'lit-element';
 import { QuestionsTabComponent } from './questions-tab';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
-import { QuestionsTabStyles } from './question-tab.styles';
 import { translate } from '../../../../localization/localisation';
 import { updateQueryParams } from '../../../../routing/routes';
 import { ROOT_PATH } from '../../../../config/config';
@@ -16,8 +10,6 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 
 export function template(this: QuestionsTabComponent): TemplateResult {
     return html`
-            ${SharedStyles} ${pageLayoutStyles} ${QuestionsTabStyles}
-            ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
             <section class="elevation page-content card-container question-filters-section" elevation="1">
                 <etools-filters .filters="${this.filters || []}" @filter-change="${ (event: CustomEvent) => updateQueryParams(event.detail) }"></etools-filters>
             </section>

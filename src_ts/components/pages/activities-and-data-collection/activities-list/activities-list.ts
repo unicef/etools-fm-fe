@@ -22,6 +22,13 @@ import { staticDataDynamic } from '../../../../redux/selectors/static-data.selec
 import { sitesSelector } from '../../../../redux/selectors/site-specific-locations.selectors';
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
 import { specificLocations } from '../../../../redux/reducers/site-specific-locations.reducer';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { buttonsStyles } from '../../../styles/button-styles';
+import { ActivitiesListStyles } from './activities-list.styles';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({ activities, specificLocations });
@@ -196,6 +203,7 @@ export class ActivitiesListComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, FlexLayoutClasses,
+            CardStyles, buttonsStyles, ActivitiesListStyles];
     }
 }

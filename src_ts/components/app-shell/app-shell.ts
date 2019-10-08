@@ -33,7 +33,7 @@ import { getCurrentUserData } from '../../redux/effects/user.effects';
 import { AppDrawerLayoutElement } from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import { AppHeaderLayoutElement } from '@polymer/app-layout/app-header-layout/app-header-layout';
 import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
-import { customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 import { navigate } from '../../redux/effects/app.effects';
 import { UpdateDrawerState } from '../../redux/actions/app';
 import { loadStaticData } from '../../redux/effects/load-static-data.effect';
@@ -44,6 +44,7 @@ import { addTranslates, ENGLISH, useLanguage } from '../../localization/localisa
 import { MAIN_TRANSLATES } from '../../localization/en/main.translates';
 import { currentUser } from '../../redux/selectors/user.selectors';
 import { setUserGroups } from '../../config/permissions';
+import { appDrawerStyles } from './menu/styles/app-drawer-styles';
 
 store.addReducers({
     user,
@@ -145,12 +146,14 @@ export class AppShell extends connect(store)(LitElement) {
         this._notifyLayoutResize();
     }
 
+    public static get styles(): CSSResultArray {
+        return [appDrawerStyles, AppShellStyles, RouterStyles];
+    }
+
     public render(): TemplateResult {
         // main template
         // language=HTML
         return html`
-            ${AppShellStyles} ${RouterStyles}
-
             <app-drawer-layout id="layout" responsive-width="850px"
                        fullbleed ?narrow="${this.narrow}" ?small-menu="${this.smallMenu}">
                 <!-- Drawer content -->

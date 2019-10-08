@@ -2,18 +2,9 @@ import { html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../../../config/permissions';
 import { SitesPopupComponent } from './sites-popup';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../../styles/card-styles';
-import { leafletStyles } from '../../../../styles/leaflet-styles';
-import { SharedStyles } from '../../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
-import { SitesTabStyles } from '../sites-tab.styles';
-import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
 
 export function template(this: SitesPopupComponent): TemplateResult {
     return html`
-    ${SharedStyles} ${pageLayoutStyles} ${SitesTabStyles}
-    ${FlexLayoutClasses} ${CardStyles} ${leafletStyles} ${TabInputsStyles}
     <etools-dialog
                 size="md"
                 id="dialog"

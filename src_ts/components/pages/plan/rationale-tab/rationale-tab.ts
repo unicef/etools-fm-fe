@@ -11,6 +11,12 @@ import { loadRationale } from '../../../../redux/effects/rationale.effects';
 import { rationaleData } from '../../../../redux/selectors/rationale.selectors';
 import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
 import { openDialog } from '../../../utils/dialog';
+import { SharedStyles } from '../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../styles/card-styles';
+import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
+import { RationaleStyles } from './rationale.styles';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -91,6 +97,7 @@ export class RationaleTabComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
+            RationaleStyles];
     }
 }

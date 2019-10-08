@@ -11,7 +11,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../../../redux/store';
 
 import { isProductionServer, isStagingServer, ROOT_PATH } from '../../../config/config';
-import { customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { UpdateDrawerState } from '../../../redux/actions/app';
 import { pageHeaderStyles } from './page-header-styles';
 import { isEmpty } from 'ramda';
@@ -79,11 +79,14 @@ export class PageHeader extends connect(store)(LitElement) {
         }));
     }
 
+    public static get styles(): CSSResultArray {
+        return [pageHeaderStyles];
+    }
+
     public render(): TemplateResult {
         // main template
         // language=HTML
         return html`
-          ${pageHeaderStyles}
           <style>
             app-toolbar {
               background-color: ${this.headerColor};

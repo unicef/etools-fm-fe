@@ -1,41 +1,42 @@
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { html, TemplateResult } from 'lit-element';
+import { css, CSSResult } from 'lit-element';
 
-// language=HTML
-export const navMenuStyles: TemplateResult = html`
-    <style>
-      *[hidden] {
+// language=CSS
+export const navMenuStyles: CSSResult = css`
+    *[hidden] {
         display: none !important;
-      }
-      :host {
+    }
+
+    :host {
         @apply --layout-vertical;
         height: 100%;
         overflow-y: var(--side-bar-scrolling);
         overflow-x: hidden;
         border-right: 1px solid var(--light-divider-color);
-      }
+    }
 
-      :host([small-menu]) {
+    :host([small-menu]) {
         overflow-x: visible;
-      }
+    }
 
-      @media (max-height: 600px) {
+    @media (max-height: 600px) {
         paper-tooltip {
-          display: none;
+            display: none;
         }
-        :host([small-menu]) {
-          overflow-x: hidden;
-        }
-      }
 
-      .menu-header,
-      :host([small-menu]) .menu-header .ripple-wrapper.main,
-      .nav-menu-item {
+        :host([small-menu]) {
+            overflow-x: hidden;
+        }
+    }
+
+    .menu-header,
+    :host([small-menu]) .menu-header .ripple-wrapper.main,
+    .nav-menu-item {
         @apply --layout-horizontal;
         @apply --layout-center;
-      }
+    }
 
-      .menu-header {
+    .menu-header {
         @apply --layout-justified;
         background-color: var(--module-color);
         color: white;
@@ -44,70 +45,74 @@ export const navMenuStyles: TemplateResult = html`
         font-size: 14px;
         line-height: 18px;
         text-transform: uppercase;
-      }
+    }
 
-      :host([small-menu]) .menu-header {
+    :host([small-menu]) .menu-header {
         padding: 0;
-      }
-      :host([small-menu]) .menu-header .ripple-wrapper.main {
+    }
+
+    :host([small-menu]) .menu-header .ripple-wrapper.main {
         width: 60px;
         height: 60px;
-      }
+    }
 
-      :host([small-menu]) .menu-header,
-      .nav-menu-item.section-title,
-      :host([small-menu]) .nav-menu-item,
-      :host([small-menu]) .menu-header .ripple-wrapper.main {
+    :host([small-menu]) .menu-header,
+    .nav-menu-item.section-title,
+    :host([small-menu]) .nav-menu-item,
+    :host([small-menu]) .menu-header .ripple-wrapper.main {
         @apply --layout-center-justified;
-      }
+    }
 
-      :host([small-menu]) #app-name,
-      :host #menu-header-top-icon,
-      :host([small-menu]) .nav-menu-item .name,
-      :host(:not([small-menu])) paper-tooltip,
-      :host([small-menu]) .section-title span,
-      :host([small-menu]) #minimize-menu,
-      :host([small-menu]) .menu-header .ripple-wrapper:not(.main) {
+    :host([small-menu]) #app-name,
+    :host #menu-header-top-icon,
+    :host([small-menu]) .nav-menu-item .name,
+    :host(:not([small-menu])) paper-tooltip,
+    :host([small-menu]) .section-title span,
+    :host([small-menu]) #minimize-menu,
+    :host([small-menu]) .menu-header .ripple-wrapper:not(.main) {
         display: none;
-      }
-      :host([small-menu]) #menu-header-top-icon,
-      :host(:not([small-menu])) #minimize-menu {
+    }
+
+    :host([small-menu]) #menu-header-top-icon,
+    :host(:not([small-menu])) #minimize-menu {
         display: block;
-      }
+    }
 
-      .menu-header paper-icon-button {
+    .menu-header paper-icon-button {
         --paper-icon-button: {
-          width: 24px;
-          height: 24px;
-          padding: 0;
+            width: 24px;
+            height: 24px;
+            padding: 0;
         }
-      }
+    }
 
-      #menu-header-top-icon,
-      #minimize-menu {
+    #menu-header-top-icon,
+    #minimize-menu {
         cursor: pointer;
-      }
+    }
 
-      #menu-header-top-icon {
+    #menu-header-top-icon {
         --iron-icon-height: 36px;
         --iron-icon-width: 36px;
-      }
+    }
 
-      .divider {
+    .divider {
         margin: 8px 0;
         border-bottom: 1px solid var(--light-divider-color);
-      }
-      .nav-menu {
+    }
+
+    .nav-menu {
         @apply --layout-vertical;
         background: var(--primary-background-color);
         min-height: 550px;
         padding: 8px 0 0;
-      }
-      .nav-menu, .nav-menu iron-selector[role="navigation"] {
-        @apply --layout-flex;
-      }
+    }
 
-      .nav-menu-item {
+    .nav-menu, .nav-menu iron-selector[role="navigation"] {
+        @apply --layout-flex;
+    }
+
+    .nav-menu-item {
         width: 100%;
         font-size: 14px;
         font-weight: 500;
@@ -116,57 +121,57 @@ export const navMenuStyles: TemplateResult = html`
         cursor: pointer;
         text-decoration: none;
         text-transform: capitalize;
-      }
+    }
 
-      .nav-menu-item.section-title {
+    .nav-menu-item.section-title {
         color: var(--primary-text-color);
         font-size: 13px;
         font-weight: 500;
         text-transform: none;
         border-top: 1px solid var(--light-divider-color);
-      }
+    }
 
-      :host([small-menu]) .nav-menu-item.section-title {
+    :host([small-menu]) .nav-menu-item.section-title {
         height: 0;
-      }
+    }
 
-      .nav-menu-item.iron-selected {
+    .nav-menu-item.iron-selected {
         background-color: var(--secondary-background-color);
-      }
+    }
 
-      .nav-menu-item.iron-selected:active {
+    .nav-menu-item.iron-selected:active {
         background-color: var(--light-divider-color);
-      }
+    }
 
-      .nav-menu-item .name {
+    .nav-menu-item .name {
         margin-left: 16px;
         color: var(--primary-text-color);
-      }
+    }
 
-      .nav-menu-item iron-icon {
+    .nav-menu-item iron-icon {
         margin: 0 16px;
         color: var(--dark-icon-color);
-      }
+    }
 
-      :host([small-menu]) .nav-menu-item iron-icon {
+    :host([small-menu]) .nav-menu-item iron-icon {
         margin: 0;
-      }
+    }
 
-      .nav-menu-item.iron-selected .name,
-      .nav-menu-item.iron-selected iron-icon {
+    .nav-menu-item.iron-selected .name,
+    .nav-menu-item.iron-selected iron-icon {
         color: var(--module-color);
-      }
+    }
 
-      .nav-menu-item.lighter-item .name,
-      .nav-menu-item.lighter-item iron-icon {
+    .nav-menu-item.lighter-item .name,
+    .nav-menu-item.lighter-item iron-icon {
         color: var(--secondary-text-color);
-      }
+    }
 
-      .last-one {
+    .last-one {
         margin-bottom: 18px;
-      }
-      .ripple-wrapper {
+    }
+
+    .ripple-wrapper {
         position: relative;
-      }
-    </style>
+    }
 `;

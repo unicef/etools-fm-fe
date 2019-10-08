@@ -6,20 +6,11 @@ import '@unicef-polymer/etools-dropdown';
 import '@polymer/paper-input/paper-textarea';
 import { html, TemplateResult } from 'lit-element';
 import { SitesTabComponent } from './sites-tab';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { SitesTabStyles } from './sites-tab.styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
-import { leafletStyles } from '../../../styles/leaflet-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { translate } from '../../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 
 export function template(this: SitesTabComponent): TemplateResult {
     return html`
-        ${SharedStyles} ${pageLayoutStyles} ${SitesTabStyles}
-        ${FlexLayoutClasses} ${CardStyles} ${leafletStyles} ${TabInputsStyles}
        <section class="elevation page-content filters" elevation="1">
             <div class="layout horizontal">
                 <paper-input

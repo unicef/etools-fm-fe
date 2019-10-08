@@ -1,11 +1,10 @@
-import { html, TemplateResult } from 'lit-element';
+import { css, CSSResult } from 'lit-element';
 
-export const IssueTrackerPopupStyles: TemplateResult = html`
-<style>
+// language=CSS
+export const IssueTrackerPopupStyles: CSSResult = css`
     .related-to-type label {
         color: var(--secondary-text-color);
         font-size: 12px;
         padding: 0 12px;
     }
-</style>
 `;

@@ -5,12 +5,6 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import { TemplatesTabComponent } from './templates-tab';
 import { html, TemplateResult } from 'lit-element';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
-import { TemplatesSttyles } from './templates-tab.styles';
 import { translate } from '../../../../localization/localisation';
 import { PaperCheckboxElement } from '@polymer/paper-checkbox/paper-checkbox';
 import { hasPermission, Permissions } from '../../../../config/permissions';
@@ -18,9 +12,6 @@ import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-
 
 export function template(this: TemplatesTabComponent): TemplateResult {
     return html`
-          ${SharedStyles} ${pageLayoutStyles} ${TemplatesSttyles}
-          ${FlexLayoutClasses} ${CardStyles} ${TabInputsStyles}
-
           <section class="filters-container elevation page-content card-container question-filters-section layout horizontal" elevation="1">
               <div class="filter">
                   <etools-dropdown .options="${LEVELS}"

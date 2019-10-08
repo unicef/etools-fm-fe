@@ -1,4 +1,12 @@
-import { customElement, LitElement, property, PropertyValues, queryAll, TemplateResult } from 'lit-element';
+import {
+    CSSResultArray,
+    customElement,
+    LitElement,
+    property,
+    PropertyValues,
+    queryAll,
+    TemplateResult
+} from 'lit-element';
 import { template } from './question-popup.tpl';
 import { fireEvent } from '../../../../utils/fire-custom-event';
 import { store } from '../../../../../redux/store';
@@ -10,6 +18,12 @@ import { questionUpdate } from '../../../../../redux/selectors/questions.selecto
 import { PaperTextareaElement } from '@polymer/paper-input/paper-textarea';
 import { setTextareasMaxHeight } from '../../../../utils/textarea-max-rows-helper';
 import { ANSWER_TYPES, BOOLEAN_TYPE, LEVELS, SCALE_TYPE } from '../../../../common/dropdown-options';
+import { SharedStyles } from '../../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../../styles/card-styles';
+import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
+import { QuestionPopupStyles } from './question-popup.styles';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends LitElement {
@@ -67,6 +81,10 @@ export class QuestionPopupComponent extends LitElement {
             this.dialogOpened = false;
             fireEvent(this, 'response', { confirmed: true });
         }, false));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles, QuestionPopupStyles];
     }
 
     public render(): TemplateResult {
