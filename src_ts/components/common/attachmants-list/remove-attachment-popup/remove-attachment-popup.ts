@@ -8,7 +8,6 @@ import { deleteListAttachment } from '../../../../redux/effects/attachments-list
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 
 @customElement('remove-attachment-popup')
 export class RemoveAttachmentPopupComponent extends LitElement {
@@ -43,7 +42,7 @@ export class RemoveAttachmentPopupComponent extends LitElement {
     }
 
     public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, TabInputsStyles];
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
     }
 
     public render(): TemplateResult {

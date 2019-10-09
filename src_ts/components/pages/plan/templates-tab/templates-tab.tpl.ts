@@ -9,9 +9,11 @@ import { translate } from '../../../../localization/localisation';
 import { PaperCheckboxElement } from '@polymer/paper-checkbox/paper-checkbox';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { INTERVENTION, LEVELS, OUTPUT, PARTNER } from '../../../common/dropdown-options';
+import { InputStyles } from '../../../styles/input-styles';
 
 export function template(this: TemplatesTabComponent): TemplateResult {
     return html`
+          ${InputStyles}
           <section class="filters-container elevation page-content card-container question-filters-section layout horizontal" elevation="1">
               <div class="filter">
                   <etools-dropdown .options="${LEVELS}"

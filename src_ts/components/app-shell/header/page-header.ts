@@ -1,5 +1,4 @@
 import '@polymer/polymer/lib/elements/dom-if';
-import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@unicef-polymer/etools-app-selector/etools-app-selector';

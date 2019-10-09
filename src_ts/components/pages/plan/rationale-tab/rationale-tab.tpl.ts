@@ -5,10 +5,12 @@ import { RationaleTabComponent } from './rationale-tab';
 import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
 import { RATIONALE_ATTACHMENTS } from '../../../../endpoints/endpoints-list';
+import { InputStyles } from '../../../styles/input-styles';
 
 export function template(this: RationaleTabComponent): TemplateResult {
     // language=HTML
     return html`
+        ${InputStyles}
         <div class="year-dropdown-container">
             <etools-dropdown class="year-dropdown"
                              .selected="${ this.selectedYear }"

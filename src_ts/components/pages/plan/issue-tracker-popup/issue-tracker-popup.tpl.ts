@@ -13,11 +13,14 @@ import { simplifyValue } from '../../../utils/objects-diff';
 import '../../../common/file-components/file-select-input';
 import '../../../common/file-components/file-select-button';
 import { SelectedFile } from '../../../common/file-components/file-select-input';
+import { InputStyles } from '../../../styles/input-styles';
+import { DialogStyles } from '../../../styles/dialog-styles';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
     // main template
     // language=HTML
     return html`
+${InputStyles} ${DialogStyles}
 <etools-dialog
         id="dialog"
         size="md"

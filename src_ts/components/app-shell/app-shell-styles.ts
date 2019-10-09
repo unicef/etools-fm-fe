@@ -1,4 +1,3 @@
-import '@polymer/iron-flex-layout/iron-flex-layout';
 import { css, CSSResult } from 'lit-element';
 
 // language=CSS
@@ -12,6 +11,6 @@ export const AppShellStyles: CSSResult = css`
     }
 
     .main-content {
-        @apply --layout-flex;
+        flex: 1;
     }
 `;

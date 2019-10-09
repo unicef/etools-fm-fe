@@ -3,13 +3,10 @@ import { html, TemplateResult } from 'lit-element';
 import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
 import { translate } from '../../../../localization/localisation';
-import { ActivitiesListStyles } from './activities-list.styles';
 import { updateQueryParams } from '../../../../routing/routes';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
     return html`
-        ${ActivitiesListStyles}
-
         <page-content-header with-tabs-visible>
             <h1 slot="page-title">Activities</h1>
             <div slot="title-row-actions" class="content-header-actions">

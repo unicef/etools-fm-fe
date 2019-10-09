@@ -9,7 +9,7 @@ import {
     TemplateResult
 } from 'lit-element';
 import { template } from './templates-tab.tpl';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { updateQueryParams } from '../../../../routing/routes';
 import { Unsubscribe } from 'redux';
 import { store } from '../../../../redux/store';
@@ -30,7 +30,6 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { TemplatesStyles } from './templates-tab.styles';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
@@ -101,6 +100,10 @@ export class TemplatesTabComponent extends LitElement {
         return template.call(this);
     }
 
+    public static get styles(): CSSResultArray {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TemplatesStyles];
+    }
+
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.routeDetailsUnsubscribe();
@@ -151,9 +154,9 @@ export class TemplatesTabComponent extends LitElement {
             `top: ${ this.editedDetails.top || 0 }px;` +
             `left: ${ this.editedDetails.left || 0 }px;`;
     }
-
     public updateTemplate(id: number, field: 'is_active', value: boolean): void;
     public updateTemplate(id: number, field: 'specific_details', value: string): void;
+
     public updateTemplate(id: number, field: 'specific_details' | 'is_active', value: string | boolean): void {
         // close editedDetails input popover
         this.editedDetails = { opened: false };
@@ -251,11 +254,6 @@ export class TemplatesTabComponent extends LitElement {
                 .then((fetchedData: any) => this[dataName] = fetchedData)
                 .finally(() => this.additionalDataLoading = false);
         }
-    }
-
-    public static get styles(): CSSResultArray {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
-            TemplatesStyles];
     }
 
 }

@@ -1,5 +1,4 @@
  import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
-import '@polymer/iron-flex-layout/iron-flex-layout';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
  import { PaperTabsElement } from '@polymer/paper-tabs/paper-tabs';
@@ -30,8 +29,9 @@ export class EtoolsTabs extends LitElement {
             }
 
             :host {
-                @apply --layout-horizontal;
-                @apply --layout-start-justified;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
             }
 
             :host([border-bottom]) {

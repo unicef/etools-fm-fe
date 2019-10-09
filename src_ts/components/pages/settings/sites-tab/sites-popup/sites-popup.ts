@@ -18,7 +18,6 @@ import { SharedStyles } from '../../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../../styles/card-styles';
-import { TabInputsStyles } from '../../../../styles/tab-inputs-styles';
 import { leafletStyles } from '../../../../styles/leaflet-styles';
 import { SitesTabStyles } from '../sites-tab.styles';
 
@@ -84,8 +83,7 @@ export class SitesPopupComponent extends LitElement {
     }
 
     public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles, leafletStyles,
-            SitesTabStyles];
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
     }
 
     public render(): TemplateResult {

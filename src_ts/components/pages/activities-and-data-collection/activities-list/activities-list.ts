@@ -1,6 +1,6 @@
 import { CSSResult, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { template } from './activities-list.tpl';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { addTranslates, ENGLISH } from '../../../../localization/localisation';
 import { ACTIVITIES_LIST_TRANSLATES } from '../../../../localization/en/activities-and-data-collection/activities-list.translates';
 import { Unsubscribe } from 'redux';
@@ -203,7 +203,7 @@ export class ActivitiesListComponent extends LitElement {
     }
 
     public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, FlexLayoutClasses,
-            CardStyles, buttonsStyles, ActivitiesListStyles];
+        return [elevationStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, FlexLayoutClasses,
+            CardStyles, SharedStyles, buttonsStyles, ActivitiesListStyles];
     }
 }

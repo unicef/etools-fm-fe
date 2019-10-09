@@ -122,28 +122,14 @@ export const CardStyles: CSSResult = css`
     }
 
     etools-data-table-row {
-        --icon-wrapper: {
-            padding: 0 24px;
-        };
         --list-divider-color: #e0e0e0;
         --list-icon-color: rgba(0, 0, 0, 0.54);
     }
 
     etools-data-table-header {
-        --header-title: {
-            padding-left: 47px;
-            font-weight: 500;
-        };
-        --header-columns: {
-            margin-left: 47px;
-        };
         --list-divider-color: 1px solid rgba(244, 243, 242, 0.26);
         --list-bg-color: #f2eee8;
         border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-    }
-
-    etools-data-table-footer {
-        padding: 5px 0;
     }
 
     .card-container {
@@ -160,10 +146,6 @@ export const CardStyles: CSSResult = css`
 
     paper-textarea {
         overflow: hidden;
-    }
-
-    etools-dialog etools-loading {
-        font-size: 14px;
     }
 
     a.link-cell {

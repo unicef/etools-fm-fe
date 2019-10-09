@@ -2,9 +2,12 @@ import '@polymer/paper-input/paper-textarea';
 import { RationalePopupComponent } from './rationale-popup';
 import { html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../../localization/localisation';
+import { InputStyles } from '../../../../styles/input-styles';
+import { DialogStyles } from '../../../../styles/dialog-styles';
 
 export function template(this: RationalePopupComponent): TemplateResult {
     return html`
+        ${InputStyles} ${DialogStyles}
         <style>
             .helper-text {
                 padding: 0 12px;

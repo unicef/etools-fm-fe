@@ -1,9 +1,12 @@
 import { RemoveAttachmentPopupComponent } from './remove-attachment-popup';
 import { html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../localization/localisation';
+import { InputStyles } from '../../../styles/input-styles';
+import { DialogStyles } from '../../../styles/dialog-styles';
 
 export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
     return html`
+        ${InputStyles} ${DialogStyles}
         <etools-dialog
                 size="md"
                 no-padding

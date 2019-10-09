@@ -1,4 +1,3 @@
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import { css, CSSResult } from 'lit-element';
 
 // language=CSS
@@ -8,7 +7,8 @@ export const navMenuStyles: CSSResult = css`
     }
 
     :host {
-        @apply --layout-vertical;
+        display: flex;
+        flex-direction: column;
         height: 100%;
         overflow-y: var(--side-bar-scrolling);
         overflow-x: hidden;
@@ -32,12 +32,13 @@ export const navMenuStyles: CSSResult = css`
     .menu-header,
     :host([small-menu]) .menu-header .ripple-wrapper.main,
     .nav-menu-item {
-        @apply --layout-horizontal;
-        @apply --layout-center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     .menu-header {
-        @apply --layout-justified;
+        justify-content: space-between;
         background-color: var(--module-color);
         color: white;
         min-height: 60px;
@@ -60,7 +61,7 @@ export const navMenuStyles: CSSResult = css`
     .nav-menu-item.section-title,
     :host([small-menu]) .nav-menu-item,
     :host([small-menu]) .menu-header .ripple-wrapper.main {
-        @apply --layout-center-justified;
+        justify-content: center;
     }
 
     :host([small-menu]) #app-name,
@@ -102,14 +103,15 @@ export const navMenuStyles: CSSResult = css`
     }
 
     .nav-menu {
-        @apply --layout-vertical;
+        display: flex;
+        flex-flow: column;
         background: var(--primary-background-color);
         min-height: 550px;
         padding: 8px 0 0;
     }
 
     .nav-menu, .nav-menu iron-selector[role="navigation"] {
-        @apply --layout-flex;
+        flex: 1;
     }
 
     .nav-menu-item {

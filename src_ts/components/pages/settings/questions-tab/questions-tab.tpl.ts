@@ -7,9 +7,11 @@ import { translate } from '../../../../localization/localisation';
 import { updateQueryParams } from '../../../../routing/routes';
 import { ROOT_PATH } from '../../../../config/config';
 import { hasPermission, Permissions } from '../../../../config/permissions';
+import { InputStyles } from '../../../styles/input-styles';
 
 export function template(this: QuestionsTabComponent): TemplateResult {
     return html`
+            ${InputStyles}
             <section class="elevation page-content card-container question-filters-section" elevation="1">
                 <etools-filters .filters="${this.filters || []}" @filter-change="${ (event: CustomEvent) => updateQueryParams(event.detail) }"></etools-filters>
             </section>

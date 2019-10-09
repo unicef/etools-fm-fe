@@ -9,7 +9,7 @@ import {
 } from '../../../../redux/effects/site-specific-locations.effects';
 import { updateQueryParams } from '../../../../routing/routes';
 import { locationsInvert } from './locations-invert';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { debounce } from '../../../utils/debouncer';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
 import './sites-popup/sites-popup';
@@ -17,23 +17,23 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { leafletStyles } from '../../../styles/leaflet-styles';
 import { SitesTabStyles } from './sites-tab.styles';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends LitElement {
+
     public count: number = 0;
+
     public queryParams: IRouteQueryParam | null = null;
-
     @property() public sites: IGroupedSites[] = [];
-    @property() public listLoadingInProcess: boolean = false;
 
+    @property() public listLoadingInProcess: boolean = false;
     private sitesObjects: Site[] | null = null;
+
     private debouncedLoading: Callback;
     private sitesUnsubscribe!: Unsubscribe;
     private routeUnsubscribe!: Unsubscribe;
-
     public constructor() {
         super();
         this.debouncedLoading = debounce(() => {
@@ -45,6 +45,11 @@ export class SitesTabComponent extends LitElement {
 
     public render(): TemplateResult | void {
         return template.apply(this);
+    }
+
+    public static get styles(): CSSResult[] {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, SitesTabStyles,
+            leafletStyles];
     }
 
     public connectedCallback(): void {
@@ -165,6 +170,19 @@ export class SitesTabComponent extends LitElement {
         if (value.length !== 1) { this.refreshData(); }
     }
 
+    private filterSearch(sitesObject: Site[]): Site[] {
+        if (!this.queryParams) { return sitesObject; }
+        if (this.queryParams.search) {
+            const match: string = this.queryParams.search.toLowerCase();
+            return sitesObject.filter((site: Site) => {
+                const siteName: string = site.parent.name.toLowerCase();
+                const parentName: string = site.name.toLowerCase();
+                return !!~siteName.indexOf(match) || !!~parentName.indexOf(match);
+            });
+        }
+        return sitesObject;
+    }
+
     private refreshData(): void {
         let sitesObject: Site[] = this.filterSites(this.sitesObjects || []);
         this.count = sitesObject.length;
@@ -193,23 +211,5 @@ export class SitesTabComponent extends LitElement {
         const startIndex: number = page * pageSize - pageSize;
         const endIndex: number = page * pageSize;
         return sitesObject.slice(startIndex, endIndex);
-    }
-
-    private filterSearch(sitesObject: Site[]): Site[] {
-        if (!this.queryParams) { return sitesObject; }
-        if (this.queryParams.search) {
-            const match: string = this.queryParams.search.toLowerCase();
-            return sitesObject.filter((site: Site) => {
-                const siteName: string = site.parent.name.toLowerCase();
-                const parentName: string = site.name.toLowerCase();
-                return !!~siteName.indexOf(match) || !!~parentName.indexOf(match);
-            });
-        }
-        return sitesObject;
-    }
-
-    public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
-            SitesTabStyles, leafletStyles];
     }
 }

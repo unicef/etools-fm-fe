@@ -2,9 +2,12 @@ import '../../file-components/file-select-input';
 import { EditAttachmentsPopupComponent } from './edit-attachments-popup';
 import { html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../localization/localisation';
+import { InputStyles } from '../../../styles/input-styles';
+import { DialogStyles } from '../../../styles/dialog-styles';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
     return html`
+        ${InputStyles} ${DialogStyles}
         <style>
             .file-upload-container { padding: 20px 0 0; }
         </style>

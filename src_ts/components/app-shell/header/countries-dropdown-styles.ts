@@ -1,53 +1,55 @@
-import { css, CSSResult } from 'lit-element';
+import { html, TemplateResult } from 'lit-element';
 
-// language=CSS
-export const countriesDropdownStyles: CSSResult = css`
-    *[hidden] {
-        display: none !important;
-    }
+// language=HTML
+export const countriesDropdownStyles: TemplateResult = html`
+    <style>
+        *[hidden] {
+            display: none !important;
+        }
 
-    :host {
-        display: block;
-    }
+        :host {
+            display: block;
+        }
 
-    :host(:hover) {
-        cursor: pointer;
-    }
-
-    etools-dropdown {
-        width: 160px;
-
-        --paper-listbox: {
-            max-height: 600px;
-        };
-
-        --esmm-icons: {
-            color: var(--header-color);
+        :host(:hover) {
             cursor: pointer;
-        };
+        }
 
-        --paper-input-container-underline: {
-            display: none;
-        };
+        etools-dropdown {
+            width: 160px;
 
-        --paper-input-container-underline-focus: {
-            display: none;
-        };
+            --paper-listbox: {
+                max-height: 600px;
+            };
 
-        --paper-input-container-underline-disabled: {
-            display: none;
-        };
+            --esmm-icons: {
+                color: var(--header-color);
+                cursor: pointer;
+            };
 
-        --paper-input-container-input: {
-            color: var(--header-color);
-            cursor: pointer;
-            min-height: 24px;
-            text-align: right;
-            line-height: 21px; /* for IE */
-        };
+            --paper-input-container-underline: {
+                display: none;
+            };
 
-        --paper-menu-button-dropdown: {
-            max-height: 380px;
-        };
-    }
+            --paper-input-container-underline-focus: {
+                display: none;
+            };
+
+            --paper-input-container-underline-disabled: {
+                display: none;
+            };
+
+            --paper-input-container-input: {
+                color: var(--header-color);
+                cursor: pointer;
+                min-height: 24px;
+                text-align: right;
+                line-height: 21px; /* for IE */
+            };
+
+            --paper-menu-button-dropdown: {
+                max-height: 380px;
+            };
+        }
+    </style>
 `;

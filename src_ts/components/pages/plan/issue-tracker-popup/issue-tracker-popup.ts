@@ -16,7 +16,6 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 
 @customElement('issue-tracker-popup')
@@ -178,8 +177,7 @@ export class IssueTrackerPopup extends LitElement {
     }
 
     public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
-            IssueTrackerPopupStyles];
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerPopupStyles];
     }
 
     public render(): TemplateResult {

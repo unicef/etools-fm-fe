@@ -39,8 +39,8 @@ export class FileSelectInput extends LitElement {
                 padding: 8px 0;
             }
             .filename-container {
-                @apply --layout-horizontal;
-                @apply --layout-center;
+                display: flex;
+                align-items: center;
                 border-bottom: 1px solid var(--secondary-text-color, rgba(0, 0, 0, 0.54));
                 margin: 0 14px;
                 min-width: 145px;

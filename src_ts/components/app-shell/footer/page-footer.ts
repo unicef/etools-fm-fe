@@ -1,5 +1,4 @@
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { css, CSSResult, customElement, html, LitElement, TemplateResult } from 'lit-element';
+import { customElement, html, LitElement, TemplateResult } from 'lit-element';
 import { ROOT_PATH } from '../../../config/config';
 
 /**
@@ -16,28 +15,12 @@ export class PageFooter extends LitElement {
     // main template
     // language=HTML
     return html`
-      <footer>
-        <div id="footer-content">
-        <span id="unicef-logo">
-          <img src="${this.rootPath}images/UNICEF_logo.png" alt="UNICEF logo">
-        </span>
-          <!-- TODO: modify span to a with proper href values after footer pages are ready -->
-          <!--   <span class="footer-link">Contact</span>
-            <span class="footer-link">Disclaimers</span>
-            <span class="footer-link">Privacy Policy</span> -->
-        </div>
-      </footer>
-    `;
-  }
-
-  public static get styles(): CSSResult {
-    // language=CSS
-    return css`
-
+      <style>
       :host {
-        @apply --layout-vertical;
-        @apply --layout-flex;
-        @apply --layout-end-justified;
+        display: flex;
+        flex-flow: column;
+        flex: 1;
+        justify-content: flex-end;
         padding: 18px 24px;
         width: 100%;
         min-height: 90px;
@@ -45,12 +28,11 @@ export class PageFooter extends LitElement {
       }
 
       #footer-content {
-        @apply --layout-horizontal;
+        display: flex;
       }
 
       #unicef-logo {
-        @apply --layout-horizontal;
-        @apply --layout-inline;
+        display: inline-flex;
         padding-right: 30px;
       }
 
@@ -74,6 +56,18 @@ export class PageFooter extends LitElement {
           display: none;
         }
       }
+      </style>
+      <footer>
+        <div id="footer-content">
+        <span id="unicef-logo">
+          <img src="${this.rootPath}images/UNICEF_logo.png" alt="UNICEF logo">
+        </span>
+          <!-- TODO: modify span to a with proper href values after footer pages are ready -->
+          <!--   <span class="footer-link">Contact</span>
+            <span class="footer-link">Disclaimers</span>
+            <span class="footer-link">Privacy Policy</span> -->
+        </div>
+      </footer>
     `;
   }
 

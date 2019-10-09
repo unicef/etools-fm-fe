@@ -12,6 +12,7 @@ import { countrySelector } from '../../../redux/selectors/country.selectors';
 import { DEFAULT_ROUTE, updateAppLocation } from '../../../routing/routes';
 import { ROOT_PATH } from '../../../config/config';
 import { isEmpty } from 'ramda';
+import { countriesDropdownStyles } from './countries-dropdown-styles';
 
 /**
  * @LitElement
@@ -51,6 +52,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         // main template
         // language=HTML
         return html`
+      ${countriesDropdownStyles}
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown id="countrySelector"
                        .selected="${this.currentCountry.id}"

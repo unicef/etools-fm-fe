@@ -9,7 +9,6 @@ import { Unsubscribe } from 'redux';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends LitElement {
@@ -53,7 +52,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
     }
 
     public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, TabInputsStyles];
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
     }
 
     public render(): TemplateResult {

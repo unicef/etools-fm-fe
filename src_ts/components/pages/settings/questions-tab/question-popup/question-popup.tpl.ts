@@ -7,9 +7,12 @@ import { translate } from '../../../../../localization/localisation';
 import { repeat } from 'lit-html/directives/repeat';
 import { PaperCheckboxElement } from '@polymer/paper-checkbox/paper-checkbox';
 import { BOOLEAN_TYPE, SCALE_TYPE } from '../../../../common/dropdown-options';
+import { InputStyles } from '../../../../styles/input-styles';
+import { DialogStyles } from '../../../../styles/dialog-styles';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
     return html`
+        ${InputStyles} ${DialogStyles}
         <etools-dialog
                 size="md" keep-dialog-open ?opened="${ this.dialogOpened }"
                 dialog-title="${ translate(this.editedQuestion.id ?

@@ -1,5 +1,5 @@
 import { CSSResult, customElement, LitElement, property, TemplateResult } from 'lit-element';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { template } from './questions-tab.tpl';
 import { store } from '../../../../redux/store';
 import { loadQuestions } from '../../../../redux/effects/questions.effects';
@@ -20,7 +20,6 @@ import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
-import { TabInputsStyles } from '../../../styles/tab-inputs-styles';
 import { QuestionsTabStyles } from './question-tab.styles';
 
 type Serialized = {
@@ -95,6 +94,10 @@ export class QuestionsTabComponent extends LitElement {
         return template.call(this);
     }
 
+    public static get styles(): CSSResult[] {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionsTabStyles];
+    }
+
     public changePageParam(newValue: string | number, paramName: string): void {
         const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
         if (+newValue === +currentValue) { return; }
@@ -161,10 +164,5 @@ export class QuestionsTabComponent extends LitElement {
                 const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
                 this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);
         });
-    }
-
-    public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TabInputsStyles,
-            QuestionsTabStyles];
     }
 }

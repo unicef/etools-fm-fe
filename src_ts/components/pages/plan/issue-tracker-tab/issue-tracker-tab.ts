@@ -7,7 +7,7 @@ import { updateQueryParams } from '../../../../routing/routes';
 import { requestLogIssue } from '../../../../redux/effects/issue-tracker.effects';
 
 import { IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { template } from './issue-tracker-tab.tpl';
 import { issueTrackerData } from '../../../../redux/selectors/issue-tracker.selectors';
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
@@ -21,6 +21,7 @@ import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { IssueTrackerTabStyles } from './issue-tracker-tab.styles';
+import { SharedStyles } from '../../../styles/shared-styles';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
     { value: 'new', display_name: 'New' },
@@ -198,7 +199,7 @@ export class IssueTrackerTabComponent extends LitElement {
     }
 
     public static get styles(): CSSResultArray {
-        return [elevationStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
     }
 
     public render(): TemplateResult {

@@ -1,5 +1,5 @@
 import { CSSResult, customElement, html, LitElement, TemplateResult } from 'lit-element';
-import { elevationStyles } from '../../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../../styles/elevation-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 

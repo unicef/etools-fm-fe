@@ -3,7 +3,7 @@ import { template } from './attachments-list.tpl';
 import { loadAttachmentsList } from '../../../redux/effects/attachments-list.effects';
 import { store } from '../../../redux/store';
 import { attachmentsListSelector } from '../../../redux/selectors/attachments-list.selectors';
-import { elevationStyles } from '../../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../../styles/elevation-styles';
 import { IDialogResponse, openDialog } from '../../utils/dialog';
 import { Unsubscribe } from 'redux';
 import { debounce } from '../../utils/debouncer';

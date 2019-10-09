@@ -4,7 +4,7 @@ import { CSSResultArray, customElement, html, LitElement, property, TemplateResu
 import { SharedStyles } from '../styles/shared-styles';
 import { ROOT_PATH } from '../../config/config';
 import { pageLayoutStyles } from '../styles/page-layout-styles';
-import { elevationStyles } from '../styles/lit-styles/elevation-styles';
+import { elevationStyles } from '../styles/elevation-styles';
 
 /**
  * @customElement

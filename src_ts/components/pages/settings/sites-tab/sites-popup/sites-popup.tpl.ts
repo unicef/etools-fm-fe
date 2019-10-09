@@ -2,9 +2,12 @@ import { html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../../localization/localisation';
 import { hasPermission, Permissions } from '../../../../../config/permissions';
 import { SitesPopupComponent } from './sites-popup';
+import { InputStyles } from '../../../../styles/input-styles';
+import { DialogStyles } from '../../../../styles/dialog-styles';
 
 export function template(this: SitesPopupComponent): TemplateResult {
     return html`
+    ${InputStyles} ${DialogStyles}
     <etools-dialog
                 size="md"
                 id="dialog"
