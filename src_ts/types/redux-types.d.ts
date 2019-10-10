@@ -10,6 +10,7 @@ interface IRootState {
     rationale: IRationaleState;
     activities: IActivitiesState;
     attachmentsList: IAttachmentsListState;
+    widgetLocations: IWidgetLocationsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -75,6 +76,13 @@ interface IActivitiesState {
 
 interface IIssueTrackerState extends IRequestState {
     data: null | IListData<LogIssue>;
+}
+
+interface IWidgetLocationsState {
+    loading: null | boolean;
+    data: WidgetStoreData;
+    pathLoading: null | boolean;
+    pathCollection: WidgetStoreData;
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

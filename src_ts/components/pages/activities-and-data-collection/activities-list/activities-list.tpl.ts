@@ -73,7 +73,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
             ${ this.activitiesList.map((activity: IListActivity) => html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
-                        <div class="col-data flex-none w130px"><a class="link-cell" href="${ `${ this.rootPath }activity/${ activity.id }/details/` }">${ activity.reference_number }</a></div>
+                        <div class="col-data flex-none w130px"><a class="link-cell" href="${ `${ this.rootPath }activities/${ activity.id }/details/` }">${ activity.reference_number }</a></div>
                         <div class="col-data flex-none w110px">${ this.formatDate(activity.start_date) }</div>
                         <div class="col-data flex-1">${ activity.location && activity.location.name } ${ activity.location_site ? `[${activity.location_site}]` : '' }</div>
                         <div class="col-data flex-none w90px">${ this.serializeName(activity.activity_type, this.activityTypes, 'display_name', 'value') || '-' }</div>

@@ -6,6 +6,7 @@ import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
+import '../../../common/location-widget/location-widget';
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {
@@ -13,6 +14,9 @@ export class ActivityDetailsTab extends LitElement {
     public edit: GenericObject = {
         visitDetails: false
     };
+    @property()
+    public location: string = '692';
+    @property() public sites: number[] = [3, 4, 12389];
 
     // language=HTML
     public render(): TemplateResult {
@@ -29,6 +33,7 @@ export class ActivityDetailsTab extends LitElement {
                 </div>
             </div>
             <div class="card-content layout vertical">
+                <location-widget multiple-sites .selectedLocation="${ this.location || null }" .selectedSites="${ this.sites }" @sites-changed="${ ({ detail }: CustomEvent) => console.log('', detail.sites) }" @location-changed="${ ({ detail }: CustomEvent) => console.log('location', detail.location) }"></location-widget>
             </div>
         </section>
         <section class="elevation card-container page-content" elevation="1">

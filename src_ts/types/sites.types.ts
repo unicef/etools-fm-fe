@@ -66,6 +66,10 @@ type WidgetLocation = {
     point: GeojsonPoint;
 };
 
+type WidgetStoreData = {
+    [query: string]: WidgetLocation[];
+};
+
 type SitesPopupData = {
     sitesObjects: Site[];
     model?: Site;

@@ -26,6 +26,8 @@ export const RATIONALE: 'rationale' = 'rationale';
 export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
 export const USERS: 'users' = 'users';
+export const WIDGET_LOCATIONS: 'widgetLocations' = 'widgetLocations';
+export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -160,6 +162,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [ACTIVITIES_LIST]: {
         template: '/api/v1/field-monitoring/planning/activities/'
+    },
+
+    [WIDGET_LOCATIONS]: {
+        url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
+    },
+
+    [WIDGET_LOCATION_PATH]: {
+        template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',
