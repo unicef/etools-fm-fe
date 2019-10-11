@@ -109,7 +109,7 @@ export class LocationWidgetComponent extends LitElement {
 
         this.widgetLocationsUnsubscribe = store.subscribe(widgetLocationsData((widgetStoreData: WidgetStoreData) => {
             if (!widgetStoreData) { return; }
-            this.widgetLocations = { ...this.widgetLocations, ...widgetLocationsData };
+            this.widgetLocations = { ...this.widgetLocations, ...widgetStoreData };
 
             if (!widgetStoreData['level=0']) {
                 store.dispatch<AsyncEffect>(loadWidgetLocations('level=0'))
@@ -163,7 +163,8 @@ export class LocationWidgetComponent extends LitElement {
             const coords: CoordinatesArray = [...location.point.coordinates].reverse() as CoordinatesArray;
             this.MapHelper.addStaticMarker({ coords, staticData: location, popup: location.name });
         } else {
-            const newSelected: number[] = [...this.selectedSites].splice(index, 1);
+            const newSelected: number[] = [...this.selectedSites];
+            newSelected.splice(index, 1);
             this.selectedSites = [...newSelected];
             this.MapHelper.removeStaticMarker(location.id);
         }
@@ -253,7 +254,8 @@ export class LocationWidgetComponent extends LitElement {
         return loading || !isLeaf || !isListEmpty;
     }
 
-    public updateMap(): void {
+    public async updateMap(): Promise<void> {
+        await Promise.resolve();
         this.MapHelper.invalidateSize();
 
         const location: WidgetLocation | null = this.getLastLocation();
@@ -269,7 +271,7 @@ export class LocationWidgetComponent extends LitElement {
 
     protected updated(changedProperties: PropertyValues): void {
         const oldSelectedSites: number[] | undefined = changedProperties.get('selectedSites') as number[] | undefined;
-        if (oldSelectedSites) {
+        if (oldSelectedSites || changedProperties.has('mapInitializationProcess')) {
             this.checkSelectedSites(this.selectedSites, this.selectedLocation);
         }
 
@@ -290,6 +292,7 @@ export class LocationWidgetComponent extends LitElement {
     }
 
     private checkSelectedSites(selectedSites: number[], selectedLocation: string | null): void {
+        if (this.mapInitializationProcess) { return; }
         if (selectedSites.length && !selectedLocation) {
             this.selectedSites = [];
             return;
