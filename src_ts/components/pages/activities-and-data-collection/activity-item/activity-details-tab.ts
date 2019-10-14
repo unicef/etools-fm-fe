@@ -2,10 +2,10 @@ import { CSSResult, customElement, html, LitElement, property, query, TemplateRe
 import { elevationStyles } from '../../../styles/elevation-styles';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { hasPermission, Permissions } from '../../../../config/permissions';
 import { translate } from '../../../../localization/localisation';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
+import '../../../common/layout/etools-card/etools-card';
 import '../../../common/location-widget/location-widget';
 import { LocationWidgetComponent } from '../../../common/location-widget/location-widget';
 import { store } from '../../../../redux/store';
@@ -60,18 +60,13 @@ export class ActivityDetailsTab extends LitElement {
                 .widget-dropdown span,
                 .widget-dropdown iron-icon.toggle-btn { cursor: pointer; }
             </style>
-            <section class="elevation card-container page-content activity-details" elevation="1">
-                <div class="card-title-box with-bottom-line">
-                    <div class="card-title">${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}</div>
-                    <div class="buttons-container">
-                        <paper-icon-button
-                            @tap="${() => (this.edit.visitDetails = true)}"
-                            class="panel-button"
-                            ?hidden="${ !hasPermission(Permissions.EDIT_VISIT_DETAILS) }"
-                            icon="create"></paper-icon-button>
-                    </div>
-                </div>
-                <div class="card-content layout vertical">
+            <etools-card
+                class="page-content"
+                title="${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}"
+                is-editable
+                @save="${() => console.log('save')}"
+                @cancel="${() => console.log('cancel')}">
+                <div slot="content">
                     <div class="widget-dropdown">
                         <div class="flex-auto">
                             <span class=" layout horizontal center" @tap="${ () => this.widgetToggle() }">
@@ -97,33 +92,33 @@ export class ActivityDetailsTab extends LitElement {
                     </div>
 
                      <div class="layout horizontal location-inputs">
-                            <etools-dropdown
-                                    class="without-border readonly-required"
-                                    .selected="${ this.location }"
-                                    label="Location To Be Visited"
-                                    placeholder="Select Location in Widget"
-                                    .options="${ this.locations }"
-                                    option-label="name"
-                                    option-value="id"
-                                    readonly disabled required
-                                    min-width="470px">
-                            </etools-dropdown>
+                        <etools-dropdown
+                                class="without-border readonly-required"
+                                .selected="${ this.location }"
+                                label="Location To Be Visited"
+                                placeholder="Select Location in Widget"
+                                .options="${ this.locations }"
+                                option-label="name"
+                                option-value="id"
+                                readonly disabled required
+                                min-width="470px">
+                        </etools-dropdown>
 
 
-                            <etools-dropdown
-                                    class="without-border readonly-required"
-                                    .selected="${ this.sites[0] }"
-                                    label="Site To Be Visited"
-                                    placeholder="Select Site in Widget"
-                                    .options="${ this.sitesList }"
-                                    option-label="name"
-                                    option-value="id"
-                                    readonly disabled
-                                    min-width="470px">
-                            </etools-dropdown>
-                        </div>
+                        <etools-dropdown
+                                class="without-border readonly-required"
+                                .selected="${ this.sites[0] }"
+                                label="Site To Be Visited"
+                                placeholder="Select Site in Widget"
+                                .options="${ this.sitesList }"
+                                option-label="name"
+                                option-value="id"
+                                readonly disabled
+                                min-width="470px">
+                        </etools-dropdown>
+                    </div>
                 </div>
-            </section>
+            </etools-card>
             <section class="elevation card-container page-content" elevation="1">
                 <div class="card-title-box with-bottom-line">${ translate('ACTIVITY_ITEM.MONITOR_INFO')}</div>
                 <div class="card-content layout vertical">
