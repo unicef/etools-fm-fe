@@ -28,6 +28,8 @@ export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachm
 export const USERS: 'users' = 'users';
 export const WIDGET_LOCATIONS: 'widgetLocations' = 'widgetLocations';
 export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
+export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
+export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -142,6 +144,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [RATIONALE_ATTACHMENTS]: {
         url: '/api/v1/field-monitoring/settings/attachments/'
+    },
+
+    [ACTIVITY_RELATED_DOCUMENTS]: {
+        template: '/api/v1/field-monitoring/planning/activities/<%=id%>/attachments/'
+    },
+
+    [ACTIVITY_REPORT_ATTACHMENTS]: {
+        template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/attachments/'
     },
 
     [LOG_ISSUES]: {

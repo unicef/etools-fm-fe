@@ -41,6 +41,8 @@ export const MAIN_TRANSLATES: TranslateObject = {
     },
     'ATTACHMENTS_LIST': {
         'TITLE': 'Attachments',
+        'RELATED_DOCUMENTS': 'Related Documents',
+        'REPORT_ATTACHMENTS': 'Report Attachments',
         'EDIT_POPUP_TITLE': 'Edit Attachment',
         'ADD_POPUP_TITLE': 'Add Attachment',
         'DELETE_POPUP_TITLE': 'Delete attachment?',

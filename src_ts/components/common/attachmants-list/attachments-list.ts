@@ -11,13 +11,18 @@ import { SharedStyles } from '../../styles/shared-styles';
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
 import { CardStyles } from '../../styles/card-styles';
+import { attachmentsList } from '../../../redux/reducers/attachments-list.reducer';
+import { fireEvent } from '../../utils/fire-custom-event';
 
+store.addReducers({ attachmentsList });
 const FILE_TYPES: DefaultDropdownOption[] = [{ display_name: 'SOP', value: 34 }, { display_name: 'Other', value: 35 }];
 
 @customElement('attachments-list')
 export class AttachmentsListComponent extends LitElement {
     @property() public loadingInProcess: boolean = false;
+    @property({ type: String, attribute: 'tab-title-key' }) public tabTitleKey: string = 'ATTACHMENTS_LIST.TITLE';
     public attachmentsList: Attachment[] = [];
+    public additionalEndpointData: GenericObject = {};
 
     private attachmentsListUnsubscribe: Unsubscribe | undefined;
     private _endpointName: string = '';
@@ -43,8 +48,9 @@ export class AttachmentsListComponent extends LitElement {
         this.debouncedLoading = debounce(() => {
             this.loadingInProcess = true;
             store
-                .dispatch<AsyncEffect>(loadAttachmentsList(this._endpointName))
-                .then(() => this.loadingInProcess = false);
+                .dispatch<AsyncEffect>(loadAttachmentsList(this._endpointName, this.additionalEndpointData))
+                .catch(() => fireEvent(this, 'toast', { text: 'Can not load attachments' }))
+                .finally(() => this.loadingInProcess = false);
         }, 100);
         // load attachments
         this.debouncedLoading();
@@ -69,7 +75,12 @@ export class AttachmentsListComponent extends LitElement {
     public openPopup(attachment?: Attachment): void {
         openDialog<IAttachmentPopupData>({
             dialog: 'edit-attachment-popup',
-            data: { editedAttachment: attachment, attachmentTypes: FILE_TYPES, endpointName: this._endpointName }
+            data: {
+                editedAttachment: attachment,
+                attachmentTypes: FILE_TYPES,
+                endpointName: this._endpointName,
+                additionalEndpointData: this.additionalEndpointData
+            }
         }).then(({ confirmed }: IDialogResponse<any>) => {
             if (!confirmed || !this.debouncedLoading) { return; }
             this.debouncedLoading();
@@ -79,7 +90,7 @@ export class AttachmentsListComponent extends LitElement {
     public openDeletePopup(id: number): void {
         openDialog<IRemmoveAttachmentPopupData>({
             dialog: 'remove-attachment-popup',
-            data: { id, endpointName: this._endpointName }
+            data: { id, endpointName: this._endpointName, additionalEndpointData: this.additionalEndpointData }
         }).then(({ confirmed }: IDialogResponse<any>) => {
             if (!confirmed || !this.debouncedLoading) { return; }
             this.debouncedLoading();

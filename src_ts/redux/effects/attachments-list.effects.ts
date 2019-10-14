@@ -7,9 +7,9 @@ import {
     SetAttachmentsUpdateState
 } from '../actions/attachments-list.actions';
 
-export function loadAttachmentsList(endpointName: string): (dispatch: Dispatch) => Promise<void> {
+export function loadAttachmentsList(endpointName: string, endpointData: GenericObject): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
-        const { url }: IResultEndpoint = getEndpoint(endpointName) || {} as IResultEndpoint;
+        const { url }: IResultEndpoint = getEndpoint(endpointName, endpointData) || {} as IResultEndpoint;
         if (!url) {
             throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
         }
@@ -20,9 +20,9 @@ export function loadAttachmentsList(endpointName: string): (dispatch: Dispatch) 
     };
 }
 
-export function addAttachmentToList(endpointName: string, data: Partial<Attachment>): (dispatch: Dispatch) => Promise<void> {
+export function addAttachmentToList(endpointName: string, endpointData: GenericObject, data: Partial<Attachment>): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
-        const { url }: IResultEndpoint = getEndpoint(endpointName) || {} as IResultEndpoint;
+        const { url }: IResultEndpoint = getEndpoint(endpointName, endpointData) || {} as IResultEndpoint;
         if (!url) {
             throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
         }
@@ -35,9 +35,9 @@ export function addAttachmentToList(endpointName: string, data: Partial<Attachme
     };
 }
 
-export function updateListAttachment(endpointName: string, id: number, data: Partial<Attachment>): (dispatch: Dispatch) => Promise<void> {
+export function updateListAttachment(endpointName: string, endpointData: GenericObject, id: number, data: Partial<Attachment>): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
-        const { url }: IResultEndpoint = getEndpoint(endpointName) || {} as IResultEndpoint;
+        const { url }: IResultEndpoint = getEndpoint(endpointName, endpointData) || {} as IResultEndpoint;
         if (!url) {
             throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
         }
@@ -50,9 +50,9 @@ export function updateListAttachment(endpointName: string, id: number, data: Par
     };
 }
 
-export function deleteListAttachment(endpointName: string, id: number): (dispatch: Dispatch) => Promise<void> {
+export function deleteListAttachment(endpointName: string, endpointData: GenericObject, id: number): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
-        const { url }: IResultEndpoint = getEndpoint(endpointName) || {} as IResultEndpoint;
+        const { url }: IResultEndpoint = getEndpoint(endpointName, endpointData) || {} as IResultEndpoint;
         if (!url) {
             throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
         }

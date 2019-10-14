@@ -21,13 +21,15 @@ export class EditAttachmentsPopupComponent extends LitElement {
 
     private originalData: Attachment | null = null;
     private endpointName!: string;
+    private additionalEndpointData: GenericObject = {};
     private readonly updateAttachmentsUnsubscribe: Unsubscribe;
 
     public set data(data: IAttachmentPopupData) {
         if (!data) { return; }
-        const { editedAttachment, attachmentTypes, endpointName }: IAttachmentPopupData = data;
+        const { editedAttachment, attachmentTypes, endpointName, additionalEndpointData }: IAttachmentPopupData = data;
         this.attachmentTypes = attachmentTypes;
         this.endpointName = endpointName;
+        this.additionalEndpointData = additionalEndpointData;
 
         if (!editedAttachment) { return; }
         this.editedAttachment = { ...this.editedAttachment, ...editedAttachment };
@@ -90,9 +92,9 @@ export class EditAttachmentsPopupComponent extends LitElement {
         }
 
         if (this.editedAttachment.id) {
-            store.dispatch<AsyncEffect>(updateListAttachment(this.endpointName, this.editedAttachment.id, data));
+            store.dispatch<AsyncEffect>(updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedAttachment.id, data));
         } else {
-            store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, data));
+            store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
         }
     }
 

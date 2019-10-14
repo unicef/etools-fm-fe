@@ -15,13 +15,15 @@ export class RemoveAttachmentPopupComponent extends LitElement {
     @property() public removeInProcess: boolean = false;
     private attachmentToDelete!: number;
     private endpointName!: string;
+    private additionalEndpointData: GenericObject = {};
     private readonly updateAttachmentsUnsubscribe: Unsubscribe;
 
     public set data(data: IRemmoveAttachmentPopupData) {
         if (!data) { return; }
-        const { id, endpointName }: IRemmoveAttachmentPopupData = data;
+        const { id, endpointName, additionalEndpointData }: IRemmoveAttachmentPopupData = data;
         this.attachmentToDelete = id;
         this.endpointName = endpointName;
+        this.additionalEndpointData = additionalEndpointData;
     }
 
     public constructor() {
@@ -54,7 +56,7 @@ export class RemoveAttachmentPopupComponent extends LitElement {
     }
 
     public processRequest(): void {
-        store.dispatch<AsyncEffect>(deleteListAttachment(this.endpointName, this.attachmentToDelete));
+        store.dispatch<AsyncEffect>(deleteListAttachment(this.endpointName, this.additionalEndpointData, this.attachmentToDelete));
     }
 
     public onClose(): void {

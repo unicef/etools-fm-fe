@@ -19,10 +19,12 @@ type AttachmentFile = {
 interface IRemmoveAttachmentPopupData {
     id: number;
     endpointName: string;
+    additionalEndpointData: GenericObject;
 }
 
 interface IAttachmentPopupData {
     editedAttachment?: Attachment;
     attachmentTypes: DefaultDropdownOption[];
     endpointName: string;
+    additionalEndpointData: GenericObject;
 }

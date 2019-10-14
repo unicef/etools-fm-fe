@@ -32,9 +32,13 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
                 return response
                     .text()
                     .then((error: string) => {
-                        const data: GenericObject = JSON.parse(error);
-                        const { status, statusText } = response;
-                        return Promise.reject({ data, status, statusText });
+                        try {
+                            const data: GenericObject = JSON.parse(error);
+                            const { status, statusText } = response;
+                            return Promise.reject({ data, status, statusText });
+                        } catch (e) {
+                            return Promise.reject({ data: 'UnknownError', status: 500, statusText: 'UnknownError' });
+                        }
                     });
             }
         });

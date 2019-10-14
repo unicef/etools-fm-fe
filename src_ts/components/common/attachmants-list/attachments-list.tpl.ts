@@ -23,7 +23,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
             <!-- TITLE with ADD ATTACHMENT button -->
             <div class="card-title-box with-bottom-line">
 
-                <div class="card-title">${ translate('ATTACHMENTS_LIST.TITLE') }</div>
+                <div class="card-title">${ translate(this.tabTitleKey) }</div>
                 <div class="buttons-container">
                     <paper-icon-button
                             @tap="${() => this.openPopup()}"
