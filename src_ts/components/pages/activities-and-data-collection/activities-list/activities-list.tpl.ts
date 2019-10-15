@@ -55,7 +55,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
 
 
             <!-- Table Empty Row -->
-            ${ !this.activitiesList.length ? html`
+            ${ !this.items.length ? html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
                         <div class="col-data flex-none w130px">-</div>
@@ -70,7 +70,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
             ` : '' }
 
             <!-- Table Row items -->
-            ${ this.activitiesList.map((activity: IListActivity) => html`
+            ${ this.items.map((activity: IListActivity) => html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal editable-row flex">
                         <div class="col-data flex-none w130px"><a class="link-cell" href="${ `${ this.rootPath }activities/${ activity.id }/details/` }">${ activity.reference_number }</a></div>

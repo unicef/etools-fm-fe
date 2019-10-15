@@ -33,7 +33,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                     </div>
                 </div>
 
-                <etools-data-table-header no-title ?no-collapse="${!this.questionsList.length}">
+                <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
                     <etools-data-table-column class="flex-2 col-data" field="text" sortable>
                         ${ translate('QUESTIONS.COLUMNS.TEXT') }
                     </etools-data-table-column>
@@ -54,7 +54,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                     </etools-data-table-column>
                 </etools-data-table-header>
 
-                ${!this.questionsList.length ?
+                ${!this.items.length ?
                         html`
                         <etools-data-table-row no-collapse>
                             <div slot="row-data" class="layout horizontal editable-row flex">
@@ -70,7 +70,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                         '' }
 
                 ${
-                    this.questionsList.map((question: IQuestion) => html`
+                    this.items.map((question: IQuestion) => html`
                         <etools-data-table-row secondary-bg-on-hover>
                             <div slot="row-data" class="layout horizontal editable-row flex">
                                 <div class="col-data flex-2">${ question.text || '-' }</div>

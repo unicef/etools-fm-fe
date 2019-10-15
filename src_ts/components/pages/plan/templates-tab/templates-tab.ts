@@ -31,19 +31,17 @@ import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { TemplatesStyles } from './templates-tab.styles';
+import { ListMixin } from '../../../common/mixins/list-mixin';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
 const ESCAPE: 27 = 27;
 
 @customElement('templates-tab')
-export class TemplatesTabComponent extends LitElement {
-    @property() public questionTemplatesList: IQuestionTemplate[] = [];
-    @property() public queryParams: IRouteQueryParam | null = null;
+export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitElement) {
     @property() public listLoadingInProcess: boolean = false;
     @property() public editedDetails: GenericObject = { opened: false };
     @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
-    public count: number = 0;
     public partners!: EtoolsPartner[];
     public interventions!: EtoolsIntervention[];
     public outputs!: EtoolsCpOutput[];
@@ -86,7 +84,7 @@ export class TemplatesTabComponent extends LitElement {
         this.questionTemplatesDataUnsubscribe = store.subscribe(questionTemplatesListData((data: IListData<IQuestionTemplate> | null) => {
             if (!data) { return; }
             this.count = data.count;
-            this.questionTemplatesList = data.results;
+            this.items = data.results;
         }, false));
 
         // route params listener
@@ -129,14 +127,6 @@ export class TemplatesTabComponent extends LitElement {
         return Boolean(collection) && target && level === forLevel ? target : undefined;
     }
 
-    public changePageParam(newValue: string | number, paramName: string): void {
-        const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
-        if (+newValue === +currentValue) { return; }
-        const newParams: IRouteQueryParams = { [paramName]: newValue };
-        if (paramName === 'page_size') { newParams.page = 1; }
-        updateQueryParams({ [paramName]: newValue });
-    }
-
     public showDetailsInput(target: HTMLElement, id: number, details: string | null): void {
         if (!hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)) { return; }
         const { top, left, width } = target.getBoundingClientRect();
@@ -162,7 +152,7 @@ export class TemplatesTabComponent extends LitElement {
         this.editedDetails = { opened: false };
 
         // find edited template in list
-        const selectedTemplate: IQuestionTemplate | undefined = this.questionTemplatesList.find((questionTemplate: IQuestionTemplate) => questionTemplate.id === id);
+        const selectedTemplate: IQuestionTemplate | undefined = this.items.find((questionTemplate: IQuestionTemplate) => questionTemplate.id === id);
         if (!selectedTemplate) { return; }
 
         // get current template data from object

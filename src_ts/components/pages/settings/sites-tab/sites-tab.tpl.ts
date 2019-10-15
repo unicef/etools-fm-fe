@@ -59,7 +59,7 @@ export function template(this: SitesTabComponent): TemplateResult {
                 </etools-data-table-column>
             </etools-data-table-header>
 
-            ${this.sites.map((parentLocation: IGroupedSites) => html`
+            ${this.items.map((parentLocation: IGroupedSites) => html`
                 <etools-data-table-row no-collapse>
                         <div slot="row-data" class="layout horizontal editable-row parent-row">
 
@@ -88,7 +88,7 @@ export function template(this: SitesTabComponent): TemplateResult {
                     </etools-data-table-row>
             `)}
 
-            ${ !this.sites.length ? html`
+            ${ !this.items.length ? html`
                 <etools-data-table-row no-collapse>
                     <div slot="row-data" class="layout horizontal">
                         <div  class="col-data w30">-</div>
@@ -100,11 +100,11 @@ export function template(this: SitesTabComponent): TemplateResult {
             ` : '' }
 
             <etools-data-table-footer
-                    .pageSize="${this.queryParams && this.queryParams.page_size || undefined}"
-                    .pageNumber="${this.queryParams && this.queryParams.page || undefined}"
-                    .totalResults="${this.count}"
-                    @page-size-changed="${(event: CustomEvent) => this.pageSizeSelected(event)}"
-                    @page-number-changed="${(event: CustomEvent) => this.pageNumberChanged(event)}">
+                .pageSize="${this.queryParams && this.queryParams.page_size || undefined}"
+                .pageNumber="${this.queryParams && this.queryParams.page || undefined}"
+                .totalResults="${this.count}"
+                @page-size-changed="${ (event: CustomEvent) => this.changePageParam(event.detail.value, 'page_size') }"
+                @page-number-changed="${ (event: CustomEvent) => this.changePageParam(event.detail.value, 'page') }">
             </etools-data-table-footer>
         </section>
     `;

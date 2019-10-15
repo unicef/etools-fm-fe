@@ -19,19 +19,16 @@ import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { leafletStyles } from '../../../styles/leaflet-styles';
 import { SitesTabStyles } from './sites-tab.styles';
+import { ListMixin } from '../../../common/mixins/list-mixin';
 
 @customElement('sites-tab')
-export class SitesTabComponent extends LitElement {
-
-    public count: number = 0;
-
-    public queryParams: IRouteQueryParam | null = null;
-    @property() public sites: IGroupedSites[] = [];
+export class SitesTabComponent extends ListMixin<IGroupedSites>(LitElement) {
+    @property() public items: IGroupedSites[] = [];
 
     @property() public listLoadingInProcess: boolean = false;
     private sitesObjects: Site[] | null = null;
 
-    private debouncedLoading: Callback;
+    private readonly debouncedLoading: Callback;
     private sitesUnsubscribe!: Unsubscribe;
     private routeUnsubscribe!: Unsubscribe;
     public constructor() {
@@ -55,7 +52,8 @@ export class SitesTabComponent extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
 
-        this.routeUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false));
+        this.routeUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) =>
+            this.onRouteChange(details), false));
         const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
         this.onRouteChange(currentRoute);
 
@@ -126,26 +124,6 @@ export class SitesTabComponent extends LitElement {
         });
     }
 
-    public pageNumberChanged({ detail }: CustomEvent): void {
-        // prevent updating during initialization
-        if (!this.sitesObjects) { return; }
-        const newValue: string | number = detail.value;
-        const currentValue: number | string = this.queryParams && this.queryParams.page || 0;
-        if (+newValue === +currentValue) { return; }
-        updateQueryParams({ page: detail.value });
-        this.refreshData();
-    }
-
-    public pageSizeSelected({ detail }: CustomEvent): void {
-        // prevent updating during initialization
-        if (!this.sitesObjects) { return; }
-        const newValue: string | number = detail.value;
-        const currentValue: number | string = this.queryParams && this.queryParams.page_size || 0;
-        if (+newValue === +currentValue) { return; }
-        updateQueryParams({ page_size: detail.value, page: 1 });
-        this.refreshData();
-    }
-
     public changeShowInactive({ detail }: CustomEvent): void {
         // prevent updating during initialization
         const checked: boolean = detail.value;
@@ -187,7 +165,7 @@ export class SitesTabComponent extends LitElement {
         let sitesObject: Site[] = this.filterSites(this.sitesObjects || []);
         this.count = sitesObject.length;
         sitesObject = this.filterPagination(sitesObject);
-        this.sites = locationsInvert(sitesObject);
+        this.items = locationsInvert(sitesObject);
     }
 
     private filterSites(sitesObject: Site[]): Site[] {

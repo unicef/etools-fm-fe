@@ -29,19 +29,17 @@ import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { buttonsStyles } from '../../../styles/button-styles';
 import { ActivitiesListStyles } from './activities-list.styles';
+import { ListMixin } from '../../../common/mixins/list-mixin';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({ activities, specificLocations });
 
 @customElement('activities-list')
-export class ActivitiesListComponent extends LitElement {
+export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement) {
     @property() public loadingInProcess: boolean = false;
-    @property() public queryParams: IRouteQueryParam | null = null;
     @property() public rootPath: string = ROOT_PATH;
     @property() public filtersLoading: boolean = false;
     @property() public filters: IEtoolsFilter[] | null = null;
-    public activitiesList: IListActivity[] = [];
-    public count: number = 0;
 
     public activityTypes: DefaultDropdownOption<string>[] = ACTIVITY_TYPES;
     public activityStatuses: DefaultDropdownOption<string>[] = ACTIVITY_STATUSES;
@@ -73,7 +71,7 @@ export class ActivitiesListComponent extends LitElement {
         this.activitiesDataUnsubscribe = store.subscribe(activitiesListData((data: IListData<IListActivity> | null) => {
             if (!data) { return; }
             this.count = data.count;
-            this.activitiesList = data.results;
+            this.items = data.results;
         }, false));
 
         this.initFilters();
@@ -91,14 +89,6 @@ export class ActivitiesListComponent extends LitElement {
         super.disconnectedCallback();
         this.routeDetailsUnsubscribe();
         this.activitiesDataUnsubscribe();
-    }
-
-    public changePageParam(newValue: string | number, paramName: string): void {
-        const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
-        if (+newValue === +currentValue) { return; }
-        const newParams: IRouteQueryParams = { [paramName]: newValue };
-        if (paramName === 'page_size') { newParams.page = 1; }
-        updateQueryParams({ [paramName]: newValue });
     }
 
     public formatDate(date: string | null): string {

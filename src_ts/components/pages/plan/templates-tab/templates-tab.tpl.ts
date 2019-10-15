@@ -116,7 +116,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
 
 
               <!-- Table Empty Row -->
-              ${ this.loadingInProcess || !this.questionTemplatesList.length ? html`
+              ${ this.loadingInProcess || !this.items.length ? html`
                   <etools-data-table-row no-collapse>
                       <div slot="row-data" class="layout horizontal editable-row flex">
                           <div class="checkbox-container"></div>
@@ -129,7 +129,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
 
 
               <!-- Table Row item -->
-              ${ !this.loadingInProcess ? this.questionTemplatesList.map((questionTemplate: IQuestionTemplate) => html`
+              ${ !this.loadingInProcess ? this.items.map((questionTemplate: IQuestionTemplate) => html`
                   <etools-data-table-row no-collapse>
                       <div slot="row-data" class="layout horizontal editable-row flex">
 

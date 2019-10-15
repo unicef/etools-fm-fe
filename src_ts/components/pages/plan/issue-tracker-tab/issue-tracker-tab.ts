@@ -1,7 +1,6 @@
 import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { debounce } from '../../../utils/debouncer';
 import { store } from '../../../../redux/store';
-import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 import { Unsubscribe } from 'redux';
 import { updateQueryParams } from '../../../../routing/routes';
 import { requestLogIssue } from '../../../../redux/effects/issue-tracker.effects';
@@ -11,10 +10,7 @@ import { elevationStyles } from '../../../styles/elevation-styles';
 import { template } from './issue-tracker-tab.tpl';
 import { issueTrackerData } from '../../../../redux/selectors/issue-tracker.selectors';
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
-import { sitesSelector } from '../../../../redux/selectors/site-specific-locations.selectors';
-import { locationsInvert } from '../../settings/sites-tab/locations-invert';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
-import { outputsDataSelector, partnersDataSelector } from '../../../../redux/selectors/static-data.selectors';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
 import '../issue-tracker-popup/issue-tracker-popup';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
@@ -22,6 +18,11 @@ import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { IssueTrackerTabStyles } from './issue-tracker-tab.styles';
 import { SharedStyles } from '../../../styles/shared-styles';
+import { ListMixin } from '../../../common/mixins/list-mixin';
+import { PartnersMixin } from '../../../common/mixins/partners-mixin';
+import { CpOutputsMixin } from '../../../common/mixins/cp-outputs-mixin';
+import { SiteMixin } from '../../../common/mixins/site-mixin';
+import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
     { value: 'new', display_name: 'New' },
@@ -29,34 +30,16 @@ export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
 ];
 
 @customElement('issue-tracker-tab')
-export class IssueTrackerTabComponent extends LitElement {
+export class IssueTrackerTabComponent extends
+    SiteMixin(CpOutputsMixin(PartnersMixin(ListMixin<LogIssue>(LitElement)))) {
 
     @property()
     public filters: IEtoolsFilter[] | null = [];
 
-    @property({ type: Number })
-    public count: number = 0;
-
-    @property({ type: Array })
-    public logIssues: LogIssue[] = [];
-
-    @property({ type: Array })
-    public outputs: EtoolsCpOutput[] = [];
-
-    @property({ type: Array })
-    public partners: EtoolsPartner[] = [];
-
-    @property({ type: Array })
-    public locations: IGroupedSites[] = [];
-
-    public queryParams: GenericObject | null = null;
     private readonly debouncedLoading: Callback;
 
     private routeUnsubscribe!: Unsubscribe;
     private issueTrackerDataUnsubscribe!: Unsubscribe;
-    private sitesUnsubscribe!: Unsubscribe;
-    private outputsUnsubscribe!: Unsubscribe;
-    private partnersUnsubscribe!: Unsubscribe;
 
     public constructor() {
         super();
@@ -81,19 +64,7 @@ export class IssueTrackerTabComponent extends LitElement {
         this.issueTrackerDataUnsubscribe = store.subscribe(issueTrackerData((data: IListData<LogIssue> | null) => {
             if (!data) { return; }
             this.count = data.count;
-            this.logIssues = data.results;
-        }));
-        this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
-            if (!sites) { return; }
-            this.locations = locationsInvert(sites);
-        }));
-        this.outputsUnsubscribe = store.subscribe(outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
-            if (!outputs) { return; }
-            this.outputs = outputs;
-        }));
-        this.partnersUnsubscribe = store.subscribe(partnersDataSelector((partners: EtoolsPartner[] | undefined) => {
-            if (!partners) { return; }
-            this.partners = partners;
+            this.items = data.results;
         }));
         const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
         this.onRouteChange(currentRoute);
@@ -104,12 +75,10 @@ export class IssueTrackerTabComponent extends LitElement {
         super.disconnectedCallback();
         this.routeUnsubscribe();
         this.issueTrackerDataUnsubscribe();
-        this.sitesUnsubscribe();
-        this.outputsUnsubscribe();
-        this.partnersUnsubscribe();
     }
 
-    public onRouteChange({ routeName, subRouteName, queryParams }: IRouteDetails): void {
+    public onRouteChange(routeDetails: IRouteDetails): void {
+        const { routeName, subRouteName, queryParams } = routeDetails;
         if (routeName !== 'plan' || subRouteName !== 'issue-tracker') { return; }
 
         const paramsAreValid: boolean = this.checkParams(queryParams);
@@ -159,45 +128,6 @@ export class IssueTrackerTabComponent extends LitElement {
             store.dispatch<AsyncEffect>(requestLogIssue(currentParams || {}));
         });
     }
-
-    public pageNumberChanged({ detail }: CustomEvent): void {
-        // prevent updating during initialization
-        if (!this.logIssues) { return; }
-        const newValue: string | number = detail.value;
-        const currentValue: number | string = this.queryParams && this.queryParams.page || 0;
-        if (+newValue === +currentValue) { return; }
-        updateQueryParams({ page: detail.value });
-        // this.refreshData();
-    }
-
-    public changePageParam(newValue: string | number, paramName: string): void {
-        const currentValue: number | string = this.queryParams && this.queryParams[paramName] || 0;
-        if (+newValue === +currentValue) { return; }
-        updateQueryParams({ [paramName]: newValue });
-    }
-
-    public changeSort({ field, direction }: SortDetails): void {
-        updateQueryParams({ ordering: `${ direction === 'desc' ? '-' : '' }${ field }` });
-    }
-
-    public pageSizeSelected({ detail }: CustomEvent): void {
-        // prevent updating during initialization
-        if (!this.logIssues) { return; }
-        const newValue: string | number = detail.value;
-        const currentValue: number | string = this.queryParams && this.queryParams.page_size || 0;
-        if (+newValue === +currentValue) { return; }
-        updateQueryParams({ page_size: detail.value });
-        // this.refreshData();
-    }
-
-    public get tableInformation(): TableInformation {
-        const { page, page_size }: GenericObject = this.queryParams || {};
-        const notEnoughData: boolean = !page_size || !page || !this.count || !this.logIssues;
-        const end: number = notEnoughData ? 0 : Math.min(page * page_size, this.count);
-        const start: number = notEnoughData ? 0 : end - this.logIssues.length + 1;
-        return { start, end, count: this.count };
-    }
-
     public static get styles(): CSSResultArray {
         return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
     }
