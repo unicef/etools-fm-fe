@@ -63,7 +63,7 @@ export class NewActivityComponent extends LitElement {
                 this.activeTab = activeTab;
             } else {
                 this.activeTab = DETAILS_TAB;
-                updateAppLocation(`activities/new/${DETAILS_TAB}`);
+                updateAppLocation(`activities/${ this.activityId }/${DETAILS_TAB}`);
             }
         }));
     }
@@ -109,6 +109,6 @@ export class NewActivityComponent extends LitElement {
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
         if (this.activeTab === tabName) { return; }
-        updateAppLocation(`activities/new/${tabName}`);
+        updateAppLocation(`activities/${ this.activityId }/${tabName}`);
     }
 }

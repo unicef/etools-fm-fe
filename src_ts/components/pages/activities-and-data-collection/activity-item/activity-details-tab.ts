@@ -61,13 +61,10 @@ export class ActivityDetailsTab extends LitElement {
             </style>
             <etools-card
                 class="page-content"
-                title="${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}"
+                card-title="${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}"
                 is-editable
                 @save="${() => console.log('save')}"
                 @cancel="${() => console.log('cancel')}">
-                <div slot="actions">
-                    <paper-icon-button icon="cloud-download"></paper-icon-button>
-                </div>
                 <div slot="content">
                     <div class="widget-dropdown">
                         <div class="flex-auto">
