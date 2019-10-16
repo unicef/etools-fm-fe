@@ -83,10 +83,6 @@ export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
         return template.call(this);
     }
 
-    public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionsTabStyles];
-    }
-
     public serializeName<T extends Serialized>(id: number, collection: T[]): string {
         if (!id || !collection) { return ''; }
         const item: T | undefined = collection.find((collectionItem: T) => +collectionItem.id === +id);
@@ -141,5 +137,9 @@ export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
                 const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
                 this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);
         });
+    }
+
+    public static get styles(): CSSResult[] {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionsTabStyles];
     }
 }

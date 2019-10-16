@@ -63,9 +63,7 @@ interface IChecklistQuestion {
     is_custom: boolean;
 }
 
-interface IChecklistItemByTarget {
-    id: number;
-    name: string;
-    type: 'partner' | 'intervention' | 'output';
-    items: IChecklistItem[];
+interface IChecklistByMethods {
+    method: number;
+    checklist: GenericObject<IChecklistItem[]>;
 }

@@ -4,10 +4,11 @@ import { request } from '../../endpoints/request';
 import { ACTIVITY_CHECKLIST } from '../../endpoints/endpoints-list';
 import { SetActivityChecklist } from '../actions/activity-checklist.actions';
 
-export function loadActivityChecklist(id: number): (dispatch: Dispatch) => Promise<void> {
+export function loadActivityChecklist(id: number, enabled?: true): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
         const { url }: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST, { id });
-        return request<IChecklistItem[]>(`${ url }?page_size=all`, { method: 'GET' })
+        const enabledParam: string = enabled ? '&is_enabled=True' : '';
+        return request<IChecklistItem[]>(`${ url }?page_size=all${ enabledParam }`, { method: 'GET' })
             .then((response: IChecklistItem[]) => { dispatch(new SetActivityChecklist(response)); });
     };
 }
