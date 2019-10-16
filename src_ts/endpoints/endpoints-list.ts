@@ -31,6 +31,7 @@ export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
+export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -181,6 +182,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [WIDGET_LOCATION_PATH]: {
         template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
+    },
+
+    [ACTIVITY_DETAILS]: {
+        template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
     },
 
     [ACTIVITY_CHECKLIST]: {

@@ -101,7 +101,7 @@ export class NewActivityComponent extends LitElement {
     public getTabElement(): TemplateResult {
         switch (this.activeTab) {
             case DETAILS_TAB:
-                return html`<activity-details-tab></activity-details-tab>`;
+                return html`<activity-details-tab .activityId="${ this.activityId }"></activity-details-tab>`;
             case ATTACHMENTS_TAB:
                 return html`<activity-attachments-tab></activity-attachments-tab>`;
             case CHECKLIST_TAB:

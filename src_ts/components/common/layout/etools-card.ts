@@ -1,9 +1,9 @@
 import { css, CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
-import { fireEvent } from '../../../utils/fire-custom-event';
-import { CardStyles } from '../../../styles/card-styles';
-import { elevationStyles } from '../../../styles/elevation-styles';
+import { fireEvent } from '../../utils/fire-custom-event';
+import { CardStyles } from '../../styles/card-styles';
+import { elevationStyles } from '../../styles/elevation-styles';
 import '@polymer/iron-icons/iron-icons';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
+import { FlexLayoutClasses } from '../../styles/flex-layout-classes';
 
 @customElement('etools-card')
 export class EtoolsCard extends LitElement {
@@ -54,12 +54,14 @@ export class EtoolsCard extends LitElement {
                     <div class="card-title">${ this.cardTitle }</div>
                     <div class="layout horizontal center">
                         <slot name="actions"></slot>
+                        ${this.isEditable ? html`
                         <paper-icon-button
                             icon="create"
                             ?edit=${ this.edit }
                             ?hidden="${ this.hideEditButton }"
                             class="edit-button"
                             @tap="${ () => this.startEdit() }"></paper-icon-button>
+                        ` : ''}
                     </div>
                 </header>
                 <iron-collapse ?opened="${ !this.collapsed }">

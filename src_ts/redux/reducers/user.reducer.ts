@@ -4,7 +4,7 @@ import { UserActionTypes } from '../actions/user.actions';
 const INITIAL_USER_DATA: IUserState = {
     data: null,
     isRequest: {
-        get: false
+        load: false
     },
     error: {}
 };
@@ -14,20 +14,20 @@ export const user: Reducer<IUserState, any> = (state: IUserState = INITIAL_USER_
         case UserActionTypes.USER_DATA_REQUEST:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: true },
+                isRequest: { ...state.isRequest, load: true },
                 error: null
             };
         case UserActionTypes.USER_DATA_SUCCESS:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: false },
+                isRequest: { ...state.isRequest, load: false },
                 data: action.payload,
                 error: null
             };
         case UserActionTypes.USER_DATA_FAILURE:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: false },
+                isRequest: { ...state.isRequest, load: false },
                 error: action.payload
             };
         default:

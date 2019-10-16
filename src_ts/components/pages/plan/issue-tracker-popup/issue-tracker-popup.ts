@@ -3,7 +3,7 @@ import { Unsubscribe } from 'redux';
 import { clone } from 'ramda';
 import { store } from '../../../../redux/store';
 import { fireEvent } from '../../../utils/fire-custom-event';
-import { issueTrackerUpdate } from '../../../../redux/selectors/issue-tracker.selectors';
+import { issueTrackerIsUpdate } from '../../../../redux/selectors/issue-tracker.selectors';
 import { getDifference } from '../../../utils/objects-diff';
 import { createLogIssue, updateLogIssue } from '../../../../redux/effects/issue-tracker.effects';
 import { outputsDataSelector, partnersDataSelector } from '../../../../redux/selectors/static-data.selectors';
@@ -77,7 +77,7 @@ export class IssueTrackerPopup extends LitElement {
 
     public constructor() {
         super();
-        this.updateUnsubscribe = store.subscribe(issueTrackerUpdate((isRequest: boolean | null) => {
+        this.updateUnsubscribe = store.subscribe(issueTrackerIsUpdate((isRequest: boolean | null) => {
             // set updating state for spinner
             this.isRequest = Boolean(isRequest);
             if (isRequest) { return; }

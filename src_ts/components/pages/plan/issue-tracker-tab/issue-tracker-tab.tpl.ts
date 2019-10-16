@@ -63,6 +63,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
         </div>
     </section>
     <section class="elevation page-content card-container issue-tracker-table-section" elevation="1">
+        <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
         <div class="card-title-box with-bottom-line">
             <div class="card-title counter">${ translate('ISSUE_TRACKER.TABLE_CAPTION', this.tableInformation) }</div>
             <div class="buttons-container">

@@ -28,7 +28,8 @@ export const InputStyles: TemplateResult = html`
         etools-dropdown-multi,
         paper-dropdown-menu,
         paper-textarea,
-        paper-input {
+        paper-input,
+        datepicker-lite {
             padding: 0 12px;
             color: var(--gray-mid);
             box-sizing: border-box;
@@ -72,7 +73,8 @@ export const InputStyles: TemplateResult = html`
         paper-input,
         paper-textarea,
         paper-dropdown-menu,
-        etools-currency-amount-input {
+        etools-currency-amount-input,
+        datepicker-lite {
             outline: none!important;
             --esmm-placeholder-color: var(--gray-20);
             --esmm-multi-placeholder-color: var(--gray-20);
@@ -139,7 +141,8 @@ export const InputStyles: TemplateResult = html`
         etools-dropdown[readonly]:not(.datepicker), etools-dropdown[disabled].disabled-as-readonly,
         paper-textarea[readonly]:not(.datepicker), paper-textarea[disabled].disabled-as-readonly,
         paper-dropdown-menu[readonly]:not(.datepicker), paper-dropdown-menu[disabled].disabled-as-readonly,
-        paper-input[readonly]:not(.datepicker), paper-input[disabled].disabled-as-readonly {
+        paper-input[readonly]:not(.datepicker), paper-input[disabled].disabled-as-readonly.
+        datepicker-lite[readonly], datepicker-lite[disabled].disabled-as-readonly {
             --paper-input-container: {
                 opacity: 1 !important;
             };
@@ -156,7 +159,8 @@ export const InputStyles: TemplateResult = html`
         etools-dropdown-multi[disabled].without-border,
         etools-dropdown[disabled].without-border,
         paper-textarea[disabled].without-border,
-        paper-input[disabled].without-border {
+        paper-input[disabled].without-border,
+        datepicker-lite[disabled].without-border {
             --paper-input-container-label: {
                 color: var(--gray-50) !important;
             };

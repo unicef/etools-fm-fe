@@ -8,7 +8,7 @@ import { requestLogIssue } from '../../../../redux/effects/issue-tracker.effects
 import { IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
 import { elevationStyles } from '../../../styles/elevation-styles';
 import { template } from './issue-tracker-tab.tpl';
-import { issueTrackerData } from '../../../../redux/selectors/issue-tracker.selectors';
+import { issueTrackerData, issueTrackerIsLoad } from '../../../../redux/selectors/issue-tracker.selectors';
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
 import { IDialogResponse, openDialog } from '../../../utils/dialog';
@@ -33,13 +33,17 @@ export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
 export class IssueTrackerTabComponent extends
     SiteMixin(CpOutputsMixin(PartnersMixin(ListMixin<LogIssue>(LitElement)))) {
 
+    @property({ type: Boolean })
+    public isLoad: boolean = false;
+
     @property()
     public filters: IEtoolsFilter[] | null = [];
 
     private readonly debouncedLoading: Callback;
 
     private routeUnsubscribe!: Unsubscribe;
-    private issueTrackerDataUnsubscribe!: Unsubscribe;
+    private dataUnsubscribe!: Unsubscribe;
+    private isLoadUnsubscribe!: Unsubscribe;
 
     public constructor() {
         super();
@@ -57,11 +61,13 @@ export class IssueTrackerTabComponent extends
 
     public connectedCallback(): void {
         super.connectedCallback();
-
         this.routeUnsubscribe = store.subscribe(routeDetailsSelector((details: IRouteDetails) => {
             return this.onRouteChange(details);
         }, false));
-        this.issueTrackerDataUnsubscribe = store.subscribe(issueTrackerData((data: IListData<LogIssue> | null) => {
+        this.isLoadUnsubscribe = store.subscribe(issueTrackerIsLoad((isLoad: boolean | null) => {
+            this.isLoad = Boolean(isLoad);
+        }));
+        this.dataUnsubscribe = store.subscribe(issueTrackerData((data: IListData<LogIssue> | null) => {
             if (!data) { return; }
             this.count = data.count;
             this.items = data.results;
@@ -74,7 +80,8 @@ export class IssueTrackerTabComponent extends
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.routeUnsubscribe();
-        this.issueTrackerDataUnsubscribe();
+        this.dataUnsubscribe();
+        this.isLoadUnsubscribe();
     }
 
     public onRouteChange(routeDetails: IRouteDetails): void {

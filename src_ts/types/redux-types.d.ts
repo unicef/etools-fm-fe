@@ -9,6 +9,7 @@ interface IRootState {
     questionTemplates: IQuestionTemplatesState;
     rationale: IRationaleState;
     activities: IActivitiesState;
+    activityDetails: IActivityDetailsState;
     activityChecklist: IActivityChecklistState;
     attachmentsList: IAttachmentsListState;
     widgetLocations: IWidgetLocationsState;
@@ -82,6 +83,10 @@ interface IActivityChecklistState {
 
 interface IIssueTrackerState extends IRequestState {
     data: null | IListData<LogIssue>;
+}
+
+interface IActivityDetailsState extends IRequestState {
+    data: null | IActivityDetails;
 }
 
 interface IWidgetLocationsState {

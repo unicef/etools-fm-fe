@@ -3,7 +3,7 @@ import { IssueTrackerActions } from '../actions/issue-tracker.actions';
 
 const INITIAL: IIssueTrackerState = {
     isRequest: {
-        get: false,
+        load: false,
         update: false
     },
     error: null,
@@ -15,20 +15,20 @@ export const issueTracker: Reducer<IIssueTrackerState, any> = (state: IIssueTrac
         case IssueTrackerActions.ISSUE_TRACKER_DATA_REQUEST:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: true },
+                isRequest: { ...state.isRequest, load: true },
                 error: null
             };
         case IssueTrackerActions.ISSUE_TRACKER_DATA_SUCCESS:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: false },
+                isRequest: { ...state.isRequest, load: false },
                 data: action.payload,
                 error: null
             };
         case IssueTrackerActions.ISSUE_TRACKER_DATA_FAILURE:
             return {
                 ...state,
-                isRequest: { ...state.isRequest, get: false },
+                isRequest: { ...state.isRequest, load: false },
                 error: action.payload
             };
         case IssueTrackerActions.ISSUE_TRACKER_UPDATE_REQUEST:
