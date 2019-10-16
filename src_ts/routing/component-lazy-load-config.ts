@@ -28,15 +28,18 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
         'components/pages/plan/templates-tab/templates-tab.js'
     ],
 
+    // Activities List
     'activities_list': [
         'components/pages/activities-and-data-collection/activities-page.js',
         'components/pages/activities-and-data-collection/activities-list/activities-list.js'
     ],
 
+    // Activity Item Pages
     'activities_item': [
         'components/pages/activities-and-data-collection/activities-page.js',
         'components/pages/activities-and-data-collection/activity-item/activity-item.js',
         'components/pages/activities-and-data-collection/activity-item/activity-details-tab.js',
+        'components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js',
         'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js'
     ],
 

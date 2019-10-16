@@ -16,6 +16,11 @@
     "src/components/pages/plan/issue-tracker-tab/issue-tracker-tab.js",
 
     "src/components/pages/activities-and-data-collection/activities-page.js",
+    "src/components/pages/activities-and-data-collection/activities-list/activities-list.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-item.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-details-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js",
 
     "src/components/pages/analyze/analyze-page.js"
   ],

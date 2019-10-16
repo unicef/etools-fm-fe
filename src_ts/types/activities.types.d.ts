@@ -23,3 +23,49 @@ type ActivityTeamMember = {
     middle_name: string;
     last_name: string;
 };
+
+interface IActivityPartner {
+    id: number;
+    name: string;
+}
+
+interface IActivityCPOutput {
+    id: number;
+    name: string;
+}
+
+interface IActivityIntervention {
+    id: number;
+    title: string;
+}
+
+interface IChecklistItem {
+    id: number;
+    partner: null | IActivityPartner;
+    cp_output: null | IActivityCPOutput;
+    intervention: null | IActivityIntervention;
+    question: IChecklistQuestion;
+    specific_details: string;
+    is_enabled: boolean;
+}
+
+interface IChecklistQuestion {
+    id: number;
+    answer_type: string;
+    choices_size: null | number;
+    level: string;
+    methods: number[];
+    category: number;
+    sections: number[];
+    text: string;
+    is_hact: boolean;
+    is_active: boolean;
+    is_custom: boolean;
+}
+
+interface IChecklistItemByTarget {
+    id: number;
+    name: string;
+    type: 'partner' | 'intervention' | 'output';
+    items: IChecklistItem[];
+}

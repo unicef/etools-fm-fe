@@ -7,14 +7,17 @@ import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 
 @customElement('etools-card')
 export class EtoolsCard extends LitElement {
-    @property()
-    public title!: string;
+    @property({ attribute: 'card-title' })
+    public cardTitle!: string;
 
     @property({ type: Boolean, attribute: 'is-editable' })
     public isEditable: boolean = false;
 
     @property({ type: Boolean, attribute: 'is-collapsible' })
     public isCollapsible: boolean = false;
+
+    @property({ type: Boolean, attribute: 'hide-edit-button' })
+    public hideEditButton: boolean = false;
 
     @property({ type: Boolean }) public collapsed: boolean = false;
     @property({ type: Boolean }) public edit: boolean = false;
@@ -28,6 +31,12 @@ export class EtoolsCard extends LitElement {
         fireEvent(this, 'cancel');
     }
 
+    public startEdit(): void {
+        if (this.edit) { return; }
+        this.edit = true;
+        fireEvent(this, 'start-edit');
+    }
+
     public toggleCollapse(): void {
         this.collapsed = !this.collapsed;
     }
@@ -36,31 +45,32 @@ export class EtoolsCard extends LitElement {
     protected render(): TemplateResult {
         return html`
             <div class="elevation card-container" elevation="1">
-                <header class="card-title-box with-bottom-line" ?is-collapsible="${this.isCollapsible}">
+                <header class="card-title-box with-bottom-line" ?is-collapsible="${ this.isCollapsible }">
                     ${this.isCollapsible ? html`
                     <paper-icon-button
-                        @tap="${() => this.toggleCollapse()}"
-                        icon="${this.collapsed ? 'expand-less' : 'expand-more'}"></paper-icon-button>
+                        @tap="${ () => this.toggleCollapse() }"
+                        icon="${ this.collapsed ? 'expand-more' : 'expand-less' }"></paper-icon-button>
                     ` : ''}
-                    <div class="card-title">${this.title}</div>
+                    <div class="card-title">${ this.cardTitle }</div>
                     <div class="layout horizontal center">
                         <slot name="actions"></slot>
                         <paper-icon-button
                             icon="create"
-                            ?edit=${this.edit}
+                            ?edit=${ this.edit }
+                            ?hidden="${ this.hideEditButton }"
                             class="edit-button"
-                            @tap="${() => this.edit = true}"></paper-icon-button>
+                            @tap="${ () => this.startEdit() }"></paper-icon-button>
                     </div>
                 </header>
                 <iron-collapse ?opened="${ !this.collapsed }">
-                    <section class="card-content">
+                    <section class="card-content-block">
                         <slot name="content"></slot>
 
-                        ${this.isEditable && this.edit ? html`
-                        <div class="layout horizontal end-justified card-buttons">
-                            <paper-button @tap="${() => this.cancel()}">Cancel</paper-button>
-                            <paper-button class="save-button" @tap="${() => this.save()}">Save</paper-button>
-                        </div>
+                        ${ this.isEditable && this.edit ? html`
+                            <div class="layout horizontal end-justified card-buttons">
+                                <paper-button @tap="${ () => this.cancel() }">Cancel</paper-button>
+                                <paper-button class="save-button" @tap="${ () => this.save() }">Save</paper-button>
+                            </div>
                         ` : ''}
                     </section>
                 </iron-collapse>
@@ -78,12 +88,13 @@ export class EtoolsCard extends LitElement {
             }
             .card-title-box[is-collapsible] {
                 padding-left: 17px;
+                padding-right: 25px;
             }
             .card-content {
-                padding: 18px 13px;
+                padding: 0;
             }
             .card-buttons {
-                padding: 0 9px;
+                padding: 12px 24px;
             }
             .save-button {
                 color: var(--primary-background-color);

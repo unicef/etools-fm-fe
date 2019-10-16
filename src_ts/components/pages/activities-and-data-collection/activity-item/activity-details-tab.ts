@@ -5,7 +5,6 @@ import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { translate } from '../../../../localization/localisation';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
-import '../../../common/layout/etools-card/etools-card';
 import '../../../common/location-widget/location-widget';
 import { LocationWidgetComponent } from '../../../common/location-widget/location-widget';
 import { store } from '../../../../redux/store';
@@ -66,6 +65,9 @@ export class ActivityDetailsTab extends LitElement {
                 is-editable
                 @save="${() => console.log('save')}"
                 @cancel="${() => console.log('cancel')}">
+                <div slot="actions">
+                    <paper-icon-button icon="cloud-download"></paper-icon-button>
+                </div>
                 <div slot="content">
                     <div class="widget-dropdown">
                         <div class="flex-auto">

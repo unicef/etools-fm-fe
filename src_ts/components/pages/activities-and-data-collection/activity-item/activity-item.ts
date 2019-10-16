@@ -18,6 +18,7 @@ const SUB_ROUTE: string = 'item';
 
 const DETAILS_TAB: string = 'details';
 const ATTACHMENTS_TAB: string = 'attachments';
+const CHECKLIST_TAB: string = 'checklist';
 
 const STATUSES: IEtoolsStatusModel[] = [
     { status: 'draft', label: 'Draft' },
@@ -41,6 +42,10 @@ export class NewActivityComponent extends LitElement {
         }, {
             tab: ATTACHMENTS_TAB,
             tabLabel: 'Attachments',
+            hidden: false
+        }, {
+            tab: CHECKLIST_TAB,
+            tabLabel: 'Checklist',
             hidden: false
         }
     ];
@@ -94,6 +99,8 @@ export class NewActivityComponent extends LitElement {
                 return html`<activity-details-tab></activity-details-tab>`;
             case ATTACHMENTS_TAB:
                 return html`<activity-attachments-tab></activity-attachments-tab>`;
+            case CHECKLIST_TAB:
+                return html`<activity-checklist-tab .activityId="${ this.activityId }"></activity-checklist-tab>`;
             default:
                 return html`Tab Not Found`;
         }
