@@ -7,24 +7,21 @@ import '@unicef-polymer/etools-date-time/datepicker-lite';
 import '../../../../common/layout/etools-card';
 import '../../../../common/location-widget/location-widget';
 import { ACTIVITY_DETAILS_TRANSLATES } from '../../../../../localization/en/activities-and-data-collection/activity-details.translates';
-import { activityDetails } from '../../../../../redux/reducers/activity-details.reducer';
-import { activityDetailsData, activityDetailsIsLoad } from '../../../../../redux/selectors/activity-details.selectors';
+import { activityDetailsIsLoad } from '../../../../../redux/selectors/activity-details.selectors';
 import { requestActivityDetails } from '../../../../../redux/effects/activity-details.effects';
 import './visit-details';
 
 addTranslates(ENGLISH, [ACTIVITY_DETAILS_TRANSLATES]);
-store.addReducers({ activityDetails });
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {
-    @property({ type: Number }) public set activityId(id: number | null) {
+    @property({ type: String }) public set activityId(id: string | null) {
         if (!id) { return; }
         store.dispatch<AsyncEffect>(requestActivityDetails(id));
     }
     @property() public activityDetails!: IActivityDetails;
     @property({ type: Boolean }) public isLoad: boolean = false;
 
-    private dataUnsubscribe!: Unsubscribe;
     private isLoadUnsubscribe!: Unsubscribe;
 
     public connectedCallback(): void {
@@ -32,15 +29,11 @@ export class ActivityDetailsTab extends LitElement {
         this.isLoadUnsubscribe = store.subscribe(activityDetailsIsLoad((isLoad: boolean | null) => {
             this.isLoad = Boolean(isLoad);
         }));
-        this.dataUnsubscribe = store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
-            if (data) { this.activityDetails = data; }
-        }));
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.isLoadUnsubscribe();
-        this.dataUnsubscribe();
     }
 
     public render(): TemplateResult {

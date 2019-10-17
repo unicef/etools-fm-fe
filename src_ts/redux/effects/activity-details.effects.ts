@@ -4,7 +4,7 @@ import { ACTIVITY_DETAILS } from '../../endpoints/endpoints-list';
 import { request } from '../../endpoints/request';
 import { ActivityDetailsActions } from '../actions/activity-details.actions';
 
-export function requestActivityDetails(id: number): IAsyncAction {
+export function requestActivityDetails(id: string): IAsyncAction {
     return {
         types: [
             ActivityDetailsActions.ACTIVITY_DETAILS_GET_REQUEST,

@@ -19,6 +19,7 @@ interface IListActivity {
 interface IActivityDetails {
     id: number;
     sections: Section[];
+    reference_number: string;
 }
 
 type ActivityTeamMember = {

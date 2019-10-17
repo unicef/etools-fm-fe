@@ -12,6 +12,10 @@ import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 import { translate } from '../../../../localization/localisation';
 import { SharedStyles } from '../../../styles/shared-styles';
+import { activityDetailsData } from '../../../../redux/selectors/activity-details.selectors';
+import { activityDetails } from '../../../../redux/reducers/activity-details.reducer';
+
+store.addReducers({ activityDetails });
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
@@ -35,6 +39,7 @@ const STATUSES: IEtoolsStatusModel[] = [
 @customElement('activity-item')
 export class NewActivityComponent extends LitElement {
     @property() public activityId: string | null = null;
+    @property() public activityDetails?: IActivityDetails;
     public pageTabs: PageTab[] = [
         {
             tab: DETAILS_TAB,
@@ -57,22 +62,6 @@ export class NewActivityComponent extends LitElement {
 
     @property() public activeTab!: string;
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        store.subscribe(routeDetailsSelector(({ routeName, subRouteName, params }: IRouteDetails) => {
-            if (routeName !== PAGE || subRouteName !== SUB_ROUTE) { return; }
-            const activeTab: string | null = params && params.tab as string;
-            const activityId: string | null = params && params.id as string;
-            this.activityId = activityId && activityId.trim() !== 'new'.trim() ? activityId : null;
-            if (activeTab) {
-                this.activeTab = activeTab;
-            } else {
-                this.activeTab = DETAILS_TAB;
-                updateAppLocation(`activities/${ this.activityId }/${DETAILS_TAB}`);
-            }
-        }));
-    }
-
     public static get styles(): CSSResultArray {
         return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
     }
@@ -82,7 +71,7 @@ export class NewActivityComponent extends LitElement {
         return html`
         <etools-status .statuses="${ STATUSES }"></etools-status>
         <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${ !this.activityId ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityId}</h1>
+            <h1 slot="page-title">${ !this.activityDetails ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityDetails.reference_number}</h1>
 
             <div slot="title-row-actions" class="content-header-actions">
             </div>
@@ -96,6 +85,30 @@ export class NewActivityComponent extends LitElement {
 
         ${ this.getTabElement() }
         `;
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
+            if (data) {
+                this.activityDetails = data;
+            }
+        }));
+        store.subscribe(routeDetailsSelector(({ routeName, subRouteName, params }: IRouteDetails) => {
+            if (routeName !== PAGE || subRouteName !== SUB_ROUTE) { return; }
+            const activeTab: string | null = params && params.tab as string;
+            const activityId: string | null = params && params.id as string;
+            this.activityId = activityId && activityId.trim() !== 'new'.trim() ? activityId : null;
+            // if (this.activityId) {
+            //     store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
+            // }
+            if (activeTab) {
+                this.activeTab = activeTab;
+            } else {
+                this.activeTab = DETAILS_TAB;
+                updateAppLocation(`activities/${ this.activityId }/${DETAILS_TAB}`);
+            }
+        }));
     }
 
     public getTabElement(): TemplateResult {
