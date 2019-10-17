@@ -5,7 +5,7 @@ import { PropertyDeclarations } from 'lit-element/src/lib/updating-element';
 // tslint:disable-next-line:typedef
 export const DataMixin = <T, B extends Constructor<LitElement>>(superclass: B) => class extends superclass {
     public editedData: Partial<T> = {};
-    public originalData!: Partial<T>;
+    public originalData!: T;
     public errors: GenericObject = {};
 
     public set data(data: T) {
@@ -15,7 +15,6 @@ export const DataMixin = <T, B extends Constructor<LitElement>>(superclass: B) =
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.originalData = clone(this.editedData);
     }
 
     public resetFieldError(fieldName: string): void {

@@ -11,7 +11,7 @@ import { store } from '../../../redux/store';
 
 import { isProductionServer, isStagingServer, ROOT_PATH } from '../../../config/config';
 import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
-import { UpdateDrawerState } from '../../../redux/actions/app';
+import { UpdateDrawerState } from '../../../redux/actions/app.actions';
 import { pageHeaderStyles } from './page-header-styles';
 import { isEmpty } from 'ramda';
 import { fireEvent } from '../../utils/fire-custom-event';

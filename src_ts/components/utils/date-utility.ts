@@ -13,6 +13,10 @@ function _utcDate(date: any, format?: string): string {
   return (!date) ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
 }
 
+export function formatDate(date: Date, format: string = 'YYYY-MM-DD'): string {
+  return moment(date).format(format);
+}
+
 export function convertDate(dateString: string, noZTimezoneOffset?: boolean): null | Date {
   if (dateString !== '') {
     dateString = (dateString.indexOf('T') === -1) ? (dateString + 'T00:00:00') : dateString;

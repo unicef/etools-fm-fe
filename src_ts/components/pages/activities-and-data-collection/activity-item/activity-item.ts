@@ -14,6 +14,7 @@ import { translate } from '../../../../localization/localisation';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { activityDetailsData } from '../../../../redux/selectors/activity-details.selectors';
 import { activityDetails } from '../../../../redux/reducers/activity-details.reducer';
+import { requestActivityDetails } from '../../../../redux/effects/activity-details.effects';
 
 store.addReducers({ activityDetails });
 
@@ -99,9 +100,9 @@ export class NewActivityComponent extends LitElement {
             const activeTab: string | null = params && params.tab as string;
             const activityId: string | null = params && params.id as string;
             this.activityId = activityId && activityId.trim() !== 'new'.trim() ? activityId : null;
-            // if (this.activityId) {
-            //     store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
-            // }
+            if (this.activityId) {
+                store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
+            }
             if (activeTab) {
                 this.activeTab = activeTab;
             } else {

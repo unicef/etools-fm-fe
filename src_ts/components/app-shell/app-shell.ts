@@ -35,7 +35,7 @@ import { AppHeaderLayoutElement } from '@polymer/app-layout/app-header-layout/ap
 import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
 import { CSSResultArray, customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 import { navigate } from '../../redux/effects/app.effects';
-import { UpdateDrawerState } from '../../redux/actions/app';
+import { UpdateDrawerState } from '../../redux/actions/app.actions';
 import { loadStaticData } from '../../redux/effects/load-static-data.effect';
 import { user } from '../../redux/reducers/user.reducer';
 import { country } from '../../redux/reducers/country.reducer';

@@ -45,7 +45,7 @@ export class IssueTrackerPopup extends LitElement {
     @property() public errors: GenericObject = {};
 
     @property() public editedData: Partial<LogIssue> = {};
-    public originalData: LogIssue | null = null;
+    public originalData!: LogIssue;
 
     @property({ type: Array })
     public currentFiles: Partial<Attachment>[] = [];
@@ -151,7 +151,7 @@ export class IssueTrackerPopup extends LitElement {
 
     public updateIssue(): void {
         if (!this.editedData) { return; }
-        const data: Partial<LogIssue> = getDifference<any>(
+        const data: Partial<LogIssue> = getDifference<LogIssue>(
             this.originalData,
             this.editedData,
             { toRequest: true, nestedFields: ['options'] });

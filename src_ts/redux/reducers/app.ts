@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { AppAction, AppActionTypes } from '../actions/app';
+import { AppAction, AppActionTypes } from '../actions/app.actions';
 
 const INITIAL_STATE: IAppState = {
     routeDetails: {} as IRouteDetails,

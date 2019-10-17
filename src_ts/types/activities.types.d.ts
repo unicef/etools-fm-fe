@@ -16,10 +16,8 @@ interface IListActivity {
     team_members: ActivityTeamMember[];
 }
 
-interface IActivityDetails {
-    id: number;
+interface IActivityDetails extends IListActivity {
     sections: Section[];
-    reference_number: string;
 }
 
 type ActivityTeamMember = {

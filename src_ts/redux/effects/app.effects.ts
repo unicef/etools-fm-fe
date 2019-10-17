@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { AppAction, UpdateStoreRouteDetails } from '../actions/app';
+import { AppAction, UpdateStoreRouteDetails } from '../actions/app.actions';
 import { getFilePathsToImport } from '../../routing/component-lazy-load-config';
 import { DEFAULT_ROUTE, EtoolsRouter, ROUTE_404, updateAppLocation } from '../../routing/routes';
 import { ROOT_PATH } from '../../config/config';

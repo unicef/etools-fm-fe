@@ -1,4 +1,4 @@
-import { WidgetLocationsActions, WidgetLocationsActionTypes } from '../actions/widget-locations.actinos';
+import { WidgetLocationsActions, WidgetLocationsActionTypes } from '../actions/widget-locations.actions';
 import { Reducer } from 'redux';
 
 const INITIAL_STATE: IWidgetLocationsState = {

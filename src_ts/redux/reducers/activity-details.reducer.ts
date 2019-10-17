@@ -34,6 +34,24 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (state: IAct
                 error: action.payload
             };
         }
+        case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_REQUEST:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, update: true },
+                error: null
+            };
+        case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_SUCCESS:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, update: false },
+                error: null
+            };
+        case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_FAILURE:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, update: false },
+                error: action.payload
+            };
         default:
             return state;
     }

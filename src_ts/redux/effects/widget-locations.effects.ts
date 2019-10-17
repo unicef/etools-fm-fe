@@ -3,7 +3,7 @@ import {
     SaveWidgetLocations,
     SetLocationPathLoading,
     SetWidgetLocationsLoading
-} from '../actions/widget-locations.actinos';
+} from '../actions/widget-locations.actions';
 import { Dispatch } from 'redux';
 import { getEndpoint } from '../../endpoints/endpoints';
 import { request } from '../../endpoints/request';

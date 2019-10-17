@@ -8,7 +8,9 @@ export function simplifyValue(value: any): any {
 
  function areEquals(first: any, second: any): boolean {
     if (Array.isArray(first) && Array.isArray(second)) {
-        return first.every((item: any, index: number) => areEquals(item, second[index]));
+        const arr1: any[] = first.length < second.length ? second : first;
+        const arr2: any[] = first.length < second.length ? first : second;
+        return arr1.every((item: any, index: number) => areEquals(item, arr2[index]));
     } else if (typeof first === 'object' && typeof second === 'object') {
         return equals(first, second);
     }

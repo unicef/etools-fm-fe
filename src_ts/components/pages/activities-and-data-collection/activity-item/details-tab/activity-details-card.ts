@@ -3,14 +3,12 @@ import {
     CSSResult,
     customElement,
     html,
-    LitElement,
     property,
     query,
     TemplateResult
 } from 'lit-element';
 import { translate } from '../../../../../localization/localisation';
 import { LocationWidgetComponent } from '../../../../common/location-widget/location-widget';
-import { DataMixin } from '../../../../common/mixins/data-mixin';
 import { SectionsMixin } from '../../../../common/mixins/sections-mixin';
 import { store } from '../../../../../redux/store';
 import { sitesSelector } from '../../../../../redux/selectors/site-specific-locations.selectors';
@@ -22,13 +20,19 @@ import { SharedStyles } from '../../../../styles/shared-styles';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../../styles/card-styles';
 import { InputStyles } from '../../../../styles/input-styles';
+import {
+    activityDetailsData,
+    activityDetailsIsUpdate
+} from '../../../../../redux/selectors/activity-details.selectors';
+import { simplifyValue } from '../../../../utils/objects-diff';
+import { formatDate } from '../../../../utils/date-utility';
+import { BaseCard } from './base-card';
 
-@customElement('visit-details')
-export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, typeof LitElement>(LitElement)) {
+@customElement('activity-details-card')
+export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
+    @property() public isUpdate: boolean = false;
     @property() public isReadonly: boolean = true;
     @property() public widgetOpened: boolean = false;
-    @property() public location: string = '692';
-    @property() public sites: number[] = [3];
     @property() public sitesList: Site[] = [];
     @property() public locations: EtoolsLightLocation[] = [];
 
@@ -44,6 +48,19 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
 
     public connectedCallback(): void {
         super.connectedCallback();
+
+        store.subscribe(activityDetailsIsUpdate((isUpdate: boolean | null) => {
+            this.isUpdate = Boolean(isUpdate);
+            if (isUpdate === false) {
+                this.isReadonly = true;
+            }
+        }));
+
+        store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
+            if (data) {
+                this.data = data;
+            }
+        }));
         this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
             if (!sites) { return; }
             this.sitesList = sites;
@@ -64,13 +81,14 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
         return html`
             ${InputStyles}
             <etools-card
-                card-title="${ translate('ACTIVITY_ITEM.VISIT_DETAILS')}"
+                card-title="${ translate('ACTIVITY_ITEM.ACTIVITY_DETAILS')}"
                 is-editable
                 ?edit="${!this.isReadonly}"
                 @start-edit="${() => this.isReadonly = false}"
-                @save="${() => this.isReadonly = true}"
-                @cancel="${() => this.isReadonly = true}">
+                @save="${() => this.save()}"
+                @cancel="${() => this.cancel()}">
                 <div slot="content" class="card-content">
+                    <etools-loading ?active="${ this.isUpdate }" loading-text="${ translate('MAIN.SAVING_DATA_IN_PROCESS') }"></etools-loading>
                     ${!this.isReadonly ? html`
                     <div class="widget-dropdown">
                         <div class="flex-auto">
@@ -88,17 +106,18 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
                         <iron-collapse ?opened="${ this.widgetOpened }">
                             <location-widget
                                 id="locationWidget"
-                                .selectedLocation="${ this.location || null }"
-                                .selectedSites="${ this.sites }"
-                                @sites-changed="${ ({ detail }: CustomEvent) => { console.log('', detail.sites); this.sites = detail.sites; } }"
-                                @location-changed="${ ({ detail }: CustomEvent) => { console.log('location', detail.location); this.location = detail.location; } }"></location-widget>
+                                .selectedLocation="${ simplifyValue(this.editedData.location) }"
+                                .selectedSites="${ this.editedData.location_site ?
+                                    [simplifyValue(this.editedData.location_site)] : [] }"
+                                @sites-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location_site', detail.sites[0] || null); } }"
+                                @location-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location', detail.location); } }"></location-widget>
                         </iron-collapse>
                     </div>` : ''}
 
                     <div class="layout horizontal location-inputs">
                         <etools-dropdown
                             class="without-border readonly-required"
-                            .selected="${ this.location }"
+                            .selected="${ simplifyValue(this.editedData.location) }"
                             label="Location To Be Visited"
                             .options="${ this.locations }"
                             option-label="name"
@@ -109,7 +128,7 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
 
                         <etools-dropdown
                             class="without-border readonly-required"
-                            .selected="${ this.sites[0] }"
+                            .selected="${ simplifyValue(this.editedData.location_site) }"
                             label="Site To Be Visited"
                             .options="${ this.sitesList }"
                             option-label="name"
@@ -122,14 +141,17 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
                         <div class="layout horizontal flex">
                             <datepicker-lite
                                 class="without-border"
-                                month-input="07"
-                                day-input="13"
-                                year-input="1992"
+                                value="${this.editedData.start_date}"
                                 label="${ translate('ACTIVITY_DETAILS.START_DATE')}"
+                                ?fire-date-has-changed="${!this.isReadonly}"
+                                @date-has-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('start_date', formatDate(detail.date))}}"
                                 ?disabled="${ this.isReadonly }"
                                 ?readonly="${ this.isReadonly }"></datepicker-lite>
                             <datepicker-lite
                                 class="without-border"
+                                value="${this.editedData.end_date}"
+                                ?fire-date-has-changed="${!this.isReadonly}"
+                                @date-has-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('end_date', formatDate(detail.date))}}"
                                 label="${ translate('ACTIVITY_DETAILS.END_DATE')}"
                                 ?disabled="${ this.isReadonly }"
                                 ?readonly="${ this.isReadonly }"></datepicker-lite>
@@ -137,9 +159,9 @@ export class VisitDetails extends SectionsMixin(DataMixin<IActivityDetails, type
                         <div class="layout horizontal flex">
                             <etools-dropdown-multi
                                 class="without-border"
-                                .selectedValues="${ this.editedData.sections }"
+                                .selectedValues="${ simplifyValue(this.editedData.sections) }"
                                 @etools-selected-items-changed="${({ detail }: CustomEvent) => this.updateModelValue('sections', detail.selectedItems)}"
-                                trigger-value-change-event
+                                ?trigger-value-change-event="${!this.isReadonly}"
                                 label="${ translate('ACTIVITY_DETAILS.SECTIONS') }"
                                 .options="${ this.sections }"
                                 option-label="name"
