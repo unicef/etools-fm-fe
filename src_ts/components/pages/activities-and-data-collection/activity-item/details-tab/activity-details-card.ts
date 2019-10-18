@@ -20,17 +20,16 @@ import { SharedStyles } from '../../../../styles/shared-styles';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../../styles/card-styles';
 import { InputStyles } from '../../../../styles/input-styles';
-import {
-    activityDetailsData,
-    activityDetailsIsUpdate
-} from '../../../../../redux/selectors/activity-details.selectors';
+import { activityDetailsData } from '../../../../../redux/selectors/activity-details.selectors';
 import { simplifyValue } from '../../../../utils/objects-diff';
 import { formatDate } from '../../../../utils/date-utility';
 import { BaseCard } from './base-card';
+import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
+
+export const CARD_NAME: string = 'activity-details';
 
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
-    @property() public isUpdate: boolean = false;
     @property() public isReadonly: boolean = true;
     @property() public widgetOpened: boolean = false;
     @property() public sitesList: Site[] = [];
@@ -49,27 +48,29 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
     public connectedCallback(): void {
         super.connectedCallback();
 
-        store.subscribe(activityDetailsIsUpdate((isUpdate: boolean | null) => {
-            this.isUpdate = Boolean(isUpdate);
-            if (isUpdate === false) {
-                this.isReadonly = true;
-            }
-        }));
-
         store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
             if (data) {
                 this.data = data;
             }
         }));
         this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
-            if (!sites) { return; }
+            if (!sites) {
+                return;
+            }
             this.sitesList = sites;
         }));
 
         store.subscribe(staticDataDynamic((locations: EtoolsLightLocation[] | undefined) => {
-            if (!locations) { return; }
+            if (!locations) {
+                return;
+            }
             this.locations = locations;
         }, [LOCATIONS_ENDPOINT]));
+    }
+
+    public startEdit(): void {
+        this.isReadonly = false;
+        store.dispatch(new SetEditedDetailsCard(CARD_NAME));
     }
 
     public disconnectedCallback(): void {
@@ -82,9 +83,9 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
             ${InputStyles}
             <etools-card
                 card-title="${ translate('ACTIVITY_ITEM.ACTIVITY_DETAILS')}"
-                is-editable
+                ?is-editable="${!this.editedCard || this.editedCard === CARD_NAME}"
                 ?edit="${!this.isReadonly}"
-                @start-edit="${() => this.isReadonly = false}"
+                @start-edit="${() => this.startEdit()}"
                 @save="${() => this.save()}"
                 @cancel="${() => this.cancel()}">
                 <div slot="content" class="card-content">

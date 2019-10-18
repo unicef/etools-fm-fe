@@ -8,3 +8,6 @@ export const activityDetailsIsLoad: Selector<boolean | null> =
 
 export const activityDetailsIsUpdate: Selector<boolean | null> =
     select<boolean | null>((store: IRootState) => store.activityDetails.isRequest.update);
+
+export const detailsEditedCard: Selector<string | null> =
+    select<string | null>((store: IRootState) => store.activityDetails.editedCard);

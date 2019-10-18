@@ -6,12 +6,17 @@ const INITIAL: IActivityDetailsState = {
         load: false,
         update: false
     },
+    editedCard: null,
     error: null,
     data: null
 };
 
 export const activityDetails: Reducer<IActivityDetailsState, any> = (state: IActivityDetailsState = INITIAL, action: AnyAction) => {
     switch (action.type) {
+        case ActivityDetailsActions.SET_EDITED_DETAILS_CARD:
+            return {
+                ...state, editedCard: action.payload
+            };
         case ActivityDetailsActions.ACTIVITY_DETAILS_GET_REQUEST: {
             return {
                 ...state,

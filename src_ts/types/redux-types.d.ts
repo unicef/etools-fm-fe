@@ -87,6 +87,7 @@ interface IIssueTrackerState extends IRequestState {
 
 interface IActivityDetailsState extends IRequestState {
     data: null | IActivityDetails;
+    editedCard: null | string;
 }
 
 interface IWidgetLocationsState {

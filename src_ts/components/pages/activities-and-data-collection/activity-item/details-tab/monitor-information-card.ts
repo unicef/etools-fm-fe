@@ -7,20 +7,29 @@ import { CardStyles } from '../../../../styles/card-styles';
 import { repeat } from 'lit-html/directives/repeat';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
+import { store } from '../../../../../redux/store';
+import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
+
+export const CARD_NAME: string = 'monitor-information';
 
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseCard {
     @property() public userType: UserType = 'staff';
     public userTypes: UserType[] = ['staff', 'tpm'];
 
+    public startEdit(): void {
+        this.isReadonly = false;
+        store.dispatch(new SetEditedDetailsCard(CARD_NAME));
+    }
+
     public render(): TemplateResult {
         // language=HTML
         return html`
             <etools-card
                 card-title="${ translate('ACTIVITY_ITEM.MONITOR_INFO')}"
-                is-editable
+                ?is-editable="${!this.editedCard || this.editedCard === CARD_NAME}"
                 ?edit="${!this.isReadonly}"
-                @start-edit="${() => this.isReadonly = false}"
+                @start-edit="${() => this.startEdit()}"
                 @save="${() => this.save()}"
                 @cancel="${() => this.cancel()}">
                 <div class="card-content" slot="content">
