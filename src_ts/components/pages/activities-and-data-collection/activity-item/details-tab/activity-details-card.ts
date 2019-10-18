@@ -20,16 +20,15 @@ import { SharedStyles } from '../../../../styles/shared-styles';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../../styles/card-styles';
 import { InputStyles } from '../../../../styles/input-styles';
-import { activityDetailsData } from '../../../../../redux/selectors/activity-details.selectors';
 import { simplifyValue } from '../../../../utils/objects-diff';
 import { formatDate } from '../../../../utils/date-utility';
-import { BaseCard } from './base-card';
+import { BaseDetailsCard } from './base-details-card';
 import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
 
 export const CARD_NAME: string = 'activity-details';
 
 @customElement('activity-details-card')
-export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
+export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
     @property() public isReadonly: boolean = true;
     @property() public widgetOpened: boolean = false;
     @property() public sitesList: Site[] = [];
@@ -47,12 +46,6 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
 
     public connectedCallback(): void {
         super.connectedCallback();
-
-        store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
-            if (data) {
-                this.data = data;
-            }
-        }));
         this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
             if (!sites) {
                 return;
@@ -69,7 +62,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
     }
 
     public startEdit(): void {
-        this.isReadonly = false;
+        super.startEdit();
         store.dispatch(new SetEditedDetailsCard(CARD_NAME));
     }
 
@@ -89,6 +82,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
                 @save="${() => this.save()}"
                 @cancel="${() => this.cancel()}">
                 <div slot="content" class="card-content">
+                    <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
                     <etools-loading ?active="${ this.isUpdate }" loading-text="${ translate('MAIN.SAVING_DATA_IN_PROCESS') }"></etools-loading>
                     ${!this.isReadonly ? html`
                     <div class="widget-dropdown">
@@ -142,7 +136,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
                         <div class="layout horizontal flex">
                             <datepicker-lite
                                 class="without-border"
-                                value="${this.editedData.start_date}"
+                                value="${this.editedData.start_date || ''}"
                                 label="${ translate('ACTIVITY_DETAILS.START_DATE')}"
                                 ?fire-date-has-changed="${!this.isReadonly}"
                                 @date-has-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('start_date', formatDate(detail.date))}}"
@@ -150,7 +144,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
                                 ?readonly="${ this.isReadonly }"></datepicker-lite>
                             <datepicker-lite
                                 class="without-border"
-                                value="${this.editedData.end_date}"
+                                value="${this.editedData.end_date || ''}"
                                 ?fire-date-has-changed="${!this.isReadonly}"
                                 @date-has-changed="${ ({ detail }: CustomEvent) => this.updateModelValue('end_date', formatDate(detail.date))}}"
                                 label="${ translate('ACTIVITY_DETAILS.END_DATE')}"
@@ -160,7 +154,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseCard) {
                         <div class="layout horizontal flex">
                             <etools-dropdown-multi
                                 class="without-border"
-                                .selectedValues="${ simplifyValue(this.editedData.sections) }"
+                                .selectedValues="${ simplifyValue(this.editedData.sections || []) }"
                                 @etools-selected-items-changed="${({ detail }: CustomEvent) => this.updateModelValue('sections', detail.selectedItems)}"
                                 ?trigger-value-change-event="${!this.isReadonly}"
                                 label="${ translate('ACTIVITY_DETAILS.SECTIONS') }"

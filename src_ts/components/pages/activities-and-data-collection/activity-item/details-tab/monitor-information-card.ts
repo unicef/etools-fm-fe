@@ -1,8 +1,8 @@
-import { css, CSSResultArray, customElement, html, property, TemplateResult } from 'lit-element';
+import { css, CSSResultArray, customElement, html, TemplateResult } from 'lit-element';
 import { translate } from '../../../../../localization/localisation';
 import { elevationStyles } from '../../../../styles/elevation-styles';
 import { SharedStyles } from '../../../../styles/shared-styles';
-import { BaseCard } from './base-card';
+import { BaseDetailsCard } from './base-details-card';
 import { CardStyles } from '../../../../styles/card-styles';
 import { repeat } from 'lit-html/directives/repeat';
 import '@polymer/paper-radio-group/paper-radio-group';
@@ -13,12 +13,11 @@ import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-deta
 export const CARD_NAME: string = 'monitor-information';
 
 @customElement('monitor-information-card')
-export class MonitorInformationCard extends BaseCard {
-    @property() public userType: UserType = 'staff';
+export class MonitorInformationCard extends BaseDetailsCard {
     public userTypes: UserType[] = ['staff', 'tpm'];
 
     public startEdit(): void {
-        this.isReadonly = false;
+        super.startEdit();
         store.dispatch(new SetEditedDetailsCard(CARD_NAME));
     }
 
@@ -33,10 +32,12 @@ export class MonitorInformationCard extends BaseCard {
                 @save="${() => this.save()}"
                 @cancel="${() => this.cancel()}">
                 <div class="card-content" slot="content">
+                    <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
+                    <etools-loading ?active="${ this.isUpdate }" loading-text="${ translate('MAIN.SAVING_DATA_IN_PROCESS') }"></etools-loading>
                     <div class="layout horizontal user-types">
                         <label>${ translate('ACTIVITY_ITEM.USER_TYPE')}</label>
                         <paper-radio-group
-                            selected="${ this.userType }"
+                            selected="${ this.editedData && this.editedData.activity_type || 'staff' }"
                              @iron-select="${({ detail }: CustomEvent) => this.updateModelValue('activity_type', detail.item.name)}"
                             ?disabled="${ this.isReadonly }">
                             ${repeat(this.userTypes, (type: UserType) => html`

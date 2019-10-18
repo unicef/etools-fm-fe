@@ -17,7 +17,7 @@ export function simplifyValue(value: any): any {
     return equals(`${first}`, `${second}`);
 }
 
-export function getDifference<T>(originalData: T, modifiedData: Partial<T>, options: DataComparisonOptions = {}): Partial<T> {
+export function getDifference<T>(originalData: Partial<T>, modifiedData: Partial<T>, options: DataComparisonOptions = {}): Partial<T> {
     const { toRequest = false, strongComparison = false, nestedFields = [] } = options;
     return Object.keys(modifiedData).reduce((changes: Partial<T>, key: string) => {
         const originalValue: any = originalData[key as keyof T];

@@ -124,14 +124,16 @@ export class NewActivityComponent extends LitElement {
             const activeTab: string | null = params && params.tab as string;
             const activityId: string | null = params && params.id as string;
             this.activityId = activityId && activityId.trim() !== 'new'.trim() ? activityId : null;
-            if (this.activityId) {
+            const state: IActivityDetailsState = (store.getState() as IRootState).activityDetails;
+            const isNotLoaded: boolean = !state || !state.data;
+            if (this.activityId && isNotLoaded) {
                 store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
             }
             if (activeTab) {
                 this.activeTab = activeTab;
             } else {
                 this.activeTab = DETAILS_TAB;
-                updateAppLocation(`activities/${ this.activityId }/${DETAILS_TAB}`);
+                updateAppLocation(`activities/${ activityId }/${DETAILS_TAB}`);
             }
         }));
         this.isLoadUnsubscribe = store.subscribe(activityStatusIsChanging((isLoad: boolean | null) => {
@@ -162,6 +164,6 @@ export class NewActivityComponent extends LitElement {
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
         if (this.activeTab === tabName) { return; }
-        updateAppLocation(`activities/${ this.activityId }/${tabName}`);
+        updateAppLocation(`activities/${ this.activityId || 'new' }/${tabName}`);
     }
 }

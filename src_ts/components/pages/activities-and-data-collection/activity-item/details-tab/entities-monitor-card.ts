@@ -2,17 +2,16 @@ import { CSSResultArray, customElement, html, TemplateResult } from 'lit-element
 import { translate } from '../../../../../localization/localisation';
 import { elevationStyles } from '../../../../styles/elevation-styles';
 import { SharedStyles } from '../../../../styles/shared-styles';
-import { BaseCard } from './base-card';
+import { BaseDetailsCard } from './base-details-card';
 import { store } from '../../../../../redux/store';
 import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
 
 export const CARD_NAME: string = 'entities-monitor';
 
 @customElement('entities-monitor-card')
-export class EntitiesMonitorCard extends BaseCard {
-
+export class EntitiesMonitorCard extends BaseDetailsCard {
     public startEdit(): void {
-        this.isReadonly = false;
+        super.startEdit();
         store.dispatch(new SetEditedDetailsCard(CARD_NAME));
     }
 
@@ -27,6 +26,8 @@ export class EntitiesMonitorCard extends BaseCard {
                 @save="${() => this.save()}"
                 @cancel="${() => this.cancel()}">
                 <div class="card-content" slot="content">
+                    <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
+                    <etools-loading ?active="${ this.isUpdate }" loading-text="${ translate('MAIN.SAVING_DATA_IN_PROCESS') }"></etools-loading>
                 </div>>
             </etools-card>
         `;

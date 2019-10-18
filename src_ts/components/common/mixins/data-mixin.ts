@@ -5,11 +5,11 @@ import { PropertyDeclarations } from 'lit-element/src/lib/updating-element';
 // tslint:disable-next-line:typedef
 export const DataMixin = <T, B extends Constructor<LitElement>>(superclass: B) => class extends superclass {
     public editedData: Partial<T> = {};
-    public originalData!: T;
+    public originalData!: T | null;
     public errors: GenericObject = {};
 
-    public set data(data: T) {
-        this.editedData = { ...this.editedData, ...data };
+    public set data(data: T | null) {
+        this.editedData = !data ? {} : { ...this.editedData, ...data };
         this.originalData = clone(data);
     }
 
