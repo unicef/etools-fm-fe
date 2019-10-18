@@ -19,7 +19,7 @@ export class EntitiesMonitorCard extends BaseDetailsCard {
         // language=HTML
         return html`
             <etools-card
-                card-title="${ translate('ACTIVITY_ITEM.ENTRIES_TO_MONITOR')}"
+                card-title="${ translate('ACTIVITY_DETAILS.ENTRIES_TO_MONITOR')}"
                 ?is-editable="${!this.editedCard || this.editedCard === CARD_NAME}"
                 ?edit="${!this.isReadonly}"
                 @start-edit="${() => this.startEdit()}"

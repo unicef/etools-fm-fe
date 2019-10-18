@@ -75,7 +75,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
         return html`
             ${InputStyles}
             <etools-card
-                card-title="${ translate('ACTIVITY_ITEM.ACTIVITY_DETAILS')}"
+                card-title="${ translate('ACTIVITY_DETAILS.ACTIVITY_DETAILS')}"
                 ?is-editable="${!this.editedCard || this.editedCard === CARD_NAME}"
                 ?edit="${!this.isReadonly}"
                 @start-edit="${() => this.startEdit()}"

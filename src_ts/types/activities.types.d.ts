@@ -1,7 +1,7 @@
 interface IListActivity {
     id: number;
     reference_number: string;
-    activity_type: string;
+    activity_type: UserType;
     tpm_partner: null | number;
     person_responsible: null | number;
     location: ISiteParrentLocation;

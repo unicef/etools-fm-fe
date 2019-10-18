@@ -60,7 +60,7 @@ export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitEleme
 
     protected cancel(): void {
         this.isReadonly = true;
-        this.editedData = clone(this.originalData) || {};
+        this.data = clone(this.originalData);
         store.dispatch(new SetEditedDetailsCard(null));
     }
 

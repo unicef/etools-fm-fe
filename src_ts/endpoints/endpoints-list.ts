@@ -26,6 +26,7 @@ export const RATIONALE: 'rationale' = 'rationale';
 export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
 export const USERS: 'users' = 'users';
+export const TEAM_MEMBERS: 'teamMembers' = 'teamMembers';
 export const WIDGET_LOCATIONS: 'widgetLocations' = 'widgetLocations';
 export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
@@ -42,6 +43,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         url: '/api/v1/field-monitoring/planning/users/?page_size=all',
         exp: 60 * 60 * 1000, // 1 hour
         cacheTableName: 'users'
+    },
+
+    [TEAM_MEMBERS]: {
+        template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
     },
 
     [CP_OUTCOMES_ENDPOINT]: {

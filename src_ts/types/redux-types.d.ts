@@ -42,6 +42,7 @@ interface IStaticDataState {
     interventions?: EtoolsIntervention[];
     outputs?: EtoolsCpOutput[];
     users?: User[];
+    teamMembers?: User[];
 }
 
 interface ISpecificLocationsState {
