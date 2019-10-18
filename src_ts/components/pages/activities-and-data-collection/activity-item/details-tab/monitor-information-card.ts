@@ -28,6 +28,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     @property() public tpmPartnersOptions: EtoolsTPMPartner[] = [];
     @property() public userType!: UserType;
 
+    @property() public tpmPartner?: EtoolsTPMPartner | null;
     @property() public teamMembers: User[] = [];
     @property() public personalResponsible?: User | null;
 
@@ -41,6 +42,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
         }
         this.personalResponsible = this.editedData.person_responsible as unknown as User;
         this.teamMembers = this.editedData.team_members as unknown as User[];
+        this.tpmPartner = this.editedData.tpm_partner as unknown as EtoolsTPMPartner;
     }
 
     public connectedCallback(): void {
@@ -66,6 +68,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     public setTpmPartner(tpmPartner: EtoolsTPMPartner): void {
         if (tpmPartner) {
             this.updateModelValue('tpm_partner', tpmPartner.id);
+            this.tpmPartner = tpmPartner;
             this.clearMembers();
             this.loadMembersOptions(tpmPartner.id);
         }
@@ -136,7 +139,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                         ${ this.editedData.activity_type === USER_TPM ? html`
                         <etools-dropdown
                             class="without-border flex"
-                            .selected="${ simplifyValue(this.editedData.tpm_partner) }"
+                            .selected="${ simplifyValue(this.tpmPartner) }"
                             @etools-selected-item-changed="${({ detail }: CustomEvent) =>
                                 this.setTpmPartner(detail.selectedItem)}"
                             trigger-value-change-event
