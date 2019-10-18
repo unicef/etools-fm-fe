@@ -1,4 +1,9 @@
 import { translate } from '../../localization/localisation';
+import {
+    ASSIGNED,
+    CANCELLED,
+    CHECKLIST, COMPLETED, DATA_COLLECTION, DRAFT, REPORT_FINALIZATION, REVIEW, SUBMITTED
+} from '../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 // ANSWER_TYPES
 export const TEXT_TYPE: 'text' = 'text';
@@ -14,17 +19,6 @@ export const INTERVENTION: 'intervention' = 'intervention';
 // ACTIVITY_TYPES
 export const STAFF: 'staff' = 'staff';
 export const TPM: 'tpm' = 'tpm';
-
-// ACTIVITY_STATUSES
-export const DRAFT: 'draft' = 'draft';
-export const CHECKLIST: 'checklist' = 'checklist';
-export const REVIEW: 'review' = 'review';
-export const ASSIGNED: 'assigned' = 'assigned';
-export const DATA_COLLECTION: 'data_collection' = 'data_collection';
-export const REPORT_FINALIZATION: 'report_finalization' = 'report_finalization';
-export const SUBMITTED: 'submitted' = 'submitted';
-export const COMPLETED: 'completed' = 'completed';
-export const CANCELLED: 'cancelled' = 'cancelled';
 
 export const ANSWER_TYPES: AnswerTypeOption[] = [
     { value: TEXT_TYPE, display_name: translate(`ANSWER_TYPE_OPTIONS.TEXT`) },

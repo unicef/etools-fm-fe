@@ -11,3 +11,6 @@ export const activityDetailsIsUpdate: Selector<boolean | null> =
 
 export const detailsEditedCard: Selector<string | null> =
     select<string | null>((store: IRootState) => store.activityDetails.editedCard);
+
+export const activityStatusIsChanging: Selector<boolean | null> =
+    select<boolean | null>((store: IRootState) => store.activityDetails.isRequest.statusChange);

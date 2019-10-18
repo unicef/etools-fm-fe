@@ -3,6 +3,7 @@ import { getEndpoint } from '../../endpoints/endpoints';
 import { ACTIVITY_DETAILS } from '../../endpoints/endpoints-list';
 import { request } from '../../endpoints/request';
 import { ActivityDetailsActions } from '../actions/activity-details.actions';
+import { ActivityStatus } from '../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 export function requestActivityDetails(id: string): IAsyncAction {
     return {
@@ -30,8 +31,25 @@ export function updateActivityDetails(id: number, activityDetails: Partial<IActi
             const { url }: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, { id });
             const options: RequestInit = {
                 method: 'PATCH',
-                body: JSON.stringify(activityDetails),
-                headers: { 'Content-Type': 'application/json' }
+                body: JSON.stringify(activityDetails)
+            };
+            return request(url, options);
+        }
+    };
+}
+
+export function changeActivityStatus(id: number, status: ActivityStatus): IAsyncAction {
+    return {
+        types: [
+            ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_REQUEST,
+            ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_SUCCESS,
+            ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_FAILURE
+        ],
+        api: () => {
+            const { url }: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, { id });
+            const options: RequestInit = {
+                method: 'PATCH',
+                body: JSON.stringify({ status })
             };
             return request(url, options);
         }

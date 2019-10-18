@@ -88,6 +88,12 @@ interface IIssueTrackerState extends IRequestState {
 interface IActivityDetailsState extends IRequestState {
     data: null | IActivityDetails;
     editedCard: null | string;
+    error: null | GenericObject;
+    isRequest: {
+        load: boolean;
+        update: boolean;
+        statusChange: boolean;
+    };
 }
 
 interface IWidgetLocationsState {

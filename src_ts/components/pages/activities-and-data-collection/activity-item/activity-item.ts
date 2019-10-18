@@ -3,6 +3,7 @@ import { updateAppLocation } from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
 import '../../../common/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
+import './statuses-actions/statuses-actions';
 import { IEtoolsStatusModel } from '../../../common/layout/status/etools-status';
 import { RouterStyles } from '../../../app-shell/router-style';
 import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
@@ -12,9 +13,21 @@ import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 import { translate } from '../../../../localization/localisation';
 import { SharedStyles } from '../../../styles/shared-styles';
-import { activityDetailsData } from '../../../../redux/selectors/activity-details.selectors';
+import {
+    activityDetailsData,
+    activityStatusIsChanging
+} from '../../../../redux/selectors/activity-details.selectors';
 import { activityDetails } from '../../../../redux/reducers/activity-details.reducer';
 import { requestActivityDetails } from '../../../../redux/effects/activity-details.effects';
+import {
+    ASSIGNED,
+    CHECKLIST, COMPLETED,
+    DATA_COLLECTION,
+    DRAFT,
+    REPORT_FINALIZATION,
+    REVIEW, SUBMITTED
+} from './statuses-actions/activity-statuses';
+import { Unsubscribe } from 'redux';
 
 store.addReducers({ activityDetails });
 
@@ -27,20 +40,22 @@ const CHECKLIST_TAB: string = 'checklist';
 const REVIEW_TAB: string = 'review';
 
 const STATUSES: IEtoolsStatusModel[] = [
-    { status: 'draft', label: 'Draft' },
-    { status: 'checklist', label: 'Checklist' },
-    { status: 'review', label: 'Review' },
-    { status: 'assigned', label: 'Assigned' },
-    { status: 'data_collection', label: 'Data Collection' },
-    { status: 'report_finalize', label: 'Report finalization' },
-    { status: 'submitted', label: 'Submitted' },
-    { status: 'completed', label: 'Completed' }
+    { status: DRAFT, label: 'Draft' },
+    { status: CHECKLIST, label: 'Checklist' },
+    { status: REVIEW, label: 'Review' },
+    { status: ASSIGNED, label: 'Assigned' },
+    { status: DATA_COLLECTION, label: 'Data Collection' },
+    { status: REPORT_FINALIZATION, label: 'Report finalization' },
+    { status: SUBMITTED, label: 'Submitted' },
+    { status: COMPLETED, label: 'Completed' }
 ];
 
 @customElement('activity-item')
 export class NewActivityComponent extends LitElement {
     @property() public activityId: string | null = null;
     @property() public activityDetails?: IActivityDetails;
+    @property() public isLoad: boolean = false;
+
     public pageTabs: PageTab[] = [
         {
             tab: DETAILS_TAB,
@@ -62,6 +77,7 @@ export class NewActivityComponent extends LitElement {
     ];
 
     @property() public activeTab!: string;
+    private isLoadUnsubscribe!: Unsubscribe;
 
     public static get styles(): CSSResultArray {
         return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
@@ -70,11 +86,19 @@ export class NewActivityComponent extends LitElement {
     public render(): TemplateResult {
         // language=HTML
         return html`
-        <etools-status .statuses="${ STATUSES }"></etools-status>
-        <page-content-header with-tabs-visible>
+
+            <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('ACTIVITY_ITEM.STATUS_CHANGE') }"></etools-loading>
+
+            <etools-status .statuses="${ STATUSES }" .activeStatus="${ this.activityDetails && this.activityDetails.status }"></etools-status>
+
+            <page-content-header with-tabs-visible>
             <h1 slot="page-title">${ !this.activityDetails ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityDetails.reference_number}</h1>
 
             <div slot="title-row-actions" class="content-header-actions">
+                <statuses-actions
+                        .currentStatus="${ this.activityDetails && this.activityDetails.status }"
+                        .activityType="${ this.activityDetails && this.activityDetails.activity_type }"
+                        .activityId="${ this.activityDetails && this.activityDetails.id }"></statuses-actions>
             </div>
 
             <etools-tabs
@@ -110,6 +134,14 @@ export class NewActivityComponent extends LitElement {
                 updateAppLocation(`activities/${ this.activityId }/${DETAILS_TAB}`);
             }
         }));
+        this.isLoadUnsubscribe = store.subscribe(activityStatusIsChanging((isLoad: boolean | null) => {
+            this.isLoad = Boolean(isLoad);
+        }));
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.isLoadUnsubscribe();
     }
 
     public getTabElement(): TemplateResult {

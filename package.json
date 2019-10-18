@@ -11,6 +11,7 @@
     "tsToJs": "tsc --skipLibCheck",
     "tsLint": "./node_modules/.bin/tslint 'src_ts/**/*'",
     "esLint": "./node_modules/eslint/bin/eslint.js 'src_ts/**'",
+    "lint": " npm run tsLint && npm run esLint",
     "start": "gulp serve",
     "build": "tsc  --skipLibCheck && npm run build:prpl-server && npm run build:static",
     "build:prpl-server": "polymer build --auto-base-path && gulp prpl-server",

@@ -30,7 +30,6 @@ export class EtoolsStatus extends LitElement {
     @property({ type: Number })
     public activeStatusIndex: number = 0;
 
-    // init with a default list of statuses (for testing)
     @property({ type: Array })
     public statuses: IEtoolsStatusModel[] = [];
 
@@ -54,7 +53,6 @@ export class EtoolsStatus extends LitElement {
                 color: var(--secondary-text-color);
                 font-size: 16px;
                 padding-bottom: 24px;
-                max-width: 260px;
             }
 
             .status:not(:last-of-type)::after {
@@ -97,12 +95,12 @@ export class EtoolsStatus extends LitElement {
         const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
         // language=HTML
         return html`
-    <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
-      <span class="icon">
-          ${completed ? html`${completedStatusIcon}` : html`${this.getBaseOneIndex(index)}`}
-      </span>
-      <span class="label">${item.label}</span>
-    </div>
+            <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
+                <span class="icon">
+                    ${completed ? html`${completedStatusIcon}` : html`${this.getBaseOneIndex(index)}`}
+                </span>
+                <span class="label">${item.label}</span>
+            </div>
     `;
     }
 

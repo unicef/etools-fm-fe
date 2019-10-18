@@ -4,7 +4,8 @@ import { ActivityDetailsActions } from '../actions/activity-details.actions';
 const INITIAL: IActivityDetailsState = {
     isRequest: {
         load: false,
-        update: false
+        update: false,
+        statusChange: false
     },
     editedCard: null,
     error: null,
@@ -17,6 +18,8 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (state: IAct
             return {
                 ...state, editedCard: action.payload
             };
+
+        // DETAILS GET ACTIONS
         case ActivityDetailsActions.ACTIVITY_DETAILS_GET_REQUEST: {
             return {
                 ...state,
@@ -39,6 +42,8 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (state: IAct
                 error: action.payload
             };
         }
+
+        // DETAILS UPDATE ACTIONS
         case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_REQUEST:
             return {
                 ...state,
@@ -49,12 +54,34 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (state: IAct
             return {
                 ...state,
                 isRequest: { ...state.isRequest, update: false },
+                data: action.payload,
                 error: null
             };
         case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_FAILURE:
             return {
                 ...state,
                 isRequest: { ...state.isRequest, update: false },
+                error: action.payload
+            };
+
+        // STATUS CHANGE ACTIONS
+        case ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_REQUEST:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, statusChange: true },
+                error: null
+            };
+        case ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_SUCCESS:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, statusChange: false },
+                data: action.payload,
+                error: null
+            };
+        case ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_FAILURE:
+            return {
+                ...state,
+                isRequest: { ...state.isRequest, statusChange: false },
                 error: action.payload
             };
         default:
