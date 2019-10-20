@@ -20,6 +20,7 @@ type PageTab = {
     tab: string;
     tabLabel: string;
     hidden: boolean;
+    requiredPermission?: string;
 };
 
 interface IEtoolsEndpoint {

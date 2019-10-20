@@ -19,7 +19,7 @@ export const POSSIBLE_TRANSITIONS: GenericObject<ActivityTransition> = {
         cancelPossibility: true
     },
     [REVIEW]: {
-        mainAction: { staff: DATA_COLLECTION, tpm: ASSIGNED },
+        mainAction: ASSIGNED,
         backAction: CHECKLIST,
         cancelPossibility: true
     },

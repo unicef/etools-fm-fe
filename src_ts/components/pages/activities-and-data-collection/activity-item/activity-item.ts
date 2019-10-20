@@ -4,14 +4,13 @@ import '../../../common/layout/page-content-header/page-content-header';
 import '../../../common/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import './statuses-actions/statuses-actions';
-import { IEtoolsStatusModel } from '../../../common/layout/status/etools-status';
 import { RouterStyles } from '../../../app-shell/router-style';
 import { pageContentHeaderSlottedStyles } from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { buttonsStyles } from '../../../styles/button-styles';
 import { store } from '../../../../redux/store';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
-import { translate } from '../../../../localization/localisation';
+import { addTranslates, ENGLISH, translate } from '../../../../localization/localisation';
 import { SharedStyles } from '../../../styles/shared-styles';
 import {
     activityDetailsData,
@@ -20,74 +19,84 @@ import {
 import { activityDetails } from '../../../../redux/reducers/activity-details.reducer';
 import { requestActivityDetails } from '../../../../redux/effects/activity-details.effects';
 import {
+    ActivityStatus,
     ASSIGNED,
-    CHECKLIST, COMPLETED,
+    CHECKLIST,
+    COMPLETED,
     DATA_COLLECTION,
     DRAFT,
     REPORT_FINALIZATION,
-    REVIEW, SUBMITTED
+    REVIEW,
+    SUBMITTED
 } from './statuses-actions/activity-statuses';
+import { ATTACHMENTS_TAB, CHECKLIST_TAB, DETAILS_TAB, REVIEW_TAB } from './activities-tabs';
 import { Unsubscribe } from 'redux';
+import { hasActivityPermission, Permissions } from '../../../../config/permissions';
+import { IEtoolsStatusModel } from '../../../common/layout/status/etools-status';
+import { ACTIVITY_ITEM_TRANSLATES } from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 
 store.addReducers({ activityDetails });
+addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
 
-const DETAILS_TAB: string = 'details';
-const ATTACHMENTS_TAB: string = 'attachments';
-const CHECKLIST_TAB: string = 'checklist';
-const REVIEW_TAB: string = 'review';
+const VALID_TABS: Set<string> = new Set([DETAILS_TAB, ATTACHMENTS_TAB, CHECKLIST_TAB, REVIEW_TAB]);
 
-const STATUSES: IEtoolsStatusModel[] = [
-    { status: DRAFT, label: 'Draft' },
-    { status: CHECKLIST, label: 'Checklist' },
-    { status: REVIEW, label: 'Review' },
-    { status: ASSIGNED, label: 'Assigned' },
-    { status: DATA_COLLECTION, label: 'Data Collection' },
-    { status: REPORT_FINALIZATION, label: 'Report finalization' },
-    { status: SUBMITTED, label: 'Submitted' },
-    { status: COMPLETED, label: 'Completed' }
+export const STATUSES: IEtoolsStatusModel[] = [
+    { status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${ DRAFT }`) },
+    { status: CHECKLIST, label: translate(`ACTIVITY_ITEM.STATUSES.${ CHECKLIST }`) },
+    { status: REVIEW, label: translate(`ACTIVITY_ITEM.STATUSES.${ REVIEW }`) },
+    { status: ASSIGNED, label: translate(`ACTIVITY_ITEM.STATUSES.${ ASSIGNED }`) },
+    { status: DATA_COLLECTION, label: translate(`ACTIVITY_ITEM.STATUSES.${ DATA_COLLECTION }`) },
+    { status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${ REPORT_FINALIZATION }`) },
+    { status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${ SUBMITTED }`) },
+    { status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${ COMPLETED }`) }
 ];
 
 @customElement('activity-item')
 export class NewActivityComponent extends LitElement {
     @property() public activityId: string | null = null;
     @property() public activityDetails?: IActivityDetails;
-    @property() public isLoad: boolean = false;
+    @property() public isStatusUpdating: boolean = false;
 
     public pageTabs: PageTab[] = [
         {
             tab: DETAILS_TAB,
-            tabLabel: 'Details',
-            hidden: false
-        }, {
-            tab: ATTACHMENTS_TAB,
-            tabLabel: 'Attachments',
+            tabLabel: translate(`ACTIVITY_ITEM.TABS.${ DETAILS_TAB }`),
             hidden: false
         }, {
             tab: CHECKLIST_TAB,
-            tabLabel: 'Checklist',
-            hidden: false
+            tabLabel: translate(`ACTIVITY_ITEM.TABS.${ CHECKLIST_TAB }`),
+            hidden: false,
+            requiredPermission: Permissions.VIEW_CHECKLIST_TAB
         }, {
             tab: REVIEW_TAB,
-            tabLabel: 'Review',
+            tabLabel: translate(`ACTIVITY_ITEM.TABS.${ REVIEW_TAB }`),
+            hidden: false,
+            requiredPermission: Permissions.VIEW_REVIEW_TAB
+        }, {
+            tab: ATTACHMENTS_TAB,
+            tabLabel: translate(`ACTIVITY_ITEM.TABS.${ ATTACHMENTS_TAB }`),
             hidden: false
         }
     ];
 
     @property() public activeTab!: string;
     private isLoadUnsubscribe!: Unsubscribe;
+    private activityDetailsUnsubscribe!: Unsubscribe;
+    private routeDetailsUnsubscribe!: Unsubscribe;
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
-    }
+    private tabPermissions: GenericObject<Permissions> = {
+        [CHECKLIST_TAB]: Permissions.VIEW_CHECKLIST_TAB,
+        [REVIEW_TAB]: Permissions.VIEW_REVIEW_TAB
+    };
 
     public render(): TemplateResult {
         // language=HTML
         return html`
 
-            <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('ACTIVITY_ITEM.STATUS_CHANGE') }"></etools-loading>
+            <etools-loading ?active="${ this.isStatusUpdating }" loading-text="${ translate('ACTIVITY_ITEM.STATUS_CHANGE') }"></etools-loading>
 
             <etools-status .statuses="${ STATUSES }" .activeStatus="${ this.activityDetails && this.activityDetails.status }"></etools-status>
 
@@ -103,7 +112,7 @@ export class NewActivityComponent extends LitElement {
 
             <etools-tabs
                 id="tabs" slot="tabs"
-                .tabs="${this.pageTabs}"
+                .tabs="${ this.getTabList() }"
                 @iron-select="${({ detail }: any) => this.onSelect(detail.item)}"
                 .activeTab="${this.activeTab}"></etools-tabs>
         </page-content-header>
@@ -114,36 +123,47 @@ export class NewActivityComponent extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
-            if (data) {
-                this.activityDetails = data;
-            }
-        }));
-        store.subscribe(routeDetailsSelector(({ routeName, subRouteName, params }: IRouteDetails) => {
+
+        // On Activity data changes
+        this.activityDetailsUnsubscribe = store.subscribe(activityDetailsData((data: IActivityDetails | null) => {
+            if (!data) { return; }
+            this.activityDetails = data;
+            this.checkTab();
+        }, false));
+
+        // On Route changes
+        this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector(({ routeName, subRouteName, params }: IRouteDetails) => {
             if (routeName !== PAGE || subRouteName !== SUB_ROUTE) { return; }
-            const activeTab: string | null = params && params.tab as string;
             const activityId: string | null = params && params.id as string;
-            this.activityId = activityId && activityId.trim() !== 'new'.trim() ? activityId : null;
-            const state: IActivityDetailsState = (store.getState() as IRootState).activityDetails;
-            const isNotLoaded: boolean = !state || !state.data;
+
+            if (!activityId) { updateAppLocation('page-not-found'); }
+            this.activityId = activityId;
+
+            const activityDetailsState: IActivityDetailsState = store.getState().activityDetails;
+            const loadedActivityId: number | null = activityDetailsState &&
+                activityDetailsState.data &&
+                activityDetailsState.data.id;
+            const isNotLoaded: boolean = !loadedActivityId || `${ loadedActivityId }` !== `${ activityId }`;
+
             if (this.activityId && isNotLoaded) {
                 store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
-            }
-            if (activeTab) {
-                this.activeTab = activeTab;
             } else {
-                this.activeTab = DETAILS_TAB;
-                updateAppLocation(`activities/${ activityId }/${DETAILS_TAB}`);
+                this.activityDetails = activityDetailsState.data as IActivityDetails;
+                this.checkTab();
             }
         }));
+
+        // On update status flag changes
         this.isLoadUnsubscribe = store.subscribe(activityStatusIsChanging((isLoad: boolean | null) => {
-            this.isLoad = Boolean(isLoad);
+            this.isStatusUpdating = Boolean(isLoad);
         }));
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.isLoadUnsubscribe();
+        this.activityDetailsUnsubscribe();
+        this.routeDetailsUnsubscribe();
     }
 
     public getTabElement(): TemplateResult {
@@ -157,13 +177,51 @@ export class NewActivityComponent extends LitElement {
             case REVIEW_TAB:
                 return html`<activity-review-tab .activityId="${ this.activityId }"></activity-review-tab>`;
             default:
-                return html`Tab Not Found`;
+                return html``;
         }
+    }
+
+    public getTabList(): PageTab[] {
+        if (!this.activityDetails) { return []; }
+        return this.pageTabs.filter(({ tab }: PageTab) => {
+            return !this.tabPermissions[tab] ||
+                hasActivityPermission(
+                    this.tabPermissions[tab],
+                    this.activityDetails!.permissions,
+                    this.activityDetails!.status as ActivityStatus
+                );
+        });
     }
 
     public onSelect(selectedTab: HTMLElement): void {
         const tabName: string = selectedTab.getAttribute('name') || '';
         if (this.activeTab === tabName) { return; }
         updateAppLocation(`activities/${ this.activityId || 'new' }/${tabName}`);
+    }
+
+    private checkTab(): void {
+        if (!this.activityDetails) { return; }
+
+        const { params }: IRouteDetails = store.getState().app.routeDetails;
+        const activeTab: string | null = params && params.tab as string;
+
+        const permissions: ActivityPermissions = this.activityDetails.permissions;
+        const status: ActivityStatus = this.activityDetails.status as ActivityStatus;
+
+        const isValidTab: boolean = VALID_TABS.has(`${ activeTab }`);
+        const canViewTab: boolean = isValidTab &&
+            (!this.tabPermissions[activeTab as string] ||
+                hasActivityPermission(`VIEW_${ (activeTab as string).toUpperCase() }_TAB`, permissions, status));
+
+        if (canViewTab) {
+            this.activeTab = `${ activeTab }`;
+        } else {
+            this.activeTab = DETAILS_TAB;
+            updateAppLocation(`activities/${ this.activityDetails.id }/${DETAILS_TAB}`);
+        }
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
     }
 }

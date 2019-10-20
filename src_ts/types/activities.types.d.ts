@@ -18,6 +18,7 @@ interface IListActivity {
 
 interface IActivityDetails extends IListActivity {
     sections: Section[];
+    permissions: ActivityPermissions;
 }
 
 type ActivityTeamMember = {
@@ -71,3 +72,45 @@ interface IChecklistByMethods {
     method: number;
     checklist: GenericObject<IChecklistItem[]>;
 }
+
+type ActivityPermissions = {
+    edit: ActivityPermissionsObject;
+    view: ActivityPermissionsObject;
+    required: ActivityPermissionsObject;
+};
+
+type ActivityPermissionsObject = {
+    location: boolean;
+    cp_outputs: boolean;
+    field_office: boolean;
+    id: boolean;
+    activity_type: boolean;
+    attachments: boolean;
+    end_date: boolean;
+    created: boolean;
+    status: boolean;
+    start_date: boolean;
+    person_responsible: boolean;
+    tpm_partner: boolean;
+    location_site_id: boolean;
+    tpm_partner_id: boolean;
+    location_site: boolean;
+    modified: boolean;
+    team_members: boolean;
+    location_id: boolean;
+    deleted_at: boolean;
+    partners: boolean;
+    person_responsible_id: boolean;
+    checklists: boolean;
+    interventions: boolean;
+    report_attachments: boolean;
+    questions: boolean;
+    overall_findings: boolean;
+    field_office_id: boolean;
+    sections: boolean;
+    activity_question_set: boolean;
+    started_checklist_set: boolean;
+    activity_overall_finding: boolean;
+    activity_question_overall_finding: boolean;
+    action_points: boolean;
+};
