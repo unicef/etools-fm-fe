@@ -1,5 +1,6 @@
 import {
-    ActivityStatus, CHECKLIST, REVIEW
+    ASSIGNED,
+    CHECKLIST, COMPLETED, DATA_COLLECTION, DRAFT, REPORT_FINALIZATION, REVIEW, SUBMITTED
 } from '../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 const PME: 'PME' = 'PME';
@@ -7,6 +8,9 @@ const FM_USER: 'FM User' = 'FM User';
 
 // Add groups that are used in PERMISSIONS_MAP
 const KNOWN_GROUPS: Set<string> = new Set([PME, FM_USER]);
+
+let currentUserGroups: string[] | null = null;
+let currentUser: number | null = null;
 
 export enum Permissions {
     EDIT_SITES = 'EDIT_SITES',
@@ -19,6 +23,7 @@ export enum Permissions {
     VIEW_CHECKLIST_TAB = 'VIEW_CHECKLIST_TAB',
     EDIT_CHECKLIST_TAB = 'EDIT_CHECKLIST_TAB',
     VIEW_REVIEW_TAB = 'VIEW_REVIEW_TAB',
+    MAKE_STATUS_TRANSITION = 'MAKE_STATUS_TRANSITION',
     // Test permissions
     READONLY_TEST_PERMISSION = 'READONLY_TEST_PERMISSION',
     PME_TEST_PERMISSION = 'PME_TEST_PERMISSION',
@@ -44,15 +49,32 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
     ])
 };
 
-const ACTIVITY_PERMISSIONS_MAP: GenericObject<(permissions: ActivityPermissions, status?: ActivityStatus) => boolean> = {
-    [Permissions.VIEW_CHECKLIST_TAB]: (permissions: ActivityPermissions, status?: ActivityStatus) => permissions.view.activity_question_set && status === CHECKLIST,
-    [Permissions.EDIT_CHECKLIST_TAB]: (permissions: ActivityPermissions) => permissions.edit.activity_question_set,
-    [Permissions.VIEW_REVIEW_TAB]: (permissions: ActivityPermissions, status?: ActivityStatus) => permissions.view.activity_question_set && status === REVIEW
+const ACTIVITY_PERMISSIONS_MAP: GenericObject<(details: IActivityDetails) => boolean> = {
+    [Permissions.VIEW_CHECKLIST_TAB]: ({ permissions, status }: IActivityDetails) => permissions.view.activity_question_set && status === CHECKLIST,
+    [Permissions.EDIT_CHECKLIST_TAB]: ({ permissions }: IActivityDetails) => permissions.edit.activity_question_set,
+    [Permissions.VIEW_REVIEW_TAB]: ({ permissions, status }: IActivityDetails) => permissions.view.activity_question_set && status === REVIEW,
+    [Permissions.MAKE_STATUS_TRANSITION]: ({ status, person_responsible }: IActivityDetails) => {
+        if (!currentUserGroups || !currentUser) { return false; }
+        switch (status) {
+            case DRAFT:
+            case CHECKLIST:
+            case REVIEW:
+            case SUBMITTED:
+                return currentUserGroups.includes(PME) || currentUserGroups.includes(FM_USER);
+            case ASSIGNED:
+            case DATA_COLLECTION:
+            case REPORT_FINALIZATION:
+                return person_responsible !== null && currentUser === person_responsible.id;
+            case COMPLETED:
+                return false;
+            default:
+                throw new Error(`Unknown status "${ status }"`);
+        }
+    }
 };
 
-let currentUserGroups: string[] | null = null;
-
-export function setUserGroups(groups: UserGroup[]): void {
+export function setUser({ user, groups }: IEtoolsUserModel): void {
+    currentUser = user;
     currentUserGroups = groups
         .map((group: UserGroup) => group.name)
         .filter((groupName: string) => KNOWN_GROUPS.has(groupName));
@@ -69,8 +91,7 @@ export function hasPermission(permission: Permissions): boolean {
 
 export function hasActivityPermission(
     permissionName: string,
-    permissions: ActivityPermissions,
-    status?: ActivityStatus
+    activityDetails: IActivityDetails
 ): boolean {
-    return ACTIVITY_PERMISSIONS_MAP[permissionName] && ACTIVITY_PERMISSIONS_MAP[permissionName](permissions, status);
+    return ACTIVITY_PERMISSIONS_MAP[permissionName] && ACTIVITY_PERMISSIONS_MAP[permissionName](activityDetails);
 }

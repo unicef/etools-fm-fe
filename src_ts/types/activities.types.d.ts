@@ -3,7 +3,13 @@ interface IListActivity {
     reference_number: string;
     activity_type: UserType;
     tpm_partner: null | number;
-    person_responsible: null | number;
+    person_responsible: null | {
+        id: number;
+        name: string;
+        first_name: string;
+        middle_name: string;
+        last_name: string;
+    };
     location: ISiteParrentLocation;
     location_site: null | number;
     partners: number[];

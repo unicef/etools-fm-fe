@@ -43,7 +43,7 @@ import { CURRENT_WORKSPACE, LOCATIONS_ENDPOINT } from '../../endpoints/endpoints
 import { addTranslates, ENGLISH, useLanguage } from '../../localization/localisation';
 import { MAIN_TRANSLATES } from '../../localization/en/main.translates';
 import { currentUser } from '../../redux/selectors/user.selectors';
-import { setUserGroups } from '../../config/permissions';
+import { setUser } from '../../config/permissions';
 import { appDrawerStyles } from './menu/styles/app-drawer-styles';
 
 store.addReducers({
@@ -105,7 +105,7 @@ export class AppShell extends connect(store)(LitElement) {
 
         store.subscribe(currentUser((userData: IEtoolsUserModel | null) => {
             if (!userData) { return; }
-            setUserGroups(userData.groups);
+            setUser(userData);
         }));
     }
 

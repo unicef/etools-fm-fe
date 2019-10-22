@@ -19,7 +19,6 @@ import {
 import { activityDetails } from '../../../../redux/reducers/activity-details.reducer';
 import { requestActivityDetails } from '../../../../redux/effects/activity-details.effects';
 import {
-    ActivityStatus,
     ASSIGNED,
     CHECKLIST,
     COMPLETED,
@@ -59,6 +58,12 @@ export class NewActivityComponent extends LitElement {
     @property() public activityId: string | null = null;
     @property() public activityDetails?: IActivityDetails;
     @property() public isStatusUpdating: boolean = false;
+
+    public get personResponsible(): number | null {
+        return this.activityDetails &&
+            this.activityDetails.person_responsible &&
+            this.activityDetails.person_responsible.id || null;
+    }
 
     public pageTabs: PageTab[] = [
         {
@@ -101,21 +106,18 @@ export class NewActivityComponent extends LitElement {
             <etools-status .statuses="${ STATUSES }" .activeStatus="${ this.activityDetails && this.activityDetails.status }"></etools-status>
 
             <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${ !this.activityDetails ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityDetails.reference_number}</h1>
+                <h1 slot="page-title">${ !this.activityDetails ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityDetails.reference_number}</h1>
 
-            <div slot="title-row-actions" class="content-header-actions">
-                <statuses-actions
-                        .currentStatus="${ this.activityDetails && this.activityDetails.status }"
-                        .activityType="${ this.activityDetails && this.activityDetails.activity_type }"
-                        .activityId="${ this.activityDetails && this.activityDetails.id }"></statuses-actions>
-            </div>
+                <div slot="title-row-actions" class="content-header-actions">
+                    <statuses-actions .activityDetails="${ this.activityDetails }"></statuses-actions>
+                </div>
 
-            <etools-tabs
-                id="tabs" slot="tabs"
-                .tabs="${ this.getTabList() }"
-                @iron-select="${({ detail }: any) => this.onSelect(detail.item)}"
-                .activeTab="${this.activeTab}"></etools-tabs>
-        </page-content-header>
+                <etools-tabs
+                    id="tabs" slot="tabs"
+                    .tabs="${ this.getTabList() }"
+                    @iron-select="${({ detail }: any) => this.onSelect(detail.item)}"
+                    .activeTab="${this.activeTab}"></etools-tabs>
+            </page-content-header>
 
         ${ this.getTabElement() }
         `;
@@ -187,8 +189,7 @@ export class NewActivityComponent extends LitElement {
             return !this.tabPermissions[tab] ||
                 hasActivityPermission(
                     this.tabPermissions[tab],
-                    this.activityDetails!.permissions,
-                    this.activityDetails!.status as ActivityStatus
+                    this.activityDetails as IActivityDetails
                 );
         });
     }
@@ -205,13 +206,10 @@ export class NewActivityComponent extends LitElement {
         const { params }: IRouteDetails = store.getState().app.routeDetails;
         const activeTab: string | null = params && params.tab as string;
 
-        const permissions: ActivityPermissions = this.activityDetails.permissions;
-        const status: ActivityStatus = this.activityDetails.status as ActivityStatus;
-
         const isValidTab: boolean = VALID_TABS.has(`${ activeTab }`);
         const canViewTab: boolean = isValidTab &&
             (!this.tabPermissions[activeTab as string] ||
-                hasActivityPermission(`VIEW_${ (activeTab as string).toUpperCase() }_TAB`, permissions, status));
+                hasActivityPermission(`VIEW_${ (activeTab as string).toUpperCase() }_TAB`, this.activityDetails));
 
         if (canViewTab) {
             this.activeTab = `${ activeTab }`;

@@ -1,32 +1,41 @@
 import '@polymer/paper-button';
 import { css, CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
-import { ActivityStatus, ComplexMainActionData, POSSIBLE_TRANSITIONS } from './activity-statuses';
+import { ActivityStatus, ActivityTransition, POSSIBLE_TRANSITIONS } from './activity-statuses';
 import { arrowLeftIcon, arrowRightIcon } from '../../../../styles/app-icons';
 import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
 import { translate } from '../../../../../localization/localisation';
 import { store } from '../../../../../redux/store';
 import { changeActivityStatus } from '../../../../../redux/effects/activity-details.effects';
 import { fireEvent } from '../../../../utils/fire-custom-event';
+import { hasActivityPermission, Permissions } from '../../../../../config/permissions';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
-    @property({ type: String }) public currentStatus: ActivityStatus | null = null;
-    @property({ type: String }) public activityType: 'staff' | 'tpm' | null = null;
-    @property({ type: Number }) public activityId: number | null = null;
+    @property({ type: String }) public activityDetails: IActivityDetails | null = null;
 
     public render(): TemplateResult {
         // language=HTML
         return html`
             <!--  BACK Button  -->
-            <paper-button class="back-button" ?hidden="${ this.hideBackButton() }" @tap="${ () => this.changeStatus('backAction') }">${ arrowLeftIcon }</paper-button>
+            <paper-button
+                    class="back-button"
+                    ?hidden="${ this.hideActionButton('backAction') }"
+                    @tap="${ () => this.changeStatus('backAction') }">
+                ${ arrowLeftIcon }
+            </paper-button>
 
 
             <!--  REJECT Button  -->
-            <paper-button class="back-button" ?hidden="${ this.hideRejectButton() }" @tap="${ () => this.changeStatus('rejectAction') }">${ translate('ACTIVITY_ITEM.TRANSITIONS.REJECT') }</paper-button>
+            <paper-button
+                    class="back-button"
+                    ?hidden="${ this.hideActionButton('rejectAction') }"
+                    @tap="${ () => this.changeStatus('rejectAction') }">
+                ${ translate('ACTIVITY_ITEM.TRANSITIONS.REJECT') }
+            </paper-button>
 
 
             <!--  MAIN Button  -->
-            ${ !this.isStatusCorrect(this.currentStatus) || this.activityType === null ? '' : html`
+            ${ this.hideActionButton('mainAction') ? '' : html`
                 <paper-button class="main-button" @tap="${ () => this.changeStatus('mainAction') }">
                     <span>${ this.getMainButtonText() }</span>${ arrowRightIcon }
                 </paper-button>
@@ -35,38 +44,41 @@ export class StatusesActionsComponent extends LitElement {
         `;
     }
 
-    protected hideBackButton(): boolean {
-        return !this.isStatusCorrect(this.currentStatus) || !POSSIBLE_TRANSITIONS[this.currentStatus].backAction;
-    }
-
-    protected hideRejectButton(): boolean {
-        return !this.isStatusCorrect(this.currentStatus) || !POSSIBLE_TRANSITIONS[this.currentStatus].rejectAction;
+    protected hideActionButton(actionType: 'backAction' | 'rejectAction' | 'mainAction'): boolean {
+        return !this.detailsAreValid(this.activityDetails) ||
+            !POSSIBLE_TRANSITIONS[this.activityDetails.status][actionType] ||
+            !hasActivityPermission(Permissions.MAKE_STATUS_TRANSITION, this.activityDetails);
     }
 
     private getMainButtonText(): string {
-        if (!this.isStatusCorrect(this.currentStatus) || this.activityType === null) { return ''; }
-        const mainAction: ActivityStatus | ComplexMainActionData = POSSIBLE_TRANSITIONS[this.currentStatus].mainAction;
-        const nextStatus: ActivityStatus = typeof mainAction === 'string' ? mainAction : mainAction[this.activityType];
-        return translate(`ACTIVITY_ITEM.TRANSITIONS.FROM_${ this.currentStatus }_TO_${ nextStatus }`);
+        if (!this.detailsAreValid(this.activityDetails)) { return ''; }
+
+        const currentStatus: string = this.activityDetails.status;
+        const nextStatus: ActivityStatus = POSSIBLE_TRANSITIONS[currentStatus].mainAction;
+        return translate(`ACTIVITY_ITEM.TRANSITIONS.FROM_${ currentStatus }_TO_${ nextStatus }`);
     }
 
     private changeStatus(actionType: 'backAction' | 'rejectAction' | 'mainAction'): void {
-        if (
-            !this.isStatusCorrect(this.currentStatus) ||
-            this.activityType === null ||
-            this.activityId === null
-        ) { return; }
+        if (!this.detailsAreValid(this.activityDetails)) { return; }
 
-        const action: ActivityStatus | ComplexMainActionData | undefined =
-            POSSIBLE_TRANSITIONS[this.currentStatus][actionType];
+        const currentStatus: string = this.activityDetails.status;
+        const activityId: number = this.activityDetails.id;
 
-        if (!actionType) { return; }
+        const transitionData: ActivityTransition | undefined =
+            POSSIBLE_TRANSITIONS[currentStatus];
+        if (!transitionData) {
+            throw new Error(`Can not find ActivityTransition data for selected status - "${ currentStatus }"`);
+        }
 
-        const nextStatus: ActivityStatus = typeof action === 'string' ?
-            action :
-            (action as ComplexMainActionData)[this.activityType];
+        const nextStatus: ActivityStatus | undefined = transitionData && transitionData[actionType];
+
+        if (!nextStatus) {
+            console.warn(`Selected action type "${ actionType }" is missing in status "${ currentStatus }"`);
+            return;
+        }
+
         store
-            .dispatch<AsyncEffect>(changeActivityStatus(this.activityId, nextStatus))
+            .dispatch<AsyncEffect>(changeActivityStatus(activityId, nextStatus))
             .then(() => {
                 const errors: any = store.getState().activityDetails.error;
                 if (!errors) { return; }
@@ -76,8 +88,8 @@ export class StatusesActionsComponent extends LitElement {
             });
     }
 
-    private isStatusCorrect(status: string | null): status is ActivityStatus {
-        return status !== null && Boolean(POSSIBLE_TRANSITIONS[status]);
+    private detailsAreValid(activityDetails: IActivityDetails | null): activityDetails is IActivityDetails {
+        return activityDetails !== null && POSSIBLE_TRANSITIONS[activityDetails.status] !== undefined;
     }
 
     public static get styles(): CSSResult[] {

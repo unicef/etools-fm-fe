@@ -45,7 +45,7 @@ export type ActivityStatus = 'draft' | 'checklist' | 'review' | 'assigned' |
     'data_collection' | 'report_finalization' | 'submitted' | 'completed' | 'cancelled';
 
 export type ActivityTransition = {
-    mainAction: ActivityStatus | ComplexMainActionData;
+    mainAction: ActivityStatus;
     backAction?: ActivityStatus;
     cancelPossibility?: true;
     rejectAction?: ActivityStatus;
