@@ -105,7 +105,7 @@ export class NewActivityComponent extends LitElement {
             <etools-status .statuses="${ STATUSES }" .activeStatus="${ this.activityDetails && this.activityDetails.status }"></etools-status>
 
             <page-content-header with-tabs-visible>
-                <h1 slot="page-title">${ !this.activityDetails ? translate('ACTIVITY_ITEM.NEW_ACTIVITY') : this.activityDetails.reference_number}</h1>
+                <h1 slot="page-title">${ this.activityDetails && this.activityDetails.reference_number || '' }</h1>
 
                 <div slot="title-row-actions" class="content-header-actions">
                     <statuses-actions .activityDetails="${ this.activityDetails }"></statuses-actions>
