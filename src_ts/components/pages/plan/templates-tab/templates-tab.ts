@@ -70,10 +70,7 @@ export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitEleme
 
         // List loading request
         this.debouncedLoading = debounce((params: IRouteQueryParam) => {
-            const { level, target } = params;
-            const refactoredParams: IRouteQueryParam = Object.entries(params)
-                .filter(([paramName]: [string, string]) => paramName !== 'level' && paramName !== 'target')
-                .reduce((newParams: IRouteQueryParams, [name, value]: [string, any]) => ({ ...newParams, [name]: value }), {});
+            const { level, target, ...refactoredParams } = params;
 
             this.listLoadingInProcess = true;
             store.dispatch<AsyncEffect>(loadQuestionTemplates(refactoredParams, level, target))
@@ -96,10 +93,6 @@ export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitEleme
     }
     public render(): TemplateResult {
         return template.call(this);
-    }
-
-    public static get styles(): CSSResultArray {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TemplatesStyles];
     }
 
     public disconnectedCallback(): void {
@@ -244,6 +237,10 @@ export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitEleme
                 .then((fetchedData: any) => this[dataName] = fetchedData)
                 .finally(() => this.additionalDataLoading = false);
         }
+    }
+
+    public static get styles(): CSSResultArray {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TemplatesStyles];
     }
 
 }
