@@ -33,50 +33,6 @@ export class EtoolsToast extends LitElement {
             </paper-toast>`;
     }
 
-    public static get styles(): CSSResult {
-        // language=CSS
-        return css`
-            .toast-dismiss-btn {
-                --paper-button: {
-                    padding: 8px;
-                    min-width: 16px;
-                    margin: 0 -8px 0 24px;
-                };
-            }
-
-            .toast-dismiss-btn-general-style {
-                text-transform: uppercase;
-                color: var(--primary-color);
-            }
-
-            .toast-dismiss-btn-multi-line {
-                --paper-button: {
-                    padding: 8px;
-                    min-width: 16px;
-                    margin: 16px -8px -8px 0;
-                    align-self: flex-end;
-                };
-            }
-
-            .toast-general-style {
-                max-width: 568px !important;
-                min-height: 40px;
-                max-height: 70vh !important;
-            }
-
-            .toast {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .toast-multi-line {
-                display: flex;
-                flex-direction: column;
-                text-align: justify;
-            }`;
-    }
-
     public connectedCallback(): void {
         super.connectedCallback();
         setTimeout(() => {
@@ -179,6 +135,50 @@ export class EtoolsToast extends LitElement {
             this.confirmBtn.classList.remove('toast-dismiss-btn-multi-line');
             this.confirmBtn.classList.add('toast-dismiss-btn');
         }
+    }
+
+    public static get styles(): CSSResult {
+        // language=CSS
+        return css`
+            .toast-dismiss-btn {
+                --paper-button: {
+                    padding: 8px;
+                    min-width: 16px;
+                    margin: 0 -8px 0 24px;
+                };
+            }
+
+            .toast-dismiss-btn-general-style {
+                text-transform: uppercase;
+                color: var(--primary-color);
+            }
+
+            .toast-dismiss-btn-multi-line {
+                --paper-button: {
+                    padding: 8px;
+                    min-width: 16px;
+                    margin: 16px -8px -8px 0;
+                    align-self: flex-end;
+                };
+            }
+
+            .toast-general-style {
+                max-width: 568px !important;
+                min-height: 40px;
+                max-height: 70vh !important;
+            }
+
+            .toast {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .toast-multi-line {
+                display: flex;
+                flex-direction: column;
+                text-align: justify;
+            }`;
     }
 
 }

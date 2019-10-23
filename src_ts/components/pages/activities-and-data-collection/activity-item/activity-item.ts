@@ -31,7 +31,6 @@ import {
 import { ATTACHMENTS_TAB, CHECKLIST_TAB, DETAILS_TAB, REVIEW_TAB } from './activities-tabs';
 import { Unsubscribe } from 'redux';
 import { hasActivityPermission, Permissions } from '../../../../config/permissions';
-import { IEtoolsStatusModel } from '../../../common/layout/status/etools-status';
 import { ACTIVITY_ITEM_TRANSLATES } from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 
 store.addReducers({ activityDetails });

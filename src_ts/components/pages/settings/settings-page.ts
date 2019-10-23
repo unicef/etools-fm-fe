@@ -39,10 +39,6 @@ export class FmSettingsComponent extends LitElement {
 
     @property() public activeTab: string = QUESTIONS_TAB;
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-    }
-
     public render(): TemplateResult | void {
         return html`
             <page-content-header with-tabs-visible>
@@ -96,6 +92,10 @@ export class FmSettingsComponent extends LitElement {
             `?${routeDetails.queryParamsString}` :
             '';
         window.open(url + params, '_blank');
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
     }
 
 }

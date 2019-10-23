@@ -61,10 +61,6 @@ export class RationalePopupComponent extends LitElement {
         }, false));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
-    }
-
     public render(): TemplateResult {
         return template.call(this);
     }
@@ -114,5 +110,9 @@ export class RationalePopupComponent extends LitElement {
     protected firstUpdated(_changedProperties: PropertyValues): void {
         super.firstUpdated(_changedProperties);
         setTextareasMaxHeight(this.textareas);
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
     }
 }

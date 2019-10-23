@@ -11,7 +11,7 @@ import { template } from './issue-tracker-tab.tpl';
 import { issueTrackerData, issueTrackerIsLoad } from '../../../../redux/selectors/issue-tracker.selectors';
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
-import { IDialogResponse, openDialog } from '../../../utils/dialog';
+import { openDialog } from '../../../utils/dialog';
 import '../issue-tracker-popup/issue-tracker-popup';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
@@ -57,6 +57,10 @@ export class IssueTrackerTabComponent extends
             store.dispatch<AsyncEffect>(loadSiteLocations());
         }
         this.loadStaticData();
+    }
+
+    public render(): TemplateResult {
+        return template.call(this);
     }
 
     public connectedCallback(): void {
@@ -135,13 +139,6 @@ export class IssueTrackerTabComponent extends
             store.dispatch<AsyncEffect>(requestLogIssue(currentParams || {}));
         });
     }
-    public static get styles(): CSSResultArray {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
-    }
-
-    public render(): TemplateResult {
-        return template.call(this);
-    }
 
     public loadStaticData(): void {
         const data: IStaticDataState = (store.getState() as IRootState).staticData;
@@ -181,5 +178,9 @@ export class IssueTrackerTabComponent extends
         } else {
             updateQueryParams({ status: null });
         }
+    }
+
+    public static get styles(): CSSResultArray {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
     }
 }

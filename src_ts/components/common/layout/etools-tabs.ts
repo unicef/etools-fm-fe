@@ -21,6 +21,39 @@ export class EtoolsTabs extends LitElement {
 
     @query('#tabs') public tabsElement!: PaperTabsElement;
 
+    public render(): TemplateResult {
+        // main template
+        // language=HTML
+        return html`
+      <paper-tabs id="tabs"
+                  .selected="${this.activeTab}"
+                  attr-for-selected="name"
+                  noink>
+      ${this.tabs.map((item: GenericObject) => this.getTabHtml(item))}
+      </paper-tabs>
+    `;
+    }
+    public connectedCallback(): void {
+        super.connectedCallback();
+        store.subscribe(routeDetailsSelector(() => setTimeout(() => this.updateTabs())));
+    }
+
+    public updateTabs(): void {
+        if (!this.tabsElement) { return; }
+        this.tabsElement.updateStyles();
+        this.tabsElement.notifyResize();
+    }
+
+    public getTabHtml(item: any): TemplateResult {
+        return html`
+        <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
+        <span class="tab-content">
+            ${item.tabLabel} ${item.showTabCounter ? html`(item.counter)` : ''}
+        </span>
+        </paper-tab>
+    `;
+    }
+
     public static get styles(): CSSResult {
         // language=CSS
         return css`
@@ -62,39 +95,6 @@ export class EtoolsTabs extends LitElement {
                     display: none;
                 }
             }`;
-    }
-
-    public render(): TemplateResult {
-        // main template
-        // language=HTML
-        return html`
-      <paper-tabs id="tabs"
-                  .selected="${this.activeTab}"
-                  attr-for-selected="name"
-                  noink>
-      ${this.tabs.map((item: GenericObject) => this.getTabHtml(item))}
-      </paper-tabs>
-    `;
-    }
-    public connectedCallback(): void {
-        super.connectedCallback();
-        store.subscribe(routeDetailsSelector(() => setTimeout(() => this.updateTabs())));
-    }
-
-    public updateTabs(): void {
-        if (!this.tabsElement) { return; }
-        this.tabsElement.updateStyles();
-        this.tabsElement.notifyResize();
-    }
-
-    public getTabHtml(item: any): TemplateResult {
-        return html`
-        <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
-        <span class="tab-content">
-            ${item.tabLabel} ${item.showTabCounter ? html`(item.counter)` : ''}
-        </span>
-        </paper-tab>
-    `;
     }
 
 }

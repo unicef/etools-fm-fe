@@ -1,8 +1,5 @@
-type SitesGroups = {
-    [key: string]: Site[];
-};
 export function locationsInvert(sites: Site[]): IGroupedSites[] {
-    const groupedByParent: SitesGroups = sites.reduce((group: SitesGroups, site: Site) => {
+    const groupedByParent: GenericObject<Site[]> = sites.reduce((group: GenericObject<Site[]>, site: Site) => {
         const id: string = site.parent.id;
         if (!group[id]) { group[id] = []; }
         group[id].push(site);

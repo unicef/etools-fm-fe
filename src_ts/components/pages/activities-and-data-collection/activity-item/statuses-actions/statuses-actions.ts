@@ -89,7 +89,9 @@ export class StatusesActionsComponent extends LitElement {
     }
 
     private detailsAreValid(activityDetails: IActivityDetails | null): activityDetails is IActivityDetails {
-        return activityDetails !== null && POSSIBLE_TRANSITIONS[activityDetails.status] !== undefined;
+        return activityDetails !== null &&
+            activityDetails !== undefined &&
+            POSSIBLE_TRANSITIONS[activityDetails.status] !== undefined;
     }
 
     public static get styles(): CSSResult[] {

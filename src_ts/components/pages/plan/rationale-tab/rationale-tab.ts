@@ -55,10 +55,6 @@ export class RationaleTabComponent extends LitElement {
         return template.call(this);
     }
 
-    public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, RationaleStyles];
-    }
-
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.routeDetailsUnsubscribe();
@@ -97,5 +93,9 @@ export class RationaleTabComponent extends LitElement {
         } else {
             updateQueryParams({ year: this.yearOptions[0].value });
         }
+    }
+
+    public static get styles(): CSSResult[] {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, RationaleStyles];
     }
 }

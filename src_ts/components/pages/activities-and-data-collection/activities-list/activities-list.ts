@@ -77,12 +77,12 @@ export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement
         this.initFilters();
     }
 
-    public goNew(): void {
-        updateAppLocation('activities/new');
-    }
-
     public render(): TemplateResult {
         return template.call(this);
+    }
+
+    public goNew(): void {
+        updateAppLocation('activities/new');
     }
 
     public disconnectedCallback(): void {

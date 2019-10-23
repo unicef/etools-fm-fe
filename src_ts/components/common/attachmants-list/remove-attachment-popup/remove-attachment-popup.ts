@@ -43,10 +43,6 @@ export class RemoveAttachmentPopupComponent extends LitElement {
         }, false));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
-    }
-
     public render(): TemplateResult {
         return template.call(this);
     }
@@ -61,5 +57,9 @@ export class RemoveAttachmentPopupComponent extends LitElement {
 
     public onClose(): void {
         fireEvent(this, 'response', { confirmed: false });
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
     }
 }

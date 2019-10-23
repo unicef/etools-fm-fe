@@ -82,10 +82,6 @@ export class QuestionPopupComponent extends LitElement {
         }, false));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionPopupStyles];
-    }
-
     public render(): TemplateResult {
         return template.call(this);
     }
@@ -224,6 +220,10 @@ export class QuestionPopupComponent extends LitElement {
     private validateScales(): boolean {
         const currentOptions: EditedQuestionOption[] = this.editedQuestion.options || [];
         return !currentOptions.length || currentOptions.every((option: EditedQuestionOption) => Boolean(option.label));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionPopupStyles];
     }
 
 }

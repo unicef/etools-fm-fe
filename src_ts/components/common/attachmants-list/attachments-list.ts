@@ -4,7 +4,7 @@ import { loadAttachmentsList } from '../../../redux/effects/attachments-list.eff
 import { store } from '../../../redux/store';
 import { attachmentsListSelector } from '../../../redux/selectors/attachments-list.selectors';
 import { elevationStyles } from '../../styles/elevation-styles';
-import { IDialogResponse, openDialog } from '../../utils/dialog';
+import { openDialog } from '../../utils/dialog';
 import { Unsubscribe } from 'redux';
 import { debounce } from '../../utils/debouncer';
 import { SharedStyles } from '../../styles/shared-styles';

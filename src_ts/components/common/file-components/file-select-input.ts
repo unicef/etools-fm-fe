@@ -1,10 +1,5 @@
 import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from 'lit-element';
 
-export type SelectedFile = {
-    id?: number;
-    file?: File;
-};
-
 @customElement('file-select-input')
 export class FileSelectInput extends LitElement {
 
@@ -28,56 +23,6 @@ export class FileSelectInput extends LitElement {
 
     @query('#link')
     public link!: HTMLLinkElement;
-
-    public static get styles(): CSSResult {
-        // language=CSS
-        return css`
-            .file-selector-container {
-                display: flex;
-                flex-flow: row;
-                align-items: center;
-                padding: 8px 0;
-            }
-            .filename-container {
-                display: flex;
-                align-items: center;
-                border-bottom: 1px solid var(--secondary-text-color, rgba(0, 0, 0, 0.54));
-                margin: 0 14px;
-                min-width: 145px;
-                overflow-wrap: break-word;
-                font-size: 16px;
-            }
-            .filename {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .file-icon {
-                width: 24px;
-                flex: none;
-                color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
-            }
-            .delete-button {
-                color: #ea4022;
-            }
-            .upload-button,
-            .download-button {
-                color: var(--primary-color);
-                min-width: 130px;
-            }
-            .change-button {
-                color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
-            }
-            iron-icon {
-                margin-right: 8px;
-            }
-            paper-button {
-                font-weight: 700;
-                margin: 0 0;
-                padding: 0 0;
-            }
-        `;
-    }
 
     public render(): TemplateResult {
         // language=HTML
@@ -174,5 +119,55 @@ export class FileSelectInput extends LitElement {
                 composed: true
             }));
         }
+    }
+
+    public static get styles(): CSSResult {
+        // language=CSS
+        return css`
+            .file-selector-container {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                padding: 8px 0;
+            }
+            .filename-container {
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid var(--secondary-text-color, rgba(0, 0, 0, 0.54));
+                margin: 0 14px;
+                min-width: 145px;
+                overflow-wrap: break-word;
+                font-size: 16px;
+            }
+            .filename {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .file-icon {
+                width: 24px;
+                flex: none;
+                color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
+            }
+            .delete-button {
+                color: #ea4022;
+            }
+            .upload-button,
+            .download-button {
+                color: var(--primary-color);
+                min-width: 130px;
+            }
+            .change-button {
+                color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
+            }
+            iron-icon {
+                margin-right: 8px;
+            }
+            paper-button {
+                font-weight: 700;
+                margin: 0 0;
+                padding: 0 0;
+            }
+        `;
     }
 }

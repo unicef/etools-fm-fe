@@ -11,7 +11,7 @@ import { updateQueryParams } from '../../../../routing/routes';
 import { locationsInvert } from './locations-invert';
 import { elevationStyles } from '../../../styles/elevation-styles';
 import { debounce } from '../../../utils/debouncer';
-import { IDialogResponse, openDialog } from '../../../utils/dialog';
+import { openDialog } from '../../../utils/dialog';
 import './sites-popup/sites-popup';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
@@ -42,11 +42,6 @@ export class SitesTabComponent extends ListMixin<IGroupedSites>(LitElement) {
 
     public render(): TemplateResult | void {
         return template.apply(this);
-    }
-
-    public static get styles(): CSSResult[] {
-        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, SitesTabStyles,
-            leafletStyles];
     }
 
     public connectedCallback(): void {
@@ -189,5 +184,10 @@ export class SitesTabComponent extends ListMixin<IGroupedSites>(LitElement) {
         const startIndex: number = page * pageSize - pageSize;
         const endIndex: number = page * pageSize;
         return sitesObject.slice(startIndex, endIndex);
+    }
+
+    public static get styles(): CSSResult[] {
+        return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, SitesTabStyles,
+            leafletStyles];
     }
 }

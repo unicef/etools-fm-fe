@@ -48,21 +48,9 @@ export class PlanPage extends LitElement {
 
     @property() public activeTab: string = ISSUE_TRACKER_TAB;
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        store.subscribe(routeDetailsSelector(({ routeName, subRouteName }: IRouteDetails) => {
-            if (routeName !== PAGE) { return; }
-            this.activeTab = subRouteName as string;
-        }));
-    }
-
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-    }
-
     public render(): TemplateResult {
         return html`
-        <page-content-header with-tabs-visible>
+            <page-content-header with-tabs-visible>
                  <h1 slot="page-title">Plan</h1>
 
                  <etools-tabs id="tabs" slot="tabs"
@@ -72,6 +60,14 @@ export class PlanPage extends LitElement {
             </page-content-header>
 
             ${ this.getTabElement() }`;
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        store.subscribe(routeDetailsSelector(({ routeName, subRouteName }: IRouteDetails) => {
+            if (routeName !== PAGE) { return; }
+            this.activeTab = subRouteName as string;
+        }));
     }
 
     public getTabElement(): TemplateResult {
@@ -91,5 +87,9 @@ export class PlanPage extends LitElement {
         const tabName: string = selectedTab.getAttribute('name') || '';
         if (this.activeTab === tabName) { return; }
         updateAppLocation(`${PAGE}/${tabName}`);
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
     }
 }

@@ -13,7 +13,7 @@ import { loadStaticData } from '../../../../redux/effects/load-static-data.effec
 import { CATEGORIES, METHODS, SECTIONS } from '../../../../endpoints/endpoints-list';
 import { IEtoolsFilter } from '../../../common/layout/filters/etools-filters';
 import { mapFilters } from '../../../utils/filters-mapping';
-import { IDialogResponse, openDialog } from '../../../utils/dialog';
+import { openDialog } from '../../../utils/dialog';
 import { ANSWER_TYPES, LEVELS } from '../../../common/dropdown-options';
 import { questionsFilters } from './questions-tab.filters';
 import { SharedStyles } from '../../../styles/shared-styles';
@@ -22,12 +22,6 @@ import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
 import { QuestionsTabStyles } from './question-tab.styles';
 import { ListMixin } from '../../../common/mixins/list-mixin';
-
-type Serialized = {
-    id: number | string;
-    name: string;
-    [key: string]: any;
-};
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {

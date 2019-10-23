@@ -82,10 +82,6 @@ export class SitesPopupComponent extends LitElement {
             }));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
-    }
-
     public render(): TemplateResult {
         return template.call(this);
     }
@@ -187,5 +183,9 @@ export class SitesPopupComponent extends LitElement {
                 `${ translate('MAIN.LATITUDE') } ${lat.toFixed(6)}` +
                 `     ${ translate('MAIN.LONGITUDE') } ${lng.toFixed(6)}`;
         }
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
     }
 }

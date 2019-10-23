@@ -94,3 +94,32 @@ type DefaultDropdownOption<T = number> = {
     value: T;
     display_name: string;
 };
+
+type SelectedFile = {
+    id?: number;
+    file?: File;
+};
+
+interface IDialog<D> {
+    dialog: string;
+    data: D;
+    readonly?: boolean;
+}
+
+interface IEtoolsDialogResponse {
+    confirmed: boolean;
+}
+
+interface IDialogResponse<R> extends IEtoolsDialogResponse {
+    response?: R;
+}
+
+interface IEtoolsStatusItem {
+    status?: string;
+    label?: string;
+}
+
+interface IEtoolsStatusModel extends IEtoolsStatusItem {
+    // some statuses may share the same position
+    statusOptions?: IEtoolsStatusItem[];
+}

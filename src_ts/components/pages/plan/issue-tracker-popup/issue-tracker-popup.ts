@@ -11,7 +11,6 @@ import { sitesSelector } from '../../../../redux/selectors/site-specific-locatio
 import { locationsInvert } from '../../settings/sites-tab/locations-invert';
 import { template } from './issue-tracker-popup.tpl';
 import { PaperRadioButtonElement } from '@polymer/paper-radio-button/paper-radio-button';
-import { SelectedFile } from '../../../common/file-components/file-select-input';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
@@ -106,6 +105,10 @@ export class IssueTrackerPopup extends LitElement {
         }));
     }
 
+    public render(): TemplateResult {
+        return template.call(this);
+    }
+
     public onClose(): void {
         fireEvent(this, 'response', { confirmed: false });
     }
@@ -174,14 +177,6 @@ export class IssueTrackerPopup extends LitElement {
         this.sitesUnsubscribe();
         this.outputsUnsubscribe();
         this.partnersUnsubscribe();
-    }
-
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerPopupStyles];
-    }
-
-    public render(): TemplateResult {
-        return template.call(this);
     }
 
     public resetFieldError(fieldName: string): void {
@@ -257,5 +252,9 @@ export class IssueTrackerPopup extends LitElement {
         return originalFiles
             .filter((originalFile: Partial<Attachment>) =>
                 !currentFiles.some((currentFile: Partial<Attachment>) => currentFile.id === originalFile.id));
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerPopupStyles];
     }
 }

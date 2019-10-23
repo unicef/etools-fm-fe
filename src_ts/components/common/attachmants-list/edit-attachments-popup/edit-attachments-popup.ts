@@ -53,10 +53,6 @@ export class EditAttachmentsPopupComponent extends LitElement {
         }, false));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
-    }
-
     public render(): TemplateResult {
         return template.call(this);
     }
@@ -106,5 +102,9 @@ export class EditAttachmentsPopupComponent extends LitElement {
         if (!this.errors) { return; }
         delete this.errors[fieldName];
         this.performUpdate();
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
     }
 }

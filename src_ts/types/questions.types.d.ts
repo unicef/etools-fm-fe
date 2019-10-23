@@ -30,3 +30,9 @@ type AnswerTypeOption = {
     value: QuestionAnswerType;
     display_name: string;
 };
+
+type Serialized = {
+    id: number | string;
+    name: string;
+    [key: string]: any;
+};

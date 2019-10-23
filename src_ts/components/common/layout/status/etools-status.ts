@@ -2,16 +2,6 @@ import { customElement, html, LitElement, property, TemplateResult } from 'lit-e
 import '@polymer/iron-icons/iron-icons';
 import { completedStatusIcon } from './status-icons';
 
-export interface IEtoolsStatusItem {
-    status?: string;
-    label?: string;
-}
-
-export interface IEtoolsStatusModel extends IEtoolsStatusItem {
-    // some statuses may share the same position
-    statusOptions?: IEtoolsStatusItem[];
-}
-
 /**
  * @LitElement
  * @customElement

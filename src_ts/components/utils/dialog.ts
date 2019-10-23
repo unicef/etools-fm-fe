@@ -1,16 +1,3 @@
-export interface IDialog<D> {
-    dialog: string;
-    data?: D;
-    readonly?: boolean;
-}
-
-export interface IEtoolsDialogResponse {
-    confirmed: boolean;
-}
-
-export interface IDialogResponse<R> extends IEtoolsDialogResponse {
-    response?: R;
-}
 // you need to fire 'response' event on dialog close!
 export function openDialog<D, R = any>({ dialog, data, readonly }: IDialog<D>): Promise<IDialogResponse<R>> {
     return new Promise((resolve: (detail: IDialogResponse<R>) => any, reject: (e: Error) => any) => {
