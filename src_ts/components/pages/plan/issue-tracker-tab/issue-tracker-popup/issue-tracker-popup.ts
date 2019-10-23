@@ -1,20 +1,20 @@
 import { CSSResultArray, customElement, LitElement, property, TemplateResult } from 'lit-element';
 import { Unsubscribe } from 'redux';
 import { clone } from 'ramda';
-import { store } from '../../../../redux/store';
-import { fireEvent } from '../../../utils/fire-custom-event';
-import { issueTrackerIsUpdate } from '../../../../redux/selectors/issue-tracker.selectors';
-import { getDifference } from '../../../utils/objects-diff';
-import { createLogIssue, updateLogIssue } from '../../../../redux/effects/issue-tracker.effects';
-import { outputsDataSelector, partnersDataSelector } from '../../../../redux/selectors/static-data.selectors';
-import { sitesSelector } from '../../../../redux/selectors/site-specific-locations.selectors';
-import { locationsInvert } from '../../settings/sites-tab/locations-invert';
+import { store } from '../../../../../redux/store';
+import { fireEvent } from '../../../../utils/fire-custom-event';
+import { issueTrackerIsUpdate } from '../../../../../redux/selectors/issue-tracker.selectors';
+import { getDifference } from '../../../../utils/objects-diff';
+import { createLogIssue, updateLogIssue } from '../../../../../redux/effects/issue-tracker.effects';
+import { outputsDataSelector, partnersDataSelector } from '../../../../../redux/selectors/static-data.selectors';
+import { sitesSelector } from '../../../../../redux/selectors/site-specific-locations.selectors';
+import { locationsInvert } from '../../../settings/sites-tab/locations-invert';
 import { template } from './issue-tracker-popup.tpl';
 import { PaperRadioButtonElement } from '@polymer/paper-radio-button/paper-radio-button';
-import { SharedStyles } from '../../../styles/shared-styles';
-import { pageLayoutStyles } from '../../../styles/page-layout-styles';
-import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../styles/card-styles';
+import { SharedStyles } from '../../../../styles/shared-styles';
+import { pageLayoutStyles } from '../../../../styles/page-layout-styles';
+import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../../styles/card-styles';
 import { IssueTrackerPopupStyles } from './issue-tracker-popu.styles';
 
 @customElement('issue-tracker-popup')

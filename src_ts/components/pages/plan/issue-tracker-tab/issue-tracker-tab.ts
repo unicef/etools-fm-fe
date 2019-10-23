@@ -12,7 +12,7 @@ import { issueTrackerData, issueTrackerIsLoad } from '../../../../redux/selector
 import { loadSiteLocations } from '../../../../redux/effects/site-specific-locations.effects';
 import { loadStaticData } from '../../../../redux/effects/load-static-data.effect';
 import { openDialog } from '../../../utils/dialog';
-import '../issue-tracker-popup/issue-tracker-popup';
+import './issue-tracker-popup/issue-tracker-popup';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
 import { FlexLayoutClasses } from '../../../styles/flex-layout-classes';
 import { CardStyles } from '../../../styles/card-styles';
