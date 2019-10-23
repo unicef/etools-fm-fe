@@ -2,8 +2,9 @@
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
  import { PaperTabsElement } from '@polymer/paper-tabs/paper-tabs';
- import { store } from '../../../redux/store';
- import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
+ // import { store } from '../../../redux/store';
+ // import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
+ // import { Unsubscribe } from 'redux';
 
 /**
  * @LitElement
@@ -21,21 +22,28 @@ export class EtoolsTabs extends LitElement {
 
     @query('#tabs') public tabsElement!: PaperTabsElement;
 
+    // private routeDetailsUnsubscribe!: Unsubscribe;
+
     public render(): TemplateResult {
         // main template
         // language=HTML
         return html`
-      <paper-tabs id="tabs"
-                  .selected="${this.activeTab}"
-                  attr-for-selected="name"
-                  noink>
-      ${this.tabs.map((item: GenericObject) => this.getTabHtml(item))}
-      </paper-tabs>
+            <paper-tabs id="tabs"
+                      .selected="${this.activeTab}"
+                      attr-for-selected="name"
+                      noink>
+                ${this.tabs.map((item: GenericObject) => this.getTabHtml(item))}
+            </paper-tabs>
     `;
     }
     public connectedCallback(): void {
         super.connectedCallback();
-        store.subscribe(routeDetailsSelector(() => setTimeout(() => this.updateTabs())));
+        // this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector(() => setTimeout(() => this.updateTabs())));
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        // this.routeDetailsUnsubscribe();
     }
 
     public updateTabs(): void {
@@ -47,9 +55,9 @@ export class EtoolsTabs extends LitElement {
     public getTabHtml(item: any): TemplateResult {
         return html`
         <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
-        <span class="tab-content">
-            ${item.tabLabel} ${item.showTabCounter ? html`(item.counter)` : ''}
-        </span>
+            <span class="tab-content">
+                ${item.tabLabel} ${item.showTabCounter ? html`(item.counter)` : ''}
+            </span>
         </paper-tab>
     `;
     }

@@ -1,18 +1,18 @@
 import { css, CSSResultArray, customElement, html, property, TemplateResult } from 'lit-element';
-import { translate } from '../../../../../localization/localisation';
-import { elevationStyles } from '../../../../styles/elevation-styles';
-import { SharedStyles } from '../../../../styles/shared-styles';
+import { translate } from '../../../../../../localization/localisation';
+import { elevationStyles } from '../../../../../styles/elevation-styles';
+import { SharedStyles } from '../../../../../styles/shared-styles';
 import { BaseDetailsCard } from './base-details-card';
-import { store } from '../../../../../redux/store';
-import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
-import { CpOutputsMixin } from '../../../../common/mixins/cp-outputs-mixin';
-import { PartnersMixin } from '../../../../common/mixins/partners-mixin';
-import './entries-list';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { simplifyValue } from '../../../../utils/objects-diff';
+import { store } from '../../../../../../redux/store';
+import { SetEditedDetailsCard } from '../../../../../../redux/actions/activity-details.actions';
+import { CpOutputsMixin } from '../../../../../common/mixins/cp-outputs-mixin';
+import { PartnersMixin } from '../../../../../common/mixins/partners-mixin';
+import './entities-list-and-popups/entries-list';
+import { FlexLayoutClasses } from '../../../../../styles/flex-layout-classes';
+import { simplifyValue } from '../../../../../utils/objects-diff';
 import clone from 'ramda/es/clone';
-import { IDialogResponse, openDialog } from '../../../../utils/dialog';
-import './partner-popup';
+import { openDialog } from '../../../../../utils/dialog';
+import './entities-list-and-popups/partner-popup';
 
 export const CARD_NAME: string = 'entities-monitor';
 

@@ -29,6 +29,7 @@ export const DataMixin = <T, B extends Constructor<LitElement>>(superclass: B) =
         this.editedData[fieldName] = !Array.isArray(value) ?
             value :
             value.map((item: any) => item.id);
+        this.requestUpdate();
     }
 
     public static get properties(): PropertyDeclarations {

@@ -4,6 +4,7 @@ import { store } from '../../../redux/store';
 import { Unsubscribe } from 'redux';
 import { PropertyDeclarations } from 'lit-element/src/lib/updating-element';
 import { loadStaticData } from '../../../redux/effects/load-static-data.effect';
+import { SECTIONS } from '../../../endpoints/endpoints-list';
 
 // tslint:disable-next-line:typedef
 export const SectionsMixin = <T extends Constructor<LitElement>>(superclass: T) => class extends superclass {
@@ -19,7 +20,7 @@ export const SectionsMixin = <T extends Constructor<LitElement>>(superclass: T) 
         }));
         const data: IStaticDataState = (store.getState() as IRootState).staticData;
         if (!data.sections) {
-            store.dispatch<AsyncEffect>(loadStaticData('sections'));
+            store.dispatch<AsyncEffect>(loadStaticData(SECTIONS));
         }
     }
 

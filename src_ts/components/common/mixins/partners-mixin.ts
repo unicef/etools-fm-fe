@@ -14,7 +14,7 @@ export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) 
 
     public connectedCallback(): void {
         super.connectedCallback();
-        store.subscribe(staticDataDynamic((partners: EtoolsPartner[] | undefined) => {
+        this.partnersUnsubscribe = store.subscribe(staticDataDynamic((partners: EtoolsPartner[] | undefined) => {
             if (!partners) { return; }
             this.partners = partners;
         }, [PARTNERS]));

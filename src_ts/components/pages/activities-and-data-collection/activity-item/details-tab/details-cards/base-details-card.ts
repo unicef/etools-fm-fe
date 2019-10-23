@@ -1,15 +1,15 @@
 import { LitElement, property } from 'lit-element';
-import { getDifference } from '../../../../utils/objects-diff';
-import { store } from '../../../../../redux/store';
-import { updateActivityDetails } from '../../../../../redux/effects/activity-details.effects';
+import { getDifference } from '../../../../../utils/objects-diff';
+import { store } from '../../../../../../redux/store';
+import { updateActivityDetails } from '../../../../../../redux/effects/activity-details.effects';
 import clone from 'ramda/es/clone';
-import { DataMixin } from '../../../../common/mixins/data-mixin';
-import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
+import { DataMixin } from '../../../../../common/mixins/data-mixin';
+import { SetEditedDetailsCard } from '../../../../../../redux/actions/activity-details.actions';
 import {
     activityDetailsData,
     activityDetailsIsLoad,
     detailsEditedCard
-} from '../../../../../redux/selectors/activity-details.selectors';
+} from '../../../../../../redux/selectors/activity-details.selectors';
 import { Unsubscribe } from 'redux';
 
 export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitElement>(LitElement) {

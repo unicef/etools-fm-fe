@@ -1,20 +1,20 @@
 import { css, CSSResultArray, customElement, html, property, TemplateResult } from 'lit-element';
-import { translate } from '../../../../../localization/localisation';
-import { elevationStyles } from '../../../../styles/elevation-styles';
-import { SharedStyles } from '../../../../styles/shared-styles';
+import { translate } from '../../../../../../localization/localisation';
+import { elevationStyles } from '../../../../../styles/elevation-styles';
+import { SharedStyles } from '../../../../../styles/shared-styles';
 import { BaseDetailsCard } from './base-details-card';
-import { CardStyles } from '../../../../styles/card-styles';
+import { CardStyles } from '../../../../../styles/card-styles';
 import { repeat } from 'lit-html/directives/repeat';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
-import { store } from '../../../../../redux/store';
-import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
-import { staticDataDynamic } from '../../../../../redux/selectors/static-data.selectors';
-import { TEAM_MEMBERS, TPM_PARTNERS } from '../../../../../endpoints/endpoints-list';
-import { loadStaticData } from '../../../../../redux/effects/load-static-data.effect';
-import { simplifyValue } from '../../../../utils/objects-diff';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { InputStyles } from '../../../../styles/input-styles';
+import { store } from '../../../../../../redux/store';
+import { SetEditedDetailsCard } from '../../../../../../redux/actions/activity-details.actions';
+import { staticDataDynamic } from '../../../../../../redux/selectors/static-data.selectors';
+import { TEAM_MEMBERS, TPM_PARTNERS } from '../../../../../../endpoints/endpoints-list';
+import { loadStaticData } from '../../../../../../redux/effects/load-static-data.effect';
+import { simplifyValue } from '../../../../../utils/objects-diff';
+import { FlexLayoutClasses } from '../../../../../styles/flex-layout-classes';
+import { InputStyles } from '../../../../../styles/input-styles';
 
 export const CARD_NAME: string = 'monitor-information';
 

@@ -12,8 +12,8 @@ import '@polymer/paper-radio-button/paper-radio-button';
 import { simplifyValue } from '../../../../utils/objects-diff';
 import '../../../../common/file-components/file-select-input';
 import '../../../common/file-components/file-select-button';
-import { InputStyles } from '../../../styles/input-styles';
-import { DialogStyles } from '../../../styles/dialog-styles';
+import { InputStyles } from '../../../../styles/input-styles';
+import { DialogStyles } from '../../../../styles/dialog-styles';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
     // main template

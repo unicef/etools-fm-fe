@@ -32,9 +32,9 @@ export class QuestionPopupComponent extends LitElement {
     @property() public errors: GenericObject = {};
     @queryAll('paper-textarea') public textareas!: PaperTextareaElement[];
 
-    public readonly sections: EtoolsSection[] = (store.getState() as IRootState).staticData.sections || [];
-    public readonly methods: EtoolsMethod[] = (store.getState() as IRootState).staticData.methods || [];
-    public readonly categories: EtoolsCategory[] = (store.getState() as IRootState).staticData.categories || [];
+    public readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
+    public readonly methods: EtoolsMethod[] = store.getState().staticData.methods || [];
+    public readonly categories: EtoolsCategory[] = store.getState().staticData.categories || [];
     public readonly levels: DefaultDropdownOption<string>[] = LEVELS;
     public readonly answerTypes: AnswerTypeOption[] = ANSWER_TYPES;
     public readonly scaleSizes: DefaultDropdownOption[] = [

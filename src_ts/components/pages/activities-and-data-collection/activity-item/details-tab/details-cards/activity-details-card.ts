@@ -7,23 +7,23 @@ import {
     query,
     TemplateResult
 } from 'lit-element';
-import { translate } from '../../../../../localization/localisation';
-import { LocationWidgetComponent } from '../../../../common/location-widget/location-widget';
-import { SectionsMixin } from '../../../../common/mixins/sections-mixin';
-import { store } from '../../../../../redux/store';
-import { sitesSelector } from '../../../../../redux/selectors/site-specific-locations.selectors';
-import { staticDataDynamic } from '../../../../../redux/selectors/static-data.selectors';
-import { LOCATIONS_ENDPOINT } from '../../../../../endpoints/endpoints-list';
+import { translate } from '../../../../../../localization/localisation';
+import { LocationWidgetComponent } from '../../../../../common/location-widget/location-widget';
+import { SectionsMixin } from '../../../../../common/mixins/sections-mixin';
+import { store } from '../../../../../../redux/store';
+import { sitesSelector } from '../../../../../../redux/selectors/site-specific-locations.selectors';
+import { staticDataDynamic } from '../../../../../../redux/selectors/static-data.selectors';
+import { LOCATIONS_ENDPOINT } from '../../../../../../endpoints/endpoints-list';
 import { Unsubscribe } from 'redux';
-import { elevationStyles } from '../../../../styles/elevation-styles';
-import { SharedStyles } from '../../../../styles/shared-styles';
-import { FlexLayoutClasses } from '../../../../styles/flex-layout-classes';
-import { CardStyles } from '../../../../styles/card-styles';
-import { InputStyles } from '../../../../styles/input-styles';
-import { simplifyValue } from '../../../../utils/objects-diff';
-import { formatDate } from '../../../../utils/date-utility';
+import { elevationStyles } from '../../../../../styles/elevation-styles';
+import { SharedStyles } from '../../../../../styles/shared-styles';
+import { FlexLayoutClasses } from '../../../../../styles/flex-layout-classes';
+import { CardStyles } from '../../../../../styles/card-styles';
+import { InputStyles } from '../../../../../styles/input-styles';
+import { simplifyValue } from '../../../../../utils/objects-diff';
+import { formatDate } from '../../../../../utils/date-utility';
 import { BaseDetailsCard } from './base-details-card';
-import { SetEditedDetailsCard } from '../../../../../redux/actions/activity-details.actions';
+import { SetEditedDetailsCard } from '../../../../../../redux/actions/activity-details.actions';
 
 export const CARD_NAME: string = 'activity-details';
 
@@ -85,53 +85,53 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
                     <etools-loading ?active="${ this.isLoad }" loading-text="${ translate('MAIN.LOADING_DATA_IN_PROCESS') }"></etools-loading>
                     <etools-loading ?active="${ this.isUpdate }" loading-text="${ translate('MAIN.SAVING_DATA_IN_PROCESS') }"></etools-loading>
                     ${!this.isReadonly ? html`
-                    <div class="widget-dropdown">
-                        <div class="flex-auto">
-                            <span class=" layout horizontal center" @tap="${ () => this.widgetToggle() }">
-                                <iron-icon icon="maps:map"></iron-icon>Select Location/Site with Widget
-                            </span>
+                        <div class="widget-dropdown">
+                            <div class="flex-auto">
+                                <span class=" layout horizontal center" @tap="${ () => this.widgetToggle() }">
+                                    <iron-icon icon="maps:map"></iron-icon>Select Location/Site with Widget
+                                </span>
+                            </div>
+                            <iron-icon icon="expand-less" class="flex-none toggle-btn" ?hidden="${ !this.widgetOpened }"
+                                @tap="${ () => this.widgetToggle() }"></iron-icon>
+                            <iron-icon icon="expand-more" class="flex-none toggle-btn" ?hidden="${ this.widgetOpened }"
+                                @tap="${ () => this.widgetToggle() }"></iron-icon>
                         </div>
-                        <iron-icon icon="expand-less" class="flex-none toggle-btn" ?hidden="${ !this.widgetOpened }"
-                            @tap="${ () => this.widgetToggle() }"></iron-icon>
-                        <iron-icon icon="expand-more" class="flex-none toggle-btn" ?hidden="${ this.widgetOpened }"
-                            @tap="${ () => this.widgetToggle() }"></iron-icon>
-                    </div>
 
-                    <div class="widget-container">
-                        <iron-collapse ?opened="${ this.widgetOpened }">
-                            <location-widget
-                                id="locationWidget"
-                                .selectedLocation="${ simplifyValue(this.editedData.location) }"
-                                .selectedSites="${ this.editedData.location_site ?
-                                    [simplifyValue(this.editedData.location_site)] : [] }"
-                                @sites-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location_site', detail.sites[0] || null); } }"
-                                @location-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location', detail.location); } }"></location-widget>
-                        </iron-collapse>
-                    </div>` : ''}
+                        <div class="widget-container">
+                            <iron-collapse ?opened="${ this.widgetOpened }">
+                                <location-widget
+                                    id="locationWidget"
+                                    .selectedLocation="${ simplifyValue(this.editedData.location) }"
+                                    .selectedSites="${ this.editedData.location_site ?
+                                        [simplifyValue(this.editedData.location_site)] : [] }"
+                                    @sites-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location_site', detail.sites[0] || null); } }"
+                                    @location-changed="${ ({ detail }: CustomEvent) => { this.updateModelValue('location', detail.location); } }"></location-widget>
+                            </iron-collapse>
+                        </div>` : ''}
 
-                    <div class="layout horizontal location-inputs">
-                        <etools-dropdown
-                            class="without-border readonly-required"
-                            .selected="${ simplifyValue(this.editedData.location) }"
-                            label="Location To Be Visited"
-                            .options="${ this.locations }"
-                            option-label="name"
-                            option-value="id"
-                            readonly disabled required
-                            min-width="470px">
-                        </etools-dropdown>
+                        <div class="layout horizontal location-inputs">
+                            <etools-dropdown
+                                class="without-border readonly-required"
+                                .selected="${ simplifyValue(this.editedData.location) }"
+                                label="Location To Be Visited"
+                                .options="${ this.locations }"
+                                option-label="name"
+                                option-value="id"
+                                readonly disabled required
+                                min-width="470px">
+                            </etools-dropdown>
 
-                        <etools-dropdown
-                            class="without-border readonly-required"
-                            .selected="${ simplifyValue(this.editedData.location_site) }"
-                            label="Site To Be Visited"
-                            .options="${ this.sitesList }"
-                            option-label="name"
-                            option-value="id"
-                            readonly disabled
-                            min-width="470px">
-                        </etools-dropdown>
-                    </div>
+                            <etools-dropdown
+                                class="without-border readonly-required"
+                                .selected="${ simplifyValue(this.editedData.location_site) }"
+                                label="Site To Be Visited"
+                                .options="${ this.sitesList }"
+                                option-label="name"
+                                option-value="id"
+                                readonly disabled
+                                min-width="470px">
+                            </etools-dropdown>
+                        </div>
                     <div class="layout horizontal">
                         <div class="layout horizontal flex">
                             <datepicker-lite
@@ -191,7 +191,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
                 display: flex;
                 align-items: center;
                 padding: 14px 19px;
-                margin: 0 12px;
+                margin: 18px 12px 0;
                 color: var(--module-primary);
                 background-color: var(--gray-06);
                 text-transform: uppercase;
@@ -201,6 +201,9 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
 
             .widget-dropdown span,
             .widget-dropdown iron-icon.toggle-btn { cursor: pointer; }
+
+            etools-loading { z-index: 9999; }
+            datepicker-lite { white-space: nowrap; }
         `];
     }
 }
