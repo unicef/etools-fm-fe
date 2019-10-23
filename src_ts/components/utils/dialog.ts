@@ -1,6 +1,6 @@
 export interface IDialog<D> {
     dialog: string;
-    data: D;
+    data?: D;
     readonly?: boolean;
 }
 
@@ -23,7 +23,9 @@ export function openDialog<D, R = any>({ dialog, data, readonly }: IDialog<D>): 
             reject(new Error('Body not exist'));
         }
 
-        dialogElement.data = data;
+        if (data) {
+            dialogElement.data = data;
+        }
         if (readonly) {
             dialogElement.readonly = readonly;
         }

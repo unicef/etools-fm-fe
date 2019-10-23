@@ -47,7 +47,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.loadMembersOptions(this.editedData.tpm_partner);
+        if (this.tpmPartner) {
+            this.loadMembersOptions(this.tpmPartner.id);
+        }
         store.subscribe(staticDataDynamic((teamMembers: User[] | undefined) => {
             if (!teamMembers) { return; }
             this.membersOptions = teamMembers;
@@ -65,13 +67,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
         store.dispatch<AsyncEffect>(loadStaticData(TEAM_MEMBERS, { params }, isReset));
     }
 
-    public setTpmPartner(tpmPartner: EtoolsTPMPartner): void {
-        if (tpmPartner) {
-            this.updateModelValue('tpm_partner', tpmPartner.id);
-            this.tpmPartner = tpmPartner;
-            this.clearMembers();
-            this.loadMembersOptions(tpmPartner.id);
-        }
+    public setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
+        const id: number | null = tpmPartner ? tpmPartner.id : null;
+        this.tpmPartner = tpmPartner;
+        this.updateModelValue('tpm_partner', id);
+        this.loadMembersOptions(id);
     }
 
     public setTeamMembers(members: User[]): void {
@@ -85,14 +85,24 @@ export class MonitorInformationCard extends BaseDetailsCard {
     }
 
     public setUserType(userType: UserType): void {
+        if (this.userType !== userType) {
+            this.clearMembers();
+        }
         this.userType = userType;
         this.updateModelValue('activity_type', userType);
         const state: IRootState = store.getState() as IRootState;
         if (userType === USER_TPM && !state.staticData.tpmPartners) {
             store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
         }
-        if (userType === USER_TPM && !this.editedData.tpm_partner) {
-            this.clearMembers();
+        if (userType === USER_STAFF) {
+            this.setTpmPartner(null);
+        }
+    }
+
+    public cancel(): void {
+        super.cancel();
+        if (this.tpmPartner) {
+            this.loadMembersOptions(this.tpmPartner.id);
         }
     }
 
@@ -142,7 +152,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                             .selected="${ simplifyValue(this.tpmPartner) }"
                             @etools-selected-item-changed="${({ detail }: CustomEvent) =>
                                 this.setTpmPartner(detail.selectedItem)}"
-                            trigger-value-change-event
+                            ?trigger-value-change-event="${!this.isReadonly}"
                             label="${ translate('ACTIVITY_DETAILS.TPM_PARTNER') }"
                             .options="${ this.tpmPartnersOptions }"
                             option-label="name"

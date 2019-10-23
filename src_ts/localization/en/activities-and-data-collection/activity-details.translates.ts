@@ -13,6 +13,16 @@ export const ACTIVITY_DETAILS_TRANSLATES: TranslateObject = {
         'USER_TYPES': {
             'STAFF': 'Staff',
             'TPM': 'Third Party Monitor'
-        }
+        },
+        'PARTNER': 'Partner',
+        'CP_OUTPUT': 'CP Output',
+        'INTERVENTION': 'Intervention',
+        'PARTNERS': 'Partners',
+        'CP_OUTPUTS': 'CP Outputs',
+        'INTERVENTIONS': 'PD/SSFAs',
+        'ADD_ENTRY': 'Add New Item',
+        'ADD_PARTNER': 'Add Partner',
+        'ADD_CP_OUTPUT': 'Add CP Output',
+        'ADD_INTERVENTION': 'Add Intervention'
     }
 };
