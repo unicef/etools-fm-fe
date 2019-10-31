@@ -46,7 +46,8 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
 
     // Analyze pages
     'analyze_monitoring-activity': [
-        'components/pages/analyze/analyze-page.js'
+        'components/pages/analyze/analyze-page.js',
+        'components/pages/analyze/monitoring-tab/monitoring-tab.js'
     ],
     'analyze_country-overview': [
         'components/pages/analyze/analyze-page.js'

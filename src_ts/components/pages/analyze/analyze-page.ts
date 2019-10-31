@@ -67,7 +67,7 @@ export class AnalyzePage extends LitElement {
     public getTabElement(): TemplateResult {
         switch (this.activeTab) {
             case MONITORING_ACTIVITY:
-                return html`Monitoring Activity`;
+                return html`<monitoring-tab></monitoring-tab>`;
             case COUNTRY_OVERVIEW:
                 return html`Country Overview`;
             default:
