@@ -8,7 +8,7 @@ export function overallStatisticsProgressbarDataConverter(data: OverallActivitie
         additionalCompletedLabelValue: ' Visits',
         additionalPlannedLabelValue: ' Visits (Up to December)',
         progressBarLabelsColor: 'grey',
-        completedDivBackgroundColor: '#4d9dd6'
+        completedDivBackgroundColor: '#3F9BBC'
     };
 }
 
