@@ -70,14 +70,15 @@ export class PageContentHeader extends LitElement {
             .title-row {
                 display: flex;
                 align-items: center;
-                margin: 30px 0 0;
+                margin: var(--table-row-margin, 30px 0 0);
                 padding: 0 24px;
-                height: 36px;
+                height: var(--table-row-height, 36px);
             }
 
             .title-row h1 {
                 display: flex;
                 flex: 1;
+                margin: var(--title-margin);
                 @apply --page-title;
             }
 

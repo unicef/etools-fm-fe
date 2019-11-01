@@ -88,6 +88,17 @@ EtoolsRouter
                 params: { id: params.matchDetails[1], tab: params.matchDetails[2] }
             };
         })
+    .addRoute(new RegExp(`^activities\\/${routeParamRegex}\\/data-collection\\/${routeParamRegex}$`),
+        (params: IRouteCallbackParams): IRouteDetails => {
+            return {
+                routeName: 'activities',
+                subRouteName: 'data-collection',
+                path: params.matchDetails[0],
+                queryParams: null,
+                queryParamsString: null,
+                params: { id: params.matchDetails[1], checklist: params.matchDetails[2] }
+            };
+        })
     .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`),
         (params: IRouteCallbackParams): IRouteDetails => {
             return {

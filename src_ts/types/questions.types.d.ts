@@ -3,7 +3,7 @@ interface IQuestion<O = QuestionOption> {
     answer_type: QuestionAnswerType;
     choices_size: number | null;
     level: string;
-    options: O[];
+    options: QuestionOption[];
     methods: number[];
     category: number;
     sections: number[];

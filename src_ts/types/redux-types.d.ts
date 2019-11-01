@@ -13,6 +13,7 @@ interface IRootState {
     activityChecklist: IActivityChecklistState;
     attachmentsList: IAttachmentsListState;
     widgetLocations: IWidgetLocationsState;
+    dataCollection: IDataCollectionState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -104,7 +105,25 @@ interface IWidgetLocationsState {
     pathCollection: WidgetStoreData;
 }
 
+interface IDataCollectionState {
+    checklistLoading: null | boolean;
+    checklist: {
+        data: null | DataCollectionChecklist;
+        findings: null | DataCollectionFinding[];
+        overallFindings: null;
+    };
+    checklistError: null | GenericObject;
+}
+
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
 type DynamicSelector<T> = (onChange: (state: T) => void, path?: string[], initialize?: boolean) => Callback;
 
 type AsyncEffect = any;
+
+type MiddlewareLoadingAction<T> = {
+    type: T;
+};
+type MiddlewareRequestAction<T, S = any> = {
+    type: T;
+    payload: S;
+};

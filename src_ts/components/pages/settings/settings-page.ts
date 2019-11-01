@@ -46,7 +46,7 @@ export class FmSettingsComponent extends LitElement {
 
                  <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
                      <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
-                        <iron-icon icon="file-download"></iron-icon>Export
+                         <iron-icon icon="file-download"></iron-icon>Export
                      </paper-button>
                 </div>
 

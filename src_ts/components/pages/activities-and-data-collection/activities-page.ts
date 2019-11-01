@@ -18,6 +18,7 @@ const PAGE: string = 'activities';
 
 const LIST_ROUTE: string = 'list';
 const ITEM_ROUTE: string = 'item';
+const COLLECT_ROUTE: string = 'data-collection';
 
 @customElement('activities-page')
 export class ActivitiesPageComponent extends LitElement {
@@ -42,6 +43,8 @@ export class ActivitiesPageComponent extends LitElement {
                 return html`<activities-list class="page" active></activities-list>`;
             case ITEM_ROUTE:
                 return html`<activity-item class="page" active></activity-item>`;
+            case COLLECT_ROUTE:
+                return html`<data-collection-checklist class="page" active></data-collection-checklist>`;
             default:
                 return html``;
         }

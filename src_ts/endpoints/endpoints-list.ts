@@ -33,6 +33,7 @@ export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityR
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
+export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -195,6 +196,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
     [ACTIVITY_CHECKLIST]: {
         template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
+    },
+
+    [DATA_COLLECTION_CHECKLIST]: {
+        template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/'
     }
     // agreements: {
     //   template: '/api/v2/agreements/',
