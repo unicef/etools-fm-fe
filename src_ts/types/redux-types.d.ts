@@ -13,7 +13,7 @@ interface IRootState {
     activityChecklist: IActivityChecklistState;
     attachmentsList: IAttachmentsListState;
     widgetLocations: IWidgetLocationsState;
-    analyzeActivities: IAnalyzeState;
+    monitoringActivities: IMonitoringActivityState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -105,8 +105,11 @@ interface IWidgetLocationsState {
     pathCollection: WidgetStoreData;
 }
 
-interface IAnalyzeState {
+interface IMonitoringActivityState {
     overallActivities: OverallActivities;
+    partnersCoverage: PartnersCoverage[];
+    interventionsCoverage: InterventionsCoverage[];
+    cpOutputCoverage: CpOutputCoverage[];
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

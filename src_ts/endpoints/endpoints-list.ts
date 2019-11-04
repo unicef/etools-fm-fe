@@ -33,7 +33,10 @@ export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityR
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
-export const ANALYZE_OVERALL_STATISTICS: 'analyzeOverallStatistics' = 'analyzeOverallStatistics';
+export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' = 'monitoringActivityOverallStatistics';
+export const MONITORING_ACTIVITY_PARTNERS_COVERAGE: 'monitoringActivityPartnersCoverage' = 'monitoringActivityPartnersCoverage';
+export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInterventionsCoverage' = 'monitoringActivityInterventionsCoverage';
+export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' = 'monitoringActivityCpOutputCoverage';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -203,7 +206,19 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     //   cacheTableName: 'agreements'
     // },
 
-    [ANALYZE_OVERALL_STATISTICS]: {
+    [MONITORING_ACTIVITY_OVERALL_STATISTICS]: {
         template: '/api/v1/field-monitoring/analyze/overall/'
+    },
+
+    [MONITORING_ACTIVITY_PARTNERS_COVERAGE]: {
+        template: '/api/v1/field-monitoring/analyze/coverage/partners/'
+    },
+
+    [MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE]: {
+        template: '/api/v1/field-monitoring/analyze/coverage/interventions/'
+    },
+
+    [MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE]: {
+        template: '/api/v1/field-monitoring/analyze/coverage/cp-outputs/'
     }
 };

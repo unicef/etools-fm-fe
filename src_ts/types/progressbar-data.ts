@@ -1,10 +1,10 @@
 type ProgressBarData = {
     completed: number;
     planned: number;
-    minRequired: number;
-    daysSinceLastVisit: number;
-    additionalCompletedLabelValue: string;
-    additionalPlannedLabelValue: string;
+    minRequired: number | null;
+    daysSinceLastVisit: number | null;
+    additionalCompletedLabelValue: string | null;
+    additionalPlannedLabelValue: string | null;
     progressBarLabelsColor: string;
     completedDivBackgroundColor: string;
 };

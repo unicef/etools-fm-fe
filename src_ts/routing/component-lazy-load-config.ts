@@ -47,7 +47,10 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
     // Analyze pages
     'analyze_monitoring-activity': [
         'components/pages/analyze/analyze-page.js',
-        'components/pages/analyze/monitoring-tab/monitoring-tab.js'
+        'components/pages/analyze/monitoring-tab/monitoring-tab.js',
+        'components/pages/analyze/monitoring-tab/partnership-tab/partnership-tab.js',
+        'components/pages/analyze/monitoring-tab/pd-ssfa-tab/pd-ssfa-tab.js',
+        'components/pages/analyze/monitoring-tab/cp-output-tab/cp-output-tab.js'
     ],
     'analyze_country-overview': [
         'components/pages/analyze/analyze-page.js'
@@ -60,7 +63,6 @@ export function getFilePathsToImport(routeDetails: IRouteDetails): string[] {
     if (routeDetails.subRouteName) {
         routeImportsPathsKey += `_${routeDetails.subRouteName}`;
     }
-
     const filesToImport: string[] = componentsLazyLoadConfig[routeImportsPathsKey];
     if (!filesToImport || filesToImport.length === 0) {
         throw new Error('No file imports configuration found (componentsLazyLoadConfig)!');
