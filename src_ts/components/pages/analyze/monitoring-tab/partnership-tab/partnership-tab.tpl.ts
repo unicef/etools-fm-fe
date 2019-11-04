@@ -81,7 +81,7 @@ export function template(this: PartnershipTab): TemplateResult {
                     </etools-dropdown>
                 </div>
             </div>
-            ${ this.progressbarData.map((progressBar: {headline: string; progressbarData: ProgressBarData}) => html`
+            ${ this.progressbarData.map((progressBar: ProgressBarDataWithHeadline) => html`
                 <div class="progressbar-container">
                     <div class="progressbar-container__header ">${ progressBar.headline }</div>
                     <progress-bar .progressbarData="${ progressBar.progressbarData }"></progress-bar>

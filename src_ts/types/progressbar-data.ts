@@ -8,3 +8,8 @@ type ProgressBarData = {
     progressBarLabelsColor: string;
     completedDivBackgroundColor: string;
 };
+
+type ProgressBarDataWithHeadline = {
+    headline: string;
+    progressbarData: ProgressBarData;
+};

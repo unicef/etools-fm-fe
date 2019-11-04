@@ -54,9 +54,6 @@ export class MonitoringTabComponent extends LitElement {
       store.dispatch<AsyncEffect>(loadOverallStatistics());
       this.overallActivitiesUnsubscribe = store.subscribe(monitoringActivitySelector((monitoringActivitiesState: IMonitoringActivityState) => {
           this.progressbarData = convertOverallStatisticsProgressbarData(monitoringActivitiesState.overallActivities);
-          // TODO remove
-          this.progressbarData.planned = 123;
-          this.progressbarData.completed = 83;
           this.completed = this.progressbarData.completed;
           this.planned = this.progressbarData.planned;
       }));

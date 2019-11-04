@@ -12,17 +12,17 @@ export class SetOverallActivities {
 
 export class SetPartnersCoverage {
     public readonly type: MonitoringActivityActionTypes.SET_PARTNERS_COVERAGE = MonitoringActivityActionTypes.SET_PARTNERS_COVERAGE;
-    public constructor(public payload: PartnersCoverage) {}
+    public constructor(public payload: PartnersCoverage[]) {}
 }
 
 export class SetInterventionsCoverage {
     public readonly type: MonitoringActivityActionTypes.SET_INTERVENTIONS_COVERAGE = MonitoringActivityActionTypes.SET_INTERVENTIONS_COVERAGE;
-    public constructor(public payload: InterventionsCoverage) {}
+    public constructor(public payload: InterventionsCoverage[]) {}
 }
 
 export class SetCpOutpurCoverage {
     public readonly type: MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE = MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE;
-    public constructor(public payload: CpOutputCoverage) {}
+    public constructor(public payload: CpOutputCoverage[]) {}
 }
 
 export type MonitoringActivityActions = SetOverallActivities | SetPartnersCoverage | SetInterventionsCoverage | SetCpOutpurCoverage;
