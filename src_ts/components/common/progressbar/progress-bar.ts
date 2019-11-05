@@ -1,58 +1,110 @@
 import {
+    css,
+    CSSResult,
     customElement,
     html,
     LitElement,
     property,
     TemplateResult
 } from 'lit-element';
-import { initProgressbarData } from '../../utils/progressbar-utils';
 import { StyleInfo, styleMap } from 'lit-html/directives/style-map';
 
 @customElement('progress-bar')
 export class ProgressBar extends LitElement {
-    @property() public progressbarData: ProgressBarData = initProgressbarData();
-    public progressbarFooterComputedStyles!: StyleInfo;
-    public progressbarMinRequiredComputedStyles!: StyleInfo;
-    public progressbarCompletedComputedStyles!: StyleInfo;
-    public progressbarLabelComputedStyles!: StyleInfo;
-
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.progressbarFooterComputedStyles = {
-            display: (this.progressbarData.minRequired ? 'flex' : 'none')
-        };
-        this.progressbarMinRequiredComputedStyles = {
-            display: (this.progressbarData.minRequired ? 'flex' : 'none'),
-            width: this.getMinRequiredDivWidth()
-        };
-        this.progressbarCompletedComputedStyles = {
-            'background-color': this.progressbarData.completedDivBackgroundColor,
-            'width': this.getCompletedDivWidth()
-        };
-        this.progressbarLabelComputedStyles = {
-            color: this.progressbarData.progressBarLabelsColor
-        };
-    }
-
-    public getCompletedPercentage(): number {
-        return this.progressbarData.completed / this.progressbarData.planned * 100;
-    }
-
-    public getCompletedDivWidth(): string {
-        return `${this.progressbarData.completed / this.progressbarData.planned * 100}%`;
-    }
-
-    public getMinRequiredDivWidth(): string {
-        if (!this.progressbarData.minRequired || !this.progressbarData.planned) {
-            return '0%';
-        } else {
-            return `${ this.progressbarData.minRequired / this.progressbarData.planned * 100}%`;
-        }
-    }
+    @property() public completed: number = 0;
+    @property() public planned: number = 0;
+    @property() public minRequired: number | null = null;
+    @property() public daysSinceLastVisit: number | null = null;
+    @property() public completedLabelValue: string | null = 'Completed';
+    @property() public plannedLabelValue: string | null = 'Planned';
+    @property() public minRequiredLabelValue: string = `Minimum Required ${ this.minRequired ? this.minRequired : 0 }`;
+    @property() public daysSinceLastVisitLabelValue: string = `Days Since Last Visit ${ this.daysSinceLastVisit ? this.daysSinceLastVisit : 0 }`;
+    @property() public progressBarLabelsColor: string = 'grey';
+    @property() public completedDivBackgroundColor: string = '#48B6C2';
+    // public progressbarFooterComputedStyles!: StyleInfo;
+    // public progressbarMinRequiredComputedStyles!: StyleInfo;
+    // public progressbarCompletedComputedStyles!: StyleInfo;
+    // public progressbarLabelComputedStyles!: StyleInfo;
+    @property() private progressbarFooterComputedStyles: StyleInfo = {
+        display: (this.minRequired ? 'flex' : 'none')
+    };
+    @property() private progressbarMinRequiredComputedStyles: StyleInfo = {
+        display: (this.minRequired ? 'flex' : 'none'),
+        width: this.getMinRequiredDivWidth()
+    };
+    @property() private progressbarCompletedComputedStyles: StyleInfo = {
+        'background-color': this.completedDivBackgroundColor,
+        'width': this.getCompletedDivWidth()
+    };
+    @property() private progressbarLabelComputedStyles: StyleInfo = {
+        color: this.progressBarLabelsColor
+    };
 
     public render(): TemplateResult {
         return html`
-            <style>
+          <div class="progressbar-host">
+            <!--  Top labels  -->
+            <div class="progressbar__header">
+              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">${ this.completedLabelValue }</label>
+              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">${ this.plannedLabelValue }</label>
+            </div>
+            <!--  Progress bar  -->
+            <div class="progressbar__content">
+              <div class="progressbar">
+                <div class="progressbar-values-container">
+                  <label class="progressbar-value">${ this.completed }</label>
+                  <label class="progressbar-value">${ this.planned }</label>
+                </div>
+                <div class="progressbar-completed" style="${styleMap(this.progressbarCompletedComputedStyles)}"></div>
+                <div class="progressbar-planned"></div>
+              </div>
+              <div class="progressbar-min-required" style="${styleMap(this.progressbarMinRequiredComputedStyles)}"></div>
+            </div>
+            <!--  Bottom labels  -->
+            <div class="progressbar__footer" style="${styleMap(this.progressbarFooterComputedStyles)}">
+              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">${ this.minRequiredLabelValue }</label>
+              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">${ this.daysSinceLastVisitLabelValue }</label>
+            </div>
+          </div>
+        `;
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        // this.progressbarFooterComputedStyles = {
+        //     display: (this.minRequired ? 'flex' : 'none')
+        // };
+        // this.progressbarMinRequiredComputedStyles = {
+        //     display: (this.minRequired ? 'flex' : 'none'),
+        //     width: this.getMinRequiredDivWidth()
+        // };
+        // this.progressbarCompletedComputedStyles = {
+        //     'background-color': this.completedDivBackgroundColor,
+        //     'width': this.getCompletedDivWidth()
+        // };
+        // this.progressbarLabelComputedStyles = {
+        //     color: this.progressBarLabelsColor
+        // };
+    }
+
+    public getCompletedPercentage(): number {
+        return this.completed / this.planned * 100;
+    }
+
+    public getCompletedDivWidth(): string {
+        return `${this.completed / this.planned * 100}%`;
+    }
+
+    public getMinRequiredDivWidth(): string {
+        if (!this.minRequired || !this.planned) {
+            return '0%';
+        } else {
+            return `${ this.minRequired / this.planned * 100}%`;
+        }
+    }
+
+    public static get styles(): CSSResult {
+        return css`
             .progressbar-host {
                 display: flex;
                 flex-direction: column;
@@ -124,28 +176,6 @@ export class ProgressBar extends LitElement {
             .progressbar-label {
                 color: grey;
             }
-            </style>
-          <div class="progressbar-host">
-            <div class="progressbar__header">
-              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">Completed ${ this.progressbarData.additionalCompletedLabelValue }</label>
-              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">Planned ${ this.progressbarData.additionalPlannedLabelValue }</label>
-            </div>
-            <div class="progressbar__content">
-              <div class="progressbar">
-                <div class="progressbar-values-container">
-                  <label class="progressbar-value">${ this.progressbarData.completed }</label>
-                  <label class="progressbar-value">${ this.progressbarData.planned }</label>
-                </div>
-                <div class="progressbar-completed" style="${styleMap(this.progressbarCompletedComputedStyles)}"></div>
-                <div class="progressbar-planned"></div>
-              </div>
-              <div class="progressbar-min-required" style="${styleMap(this.progressbarMinRequiredComputedStyles)}"></div>
-            </div>
-            <div class="progressbar__footer" style="${styleMap(this.progressbarFooterComputedStyles)}">
-              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">Minimum Required ${ this.progressbarData.minRequired }</label>
-              <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}">Days Since Last Visit ${ this.progressbarData.daysSinceLastVisit }</label>
-            </div>
-          </div>
         `;
     }
 }

@@ -1,4 +1,4 @@
-import { CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
+import { css, CSSResult, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
 import { template } from './monitoring-tab.tpl';
 import { SharedStyles } from '../../../styles/shared-styles';
 import { pageLayoutStyles } from '../../../styles/page-layout-styles';
@@ -8,9 +8,8 @@ import { elevationStyles } from '../../../styles/elevation-styles';
 import { store } from '../../../../redux/store';
 import { monitoringActivities } from '../../../../redux/reducers/monitoring-activity.reducer';
 import { loadOverallStatistics } from '../../../../redux/effects/monitoring-activity.effects';
-import { monitoringActivitySelector } from '../../../../redux/selectors/monitoring-activity.selectors';
+import { overallActivitiesSelector } from '../../../../redux/selectors/overall-activities.selectors';
 import { Unsubscribe } from 'redux';
-import { convertOverallStatisticsProgressbarData } from '../../../utils/progressbar-utils';
 import { updateAppLocation } from '../../../../routing/routes';
 import { routeDetailsSelector } from '../../../../redux/selectors/app.selectors';
 
@@ -41,31 +40,28 @@ export class MonitoringTabComponent extends LitElement {
       }
   ];
   @property() public activeTab: string = PARTNER_TAB;
-  @property() public progressbarData: ProgressBarData | null = null;
   @property() public completed: number = 0;
   @property() public planned: number = 0;
 
-  // private readonly debouncedLoading: Callback;
   private readonly overallActivitiesUnsubscribe: Unsubscribe;
-  private routeDetailsUnsubscribe!: Unsubscribe;
+  private readonly routeDetailsUnsubscribe!: Unsubscribe;
   public constructor() {
       super();
-      // this.debouncedLoading = debounce(store.dispatch<AsyncEffect>(loadOverallStatistics()), 100);
       store.dispatch<AsyncEffect>(loadOverallStatistics());
-      this.overallActivitiesUnsubscribe = store.subscribe(monitoringActivitySelector((monitoringActivitiesState: IMonitoringActivityState) => {
-          this.progressbarData = convertOverallStatisticsProgressbarData(monitoringActivitiesState.overallActivities);
-          this.completed = this.progressbarData.completed;
-          this.planned = this.progressbarData.planned;
+      this.overallActivitiesUnsubscribe = store.subscribe(overallActivitiesSelector((overallActivities: OverallActivities) => {
+          this.completed = overallActivities.visits_completed;
+          this.planned = overallActivities.visits_planned;
+      }));
+      this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector(({ params }: IRouteDetails) => {
+          if (params) {
+              this.activeTab = params.tab as string;
+          }
       }));
   }
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.routeDetailsUnsubscribe = store.subscribe(routeDetailsSelector(({ params }: IRouteDetails) => {
-            if (params) {
-                this.activeTab = params.tab as string;
-            }
-        }));
-    }
+
+  public render(): TemplateResult {
+      return template.call(this);
+  }
 
   public disconnectedCallback(): void {
       super.disconnectedCallback();
@@ -73,18 +69,10 @@ export class MonitoringTabComponent extends LitElement {
       this.routeDetailsUnsubscribe();
   }
 
-  public render(): TemplateResult {
-      return template.call(this);
-  }
-
-  public static get styles(): CSSResult[] {
-      return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
-  }
-
   public getCompletedPercentage(completed: number, planned: number): number | null {
       return planned ? Math.round(completed / planned * 100) : null;
   }
-// TODO
+
   public onSelect(selectedTab: HTMLElement): void {
       const tabName: string = selectedTab.getAttribute('name') || '';
       if (this.activeTab === tabName) { return; }
@@ -102,5 +90,51 @@ export class MonitoringTabComponent extends LitElement {
           default:
               return html`d partner tab`;
       }
+  }
+
+  public static get styles(): CSSResult[] {
+      const monitoringTabStyles: CSSResult = css`
+            .monitoring-activity-container {
+              display: flex;
+              flex-wrap: wrap;
+            }
+
+            .monitoring-activity__item {
+              flex-grow: 1;
+            }
+
+            .monitoring-activity__overall-statistics {
+              flex-basis: 100%;
+            }
+
+            .monitoring-activity__partnership-coverage {
+            }
+
+            .monitoring-activity__geographic-coverage {
+            }
+
+            .monitoring-activity__hact-visits {
+            }
+            .visits-card {
+              display: flex;
+              justify-content: space-around;
+              min-height: 62px;
+            }
+
+            .visits-card__item {
+              flex-basis: 50%;
+              margin: 1%;
+            }
+
+            .completed-percentage-container {
+              display: flex;
+              align-items: center;
+            }
+
+            .tabs-container {
+              border-bottom: 1px solid lightgrey;
+            }
+      `;
+      return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, monitoringTabStyles];
   }
 }

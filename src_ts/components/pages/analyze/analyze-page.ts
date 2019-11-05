@@ -8,13 +8,6 @@ import { buttonsStyles } from '../../styles/button-styles';
 import { pageLayoutStyles } from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
-// import { addTranslates, ENGLISH } from '../../../localization/localisation';
-// import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templates-tab.translates';
-// import { questionTemplates } from '../../../redux/reducers/templates.reducer';
-// import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
-
-// store.addReducers({ questionTemplates });
-// addTranslates(ENGLISH, [TEMPLATES_TRANSLATES]);
 
 const PAGE: string = 'analyze';
 
@@ -46,10 +39,6 @@ export class AnalyzePage extends LitElement {
         }));
     }
 
-    public static get styles(): CSSResultArray {
-        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-    }
-
     public render(): TemplateResult {
         return html`
         <page-content-header with-tabs-visible>
@@ -79,5 +68,9 @@ export class AnalyzePage extends LitElement {
         const tabName: string = selectedTab.getAttribute('name') || '';
         if (this.activeTab === tabName) { return; }
         updateAppLocation(`${PAGE}/${tabName}`);
+    }
+
+    public static get styles(): CSSResultArray {
+        return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
     }
 }
