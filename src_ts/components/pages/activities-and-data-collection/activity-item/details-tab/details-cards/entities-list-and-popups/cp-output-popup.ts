@@ -1,11 +1,10 @@
-import { html, LitElement, TemplateResult } from 'lit-element';
+import {html, LitElement, TemplateResult} from 'lit-element';
 
 export class CpOutputPopup extends LitElement {
-    // language=HTML
-    public render(): TemplateResult {
-        return html`
-            <etools-dialog>
-            </etools-dialog>
-        `;
-    }
+  // language=HTML
+  render(): TemplateResult {
+    return html`
+      <etools-dialog> </etools-dialog>
+    `;
+  }
 }

@@ -9,46 +9,54 @@ export const COMPLETED: 'completed' = 'completed';
 export const CANCELLED: 'cancelled' = 'cancelled';
 
 export const POSSIBLE_TRANSITIONS: GenericObject<ActivityTransition> = {
-    [DRAFT]: {
-        mainAction: CHECKLIST,
-        cancelPossibility: true
-    },
-    [CHECKLIST]: {
-        mainAction: REVIEW,
-        backAction: DRAFT,
-        cancelPossibility: true
-    },
-    [REVIEW]: {
-        mainAction: ASSIGNED,
-        backAction: CHECKLIST,
-        cancelPossibility: true
-    },
-    [ASSIGNED]: {
-        mainAction: DATA_COLLECTION,
-        rejectAction: DRAFT,
-        cancelPossibility: true
-    },
-    [DATA_COLLECTION]: {
-        mainAction: REPORT_FINALIZATION,
-        cancelPossibility: true
-    },
-    [REPORT_FINALIZATION]: {
-        mainAction: SUBMITTED,
-        cancelPossibility: true
-    },
-    [SUBMITTED]: {
-        mainAction: COMPLETED
-    }
+  [DRAFT]: {
+    mainAction: CHECKLIST,
+    cancelPossibility: true
+  },
+  [CHECKLIST]: {
+    mainAction: REVIEW,
+    backAction: DRAFT,
+    cancelPossibility: true
+  },
+  [REVIEW]: {
+    mainAction: ASSIGNED,
+    backAction: CHECKLIST,
+    cancelPossibility: true
+  },
+  [ASSIGNED]: {
+    mainAction: DATA_COLLECTION,
+    rejectAction: DRAFT,
+    cancelPossibility: true
+  },
+  [DATA_COLLECTION]: {
+    mainAction: REPORT_FINALIZATION,
+    cancelPossibility: true
+  },
+  [REPORT_FINALIZATION]: {
+    mainAction: SUBMITTED,
+    cancelPossibility: true
+  },
+  [SUBMITTED]: {
+    mainAction: COMPLETED
+  }
 };
 
-export type ActivityStatus = 'draft' | 'checklist' | 'review' | 'assigned' |
-    'data_collection' | 'report_finalization' | 'submitted' | 'completed' | 'cancelled';
+export type ActivityStatus =
+  | 'draft'
+  | 'checklist'
+  | 'review'
+  | 'assigned'
+  | 'data_collection'
+  | 'report_finalization'
+  | 'submitted'
+  | 'completed'
+  | 'cancelled';
 
 export type ActivityTransition = {
-    mainAction: ActivityStatus;
-    backAction?: ActivityStatus;
-    cancelPossibility?: true;
-    rejectAction?: ActivityStatus;
+  mainAction: ActivityStatus;
+  backAction?: ActivityStatus;
+  cancelPossibility?: true;
+  rejectAction?: ActivityStatus;
 };
 
-export type ComplexMainActionData = { staff: ActivityStatus; tpm: ActivityStatus };
+export type ComplexMainActionData = {staff: ActivityStatus; tpm: ActivityStatus};
