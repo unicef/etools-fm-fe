@@ -1,4 +1,4 @@
-import { css, CSSResult } from 'lit-element';
+import {css, CSSResult} from 'lit-element';
 
 // language=CSS
 export const etoolsFiltersStyles: CSSResult = css`
@@ -55,15 +55,15 @@ export const etoolsFiltersStyles: CSSResult = css`
     min-width: 280px;
   }
 
-  iron-icon[icon="search"] {
+  iron-icon[icon='search'] {
     color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
   }
 
   #filters .filter.date {
-      white-space: nowrap;
+    white-space: nowrap;
     --paper-input-container: {
       width: 182px;
-    };
+    }
     min-width: 180px;
   }
 

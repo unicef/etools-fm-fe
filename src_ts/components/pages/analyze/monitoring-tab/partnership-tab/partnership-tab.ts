@@ -12,32 +12,7 @@ enum SortingTypes {
 
 @customElement('partnership-tab')
 export class PartnershipTab extends LitElement {
-    @property() public partnersCoverage: PartnersCoverage[] = [
-        {
-            id: 123,
-            name: 'setset1',
-            completed_visits: 20,
-            planned_visits: 100,
-            minimum_required_visits: 14,
-            days_since_visit: 2
-        },
-        {
-            id: 23,
-            name: 'rewqzx1',
-            completed_visits: 70,
-            planned_visits: 100,
-            minimum_required_visits: 65,
-            days_since_visit: 0
-        },
-        {
-            id: 6,
-            name: '4564fhhtr',
-            completed_visits: 50,
-            planned_visits: 100,
-            minimum_required_visits: 50,
-            days_since_visit: 10
-        }
-    ];
+    @property() public partnersCoverage!: PartnersCoverage[];
     public readonly sortingOptions: DefaultDropdownOption<SortingTypes>[] = [
         { display_name: '% of Completed ↑', value: SortingTypes.COMPLETED_ASCEND_SORTING_TYPE },
         { display_name: '% of Completed ↓', value: SortingTypes.COMPLETED_DESCEND_SORTING_TYPE }
@@ -48,8 +23,7 @@ export class PartnershipTab extends LitElement {
         super();
         store.dispatch<AsyncEffect>(loadPartnersCoverage());
         this.partnersCoverageUnsubscribe = store.subscribe(partnersCoverageSelector((partnersCoverage: PartnersCoverage[]) => {
-            // this.partnersCoverage = partnersCoverage;
-            console.log(partnersCoverage);
+            this.partnersCoverage = partnersCoverage;
             this.onSelectionChange(this.selectedSortingOption);
         }));
     }

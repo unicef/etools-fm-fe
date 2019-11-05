@@ -1,12 +1,9 @@
 #!/bin/sh
 
-npm run tsLint
-TS_LINT=$?;
-
 npm run esLint
 ES_LINT=$?
 
-if [ $TS_LINT -gt 0 ] || [ $ES_LINT -gt 0 ]; then
+if [ $ES_LINT -gt 0 ]; then
     exit 1;
 fi;
 

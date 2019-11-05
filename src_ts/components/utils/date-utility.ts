@@ -1,16 +1,16 @@
-import { logWarn } from '@unicef-polymer/etools-behaviors/etools-logging.js';
+import {logWarn} from '@unicef-polymer/etools-behaviors/etools-logging.js';
 
 export function isValidDate(date: any): boolean {
-  return !(date instanceof Date) ? false : (date.toString() !== 'Invalid Date');
+  return !(date instanceof Date) ? false : date.toString() !== 'Invalid Date';
 }
 
 export function prettyDate(dateString: string, format?: string, placeholder: string = '-'): string | '' | Response {
   const date: Date | null = convertDate(dateString);
-  return (!date) ? (placeholder ? placeholder : '') : _utcDate(date, format);
+  return !date ? (placeholder ? placeholder : '') : _utcDate(date, format);
 }
 
 function _utcDate(date: any, format?: string): string {
-  return (!date) ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
+  return !date ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
 }
 
 export function formatDate(date: Date, format: string = 'YYYY-MM-DD'): string {
@@ -19,7 +19,7 @@ export function formatDate(date: Date, format: string = 'YYYY-MM-DD'): string {
 
 export function convertDate(dateString: string, noZTimezoneOffset?: boolean): null | Date {
   if (dateString !== '') {
-    dateString = (dateString.indexOf('T') === -1) ? (dateString + 'T00:00:00') : dateString;
+    dateString = !dateString.includes('T') ? dateString + 'T00:00:00' : dateString;
     /**
      * `Z` (zero time offset) will ensure `new Date` will create the date in UTC and then it will apply local timezone
      * and will have the same result in all timezones (for the UTC date).
@@ -29,7 +29,7 @@ export function convertDate(dateString: string, noZTimezoneOffset?: boolean): nu
      *  d.toGMTString() == "Wed, 25 Apr 2018 00:00:00 GMT"
      * @type {string}
      */
-    dateString += (noZTimezoneOffset || dateString.indexOf('Z') >= 0) ? '' : 'Z';
+    dateString += noZTimezoneOffset || dateString.includes('Z') ? '' : 'Z';
     const date: Date = new Date(dateString);
     const isValid: boolean = isValidDate(date);
     if (!isValid) {

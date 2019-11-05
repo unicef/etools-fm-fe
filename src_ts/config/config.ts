@@ -7,19 +7,19 @@ export const SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY: string = 'etoolsAppSmallMenuIsA
 export const ROOT_PATH: string = '/fm/';
 
 export function isProductionServer(): boolean {
-    const location: string = window.location.href;
-    return location.indexOf(PROD_DOMAIN) > -1;
+  const location: string = window.location.href;
+  return location.includes(PROD_DOMAIN);
 }
 
 export function isStagingServer(): boolean {
-    const location: string = window.location.href;
-    return location.indexOf(STAGING_DOMAIN) > -1;
+  const location: string = window.location.href;
+  return location.includes(STAGING_DOMAIN);
 }
 
 export function isDevServer(): boolean {
-    return window.location.href.indexOf(DEV_DOMAIN) > -1;
+  return window.location.href.includes(DEV_DOMAIN);
 }
 
 export function isDemoServer(): boolean {
-    return window.location.href.indexOf(DEMO_DOMAIN) > -1;
+  return window.location.href.includes(DEMO_DOMAIN);
 }

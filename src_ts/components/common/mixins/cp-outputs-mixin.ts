@@ -1,34 +1,40 @@
-import { store } from '../../../redux/store';
-import { Unsubscribe } from 'redux';
-import { outputsDataSelector } from '../../../redux/selectors/static-data.selectors';
-import { LitElement } from 'lit-element';
-import { PropertyDeclarations } from 'lit-element/src/lib/updating-element';
+import {store} from '../../../redux/store';
+import {Unsubscribe} from 'redux';
+import {outputsDataSelector} from '../../../redux/selectors/static-data.selectors';
+import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
+import {LitElement} from 'lit-element';
 
-// tslint:disable-next-line:typedef
-export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) => class extends superclass {
-    public outputs!: EtoolsCpOutput[];
+// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
+  class extends superclass {
+    outputs!: EtoolsCpOutput[];
 
     private outputsUnsubscribe!: Unsubscribe;
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.outputsUnsubscribe = store.subscribe(outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
-            if (!outputs) { return; }
-            this.outputs = outputs;
-        }));
+    static get properties(): PropertyDeclarations {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      const superProps: PropertyDeclarations = super.properties;
+      return {
+        ...superProps,
+        outputs: {type: Array}
+      };
     }
 
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.outputsUnsubscribe();
+    connectedCallback(): void {
+      super.connectedCallback();
+      this.outputsUnsubscribe = store.subscribe(
+        outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
+          if (!outputs) {
+            return;
+          }
+          this.outputs = outputs;
+        })
+      );
     }
 
-    public static get properties(): PropertyDeclarations {
-        // @ts-ignore
-        const superProps: PropertyDeclarations = super.properties;
-        return {
-            ...superProps,
-            outputs: { type: Array }
-        };
+    disconnectedCallback(): void {
+      super.disconnectedCallback();
+      this.outputsUnsubscribe();
     }
-};
+  };

@@ -1,11 +1,11 @@
-import { CSSResultArray, customElement, html, LitElement, property, TemplateResult } from 'lit-element';
-import { store } from '../../../redux/store';
-import { routeDetailsSelector } from '../../../redux/selectors/app.selectors';
-import { updateAppLocation } from '../../../routing/routes';
-import { SharedStyles } from '../../styles/shared-styles';
-import { pageContentHeaderSlottedStyles } from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import { buttonsStyles } from '../../styles/button-styles';
-import { pageLayoutStyles } from '../../styles/page-layout-styles';
+import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {store} from '../../../redux/store';
+import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
+import {updateAppLocation} from '../../../routing/routes';
+import {SharedStyles} from '../../styles/shared-styles';
+import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import {buttonsStyles} from '../../styles/button-styles';
+import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 
@@ -16,18 +16,18 @@ const COUNTRY_OVERVIEW: string = 'country-overview';
 
 @customElement('analyze-page')
 export class AnalyzePage extends LitElement {
-    public pageTabs: PageTab[] = [
-        {
-            tab: MONITORING_ACTIVITY,
-            tabLabel: 'Monitoring Activity',
-            hidden: false
-        },
-        {
-            tab: COUNTRY_OVERVIEW,
-            tabLabel: 'Country Overview',
-            hidden: false
-        }
-    ];
+  pageTabs: PageTab[] = [
+    {
+      tab: MONITORING_ACTIVITY,
+      tabLabel: 'Monitoring Activity',
+      hidden: false
+    },
+    {
+      tab: COUNTRY_OVERVIEW,
+      tabLabel: 'Country Overview',
+      hidden: false
+    }
+  ];
 
     @property() public activeTab: string = MONITORING_ACTIVITY;
 

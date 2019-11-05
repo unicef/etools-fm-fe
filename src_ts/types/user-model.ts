@@ -1,31 +1,31 @@
 // TODO: improve this user model
 interface IEtoolsUserModel {
-    countries_available: object[];
-    groups: UserGroup[];
-    country: object;
-    country_override: number;
-    email: string;
-    first_name: string;
-    guid: string;
-    is_active: string;
-    is_staff: string;
-    is_superuser: string;
-    job_title: string;
-    last_login: string;
-    last_name: string;
-    middle_name: string;
-    name: string;
-    office: string | null;
-    oic: any;
-    user: number;
-    username: string;
-    vendor_number: string | null;
+  countries_available: object[];
+  groups: UserGroup[];
+  country: object;
+  country_override: number;
+  email: string;
+  first_name: string;
+  guid: string;
+  is_active: string;
+  is_staff: string;
+  is_superuser: string;
+  job_title: string;
+  last_login: string;
+  last_name: string;
+  middle_name: string;
+  name: string;
+  office: string | null;
+  oic: any;
+  user: number;
+  username: string;
+  vendor_number: string | null;
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 type UserGroup = {
-    id: string;
-    name: string;
-    permissions: number[];
+  id: string;
+  name: string;
+  permissions: number[];
 };

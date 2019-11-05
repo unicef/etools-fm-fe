@@ -1,14 +1,14 @@
 interface IListData<T> {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: T[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
 }
 
 interface IStatedListData<T> extends IListData<T> {
-    current: string;
+  current: string;
 }
 
 type QueryParams = {
-    [param: string]: number | string | boolean | (string | number)[];
+  [param: string]: number | string | boolean | (string | number)[];
 };
