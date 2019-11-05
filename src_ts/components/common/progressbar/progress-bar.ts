@@ -17,28 +17,14 @@ export class ProgressBar extends LitElement {
     @property() public daysSinceLastVisit: number | null = null;
     @property() public completedLabelValue: string | null = 'Completed';
     @property() public plannedLabelValue: string | null = 'Planned';
-    @property() public minRequiredLabelValue: string = `Minimum Required ${ this.minRequired ? this.minRequired : 0 }`;
-    @property() public daysSinceLastVisitLabelValue: string = `Days Since Last Visit ${ this.daysSinceLastVisit ? this.daysSinceLastVisit : 0 }`;
+    @property() public minRequiredLabelValue: string | null = null;
+    @property() public daysSinceLastVisitLabelValue: string | null = null;
     @property() public progressBarLabelsColor: string = 'grey';
     @property() public completedDivBackgroundColor: string = '#48B6C2';
-    // public progressbarFooterComputedStyles!: StyleInfo;
-    // public progressbarMinRequiredComputedStyles!: StyleInfo;
-    // public progressbarCompletedComputedStyles!: StyleInfo;
-    // public progressbarLabelComputedStyles!: StyleInfo;
-    @property() private progressbarFooterComputedStyles: StyleInfo = {
-        display: (this.minRequired ? 'flex' : 'none')
-    };
-    @property() private progressbarMinRequiredComputedStyles: StyleInfo = {
-        display: (this.minRequired ? 'flex' : 'none'),
-        width: this.getMinRequiredDivWidth()
-    };
-    @property() private progressbarCompletedComputedStyles: StyleInfo = {
-        'background-color': this.completedDivBackgroundColor,
-        'width': this.getCompletedDivWidth()
-    };
-    @property() private progressbarLabelComputedStyles: StyleInfo = {
-        color: this.progressBarLabelsColor
-    };
+    private progressbarFooterComputedStyles!: StyleInfo;
+    private progressbarMinRequiredComputedStyles!: StyleInfo;
+    private progressbarCompletedComputedStyles!: StyleInfo;
+    private progressbarLabelComputedStyles!: StyleInfo;
 
     public render(): TemplateResult {
         return html`
@@ -71,20 +57,24 @@ export class ProgressBar extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        // this.progressbarFooterComputedStyles = {
-        //     display: (this.minRequired ? 'flex' : 'none')
-        // };
-        // this.progressbarMinRequiredComputedStyles = {
-        //     display: (this.minRequired ? 'flex' : 'none'),
-        //     width: this.getMinRequiredDivWidth()
-        // };
-        // this.progressbarCompletedComputedStyles = {
-        //     'background-color': this.completedDivBackgroundColor,
-        //     'width': this.getCompletedDivWidth()
-        // };
-        // this.progressbarLabelComputedStyles = {
-        //     color: this.progressBarLabelsColor
-        // };
+        this.updateProgressbarStyles();
+    }
+
+    public updateProgressbarStyles(): void {
+        this.progressbarFooterComputedStyles = {
+            display: (this.minRequired ? 'flex' : 'none')
+        };
+        this.progressbarMinRequiredComputedStyles = {
+            display: (this.minRequired ? 'flex' : 'none'),
+            width: this.getMinRequiredDivWidth()
+        };
+        this.progressbarCompletedComputedStyles = {
+            'background-color': this.completedDivBackgroundColor,
+            'width': this.getCompletedDivWidth()
+        };
+        this.progressbarLabelComputedStyles = {
+            color: this.progressBarLabelsColor
+        };
     }
 
     public getCompletedPercentage(): number {
