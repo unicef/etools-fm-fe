@@ -117,10 +117,10 @@ interface IDataCollectionState {
 }
 
 interface IMonitoringActivityState {
-    overallActivities: OverallActivities;
-    partnersCoverage: PartnersCoverage[];
-    interventionsCoverage: InterventionsCoverage[];
-    cpOutputCoverage: CpOutputCoverage[];
+  overallActivities: OverallActivities;
+  partnersCoverage: PartnersCoverage[];
+  interventionsCoverage: InterventionsCoverage[];
+  cpOutputCoverage: CpOutputCoverage[];
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

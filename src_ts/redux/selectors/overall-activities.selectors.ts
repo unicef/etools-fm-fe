@@ -1,3 +1,5 @@
-import { select } from './create-selectors';
+import {select} from './create-selectors';
 
-export const overallActivitiesSelector: Selector<OverallActivities> = select<OverallActivities>((store: IRootState) => store.monitoringActivities.overallActivities);
+export const overallActivitiesSelector: Selector<OverallActivities> = select<OverallActivities>(
+  (store: IRootState) => store.monitoringActivities.overallActivities
+);

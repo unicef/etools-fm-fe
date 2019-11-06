@@ -1,3 +1,5 @@
-import { select } from './create-selectors';
+import {select} from './create-selectors';
 
-export const partnersCoverageSelector: Selector<PartnersCoverage[]> = select<PartnersCoverage[]>((store: IRootState) => store.monitoringActivities.partnersCoverage);
+export const partnersCoverageSelector: Selector<PartnersCoverage[]> = select<PartnersCoverage[]>(
+  (store: IRootState) => store.monitoringActivities.partnersCoverage
+);

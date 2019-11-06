@@ -34,10 +34,14 @@ export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activit
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
-export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' = 'monitoringActivityOverallStatistics';
-export const MONITORING_ACTIVITY_PARTNERS_COVERAGE: 'monitoringActivityPartnersCoverage' = 'monitoringActivityPartnersCoverage';
-export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInterventionsCoverage' = 'monitoringActivityInterventionsCoverage';
-export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' = 'monitoringActivityCpOutputCoverage';
+export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' =
+  'monitoringActivityOverallStatistics';
+export const MONITORING_ACTIVITY_PARTNERS_COVERAGE: 'monitoringActivityPartnersCoverage' =
+  'monitoringActivityPartnersCoverage';
+export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInterventionsCoverage' =
+  'monitoringActivityInterventionsCoverage';
+export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' =
+  'monitoringActivityCpOutputCoverage';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
