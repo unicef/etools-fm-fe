@@ -1,6 +1,7 @@
 import {MonitoringTabComponent} from './monitoring-tab';
 import {html, TemplateResult} from 'lit-element';
 import '../../../common/progressbar/proportional-progress-bar';
+import './geographic-coverage/geographic-coverage';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -46,14 +47,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
 
       <div class="monitoring-activity__item">
         <!--  Geographic coverage (map)  -->
-        <section class="elevation page-content card-container monitoring-activity__geographic-coverage" elevation="1">
-          <div class="card-title-box with-bottom-line">
-            <div class="card-title">Geographic coverage</div>
-          </div>
-          <div class="layout vertical card-content">
-            some sort of testing
-          </div>
-        </section>
+        <geographic-coverage></geographic-coverage>
         <!--  Visits table  -->
         <section class="elevation page-content card-container monitoring-activity__hact-visits" elevation="1">
           <div class="card-title-box with-bottom-line">

@@ -101,9 +101,7 @@ export class MonitoringTabComponent extends LitElement {
           <cp-output-tab></cp-output-tab>
         `;
       default:
-        return html`
-          d partner tab
-        `;
+        return html``;
     }
   }
 
