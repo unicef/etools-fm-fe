@@ -1,6 +1,6 @@
 import {MonitoringTabComponent} from './monitoring-tab';
 import {html, TemplateResult} from 'lit-element';
-import '../../../common/progressbar/progress-bar';
+import '../../../common/progressbar/proportional-progress-bar';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -9,14 +9,14 @@ export function template(this: MonitoringTabComponent): TemplateResult {
       <section class="elevation page-content card-container monitoring-activity__overall-statistics" elevation="1">
         <div class="visits-card">
           <div class="visits-card__item">
-            <progress-bar
+            <proportional-progress-bar
               .completed="${this.completed}"
               .planned="${this.planned}"
               .completedLabelValue="Completed Visits"
               .plannedLabelValue="Planned Visits (Up to December)"
               .completedDivBackgroundColor="#3F9BBC"
             >
-            </progress-bar>
+            </proportional-progress-bar>
           </div>
           <div class="visits-card__item completed-percentage-container">
             ${this.getCompletedPercentage(this.completed, this.planned)} % of visits are completed

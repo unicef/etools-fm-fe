@@ -13,13 +13,15 @@ type PartnersCoverage = {
 };
 
 type InterventionsCoverage = {
-  name: string;
-  days_since_visit: number;
-  avg_days: number;
+  id: number;
+  number: string;
+  days_since_visit: number | null;
+  avg_days_between_visits: number | null;
 };
 
 type CpOutputCoverage = {
-  name: string;
-  days_since_visit: number;
-  avg_days: number;
+  id: number;
+  number: string;
+  days_since_visit: number | null;
+  avg_days_between_visits: number | null;
 };

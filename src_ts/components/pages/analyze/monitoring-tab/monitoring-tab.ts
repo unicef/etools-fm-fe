@@ -116,6 +116,7 @@ export class MonitoringTabComponent extends LitElement {
 
       .monitoring-activity__item {
         flex-grow: 1;
+        flex-basis: 48%;
       }
 
       .monitoring-activity__overall-statistics {

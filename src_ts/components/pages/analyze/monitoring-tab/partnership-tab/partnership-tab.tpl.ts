@@ -1,6 +1,6 @@
 import {html, TemplateResult} from 'lit-element';
 import {PartnershipTab} from './partnership-tab';
-import '../../../../common/progressbar/progress-bar';
+import '../../../../common/progressbar/proportional-progress-bar';
 import {repeat} from 'lit-html/directives/repeat';
 
 export function template(this: PartnershipTab): TemplateResult {
@@ -42,7 +42,7 @@ export function template(this: PartnershipTab): TemplateResult {
         (item: PartnersCoverage) => html`
           <div class="progressbar-container">
             <div class="progressbar-container__header ">${item.name}</div>
-            <progress-bar
+            <proportional-progress-bar
               .completed="${item.completed_visits}"
               .planned="${item.planned_visits}"
               .minRequired="${item.minimum_required_visits}"
@@ -50,7 +50,7 @@ export function template(this: PartnershipTab): TemplateResult {
               .minRequiredLabelValue="Minimum Required ${item.minimum_required_visits}"
               .daysSinceLastVisitLabelValue="Days Since Last Visit ${item.days_since_visit}"
             >
-            </progress-bar>
+            </proportional-progress-bar>
           </div>
         `
       )}
