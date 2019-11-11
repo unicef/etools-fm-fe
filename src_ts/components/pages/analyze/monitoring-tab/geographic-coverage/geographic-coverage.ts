@@ -1,41 +1,150 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {template} from './geographic-coverage.tpl';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
-
-enum FilterTypes {
-  EDUCATION = 'EDUCATION'
-}
+import {MapHelper} from '../../../../common/map-mixin';
+import {LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
+import {leafletStyles} from '../../../../styles/leaflet-styles';
+import {Unsubscribe} from 'redux';
+import {store} from '../../../../../redux/store';
+import {loadGeographicCoverageBySection} from '../../../../../redux/effects/monitoring-activity.effects';
+import {geographicCoverageSelector} from '../../../../../redux/selectors/geographic-coverage.selectors';
+import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
+import {SECTIONS} from '../../../../../endpoints/endpoints-list';
+import {sectionsDataSelector} from '../../../../../redux/selectors/static-data.selectors';
 
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends LitElement {
-  @property() selectedSortingOption: FilterTypes = FilterTypes.EDUCATION;
-  sortingOptions: DefaultDropdownOption<FilterTypes>[] = [{display_name: 'Education', value: FilterTypes.EDUCATION}];
+  @property() selectedSortingOptions: number[] = [];
+  @property() sortingOptions: DefaultDropdownOption<number>[] = [];
+  @query('#geomap') private mapElement!: HTMLElement;
+  private polygon: Polygon | null = null;
+  private MapHelper!: MapHelper;
+  private readonly geographicCoverageUnsubscribe!: Unsubscribe;
+  private readonly sectionsUnsubscribe!: Unsubscribe;
+
+  constructor() {
+    super();
+    store.dispatch<AsyncEffect>(loadStaticData(SECTIONS));
+    this.sectionsUnsubscribe = store.subscribe(
+      sectionsDataSelector((sections: EtoolsSection[] | undefined) => {
+        this.sortingOptions = sections
+          ? sections.map(
+              (item: EtoolsSection): DefaultDropdownOption => {
+                return {display_name: item.name, value: JSON.parse(item.id)};
+              }
+            )
+          : [];
+
+        if (this.sortingOptions.length) {
+          this.onSelectionChange([this.sortingOptions[0]]);
+        }
+      })
+    );
+
+    this.geographicCoverageUnsubscribe = store.subscribe(
+      geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
+        geographicCoverage.forEach(
+          (item: GeographicCoverage) => (item.completed_visits = Math.floor(Math.random() * Math.floor(20)))
+        );
+        geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item, this.getPolygonOptions(item)));
+      })
+    );
+  }
 
   render(): TemplateResult {
     return template.call(this);
   }
 
-  onSelectionChange(detail: FilterTypes): void {
-    this.selectedSortingOption = detail;
+  onSelectionChange(selectedItems: DefaultDropdownOption<number>[]): void {
+    console.log('on selection change', selectedItems.map((item: DefaultDropdownOption) => item.value));
+    console.log(this.selectedSortingOptions);
+    // this.selectedSortingOptions = selectedItems.map((item: DefaultDropdownOption) => item.value);
+    if (this.selectedSortingOptions.length) {
+      store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(this.selectedSortingOptions.join(',')));
+    }
+  }
+
+  getPolygonOptions(geographicCoverageItem: GeographicCoverage): PolylineOptions {
+    let color: string = 'grey';
+    if (geographicCoverageItem.completed_visits == 0) {
+      color = 'var(--mark-no-visits-color)';
+    } else if (1 <= geographicCoverageItem.completed_visits && geographicCoverageItem.completed_visits <= 5) {
+      color = 'var(--mark-one-five-color)';
+    } else if (6 <= geographicCoverageItem.completed_visits && geographicCoverageItem.completed_visits <= 10) {
+      color = 'var(--mark-six-ten)';
+    } else if (geographicCoverageItem.completed_visits >= 11) {
+      color = 'var(--mark-eleven)';
+    } else {
+      console.error(
+        'Geographic coverage: wrong completed_visits count: ',
+        JSON.stringify(geographicCoverageItem.completed_visits)
+      );
+    }
+    return {
+      color: color,
+      stroke: false,
+      fillOpacity: 0.8,
+      pane: 'tilePane'
+    };
+  }
+
+  initMap(): void {
+    this.MapHelper = new MapHelper();
+    this.MapHelper.initMap(this.mapElement);
+    const reversedCoords: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
+    const zoom: number = 6;
+    this.MapHelper.map!.setView(reversedCoords, zoom);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.geographicCoverageUnsubscribe();
+    this.sectionsUnsubscribe();
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    this.initMap();
+  }
+
+  private drawPolygons(location: GeographicCoverage, polygonOptions: PolylineOptions): void {
+    const polygonCoordinates: CoordinatesArray[] = (location.geom.coordinates || []).flat().flat();
+
+    const reversedCoordinates: CoordinatesArray[] = polygonCoordinates.map(
+      (coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray
+    );
+    // this.MapHelper.map!.flyToBounds(reversedCoordinates);
+
+    this.polygon = L.polygon(reversedCoordinates, polygonOptions);
+    this.polygon.addTo(this.MapHelper.map!);
   }
 
   static get styles(): CSSResult[] {
     const monitoringTabStyles: CSSResult = css`
+      :host {
+        --mark-no-visits-color: #ddf1bf;
+        --mark-one-five-color: #9ed6b9;
+        --mark-six-ten: #3f9bbc;
+        --mark-eleven: #273891;
+      }
+      #geomap {
+        min-height: 400px;
+        z-index: 0;
+      }
       .monitoring-activity__geographic-coverage {
       }
       .geographic-coverage {
         display: flex;
         flex-direction: column;
-        padding: 1%;
       }
       .geographic-coverage__header {
         display: flex;
         flex-wrap: wrap;
-        margin-bottom: 2%;
+        padding: 2%;
       }
       .geographic-coverage__header-item {
         display: flex;
@@ -63,20 +172,28 @@ export class GeographicCoverageComponent extends LitElement {
         justify-content: center;
       }
       .coverage-legend__mark-no-visits {
-        background-color: #ddf1bf;
+        background-color: var(--mark-no-visits-color);
       }
       .coverage-legend__mark-one-five {
-        background-color: #48b6c2;
+        background-color: var(--mark-one-five-color);
       }
       .coverage-legend__mark-six-ten {
-        background-color: #3f9bbc;
+        background-color: var(--mark-six-ten);
       }
       .coverage-legend__mark-eleven {
-        background-color: #273891;
+        background-color: var(--mark-eleven);
       }
       .coverage-legend__label {
       }
     `;
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, monitoringTabStyles];
+    return [
+      elevationStyles,
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      monitoringTabStyles,
+      leafletStyles
+    ];
   }
 }

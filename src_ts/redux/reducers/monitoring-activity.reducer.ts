@@ -8,7 +8,8 @@ const INITIAL_STATE: IMonitoringActivityState = {
   },
   partnersCoverage: [],
   interventionsCoverage: [],
-  cpOutputCoverage: []
+  cpOutputCoverage: [],
+  geographicCoverage: []
 };
 
 export const monitoringActivities: Reducer<IMonitoringActivityState, any> = (
@@ -24,6 +25,8 @@ export const monitoringActivities: Reducer<IMonitoringActivityState, any> = (
       return {...state, interventionsCoverage: action.payload};
     case MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE:
       return {...state, cpOutputCoverage: action.payload};
+    case MonitoringActivityActionTypes.SET_GEOGRAPHIC_COVERAGE:
+      return {...state, geographicCoverage: action.payload};
     default:
       return state;
   }

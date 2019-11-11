@@ -93,6 +93,7 @@ export class LocationWidgetComponent extends LitElement {
         if (!workspace) {
           return;
         }
+
         this.defaultMapCenter = (workspace.point && workspace.point.coordinates) || DEFAULT_COORDINATES;
         this.mapInitialisation();
       })

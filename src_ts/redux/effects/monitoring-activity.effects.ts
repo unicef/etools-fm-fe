@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
+  GEOGRAPHIC_COVERAGE,
   MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE,
   MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE,
   MONITORING_ACTIVITY_OVERALL_STATISTICS,
@@ -9,6 +10,7 @@ import {
 import {request} from '../../endpoints/request';
 import {
   SetCpOutpurCoverage,
+  SetGeographicCoverage,
   SetInterventionsCoverage,
   SetOverallActivities,
   SetPartnersCoverage
@@ -46,6 +48,16 @@ export function loadCpOutputCoverage(): (dispatch: Dispatch) => Promise<void> {
     const endpoint: IResultEndpoint = getEndpoint(MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE);
     return request<CpOutputCoverage[]>(endpoint.url, {method: 'GET'}).then((response: CpOutputCoverage[]) => {
       dispatch(new SetCpOutpurCoverage(response));
+    });
+  };
+}
+
+export function loadGeographicCoverageBySection(section: string): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(GEOGRAPHIC_COVERAGE);
+    endpoint.url += section;
+    return request<GeographicCoverage[]>(endpoint.url, {method: 'GET'}).then((response: GeographicCoverage[]) => {
+      dispatch(new SetGeographicCoverage(response));
     });
   };
 }

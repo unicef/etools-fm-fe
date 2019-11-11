@@ -1,12 +1,14 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
 import {html, TemplateResult} from 'lit-element';
+import '../../../../common/location-widget/location-widget';
+
 export function template(this: GeographicCoverageComponent): TemplateResult {
   return html`
     <section class="elevation page-content card-container monitoring-activity__geographic-coverage" elevation="1">
       <div class="card-title-box with-bottom-line">
         <div class="card-title">Geographic coverage</div>
       </div>
-      <div class="layout vertical card-content">
+      <div>
         <div class="geographic-coverage">
           <div class="geographic-coverage__header">
             <!--  Map legend  -->
@@ -33,22 +35,22 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
             </div>
             <!--  Sorting  -->
             <div class="geographic-coverage__header-item">
-              <etools-dropdown
-                .selected="${this.selectedSortingOption}"
+              <etools-dropdown-multi
+                .selectedValues="${this.selectedSortingOptions}"
                 label="Filter By Section"
                 .options="${this.sortingOptions}"
                 option-label="display_name"
                 option-value="value"
                 trigger-value-change-event
-                @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                  this.onSelectionChange(detail.selectedItem.value)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.onSelectionChange(detail.selectedItems)}"
                 hide-search
                 allow-outside-scroll
               >
-              </etools-dropdown>
+              </etools-dropdown-multi>
             </div>
           </div>
-                      asdlf;kasjdfklas
+          <div id="geomap"></div>
         </div>
       </div>
     </section>

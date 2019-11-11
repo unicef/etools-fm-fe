@@ -25,3 +25,10 @@ type CpOutputCoverage = {
   days_since_visit: number | null;
   avg_days_between_visits: number | null;
 };
+
+type GeographicCoverage = {
+  id: number;
+  name: string;
+  completed_visits: number;
+  geom: LocationGeometry;
+};

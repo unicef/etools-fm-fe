@@ -42,6 +42,7 @@ export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInte
   'monitoringActivityInterventionsCoverage';
 export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' =
   'monitoringActivityCpOutputCoverage';
+export const GEOGRAPHIC_COVERAGE: 'geographicCoverage' = 'geographicCoverage';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -229,5 +230,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE]: {
     template: '/api/v1/field-monitoring/analyze/coverage/cp-outputs/'
+  },
+
+  [GEOGRAPHIC_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/geographic/?sections__in='
   }
 };

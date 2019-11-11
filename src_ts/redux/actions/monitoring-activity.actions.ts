@@ -2,7 +2,8 @@ export enum MonitoringActivityActionTypes {
   SET_OVERALL_ACTIVITIES = '[Monitoring activity Action]: SET_OVERALL_ACTIVITIES',
   SET_PARTNERS_COVERAGE = '[Monitoring activity Action]: SET_PARTNERS_COVERAGE',
   SET_INTERVENTIONS_COVERAGE = '[Monitoring activity Action]: SET_INTERVENTIONS_COVERAGE',
-  SET_CP_OUTPUT_COVERAGE = '[Monitoring activity Action]: SET_CP_OUTPUT_COVERAGE'
+  SET_CP_OUTPUT_COVERAGE = '[Monitoring activity Action]: SET_CP_OUTPUT_COVERAGE',
+  SET_GEOGRAPHIC_COVERAGE = '[Monitoring activity Action]: SET_GEOGRAPHIC_COVERAGE'
 }
 
 export class SetOverallActivities {
@@ -29,8 +30,15 @@ export class SetCpOutpurCoverage {
   constructor(public payload: CpOutputCoverage[]) {}
 }
 
+export class SetGeographicCoverage {
+  readonly type: MonitoringActivityActionTypes.SET_GEOGRAPHIC_COVERAGE =
+    MonitoringActivityActionTypes.SET_GEOGRAPHIC_COVERAGE;
+  constructor(public payload: GeographicCoverage[]) {}
+}
+
 export type MonitoringActivityActions =
   | SetOverallActivities
   | SetPartnersCoverage
   | SetInterventionsCoverage
-  | SetCpOutpurCoverage;
+  | SetCpOutpurCoverage
+  | SetGeographicCoverage;

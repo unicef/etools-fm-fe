@@ -121,6 +121,7 @@ interface IMonitoringActivityState {
   partnersCoverage: PartnersCoverage[];
   interventionsCoverage: InterventionsCoverage[];
   cpOutputCoverage: CpOutputCoverage[];
+  geographicCoverage: GeographicCoverage[];
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
