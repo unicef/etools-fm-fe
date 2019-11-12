@@ -106,14 +106,27 @@ interface IWidgetLocationsState {
 }
 
 interface IDataCollectionState {
-  checklistLoading: null | boolean;
+  loading: {
+    checklist: null | boolean;
+    findings: null | boolean;
+    overallAndFindingsUpdate: null | boolean;
+  };
+  editedFindingsTab: null | string;
   checklist: {
     data: null | DataCollectionChecklist;
-    findings: null | DataCollectionFinding[];
-    overallFindings: null;
+    findingsAndOverall: FindingsAndOverall;
   };
-  checklistError: null | GenericObject;
+  errors: {
+    checklist: null | GenericObject;
+    findings: null | GenericObject;
+    overallAndFindingsUpdate: null | GenericObject;
+  };
 }
+
+type FindingsAndOverall = {
+  findings: null | DataCollectionFinding[];
+  overall: null | DataCollectionOverall[];
+};
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
 type DynamicSelector<T> = (onChange: (state: T) => void, path?: string[], initialize?: boolean) => Callback;

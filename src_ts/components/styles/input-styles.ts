@@ -184,6 +184,10 @@ export const InputStyles: TemplateResult = html`
       --paper-input-container-underline-disabled: {
         display: none;
       }
+      --iron-autogrow-textarea-placeholder: {
+        color: var(--gray-mid-dark) !important;
+      }
+      --paper-input-container-color: var(--gray-mid-dark);
     }
 
     etools-dropdown-multi.required:not([disabled]),
