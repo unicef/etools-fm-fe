@@ -1,4 +1,4 @@
-import {customElement, html, LitElement, TemplateResult} from 'lit-element';
+import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
 import {loadInterventionsCoverage} from '../../../../../redux/effects/monitoring-activity.effects';
@@ -8,7 +8,7 @@ import '../shared-tab-template/shared-tab-template';
 
 @customElement('pd-ssfa-tab')
 export class PdSsfaTab extends LitElement {
-  private interventionsCoverage!: InterventionsCoverage[];
+  @property() private interventionsCoverage!: InterventionsCoverage[];
   private readonly label: string =
     'Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not\n' +
     ' been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)';

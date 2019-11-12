@@ -110,6 +110,7 @@ export class MonitoringTabComponent extends LitElement {
       .monitoring-activity-container {
         display: flex;
         flex-wrap: wrap;
+        align-items: baseline;
       }
 
       .monitoring-activity__item {

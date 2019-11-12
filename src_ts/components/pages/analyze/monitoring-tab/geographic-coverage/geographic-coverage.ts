@@ -16,6 +16,8 @@ import {loadStaticData} from '../../../../../redux/effects/load-static-data.effe
 import {SECTIONS} from '../../../../../endpoints/endpoints-list';
 import {sectionsDataSelector} from '../../../../../redux/selectors/static-data.selectors';
 
+const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends LitElement {
   @property() selectedSortingOptions: number[] = [];
@@ -47,10 +49,10 @@ export class GeographicCoverageComponent extends LitElement {
 
     this.geographicCoverageUnsubscribe = store.subscribe(
       geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
-        geographicCoverage.forEach(
-          (item: GeographicCoverage) => (item.completed_visits = Math.floor(Math.random() * Math.floor(20)))
-        );
         geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item, this.getPolygonOptions(item)));
+        if (geographicCoverage.length) {
+          this.MapHelper.map!.flyToBounds(this.getReversedCoordinates(geographicCoverage[0]), {maxZoom: 6});
+        }
       })
     );
   }
@@ -60,9 +62,11 @@ export class GeographicCoverageComponent extends LitElement {
   }
 
   onSelectionChange(selectedItems: DefaultDropdownOption<number>[]): void {
-    console.log('on selection change', selectedItems.map((item: DefaultDropdownOption) => item.value));
-    console.log(this.selectedSortingOptions);
-    // this.selectedSortingOptions = selectedItems.map((item: DefaultDropdownOption) => item.value);
+    this.selectedSortingOptions.splice(
+      0,
+      this.selectedSortingOptions.length,
+      ...selectedItems.map((item: DefaultDropdownOption) => item.value)
+    );
     if (this.selectedSortingOptions.length) {
       store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(this.selectedSortingOptions.join(',')));
     }
@@ -79,6 +83,7 @@ export class GeographicCoverageComponent extends LitElement {
     } else if (geographicCoverageItem.completed_visits >= 11) {
       color = 'var(--mark-eleven)';
     } else {
+      //TODO throw an error instead?
       console.error(
         'Geographic coverage: wrong completed_visits count: ',
         JSON.stringify(geographicCoverageItem.completed_visits)
@@ -95,7 +100,7 @@ export class GeographicCoverageComponent extends LitElement {
   initMap(): void {
     this.MapHelper = new MapHelper();
     this.MapHelper.initMap(this.mapElement);
-    const reversedCoords: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
+    const reversedCoords: LatLngTuple = DEFAULT_COORDINATES.reverse() as LatLngTuple;
     const zoom: number = 6;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }
@@ -112,15 +117,16 @@ export class GeographicCoverageComponent extends LitElement {
   }
 
   private drawPolygons(location: GeographicCoverage, polygonOptions: PolylineOptions): void {
-    const polygonCoordinates: CoordinatesArray[] = (location.geom.coordinates || []).flat().flat();
-
-    const reversedCoordinates: CoordinatesArray[] = polygonCoordinates.map(
-      (coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray
-    );
-    // this.MapHelper.map!.flyToBounds(reversedCoordinates);
-
+    const reversedCoordinates: CoordinatesArray[] = this.getReversedCoordinates(location);
     this.polygon = L.polygon(reversedCoordinates, polygonOptions);
     this.polygon.addTo(this.MapHelper.map!);
+  }
+
+  private getReversedCoordinates(location: GeographicCoverage): CoordinatesArray[] {
+    return (location.geom.coordinates || [])
+      .flat()
+      .flat()
+      .map((coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray);
   }
 
   static get styles(): CSSResult[] {

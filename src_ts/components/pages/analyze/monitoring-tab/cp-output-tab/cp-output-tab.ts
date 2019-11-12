@@ -1,4 +1,4 @@
-import {customElement, html, LitElement, TemplateResult} from 'lit-element';
+import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {store} from '../../../../../redux/store';
 import {loadCpOutputCoverage} from '../../../../../redux/effects/monitoring-activity.effects';
 import {Unsubscribe} from 'redux';
@@ -6,7 +6,7 @@ import {cpOutputCoverageSelector} from '../../../../../redux/selectors/cp-output
 
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {
-  private cpOutputCoverage!: CpOutputCoverage[];
+  @property() private cpOutputCoverage!: CpOutputCoverage[];
   private readonly label: string = 'Showing CP Outputs that can be monitored at the community level.';
   private readonly cpOutputCoverageUnsubscribe: Unsubscribe;
   constructor() {

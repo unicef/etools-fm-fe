@@ -57,10 +57,10 @@ export class SharedTabTemplate extends LitElement {
         case WidthCalculationTargets.AVG:
           return (avgDaysBetweenVisits / Math.max(daysSinceVisit, avgDaysBetweenVisits)) * 100;
         default:
-          return 0;
+          return 0.5;
       }
     } else {
-      return 0;
+      return 0.5;
     }
   }
 

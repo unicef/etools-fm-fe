@@ -50,6 +50,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
               </etools-dropdown-multi>
             </div>
           </div>
+          <!--  Map element  -->
           <div id="geomap"></div>
         </div>
       </div>
