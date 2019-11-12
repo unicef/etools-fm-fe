@@ -3,6 +3,7 @@ import {html, TemplateResult} from 'lit-element';
 import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
 import './open-issues-action-points/open-issues-action-points';
+import './shared-section-with-tabs-template/shared-section-with-tabs-template';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -26,31 +27,24 @@ export function template(this: MonitoringTabComponent): TemplateResult {
         </div>
       </section>
       <!--  Coverage tabs  -->
-      <section
-        class="elevation page-content card-container monitoring-activity__item monitoring-activity__partnership-coverage"
-        elevation="1"
-      >
-        <div class="card-title-box with-bottom-line">
-          <div class="card-title">Coverage of Active Partnerships</div>
-        </div>
-        <etools-tabs
-          class="tabs-container"
-          id="tabs"
-          slot="tabs"
-          .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
-          .activeTab="${this.activeTab}"
-        ></etools-tabs>
-        <div class="layout vertical card-content">
-          ${this.tabElement}
-        </div>
-      </section>
+      <shared-section-with-tabs-template
+        class="monitoring-activity__item"
+        .title="${'Coverage of Active Partnerships'}"
+        .pageTabs="${this.coveragePageTabs}"
+        .activeTab="${this.coverageActiveTab}"
+        .tabContentMap="${this.coverageOfActivePartnershipsContentMap}"
+      ></shared-section-with-tabs-template>
 
       <div class="monitoring-activity__item">
         <!--  Geographic coverage (map)  -->
         <geographic-coverage></geographic-coverage>
         <!--  Open issues and Action points  -->
-        <open-issues-action-points></open-issues-action-points>
+        <shared-section-with-tabs-template
+          .title="${'Open Issues and Action Points'}"
+          .pageTabs="${this.openIssuesPageTabs}"
+          .activeTab="${this.openIssuesActiveTab}"
+          .tabContentMap="${this.openIssuesContentMap}"
+        ></shared-section-with-tabs-template>
       </div>
     </div>
   `;

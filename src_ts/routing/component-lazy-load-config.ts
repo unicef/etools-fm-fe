@@ -46,9 +46,9 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
     'components/pages/analyze/monitoring-tab/partnership-tab/partnership-tab.js',
     'components/pages/analyze/monitoring-tab/pd-ssfa-tab/pd-ssfa-tab.js',
     'components/pages/analyze/monitoring-tab/cp-output-tab/cp-output-tab.js',
-    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js',
-    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js',
-    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js'
+    'components/pages/analyze/monitoring-tab/open-issues-partnership-tab/open-issues-partnership-tab.js',
+    'components/pages/analyze/monitoring-tab/open-issues-cp-output-tab/open-issues-cp-output-tab.js',
+    'components/pages/analyze/monitoring-tab/open-issues-location-tab/open-issues-location-tab.js'
   ],
   'analyze_country-overview': ['components/pages/analyze/analyze-page.js']
 };

@@ -17,9 +17,13 @@ const PARTNER_TAB: string = 'partner';
 const PD_SSFA_TAB: string = 'pd-ssfa';
 const CP_OUTPUT_TAB: string = 'cp-output';
 
+const OPEN_ISSUES_PARTNER_TAB: string = 'open-issues-partner';
+const OPEN_ISSUES_CP_OUTPUT_TAB: string = 'open-issues-cp-output';
+const OPEN_ISSUES_LOCATION_TAB: string = 'open-issues-location';
+
 @customElement('monitoring-tab')
 export class MonitoringTabComponent extends LitElement {
-  pageTabs: PageTab[] = [
+  coveragePageTabs: PageTab[] = [
     {
       tab: PARTNER_TAB,
       tabLabel: 'By Partner',
@@ -36,10 +40,67 @@ export class MonitoringTabComponent extends LitElement {
       hidden: false
     }
   ];
-  @property() activeTab: string = PARTNER_TAB;
+  coverageOfActivePartnershipsContentMap: Map<string, TemplateResult> = new Map([
+    [
+      PARTNER_TAB,
+      html`
+        <partnership-tab></partnership-tab>
+      `
+    ],
+    [
+      PD_SSFA_TAB,
+      html`
+        <pd-ssfa-tab></pd-ssfa-tab>
+      `
+    ],
+    [
+      CP_OUTPUT_TAB,
+      html`
+        <cp-output-tab></cp-output-tab>
+      `
+    ]
+  ]);
+  openIssuesPageTabs: PageTab[] = [
+    {
+      tab: OPEN_ISSUES_PARTNER_TAB,
+      tabLabel: 'By Partner',
+      hidden: false
+    },
+    {
+      tab: OPEN_ISSUES_CP_OUTPUT_TAB,
+      tabLabel: 'By CP Output',
+      hidden: false
+    },
+    {
+      tab: OPEN_ISSUES_LOCATION_TAB,
+      tabLabel: 'By Location',
+      hidden: false
+    }
+  ];
+  openIssuesContentMap: Map<string, TemplateResult> = new Map([
+    [
+      OPEN_ISSUES_PARTNER_TAB,
+      html`
+        <open-issues-partnership-tab></open-issues-partnership-tab>
+      `
+    ],
+    [
+      OPEN_ISSUES_CP_OUTPUT_TAB,
+      html`
+        <open-issues-cp-output-tab></open-issues-cp-output-tab>
+      `
+    ],
+    [
+      OPEN_ISSUES_LOCATION_TAB,
+      html`
+        <open-issues-location-tab></open-issues-location-tab>
+      `
+    ]
+  ]);
+  @property() coverageActiveTab: string = PARTNER_TAB;
+  @property() openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
   @property() completed: number = 0;
   @property() planned: number = 0;
-  @property() tabElement: TemplateResult = this.getTabElement();
 
   private readonly overallActivitiesUnsubscribe: Unsubscribe;
 
@@ -65,34 +126,6 @@ export class MonitoringTabComponent extends LitElement {
 
   getCompletedPercentage(completed: number, planned: number): number | null {
     return planned ? Math.round((completed / planned) * 100) : null;
-  }
-
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
-    if (this.activeTab === tabName) {
-      return;
-    }
-    this.activeTab = tabName;
-    this.tabElement = this.getTabElement();
-  }
-
-  getTabElement(): TemplateResult {
-    switch (this.activeTab) {
-      case PARTNER_TAB:
-        return html`
-          <partnership-tab></partnership-tab>
-        `;
-      case PD_SSFA_TAB:
-        return html`
-          <pd-ssfa-tab></pd-ssfa-tab>
-        `;
-      case CP_OUTPUT_TAB:
-        return html`
-          <cp-output-tab></cp-output-tab>
-        `;
-      default:
-        return html``;
-    }
   }
 
   static get styles(): CSSResult[] {

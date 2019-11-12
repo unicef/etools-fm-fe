@@ -1,41 +1,24 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import '../../../../common/progressbar/column-item-progress-bar';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 
-const PARTNER_TAB: string = 'partner';
-const CP_OUTPUT_TAB: string = 'cp-output';
-const LOCATION_TAB: string = 'location';
-
-@customElement('open-issues-action-points')
-export class OpenIssuesActionPoints extends LitElement {
-  pageTabs: PageTab[] = [
-    {
-      tab: PARTNER_TAB,
-      tabLabel: 'By Partner',
-      hidden: false
-    },
-    {
-      tab: CP_OUTPUT_TAB,
-      tabLabel: 'By CP Output',
-      hidden: false
-    },
-    {
-      tab: LOCATION_TAB,
-      tabLabel: 'By Location',
-      hidden: false
-    }
-  ];
-  @property() activeTab: string = PARTNER_TAB;
+@customElement('shared-section-with-tabs-template')
+export class SharedSectionWithTabsTemplate extends LitElement {
+  @property() title!: string;
+  @property() pageTabs!: PageTab[];
+  @property() activeTab!: string;
+  @property() tabContentMap: Map<string, TemplateResult> = new Map();
   @property() tabElement: TemplateResult = this.getTabElement();
 
   render(): TemplateResult {
     return html`
       <section class="elevation page-content card-container" elevation="1">
         <div class="card-title-box with-bottom-line">
-          <div class="card-title">Open Issues and Action Points</div>
+          <div class="card-title">${this.title}</div>
         </div>
         <etools-tabs
           class="tabs-container"
@@ -51,7 +34,12 @@ export class OpenIssuesActionPoints extends LitElement {
       </section>
     `;
   }
-  // TODO reduce copy-paste?
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.tabElement = this.getTabElement();
+  }
+
   onSelect(selectedTab: HTMLElement): void {
     const tabName: string = selectedTab.getAttribute('name') || '';
     if (this.activeTab === tabName) {
@@ -62,22 +50,7 @@ export class OpenIssuesActionPoints extends LitElement {
   }
 
   getTabElement(): TemplateResult {
-    switch (this.activeTab) {
-      case PARTNER_TAB:
-        return html`
-          <open-issues-partnership-tab></open-issues-partnership-tab>
-        `;
-      case CP_OUTPUT_TAB:
-        return html`
-          <open-issues-cp-output-tab></open-issues-cp-output-tab>
-        `;
-      case LOCATION_TAB:
-        return html`
-          <open-issues-location-tab></open-issues-location-tab>
-        `;
-      default:
-        return html``;
-    }
+    return this.tabContentMap.get(this.activeTab) || html``;
   }
 
   static get styles(): CSSResult[] {
