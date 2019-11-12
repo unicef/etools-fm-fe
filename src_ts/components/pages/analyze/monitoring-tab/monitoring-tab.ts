@@ -10,12 +10,9 @@ import {monitoringActivities} from '../../../../redux/reducers/monitoring-activi
 import {loadOverallStatistics} from '../../../../redux/effects/monitoring-activity.effects';
 import {overallActivitiesSelector} from '../../../../redux/selectors/overall-activities.selectors';
 import {Unsubscribe} from 'redux';
-import {updateAppLocation} from '../../../../routing/routes';
-import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 
 store.addReducers({monitoringActivities});
 
-const PAGE: string = 'analyze/monitoring-activity';
 const PARTNER_TAB: string = 'partner';
 const PD_SSFA_TAB: string = 'pd-ssfa';
 const CP_OUTPUT_TAB: string = 'cp-output';
@@ -42,9 +39,9 @@ export class MonitoringTabComponent extends LitElement {
   @property() activeTab: string = PARTNER_TAB;
   @property() completed: number = 0;
   @property() planned: number = 0;
+  @property() tabElement: TemplateResult = this.getTabElement();
 
   private readonly overallActivitiesUnsubscribe: Unsubscribe;
-  private readonly routeDetailsUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
@@ -53,13 +50,6 @@ export class MonitoringTabComponent extends LitElement {
       overallActivitiesSelector((overallActivities: OverallActivities) => {
         this.completed = overallActivities.visits_completed;
         this.planned = overallActivities.visits_planned;
-      })
-    );
-    this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector(({params}: IRouteDetails) => {
-        if (params) {
-          this.activeTab = params.tab as string;
-        }
       })
     );
   }
@@ -71,7 +61,6 @@ export class MonitoringTabComponent extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.overallActivitiesUnsubscribe();
-    this.routeDetailsUnsubscribe();
   }
 
   getCompletedPercentage(completed: number, planned: number): number | null {
@@ -83,7 +72,8 @@ export class MonitoringTabComponent extends LitElement {
     if (this.activeTab === tabName) {
       return;
     }
-    updateAppLocation(`${PAGE}/${tabName}`);
+    this.activeTab = tabName;
+    this.tabElement = this.getTabElement();
   }
 
   getTabElement(): TemplateResult {
@@ -128,8 +118,6 @@ export class MonitoringTabComponent extends LitElement {
       .monitoring-activity__geographic-coverage {
       }
 
-      .monitoring-activity__hact-visits {
-      }
       .visits-card {
         display: flex;
         justify-content: space-around;

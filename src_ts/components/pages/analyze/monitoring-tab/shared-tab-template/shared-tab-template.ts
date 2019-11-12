@@ -30,7 +30,7 @@ export class SharedTabTemplate extends LitElement {
                 .progressValue="${item.days_since_visit}"
                 .width="${this.calculateProgressBarWidth(item, WidthCalculationTargets.DAYS)}"
                 .labelValue="${'Days Since Last Visit'}"
-                .completedDivBackgroundColor="${this.computeCompletedDivBackgroundColor(item)}"
+                .completedDivBackgroundColor="${item.days_since_visit ? this.computeCompletedDivBackgroundColor(item) : 'green'}"
               >
               </column-item-progress-bar>
               <!--    Average days between visits indicator      -->
@@ -38,6 +38,7 @@ export class SharedTabTemplate extends LitElement {
                 .progressValue="${item.avg_days_between_visits}"
                 .width="${this.calculateProgressBarWidth(item, WidthCalculationTargets.AVG)}"
                 .labelValue="${'Average Days Between Visits'}"
+                .completedDivBackgroundColor="${item.avg_days_between_visits ? '#D8D8D8' : 'green'}"
               >
               </column-item-progress-bar>
             </div>

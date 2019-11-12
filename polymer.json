@@ -29,7 +29,10 @@
     "src/components/pages/analyze/monitoring-tab/monitoring-tab.js",
     "src/components/pages/analyze/monitoring-tab/partnership-tab/partnership-tab.js",
     "src/components/pages/analyze/monitoring-tab/pd-ssfa-tab/pd-ssfa-tab.js",
-    "src/components/pages/analyze/monitoring-tab/cp-output-tab/cp-output-tab.js"
+    "src/components/pages/analyze/monitoring-tab/cp-output-tab/cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js"
   ],
   "extraDependencies": [
     "manifest.json",

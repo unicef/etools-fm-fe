@@ -2,6 +2,7 @@ import {MonitoringTabComponent} from './monitoring-tab';
 import {html, TemplateResult} from 'lit-element';
 import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
+import './open-issues-action-points/open-issues-action-points';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -41,22 +42,15 @@ export function template(this: MonitoringTabComponent): TemplateResult {
           .activeTab="${this.activeTab}"
         ></etools-tabs>
         <div class="layout vertical card-content">
-          ${this.getTabElement()}
+          ${this.tabElement}
         </div>
       </section>
 
       <div class="monitoring-activity__item">
         <!--  Geographic coverage (map)  -->
         <geographic-coverage></geographic-coverage>
-        <!--  Visits table  -->
-        <section class="elevation page-content card-container monitoring-activity__hact-visits" elevation="1">
-          <div class="card-title-box with-bottom-line">
-            <div class="card-title">Visits Eligible for HACT Programmatic Visit</div>
-          </div>
-          <div class="layout vertical card-content">
-            some sort of testing
-          </div>
-        </section>
+        <!--  Open issues and Action points  -->
+        <open-issues-action-points></open-issues-action-points>
       </div>
     </div>
   `;

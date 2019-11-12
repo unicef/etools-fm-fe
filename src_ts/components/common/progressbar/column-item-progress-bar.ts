@@ -21,7 +21,7 @@ export class ColumnItemProgressBar extends LitElement {
           <div class="progressbar">
             <div class="progressbar-completed" style="${styleMap(this.widthComputedStyle)}"></div>
           </div>
-          <div class="progressbar-value">${this.progressValue}</div>
+          <div class="progressbar-value">${this.progressValue || 0}</div>
         </div>
       </div>
     `;

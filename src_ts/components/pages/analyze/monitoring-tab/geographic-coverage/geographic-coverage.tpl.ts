@@ -1,6 +1,5 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
 import {html, TemplateResult} from 'lit-element';
-import '../../../../common/location-widget/location-widget';
 
 export function template(this: GeographicCoverageComponent): TemplateResult {
   return html`
