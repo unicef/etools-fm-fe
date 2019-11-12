@@ -1,8 +1,10 @@
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
-import {outputsDataSelector} from '../../../redux/selectors/static-data.selectors';
+import {staticDataDynamic} from '../../../redux/selectors/static-data.selectors';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {LitElement} from 'lit-element';
+import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
+import {CP_OUTPUTS} from '../../../endpoints/endpoints-list';
 
 // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
 export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
@@ -24,13 +26,20 @@ export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T)
     connectedCallback(): void {
       super.connectedCallback();
       this.outputsUnsubscribe = store.subscribe(
-        outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
-          if (!outputs) {
-            return;
-          }
-          this.outputs = outputs;
-        })
+        staticDataDynamic(
+          (outputs?: EtoolsCpOutput[]) => {
+            if (!outputs) {
+              return;
+            }
+            this.outputs = outputs;
+          },
+          [CP_OUTPUTS]
+        )
       );
+      const data: IStaticDataState = (store.getState() as IRootState).staticData;
+      if (!data.outputs) {
+        store.dispatch<AsyncEffect>(loadStaticData(CP_OUTPUTS));
+      }
     }
 
     disconnectedCallback(): void {

@@ -16,6 +16,7 @@ export const PARTNERS: 'partners' = 'partners';
 export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
+export const PLANNING_OUTPUTS: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
@@ -89,6 +90,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     url: '/api/v2/reports/results/?result_type=output',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'cpOutputs'
+  },
+
+  [PLANNING_OUTPUTS]: {
+    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all'
   },
 
   [INTERVENTIONS]: {

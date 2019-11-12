@@ -44,6 +44,7 @@ interface IStaticDataState {
   outputs?: EtoolsCpOutput[];
   users?: User[];
   teamMembers?: User[];
+  planningOutputs?: EtoolsCpOutput[];
 }
 
 interface ISpecificLocationsState {

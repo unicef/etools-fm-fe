@@ -18,11 +18,15 @@ export const ACTIVITY_DETAILS_TRANSLATES: TranslateObject = {
     CP_OUTPUT: 'CP Output',
     INTERVENTION: 'Intervention',
     PARTNERS: 'Partners',
+    PARTNER_ORGANIZATION: 'Partner Organization',
     CP_OUTPUTS: 'CP Outputs',
+    CP_OUTPUTS_FOUND: `<%count%> CP Outputs were found:`,
+    INTERVENTIONS_FOUND: `<%count%> PD/SSFA were found:`,
     INTERVENTIONS: 'PD/SSFAs',
+    CONNECTED_ENTRIES: 'Connected entries to be added together with the selected PD/SSFA:',
     ADD_ENTRY: 'Add New Item',
     ADD_PARTNER: 'Add Partner',
     ADD_CP_OUTPUT: 'Add CP Output',
-    ADD_INTERVENTION: 'Add Intervention'
+    ADD_INTERVENTION: 'Add PD/SSFA'
   }
 };

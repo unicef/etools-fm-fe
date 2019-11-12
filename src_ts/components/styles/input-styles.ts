@@ -302,5 +302,19 @@ export const InputStyles: TemplateResult = html`
         line-height: 0;
       }
     }
+
+    .text-control {
+      padding: 14px;
+    }
+
+    .text-control label {
+      color: var(--gray-mid);
+      font-size: var(--paper-font-caption_-_font-size);
+      font-weight: var(--paper-font-caption_-_font-weight);
+    }
+
+    .text-control .value {
+      padding-bottom: 3px;
+    }
   </style>
 `;

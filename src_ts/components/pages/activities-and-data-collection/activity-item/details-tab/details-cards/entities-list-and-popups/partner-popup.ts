@@ -26,6 +26,10 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     fireEvent(this, 'response', {confirmed: true, response: this.partner});
   }
 
+  onClose(): void {
+    fireEvent(this, 'response', {confirmed: false});
+  }
+
   // language=HTML
   render(): TemplateResult {
     return html`
@@ -39,6 +43,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         dialog-title="${translate('ACTIVITY_DETAILS.ADD_PARTNER')}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.addPartner()}"
+        @close="${this.onClose}"
       >
         <div class="container layout vertical">
           <etools-dropdown
