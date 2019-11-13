@@ -32,3 +32,10 @@ type GeographicCoverage = {
   completed_visits: number;
   geom: LocationGeometry;
 };
+
+type OpenIssuesActionPoints = {
+  id: number;
+  name: string;
+  log_issues_count: number;
+  action_points_count: number;
+};

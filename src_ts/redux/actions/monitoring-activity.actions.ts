@@ -3,7 +3,10 @@ export enum MonitoringActivityActionTypes {
   SET_PARTNERS_COVERAGE = '[Monitoring activity Action]: SET_PARTNERS_COVERAGE',
   SET_INTERVENTIONS_COVERAGE = '[Monitoring activity Action]: SET_INTERVENTIONS_COVERAGE',
   SET_CP_OUTPUT_COVERAGE = '[Monitoring activity Action]: SET_CP_OUTPUT_COVERAGE',
-  SET_GEOGRAPHIC_COVERAGE = '[Monitoring activity Action]: SET_GEOGRAPHIC_COVERAGE'
+  SET_GEOGRAPHIC_COVERAGE = '[Monitoring activity Action]: SET_GEOGRAPHIC_COVERAGE',
+  SET_OPEN_ISSUES_PARTNERSHIP = '[Monitoring activity Action]: SET_OPEN_ISSUES_PARTNERSHIP',
+  SET_OPEN_ISSUES_CP_OUTPUT = '[Monitoring activity Action]: SET_OPEN_ISSUES_CP_OUTPUT',
+  SET_OPEN_ISSUES_LOCATION = '[Monitoring activity Action]: SET_OPEN_ISSUES_LOCATION'
 }
 
 export class SetOverallActivities {
@@ -36,9 +39,30 @@ export class SetGeographicCoverage {
   constructor(public payload: GeographicCoverage[]) {}
 }
 
+export class SetOpenIssuesPartnership {
+  readonly type: MonitoringActivityActionTypes.SET_OPEN_ISSUES_PARTNERSHIP =
+    MonitoringActivityActionTypes.SET_OPEN_ISSUES_PARTNERSHIP;
+  constructor(public payload: OpenIssuesActionPoints[]) {}
+}
+
+export class SetOpenIssuesCpOutput {
+  readonly type: MonitoringActivityActionTypes.SET_OPEN_ISSUES_CP_OUTPUT =
+    MonitoringActivityActionTypes.SET_OPEN_ISSUES_CP_OUTPUT;
+  constructor(public payload: OpenIssuesActionPoints[]) {}
+}
+
+export class SetOpenIssuesLocation {
+  readonly type: MonitoringActivityActionTypes.SET_OPEN_ISSUES_LOCATION =
+    MonitoringActivityActionTypes.SET_OPEN_ISSUES_LOCATION;
+  constructor(public payload: OpenIssuesActionPoints[]) {}
+}
+
 export type MonitoringActivityActions =
   | SetOverallActivities
   | SetPartnersCoverage
   | SetInterventionsCoverage
   | SetCpOutpurCoverage
-  | SetGeographicCoverage;
+  | SetGeographicCoverage
+  | SetOpenIssuesPartnership
+  | SetOpenIssuesCpOutput
+  | SetOpenIssuesLocation;

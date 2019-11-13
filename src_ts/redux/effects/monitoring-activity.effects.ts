@@ -5,15 +5,19 @@ import {
   MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE,
   MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE,
   MONITORING_ACTIVITY_OVERALL_STATISTICS,
-  MONITORING_ACTIVITY_PARTNERS_COVERAGE
+  MONITORING_ACTIVITY_PARTNERS_COVERAGE,
+  OPEN_ISSUES_CP_OUTPUT,
+  OPEN_ISSUES_LOCATIONS,
+  OPEN_ISSUES_PARTNERS
 } from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {
   SetCpOutpurCoverage,
   SetGeographicCoverage,
-  SetInterventionsCoverage,
+  SetInterventionsCoverage, SetOpenIssuesCpOutput, SetOpenIssuesLocation,
+  SetOpenIssuesPartnership,
   SetOverallActivities,
-  SetPartnersCoverage
+  SetPartnersCoverage,
 } from '../actions/monitoring-activity.actions';
 
 export function loadOverallStatistics(): (dispatch: Dispatch) => Promise<void> {
@@ -59,5 +63,38 @@ export function loadGeographicCoverageBySection(section: string): (dispatch: Dis
     return request<GeographicCoverage[]>(endpoint.url, {method: 'GET'}).then((response: GeographicCoverage[]) => {
       dispatch(new SetGeographicCoverage(response));
     });
+  };
+}
+
+export function loadOpenIssuesPartnership(): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(OPEN_ISSUES_PARTNERS);
+    return request<OpenIssuesActionPoints[]>(endpoint.url, {method: 'GET'}).then(
+      (response: OpenIssuesActionPoints[]) => {
+        dispatch(new SetOpenIssuesPartnership(response));
+      }
+    );
+  };
+}
+
+export function loadOpenIssuesCpOutput(): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(OPEN_ISSUES_CP_OUTPUT);
+    return request<OpenIssuesActionPoints[]>(endpoint.url, {method: 'GET'}).then(
+      (response: OpenIssuesActionPoints[]) => {
+        dispatch(new SetOpenIssuesCpOutput(response));
+      }
+    );
+  };
+}
+
+export function loadOpenIssuesLocations(): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(OPEN_ISSUES_LOCATIONS);
+    return request<OpenIssuesActionPoints[]>(endpoint.url, {method: 'GET'}).then(
+      (response: OpenIssuesActionPoints[]) => {
+        dispatch(new SetOpenIssuesLocation(response));
+      }
+    );
   };
 }

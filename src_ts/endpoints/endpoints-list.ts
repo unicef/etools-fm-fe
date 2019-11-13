@@ -43,6 +43,9 @@ export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInte
 export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' =
   'monitoringActivityCpOutputCoverage';
 export const GEOGRAPHIC_COVERAGE: 'geographicCoverage' = 'geographicCoverage';
+export const OPEN_ISSUES_PARTNERS: 'openIssuesPartners' = 'openIssuesPartners';
+export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
+export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -234,5 +237,17 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [GEOGRAPHIC_COVERAGE]: {
     template: '/api/v1/field-monitoring/analyze/coverage/geographic/?sections__in='
+  },
+
+  [OPEN_ISSUES_PARTNERS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/partners/'
+  },
+
+  [OPEN_ISSUES_CP_OUTPUT]: {
+    template: '/api/v1/field-monitoring/analyze/issues/interventions/'
+  },
+
+  [OPEN_ISSUES_LOCATIONS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/locations/'
   }
 };

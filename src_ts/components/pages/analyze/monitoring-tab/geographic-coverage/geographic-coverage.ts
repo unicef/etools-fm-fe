@@ -130,7 +130,7 @@ export class GeographicCoverageComponent extends LitElement {
   }
 
   static get styles(): CSSResult[] {
-    const monitoringTabStyles: CSSResult = css`
+    const geographicCoverageStyles: CSSResult = css`
       :host {
         --mark-no-visits-color: #ddf1bf;
         --mark-one-five-color: #9ed6b9;
@@ -198,7 +198,7 @@ export class GeographicCoverageComponent extends LitElement {
       pageLayoutStyles,
       FlexLayoutClasses,
       CardStyles,
-      monitoringTabStyles,
+      geographicCoverageStyles,
       leafletStyles
     ];
   }
