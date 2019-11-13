@@ -1,12 +1,13 @@
 import {html, customElement, TemplateResult} from 'lit-element';
 import {BaseFinding} from './base-finding';
-import '@polymer/paper-input/paper-input';
+import '@polymer/paper-input/paper-textarea';
 
 @customElement('text-finding')
 export class TextFinding extends BaseFinding<string> {
   protected controlTemplate(): TemplateResult {
     return html`
-      <paper-input
+      <paper-textarea
+        id="textarea"
         class="without-border"
         no-label-float
         .value="${this.value}"
@@ -14,7 +15,7 @@ export class TextFinding extends BaseFinding<string> {
         placeholder="-"
         ?disabled="${this.isReadonly}"
       >
-      </paper-input>
+      </paper-textarea>
     `;
   }
 }

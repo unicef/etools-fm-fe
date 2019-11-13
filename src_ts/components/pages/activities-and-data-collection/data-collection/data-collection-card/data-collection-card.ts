@@ -1,9 +1,9 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {clone} from 'ramda';
-import '../../../../common/layout/etools-card';
-import '@polymer/paper-input/paper-textarea';
 import './finding-types/text-finding';
-import {InputStyles} from '../../../../styles/input-styles';
+import './finding-types/number-finding';
+import './finding-types/scale-finding';
+import {template} from './data-collection-card.tpl';
 import {DataCollectionCardStyles} from './data-collection-card.styles';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {store} from '../../../../../redux/store';
@@ -13,7 +13,7 @@ import {
 } from '../../../../../redux/selectors/data-collection.selectors';
 import {SetEditedDCChecklistCard} from '../../../../../redux/actions/data-collection.actions';
 import {Unsubscribe} from 'redux';
-import {translate} from '../../../../../localization/localisation';
+import {BOOLEAN_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 
 @customElement('data-collection-card')
 export class DataCollectionCard extends LitElement {
@@ -21,6 +21,7 @@ export class DataCollectionCard extends LitElement {
   @property({type: String}) tabName: string = '';
   @property({type: Object}) overallInfo: DataCollectionOverall | null = null;
   @property({type: Array}) findings: DataCollectionFinding[] = [];
+  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
 
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
@@ -32,62 +33,7 @@ export class DataCollectionCard extends LitElement {
   private editedTabUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult | void {
-    return html`
-      ${InputStyles}
-      <etools-card
-        card-title="${this.tabName}"
-        is-collapsible
-        is-editable
-        ?edit="${this.isEditMode && !this.updateInProcess}"
-        ?hide-edit-button="${this.blockEdit}"
-        @start-edit="${() => store.dispatch(new SetEditedDCChecklistCard(this.cardId))}"
-        @save="${() => this.saveChanges()}"
-        @cancel="${() => this.cancelEdit()}"
-      >
-        <div slot="content">
-          <!-- Spinner -->
-          <etools-loading
-            ?active="${this.updateInProcess}"
-            loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
-          ></etools-loading>
-
-          <!-- Overall Finding field. Is Hidden if overallInfo property is null -->
-          ${this.overallInfo
-            ? html`
-                <div class="overall-finding">
-                  <paper-textarea
-                    id="details-input"
-                    class="without-border"
-                    .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
-                    max-rows="3"
-                    label="Overall finding"
-                    ?disabled="${!this.isEditMode}"
-                    placeholder="${this.isEditMode ? 'Enter Overall finding' : '-'}"
-                    @value-changed="${({detail}: CustomEvent) =>
-                      this.updateOverallFinding({narrative_finding: detail.value})}"
-                  ></paper-textarea>
-                </div>
-              `
-            : ''}
-
-          <!-- Findings table with different findings types -->
-          ${this.findings
-            .filter((finding: DataCollectionFinding) => finding.activity_question.question.answer_type === 'text')
-            .map(
-              (finding: DataCollectionFinding) => html`
-                <div class="finding-container">
-                  <text-finding
-                    .questionText="${finding.activity_question.question.text}"
-                    .isReadonly="${!this.isEditMode}"
-                    .value="${finding.value}"
-                    @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
-                  ></text-finding>
-                </div>
-              `
-            )}
-        </div>
-      </etools-card>
-    `;
+    return template.call(this);
   }
 
   connectedCallback(): void {
@@ -124,6 +70,48 @@ export class DataCollectionCard extends LitElement {
     super.disconnectedCallback();
     this.editedTabUnsubscribe();
     this.updateUnsubscribe();
+  }
+
+  protected getFindingTemplate(finding: DataCollectionFinding): TemplateResult {
+    switch (finding.activity_question.question.answer_type) {
+      case TEXT_TYPE:
+        return html`
+          <div class="finding-container">
+            <text-finding
+              .questionText="${finding.activity_question.question.text}"
+              .isReadonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            ></text-finding>
+          </div>
+        `;
+      case NUMBER_TYPE:
+        return html`
+          <div class="finding-container">
+            <number-finding
+              .questionText="${finding.activity_question.question.text}"
+              .isReadonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            ></number-finding>
+          </div>
+        `;
+      case BOOLEAN_TYPE:
+      case SCALE_TYPE:
+        return html`
+          <div class="finding-container">
+            <scale-finding
+              .questionText="${finding.activity_question.question.text}"
+              .options="${finding.activity_question.question.options}"
+              .isReadonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            ></scale-finding>
+          </div>
+        `;
+      default:
+        return html``;
+    }
   }
 
   /**
@@ -163,6 +151,24 @@ export class DataCollectionCard extends LitElement {
   }
 
   /**
+   * On overall finding input changes
+   * we need to perform update for cancelEdit() correct behaviour
+   */
+  protected updateOverallFinding(newData: Partial<DataCollectionOverall>): void {
+    const oldData: Partial<DataCollectionOverall> = this.overallInfo || {};
+    this.overallInfo = {...oldData, ...newData} as DataCollectionOverall;
+  }
+
+  /**
+   * On finding item input changes
+   * we need to run performUpdate for cancelEdit() correct behaviour
+   */
+  protected updateFinding(finding: DataCollectionFinding, value: any): void {
+    finding.value = value;
+    this.performUpdate();
+  }
+
+  /**
    * Compares narrative_finding field, returns null if narrative_finding is not changed
    */
   private getOverallInfoChanges(): Partial<DataCollectionOverall> | null {
@@ -189,24 +195,6 @@ export class DataCollectionCard extends LitElement {
       .filter((finding: DataCollectionFinding, index: number) => finding.value !== this.originalFindings[index].value)
       .map(({id, value}: DataCollectionFinding) => ({id, value}));
     return changes.length ? changes : null;
-  }
-
-  /**
-   * On overall finding input changes
-   * we need to perform update for cancelEdit() correct behaviour
-   */
-  private updateOverallFinding(newData: Partial<DataCollectionOverall>): void {
-    const oldData: Partial<DataCollectionOverall> = this.overallInfo || {};
-    this.overallInfo = {...oldData, ...newData} as DataCollectionOverall;
-  }
-
-  /**
-   * On finding item input changes
-   * we need to run performUpdate for cancelEdit() correct behaviour
-   */
-  private updateFinding(finding: DataCollectionFinding, value: any): void {
-    finding.value = value;
-    this.performUpdate();
   }
 
   static get styles(): CSSResultArray {

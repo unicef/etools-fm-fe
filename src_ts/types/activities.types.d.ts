@@ -72,6 +72,7 @@ interface IChecklistQuestion {
   is_hact: boolean;
   is_active: boolean;
   is_custom: boolean;
+  options: QuestionOption[];
 }
 
 interface IChecklistByMethods {

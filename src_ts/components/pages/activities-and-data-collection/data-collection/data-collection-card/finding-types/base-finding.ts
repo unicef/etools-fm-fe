@@ -12,15 +12,21 @@ export abstract class BaseFinding<T> extends LitElement {
     return html`
       ${InputStyles}
       <style>
+        paper-textarea {
+          --paper-input-container-input: {
+            font-size: 13px;
+          }
+        }
         paper-input {
           --paper-input-container-shared-input-style: {
             font-size: 13px;
+            width: 100%;
           }
         }
       </style>
 
-      <div class="finding-container layout horizontal start-justified center">
-        <div class="question flex-2">${this.questionTemplate()}</div>
+      <div class="finding-container layout horizontal start center-justified">
+        <div class="question flex-2 layout horizontal center">${this.questionTemplate()}</div>
         <div class="question-control flex-3">${this.controlTemplate()}</div>
       </div>
     `;
@@ -34,6 +40,7 @@ export abstract class BaseFinding<T> extends LitElement {
 
   protected valueChanged(newValue: T): void {
     if (newValue !== this.value) {
+      this.value = newValue;
       fireEvent(this, 'value-changed', {value: newValue});
     }
   }
@@ -54,6 +61,10 @@ export abstract class BaseFinding<T> extends LitElement {
 
         .finding-container {
           width: 100%;
+          min-height: 48px;
+        }
+
+        .question {
           min-height: 48px;
         }
 

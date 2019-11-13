@@ -37,6 +37,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private checklist: DataCollectionChecklist | null = null;
   @property() private findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
   private activityDetails: IActivityDetails | null = null;
+  private tabIsReadonly: boolean = true;
 
   private routeDetailsUnsubscribe!: Unsubscribe;
   private checklistUnsubscribe!: Unsubscribe;
@@ -66,6 +67,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             .tabName="${name}"
             .overallInfo="${overall}"
             .findings="${findings}"
+            ?readonly="${this.tabIsReadonly}"
             @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
           ></data-collection-card>
         `;
@@ -186,6 +188,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       return;
     }
 
+    this.tabIsReadonly = !this.activityDetails.permissions.edit.started_checklist_set;
     store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId));
 
     const dataCollectionState: IDataCollectionState = store.getState().dataCollection;
