@@ -92,10 +92,10 @@ EtoolsRouter
         (params: IRouteCallbackParams): IRouteDetails => {
             return {
                 routeName: 'analyze',
-                subRouteName: params.matchDetails[1],
+                subRouteName: params.matchDetails[1], // tab name
                 path: params.matchDetails[0],
-                queryParams: null,
-                queryParamsString: null,
+                queryParams: params.queryParams,
+                queryParamsString: params.queryParamsString,
                 params: null
             };
         })

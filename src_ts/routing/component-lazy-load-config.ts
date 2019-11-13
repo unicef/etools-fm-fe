@@ -49,7 +49,9 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
         'components/pages/analyze/analyze-page.js'
     ],
     'analyze_country-overview': [
-        'components/pages/analyze/analyze-page.js'
+        'components/pages/analyze/analyze-page.js',
+        'components/pages/analyze/co-overview-tab/co-overview-tab.js',
+        'components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js'
     ]
 
 };

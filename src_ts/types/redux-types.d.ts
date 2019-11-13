@@ -13,6 +13,7 @@ interface IRootState {
     activityChecklist: IActivityChecklistState;
     attachmentsList: IAttachmentsListState;
     widgetLocations: IWidgetLocationsState;
+    fullReport: IFullReportState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -43,6 +44,7 @@ interface IStaticDataState {
     outputs?: EtoolsCpOutput[];
     users?: User[];
     teamMembers?: User[];
+    cpOutcomes?: EtoolsCpOutcome[];
 }
 
 interface ISpecificLocationsState {
@@ -76,6 +78,9 @@ interface IQuestionTemplatesState {
 interface IActivitiesState {
     listData: null | IListData<IListActivity>;
 }
+
+// TODO: add FullReport interface here!!!
+type IFullReportState = any | null;
 
 interface IActivityChecklistState {
     data: null | IChecklistItem[];

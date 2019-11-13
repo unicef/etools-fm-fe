@@ -23,7 +23,9 @@
     "src/components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js",
 
-    "src/components/pages/analyze/analyze-page.js"
+    "src/components/pages/analyze/analyze-page.js",
+    "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
   ],
   "extraDependencies": [
     "manifest.json",

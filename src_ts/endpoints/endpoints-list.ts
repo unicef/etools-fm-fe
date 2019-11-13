@@ -33,6 +33,7 @@ export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityR
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
+export const FULL_REPORT: 'fullReport' = 'fullReport';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
     [PROFILE_ENDPOINT]: {
@@ -53,6 +54,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
         template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
         exp: 60 * 60 * 1000, // 1 hour
         cacheTableName: 'cpOutcomes'
+    },
+
+    [FULL_REPORT]: {
+        template: '/api/reports/results/<%=id%>/full/'
     },
 
     [LOCATIONS_ENDPOINT]: {

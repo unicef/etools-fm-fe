@@ -6,6 +6,9 @@ export const locationsDataSelector: Selector<EtoolsLightLocation[] | undefined> 
 export const outputsDataSelector: Selector<EtoolsCpOutput[] | undefined> =
     select<EtoolsCpOutput[] | undefined>((store: IRootState) => store.staticData.outputs);
 
+export const cpOutcomeDataSelector: Selector<EtoolsCpOutcome[] | undefined> =
+    select<EtoolsCpOutcome[] | undefined>((store: IRootState) => store.staticData.cpOutcomes);
+
 export const partnersDataSelector: Selector<EtoolsPartner[] | undefined> =
     select<EtoolsPartner[] | undefined>((store: IRootState) => store.staticData.partners);
 

@@ -69,7 +69,7 @@ export class AnalyzePage extends LitElement {
             case MONITORING_ACTIVITY:
                 return html`Monitoring Activity`;
             case COUNTRY_OVERVIEW:
-                return html`Country Overview`;
+                return html`<co-overview-tab></co-overview-tab>`;
             default:
                 return html`Tab Not Found`;
         }
