@@ -121,10 +121,13 @@ interface IMonitoringActivityState {
   partnersCoverage: PartnersCoverage[];
   interventionsCoverage: InterventionsCoverage[];
   cpOutputCoverage: CpOutputCoverage[];
+  sections: EtoolsSection[];
   geographicCoverage: GeographicCoverage[];
   openIssuesPartnership: OpenIssuesActionPoints[];
   openIssuesCpOutput: OpenIssuesActionPoints[];
   openIssuesLocation: OpenIssuesActionPoints[];
+  lastActivatedTab: string;
+  hactVisits: HactVisits[];
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

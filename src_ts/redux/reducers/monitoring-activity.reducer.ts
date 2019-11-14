@@ -1,6 +1,8 @@
 import {Reducer} from 'redux';
 import {MonitoringActivityActions, MonitoringActivityActionTypes} from '../actions/monitoring-activity.actions';
 
+const PARTNER_TAB: string = 'partner';
+
 const INITIAL_STATE: IMonitoringActivityState = {
   overallActivities: {
     visits_completed: 0,
@@ -9,10 +11,13 @@ const INITIAL_STATE: IMonitoringActivityState = {
   partnersCoverage: [],
   interventionsCoverage: [],
   cpOutputCoverage: [],
+  sections: [],
   geographicCoverage: [],
   openIssuesPartnership: [],
   openIssuesCpOutput: [],
-  openIssuesLocation: []
+  openIssuesLocation: [],
+  lastActivatedTab: PARTNER_TAB,
+  hactVisits: []
 };
 
 export const monitoringActivities: Reducer<IMonitoringActivityState, any> = (
@@ -28,6 +33,8 @@ export const monitoringActivities: Reducer<IMonitoringActivityState, any> = (
       return {...state, interventionsCoverage: action.payload};
     case MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE:
       return {...state, cpOutputCoverage: action.payload};
+    case MonitoringActivityActionTypes.SET_SECTIONS:
+      return {...state, sections: action.payload};
     case MonitoringActivityActionTypes.SET_GEOGRAPHIC_COVERAGE:
       return {...state, geographicCoverage: action.payload};
     case MonitoringActivityActionTypes.SET_OPEN_ISSUES_PARTNERSHIP:
@@ -36,6 +43,10 @@ export const monitoringActivities: Reducer<IMonitoringActivityState, any> = (
       return {...state, openIssuesCpOutput: action.payload};
     case MonitoringActivityActionTypes.SET_OPEN_ISSUES_LOCATION:
       return {...state, openIssuesLocation: action.payload};
+    case MonitoringActivityActionTypes.SWITCH_TAB:
+      return {...state, lastActivatedTab: action.payload};
+    case MonitoringActivityActionTypes.SET_HACT_VISITS:
+      return {...state, hactVisits: action.payload};
     default:
       return state;
   }

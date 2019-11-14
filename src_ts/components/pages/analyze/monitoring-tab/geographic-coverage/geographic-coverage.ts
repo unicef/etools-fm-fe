@@ -10,11 +10,9 @@ import {LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
-import {loadGeographicCoverageBySection} from '../../../../../redux/effects/monitoring-activity.effects';
+import {loadGeographicCoverageBySection, loadSections} from '../../../../../redux/effects/monitoring-activity.effects';
 import {geographicCoverageSelector} from '../../../../../redux/selectors/geographic-coverage.selectors';
-import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
-import {SECTIONS} from '../../../../../endpoints/endpoints-list';
-import {sectionsDataSelector} from '../../../../../redux/selectors/static-data.selectors';
+import {geoSectionsSelector} from '../../../../../redux/selectors/geo-sections.selectors';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 
@@ -24,15 +22,15 @@ export class GeographicCoverageComponent extends LitElement {
   @property() sortingOptions: DefaultDropdownOption<number>[] = [];
   @query('#geomap') private mapElement!: HTMLElement;
   private polygon: Polygon | null = null;
-  private MapHelper!: MapHelper;
+  private mapHelper!: MapHelper;
   private readonly geographicCoverageUnsubscribe!: Unsubscribe;
   private readonly sectionsUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
-    store.dispatch<AsyncEffect>(loadStaticData(SECTIONS));
+    store.dispatch<AsyncEffect>(loadSections());
     this.sectionsUnsubscribe = store.subscribe(
-      sectionsDataSelector((sections: EtoolsSection[] | undefined) => {
+      geoSectionsSelector((sections: EtoolsSection[] | undefined) => {
         this.sortingOptions = sections
           ? sections.map(
               (item: EtoolsSection): DefaultDropdownOption => {
@@ -51,7 +49,7 @@ export class GeographicCoverageComponent extends LitElement {
       geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
         geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item, this.getPolygonOptions(item)));
         if (geographicCoverage.length) {
-          this.MapHelper.map!.flyToBounds(this.getReversedCoordinates(geographicCoverage[0]), {maxZoom: 6});
+          this.mapHelper.map!.flyToBounds(this.getReversedCoordinates(geographicCoverage[0]), {maxZoom: 6});
         }
       })
     );
@@ -98,11 +96,11 @@ export class GeographicCoverageComponent extends LitElement {
   }
 
   initMap(): void {
-    this.MapHelper = new MapHelper();
-    this.MapHelper.initMap(this.mapElement);
+    this.mapHelper = new MapHelper();
+    this.mapHelper.initMap(this.mapElement);
     const reversedCoords: LatLngTuple = DEFAULT_COORDINATES.reverse() as LatLngTuple;
     const zoom: number = 6;
-    this.MapHelper.map!.setView(reversedCoords, zoom);
+    this.mapHelper.map!.setView(reversedCoords, zoom);
   }
 
   disconnectedCallback(): void {
@@ -119,7 +117,7 @@ export class GeographicCoverageComponent extends LitElement {
   private drawPolygons(location: GeographicCoverage, polygonOptions: PolylineOptions): void {
     const reversedCoordinates: CoordinatesArray[] = this.getReversedCoordinates(location);
     this.polygon = L.polygon(reversedCoordinates, polygonOptions);
-    this.polygon.addTo(this.MapHelper.map!);
+    this.polygon.addTo(this.mapHelper.map!);
   }
 
   private getReversedCoordinates(location: GeographicCoverage): CoordinatesArray[] {

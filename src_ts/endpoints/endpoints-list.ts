@@ -46,6 +46,7 @@ export const GEOGRAPHIC_COVERAGE: 'geographicCoverage' = 'geographicCoverage';
 export const OPEN_ISSUES_PARTNERS: 'openIssuesPartners' = 'openIssuesPartners';
 export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
 export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
+export const HACT_VISITS: 'hactVisits' = 'hactVisits';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -249,5 +250,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [OPEN_ISSUES_LOCATIONS]: {
     template: '/api/v1/field-monitoring/analyze/issues/locations/'
+  },
+
+  [HACT_VISITS]: {
+    template: '/api/v1/field-monitoring/analyze/hact/'
   }
 };

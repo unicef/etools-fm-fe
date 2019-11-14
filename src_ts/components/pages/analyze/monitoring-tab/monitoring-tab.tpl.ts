@@ -4,6 +4,7 @@ import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
 import './open-issues-action-points/open-issues-action-points';
 import './shared-section-with-tabs-template/shared-section-with-tabs-template';
+import './visits-eligible-for-hact/visits-eligible-for-hact';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -38,13 +39,20 @@ export function template(this: MonitoringTabComponent): TemplateResult {
       <div class="monitoring-activity__item">
         <!--  Geographic coverage (map)  -->
         <geographic-coverage></geographic-coverage>
-        <!--  Open issues and Action points  -->
-        <shared-section-with-tabs-template
-          .title="${'Open Issues and Action Points'}"
-          .pageTabs="${this.openIssuesPageTabs}"
-          .activeTab="${this.openIssuesActiveTab}"
-          .tabContentMap="${this.openIssuesContentMap}"
-        ></shared-section-with-tabs-template>
+        ${this.isHactVisitSectionActivated
+          ? html`
+              <!--  Open issues and Action points  -->
+              <shared-section-with-tabs-template
+                .title="${'Open Issues and Action Points'}"
+                .pageTabs="${this.openIssuesPageTabs}"
+                .activeTab="${this.openIssuesActiveTab}"
+                .tabContentMap="${this.openIssuesContentMap}"
+              ></shared-section-with-tabs-template>
+            `
+          : html`
+              <!--  Visits section  -->
+              <visits-eligible-for-hact></visits-eligible-for-hact>
+            `}
       </div>
     </div>
   `;

@@ -39,3 +39,17 @@ type OpenIssuesActionPoints = {
   log_issues_count: number;
   action_points_count: number;
 };
+
+type HactVisitsActivity = {
+  name: string;
+  cp_outputs: string;
+  interventions: string;
+  end_date: string;
+};
+
+type HactVisits = {
+  id: number;
+  name: string;
+  visits: HactVisitsActivity[];
+  visits_count: number;
+};

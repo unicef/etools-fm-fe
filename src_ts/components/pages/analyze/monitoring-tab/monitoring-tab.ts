@@ -10,12 +10,14 @@ import {monitoringActivities} from '../../../../redux/reducers/monitoring-activi
 import {loadOverallStatistics} from '../../../../redux/effects/monitoring-activity.effects';
 import {overallActivitiesSelector} from '../../../../redux/selectors/overall-activities.selectors';
 import {Unsubscribe} from 'redux';
+import {lastActivatedTabSelector} from '../../../../redux/selectors/last-activated-tab.selectors';
 
 store.addReducers({monitoringActivities});
 
 const PARTNER_TAB: string = 'partner';
 const PD_SSFA_TAB: string = 'pd-ssfa';
 const CP_OUTPUT_TAB: string = 'cp-output';
+const COVERAGE_TABS: string[] = [PARTNER_TAB, PD_SSFA_TAB, CP_OUTPUT_TAB];
 
 const OPEN_ISSUES_PARTNER_TAB: string = 'open-issues-partner';
 const OPEN_ISSUES_CP_OUTPUT_TAB: string = 'open-issues-cp-output';
@@ -97,12 +99,14 @@ export class MonitoringTabComponent extends LitElement {
       `
     ]
   ]);
-  @property() coverageActiveTab: string = PARTNER_TAB;
-  @property() openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
+  coverageActiveTab: string = PARTNER_TAB;
+  openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
+  @property() isHactVisitSectionActivated: boolean = this.coverageActiveTab == PARTNER_TAB;
   @property() completed: number = 0;
   @property() planned: number = 0;
 
   private readonly overallActivitiesUnsubscribe: Unsubscribe;
+  private readonly lastActivatedTabUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -111,6 +115,16 @@ export class MonitoringTabComponent extends LitElement {
       overallActivitiesSelector((overallActivities: OverallActivities) => {
         this.completed = overallActivities.visits_completed;
         this.planned = overallActivities.visits_planned;
+      })
+    );
+    this.lastActivatedTabUnsubscribe = store.subscribe(
+      lastActivatedTabSelector((lastActivatedTab: string) => {
+        if (COVERAGE_TABS.includes(lastActivatedTab)) {
+          this.coverageActiveTab = lastActivatedTab;
+        } else {
+          this.openIssuesActiveTab = lastActivatedTab;
+        }
+        this.isHactVisitSectionActivated = this.coverageActiveTab != PARTNER_TAB;
       })
     );
   }
@@ -122,6 +136,7 @@ export class MonitoringTabComponent extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.overallActivitiesUnsubscribe();
+    this.lastActivatedTabUnsubscribe();
   }
 
   getCompletedPercentage(completed: number, planned: number): number | null {

@@ -5,6 +5,8 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
+import {store} from '../../../../../redux/store';
+import {SwitchTab} from '../../../../../redux/actions/monitoring-activity.actions';
 
 @customElement('shared-section-with-tabs-template')
 export class SharedSectionWithTabsTemplate extends LitElement {
@@ -47,6 +49,7 @@ export class SharedSectionWithTabsTemplate extends LitElement {
     }
     this.activeTab = tabName;
     this.tabElement = this.getTabElement();
+    store.dispatch(new SwitchTab(this.activeTab));
   }
 
   getTabElement(): TemplateResult {

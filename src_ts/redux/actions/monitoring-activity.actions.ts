@@ -3,10 +3,13 @@ export enum MonitoringActivityActionTypes {
   SET_PARTNERS_COVERAGE = '[Monitoring activity Action]: SET_PARTNERS_COVERAGE',
   SET_INTERVENTIONS_COVERAGE = '[Monitoring activity Action]: SET_INTERVENTIONS_COVERAGE',
   SET_CP_OUTPUT_COVERAGE = '[Monitoring activity Action]: SET_CP_OUTPUT_COVERAGE',
+  SET_SECTIONS = '[Monitoring activity Action]: SET_SECTIONS',
   SET_GEOGRAPHIC_COVERAGE = '[Monitoring activity Action]: SET_GEOGRAPHIC_COVERAGE',
   SET_OPEN_ISSUES_PARTNERSHIP = '[Monitoring activity Action]: SET_OPEN_ISSUES_PARTNERSHIP',
   SET_OPEN_ISSUES_CP_OUTPUT = '[Monitoring activity Action]: SET_OPEN_ISSUES_CP_OUTPUT',
-  SET_OPEN_ISSUES_LOCATION = '[Monitoring activity Action]: SET_OPEN_ISSUES_LOCATION'
+  SET_OPEN_ISSUES_LOCATION = '[Monitoring activity Action]: SET_OPEN_ISSUES_LOCATION',
+  SWITCH_TAB = '[Monitoring activity Action]: SWITCH_TAB',
+  SET_HACT_VISITS = '[Monitoring activity Action]: SET_HACT_VISITS'
 }
 
 export class SetOverallActivities {
@@ -27,10 +30,15 @@ export class SetInterventionsCoverage {
   constructor(public payload: InterventionsCoverage[]) {}
 }
 
-export class SetCpOutpurCoverage {
+export class SetCpOutputCoverage {
   readonly type: MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE =
     MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE;
   constructor(public payload: CpOutputCoverage[]) {}
+}
+
+export class SetSections {
+  readonly type: MonitoringActivityActionTypes.SET_SECTIONS = MonitoringActivityActionTypes.SET_SECTIONS;
+  constructor(public payload: EtoolsSection[]) {}
 }
 
 export class SetGeographicCoverage {
@@ -57,12 +65,25 @@ export class SetOpenIssuesLocation {
   constructor(public payload: OpenIssuesActionPoints[]) {}
 }
 
+export class SwitchTab {
+  readonly type: MonitoringActivityActionTypes.SWITCH_TAB = MonitoringActivityActionTypes.SWITCH_TAB;
+  constructor(public payload: string) {}
+}
+
+export class SetHactVisits {
+  readonly type: MonitoringActivityActionTypes.SET_HACT_VISITS = MonitoringActivityActionTypes.SET_HACT_VISITS;
+  constructor(public payload: HactVisits[]) {}
+}
+
 export type MonitoringActivityActions =
   | SetOverallActivities
   | SetPartnersCoverage
   | SetInterventionsCoverage
-  | SetCpOutpurCoverage
+  | SetCpOutputCoverage
+  | SetSections
   | SetGeographicCoverage
   | SetOpenIssuesPartnership
   | SetOpenIssuesCpOutput
-  | SetOpenIssuesLocation;
+  | SetOpenIssuesLocation
+  | SwitchTab
+  | SetHactVisits;

@@ -2,22 +2,26 @@ import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
   GEOGRAPHIC_COVERAGE,
+  HACT_VISITS,
   MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE,
   MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE,
   MONITORING_ACTIVITY_OVERALL_STATISTICS,
   MONITORING_ACTIVITY_PARTNERS_COVERAGE,
   OPEN_ISSUES_CP_OUTPUT,
   OPEN_ISSUES_LOCATIONS,
-  OPEN_ISSUES_PARTNERS
+  OPEN_ISSUES_PARTNERS, SECTIONS,
 } from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {
-  SetCpOutpurCoverage,
+  SetCpOutputCoverage,
   SetGeographicCoverage,
-  SetInterventionsCoverage, SetOpenIssuesCpOutput, SetOpenIssuesLocation,
+  SetHactVisits,
+  SetInterventionsCoverage,
+  SetOpenIssuesCpOutput,
+  SetOpenIssuesLocation,
   SetOpenIssuesPartnership,
   SetOverallActivities,
-  SetPartnersCoverage,
+  SetPartnersCoverage, SetSections,
 } from '../actions/monitoring-activity.actions';
 
 export function loadOverallStatistics(): (dispatch: Dispatch) => Promise<void> {
@@ -51,7 +55,16 @@ export function loadCpOutputCoverage(): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const endpoint: IResultEndpoint = getEndpoint(MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE);
     return request<CpOutputCoverage[]>(endpoint.url, {method: 'GET'}).then((response: CpOutputCoverage[]) => {
-      dispatch(new SetCpOutpurCoverage(response));
+      dispatch(new SetCpOutputCoverage(response));
+    });
+  };
+}
+
+export function loadSections(): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(SECTIONS);
+    return request<EtoolsSection[]>(endpoint.url, {method: 'GET'}).then((response: EtoolsSection[]) => {
+      dispatch(new SetSections(response));
     });
   };
 }
@@ -96,5 +109,14 @@ export function loadOpenIssuesLocations(): (dispatch: Dispatch) => Promise<void>
         dispatch(new SetOpenIssuesLocation(response));
       }
     );
+  };
+}
+
+export function loadHactVisits(): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(HACT_VISITS);
+    return request<HactVisits[]>(endpoint.url, {method: 'GET'}).then((response: HactVisits[]) => {
+      dispatch(new SetHactVisits(response));
+    });
   };
 }
