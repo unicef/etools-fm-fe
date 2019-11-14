@@ -1,3 +1,5 @@
-import { select } from './create-selectors';
+import {select} from './create-selectors';
 
-export const routeDetailsSelector: Selector<IRouteDetails> = select<IRouteDetails>((store: IRootState) => store.app.routeDetails);
+export const routeDetailsSelector: Selector<IRouteDetails> = select<IRouteDetails>(
+  (store: IRootState) => store.app.routeDetails
+);

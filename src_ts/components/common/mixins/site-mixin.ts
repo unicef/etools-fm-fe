@@ -1,36 +1,40 @@
-import { store } from '../../../redux/store';
-import { sitesSelector } from '../../../redux/selectors/site-specific-locations.selectors';
-import { locationsInvert } from '../../pages/settings/sites-tab/locations-invert';
-import { Unsubscribe } from 'redux';
-import { LitElement } from 'lit-element';
-import { PropertyDeclarations } from 'lit-element/src/lib/updating-element';
+import {store} from '../../../redux/store';
+import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
+import {locationsInvert} from '../../pages/settings/sites-tab/locations-invert';
+import {Unsubscribe} from 'redux';
+import {LitElement} from 'lit-element';
+import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
-// tslint:disable-next-line:typedef
-export const SiteMixin = <T extends Constructor<LitElement>>(superclass: T) => class extends superclass {
-    public locations: IGroupedSites[] = [];
+// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+export const SiteMixin = <T extends Constructor<LitElement>>(superclass: T) =>
+  class extends superclass {
+    locations: IGroupedSites[] = [];
     private sitesUnsubscribe!: Unsubscribe;
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.sitesUnsubscribe = store.subscribe(sitesSelector((sites: Site[] | null) => {
-            if (!sites) {
-                return;
-            }
-            this.locations = locationsInvert(sites);
-        }));
+    static get properties(): PropertyDeclarations {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      const superProps: PropertyDeclarations = super.properties;
+      return {
+        ...superProps,
+        locations: {type: Array}
+      };
     }
 
-    public disconnectedCallback(): void {
-        super.disconnectedCallback && super.disconnectedCallback();
-        this.sitesUnsubscribe();
+    connectedCallback(): void {
+      super.connectedCallback();
+      this.sitesUnsubscribe = store.subscribe(
+        sitesSelector((sites: Site[] | null) => {
+          if (!sites) {
+            return;
+          }
+          this.locations = locationsInvert(sites);
+        })
+      );
     }
 
-    public static get properties(): PropertyDeclarations {
-        // @ts-ignore
-        const superProps: PropertyDeclarations = super.properties;
-        return {
-            ...superProps,
-            locations: { type: Array }
-        };
+    disconnectedCallback(): void {
+      super.disconnectedCallback && super.disconnectedCallback();
+      this.sitesUnsubscribe();
     }
-};
+  };

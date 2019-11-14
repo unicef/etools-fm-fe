@@ -16,6 +16,7 @@ export const PARTNERS: 'partners' = 'partners';
 export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
+export const PLANNING_OUTPUTS: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
@@ -33,177 +34,192 @@ export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityR
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
+export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
+export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
 export const FULL_REPORT: 'fullReport' = 'fullReport';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
-    [PROFILE_ENDPOINT]: {
-        url: '/api/v3/users/profile/'
-    },
+  [PROFILE_ENDPOINT]: {
+    url: '/api/v3/users/profile/'
+  },
 
-    [USERS]: {
-        url: '/api/v1/field-monitoring/planning/users/?page_size=all',
-        exp: 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'users'
-    },
+  [USERS]: {
+    url: '/api/v1/field-monitoring/planning/users/?page_size=all',
+    exp: 60 * 60 * 1000, // 1 hour
+    cacheTableName: 'users'
+  },
 
-    [TEAM_MEMBERS]: {
-        template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
-    },
+  [TEAM_MEMBERS]: {
+    template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
+  },
 
-    [CP_OUTCOMES_ENDPOINT]: {
-        template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
-        exp: 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'cpOutcomes'
-    },
+  [CP_OUTCOMES_ENDPOINT]: {
+    template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
+    exp: 60 * 60 * 1000, // 1 hour
+    cacheTableName: 'cpOutcomes'
+  },
 
-    [FULL_REPORT]: {
-        template: '/api/reports/results/<%=id%>/full/'
-    },
+  [FULL_REPORT]: {
+    template: '/api/reports/results/<%=id%>/full/'
+  },
 
-    [LOCATIONS_ENDPOINT]: {
-        url: '/api/locations-light/',
-        exp: 25 * 60 * 60 * 1000, // 25h
-        cacheTableName: 'locations'
-    },
+  [LOCATIONS_ENDPOINT]: {
+    url: '/api/locations-light/',
+    exp: 25 * 60 * 60 * 1000, // 25h
+    cacheTableName: 'locations'
+  },
 
-    [CHANGE_COUNTRY]: {
-        url: '/api/v3/users/changecountry/'
-    },
+  [CHANGE_COUNTRY]: {
+    url: '/api/v3/users/changecountry/'
+  },
 
-    [UNICEF_USER]: {
-        url: '/api/v3/users/?verbosity=minimal',
-        exp: 60 * 60 * 1000, // 1h
-        cachingKey: 'unicefUsers'
-    },
+  [UNICEF_USER]: {
+    url: '/api/v3/users/?verbosity=minimal',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'unicefUsers'
+  },
 
-    [PARTNERS]: {
-        url: '/api/v2/partners/',
-        exp: 60 * 60 * 1000, // 1h
-        cachingKey: 'partners'
-    },
+  [PARTNERS]: {
+    url: '/api/v2/partners/',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'partners'
+  },
 
-    [TPM_PARTNERS]: {
-        url: '/api/tpm/partners/?page_size=all',
-        exp: 60 * 60 * 1000, // 1h
-        cachingKey: 'tpm_partners'
-    },
+  [TPM_PARTNERS]: {
+    url: '/api/tpm/partners/?page_size=all',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'tpm_partners'
+  },
 
-    [CP_OUTPUTS]: {
-        url: '/api/v2/reports/results/?result_type=output',
-        exp: 60 * 60 * 1000, // 1h
-        cachingKey: 'cpOutputs'
-    },
+  [CP_OUTPUTS]: {
+    url: '/api/v2/reports/results/?result_type=output',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'cpOutputs'
+  },
 
-    [INTERVENTIONS]: {
-        url: '/api/v2/interventions/',
-        exp: 60 * 60 * 1000, // 1h
-        cachingKey: 'interventions'
-    },
+  [PLANNING_OUTPUTS]: {
+    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all'
+  },
 
-    [SITES_EXPORT]: {
-        url: '/api/v1/field-monitoring/settings/sites/export/'
-    },
+  [INTERVENTIONS]: {
+    url: '/api/v2/interventions/',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'interventions'
+  },
 
-    [SITES_LIST]: {
-        url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
-    },
+  [SITES_EXPORT]: {
+    url: '/api/v1/field-monitoring/settings/sites/export/'
+  },
 
-    [SITE_DETAILS]: {
-        template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
-    },
+  [SITES_LIST]: {
+    url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
+  },
 
-    [CURRENT_WORKSPACE]: {
-        url: '/api/v1/field-monitoring/settings/locations/country/'
-    },
+  [SITE_DETAILS]: {
+    template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
+  },
 
-    [QUESTIONS_LIST]: {
-        url: '/api/v1/field-monitoring/settings/questions/'
-    },
+  [CURRENT_WORKSPACE]: {
+    url: '/api/v1/field-monitoring/settings/locations/country/'
+  },
 
-    [QUESTIONS_DETAILS]: {
-        template: '/api/v1/field-monitoring/settings/questions/<%=id%>/'
-    },
+  [QUESTIONS_LIST]: {
+    url: '/api/v1/field-monitoring/settings/questions/'
+  },
 
-    [CATEGORIES]: {
-        url: '/api/v1/field-monitoring/settings/categories/?page_size=all',
-        exp: 24 * 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'cpOutcomes'
-    },
+  [QUESTIONS_DETAILS]: {
+    template: '/api/v1/field-monitoring/settings/questions/<%=id%>/'
+  },
 
-    [SECTIONS]: {
-        url: '/api/v2/reports/sections/',
-        exp: 24 * 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'cpOutcomes'
-    },
+  [CATEGORIES]: {
+    url: '/api/v1/field-monitoring/settings/categories/?page_size=all',
+    exp: 24 * 60 * 60 * 1000, // 1 hour
+    cacheTableName: 'cpOutcomes'
+  },
 
-    [METHODS]: {
-        url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
-        exp: 24 * 60 * 60 * 1000, // 1 hour
-        cacheTableName: 'cpOutcomes'
-    },
+  [SECTIONS]: {
+    url: '/api/v2/reports/sections/',
+    exp: 24 * 60 * 60 * 1000, // 1 hour
+    cacheTableName: 'cpOutcomes'
+  },
 
-    [QUESTION_TEMPLATES]: {
-        template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/'
-    },
+  [METHODS]: {
+    url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
+    exp: 24 * 60 * 60 * 1000, // 1 hour
+    cacheTableName: 'cpOutcomes'
+  },
 
-    [QUESTION_TEMPLATES_WITH_TARGET]: {
-        template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/target/<%=target%>/'
-    },
+  [QUESTION_TEMPLATES]: {
+    template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/'
+  },
 
-    [RATIONALE]: {
-        template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
-    },
+  [QUESTION_TEMPLATES_WITH_TARGET]: {
+    template: '/api/v1/field-monitoring/planning/questions/templates/<%=level%>/target/<%=target%>/'
+  },
 
-    [RATIONALE_ATTACHMENTS]: {
-        url: '/api/v1/field-monitoring/settings/attachments/'
-    },
+  [RATIONALE]: {
+    template: '/api/v1/field-monitoring/planning/year-plan/<%=year%>/'
+  },
 
-    [ACTIVITY_RELATED_DOCUMENTS]: {
-        template: '/api/v1/field-monitoring/planning/activities/<%=id%>/attachments/'
-    },
+  [RATIONALE_ATTACHMENTS]: {
+    url: '/api/v1/field-monitoring/settings/attachments/'
+  },
 
-    [ACTIVITY_REPORT_ATTACHMENTS]: {
-        template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/attachments/'
-    },
+  [ACTIVITY_RELATED_DOCUMENTS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=id%>/attachments/'
+  },
 
-    [LOG_ISSUES]: {
-        url: '/api/v1/field-monitoring/settings/log-issues/'
-    },
+  [ACTIVITY_REPORT_ATTACHMENTS]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/attachments/'
+  },
 
-    [LOG_ISSUES_DETAILS]: {
-        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/'
-    },
+  [LOG_ISSUES]: {
+    url: '/api/v1/field-monitoring/settings/log-issues/'
+  },
 
-    [LOG_ISSUES_ATTACHMENTS]: {
-        template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
-    },
+  [LOG_ISSUES_DETAILS]: {
+    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/'
+  },
 
-    [LOG_ISSUES_ATTACHMENTS_DETAILS]: {
-        template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>/'
-    },
+  [LOG_ISSUES_ATTACHMENTS]: {
+    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
+  },
 
-    [ACTIVITIES_LIST]: {
-        template: '/api/v1/field-monitoring/planning/activities/'
-    },
+  [LOG_ISSUES_ATTACHMENTS_DETAILS]: {
+    template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>/'
+  },
 
-    [WIDGET_LOCATIONS]: {
-        url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
-    },
+  [ACTIVITIES_LIST]: {
+    template: '/api/v1/field-monitoring/planning/activities/'
+  },
 
-    [WIDGET_LOCATION_PATH]: {
-        template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
-    },
+  [WIDGET_LOCATIONS]: {
+    url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
+  },
 
-    [ACTIVITY_DETAILS]: {
-        template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
-    },
+  [WIDGET_LOCATION_PATH]: {
+    template: '/api/v1/field-monitoring/settings/locations/<%=id%>/path'
+  },
 
-    [ACTIVITY_CHECKLIST]: {
-        template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
-    }
-    // agreements: {
-    //   template: '/api/v2/agreements/',
-    //   exp: 30 * 60 * 1000, // 30min
-    //   cacheTableName: 'agreements'
-    // },
+  [ACTIVITY_DETAILS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
+  },
+
+  [ACTIVITY_CHECKLIST]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
+  },
+
+  [DATA_COLLECTION_CHECKLIST]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/'
+  },
+
+  [DATA_COLLECTION_OVERALL_FINDING]: {
+    template:
+      '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/overall/<%=overallId%>/'
+  }
+  // agreements: {
+  //   template: '/api/v2/agreements/',
+  //   exp: 30 * 60 * 1000, // 30min
+  //   cacheTableName: 'agreements'
+  // },
 };

@@ -1,16 +1,16 @@
-import { css, CSSResult } from 'lit-element';
+import {css, CSSResult} from 'lit-element';
 
 // language=CSS
 export const AppShellStyles: CSSResult = css`
-    :host {
-        display: block;
-    }
+  :host {
+    display: block;
+  }
 
-    app-header-layout {
-        position: relative;
-    }
+  app-header-layout {
+    position: relative;
+  }
 
-    .main-content {
-        flex: 1;
-    }
+  .main-content {
+    flex: 1;
+  }
 `;

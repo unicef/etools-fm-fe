@@ -1,11 +1,12 @@
-import { css, CSSResult } from 'lit-element';
+import {css, CSSResult} from 'lit-element';
 
+// language=CSS
 export const RouterStyles: CSSResult = css`
-    .page {
-        display: none;
-    }
+  .page {
+    display: none;
+  }
 
-    .page[active] {
-        display: block;
-    }
+  .page[active] {
+    display: block;
+  }
 `;
