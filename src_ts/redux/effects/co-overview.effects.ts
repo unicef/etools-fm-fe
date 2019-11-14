@@ -7,8 +7,7 @@ import { SetFullReportData } from '../actions/co-overview.actions';
 export function loadFullReport(id: number): (dispatch: Dispatch) => Promise<void> {
     return (dispatch: Dispatch) => {
         const { url }: IResultEndpoint = getEndpoint(FULL_REPORT, { id });
-        // TODO: add FullReport interface here!
-        return request<any>(url, { method: 'GET' })
-            .then((response: any) => { dispatch(new SetFullReportData({ id, ...response })); });
+        return request<FullReportData>(url, { method: 'GET' })
+            .then((response: FullReportData) => { dispatch(new SetFullReportData({ id, ...response })); });
     };
 }

@@ -3,6 +3,7 @@ import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import { html, TemplateResult } from 'lit-element';
 import { CoOverviewTabComponent } from './co-overview-tab';
 import { InputStyles } from '../../../styles/input-styles';
+import { repeat } from 'lit-html/directives/repeat';
 // TODO: !!! import { translate } from '../../../../localization/localisation';
 // TODO: add translations!
 
@@ -24,24 +25,30 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
             ></etools-dropdown>
         </section>
 
-        ${this.filteredCpOutputs.map((cpOutput: EtoolsCpOutput) => html`
-            <section class="elevation page-content card-container" elevation="1">
-                <div class="card-title-box with-bottom-line layout horizontal">
-                    <iron-icon icon="expand-more" ?hidden="${this.queryParams && this.queryParams.cp_output === cpOutput.id}" @tap="${() => this.toggleDetails(cpOutput.id)}"></iron-icon>
-                    <iron-icon icon="expand-less" ?hidden="${this.queryParams && this.queryParams.cp_output !== cpOutput.id}" @tap="${() => this.toggleDetails(cpOutput.id)}"></iron-icon>
-                    <div class="card-title full-report">${cpOutput.name}</div>
-                    <a href="${`/apd/action-points/list?cp_output=${cpOutput.id}`}" target="_blank"><iron-icon icon="flag" class="flag-icon"></iron-icon></a>
-                </div>
-                <iron-collapse ?opened="${this.queryParams && this.queryParams.cp_output === cpOutput.id}">
-                    ${ this.fullReports[cpOutput.id] ? html`
-                        <cp-details-item .fullReport="${this.fullReports[cpOutput.id]}"></cp-details-item>
-                    ` : html`
-                        <div class="spinner">
-                            <etools-loading active></etools-loading>
+        ${
+            repeat(
+                this.filteredCpOutputs,
+                (cpOutput: EtoolsCpOutput) => cpOutput.id,
+                (cpOutput: EtoolsCpOutput) => html`
+                    <section class="elevation page-content card-container" elevation="1">
+                        <div class="card-title-box with-bottom-line layout horizontal">
+                            <iron-icon icon="expand-more" ?hidden="${this.queryParams && this.queryParams.cp_output === cpOutput.id}" @tap="${() => this.toggleDetails(cpOutput.id)}"></iron-icon>
+                            <iron-icon icon="expand-less" ?hidden="${this.queryParams && this.queryParams.cp_output !== cpOutput.id}" @tap="${() => this.toggleDetails(cpOutput.id)}"></iron-icon>
+                            <div class="card-title full-report">${cpOutput.name}</div>
+                            <a href="${`/apd/action-points/list?cp_output=${cpOutput.id}`}" target="_blank"><iron-icon icon="flag" class="flag-icon"></iron-icon></a>
                         </div>
-                    `}
-                </iron-collapse>
-            </section>
-        `)}
+                        <iron-collapse ?opened="${this.queryParams && this.queryParams.cp_output === cpOutput.id}">
+                            ${ this.fullReports[cpOutput.id] ? html`
+                                <cp-details-item .cpItem="${cpOutput}" .fullReport="${this.fullReports[cpOutput.id]}"></cp-details-item>
+                            ` : html`
+                                <div class="spinner">
+                                    <etools-loading active></etools-loading>
+                                </div>
+                            `}
+                        </iron-collapse>
+                    </section>
+                `
+            )
+        }
     `;
 }

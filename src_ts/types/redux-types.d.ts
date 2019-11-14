@@ -79,8 +79,7 @@ interface IActivitiesState {
     listData: null | IListData<IListActivity>;
 }
 
-// TODO: add FullReport interface here!!!
-type IFullReportState = any | null;
+type IFullReportState = FullReportData | null;
 
 interface IActivityChecklistState {
     data: null | IChecklistItem[];

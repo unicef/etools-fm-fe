@@ -5,8 +5,7 @@ export enum CountryOverviewActionTypes {
 export class SetFullReportData {
     public readonly type: CountryOverviewActionTypes.SET_FULL_REPORT_DATA =
         CountryOverviewActionTypes.SET_FULL_REPORT_DATA;
-    // TODO: add here FullReport interface!!!
-    public constructor(public payload: any) { }
+    public constructor(public payload: FullReportData) { }
 }
 
 export type CountryOverviewActions = SetFullReportData;

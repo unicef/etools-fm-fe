@@ -4,7 +4,6 @@ import { CountryOverviewActions, CountryOverviewActionTypes } from '../actions/c
 
 const initialState: IFullReportState = null;
 
-// TODO: add FullReport interface here!
 export const fullReport: Reducer<IFullReportState, any> = (state: IFullReportState = initialState, action: CountryOverviewActions) => {
     switch (action.type) {
         case CountryOverviewActionTypes.SET_FULL_REPORT_DATA:

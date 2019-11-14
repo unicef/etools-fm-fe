@@ -3,7 +3,6 @@ import { css, CSSResult } from 'lit-element';
 export const CoOverviewTabStyles: CSSResult = css`
     :host {
         position: relative;
-        display: block;
     }
 
     etools-dropdown {
@@ -24,6 +23,7 @@ export const CoOverviewTabStyles: CSSResult = css`
 
     iron-icon.flag-icon {
         margin-left: 10px;
+        color: var(--secondary-text-color);
     }
 
     .spinner {

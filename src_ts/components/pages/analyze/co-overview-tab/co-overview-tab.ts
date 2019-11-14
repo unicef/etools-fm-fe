@@ -37,9 +37,8 @@ export class CoOverviewTabComponent extends LitElement {
     @property({ type: Array })
     public filteredCpOutputs: EtoolsCpOutput[] = [];
 
-    // TODO: add FullReport interface here!
     @property({ type: Object })
-    public fullReports: GenericObject<any> = {};
+    public fullReports: GenericObject<FullReportData> = {};
 
     private cpOutputs: EtoolsCpOutput[] = [];
     private readonly debouncedLoading: Callback;
@@ -146,7 +145,7 @@ export class CoOverviewTabComponent extends LitElement {
 
         if (!exists) {
             updateQueryParams({ cp_output: null });
-        } else if (currentCpOutput) {
+        } else if (currentCpOutput && !this.fullReports[currentCpOutput]) {
             this.debouncedLoading(currentCpOutput);
         }
     }
