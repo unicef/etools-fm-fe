@@ -2,8 +2,8 @@ import {LitElement} from 'lit-element';
 import clone from 'ramda/es/clone';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
-// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
-export const DataMixin = <T, B extends Constructor<LitElement>>(superclass: B) =>
+// eslint-disable-next-line @typescript-eslint/typedef
+export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass: B) =>
   class extends superclass {
     editedData: Partial<T> = {};
     originalData!: T | null;

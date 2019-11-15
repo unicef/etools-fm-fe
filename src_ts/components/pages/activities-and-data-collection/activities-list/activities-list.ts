@@ -38,7 +38,7 @@ addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
-export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement) {
+export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitElement) {
   @property() loadingInProcess: boolean = false;
   @property() rootPath: string = ROOT_PATH;
   @property() filtersLoading: boolean = false;

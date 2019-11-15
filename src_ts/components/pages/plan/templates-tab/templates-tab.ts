@@ -38,7 +38,7 @@ const ENTER: 13 = 13;
 const ESCAPE: 27 = 27;
 
 @customElement('templates-tab')
-export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitElement) {
+export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
   @property() listLoadingInProcess: boolean = false;
   @property() editedDetails: GenericObject = {opened: false};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];

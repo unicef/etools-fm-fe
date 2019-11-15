@@ -12,7 +12,7 @@ import {
 } from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
 
-export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitElement>(LitElement) {
+export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   @property() isReadonly: boolean = true;
   @property() isUpdate: boolean = false;
   @property() editedCard: string | null = null;

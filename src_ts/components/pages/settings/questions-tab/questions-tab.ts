@@ -24,7 +24,7 @@ import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 
 @customElement('questions-tab')
-export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
+export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: IEtoolsFilter[] | null = null;
   @property() listLoadingInProcess: boolean = false;
   categories: EtoolsCategory[] = [];

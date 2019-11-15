@@ -31,7 +31,7 @@ export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
 
 @customElement('issue-tracker-tab')
 export class IssueTrackerTabComponent extends SiteMixin(
-  CpOutputsMixin(PartnersMixin(ListMixin<LogIssue>(LitElement)))
+  CpOutputsMixin(PartnersMixin(ListMixin()<LogIssue>(LitElement)))
 ) {
   @property({type: Boolean})
   isLoad: boolean = false;

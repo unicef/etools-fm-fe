@@ -2,12 +2,12 @@ import {updateQueryParams} from '../../../routing/routes';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {LitElement} from 'lit-element';
 
-// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
-export const ListMixin = <T>(superclass: typeof LitElement) =>
+// eslint-disable-next-line @typescript-eslint/typedef
+export const ListMixin = <T extends Constructor<LitElement>>() => <L>(superclass: T) =>
   class extends superclass {
     count: number = 0;
     queryParams: GenericObject | null = null;
-    items: T[] = [];
+    items: L[] = [];
 
     static get properties(): PropertyDeclarations {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
