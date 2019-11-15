@@ -160,6 +160,14 @@ export class MonitoringTabComponent extends LitElement {
         flex-basis: 100%;
       }
 
+      .overall-completed-label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        align-self: flex-end;
+        margin: 1%;
+      }
+
       .monitoring-activity__partnership-coverage {
       }
 

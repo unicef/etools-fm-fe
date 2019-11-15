@@ -23,7 +23,9 @@ export function template(this: MonitoringTabComponent): TemplateResult {
             </proportional-progress-bar>
           </div>
           <div class="visits-card__item completed-percentage-container">
-            ${this.getCompletedPercentage(this.completed, this.planned)} % of visits are completed
+            <label class="overall-completed-label">
+              ${this.getCompletedPercentage(this.completed, this.planned)} % of visits are completed
+            </label>
           </div>
         </div>
       </section>
