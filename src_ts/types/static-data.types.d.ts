@@ -139,3 +139,15 @@ type EtoolsLightLocation = {
     admin_level: null;
   };
 };
+
+type EtoolsCpOutputShort = {
+  id: number;
+  name: string;
+};
+
+type EtoolsInterventionShort = {
+  id: number;
+  title: string;
+  partner: number;
+  cp_outputs: number[];
+};

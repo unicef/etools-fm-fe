@@ -7,7 +7,7 @@ import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {PartnersMixin} from '../../../../../../common/mixins/partners-mixin';
 import {request} from '../../../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../../../endpoints/endpoints';
-import {PLANNING_OUTPUTS} from '../../../../../../../endpoints/endpoints-list';
+import {OUTPUTS_SHORT} from '../../../../../../../endpoints/endpoints-list';
 import {debounce} from '../../../../../../utils/debouncer';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
@@ -28,12 +28,10 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
     this.loadingCpOutputs = debounce((ids: number[] = []) => {
-      const endpoint: IResultEndpoint = getEndpoint(PLANNING_OUTPUTS);
-      const {url} = endpoint;
+      const {url} = getEndpoint(OUTPUTS_SHORT);
       const queryString: string = EtoolsRouter.encodeParams({partners__in: ids});
-      request<EtoolsCpOutput[]>(`${url}&${queryString}`).then(
-        (response: EtoolsCpOutput[]) => (this.cpOutputs = response)
-      );
+      const endpoint: string = queryString ? `${url}&${queryString}` : url;
+      request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => (this.cpOutputs = response));
     }, 100);
     this.loadingCpOutputs();
   }

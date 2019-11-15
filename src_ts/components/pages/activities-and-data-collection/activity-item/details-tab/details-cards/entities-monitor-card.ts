@@ -20,15 +20,23 @@ export const CARD_NAME: string = 'entities-monitor';
 
 @customElement('entities-monitor-card')
 export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetailsCard)) {
-  @property() activityPartners: EtoolsPartner[] = [];
-  @property() activityCpOutputs: EtoolsCpOutput[] = [];
-  @property() activityInterventions: EtoolsIntervention[] = [];
+  @property() activityPartners: IActivityPartner[] = [];
+  @property() activityCpOutputs: IActivityCPOutput[] = [];
+  @property() activityInterventions: IActivityIntervention[] = [];
 
   set data(data: IActivityDetails) {
     super.data = data;
-    this.activityPartners = (clone(data.partners) as unknown) as EtoolsPartner[];
-    this.activityCpOutputs = (clone(data.cp_outputs) as unknown) as EtoolsCpOutput[];
-    this.activityInterventions = (clone(data.interventions) as unknown) as EtoolsIntervention[];
+    this.activityPartners = (clone(data.partners) as unknown) as IActivityPartner[];
+    this.activityCpOutputs = (clone(data.cp_outputs) as unknown) as IActivityCPOutput[];
+    this.activityInterventions = (clone(data.interventions) as unknown) as IActivityIntervention[];
+  }
+
+  getEntities<T>(ids: number[], options: (T & {id: number})[]): (T & {id: number})[] {
+    return options.filter((option: T & {id: number}) => ids.includes(option.id));
+  }
+
+  mapEntities<T>(ids: number[], options: (T & {id: number})[]): (T & {id: number})[] {
+    return options.filter((option: T & {id: number}) => ids.includes(option.id));
   }
 
   render(): TemplateResult {
@@ -76,7 +84,7 @@ export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetail
             <entries-list
               class="entries-list"
               .nameList="${translate('ACTIVITY_DETAILS.INTERVENTIONS')}"
-              .formatItem="${(item: EtoolsIntervention) => item.number}"
+              .formatItem="${(item: EtoolsIntervention) => item.title}"
               .items="${this.activityInterventions}"
               ?is-readonly="${this.isReadonly}"
               @add-entry="${() => this.openAddIntervention()}"
@@ -120,15 +128,38 @@ export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetail
   }
 
   openAddIntervention(): void {
-    openDialog({dialog: 'intervention-popup'}).then(({confirmed, response}: IDialogResponse<EtoolsIntervention>) => {
-      if (!confirmed) {
-        return;
+    openDialog({dialog: 'intervention-popup'}).then(
+      ({confirmed, response}: IDialogResponse<EtoolsInterventionShort>) => {
+        if (!confirmed) {
+          return;
+        }
+        let interventionIds: number[] = simplifyValue(this.editedData.interventions) || [];
+        if (response && !interventionIds.includes(response.id)) {
+          let outputIds: number[] = simplifyValue(this.editedData.cp_outputs) || [];
+          let partnerIds: number[] = simplifyValue(this.editedData.partners) || [];
+
+          interventionIds = Array.from(new Set([...interventionIds, response.id]));
+          outputIds = Array.from(new Set([...outputIds, ...response.cp_outputs]));
+          partnerIds = Array.from(new Set([...partnerIds, response.partner]));
+
+          this.editedData.interventions = [...interventionIds];
+          this.editedData.cp_outputs = [...outputIds];
+          this.editedData.partners = [...partnerIds];
+
+          const outputs: IActivityPartner[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
+          const partners: IActivityPartner[] = this.getActiveEntities<IActivityPartner>(partnerIds, this.partners);
+
+          this.activityCpOutputs = [...outputs];
+          this.activityPartners = [...partners];
+
+          this.activityInterventions = [...this.activityInterventions, response];
+        }
       }
-      if (response) {
-        this.activityInterventions = [...this.activityInterventions, response];
-        this.editedData.interventions = simplifyValue(this.activityInterventions);
-      }
-    });
+    );
+  }
+
+  getActiveEntities<T>(ids: number[], options: (T & {id: number})[]): (T & {id: number})[] {
+    return options.filter((option: T & {id: number}) => ids.includes(option.id));
   }
 
   removeItem<T extends EtoolsCpOutput | EtoolsPartner | EtoolsIntervention>(
@@ -137,11 +168,11 @@ export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetail
     arrayName: 'activityCpOutputs' | 'activityPartners' | 'activityInterventions'
   ): void {
     const collection: T[] = this[arrayName] as T[];
-    const interventions: T[] = [...collection];
-    const index: number = interventions.findIndex((intervention: T) => intervention.id === id);
-    interventions.splice(index, 1);
-    (this[arrayName] as T[]) = interventions;
-    this.editedData[field] = simplifyValue(interventions);
+    const items: T[] = [...collection];
+    const index: number = items.findIndex((item: T) => item.id === id);
+    items.splice(index, 1);
+    (this[arrayName] as T[]) = items;
+    this.editedData[field] = simplifyValue(items);
   }
 
   static get styles(): CSSResultArray {

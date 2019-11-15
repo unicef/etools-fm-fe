@@ -13,7 +13,7 @@ import '@unicef-polymer/etools-dialog';
 import '@unicef-polymer/etools-dropdown';
 import {debounce} from '../../../../../../utils/debouncer';
 import {getEndpoint} from '../../../../../../../endpoints/endpoints';
-import {INTERVENTIONS, PLANNING_OUTPUTS} from '../../../../../../../endpoints/endpoints-list';
+import {INTERVENTIONS_SHORT, OUTPUTS_SHORT} from '../../../../../../../endpoints/endpoints-list';
 import {request} from '../../../../../../../endpoints/request';
 import {EtoolsRouter} from '../../../../../../../routing/routes';
 import {repeat} from 'lit-html/directives/repeat';
@@ -23,10 +23,10 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
   @property() dialogOpened: boolean = true;
   @property() selectedPartners: EtoolsPartner[] = [];
   @property() selectedCpOutputs: EtoolsCpOutput[] = [];
-  @property() selectedIntervention?: EtoolsIntervention;
+  @property() selectedIntervention?: EtoolsInterventionShort;
 
-  @property() outputs: EtoolsCpOutput[] = [];
-  @property() interventions: EtoolsIntervention[] = [];
+  @property() outputs: EtoolsCpOutputShort[] = [];
+  @property() interventions: EtoolsInterventionShort[] = [];
   private queryParams: QueryParams = {};
 
   private loadingInterventions!: Callback;
@@ -82,7 +82,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
           <etools-dropdown
             label="${translate('ACTIVITY_DETAILS.INTERVENTIONS')}"
             .options="${this.interventions}"
-            option-label="number"
+            option-label="title"
             option-value="id"
             .selected="${simplifyValue(this.selectedIntervention)}"
             trigger-value-change-event
@@ -97,13 +97,13 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                   <div class="layout horizontal">
                     <div class="layout vertical flex-1 text-control">
                       <label>${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}</label>
-                      <div class="value">${this.selectedIntervention.partner_name}</div>
+                      <div class="value">${this.getPartnerName(this.selectedIntervention.partner)}</div>
                     </div>
                     <div class="layout vertical flex-1 text-control">
                       <label>${translate('ACTIVITY_DETAILS.CP_OUTPUT')}</label>
                       ${repeat(
                         this.getOutputs(this.selectedIntervention.cp_outputs),
-                        (output: EtoolsCpOutput) =>
+                        (output: EtoolsCpOutputShort) =>
                           html`
                             <div class="value">
                               ${output.name}
@@ -123,21 +123,19 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
     this.loadingInterventions = debounce((params: QueryParams) => {
-      const endpoint: IResultEndpoint = getEndpoint(INTERVENTIONS);
-      const url: string = endpoint.url;
+      const {url}: IResultEndpoint = getEndpoint(INTERVENTIONS_SHORT);
       this.queryParams = {...this.queryParams, ...params};
       const queryString: string = EtoolsRouter.encodeParams(this.queryParams);
-      request<EtoolsIntervention[]>(`${url}?${queryString}`).then(
-        (response: EtoolsIntervention[]) => (this.interventions = response)
+      const endpoint: string = queryString ? `${url}&${queryString}` : url;
+      request<EtoolsInterventionShort[]>(endpoint).then(
+        (response: EtoolsInterventionShort[]) => (this.interventions = response)
       );
     }, 100);
     this.loadingOutputs = debounce((ids: number[] = []) => {
-      const endpoint: IResultEndpoint = getEndpoint(PLANNING_OUTPUTS);
-      const {url} = endpoint;
+      const {url} = getEndpoint(OUTPUTS_SHORT);
       const queryString: string = EtoolsRouter.encodeParams({partners__in: ids});
-      request<EtoolsCpOutput[]>(`${url}&${queryString}`).then(
-        (response: EtoolsCpOutput[]) => (this.outputs = response)
-      );
+      const endpoint: string = queryString ? `${url}&${queryString}` : url;
+      request<EtoolsCpOutputShort[]>(endpoint).then((response: EtoolsCpOutputShort[]) => (this.outputs = response));
     }, 100);
     this.loadingInterventions();
     this.loadingOutputs();
@@ -160,14 +158,19 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     }
   }
 
-  selectIntervention(intervention: EtoolsIntervention): void {
+  selectIntervention(intervention: EtoolsInterventionShort): void {
     if (this.selectedIntervention !== intervention) {
       this.selectedIntervention = intervention;
     }
   }
 
-  getOutputs(ids: number[] = []): EtoolsCpOutput[] {
-    return ids.reduce<EtoolsCpOutput[]>((outputs: EtoolsCpOutput[], id: number) => {
+  getPartnerName(id: number): string {
+    const partner: EtoolsPartner | undefined = this.partners.find((partner: EtoolsPartner) => partner.id === id);
+    return partner ? partner.name : '';
+  }
+
+  getOutputs(ids: number[] = []): EtoolsCpOutputShort[] {
+    return ids.reduce<EtoolsCpOutputShort[]>((outputs: EtoolsCpOutputShort[], id: number) => {
       for (const output of this.outputs) {
         if (output.id === id) {
           return [...outputs, output];

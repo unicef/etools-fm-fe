@@ -15,8 +15,9 @@ export const METHODS: 'methods' = 'methods';
 export const PARTNERS: 'partners' = 'partners';
 export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
+export const INTERVENTIONS_SHORT: 'interventionsShort' = 'interventionsShort';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
-export const PLANNING_OUTPUTS: 'planningOutputs' = 'planningOutputs';
+export const OUTPUTS_SHORT: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
@@ -92,12 +93,18 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     cachingKey: 'cpOutputs'
   },
 
-  [PLANNING_OUTPUTS]: {
+  [OUTPUTS_SHORT]: {
     url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all'
   },
 
   [INTERVENTIONS]: {
-    url: '/api/v2/interventions/',
+    url: '/api/v2/interventions/?page_size=all',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'interventions'
+  },
+
+  [INTERVENTIONS_SHORT]: {
+    url: '/api/v1/field-monitoring/planning/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'interventions'
   },
