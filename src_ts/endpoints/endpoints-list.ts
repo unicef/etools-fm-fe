@@ -245,7 +245,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [OPEN_ISSUES_CP_OUTPUT]: {
-    template: '/api/v1/field-monitoring/analyze/issues/interventions/'
+    template: '/api/v1/field-monitoring/analyze/issues/cp-outputs/'
   },
 
   [OPEN_ISSUES_LOCATIONS]: {

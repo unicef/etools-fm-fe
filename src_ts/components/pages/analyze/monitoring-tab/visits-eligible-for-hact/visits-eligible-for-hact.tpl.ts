@@ -1,6 +1,7 @@
 import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {VisitsEligibleForHact} from './visits-eligible-for-hact';
+import '@unicef-polymer/etools-data-table';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`

@@ -19,7 +19,7 @@ export function template(this: PartnershipTab): TemplateResult {
           </div>
         </div>
         <!--  Sorting  -->
-        <div class="partner-coverage__header-item">
+        <div class="partner-coverage__header-item sorting-dropdown">
           <etools-dropdown
             .selected="${this.selectedSortingOption}"
             label="Sort by"

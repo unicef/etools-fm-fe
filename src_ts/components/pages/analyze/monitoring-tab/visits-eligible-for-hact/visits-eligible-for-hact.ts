@@ -22,14 +22,6 @@ export class VisitsEligibleForHact extends LitElement {
     store.dispatch<AsyncEffect>(loadHactVisits());
     this.hactVisitsUnsubscribe = store.subscribe(
       hactVisitsSelector((hactVisits: HactVisits[]) => {
-        // hactVisits.forEach(item =>
-        //   item.visits.push({
-        //     name: `asdfas${Math.random()}`,
-        //     cp_outputs: `cp_out${Math.random()}`,
-        //     interventions: `interventions${Math.random()}`,
-        //     end_date: '2019-11-14'
-        //   })
-        // );
         this.items = hactVisits;
       })
     );

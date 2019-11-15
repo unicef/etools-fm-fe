@@ -10,46 +10,30 @@ import {LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
-import {loadGeographicCoverageBySection, loadSections} from '../../../../../redux/effects/monitoring-activity.effects';
+import {loadGeographicCoverageBySection} from '../../../../../redux/effects/monitoring-activity.effects';
 import {geographicCoverageSelector} from '../../../../../redux/selectors/geographic-coverage.selectors';
-import {geoSectionsSelector} from '../../../../../redux/selectors/geo-sections.selectors';
+import {SectionsMixin} from '../../../../common/mixins/sections-mixin';
 
-const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
 
 @customElement('geographic-coverage')
-export class GeographicCoverageComponent extends LitElement {
+export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedSortingOptions: number[] = [];
-  @property() sortingOptions: DefaultDropdownOption<number>[] = [];
   @query('#geomap') private mapElement!: HTMLElement;
-  private polygon: Polygon | null = null;
+  private polygons: Polygon[] = [];
   private mapHelper!: MapHelper;
   private readonly geographicCoverageUnsubscribe!: Unsubscribe;
-  private readonly sectionsUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
-    store.dispatch<AsyncEffect>(loadSections());
-    this.sectionsUnsubscribe = store.subscribe(
-      geoSectionsSelector((sections: EtoolsSection[] | undefined) => {
-        this.sortingOptions = sections
-          ? sections.map(
-              (item: EtoolsSection): DefaultDropdownOption => {
-                return {display_name: item.name, value: JSON.parse(item.id)};
-              }
-            )
-          : [];
-
-        if (this.sortingOptions.length) {
-          this.onSelectionChange([this.sortingOptions[0]]);
-        }
-      })
-    );
 
     this.geographicCoverageUnsubscribe = store.subscribe(
       geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
-        geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item, this.getPolygonOptions(item)));
+        this.clearMap();
+        geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item));
         if (geographicCoverage.length) {
-          this.mapHelper.map!.flyToBounds(this.getReversedCoordinates(geographicCoverage[0]), {maxZoom: 6});
+          const target: LatLngTuple = this.getReversedCoordinates(geographicCoverage[0])[0] || DEFAULT_COORDINATES;
+          this.mapHelper.map!.setView(target, 6);
         }
       })
     );
@@ -59,12 +43,7 @@ export class GeographicCoverageComponent extends LitElement {
     return template.call(this);
   }
 
-  onSelectionChange(selectedItems: DefaultDropdownOption<number>[]): void {
-    this.selectedSortingOptions.splice(
-      0,
-      this.selectedSortingOptions.length,
-      ...selectedItems.map((item: DefaultDropdownOption) => item.value)
-    );
+  onSelectionChange(): void {
     if (this.selectedSortingOptions.length) {
       store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(this.selectedSortingOptions.join(',')));
     }
@@ -98,15 +77,13 @@ export class GeographicCoverageComponent extends LitElement {
   initMap(): void {
     this.mapHelper = new MapHelper();
     this.mapHelper.initMap(this.mapElement);
-    const reversedCoords: LatLngTuple = DEFAULT_COORDINATES.reverse() as LatLngTuple;
     const zoom: number = 6;
-    this.mapHelper.map!.setView(reversedCoords, zoom);
+    this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.geographicCoverageUnsubscribe();
-    this.sectionsUnsubscribe();
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
@@ -114,10 +91,17 @@ export class GeographicCoverageComponent extends LitElement {
     this.initMap();
   }
 
-  private drawPolygons(location: GeographicCoverage, polygonOptions: PolylineOptions): void {
+  private drawPolygons(location: GeographicCoverage): void {
+    const polygonOptions: PolylineOptions = this.getPolygonOptions(location);
     const reversedCoordinates: CoordinatesArray[] = this.getReversedCoordinates(location);
-    this.polygon = L.polygon(reversedCoordinates, polygonOptions);
-    this.polygon.addTo(this.mapHelper.map!);
+    const polygon: Polygon = L.polygon(reversedCoordinates, polygonOptions);
+    polygon.addTo(this.mapHelper.map!);
+    this.polygons.push(polygon);
+  }
+
+  private clearMap(): void {
+    this.polygons.forEach((polygon: Polygon) => polygon.removeFrom(this.mapHelper.map!));
+    this.polygons.length = 0;
   }
 
   private getReversedCoordinates(location: GeographicCoverage): CoordinatesArray[] {
@@ -149,12 +133,16 @@ export class GeographicCoverageComponent extends LitElement {
         display: flex;
         flex-wrap: wrap;
         padding: 2%;
+        justify-content: space-between;
       }
       .geographic-coverage__header-item {
         display: flex;
         flex-direction: column;
         justify-content: center;
         flex-basis: 50%;
+      }
+      .sorting-dropdown {
+        flex-basis: 30%;
       }
       .coverage-legend-container {
         display: flex;

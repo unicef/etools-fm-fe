@@ -9,7 +9,7 @@ import {
   MONITORING_ACTIVITY_PARTNERS_COVERAGE,
   OPEN_ISSUES_CP_OUTPUT,
   OPEN_ISSUES_LOCATIONS,
-  OPEN_ISSUES_PARTNERS, SECTIONS,
+  OPEN_ISSUES_PARTNERS
 } from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {
@@ -21,7 +21,7 @@ import {
   SetOpenIssuesLocation,
   SetOpenIssuesPartnership,
   SetOverallActivities,
-  SetPartnersCoverage, SetSections,
+  SetPartnersCoverage
 } from '../actions/monitoring-activity.actions';
 
 export function loadOverallStatistics(): (dispatch: Dispatch) => Promise<void> {
@@ -56,15 +56,6 @@ export function loadCpOutputCoverage(): (dispatch: Dispatch) => Promise<void> {
     const endpoint: IResultEndpoint = getEndpoint(MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE);
     return request<CpOutputCoverage[]>(endpoint.url, {method: 'GET'}).then((response: CpOutputCoverage[]) => {
       dispatch(new SetCpOutputCoverage(response));
-    });
-  };
-}
-
-export function loadSections(): (dispatch: Dispatch) => Promise<void> {
-  return (dispatch: Dispatch) => {
-    const endpoint: IResultEndpoint = getEndpoint(SECTIONS);
-    return request<EtoolsSection[]>(endpoint.url, {method: 'GET'}).then((response: EtoolsSection[]) => {
-      dispatch(new SetSections(response));
     });
   };
 }

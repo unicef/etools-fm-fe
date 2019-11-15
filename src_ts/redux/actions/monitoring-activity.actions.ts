@@ -3,7 +3,6 @@ export enum MonitoringActivityActionTypes {
   SET_PARTNERS_COVERAGE = '[Monitoring activity Action]: SET_PARTNERS_COVERAGE',
   SET_INTERVENTIONS_COVERAGE = '[Monitoring activity Action]: SET_INTERVENTIONS_COVERAGE',
   SET_CP_OUTPUT_COVERAGE = '[Monitoring activity Action]: SET_CP_OUTPUT_COVERAGE',
-  SET_SECTIONS = '[Monitoring activity Action]: SET_SECTIONS',
   SET_GEOGRAPHIC_COVERAGE = '[Monitoring activity Action]: SET_GEOGRAPHIC_COVERAGE',
   SET_OPEN_ISSUES_PARTNERSHIP = '[Monitoring activity Action]: SET_OPEN_ISSUES_PARTNERSHIP',
   SET_OPEN_ISSUES_CP_OUTPUT = '[Monitoring activity Action]: SET_OPEN_ISSUES_CP_OUTPUT',
@@ -34,11 +33,6 @@ export class SetCpOutputCoverage {
   readonly type: MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE =
     MonitoringActivityActionTypes.SET_CP_OUTPUT_COVERAGE;
   constructor(public payload: CpOutputCoverage[]) {}
-}
-
-export class SetSections {
-  readonly type: MonitoringActivityActionTypes.SET_SECTIONS = MonitoringActivityActionTypes.SET_SECTIONS;
-  constructor(public payload: EtoolsSection[]) {}
 }
 
 export class SetGeographicCoverage {
@@ -80,7 +74,6 @@ export type MonitoringActivityActions =
   | SetPartnersCoverage
   | SetInterventionsCoverage
   | SetCpOutputCoverage
-  | SetSections
   | SetGeographicCoverage
   | SetOpenIssuesPartnership
   | SetOpenIssuesCpOutput

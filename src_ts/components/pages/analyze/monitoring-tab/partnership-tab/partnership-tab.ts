@@ -63,12 +63,16 @@ export class PartnershipTab extends LitElement {
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 2%;
+        justify-content: space-between;
       }
       .partner-coverage__header-item {
         display: flex;
         flex-direction: column;
         justify-content: center;
         flex-basis: 50%;
+      }
+      .sorting-dropdown {
+        flex-basis: 30%;
       }
       .coverage-legend {
         display: flex;

@@ -121,7 +121,6 @@ interface IMonitoringActivityState {
   partnersCoverage: PartnersCoverage[];
   interventionsCoverage: InterventionsCoverage[];
   cpOutputCoverage: CpOutputCoverage[];
-  sections: EtoolsSection[];
   geographicCoverage: GeographicCoverage[];
   openIssuesPartnership: OpenIssuesActionPoints[];
   openIssuesCpOutput: OpenIssuesActionPoints[];

@@ -33,16 +33,15 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
               </div>
             </div>
             <!--  Sorting  -->
-            <div class="geographic-coverage__header-item">
+            <div class="geographic-coverage__header-item sorting-dropdown">
               <etools-dropdown-multi
                 .selectedValues="${this.selectedSortingOptions}"
                 label="Filter By Section"
-                .options="${this.sortingOptions}"
-                option-label="display_name"
-                option-value="value"
+                .options="${this.sections}"
+                option-label="name"
+                option-value="id"
                 trigger-value-change-event
-                @etools-selected-items-changed="${({detail}: CustomEvent) =>
-                  this.onSelectionChange(detail.selectedItems)}"
+                @etools-selected-items-changed="${() => this.onSelectionChange()}"
                 hide-search
                 allow-outside-scroll
               >
