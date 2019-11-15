@@ -1,8 +1,9 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {store} from '../../../../../redux/store';
-import {loadCpOutputCoverage} from '../../../../../redux/effects/monitoring-activity.effects';
+import {store} from '../../../../../../redux/store';
+import {loadCpOutputCoverage} from '../../../../../../redux/effects/monitoring-activity.effects';
 import {Unsubscribe} from 'redux';
-import {cpOutputCoverageSelector} from '../../../../../redux/selectors/cp-output-coverage.selectors';
+import {cpOutputCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
+import '../shared-tab-template';
 
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {

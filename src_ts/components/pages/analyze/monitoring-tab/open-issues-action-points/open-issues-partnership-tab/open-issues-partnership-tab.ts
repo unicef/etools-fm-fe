@@ -1,9 +1,9 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import '../shared-tab-template/open-issues-shared-tab-template';
-import {store} from '../../../../../redux/store';
-import {loadOpenIssuesPartnership} from '../../../../../redux/effects/monitoring-activity.effects';
+import '../open-issues-shared-tab-template';
 import {Unsubscribe} from 'redux';
-import {openIssuesPartnershipSelector} from '../../../../../redux/selectors/open-issues-partnership.selectors';
+import {store} from '../../../../../../redux/store';
+import {loadOpenIssuesPartnership} from '../../../../../../redux/effects/monitoring-activity.effects';
+import {openIssuesPartnershipSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 
 @customElement('open-issues-partnership-tab')
 export class OpenIssuesPartnershipTab extends LitElement {

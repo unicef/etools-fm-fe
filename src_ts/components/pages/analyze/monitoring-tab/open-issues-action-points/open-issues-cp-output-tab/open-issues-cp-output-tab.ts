@@ -1,8 +1,9 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import '../open-issues-shared-tab-template';
 import {Unsubscribe} from 'redux';
-import {store} from '../../../../../redux/store';
-import {openIssuesCpOutputSelector} from '../../../../../redux/selectors/open-issues-cp-output.selectors';
-import {loadOpenIssuesCpOutput} from '../../../../../redux/effects/monitoring-activity.effects';
+import {store} from '../../../../../../redux/store';
+import {loadOpenIssuesCpOutput} from '../../../../../../redux/effects/monitoring-activity.effects';
+import {openIssuesCpOutputSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 
 @customElement('open-issues-cp-output-tab')
 export class OpenIssuesCpOutputTab extends LitElement {

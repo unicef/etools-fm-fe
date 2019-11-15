@@ -1,6 +1,6 @@
 import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import '../../../../common/progressbar/column-item-progress-bar';
-import '../shared-tab-template/shared-tab-template';
+import '../coverage/shared-tab-template';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {CardStyles} from '../../../../styles/card-styles';
@@ -9,8 +9,8 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {Unsubscribe} from 'redux';
 import {loadHactVisits} from '../../../../../redux/effects/monitoring-activity.effects';
 import {store} from '../../../../../redux/store';
-import {hactVisitsSelector} from '../../../../../redux/selectors/hact-visits.selectors';
 import {template} from './visits-eligible-for-hact.tpl';
+import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends LitElement {

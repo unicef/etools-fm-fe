@@ -1,10 +1,10 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {Unsubscribe} from 'redux';
-import {store} from '../../../../../redux/store';
-import {loadInterventionsCoverage} from '../../../../../redux/effects/monitoring-activity.effects';
-import {interventionsCoverageSelector} from '../../../../../redux/selectors/interventions-coverage.selectors';
-import '../../../../common/progressbar/column-item-progress-bar';
-import '../shared-tab-template/shared-tab-template';
+import {store} from '../../../../../../redux/store';
+import {loadInterventionsCoverage} from '../../../../../../redux/effects/monitoring-activity.effects';
+import '../../../../../common/progressbar/column-item-progress-bar';
+import '../shared-tab-template';
+import {interventionsCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 
 @customElement('pd-ssfa-tab')
 export class PdSsfaTab extends LitElement {

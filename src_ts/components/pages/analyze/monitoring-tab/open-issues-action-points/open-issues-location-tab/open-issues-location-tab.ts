@@ -1,8 +1,9 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import '../open-issues-shared-tab-template';
 import {Unsubscribe} from 'redux';
-import {store} from '../../../../../redux/store';
-import {loadOpenIssuesLocations} from '../../../../../redux/effects/monitoring-activity.effects';
-import {openIssuesLocationsSelector} from '../../../../../redux/selectors/open-issues-locations.selectors';
+import {store} from '../../../../../../redux/store';
+import {loadOpenIssuesLocations} from '../../../../../../redux/effects/monitoring-activity.effects';
+import {openIssuesLocationsSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 
 @customElement('open-issues-location-tab')
 export class OpenIssuesLocationTab extends LitElement {

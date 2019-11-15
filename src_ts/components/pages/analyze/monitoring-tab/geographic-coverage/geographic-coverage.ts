@@ -1,4 +1,4 @@
-import {css, CSSResult, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {CSSResult, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {template} from './geographic-coverage.tpl';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -11,8 +11,9 @@ import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
 import {loadGeographicCoverageBySection} from '../../../../../redux/effects/monitoring-activity.effects';
-import {geographicCoverageSelector} from '../../../../../redux/selectors/geographic-coverage.selectors';
 import {SectionsMixin} from '../../../../common/mixins/sections-mixin';
+import {geographicCoverageSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
+import {geographicCoverageStyles} from './geographic-coverage.styles';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
 
@@ -35,7 +36,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
           const target: LatLngTuple = this.getReversedCoordinates(geographicCoverage[0])[0] || DEFAULT_COORDINATES;
           this.mapHelper.map!.setView(target, 6);
         }
-      })
+      }, false)
     );
   }
 
@@ -112,72 +113,6 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   static get styles(): CSSResult[] {
-    const geographicCoverageStyles: CSSResult = css`
-      :host {
-        --mark-no-visits-color: #ddf1bf;
-        --mark-one-five-color: #9ed6b9;
-        --mark-six-ten: #3f9bbc;
-        --mark-eleven: #273891;
-      }
-      #geomap {
-        min-height: 400px;
-        z-index: 0;
-      }
-      .monitoring-activity__geographic-coverage {
-      }
-      .geographic-coverage {
-        display: flex;
-        flex-direction: column;
-      }
-      .geographic-coverage__header {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 2%;
-        justify-content: space-between;
-      }
-      .geographic-coverage__header-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex-basis: 50%;
-      }
-      .sorting-dropdown {
-        flex-basis: 30%;
-      }
-      .coverage-legend-container {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 2%;
-      }
-      .coverage-legend {
-        display: flex;
-        flex-basis: 40%;
-        margin: 1%;
-      }
-      .coverage-legend__mark {
-        min-width: 17px;
-        min-height: 17px;
-        max-width: 17px;
-        max-height: 17px;
-        margin-right: 2%;
-        display: flex;
-        justify-content: center;
-      }
-      .coverage-legend__mark-no-visits {
-        background-color: var(--mark-no-visits-color);
-      }
-      .coverage-legend__mark-one-five {
-        background-color: var(--mark-one-five-color);
-      }
-      .coverage-legend__mark-six-ten {
-        background-color: var(--mark-six-ten);
-      }
-      .coverage-legend__mark-eleven {
-        background-color: var(--mark-eleven);
-      }
-      .coverage-legend__label {
-      }
-    `;
     return [
       elevationStyles,
       SharedStyles,

@@ -30,7 +30,9 @@ export class SharedTabTemplate extends LitElement {
                 .progressValue="${item.days_since_visit}"
                 .width="${this.calculateProgressBarWidth(item, WidthCalculationTargets.DAYS)}"
                 .labelValue="${'Days Since Last Visit'}"
-                .completedDivBackgroundColor="${item.days_since_visit ? this.computeCompletedDivBackgroundColor(item) : 'green'}"
+                .completedDivBackgroundColor="${item.days_since_visit
+                  ? this.computeCompletedDivBackgroundColor(item)
+                  : 'green'}"
               >
               </column-item-progress-bar>
               <!--    Average days between visits indicator      -->

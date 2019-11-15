@@ -32,6 +32,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
                 </div>
               </div>
             </div>
+
             <!--  Sorting  -->
             <div class="geographic-coverage__header-item sorting-dropdown">
               <etools-dropdown-multi
@@ -48,6 +49,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
               </etools-dropdown-multi>
             </div>
           </div>
+
           <!--  Map element  -->
           <div id="geomap"></div>
         </div>

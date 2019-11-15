@@ -1,6 +1,7 @@
 import {html, TemplateResult} from 'lit-element';
 import {PartnershipTab} from './partnership-tab';
-import '../../../../common/progressbar/proportional-progress-bar';
+import '../../../../../common/progressbar/proportional-progress-bar';
+import '@unicef-polymer/etools-dropdown';
 import {repeat} from 'lit-html/directives/repeat';
 
 export function template(this: PartnershipTab): TemplateResult {
@@ -18,6 +19,7 @@ export function template(this: PartnershipTab): TemplateResult {
             <label class="coverage-legend__label">Minimum Required Programmatic Visits</label>
           </div>
         </div>
+
         <!--  Sorting  -->
         <div class="partner-coverage__header-item sorting-dropdown">
           <etools-dropdown
@@ -35,6 +37,7 @@ export function template(this: PartnershipTab): TemplateResult {
           </etools-dropdown>
         </div>
       </div>
+
       <!--  Progress bars list  -->
       ${repeat(
         this.partnersCoverage.sort((a: PartnersCoverage, b: PartnersCoverage) => this.sortProgressBars(a, b)),
