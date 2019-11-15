@@ -30,9 +30,12 @@ import {CardStyles} from '../../../styles/card-styles';
 import {buttonsStyles} from '../../../styles/button-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
+import {createActivityDetails} from '../../../../redux/effects/activity-details.effects';
+import {activityDetailsData, activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
+import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
-store.addReducers({activities, specificLocations});
+store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
 export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement) {
@@ -46,6 +49,8 @@ export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly activitiesDataUnsubscribe: Unsubscribe;
+  private readonly activityDataUnsubscribe: Unsubscribe;
+  private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly filtersData: GenericObject = {
     activity_type: ACTIVITY_TYPES,
@@ -81,6 +86,22 @@ export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement
       }, false)
     );
 
+    this.activityErrorUnsubscribe = store.subscribe(
+      activityDetailsError((error: null | GenericObject) => {
+        if (error) {
+          fireEvent(this, 'toast', {text: 'Can not create Activity'});
+        }
+      }, false)
+    );
+
+    this.activityDataUnsubscribe = store.subscribe(
+      activityDetailsData((data: IActivityDetails | null) => {
+        if (data) {
+          updateAppLocation(`activities/${data.id}`);
+        }
+      }, false)
+    );
+
     this.initFilters();
   }
 
@@ -102,13 +123,15 @@ export class ActivitiesListComponent extends ListMixin<IListActivity>(LitElement
   }
 
   goNew(): void {
-    updateAppLocation('activities/new');
+    store.dispatch<AsyncEffect>(createActivityDetails());
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.activitiesDataUnsubscribe();
+    this.activityDataUnsubscribe();
+    this.activityErrorUnsubscribe();
   }
 
   formatDate(date: string | null): string {

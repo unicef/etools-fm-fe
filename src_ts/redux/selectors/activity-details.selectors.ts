@@ -19,3 +19,7 @@ export const detailsEditedCard: Selector<string | null> = select<string | null>(
 export const activityStatusIsChanging: Selector<boolean | null> = select<boolean | null>(
   (store: IRootState) => store.activityDetails.isRequest.statusChange
 );
+
+export const activityDetailsError: Selector<null | GenericObject> = select<null | GenericObject>(
+  (store: IRootState) => store.activityDetails.error
+);

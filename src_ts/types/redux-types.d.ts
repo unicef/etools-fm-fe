@@ -93,6 +93,7 @@ interface IActivityDetailsState extends IRequestState {
   editedCard: null | string;
   error: null | GenericObject;
   isRequest: {
+    create: boolean;
     load: boolean;
     update: boolean;
     statusChange: boolean;

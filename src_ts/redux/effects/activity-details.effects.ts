@@ -1,6 +1,6 @@
 import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
+import {ACTIVITIES_LIST, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {ActivityDetailsActions} from '../actions/activity-details.actions';
 import {ActivityStatus} from '../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
@@ -16,6 +16,23 @@ export function requestActivityDetails(id: string): IAsyncAction {
       const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, {id});
       const resultUrl: string = `${url}`;
       return request(resultUrl);
+    }
+  };
+}
+
+export function createActivityDetails(): IAsyncAction {
+  return {
+    types: [
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(ACTIVITIES_LIST);
+      const options: RequestInit = {
+        method: 'POST'
+      };
+      return request(url, options);
     }
   };
 }
