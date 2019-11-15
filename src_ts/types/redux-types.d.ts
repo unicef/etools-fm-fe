@@ -66,7 +66,7 @@ interface IRationaleState {
 }
 
 interface IAttachmentsListState {
-  rationale_attachments: null | Attachment[];
+  rationale_attachments: null | IAttachment[];
   updateInProcess: null | boolean;
   error: GenericObject;
 }

@@ -25,7 +25,7 @@ export function requestLogIssue(params: IRouteQueryParams): IAsyncAction {
   };
 }
 
-export function createLogIssue(issue: Partial<LogIssue>, files: Partial<Attachment>[]): IAsyncAction {
+export function createLogIssue(issue: Partial<LogIssue>, files: Partial<IAttachment>[]): IAsyncAction {
   return {
     types: [
       IssueTrackerActions.ISSUE_TRACKER_UPDATE_REQUEST,
@@ -42,7 +42,7 @@ export function createLogIssue(issue: Partial<LogIssue>, files: Partial<Attachme
       return request(url, options).then((response: any) => {
         const id: number = response.id;
         const promises: Promise<void>[] = [];
-        files.forEach((file: Partial<Attachment>) => promises.push(addAttachment(id, file)));
+        files.forEach((file: Partial<IAttachment>) => promises.push(addAttachment(id, file)));
         // .catch(() => dispatch(new AddNotification('Can not upload attachment')))));
         return Promise.all(promises);
       });
@@ -53,9 +53,9 @@ export function createLogIssue(issue: Partial<LogIssue>, files: Partial<Attachme
 export function updateLogIssue(
   issueId: number,
   issue: Partial<LogIssue>,
-  newAttachments: Partial<Attachment>[] = [],
-  deletedAttachments: Partial<Attachment>[] = [],
-  changedAttachments: Partial<Attachment>[] = []
+  newAttachments: Partial<IAttachment>[] = [],
+  deletedAttachments: Partial<IAttachment>[] = [],
+  changedAttachments: Partial<IAttachment>[] = []
 ): IAsyncAction {
   return {
     types: [
@@ -72,20 +72,20 @@ export function updateLogIssue(
       };
       return request(url, options).then(() => {
         const promises: Promise<void>[] = [];
-        changedAttachments.forEach((changedFile: Partial<Attachment>) =>
+        changedAttachments.forEach((changedFile: Partial<IAttachment>) =>
           promises.push(updateAttachment(issueId, changedFile))
         );
-        deletedAttachments.forEach((deletedFile: Partial<Attachment>) =>
+        deletedAttachments.forEach((deletedFile: Partial<IAttachment>) =>
           promises.push(deleteAttachment(issueId, deletedFile))
         );
-        newAttachments.forEach((newFile: Partial<Attachment>) => promises.push(addAttachment(issueId, newFile)));
+        newAttachments.forEach((newFile: Partial<IAttachment>) => promises.push(addAttachment(issueId, newFile)));
         return Promise.all(promises);
       });
     }
   };
 }
 
-function addAttachment(logIssueId: number, file: Partial<Attachment>): Promise<any> {
+function addAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
   const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS, {id: logIssueId});
   const body: FormData = jsonToFormData(file);
   const options: RequestInit = {
@@ -95,7 +95,7 @@ function addAttachment(logIssueId: number, file: Partial<Attachment>): Promise<a
   return request(url, options);
 }
 
-function updateAttachment(logIssueId: number, file: Partial<Attachment>): Promise<any> {
+function updateAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
   if (!file || !file.id) {
     throw new Error('Incorrect file for update');
   }
@@ -112,7 +112,7 @@ function updateAttachment(logIssueId: number, file: Partial<Attachment>): Promis
   return request(endpoint.url, options);
 }
 
-function deleteAttachment(logIssueId: number, file: Partial<Attachment>): Promise<any> {
+function deleteAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
   if (!file || !file.id) {
     throw new Error('Incorrect file for deleting');
   }

@@ -11,4 +11,11 @@ export const DataCollectionCardStyles: CSSResult = css`
   .finding-container:last-child {
     /*border-bottom: none;*/
   }
+  .attachments-button {
+    color: var(--module-primary);
+    font-weight: 500;
+  }
+  .attachments-button iron-icon {
+    margin-right: 8px;
+  }
 `;

@@ -5,7 +5,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 
 export abstract class BaseFinding<T> extends LitElement {
   @property({type: String}) questionText: string = '';
-  @property({type: Boolean}) isReadonly: boolean = false;
+  @property({type: Boolean, attribute: 'is-readonly'}) isReadonly: boolean = false;
   @property() value: T | null = null;
 
   protected render(): TemplateResult {
@@ -27,7 +27,7 @@ export abstract class BaseFinding<T> extends LitElement {
 
       <div class="finding-container layout horizontal start center-justified">
         <div class="question flex-2 layout horizontal center">${this.questionTemplate()}</div>
-        <div class="question-control flex-3">${this.controlTemplate()}</div>
+        <div class="question-control flex-3 layout horizontal center">${this.controlTemplate()}</div>
       </div>
     `;
   }
@@ -64,8 +64,14 @@ export abstract class BaseFinding<T> extends LitElement {
           min-height: 48px;
         }
 
+        .question-control,
         .question {
           min-height: 48px;
+        }
+
+        paper-input,
+        paper-textarea {
+          width: 100%;
         }
 
         .question-text {

@@ -4,6 +4,7 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {DATA_COLLECTION_CHECKLIST, DATA_COLLECTION_OVERALL_FINDING} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {store} from '../store';
+import {Dispatch} from 'redux';
 
 export function loadDataCollectionChecklistInfo(activityId: string, checklistId: string): IAsyncAction {
   return {
@@ -112,4 +113,36 @@ function updateFindings(
   const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId});
   const findingsUrl: string = `${url}${checklistId}/findings/`;
   return request(findingsUrl, {method: 'PATCH', body: JSON.stringify(findings)});
+}
+
+export function updateChecklistAttachments(
+  url: string,
+  data: RequestChecklistAttachment[]
+): (dispatch: Dispatch) => Promise<boolean> {
+  return () => {
+    const requestsData: GenericObject<RequestChecklistAttachment[]> = data.reduce(
+      (requests: GenericObject<RequestChecklistAttachment[]>, attachment: RequestChecklistAttachment) => {
+        if (attachment.id && !attachment.delete) {
+          requests.PATCH.push(attachment);
+        } else if (attachment.id) {
+          requests.DELETE.push({id: attachment.id});
+        } else {
+          requests.POST.push(attachment);
+        }
+        return requests;
+      },
+      {
+        POST: [],
+        PATCH: [],
+        DELETE: []
+      }
+    );
+    const requests: (Promise<void> | null)[] = Object.entries(requestsData).map(
+      ([method, data]: [string, RequestChecklistAttachment[]]) =>
+        data.length ? request(url, {method, body: JSON.stringify(data)}) : null
+    );
+    return Promise.all(requests).then((response: (void | null)[]) =>
+      response.every((response: void | null) => response === null)
+    );
+  };
 }

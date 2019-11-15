@@ -1,4 +1,4 @@
-type Attachment = {
+interface IAttachment {
   id: number;
   filename: string;
   file_type: number;
@@ -7,7 +7,11 @@ type Attachment = {
   created: string;
   modified: string;
   uploaded_by: null;
-};
+}
+
+interface IEditedAttachment extends IAttachment {
+  delete?: true;
+}
 
 type AttachmentFile = {
   id?: number | null;
@@ -23,8 +27,26 @@ interface IRemmoveAttachmentPopupData {
 }
 
 interface IAttachmentPopupData {
-  editedAttachment?: Attachment;
+  editedAttachment?: IAttachment;
   attachmentTypes: DefaultDropdownOption[];
   endpointName: string;
   additionalEndpointData: GenericObject;
 }
+
+type StoredAttachment = {
+  agreement_reference_number: string;
+  attachment: number;
+  created: string;
+  file_link: string;
+  file_type: string;
+  filename: string;
+  id: number;
+  object_link: string;
+  partner: string;
+  partner_type: string;
+  pd_ssfa: null;
+  pd_ssfa_number: string;
+  source: string;
+  uploaded_by: string;
+  vendor_number: string;
+};

@@ -36,3 +36,20 @@ type DataCollectionRequestData = {
   overall?: Partial<DataCollectionOverall>;
   findings?: Partial<DataCollectionFinding>[];
 };
+
+type AttachmentsPopupData = {
+  attachments: IAttachment[];
+  updateUrl: string;
+  title: string;
+};
+
+type RequestChecklistAttachment = {
+  id?: number;
+  file_type?: number | string;
+  attachment?: number;
+  delete?: true;
+};
+
+type AttachmentDialogResponse = {
+  noChanges: boolean;
+};

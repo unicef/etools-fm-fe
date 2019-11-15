@@ -22,9 +22,13 @@ export const DialogStyles: TemplateResult = html`
       --etools-dialog-content: {
         min-height: 80px;
         padding-bottom: 8px !important;
+        padding-top: 8px !important;
       }
       --etools-dialog-button-styles: {
         margin-top: 0;
+      }
+      --etools-dialog-title: {
+        padding: 8px 45px 8px 24px;
       }
     }
 
@@ -60,6 +64,10 @@ export const DialogStyles: TemplateResult = html`
 
     etools-dialog .container {
       padding: 14px;
+    }
+
+    etools-dialog .content {
+      padding: 0 14px;
     }
 
     etools-dialog {

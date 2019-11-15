@@ -47,10 +47,10 @@ export class IssueTrackerPopup extends LitElement {
   originalData!: LogIssue;
 
   @property({type: Array})
-  currentFiles: Partial<Attachment>[] = [];
+  currentFiles: Partial<IAttachment>[] = [];
 
   @property({type: Array})
-  originalFiles: Attachment[] = [];
+  originalFiles: IAttachment[] = [];
 
   private readonly updateUnsubscribe: Unsubscribe;
   private readonly sitesUnsubscribe: Unsubscribe;
@@ -188,10 +188,10 @@ export class IssueTrackerPopup extends LitElement {
       toRequest: true,
       nestedFields: ['options']
     });
-    const newFiles: Partial<Attachment>[] = this.getNewFiles(this.currentFiles);
+    const newFiles: Partial<IAttachment>[] = this.getNewFiles(this.currentFiles);
     // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-    const deletedFiles: Partial<Attachment>[] = this.getDeletedFiles(this.currentFiles, this.originalFiles);
-    const changedFiles: Partial<Attachment>[] = this.getChangedFiles(this.currentFiles);
+    const deletedFiles: Partial<IAttachment>[] = this.getDeletedFiles(this.currentFiles, this.originalFiles);
+    const changedFiles: Partial<IAttachment>[] = this.getChangedFiles(this.currentFiles);
     const isChanged: boolean = !!Object.keys(data).length;
     if (!this.editedData.id || (!isChanged && !newFiles.length && !deletedFiles.length && !changedFiles.length)) {
       this.dialogOpened = false;
@@ -251,7 +251,7 @@ export class IssueTrackerPopup extends LitElement {
 
   onChangeFile({id, file}: SelectedFile): void {
     const indexAttachment: number = this.currentFiles.findIndex(
-      (nextAttachment: Partial<Attachment>) => nextAttachment.id === id
+      (nextAttachment: Partial<IAttachment>) => nextAttachment.id === id
     );
     if (~indexAttachment) {
       this.currentFiles.splice(indexAttachment, 1, {id, file});
@@ -272,7 +272,7 @@ export class IssueTrackerPopup extends LitElement {
 
   onDeleteFile({id}: SelectedFile): void {
     const indexAttachment: number = this.currentFiles.findIndex(
-      (nextAttachment: Partial<Attachment>) => nextAttachment.id === id
+      (nextAttachment: Partial<IAttachment>) => nextAttachment.id === id
     );
     if (~indexAttachment) {
       this.currentFiles.splice(indexAttachment, 1);
@@ -280,21 +280,21 @@ export class IssueTrackerPopup extends LitElement {
     }
   }
 
-  private getChangedFiles(currentFiles: Partial<Attachment>[]): Partial<Attachment>[] {
+  private getChangedFiles(currentFiles: Partial<IAttachment>[]): Partial<IAttachment>[] {
     return currentFiles.filter(
-      (attachment: Partial<Attachment>) =>
+      (attachment: Partial<IAttachment>) =>
         attachment.id && !(typeof attachment.file === 'string' || attachment.file instanceof String)
     );
   }
 
-  private getNewFiles(currentFiles: Partial<Attachment>[]): Partial<Attachment>[] {
-    return currentFiles.filter((currentFile: Partial<Attachment>) => !currentFile.id);
+  private getNewFiles(currentFiles: Partial<IAttachment>[]): Partial<IAttachment>[] {
+    return currentFiles.filter((currentFile: Partial<IAttachment>) => !currentFile.id);
   }
 
-  private getDeletedFiles(currentFiles: Partial<Attachment>[], originalFiles: Attachment[]): Partial<Attachment>[] {
+  private getDeletedFiles(currentFiles: Partial<IAttachment>[], originalFiles: IAttachment[]): Partial<IAttachment>[] {
     return originalFiles.filter(
-      (originalFile: Partial<Attachment>) =>
-        !currentFiles.some((currentFile: Partial<Attachment>) => currentFile.id === originalFile.id)
+      (originalFile: Partial<IAttachment>) =>
+        !currentFiles.some((currentFile: Partial<IAttachment>) => currentFile.id === originalFile.id)
     );
   }
 }

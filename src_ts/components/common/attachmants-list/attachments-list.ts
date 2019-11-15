@@ -22,7 +22,7 @@ export class AttachmentsListComponent extends LitElement {
   @property() loadingInProcess: boolean = false;
   @property({type: String, attribute: 'tab-title-key'})
   tabTitleKey: string = 'ATTACHMENTS_LIST.TITLE';
-  attachmentsList: Attachment[] = [];
+  attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
@@ -49,7 +49,7 @@ export class AttachmentsListComponent extends LitElement {
     // subscribe on attachments list data. use DynamicSelector and endpointName to determine which field we need to take from store
     this.attachmentsListUnsubscribe = store.subscribe(
       attachmentsListSelector(
-        (attachments: IListData<Attachment> | Attachment[] | undefined) => {
+        (attachments: IListData<IAttachment> | IAttachment[] | undefined) => {
           if (!attachments) {
             return;
           }
@@ -90,7 +90,7 @@ export class AttachmentsListComponent extends LitElement {
     return (type && type.display_name) || '';
   }
 
-  openPopup(attachment?: Attachment): void {
+  openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
       data: {

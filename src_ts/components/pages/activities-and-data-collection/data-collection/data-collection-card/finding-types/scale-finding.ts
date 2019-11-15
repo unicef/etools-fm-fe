@@ -15,20 +15,12 @@ export class ScaleFinding extends BaseFinding<string | null> {
           position: relative;
           min-height: 48px;
         }
-        .readonly-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 999;
+        :host([is-readonly]) paper-radio-group {
+          pointer-events: none;
         }
       </style>
 
       <div class="container layout horizontal start-justified center">
-        <!--   paper-radio-button has bad [disabled] styles customization   -->
-        <div class="readonly-overlay" ?hidden="${!this.isReadonly}"></div>
-
         <paper-radio-group
           selected="${this.value}"
           @iron-select="${({detail}: CustomEvent) => this.onSelect(detail.item)}"

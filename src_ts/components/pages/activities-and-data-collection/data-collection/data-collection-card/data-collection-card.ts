@@ -3,6 +3,7 @@ import {clone} from 'ramda';
 import './finding-types/text-finding';
 import './finding-types/number-finding';
 import './finding-types/scale-finding';
+import './attachments-popup/checklist-attachments';
 import {template} from './data-collection-card.tpl';
 import {DataCollectionCardStyles} from './data-collection-card.styles';
 import {fireEvent} from '../../../../utils/fire-custom-event';
@@ -14,6 +15,7 @@ import {
 import {SetEditedDCChecklistCard} from '../../../../../redux/actions/data-collection.actions';
 import {Unsubscribe} from 'redux';
 import {BOOLEAN_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
+import {openDialog} from '../../../../utils/dialog';
 
 @customElement('data-collection-card')
 export class DataCollectionCard extends LitElement {
@@ -22,6 +24,7 @@ export class DataCollectionCard extends LitElement {
   @property({type: Object}) overallInfo: DataCollectionOverall | null = null;
   @property({type: Array}) findings: DataCollectionFinding[] = [];
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  attachmentsEndpoint?: string;
 
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
@@ -72,6 +75,37 @@ export class DataCollectionCard extends LitElement {
     this.updateUnsubscribe();
   }
 
+  openAttachmentsPopup(): void {
+    if (!this.overallInfo || !this.attachmentsEndpoint) {
+      return;
+    }
+    openDialog<AttachmentsPopupData, AttachmentDialogResponse>({
+      dialog: 'checklist-attachments-popup',
+      data: {
+        attachments: this.overallInfo.attachments,
+        updateUrl: this.attachmentsEndpoint,
+        title: `Attachments for ${this.tabName}`
+      },
+      readonly: this.readonly
+    }).then(({confirmed, response}: IDialogResponse<AttachmentDialogResponse>) => {
+      if (!confirmed || (response && response.noChanges)) {
+        return;
+      }
+
+      fireEvent(this, 'attachments-updated');
+    });
+  }
+
+  protected getAttachmentsBtnText(attachmentsCount: number): string {
+    if (attachmentsCount === 1) {
+      return `${attachmentsCount} File`;
+    } else if (attachmentsCount > 1) {
+      return `${attachmentsCount} Files`;
+    } else {
+      return 'Upload Files';
+    }
+  }
+
   protected getFindingTemplate(finding: DataCollectionFinding): TemplateResult {
     switch (finding.activity_question.question.answer_type) {
       case TEXT_TYPE:
@@ -79,7 +113,7 @@ export class DataCollectionCard extends LitElement {
           <div class="finding-container">
             <text-finding
               .questionText="${finding.activity_question.question.text}"
-              .isReadonly="${!this.isEditMode}"
+              ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
             ></text-finding>
@@ -90,7 +124,7 @@ export class DataCollectionCard extends LitElement {
           <div class="finding-container">
             <number-finding
               .questionText="${finding.activity_question.question.text}"
-              .isReadonly="${!this.isEditMode}"
+              ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
             ></number-finding>
@@ -103,7 +137,7 @@ export class DataCollectionCard extends LitElement {
             <scale-finding
               .questionText="${finding.activity_question.question.text}"
               .options="${finding.activity_question.question.options}"
-              .isReadonly="${!this.isEditMode}"
+              ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
             ></scale-finding>

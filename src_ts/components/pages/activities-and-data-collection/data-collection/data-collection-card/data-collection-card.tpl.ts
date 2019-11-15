@@ -21,6 +21,16 @@ export function template(this: DataCollectionCard): TemplateResult {
       @save="${() => this.saveChanges()}"
       @cancel="${() => this.cancelEdit()}"
     >
+      <!-- Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab is readonly and no attachments uploaded -->
+      ${this.overallInfo && (!this.readonly || this.overallInfo.attachments.length)
+        ? html`
+            <paper-button slot="actions" @click="${() => this.openAttachmentsPopup()}" class="attachments-button">
+              <iron-icon icon="${this.overallInfo.attachments.length ? 'file-download' : 'file-upload'}"></iron-icon>
+              ${this.getAttachmentsBtnText(this.overallInfo.attachments.length)}
+            </paper-button>
+          `
+        : ''}
+
       <div slot="content">
         <!-- Spinner -->
         <etools-loading
@@ -28,7 +38,7 @@ export function template(this: DataCollectionCard): TemplateResult {
           loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
         ></etools-loading>
 
-        <!-- Overall Finding field. Is Hidden if overallInfo property is null -->
+        <!-- Overall Finding field. Is Hidden if OverallInfo property is null -->
         ${this.overallInfo
           ? html`
               <div class="overall-finding">

@@ -205,7 +205,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
         <div>
           ${repeat(
             this.currentFiles,
-            (attachment: Partial<Attachment>) => html`
+            (attachment: Partial<IAttachment>) => html`
               <file-select-input
                 .fileId="${attachment.id}"
                 .fileName="${attachment.filename}"

@@ -26,6 +26,8 @@ import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {DETAILS_TAB} from '../activity-item/activities-tabs';
 import {translate} from '../../../../localization/localisation';
+import {getEndpoint} from '../../../../endpoints/endpoints';
+import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
 
 store.addReducers({dataCollection, activityDetails});
 
@@ -67,7 +69,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             .tabName="${name}"
             .overallInfo="${overall}"
             .findings="${findings}"
+            .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
             ?readonly="${this.tabIsReadonly}"
+            @attachments-updated="${() => this.getOverallInfo()}"
             @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
           ></data-collection-card>
         `;
@@ -150,6 +154,16 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       return;
     }
     store.dispatch<AsyncEffect>(updateFindingsAndOverall(this.activityId, this.checklistId, requestData));
+  }
+
+  /**
+   * Requests Overall Findings info
+   */
+  getOverallInfo(): void {
+    if (this.activityId === null || this.checklistId === null) {
+      return;
+    }
+    store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId, 'findings'));
   }
 
   /**
@@ -260,6 +274,18 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     } else {
       return '';
     }
+  }
+
+  private getAttachmentsEndpoint(overall: DataCollectionOverall): string | undefined {
+    if (!this.activityId || !this.checklistId || !overall) {
+      return;
+    }
+    const url: string = getEndpoint(DATA_COLLECTION_OVERALL_FINDING, {
+      activityId: this.activityId,
+      checklistId: this.checklistId,
+      overallId: overall.id
+    }).url;
+    return `${url}attachments/`;
   }
 
   static get styles(): CSSResultArray {

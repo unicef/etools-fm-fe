@@ -13,13 +13,13 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends LitElement {
   @property() dialogOpened: boolean = true;
-  @property() editedAttachment: Partial<Attachment> = {};
+  @property() editedAttachment: Partial<IAttachment> = {};
   @property() attachmentTypes: DefaultDropdownOption[] = [];
   @property() errors: GenericObject = {};
   savingInProcess: boolean = false;
   selectedFile: File | null = null;
 
-  private originalData: Attachment | null = null;
+  private originalData: IAttachment | null = null;
   private endpointName!: string;
   private additionalEndpointData: GenericObject = {};
   private readonly updateAttachmentsUnsubscribe: Unsubscribe;
@@ -87,7 +87,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
     }
 
     // compose new attachment data
-    const data: Partial<Attachment> = {};
+    const data: Partial<IAttachment> = {};
     if (this.selectedFile) {
       data.file = this.selectedFile;
     }

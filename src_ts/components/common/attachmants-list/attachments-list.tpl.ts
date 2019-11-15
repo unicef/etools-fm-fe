@@ -65,7 +65,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
       <!-- Table Row item -->
       ${!this.loadingInProcess
         ? this.attachmentsList.map(
-            (attachment: Attachment) => html`
+            (attachment: IAttachment) => html`
               <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row flex">
                   <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
