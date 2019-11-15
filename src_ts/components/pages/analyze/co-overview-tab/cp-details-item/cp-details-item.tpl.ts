@@ -4,9 +4,7 @@ import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
-
-// TODO: !!! import { translate } from '../../../../localization/localisation';
-// TODO: add translations!
+import { translate } from '../../../../../localization/localisation';
 
 export function template(this: CpDetailsItem): TemplateResult {
   return html`
@@ -14,8 +12,8 @@ export function template(this: CpDetailsItem): TemplateResult {
     <div class="full-report-container">
       <div class="cp-indicators">
         <div class="line layout horizontal title">
-          <div class="flex-auto">CP Indicators</div>
-          <div class="target w210px flex-none">Target</div>
+          <div class="flex-auto">${translate('CO_OVERVIEW.CP_INDICATORS')}</div>
+          <div class="target w210px flex-none">${translate('CO_OVERVIEW.TARGET')}</div>
         </div>
 
         ${this.fullReport && this.fullReport.ram_indicators && this.fullReport.ram_indicators.length
@@ -39,15 +37,14 @@ export function template(this: CpDetailsItem): TemplateResult {
       <div class="partners">
         <div class="layout horizontal">
           <div class="flex-2 layout horizontal partners-data">
-            <div class="flex-auto layout horizontal center line title">Partners</div>
-            <div class="flex-none w65px layout horizontal center line title">M.R. Prog. <br />Visits</div>
+            <div class="flex-auto layout horizontal center line title">${translate('CO_OVERVIEW.PARTNERS')}</div>
+            <div class="flex-none w65px layout horizontal center line title">${translate('CO_OVERVIEW.PROG_VISITS')}</div>
           </div>
           <div class="flex-4 layout horizontal">
             <div class="flex-none w45px"></div>
-            <div class="flex-auto layout horizontal center line title">Partnerships</div>
+            <div class="flex-auto layout horizontal center line title">${translate('CO_OVERVIEW.PARTNERSHIPS')}</div>
             <div class="flex-none layout horizontal center-center w120px line title">
-              Days Since Last<br />
-              Site Visit
+              ${translate('CO_OVERVIEW.SINCE_LAST_VISIT')}
             </div>
             <div class="flex-none w150px"></div>
           </div>
@@ -107,7 +104,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                             <iron-collapse ?opened="${this.detailsOpened[intervention.pk]}">
                               <div class="intervention-details">
                                 <div class="line title">
-                                  PD Output / SSFA Expected Result
+                                  ${translate('CO_OVERVIEW.PD_OUTPUT')}/${translate('CO_OVERVIEW.SSFA_EXPECTED_RESULT')}
                                 </div>
                                 <div class="results-text line">
                                   ${this.getExpectedResults(intervention.pk, this.fullReport.result_links)}

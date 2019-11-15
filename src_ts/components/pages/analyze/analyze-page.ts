@@ -8,13 +8,6 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
-// import { addTranslates, ENGLISH } from '../../../localization/localisation';
-// import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templates-tab.translates';
-// import { questionTemplates } from '../../../redux/reducers/templates.reducer';
-// import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
-
-// store.addReducers({ questionTemplates });
-// addTranslates(ENGLISH, [TEMPLATES_TRANSLATES]);
 
 const PAGE: string = 'analyze';
 

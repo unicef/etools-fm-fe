@@ -4,8 +4,7 @@ import {html, TemplateResult} from 'lit-element';
 import {CoOverviewTabComponent} from './co-overview-tab';
 import {InputStyles} from '../../../styles/input-styles';
 import {repeat} from 'lit-html/directives/repeat';
-// TODO: !!! import { translate } from '../../../../localization/localisation';
-// TODO: add translations!
+import { translate } from '../../../../localization/localisation';
 
 export function template(this: CoOverviewTabComponent): TemplateResult {
   return html`
@@ -13,8 +12,8 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
     <section class="elevation page-content layout horizontal" elevation="1">
       <etools-dropdown
         .selected="${(this.queryParams && this.queryParams.cp_outcome) || undefined}"
-        label="CP Outcome"
-        placeholder="Select"
+        label="${translate('CO_OVERVIEW.CP_OUTCOME')}"
+        placeholder="${translate('CO_OVERVIEW.PLACEHOLDER.CP_OUTCOME')}"
         .options="${this.cpOutcomes}"
         option-label="name"
         option-value="id"
