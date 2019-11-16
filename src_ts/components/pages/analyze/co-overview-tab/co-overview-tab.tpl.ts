@@ -4,7 +4,7 @@ import {html, TemplateResult} from 'lit-element';
 import {CoOverviewTabComponent} from './co-overview-tab';
 import {InputStyles} from '../../../styles/input-styles';
 import {repeat} from 'lit-html/directives/repeat';
-import { translate } from '../../../../localization/localisation';
+import {translate} from '../../../../localization/localisation';
 
 export function template(this: CoOverviewTabComponent): TemplateResult {
   return html`

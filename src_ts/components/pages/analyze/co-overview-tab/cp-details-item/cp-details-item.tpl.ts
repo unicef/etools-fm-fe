@@ -4,7 +4,7 @@ import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
-import { translate } from '../../../../../localization/localisation';
+import {translate} from '../../../../../localization/localisation';
 
 export function template(this: CpDetailsItem): TemplateResult {
   return html`
@@ -38,7 +38,9 @@ export function template(this: CpDetailsItem): TemplateResult {
         <div class="layout horizontal">
           <div class="flex-2 layout horizontal partners-data">
             <div class="flex-auto layout horizontal center line title">${translate('CO_OVERVIEW.PARTNERS')}</div>
-            <div class="flex-none w65px layout horizontal center line title">${translate('CO_OVERVIEW.PROG_VISITS')}</div>
+            <div class="flex-none w65px layout horizontal center line title">
+              ${translate('CO_OVERVIEW.PROG_VISITS')}
+            </div>
           </div>
           <div class="flex-4 layout horizontal">
             <div class="flex-none w45px"></div>

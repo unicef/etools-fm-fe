@@ -3,8 +3,8 @@ import {CP_OUTCOMES_ENDPOINT, CP_OUTPUTS} from '../../../../endpoints/endpoints-
 import {updateQueryParams} from '../../../../routing/routes';
 import {fireEvent} from '../../../utils/fire-custom-event';
 import {debounce} from '../../../utils/debouncer';
-import { CO_OVERVIEW_TRANSLATES } from '../../../../localization/en/analyze-page/co-overview.translates';
-import { addTranslates, ENGLISH } from '../../../../localization/localisation';
+import {CO_OVERVIEW_TRANSLATES} from '../../../../localization/en/analyze-page/co-overview.translates';
+import {addTranslates, ENGLISH} from '../../../../localization/localisation';
 
 import {cpOutcomeDataSelector, outputsDataSelector} from '../../../../redux/selectors/static-data.selectors';
 import {fullReportSelector} from '../../../../redux/selectors/co-overview.selectors';
