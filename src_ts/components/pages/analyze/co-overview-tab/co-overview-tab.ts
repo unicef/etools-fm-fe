@@ -1,12 +1,13 @@
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
-import {CP_OUTCOMES_ENDPOINT, CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
+import {CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
 import {updateQueryParams} from '../../../../routing/routes';
 import {fireEvent} from '../../../utils/fire-custom-event';
 import {debounce} from '../../../utils/debouncer';
 import {CO_OVERVIEW_TRANSLATES} from '../../../../localization/en/analyze-page/co-overview.translates';
 import {addTranslates, ENGLISH} from '../../../../localization/localisation';
+import {CpOutcomesMixin} from '../../../common/mixins/cp-outcomes.mixin';
 
-import {cpOutcomeDataSelector, outputsDataSelector} from '../../../../redux/selectors/static-data.selectors';
+import {outputsDataSelector} from '../../../../redux/selectors/static-data.selectors';
 import {fullReportSelector} from '../../../../redux/selectors/co-overview.selectors';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -29,12 +30,9 @@ store.addReducers({fullReport});
 addTranslates(ENGLISH, [CO_OVERVIEW_TRANSLATES]);
 
 @customElement('co-overview-tab')
-export class CoOverviewTabComponent extends LitElement {
+export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   @property()
   queryParams: GenericObject | null = null;
-
-  @property({type: Array})
-  cpOutcomes: CpOutcome[] = [];
 
   @property({type: Array})
   filteredCpOutputs: EtoolsCpOutput[] = [];
@@ -45,7 +43,6 @@ export class CoOverviewTabComponent extends LitElement {
   private cpOutputs: EtoolsCpOutput[] = [];
   private readonly debouncedLoading: Callback;
   private routeUnsubscribe!: Unsubscribe;
-  private cpOutcomeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
   private fullReportUnsubscribe!: Unsubscribe;
 
@@ -68,17 +65,6 @@ export class CoOverviewTabComponent extends LitElement {
 
     this.routeUnsubscribe = store.subscribe(
       routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
-    );
-    this.cpOutcomeUnsubscribe = store.subscribe(
-      cpOutcomeDataSelector((cpOutcome: EtoolsCpOutcome[] | undefined) => {
-        if (!cpOutcome) {
-          return;
-        }
-        this.cpOutcomes = cpOutcome.map((item: EtoolsCpOutcome) => ({
-          id: +item.id,
-          name: item.name
-        }));
-      })
     );
     this.cpOutputUnsubscribe = store.subscribe(
       outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
@@ -109,7 +95,6 @@ export class CoOverviewTabComponent extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeUnsubscribe();
-    this.cpOutcomeUnsubscribe();
     this.cpOutputUnsubscribe();
     this.fullReportUnsubscribe();
   }
@@ -173,9 +158,6 @@ export class CoOverviewTabComponent extends LitElement {
 
   private loadStaticData(): void {
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
-    if (!data.outputs) {
-      store.dispatch<AsyncEffect>(loadStaticData(CP_OUTCOMES_ENDPOINT));
-    }
     if (!data.outputs) {
       store.dispatch<AsyncEffect>(loadStaticData(CP_OUTPUTS));
     }

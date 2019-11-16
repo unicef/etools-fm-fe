@@ -21,20 +21,8 @@ export class CpDetailsItem extends LitElement {
   @property({type: Object})
   detailsOpened: GenericObject<boolean> = {};
 
-  constructor() {
-    super();
-  }
-
   render(): TemplateResult {
     return template.call(this);
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
   }
 
   getBackground(index: number): string {

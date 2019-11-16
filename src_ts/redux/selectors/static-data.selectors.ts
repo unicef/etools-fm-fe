@@ -8,7 +8,7 @@ export const outputsDataSelector: Selector<EtoolsCpOutput[] | undefined> = selec
   (store: IRootState) => store.staticData.outputs
 );
 
-export const cpOutcomeDataSelector: Selector<EtoolsCpOutcome[] | undefined> = select<EtoolsCpOutcome[] | undefined>(
+export const cpOutcomesDataSelector: Selector<EtoolsCpOutcome[] | undefined> = select<EtoolsCpOutcome[] | undefined>(
   (store: IRootState) => store.staticData.cpOutcomes
 );
 

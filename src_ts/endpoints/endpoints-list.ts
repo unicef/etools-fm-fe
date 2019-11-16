@@ -1,5 +1,5 @@
 export const PROFILE_ENDPOINT: 'userProfile' = 'userProfile';
-export const CP_OUTCOMES_ENDPOINT: 'cpOutcomes' = 'cpOutcomes';
+export const CP_OUTCOMES: 'cpOutcomes' = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT: 'locations' = 'locations';
 export const CHANGE_COUNTRY: 'changeCountry' = 'changeCountry';
 export const UNICEF_USER: 'unicefUsers' = 'unicefUsers';
@@ -53,7 +53,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
   },
 
-  [CP_OUTCOMES_ENDPOINT]: {
+  [CP_OUTCOMES]: {
     template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
     exp: 60 * 60 * 1000, // 1 hour
     cacheTableName: 'cpOutcomes'
