@@ -38,6 +38,8 @@ export class MonitoringTabComponent extends LitElement {
         this.planned = overallActivities.visits_planned;
       })
     );
+
+    // conditional tabs routing: Hact visits section appearance depends on whether Coverage 'By partner' tab is active. If it's not, then Open Issues section appear
     this.lastActivatedTabUnsubscribe = store.subscribe(
       lastActivatedTabSelector((lastActivatedTab: string) => {
         if (COVERAGE_TABS.includes(lastActivatedTab)) {

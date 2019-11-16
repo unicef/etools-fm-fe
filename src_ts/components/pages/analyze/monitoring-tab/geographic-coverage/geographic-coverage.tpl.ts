@@ -1,5 +1,7 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
 import {html, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-dropdown';
+import {translate} from '../../../../../localization/localisation';
 
 export function template(this: GeographicCoverageComponent): TemplateResult {
   return html`
@@ -35,14 +37,21 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
 
             <!--  Sorting  -->
             <div class="geographic-coverage__header-item sorting-dropdown">
+              <etools-loading
+                ?active="${this.loading}"
+                loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+              ></etools-loading>
               <etools-dropdown-multi
-                .selectedValues="${this.selectedSortingOptions}"
+                .selectedValues="${this.selectedOptions}"
                 label="Filter By Section"
                 .options="${this.sections}"
                 option-label="name"
                 option-value="id"
                 trigger-value-change-event
-                @etools-selected-items-changed="${() => this.onSelectionChange()}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.onSelectionChange(detail.selectedItems)}"
+                @iron-overlay-closed="${(event: Event) => this.onDropdownClose(event)}"
+                @remove-selected-item="${(event: Event) => this.onRemoveSelectedItem(event)}"
                 hide-search
                 allow-outside-scroll
               >

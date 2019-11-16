@@ -14,12 +14,14 @@ import {loadGeographicCoverageBySection} from '../../../../../redux/effects/moni
 import {SectionsMixin} from '../../../../common/mixins/sections-mixin';
 import {geographicCoverageSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {geographicCoverageStyles} from './geographic-coverage.styles';
+import {equals} from 'ramda';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
 
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
-  @property() selectedSortingOptions: number[] = [];
+  @property() selectedOptions: string[] = [];
+  @property() loading: boolean = false;
   @query('#geomap') private mapElement!: HTMLElement;
   private polygons: Polygon[] = [];
   private mapHelper!: MapHelper;
@@ -36,6 +38,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
           const target: LatLngTuple = this.getReversedCoordinates(geographicCoverage[0])[0] || DEFAULT_COORDINATES;
           this.mapHelper.map!.setView(target, 6);
         }
+        this.loading = false;
       }, false)
     );
   }
@@ -44,10 +47,30 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     return template.call(this);
   }
 
-  onSelectionChange(): void {
-    if (this.selectedSortingOptions.length) {
-      store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(this.selectedSortingOptions.join(',')));
+  dispatchGeographicCoverageLoading(): void {
+    this.loading = true;
+    const argument: string = this.selectedOptions.length ? this.selectedOptions.join(',') : 'all';
+    store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(argument));
+  }
+
+  onSelectionChange(selectedItems: EtoolsSection[]): void {
+    const selectedSections: string[] = selectedItems.map((item: EtoolsSection) => item.id);
+    // prevents infinite event triggering loop on items removal
+    if (!equals(this.selectedOptions, selectedSections)) {
+      this.selectedOptions = selectedSections;
     }
+  }
+
+  onDropdownClose(_event: Event): void {
+    this.dispatchGeographicCoverageLoading();
+  }
+
+  onRemoveSelectedItem(event: Event): void {
+    const removedItem: string = (event as any).detail;
+    // red cross removal
+    this.selectedOptions = this.selectedOptions.filter((item: string) => item != removedItem);
+    event.stopImmediatePropagation();
+    this.dispatchGeographicCoverageLoading();
   }
 
   getPolygonOptions(geographicCoverageItem: GeographicCoverage): PolylineOptions {
