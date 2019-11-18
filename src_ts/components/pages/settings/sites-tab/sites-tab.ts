@@ -121,7 +121,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   openDialog(model?: Site): void {
     openDialog<SitesPopupData | undefined>({
       dialog: 'sites-popup',
-      data: {
+      dialogData: {
         model,
         sitesObjects: this.sitesObjects as Site[]
       }

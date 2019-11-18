@@ -99,7 +99,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   openPopup(question?: IQuestion): void {
     openDialog<IQuestion | undefined>({
       dialog: 'question-popup',
-      data: question
+      dialogData: question
     }).then(({confirmed}: IDialogResponse<any>) => {
       if (!confirmed) {
         return;

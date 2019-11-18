@@ -136,7 +136,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   openViewDialog(issue?: LogIssue): void {
     openDialog<LogIssue | undefined>({
       dialog: 'issue-tracker-popup',
-      data: issue,
+      dialogData: issue,
       readonly: true
     }).then(() => {});
   }
@@ -149,7 +149,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   openLogIssue(issue?: LogIssue): void {
     openDialog<LogIssue | undefined>({
       dialog: 'issue-tracker-popup',
-      data: issue
+      dialogData: issue
     }).then(({confirmed}: IDialogResponse<any>) => {
       if (!confirmed) {
         return;

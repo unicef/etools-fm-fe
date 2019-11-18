@@ -102,7 +102,7 @@ type SelectedFile = {
 
 interface IDialog<D> {
   dialog: string;
-  data?: D;
+  dialogData?: D;
   readonly?: boolean;
 }
 

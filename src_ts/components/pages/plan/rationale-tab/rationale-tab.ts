@@ -90,7 +90,7 @@ export class RationaleTabComponent extends LitElement {
   openPopup(): void {
     openDialog<RationaleModalData | undefined>({
       dialog: 'rationale-popup',
-      data: {year: this.selectedYear, model: this.yearPlan}
+      dialogData: {year: this.selectedYear, model: this.yearPlan}
     });
   }
 

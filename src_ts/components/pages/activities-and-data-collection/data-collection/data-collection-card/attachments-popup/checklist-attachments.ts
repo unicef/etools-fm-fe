@@ -24,7 +24,7 @@ export class ChecklistAttachments extends LitElement {
   private updateUrl!: string;
   private originalAttachments: IAttachment[] = [];
 
-  set data({attachments, title, updateUrl}: AttachmentsPopupData) {
+  set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
     this.updateUrl = updateUrl;
     this.popupTitle = title;
     this.attachments = clone(attachments);

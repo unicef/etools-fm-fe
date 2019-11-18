@@ -1,6 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {fireEvent} from '../../../utils/fire-custom-event';
-import {clone} from 'ramda';
 import {template} from './edit-attachments-popup.tpl';
 import {store} from '../../../../redux/store';
 import {addAttachmentToList, updateListAttachment} from '../../../../redux/effects/attachments-list.effects';
@@ -9,17 +8,15 @@ import {Unsubscribe} from 'redux';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {DataMixin} from '../../mixins/data-mixin';
 
 @customElement('edit-attachment-popup')
-export class EditAttachmentsPopupComponent extends LitElement {
+export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened: boolean = true;
-  @property() editedAttachment: Partial<IAttachment> = {};
   @property() attachmentTypes: DefaultDropdownOption[] = [];
-  @property() errors: GenericObject = {};
   savingInProcess: boolean = false;
   selectedFile: File | null = null;
 
-  private originalData: IAttachment | null = null;
   private endpointName!: string;
   private additionalEndpointData: GenericObject = {};
   private readonly updateAttachmentsUnsubscribe: Unsubscribe;
@@ -51,7 +48,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
   }
 
-  set data(data: IAttachmentPopupData) {
+  set dialogData(data: IAttachmentPopupData) {
     if (!data) {
       return;
     }
@@ -63,8 +60,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
     if (!editedAttachment) {
       return;
     }
-    this.editedAttachment = {...this.editedAttachment, ...editedAttachment};
-    this.originalData = clone(editedAttachment);
+    this.data = editedAttachment;
   }
 
   render(): TemplateResult {
@@ -78,7 +74,7 @@ export class EditAttachmentsPopupComponent extends LitElement {
 
   processRequest(): void {
     // validate if file is selected for new attachments
-    if (!this.editedAttachment.id && !this.selectedFile) {
+    if (!this.editedData.id && !this.selectedFile) {
       fireEvent(this, 'toast', {
         text: 'Please, select correct file',
         showCloseBtn: false
@@ -92,10 +88,10 @@ export class EditAttachmentsPopupComponent extends LitElement {
       data.file = this.selectedFile;
     }
     const typeChanged: boolean = Boolean(
-      this.originalData && this.editedAttachment.file_type !== this.originalData.file_type
+      this.originalData && this.editedData.file_type !== this.originalData.file_type
     );
-    if ((!this.originalData && this.editedAttachment.file_type) || typeChanged) {
-      data.file_type = this.editedAttachment.file_type;
+    if ((!this.originalData && this.editedData.file_type) || typeChanged) {
+      data.file_type = this.editedData.file_type;
     }
 
     // don't save attachment if nothing changed. just close popup
@@ -104,9 +100,9 @@ export class EditAttachmentsPopupComponent extends LitElement {
       return;
     }
 
-    if (this.editedAttachment.id) {
+    if (this.editedData.id) {
       store.dispatch<AsyncEffect>(
-        updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedAttachment.id, data)
+        updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
       );
     } else {
       store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
@@ -115,13 +111,5 @@ export class EditAttachmentsPopupComponent extends LitElement {
 
   onClose(): void {
     fireEvent(this, 'response', {confirmed: false});
-  }
-
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
   }
 }

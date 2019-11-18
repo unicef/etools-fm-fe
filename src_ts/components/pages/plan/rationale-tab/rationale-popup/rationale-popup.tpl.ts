@@ -39,7 +39,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-textarea
             class="validate-input disabled-as-readonly flex"
-            .value="${this.editedModel.prioritization_criteria}"
+            .value="${this.editedData.prioritization_criteria}"
             @value-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('prioritization_criteria', detail.value)}"
             max-rows="3"
@@ -56,7 +56,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-textarea
             class="validate-input disabled-as-readonly flex"
-            .value="${this.editedModel.methodology_notes}"
+            .value="${this.editedData.methodology_notes}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('methodology_notes', detail.value)}"
             max-rows="3"
             label="${translate('RATIONALE.LABELS.METHODOLOGY')}"
@@ -72,7 +72,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-textarea
             class="validate-input disabled-as-readonly flex"
-            .value="${this.editedModel.modalities}"
+            .value="${this.editedData.modalities}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('modalities', detail.value)}"
             max-rows="3"
             label="${translate('RATIONALE.LABELS.MODALITIES')}"
@@ -88,7 +88,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-input
             class="validate-input disabled-as-readonly flex numeric-input"
-            .value="${this.editedModel.target_visits}"
+            .value="${this.editedData.target_visits}"
             @input="${({target}: CustomEvent) => this.onTargetVisitsChange((target as HTMLInputElement).value)}"
             type="number"
             label="${translate('RATIONALE.LABELS.VISITS')}"
@@ -103,7 +103,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-textarea
             class="validate-input disabled-as-readonly flex"
-            value="${this.editedModel.partner_engagement}"
+            value="${this.editedData.partner_engagement}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('partner_engagement', detail.value)}"
             max-rows="3"
             label="${translate('RATIONALE.LABELS.PARTNER_ENGAGEMENT')}"
@@ -119,7 +119,7 @@ export function template(this: RationalePopupComponent): TemplateResult {
         <div class="container">
           <paper-textarea
             class="validate-input disabled-as-readonly flex"
-            value="${this.editedModel.other_aspects}"
+            value="${this.editedData.other_aspects}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('other_aspects', detail.value)}"
             max-rows="3"
             label="${translate('RATIONALE.LABELS.OTHER')}"

@@ -31,6 +31,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
       dialog-title="${translate('ISSUE_TRACKER.POPUP_TITLE')}"
       @iron-overlay-closed="${({target}: CustomEvent) => this.resetData(target)}"
       @confirm-btn-clicked="${() => this.processRequest()}"
+      @close="${this.onClose}"
     >
       <etools-loading
         ?active="${this.isRequest}"

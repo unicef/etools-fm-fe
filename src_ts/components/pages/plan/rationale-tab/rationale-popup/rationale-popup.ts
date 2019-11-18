@@ -8,7 +8,6 @@ import {
   TemplateResult
 } from 'lit-element';
 import {template} from './rationale-popup.tpl';
-import {clone} from 'ramda';
 import {store} from '../../../../../redux/store';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {Unsubscribe} from 'redux';
@@ -21,16 +20,14 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
+import {DataMixin} from '../../../../common/mixins/data-mixin';
 
 @customElement('rationale-popup')
-export class RationalePopupComponent extends LitElement {
+export class RationalePopupComponent extends DataMixin()<IRationale>(LitElement) {
   @property() dialogOpened: boolean = true;
-  @property() errors: GenericObject = {};
   savingInProcess: boolean = false;
-  editedModel: Partial<IRationale> = {};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
 
-  private originalData: IRationale | null = null;
   private selectedYear: number | undefined;
   private readonly updateRationaleUnsubscribe: Unsubscribe;
 
@@ -61,7 +58,7 @@ export class RationalePopupComponent extends LitElement {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
   }
 
-  set data(data: RationaleModalData) {
+  set dialogData(data: RationaleModalData) {
     if (!data) {
       return;
     }
@@ -71,8 +68,7 @@ export class RationalePopupComponent extends LitElement {
     if (!model) {
       return;
     }
-    this.editedModel = {...this.editedModel, ...model};
-    this.originalData = clone(model);
+    this.data = model;
   }
 
   render(): TemplateResult {
@@ -96,8 +92,8 @@ export class RationalePopupComponent extends LitElement {
     this.errors = {};
     const data: Partial<IRationale> =
       this.originalData !== null
-        ? getDifference<Partial<IRationale>>(this.originalData, this.editedModel, {toRequest: true})
-        : this.editedModel;
+        ? getDifference<Partial<IRationale>>(this.originalData, this.editedData, {toRequest: true})
+        : this.editedData;
     const isEmpty: boolean = !Object.keys(data).length;
 
     if (isEmpty) {
@@ -108,20 +104,8 @@ export class RationalePopupComponent extends LitElement {
     }
   }
 
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
-  }
-
   onTargetVisitsChange(value?: string): void {
-    this.editedModel.target_visits = value && !isNaN(+value) ? +value : 0;
-  }
-
-  updateModelValue(fieldName: keyof IRationale, value: any): void {
-    this.editedModel[fieldName] = value;
+    this.editedData.target_visits = value && !isNaN(+value) ? +value : 0;
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {

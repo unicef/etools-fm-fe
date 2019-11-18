@@ -81,7 +81,7 @@ export class DataCollectionCard extends LitElement {
     }
     openDialog<AttachmentsPopupData, AttachmentDialogResponse>({
       dialog: 'checklist-attachments-popup',
-      data: {
+      dialogData: {
         attachments: this.overallInfo.attachments,
         updateUrl: this.attachmentsEndpoint,
         title: `Attachments for ${this.tabName}`

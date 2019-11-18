@@ -93,7 +93,7 @@ export class AttachmentsListComponent extends LitElement {
   openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
-      data: {
+      dialogData: {
         editedAttachment: attachment,
         attachmentTypes: FILE_TYPES,
         endpointName: this._endpointName,
@@ -110,7 +110,7 @@ export class AttachmentsListComponent extends LitElement {
   openDeletePopup(id: number): void {
     openDialog<IRemmoveAttachmentPopupData>({
       dialog: 'remove-attachment-popup',
-      data: {id, endpointName: this._endpointName, additionalEndpointData: this.additionalEndpointData}
+      dialogData: {id, endpointName: this._endpointName, additionalEndpointData: this.additionalEndpointData}
     }).then(({confirmed}: IDialogResponse<any>) => {
       if (!confirmed || !this.debouncedLoading) {
         return;

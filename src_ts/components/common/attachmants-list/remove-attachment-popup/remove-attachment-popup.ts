@@ -43,7 +43,7 @@ export class RemoveAttachmentPopupComponent extends LitElement {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
   }
 
-  set data(data: IRemmoveAttachmentPopupData) {
+  set dialogData(data: IRemmoveAttachmentPopupData) {
     if (!data) {
       return;
     }

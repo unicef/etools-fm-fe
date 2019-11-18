@@ -6,9 +6,6 @@ import {fireEvent} from '../../../../utils/fire-custom-event';
 import {issueTrackerIsUpdate} from '../../../../../redux/selectors/issue-tracker.selectors';
 import {getDifference} from '../../../../utils/objects-diff';
 import {createLogIssue, updateLogIssue} from '../../../../../redux/effects/issue-tracker.effects';
-import {outputsDataSelector, partnersDataSelector} from '../../../../../redux/selectors/static-data.selectors';
-import {sitesSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
-import {locationsInvert} from '../../../settings/sites-tab/locations-invert';
 import {template} from './issue-tracker-popup.tpl';
 import {PaperRadioButtonElement} from '@polymer/paper-radio-button/paper-radio-button';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -16,9 +13,13 @@ import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {IssueTrackerPopupStyles} from './issue-tracker-popu.styles';
+import {SiteMixin} from '../../../../common/mixins/site-mixin';
+import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
+import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
+import {DataMixin} from '../../../../common/mixins/data-mixin';
 
 @customElement('issue-tracker-popup')
-export class IssueTrackerPopup extends LitElement {
+export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
   isNew: boolean = false;
   isRequest: boolean = false;
   isReadOnly: boolean = false;
@@ -41,10 +42,6 @@ export class IssueTrackerPopup extends LitElement {
   locationSites: Site[] = [];
 
   @property() dialogOpened: boolean = true;
-  @property() errors: GenericObject = {};
-
-  @property() editedData: Partial<LogIssue> = {};
-  originalData!: LogIssue;
 
   @property({type: Array})
   currentFiles: Partial<IAttachment>[] = [];
@@ -53,9 +50,6 @@ export class IssueTrackerPopup extends LitElement {
   originalFiles: IAttachment[] = [];
 
   private readonly updateUnsubscribe: Unsubscribe;
-  private readonly sitesUnsubscribe: Unsubscribe;
-  private readonly outputsUnsubscribe!: Unsubscribe;
-  private readonly partnersUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
@@ -78,32 +72,6 @@ export class IssueTrackerPopup extends LitElement {
         fireEvent(this, 'response', {confirmed: true});
       }, false)
     );
-
-    this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: Site[] | null) => {
-        if (!sites) {
-          return;
-        }
-        this.locations = locationsInvert(sites);
-      })
-    );
-
-    this.outputsUnsubscribe = store.subscribe(
-      outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
-        if (!outputs) {
-          return;
-        }
-        this.outputs = outputs;
-      })
-    );
-    this.partnersUnsubscribe = store.subscribe(
-      partnersDataSelector((partners: EtoolsPartner[] | undefined) => {
-        if (!partners) {
-          return;
-        }
-        this.partners = partners;
-      })
-    );
   }
 
   static get styles(): CSSResultArray {
@@ -114,15 +82,14 @@ export class IssueTrackerPopup extends LitElement {
     this.isReadOnly = value;
   }
 
-  set data(data: LogIssue) {
+  set dialogData(data: LogIssue) {
+    super.data = data;
     this.isNew = !data;
     if (this.isNew) {
       this.editedData.status = 'new';
       return;
     }
-    this.editedData = {...this.editedData, ...data};
     this.relatedToType = this.editedData.related_to_type || 'cp_output';
-    this.originalData = clone(data);
     this.originalFiles = clone(data.attachments);
     this.currentFiles = clone(data.attachments);
   }
@@ -184,7 +151,8 @@ export class IssueTrackerPopup extends LitElement {
     if (!this.editedData) {
       return;
     }
-    const data: Partial<LogIssue> = getDifference<LogIssue>(this.originalData, this.editedData, {
+    const originalData: Partial<LogIssue> = this.originalData || {};
+    const data: Partial<LogIssue> = getDifference<LogIssue>(originalData, this.editedData, {
       toRequest: true,
       nestedFields: ['options']
     });
@@ -204,25 +172,6 @@ export class IssueTrackerPopup extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateUnsubscribe();
-    this.sitesUnsubscribe();
-    this.outputsUnsubscribe();
-    this.partnersUnsubscribe();
-  }
-
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
-  }
-
-  updateModelValue(fieldName: keyof LogIssue, value: any): void {
-    if (!this.editedData) {
-      return;
-    }
-    // sets values from inputs to model, refactor arrays with objects to ids arrays
-    this.editedData[fieldName] = !Array.isArray(value) ? value : value.map((item: any) => item.id);
   }
 
   changeRelatedType(item: PaperRadioButtonElement): void {
