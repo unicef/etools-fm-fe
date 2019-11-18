@@ -27,7 +27,7 @@ export function template(this: RationaleTabComponent): TemplateResult {
       ></etools-dropdown>
     </div>
 
-    <annual-fm-rationale .selectedYear="${this.selectedYear}" .data="${this.yearPlan}"></annual-fm-rationale>
+    <annual-fm-rationale .selectedYear="${this.selectedYear}" .editedModel="${this.yearPlan}"></annual-fm-rationale>
 
     <attachments-list endpoint-name="${RATIONALE_ATTACHMENTS}"></attachments-list>
   `;

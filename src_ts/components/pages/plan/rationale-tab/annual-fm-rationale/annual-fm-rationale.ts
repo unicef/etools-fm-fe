@@ -23,8 +23,8 @@ import {rationaleUpdate} from '../../../../../redux/selectors/rationale.selector
 export class AnnualFmRationale extends LitElement {
   @property() errors: GenericObject = {};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
-  @property() data!: Partial<IRationale>;
-  untouchedData!: Partial<IRationale>;
+  @property() editedModel!: Partial<IRationale>;
+  originalData!: Partial<IRationale>;
   @property() isReadonly: boolean = true;
   @property() selectedYear: number | undefined;
   savingInProcess: boolean = false;
@@ -44,7 +44,6 @@ export class AnnualFmRationale extends LitElement {
         // check errors on update(create) complete
         this.errors = store.getState().rationale.error;
         if (this.errors && Object.keys(this.errors).length) {
-          console.log('errors', this.errors);
           this.isReadonly = false;
           return;
         }
@@ -62,33 +61,26 @@ export class AnnualFmRationale extends LitElement {
   }
 
   save(): void {
+    this.performUpdate();
     this.processRequest();
     this.isReadonly = true;
   }
 
   cancel(): void {
-    this.data = JSON.parse(JSON.stringify(this.untouchedData));
+    this.performUpdate();
+    this.editedModel = JSON.parse(JSON.stringify(this.originalData));
     this.isReadonly = true;
   }
 
   startEdit(): void {
-    this.untouchedData = JSON.parse(JSON.stringify(this.data));
+    this.originalData = JSON.parse(JSON.stringify(this.editedModel));
     this.isReadonly = false;
   }
 
   processRequest(): void {
     this.errors = {};
-    // const data: Partial<IRationale> =
-    //   this.originalData !== null
-    //     ? getDifference<Partial<IRationale>>(this.originalData, this.editedModel, {toRequest: true})
-    //     : this.editedModel;
-    // const isEmpty: boolean = !Object.keys(data).length;
-
-    // if (!isEmpty && this.selectedYear) {
-    //   store.dispatch<AsyncEffect>(updateRationale(this.selectedYear, data));
-    // }
     if (this.selectedYear) {
-      store.dispatch<AsyncEffect>(updateRationale(this.selectedYear, this.data));
+      store.dispatch<AsyncEffect>(updateRationale(this.selectedYear, this.editedModel));
     }
   }
 
@@ -101,11 +93,11 @@ export class AnnualFmRationale extends LitElement {
   }
 
   onTargetVisitsChange(value?: string): void {
-    this.data.target_visits = value && !isNaN(+value) ? +value : 0;
+    this.editedModel.target_visits = value && !isNaN(+value) ? +value : 0;
   }
 
   updateModelValue(fieldName: keyof IRationale, value: any): void {
-    this.data[fieldName] = value;
+    this.editedModel[fieldName] = value;
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
