@@ -14,6 +14,7 @@ interface IRootState {
   attachmentsList: IAttachmentsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
+  monitoringActivities: IMonitoringActivityState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -129,6 +130,19 @@ type FindingsAndOverall = {
   findings: null | DataCollectionFinding[];
   overall: null | DataCollectionOverall[];
 };
+
+interface IMonitoringActivityState {
+  overallActivities: OverallActivities;
+  partnersCoverage: PartnersCoverage[];
+  interventionsCoverage: InterventionsCoverage[];
+  cpOutputCoverage: CpOutputCoverage[];
+  geographicCoverage: GeographicCoverage[];
+  openIssuesPartnership: OpenIssuesActionPoints[];
+  openIssuesCpOutput: OpenIssuesActionPoints[];
+  openIssuesLocation: OpenIssuesActionPoints[];
+  lastActivatedTab: string;
+  hactVisits: HactVisits[];
+}
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
 type DynamicSelector<T> = (onChange: (state: T) => void, path?: string[], initialize?: boolean) => Callback;

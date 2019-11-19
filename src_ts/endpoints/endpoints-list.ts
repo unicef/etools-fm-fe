@@ -38,6 +38,19 @@ export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
 export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
 export const ATTACHMENTS_STORE: 'attachmentsStore' = 'attachmentsStore';
+export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' =
+  'monitoringActivityOverallStatistics';
+export const MONITORING_ACTIVITY_PARTNERS_COVERAGE: 'monitoringActivityPartnersCoverage' =
+  'monitoringActivityPartnersCoverage';
+export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInterventionsCoverage' =
+  'monitoringActivityInterventionsCoverage';
+export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' =
+  'monitoringActivityCpOutputCoverage';
+export const GEOGRAPHIC_COVERAGE: 'geographicCoverage' = 'geographicCoverage';
+export const OPEN_ISSUES_PARTNERS: 'openIssuesPartners' = 'openIssuesPartners';
+export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
+export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
+export const HACT_VISITS: 'hactVisits' = 'hactVisits';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -223,5 +236,41 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ATTACHMENTS_STORE]: {
     url: '/api/v2/attachments/upload/'
+  },
+
+  [MONITORING_ACTIVITY_OVERALL_STATISTICS]: {
+    template: '/api/v1/field-monitoring/analyze/overall/'
+  },
+
+  [MONITORING_ACTIVITY_PARTNERS_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/partners/'
+  },
+
+  [MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/interventions/'
+  },
+
+  [MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/cp-outputs/'
+  },
+
+  [GEOGRAPHIC_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/geographic/?sections__in='
+  },
+
+  [OPEN_ISSUES_PARTNERS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/partners/'
+  },
+
+  [OPEN_ISSUES_CP_OUTPUT]: {
+    template: '/api/v1/field-monitoring/analyze/issues/cp-outputs/'
+  },
+
+  [OPEN_ISSUES_LOCATIONS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/locations/'
+  },
+
+  [HACT_VISITS]: {
+    template: '/api/v1/field-monitoring/analyze/hact/'
   }
 };

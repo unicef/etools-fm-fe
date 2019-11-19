@@ -125,6 +125,20 @@ EtoolsRouter
     }
   )
   .addRoute(
+    new RegExp(`^analyze\\/${routeParamRegex}\\/${routeParamRegex}$`),
+    (params: IRouteCallbackParams): IRouteDetails => {
+      return {
+        routeName: 'analyze',
+        subRouteName: params.matchDetails[1],
+        path: params.matchDetails[0],
+        queryParams: null,
+        queryParamsString: null,
+        params: {tab: params.matchDetails[2]}
+      };
+    }
+  )
+
+  .addRoute(
     new RegExp(`^page-not-found$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {

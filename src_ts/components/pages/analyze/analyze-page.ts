@@ -8,13 +8,6 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
-// import { addTranslates, ENGLISH } from '../../../localization/localisation';
-// import { TEMPLATES_TRANSLATES } from '../../../localization/en/plan-page/templates-tab.translates';
-// import { questionTemplates } from '../../../redux/reducers/templates.reducer';
-// import { ISSUE_TRACKER_TRANSLATES } from '../../../localization/en/plan-page/issue-tracker.translates';
-
-// store.addReducers({ questionTemplates });
-// addTranslates(ENGLISH, [TEMPLATES_TRANSLATES]);
 
 const PAGE: string = 'analyze';
 
@@ -37,10 +30,6 @@ export class AnalyzePage extends LitElement {
   ];
 
   @property() activeTab: string = MONITORING_ACTIVITY;
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-  }
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -76,7 +65,7 @@ export class AnalyzePage extends LitElement {
     switch (this.activeTab) {
       case MONITORING_ACTIVITY:
         return html`
-          Monitoring Activity
+          <monitoring-tab></monitoring-tab>
         `;
       case COUNTRY_OVERVIEW:
         return html`
@@ -95,5 +84,9 @@ export class AnalyzePage extends LitElement {
       return;
     }
     updateAppLocation(`${PAGE}/${tabName}`);
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
   }
 }

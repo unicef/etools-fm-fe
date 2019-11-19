@@ -1,0 +1,72 @@
+import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {template} from './monitoring-tab.tpl';
+import {SharedStyles} from '../../../styles/shared-styles';
+import {pageLayoutStyles} from '../../../styles/page-layout-styles';
+import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {CardStyles} from '../../../styles/card-styles';
+import {elevationStyles} from '../../../styles/elevation-styles';
+import {store} from '../../../../redux/store';
+import {monitoringActivities} from '../../../../redux/reducers/monitoring-activity.reducer';
+import {loadOverallStatistics} from '../../../../redux/effects/monitoring-activity.effects';
+import {Unsubscribe} from 'redux';
+import {
+  lastActivatedTabSelector,
+  overallActivitiesSelector
+} from '../../../../redux/selectors/monitoring-activities.selectors';
+import {monitoringActivityStyles} from './monitoring-tab.styles';
+import {COVERAGE_TABS, OPEN_ISSUES_PARTNER_TAB, PARTNER_TAB} from './monitoring-tab.navigation.constants';
+
+store.addReducers({monitoringActivities});
+
+@customElement('monitoring-tab')
+export class MonitoringTabComponent extends LitElement {
+  coverageActiveTab: string = PARTNER_TAB;
+  openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
+  @property() isHactVisitSectionActivated: boolean = this.coverageActiveTab == PARTNER_TAB;
+  @property() completed: number = 0;
+  @property() planned: number = 0;
+
+  private readonly overallActivitiesUnsubscribe: Unsubscribe;
+  private readonly lastActivatedTabUnsubscribe: Unsubscribe;
+
+  constructor() {
+    super();
+    store.dispatch<AsyncEffect>(loadOverallStatistics());
+    this.overallActivitiesUnsubscribe = store.subscribe(
+      overallActivitiesSelector((overallActivities: OverallActivities) => {
+        this.completed = overallActivities.visits_completed;
+        this.planned = overallActivities.visits_planned;
+      })
+    );
+
+    // conditional tabs routing: Hact visits section appearance depends on whether Coverage 'By partner' tab is active. If it's not, then Open Issues section appear
+    this.lastActivatedTabUnsubscribe = store.subscribe(
+      lastActivatedTabSelector((lastActivatedTab: string) => {
+        if (COVERAGE_TABS.includes(lastActivatedTab)) {
+          this.coverageActiveTab = lastActivatedTab;
+        } else {
+          this.openIssuesActiveTab = lastActivatedTab;
+        }
+        this.isHactVisitSectionActivated = this.coverageActiveTab != PARTNER_TAB;
+      })
+    );
+  }
+
+  render(): TemplateResult {
+    return template.call(this);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.overallActivitiesUnsubscribe();
+    this.lastActivatedTabUnsubscribe();
+  }
+
+  getCompletedPercentage(completed: number, planned: number): number | null {
+    return planned ? Math.round((completed / planned) * 100) : 0;
+  }
+
+  static get styles(): CSSResult[] {
+    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, monitoringActivityStyles];
+  }
+}
