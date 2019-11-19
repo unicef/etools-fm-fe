@@ -72,7 +72,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
                 ></paper-icon-button>
               </div>
               <div slot="content" class="layout vertical">
-                ${this.renderTable(this.checklistByMethods[method.id])}
+                ${this.renderTable(this.checklistByMethods[method.id], method)}
               </div>
             </etools-card>
           `
@@ -80,7 +80,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     `;
   }
 
-  renderTable(collect: DataCollectionChecklist[] = []): TemplateResult {
+  renderTable(collect: DataCollectionChecklist[] = [], method: EtoolsMethod): TemplateResult {
     return html`
       <etools-data-table-header no-title no-collapse>
         <etools-data-table-column class="flex-1" field="text">
@@ -89,9 +89,13 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
         <etools-data-table-column class="flex-1" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-1" field="text">
-          ${translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE')}
-        </etools-data-table-column>
+        ${method.use_information_source
+          ? html`
+              <etools-data-table-column class="flex-1" field="text">
+                ${translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE')}
+              </etools-data-table-column>
+            `
+          : ''}
       </etools-data-table-header>
       ${repeat(
         collect,
@@ -100,8 +104,12 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-1 truncate">${item.author.name}</div>
               <div class="col-data flex-1 truncate">${this.getMethodType(item.method)}</div>
-              <div class="col-data flex-1 truncate">${item.information_source}</div>
-              ${this.hasEditCollect
+              ${method.use_information_source
+                ? html`
+                    <div class="col-data flex-1 truncate">${item.information_source}</div>
+                  `
+                : ''}
+              ${this.hasEditCollect && method.use_information_source
                 ? html`
                     <div class="hover-block">
                       <iron-icon icon="icons:create" @click="${() => this.openUpdateDialog(item)}"></iron-icon>
