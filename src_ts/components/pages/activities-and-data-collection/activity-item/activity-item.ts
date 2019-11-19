@@ -25,7 +25,7 @@ import {
   REVIEW,
   SUBMITTED
 } from './statuses-actions/activity-statuses';
-import {ATTACHMENTS_TAB, CHECKLIST_TAB, DETAILS_TAB, REVIEW_TAB} from './activities-tabs';
+import {ATTACHMENTS_TAB, CHECKLIST_TAB, COLLECT_TAB, DETAILS_TAB, REVIEW_TAB} from './activities-tabs';
 import {Unsubscribe} from 'redux';
 import {hasActivityPermission, Permissions} from '../../../../config/permissions';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
@@ -37,7 +37,7 @@ addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
 
-const VALID_TABS: Set<string> = new Set([DETAILS_TAB, ATTACHMENTS_TAB, CHECKLIST_TAB, REVIEW_TAB]);
+const VALID_TABS: Set<string> = new Set([DETAILS_TAB, ATTACHMENTS_TAB, CHECKLIST_TAB, REVIEW_TAB, COLLECT_TAB]);
 
 export const STATUSES: IEtoolsStatusModel[] = [
   {status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
@@ -74,6 +74,12 @@ export class NewActivityComponent extends LitElement {
       requiredPermission: Permissions.VIEW_REVIEW_TAB
     },
     {
+      tab: COLLECT_TAB,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`),
+      hidden: false,
+      requiredPermission: Permissions.VIEW_COLLECT_TAB
+    },
+    {
       tab: ATTACHMENTS_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
@@ -85,6 +91,7 @@ export class NewActivityComponent extends LitElement {
   private routeDetailsUnsubscribe!: Unsubscribe;
   private tabPermissions: GenericObject<Permissions> = {
     [CHECKLIST_TAB]: Permissions.VIEW_CHECKLIST_TAB,
+    [COLLECT_TAB]: Permissions.VIEW_COLLECT_TAB,
     [REVIEW_TAB]: Permissions.VIEW_REVIEW_TAB
   };
 
@@ -209,6 +216,10 @@ export class NewActivityComponent extends LitElement {
       case REVIEW_TAB:
         return html`
           <activity-review-tab .activityId="${this.activityId}"></activity-review-tab>
+        `;
+      case COLLECT_TAB:
+        return html`
+          <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
         `;
       default:
         return html``;

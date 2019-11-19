@@ -34,12 +34,12 @@ export const CardStyles: CSSResult = css`
     height: 100%;
   }
 
-  .card-title-box .panel-button {
+  .panel-button {
     opacity: 0.45;
     transition: 0.15s;
   }
 
-  .card-title-box .panel-button:hover {
+  .panel-button:hover {
     opacity: 0.57;
   }
 

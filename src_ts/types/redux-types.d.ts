@@ -110,16 +110,21 @@ interface IWidgetLocationsState {
 
 interface IDataCollectionState {
   loading: {
+    checklistCollect: null | boolean;
+    checklistCreate: null | boolean;
     checklist: null | boolean;
     findings: null | boolean;
     overallAndFindingsUpdate: null | boolean;
   };
   editedFindingsTab: null | string;
+  checklistCollect: DataCollectionChecklist[];
   checklist: {
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
   };
   errors: {
+    checklistCollect: null | GenericObject;
+    checklistCreate: null | GenericObject;
     checklist: null | GenericObject;
     findings: null | GenericObject;
     overallAndFindingsUpdate: null | GenericObject;

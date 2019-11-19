@@ -1,5 +1,6 @@
 import {
   CHECKLIST,
+  DATA_COLLECTION,
   REVIEW
 } from '../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
@@ -22,6 +23,8 @@ export enum Permissions {
   VIEW_CHECKLIST_TAB = 'VIEW_CHECKLIST_TAB',
   EDIT_CHECKLIST_TAB = 'EDIT_CHECKLIST_TAB',
   VIEW_REVIEW_TAB = 'VIEW_REVIEW_TAB',
+  VIEW_COLLECT_TAB = 'VIEW_COLLECT_TAB',
+  EDIT_COLLECT_TAB = 'EDIT_COLLECT_TAB',
   MAKE_STATUS_TRANSITION = 'MAKE_STATUS_TRANSITION',
   // Test permissions
   READONLY_TEST_PERMISSION = 'READONLY_TEST_PERMISSION',
@@ -53,7 +56,10 @@ const ACTIVITY_PERMISSIONS_MAP: GenericObject<(details: IActivityDetails) => boo
     permissions.view.activity_question_set && status === CHECKLIST,
   [Permissions.EDIT_CHECKLIST_TAB]: ({permissions}: IActivityDetails) => permissions.edit.activity_question_set,
   [Permissions.VIEW_REVIEW_TAB]: ({permissions, status}: IActivityDetails) =>
-    permissions.view.activity_question_set && status === REVIEW
+    permissions.view.activity_question_set && status === REVIEW,
+  [Permissions.EDIT_COLLECT_TAB]: ({permissions}: IActivityDetails) => permissions.edit.checklists,
+  [Permissions.VIEW_COLLECT_TAB]: ({permissions, status}: IActivityDetails) =>
+    status === DATA_COLLECTION && permissions.view.checklists
 };
 
 export function setUser({groups}: IEtoolsUserModel): void {

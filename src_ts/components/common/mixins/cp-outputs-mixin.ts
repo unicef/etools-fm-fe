@@ -9,7 +9,7 @@ import {CP_OUTPUTS} from '../../../endpoints/endpoints-list';
 // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
 export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    outputs!: EtoolsCpOutput[];
+    outputs: EtoolsCpOutput[] = [];
 
     private outputsUnsubscribe!: Unsubscribe;
 

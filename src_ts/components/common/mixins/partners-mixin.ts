@@ -9,7 +9,7 @@ import {PARTNERS} from '../../../endpoints/endpoints-list';
 // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
 export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    partners!: EtoolsPartner[];
+    partners: EtoolsPartner[] = [];
 
     private partnersUnsubscribe!: Unsubscribe;
 

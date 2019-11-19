@@ -83,6 +83,7 @@ type EtoolsSection = {
 type EtoolsMethod = {
   id: number;
   name: string;
+  use_information_source: boolean;
 };
 
 type SortDetails = {

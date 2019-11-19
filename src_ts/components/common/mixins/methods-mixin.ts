@@ -9,7 +9,7 @@ import {METHODS} from '../../../endpoints/endpoints-list';
 // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
 export const MethodsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    methods!: EtoolsMethod[];
+    methods: EtoolsMethod[] = [];
 
     private methodsUnsubscribe!: Unsubscribe;
 

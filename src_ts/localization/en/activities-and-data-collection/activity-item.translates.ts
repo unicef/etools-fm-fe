@@ -20,6 +20,7 @@ import {
 import {
   ATTACHMENTS_TAB,
   CHECKLIST_TAB,
+  COLLECT_TAB,
   DETAILS_TAB,
   REVIEW_TAB
 } from '../../../components/pages/activities-and-data-collection/activity-item/activities-tabs';
@@ -58,7 +59,8 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [DETAILS_TAB]: 'Details',
       [ATTACHMENTS_TAB]: 'Attachments',
       [CHECKLIST_TAB]: 'Checklist',
-      [REVIEW_TAB]: 'Review'
+      [REVIEW_TAB]: 'Review',
+      [COLLECT_TAB]: 'Data Collect'
     }
   }
 };

@@ -36,6 +36,7 @@ export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activit
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
+export const DATA_COLLECTION_CHECKLIST_ITEM: 'dataCollectionChecklistItem' = 'dataCollectionChecklistItem';
 export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
 export const ATTACHMENTS_STORE: 'attachmentsStore' = 'attachmentsStore';
 export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' =
@@ -227,6 +228,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [DATA_COLLECTION_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/'
+  },
+
+  [DATA_COLLECTION_CHECKLIST_ITEM]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/'
   },
 
   [DATA_COLLECTION_OVERALL_FINDING]: {

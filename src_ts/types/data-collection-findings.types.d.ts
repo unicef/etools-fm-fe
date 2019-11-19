@@ -53,3 +53,8 @@ type RequestChecklistAttachment = {
 type AttachmentDialogResponse = {
   noChanges: boolean;
 };
+
+type CollectChecklistParams = {
+  information_source?: string;
+  method: number;
+};

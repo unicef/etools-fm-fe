@@ -15,6 +15,7 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
       const superProps: PropertyDeclarations = super.properties;
       return {
         ...superProps,
+        errors: {type: Object},
         editedData: {type: Object}
       };
     }
