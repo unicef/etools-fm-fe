@@ -1,19 +1,30 @@
 import '@polymer/paper-button';
 import '@polymer/paper-menu-button';
 import '@polymer/paper-icon-button';
+import './reason-popup';
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {BACK_TO_CHECKLIST, BACK_TO_DRAFT, REJECT, SEPARATE_TRANSITIONS, TRANSITIONS_ORDER} from './activity-statuses';
+import {
+  ASSIGN,
+  BACK_TO_CHECKLIST,
+  BACK_TO_DRAFT,
+  REASON_FIELDS,
+  REJECT,
+  SEPARATE_TRANSITIONS,
+  TRANSITIONS_ORDER
+} from './activity-statuses';
 import {arrowLeftIcon} from '../../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {translate} from '../../../../../localization/localisation';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '../../../../utils/fire-custom-event';
+import {openDialog} from '../../../../utils/dialog';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
   @property({type: Number}) activityId: number | null = null;
   @property({type: String}) possibleTransitions: ActivityTransition[] = [];
+  @property({type: Boolean, attribute: 'is-staff'}) isStaff: boolean = false;
 
   render(): TemplateResult {
     // language=HTML
@@ -35,7 +46,7 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button class="back-button" @tap="${() => this.changeStatus(transition.target)}">
+          <paper-button class="back-button" @tap="${() => this.changeStatus(transition)}">
             ${arrowLeftIcon}
           </paper-button>
         `
@@ -48,7 +59,7 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button class="reject-button" @tap="${() => this.changeStatus(transition.target)}">
+          <paper-button class="main-button reject-button" @tap="${() => this.changeStatus(transition)}">
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
           </paper-button>
         `
@@ -65,12 +76,16 @@ export class StatusesActionsComponent extends LitElement {
     const className: string = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
-          <paper-button class="${className}" @tap="${() => this.changeStatus(mainTransition.target)}">
-            ${translate(`ACTIVITY_ITEM.TRANSITIONS.${mainTransition.transition}`)}
-            ${this.getAdditionalTransitions(otherTransitions)}
+          <paper-button class="${className}" @tap="${() => this.changeStatus(mainTransition)}">
+            ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
           </paper-button>
         `
       : html``;
+  }
+
+  private getMainBtnText(transitionName: string): string {
+    const key: string = transitionName === ASSIGN && this.isStaff ? 'ASSIGN_AND_ACCEPT' : transitionName;
+    return translate(`ACTIVITY_ITEM.TRANSITIONS.${key}`);
   }
 
   private getAdditionalTransitions(transitions?: ActivityTransition[]): TemplateResult {
@@ -83,7 +98,7 @@ export class StatusesActionsComponent extends LitElement {
         <div slot="dropdown-content">
           ${transitions.map(
             (transition: ActivityTransition) => html`
-              <div class="other-options" @tap="${() => this.changeStatus(transition.target)}">
+              <div class="other-options" @tap="${() => this.changeStatus(transition)}">
                 ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
               </div>
             `
@@ -93,12 +108,21 @@ export class StatusesActionsComponent extends LitElement {
     `;
   }
 
-  private changeStatus(nextStatus: ActivityStatus): void {
+  private async changeStatus(transition: ActivityTransition): Promise<void> {
     if (!this.activityId) {
       return;
     }
-    console.log(nextStatus);
-    store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, nextStatus)).then(() => {
+    const newStatusData: Partial<IActivityDetails> | null = REASON_FIELDS[transition.transition]
+      ? await this.getReasonComment(transition)
+      : {
+          status: transition.target
+        };
+
+    if (!newStatusData) {
+      return;
+    }
+
+    store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
       const errors: any = store.getState().activityDetails.error;
       if (!errors) {
         return;
@@ -106,6 +130,26 @@ export class StatusesActionsComponent extends LitElement {
 
       const errorText: string = (errors.data && errors.data[0]) || 'please try again later';
       fireEvent(this, 'toast', {text: `Can not change activity status: ${errorText}`});
+    });
+  }
+
+  private getReasonComment(transition: ActivityTransition): Promise<Partial<IActivityDetails | null>> {
+    return openDialog<ReasonPopupData, ReasonPopupResponse>({
+      dialog: 'reason-popup',
+      dialogData: {
+        popupTitle: translate(`ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.TITLE`),
+        label: translate(`ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.LABEL`)
+      }
+    }).then(({confirmed, response}: IDialogResponse<ReasonPopupResponse>) => {
+      if (!confirmed || !response) {
+        return null;
+      }
+
+      const field: keyof IActivityDetails = REASON_FIELDS[transition.transition];
+      return {
+        status: transition.target,
+        [field]: response.comment
+      };
     });
   }
 
@@ -133,6 +177,10 @@ export class StatusesActionsComponent extends LitElement {
           color: white;
           background: var(--green-color);
           font-weight: 500;
+        }
+
+        .reject-button {
+          background: var(--reject-color);
         }
 
         .main-button.with-additional {

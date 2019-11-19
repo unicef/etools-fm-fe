@@ -26,6 +26,8 @@ interface IActivityDetails extends IListActivity {
   sections: Section[];
   permissions: ActivityPermissions;
   transitions: ActivityTransition[];
+  reject_reason: string;
+  cancel_reason: string;
 }
 
 type ActivityStatus =
@@ -137,4 +139,13 @@ type ActivityPermissionsObject = {
   activity_overall_finding: boolean;
   activity_question_overall_finding: boolean;
   action_points: boolean;
+};
+
+type ReasonPopupData = {
+  popupTitle: string;
+  label: string;
+};
+
+type ReasonPopupResponse = {
+  comment: string;
 };

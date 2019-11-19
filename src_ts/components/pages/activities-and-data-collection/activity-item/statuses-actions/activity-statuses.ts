@@ -34,3 +34,8 @@ export const TRANSITIONS_ORDER: string[] = [
   COMPLETE,
   CANCEL
 ];
+
+export const REASON_FIELDS: GenericObject<keyof IActivityDetails> = {
+  [REJECT]: 'reject_reason',
+  [CANCEL]: 'cancel_reason'
+};

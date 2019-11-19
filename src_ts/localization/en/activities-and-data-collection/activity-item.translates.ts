@@ -31,14 +31,18 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
     TRANSITIONS: {
       [MARK_DETAILS_CONFIGURED]: 'Next',
       [MARK_CHECKLIST_CONFIGURED]: 'Review',
-      [`FROM_${REVIEW}_TO_${DATA_COLLECTION}`]: 'Assign & Accept',
+      ASSIGN_AND_ACCEPT: 'Assign & Accept',
       [ASSIGN]: 'Assign',
       [ACCEPT]: 'Accept',
-      [REJECT]: 'Finalize',
-      [MARK_DATA_COLLECTED]: 'Submit',
-      [SUBMIT_REPORT]: 'Complete',
-      [COMPLETE]: 'Reject',
+      [MARK_DATA_COLLECTED]: 'Finalize',
+      [SUBMIT_REPORT]: 'Submit',
+      [COMPLETE]: 'Complete',
+      [REJECT]: 'Reject',
       [CANCEL]: 'Cancel'
+    },
+    REASON_FOR_TRANSITION: {
+      [CANCEL]: {LABEL: 'Cancellation comment', TITLE: 'Cancellation reason'},
+      [REJECT]: {LABEL: 'Rejection comment', TITLE: 'Rejection reason'}
     },
     STATUSES: {
       [DRAFT]: 'Draft',

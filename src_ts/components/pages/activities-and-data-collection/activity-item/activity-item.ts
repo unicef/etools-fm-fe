@@ -29,6 +29,7 @@ import {ATTACHMENTS_TAB, CHECKLIST_TAB, DETAILS_TAB, REVIEW_TAB} from './activit
 import {Unsubscribe} from 'redux';
 import {hasActivityPermission, Permissions} from '../../../../config/permissions';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
+import {STAFF} from '../../../common/dropdown-options';
 
 store.addReducers({activityDetails});
 addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
@@ -118,6 +119,7 @@ export class NewActivityComponent extends LitElement {
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
+            ?is-staff="${this.activityDetails && this.activityDetails.activity_type === STAFF}"
           ></statuses-actions>
         </div>
 

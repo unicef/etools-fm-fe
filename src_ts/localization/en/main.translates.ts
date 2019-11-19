@@ -11,7 +11,8 @@ export const MAIN_TRANSLATES: TranslateObject = {
       ADD: 'Add',
       SAVE: 'Save',
       DELETE: 'Delete'
-    }
+    },
+    ENTER: 'Enter'
   },
   LEVELS_OPTIONS: {
     PARTNER: 'Partner',
