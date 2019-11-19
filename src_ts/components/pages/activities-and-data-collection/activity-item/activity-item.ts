@@ -115,7 +115,10 @@ export class NewActivityComponent extends LitElement {
         <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || ''}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <statuses-actions .activityDetails="${this.activityDetails}"></statuses-actions>
+          <statuses-actions
+            .activityId="${this.activityDetails && this.activityDetails.id}"
+            .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
+          ></statuses-actions>
         </div>
 
         <etools-tabs

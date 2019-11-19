@@ -11,21 +11,33 @@ interface IListActivity {
     last_name: string;
   };
   location: ISiteParrentLocation;
-  location_site: null | number;
+  location_site: null | Site;
   partners: number[];
   interventions: number[];
   cp_outputs: number[];
   start_date: null | string;
   end_date: null | string;
   checklists_count: number;
-  status: string;
+  status: ActivityStatus;
   team_members: ActivityTeamMember[];
 }
 
 interface IActivityDetails extends IListActivity {
   sections: Section[];
   permissions: ActivityPermissions;
+  transitions: ActivityTransition[];
 }
+
+type ActivityStatus =
+  | 'draft'
+  | 'checklist'
+  | 'review'
+  | 'assigned'
+  | 'data_collection'
+  | 'report_finalization'
+  | 'submitted'
+  | 'completed'
+  | 'cancelled';
 
 type ActivityTeamMember = {
   id: number;
@@ -84,6 +96,11 @@ type ActivityPermissions = {
   edit: ActivityPermissionsObject;
   view: ActivityPermissionsObject;
   required: ActivityPermissionsObject;
+};
+
+type ActivityTransition = {
+  transition: string;
+  target: ActivityStatus;
 };
 
 type ActivityPermissionsObject = {

@@ -6,7 +6,16 @@ import {
   DRAFT,
   REPORT_FINALIZATION,
   REVIEW,
-  SUBMITTED
+  SUBMITTED,
+  MARK_DETAILS_CONFIGURED,
+  MARK_CHECKLIST_CONFIGURED,
+  ASSIGN,
+  ACCEPT,
+  REJECT,
+  MARK_DATA_COLLECTED,
+  SUBMIT_REPORT,
+  COMPLETE,
+  CANCEL
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
   ATTACHMENTS_TAB,
@@ -20,16 +29,16 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
     NEW_ACTIVITY: 'New Activity',
     STATUS_CHANGE: 'Changing Status',
     TRANSITIONS: {
-      [`FROM_${DRAFT}_TO_${CHECKLIST}`]: 'Next',
-      [`FROM_${CHECKLIST}_TO_${REVIEW}`]: 'Review',
+      [MARK_DETAILS_CONFIGURED]: 'Next',
+      [MARK_CHECKLIST_CONFIGURED]: 'Review',
       [`FROM_${REVIEW}_TO_${DATA_COLLECTION}`]: 'Assign & Accept',
-      [`FROM_${REVIEW}_TO_${ASSIGNED}`]: 'Assign',
-      [`FROM_${ASSIGNED}_TO_${DATA_COLLECTION}`]: 'Accept',
-      [`FROM_${DATA_COLLECTION}_TO_${REPORT_FINALIZATION}`]: 'Finalize',
-      [`FROM_${REPORT_FINALIZATION}_TO_${SUBMITTED}`]: 'Submit',
-      [`FROM_${SUBMITTED}_TO_${COMPLETED}`]: 'Complete',
-      REJECT: 'Reject',
-      CANCEL: 'Cancel'
+      [ASSIGN]: 'Assign',
+      [ACCEPT]: 'Accept',
+      [REJECT]: 'Finalize',
+      [MARK_DATA_COLLECTED]: 'Submit',
+      [SUBMIT_REPORT]: 'Complete',
+      [COMPLETE]: 'Reject',
+      [CANCEL]: 'Cancel'
     },
     STATUSES: {
       [DRAFT]: 'Draft',
