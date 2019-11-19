@@ -1,16 +1,46 @@
+import {FullReportsActionTypes, FullReportsActions} from '../actions/co-overview.actions';
 import {Reducer} from 'redux';
 
-import {CountryOverviewActions, CountryOverviewActionTypes} from '../actions/co-overview.actions';
+const initialState: IFullReportsState = {
+  isRequest: {
+    load: false
+  },
+  data: {},
+  error: null
+};
 
-const initialState: IFullReportState = null;
-
-export const fullReport: Reducer<IFullReportState, any> = (
-  state: IFullReportState = initialState,
-  action: CountryOverviewActions
+export const fullReports: Reducer<IFullReportsState, any> = (
+  state: IFullReportsState = initialState,
+  action: FullReportsActions
 ) => {
   switch (action.type) {
-    case CountryOverviewActionTypes.SET_FULL_REPORT_DATA:
-      return action.payload;
+    case FullReportsActionTypes.FULL_REPORT_DATA_REQUEST:
+      return {
+        ...state,
+        isRequest: {
+          load: true
+        }
+      };
+
+    case FullReportsActionTypes.FULL_REPORT_DATA_SUCCESS:
+      return {
+        ...state,
+        isRequest: {
+          load: false
+        },
+        data: {
+          ...state.data,
+          [action.payload.id]: action.payload
+        }
+      };
+
+    case FullReportsActionTypes.FULL_REPORT_DATA_FAILURE:
+      return {
+        ...state,
+        isRequest: {...state.isRequest, load: false},
+        error: action.payload
+      };
+
     default: {
       return state;
     }

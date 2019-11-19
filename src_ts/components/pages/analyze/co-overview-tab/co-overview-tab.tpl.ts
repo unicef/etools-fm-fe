@@ -31,13 +31,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
         <section class="elevation page-content card-container" elevation="1">
           <div class="card-title-box with-bottom-line layout horizontal">
             <iron-icon
-              icon="expand-more"
-              ?hidden="${this.queryParams && this.queryParams.cp_output === cpOutput.id}"
-              @tap="${() => this.toggleDetails(cpOutput.id)}"
-            ></iron-icon>
-            <iron-icon
-              icon="expand-less"
-              ?hidden="${this.queryParams && this.queryParams.cp_output !== cpOutput.id}"
+              icon="${this.queryParams && this.queryParams.cp_output === cpOutput.id ? 'expand-less' : 'expand-more'}"
               @tap="${() => this.toggleDetails(cpOutput.id)}"
             ></iron-icon>
             <div class="card-title full-report">${cpOutput.name}</div>

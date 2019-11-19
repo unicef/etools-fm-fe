@@ -2,17 +2,16 @@ import {CSSResult, customElement, LitElement, property, TemplateResult} from 'li
 import {CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
 import {updateQueryParams} from '../../../../routing/routes';
 import {fireEvent} from '../../../utils/fire-custom-event';
-import {debounce} from '../../../utils/debouncer';
 import {CO_OVERVIEW_TRANSLATES} from '../../../../localization/en/analyze-page/co-overview.translates';
 import {addTranslates, ENGLISH} from '../../../../localization/localisation';
 import {CpOutcomesMixin} from '../../../common/mixins/cp-outcomes.mixin';
 
+import {FullReportData} from '../../../../redux/selectors/co-overview.selectors';
 import {outputsDataSelector} from '../../../../redux/selectors/static-data.selectors';
-import {fullReportSelector} from '../../../../redux/selectors/co-overview.selectors';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {loadFullReport} from '../../../../redux/effects/co-overview.effects';
-import {fullReport} from '../../../../redux/reducers/co-overview.reducer';
+import {fullReports} from '../../../../redux/reducers/co-overview.reducer';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
 
@@ -26,7 +25,7 @@ import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
 
-store.addReducers({fullReport});
+store.addReducers({fullReports});
 addTranslates(ENGLISH, [CO_OVERVIEW_TRANSLATES]);
 
 @customElement('co-overview-tab')
@@ -41,20 +40,9 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   fullReports: GenericObject<FullReportData> = {};
 
   private cpOutputs: EtoolsCpOutput[] = [];
-  private readonly debouncedLoading: Callback;
   private routeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
-  private fullReportUnsubscribe!: Unsubscribe;
-
-  constructor() {
-    super();
-    this.debouncedLoading = debounce((fullReportId: number) => {
-      store
-        .dispatch<AsyncEffect>(loadFullReport(fullReportId))
-        .catch(() => fireEvent(this, 'toast', {text: 'Can not load FullReport data'}))
-        .then();
-    }, 100);
-  }
+  private fullReportsUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     return template.call(this);
@@ -66,6 +54,9 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     this.routeUnsubscribe = store.subscribe(
       routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
     );
+    this.fullReportsUnsubscribe = store.subscribe(
+      FullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
+    );
     this.cpOutputUnsubscribe = store.subscribe(
       outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
         if (!outputs) {
@@ -75,18 +66,6 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
         this.refreshData();
       })
     );
-    this.fullReportUnsubscribe = store.subscribe(
-      fullReportSelector((newFullReport: any | null) => {
-        if (!newFullReport || !newFullReport.id) {
-          return;
-        }
-        this.fullReports = {
-          ...this.fullReports,
-          [newFullReport.id]: newFullReport
-        };
-      })
-    );
-
     const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
     this.loadStaticData();
@@ -96,7 +75,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     super.disconnectedCallback();
     this.routeUnsubscribe();
     this.cpOutputUnsubscribe();
-    this.fullReportUnsubscribe();
+    this.fullReportsUnsubscribe();
   }
 
   filterValueChanged(selectedItem: CpOutcome | null): void {
@@ -114,6 +93,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
       updateQueryParams({cp_output: null});
       return;
     }
+    delete this.fullReports[newCpOutputId];
     updateQueryParams({cp_output: newCpOutputId});
   }
 
@@ -125,9 +105,10 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     if (queryParams) {
       this.queryParams = queryParams;
     }
+
     const fullReportId: number | null = (this.queryParams && +this.queryParams.cp_output) || null;
-    if (typeof fullReportId === 'number' && !this.fullReports[fullReportId]) {
-      this.debouncedLoading(fullReportId);
+    if (typeof fullReportId === 'number') {
+      this.loadFullReport(fullReportId);
     }
 
     this.refreshData();
@@ -144,15 +125,15 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
       this.filteredCpOutputs = this.cpOutputs.filter((cpOutput: EtoolsCpOutput) => cpOutput.parent === cpOutcome);
     }
 
-    const currentCpOutput: number | null = (this.queryParams && +this.queryParams.cp_output) || null;
+    const fullReportId: number | null = (this.queryParams && +this.queryParams.cp_output) || null;
     const exists: boolean = !!this.filteredCpOutputs.find(
-      (filteredCpOutoput: EtoolsCpOutput) => filteredCpOutoput.id === currentCpOutput
+      (filteredCpOutoput: EtoolsCpOutput) => filteredCpOutoput.id === fullReportId
     );
 
     if (!exists) {
       updateQueryParams({cp_output: null});
-    } else if (currentCpOutput && !this.fullReports[currentCpOutput]) {
-      this.debouncedLoading(currentCpOutput);
+    } else if (typeof fullReportId === 'number' && !this.fullReports[fullReportId]) {
+      this.loadFullReport(fullReportId);
     }
   }
 
@@ -161,6 +142,12 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     if (!data.outputs) {
       store.dispatch<AsyncEffect>(loadStaticData(CP_OUTPUTS));
     }
+  }
+
+  private loadFullReport(fullReportId: number): void {
+    store
+      .dispatch<AsyncEffect>(loadFullReport(fullReportId))
+      .catch(() => fireEvent(this, 'toast', {text: 'Can not load FullReport data'}));
   }
 
   static get styles(): CSSResult[] {

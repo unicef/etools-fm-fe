@@ -26,13 +26,14 @@ export const CpDetailsItemStyles: CSSResult = css`
     font-size: 14px;
     color: var(--primary-text-color);
   }
-  .line.gray {
-    background-color: var(--gray-lighter);
+  .line.ram-indicator:nth-child(odd) {
+    background-color: var(--secondary-background-color);
   }
 
   .target {
     text-align: right;
     padding-left: 70px;
+    width: 210px;
   }
 
   .partners-data {
@@ -41,6 +42,10 @@ export const CpDetailsItemStyles: CSSResult = css`
 
   .partners-data .prog-visits {
     text-align: right;
+  }
+
+  .partners-data .prog-visits-width {
+    width: 65px;
   }
 
   .partners-data div {
@@ -68,15 +73,23 @@ export const CpDetailsItemStyles: CSSResult = css`
 
   .partner .intervention-details {
     padding: 9px 9px 9px 45px;
-    background-color: #ecebeb;
-  }
-
-  .partner .intervention-details .results-text {
-    white-space: pre-line;
+    background-color: var(--secondary-background-color);
   }
 
   iron-icon.grey {
     margin-left: 10px;
     color: var(--secondary-text-color);
+  }
+
+  .space-for-arrow {
+    width: 45px;
+  }
+
+  .interact-icons {
+    width: 150px;
+  }
+
+  .days-since-last-visit {
+    width: 120px;
   }
 `;

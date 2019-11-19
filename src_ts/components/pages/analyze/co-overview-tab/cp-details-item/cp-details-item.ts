@@ -25,32 +25,12 @@ export class CpDetailsItem extends LitElement {
     return template.call(this);
   }
 
-  getBackground(index: number): string {
-    return index % 2 ? 'gray' : '';
-  }
-
   toggleDetails(intervention: FullReportIntervention): void {
     const currentValue: boolean = this.detailsOpened[intervention.pk];
     this.detailsOpened = {
       ...this.detailsOpened,
       [intervention.pk]: !currentValue
     };
-  }
-
-  getExpectedResults(interventionPk: number, resultLinks: FullReportResultLink[]): string {
-    const result: FullReportResultLink | undefined =
-      (resultLinks &&
-        resultLinks.length &&
-        resultLinks.find((link: FullReportResultLink) => link.intervention === interventionPk)) ||
-      undefined;
-
-    return (
-      (result &&
-        result.ll_results
-          .map((expectedResult: LowResult, index: number) => `${index + 1}) ${expectedResult.name}`)
-          .join('\n')) ||
-      '--'
-    );
   }
 
   static get styles(): CSSResult[] {

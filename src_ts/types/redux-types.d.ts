@@ -14,7 +14,7 @@ interface IRootState {
   attachmentsList: IAttachmentsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
-  fullReport: IFullReportState;
+  fullReports: IFullReportsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -81,7 +81,13 @@ interface IActivitiesState {
   listData: null | IListData<IListActivity>;
 }
 
-type IFullReportState = FullReportData | null;
+type IFullReportsState = {
+  isRequest: {
+    load: boolean;
+  };
+  data: GenericObject<FullReportData>;
+  error: null | GenericObject;
+};
 
 interface IActivityChecklistState {
   data: null | IChecklistItem[];
