@@ -157,7 +157,7 @@ type User = {
   middle_name: string;
   last_name: string;
   user_type: string;
-  tpm_partner: null;
+  tpm_partner: null | number;
 };
 
 type EtoolsLightLocation = {

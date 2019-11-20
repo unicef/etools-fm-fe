@@ -7,10 +7,12 @@ import {DataMixin} from '../../../../../common/mixins/data-mixin';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {
   activityDetailsData,
+  activityDetailsError,
   activityDetailsIsLoad,
   detailsEditedCard
 } from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
+import {fireEvent} from '../../../../../utils/fire-custom-event';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   @property() isEditMode: boolean = false;
@@ -25,6 +27,11 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
     store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
         this.data = data;
+      })
+    );
+    store.subscribe(
+      activityDetailsError((errors: GenericObject | null) => {
+        this.errors = errors || {};
       })
     );
     store.subscribe(
@@ -45,7 +52,6 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   }
 
   protected save(): void {
-    this.isEditMode = false;
     const diff: Partial<IActivityDetails> = getDifference<IActivityDetails>(this.originalData || {}, this.editedData, {
       toRequest: true
     });
@@ -53,15 +59,21 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
       this.isUpdate = true;
       store.dispatch<AsyncEffect>(updateActivityDetails(this.editedData.id, diff)).then(() => this.finish());
     } else {
-      this.isEditMode = true;
+      this.isEditMode = false;
       store.dispatch(new SetEditedDetailsCard(null));
     }
   }
 
   protected finish(): void {
-    this.isEditMode = false;
+    const errors: string[] = this.errors.data || [];
     this.isUpdate = false;
-    store.dispatch(new SetEditedDetailsCard(null));
+    if (!errors.length) {
+      this.isEditMode = false;
+      store.dispatch(new SetEditedDetailsCard(null));
+    }
+    for (const error of errors) {
+      fireEvent(this, 'toast', {text: error});
+    }
   }
 
   protected cancel(): void {

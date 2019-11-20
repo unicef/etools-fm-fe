@@ -10,14 +10,15 @@ import {openDialog} from '../../../../utils/dialog';
 import {store} from '../../../../../redux/store';
 import {
   createCollectionChecklist,
-  loadDataCollectionChecklist,
-  updateCollectionChecklist
+  loadDataCollectionChecklist
 } from '../../../../../redux/effects/data-collection.effects';
 import {dataCollection} from '../../../../../redux/reducers/data-collection.reducer';
 import {dataCollectionList} from '../../../../../redux/selectors/data-collection.selectors';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {hasActivityPermission, Permissions} from '../../../../../config/permissions';
 import {activityDetailsData} from '../../../../../redux/selectors/activity-details.selectors';
+import {updateAppLocation} from '../../../../../routing/routes';
+import {IAsyncAction} from '../../../../../redux/middleware';
 
 addTranslates(ENGLISH, [ACTIVITY_COLLECT_TRANSLATES]);
 store.addReducers({dataCollection});
@@ -66,7 +67,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
             <etools-card class="page-content" card-title="${method.name}" is-collapsible>
               <div slot="actions">
                 <paper-icon-button
-                  @tap="${() => this.createChecklist(method)}"
+                  @tap="${() => this.onCreateChecklist(method)}"
                   icon="icons:add-box"
                   class="panel-button"
                 ></paper-icon-button>
@@ -112,7 +113,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
               ${this.hasEditCollect && method.use_information_source
                 ? html`
                     <div class="hover-block">
-                      <iron-icon icon="icons:create" @click="${() => this.openUpdateDialog(item)}"></iron-icon>
+                      <iron-icon icon="icons:create" @click="${() => this.onEditChecklist(item)}"></iron-icon>
                     </div>
                   `
                 : ''}
@@ -128,11 +129,19 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     return method ? method.name : '';
   }
 
-  createChecklist(method: EtoolsMethod): void {
+  onCreateChecklist(method: EtoolsMethod): void {
+    this.processCreate(method).then(({payload}: IAsyncAction) => {
+      if (payload && payload.id) {
+        updateAppLocation(`activities/${this.activityId}/data-collection/${payload.id}`);
+      }
+    });
+  }
+
+  processCreate(method: EtoolsMethod): Promise<IAsyncAction> {
     if (method.use_information_source) {
-      this.openCreateDialog(method);
+      return this.openCreateDialog(method);
     } else {
-      store.dispatch<AsyncEffect>(
+      return store.dispatch<AsyncEffect>(
         createCollectionChecklist(this.activityId, {
           method: method.id
         })
@@ -140,12 +149,12 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     }
   }
 
-  openCreateDialog(method: EtoolsMethod): void {
-    openDialog<DataCollectionChecklist>({
+  openCreateDialog(method: EtoolsMethod): Promise<IAsyncAction> {
+    return openDialog<DataCollectionChecklist>({
       dialog: 'data-collect-popup'
     }).then(({response, confirmed}: IDialogResponse<Partial<DataCollectionChecklist>>) => {
       if (confirmed && response) {
-        store.dispatch<AsyncEffect>(
+        return store.dispatch<AsyncEffect>(
           createCollectionChecklist(this.activityId, {
             method: method.id,
             information_source: response.information_source
@@ -155,15 +164,8 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     });
   }
 
-  openUpdateDialog(checklistItem: DataCollectionChecklist): void {
-    openDialog<DataCollectionChecklist>({
-      dialog: 'data-collect-popup',
-      dialogData: checklistItem
-    }).then(({response, confirmed}: IDialogResponse<Partial<DataCollectionChecklist>>) => {
-      if (confirmed && response && Object.keys(response).length) {
-        store.dispatch<AsyncEffect>(updateCollectionChecklist(this.activityId, checklistItem.id, response));
-      }
-    });
+  onEditChecklist(checklistItem: DataCollectionChecklist): void {
+    updateAppLocation(`activities/${this.activityId}/data-collection/${checklistItem.id}`);
   }
 
   static get styles(): CSSResultArray {
