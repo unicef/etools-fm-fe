@@ -12,9 +12,9 @@ interface IListActivity {
   };
   location: ISiteParrentLocation;
   location_site: null | Site;
-  partners: number[];
-  interventions: number[];
-  cp_outputs: number[];
+  partners: IActivityPartner[];
+  interventions: IActivityIntervention[];
+  cp_outputs: IActivityCPOutput[];
   start_date: null | string;
   end_date: null | string;
   checklists_count: number;

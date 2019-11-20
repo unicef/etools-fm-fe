@@ -8,6 +8,7 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
+import {hasPermission, Permissions} from '../../../config/permissions';
 
 const PAGE: string = 'analyze';
 
@@ -37,6 +38,9 @@ export class AnalyzePage extends LitElement {
       routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
         if (routeName !== PAGE) {
           return;
+        }
+        if (!hasPermission(Permissions.VIEW_ANALYZE)) {
+          updateAppLocation('page-not-found');
         }
         this.activeTab = subRouteName as string;
       })

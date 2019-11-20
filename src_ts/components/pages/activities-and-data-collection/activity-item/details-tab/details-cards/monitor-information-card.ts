@@ -17,6 +17,12 @@ import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 
 export const CARD_NAME: string = 'monitor-information';
+const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
+  'tpm_partner',
+  'activity_type',
+  'team_members',
+  'person_responsible'
+];
 
 const USER_STAFF: UserType = 'staff';
 const USER_TPM: UserType = 'tpm';
@@ -32,25 +38,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() teamMembers: User[] = [];
   @property() personalResponsible?: User | null;
 
-  static get styles(): CSSResultArray {
-    // language=CSS
-    return [
-      elevationStyles,
-      SharedStyles,
-      CardStyles,
-      FlexLayoutClasses,
-      css`
-        .card-content {
-          padding: 10px;
-        }
-        .user-types {
-          margin: 0 12px;
-          align-items: center;
-        }
-      `
-    ];
-  }
-
   set data(data: IActivityDetails | null) {
     super.data = data;
     if (!data) {
@@ -62,6 +49,117 @@ export class MonitorInformationCard extends BaseDetailsCard {
     this.personalResponsible = (this.editedData.person_responsible as unknown) as User;
     this.teamMembers = (this.editedData.team_members as unknown) as User[];
     this.tpmPartner = (this.editedData.tpm_partner as unknown) as EtoolsTPMPartner;
+  }
+
+  render(): TemplateResult {
+    // language=HTML
+    return html`
+      ${InputStyles}
+      <etools-card
+        card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
+        ?is-editable="${(!this.editedCard || this.editedCard === CARD_NAME) &&
+          !ELEMENT_FIELDS.every((field: string) => this.isFieldReadonly(field))}"
+        ?edit="${this.isEditMode}"
+        @start-edit="${() => this.startEdit()}"
+        @save="${() => this.save()}"
+        @cancel="${() => this.cancel()}"
+      >
+        <div class="card-content" slot="content">
+          <etools-loading
+            ?active="${this.isLoad}"
+            loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+          ></etools-loading>
+          <etools-loading
+            ?active="${this.isUpdate}"
+            loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
+          ></etools-loading>
+          <div class="layout horizontal user-types">
+            <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
+            <paper-radio-group
+              selected="${this.userType}"
+              @iron-select="${({detail}: CustomEvent) => this.setUserType(detail.item.name)}"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('activity_type')}"
+            >
+              ${repeat(
+                this.userTypes,
+                (type: UserType) => html`
+                  <paper-radio-button
+                    name="${type}"
+                    ?disabled="${!this.isEditMode || this.isFieldReadonly('activity_type')}"
+                  >
+                    ${translate(`ACTIVITY_DETAILS.USER_TYPES.${type.toUpperCase()}`)}
+                  </paper-radio-button>
+                `
+              )}
+            </paper-radio-group>
+          </div>
+          <div class="layout horizontal">
+            ${this.editedData.activity_type === USER_TPM
+              ? html`
+                  <etools-dropdown
+                    class="without-border flex"
+                    .selected="${simplifyValue(this.tpmPartner)}"
+                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                      this.setTpmPartner(detail.selectedItem)}"
+                    ?trigger-value-change-event="${this.isEditMode}"
+                    label="${translate('ACTIVITY_DETAILS.TPM_PARTNER')}"
+                    .options="${this.tpmPartnersOptions}"
+                    option-label="name"
+                    option-value="id"
+                    ?disabled="${!this.isEditMode || this.isFieldReadonly('tpm_partner')}"
+                    ?readonly="${!this.isEditMode || this.isFieldReadonly('tpm_partner')}"
+                    ?invalid="${this.errors && this.errors.tpm_partner}"
+                    .errorMessage="${this.errors && this.errors.tpm_partner}"
+                    @focus="${() => this.resetFieldError('tpm_partner')}"
+                    @tap="${() => this.resetFieldError('tpm_partner')}"
+                    allow-outside-scroll
+                    dynamic-align
+                  ></etools-dropdown>
+                `
+              : ''}
+
+            <etools-dropdown-multi
+              class="without-border flex"
+              .selectedValues="${simplifyValue(this.teamMembers)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
+              .options="${this.membersOptions}"
+              option-label="name"
+              option-value="id"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('team_members')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('team_members')}"
+              ?invalid="${this.errors && this.errors.team_members}"
+              .errorMessage="${this.errors && this.errors.team_members}"
+              @focus="${() => this.resetFieldError('team_members')}"
+              @tap="${() => this.resetFieldError('team_members')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown-multi>
+
+            <etools-dropdown
+              class="without-border flex"
+              .selected="${simplifyValue(this.personalResponsible)}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                this.setPersonalResponsible(detail.selectedItem)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.PERSONAL_RESPONSIBLE')}"
+              .options="${this.membersOptions}"
+              option-label="name"
+              option-value="id"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('person_responsible')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('person_responsible')}"
+              ?invalid="${this.errors && this.errors.person_responsible}"
+              .errorMessage="${this.errors && this.errors.person_responsible}"
+              @focus="${() => this.resetFieldError('person_responsible')}"
+              @tap="${() => this.resetFieldError('person_responsible')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown>
+          </div>
+        </div>
+      </etools-card>
+    `;
   }
 
   connectedCallback(): void {
@@ -149,110 +247,22 @@ export class MonitorInformationCard extends BaseDetailsCard {
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
   }
 
-  render(): TemplateResult {
-    // language=HTML
-    return html`
-      ${InputStyles}
-      <etools-card
-        card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
-        ?is-editable="${!this.editedCard || this.editedCard === CARD_NAME}"
-        ?edit="${!this.isReadonly}"
-        @start-edit="${() => this.startEdit()}"
-        @save="${() => this.save()}"
-        @cancel="${() => this.cancel()}"
-      >
-        <div class="card-content" slot="content">
-          <etools-loading
-            ?active="${this.isLoad}"
-            loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
-          ></etools-loading>
-          <etools-loading
-            ?active="${this.isUpdate}"
-            loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
-          ></etools-loading>
-          <div class="layout horizontal user-types">
-            <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
-            <paper-radio-group
-              selected="${this.userType}"
-              @iron-select="${({detail}: CustomEvent) => this.setUserType(detail.item.name)}"
-              ?disabled="${this.isReadonly}"
-            >
-              ${repeat(
-                this.userTypes,
-                (type: UserType) => html`
-                  <paper-radio-button name="${type}" ?disabled="${this.isReadonly}">
-                    ${translate(`ACTIVITY_DETAILS.USER_TYPES.${type.toUpperCase()}`)}
-                  </paper-radio-button>
-                `
-              )}
-            </paper-radio-group>
-          </div>
-          <div class="layout horizontal">
-            ${this.editedData.activity_type === USER_TPM
-              ? html`
-                  <etools-dropdown
-                    class="without-border flex"
-                    .selected="${simplifyValue(this.tpmPartner)}"
-                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                      this.setTpmPartner(detail.selectedItem)}"
-                    ?trigger-value-change-event="${!this.isReadonly}"
-                    label="${translate('ACTIVITY_DETAILS.TPM_PARTNER')}"
-                    .options="${this.tpmPartnersOptions}"
-                    option-label="name"
-                    option-value="id"
-                    ?disabled="${this.isReadonly}"
-                    ?readonly="${this.isReadonly}"
-                    ?invalid="${this.errors && this.errors.tpm_partner}"
-                    .errorMessage="${this.errors && this.errors.tpm_partner}"
-                    @focus="${() => this.resetFieldError('tpm_partner')}"
-                    @tap="${() => this.resetFieldError('tpm_partner')}"
-                    allow-outside-scroll
-                    dynamic-align
-                  ></etools-dropdown>
-                `
-              : ''}
-
-            <etools-dropdown-multi
-              class="without-border flex"
-              .selectedValues="${simplifyValue(this.teamMembers)}"
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
-              ?trigger-value-change-event="${!this.isReadonly}"
-              label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
-              .options="${this.membersOptions}"
-              option-label="name"
-              option-value="id"
-              ?disabled="${this.isReadonly}"
-              ?readonly="${this.isReadonly}"
-              ?invalid="${this.errors && this.errors.team_members}"
-              .errorMessage="${this.errors && this.errors.team_members}"
-              @focus="${() => this.resetFieldError('team_members')}"
-              @tap="${() => this.resetFieldError('team_members')}"
-              allow-outside-scroll
-              dynamic-align
-            ></etools-dropdown-multi>
-
-            <etools-dropdown
-              class="without-border flex"
-              .selected="${simplifyValue(this.personalResponsible)}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.setPersonalResponsible(detail.selectedItem)}"
-              ?trigger-value-change-event="${!this.isReadonly}"
-              label="${translate('ACTIVITY_DETAILS.PERSONAL_RESPONSIBLE')}"
-              .options="${this.membersOptions}"
-              option-label="name"
-              option-value="id"
-              ?disabled="${this.isReadonly}"
-              ?readonly="${this.isReadonly}"
-              ?invalid="${this.errors && this.errors.person_responsible}"
-              .errorMessage="${this.errors && this.errors.person_responsible}"
-              @focus="${() => this.resetFieldError('person_responsible')}"
-              @tap="${() => this.resetFieldError('person_responsible')}"
-              allow-outside-scroll
-              dynamic-align
-            ></etools-dropdown>
-          </div>
-        </div>
-      </etools-card>
-    `;
+  static get styles(): CSSResultArray {
+    // language=CSS
+    return [
+      elevationStyles,
+      SharedStyles,
+      CardStyles,
+      FlexLayoutClasses,
+      css`
+        .card-content {
+          padding: 10px;
+        }
+        .user-types {
+          margin: 0 12px;
+          align-items: center;
+        }
+      `
+    ];
   }
 }

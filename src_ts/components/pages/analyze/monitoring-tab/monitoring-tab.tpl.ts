@@ -2,7 +2,6 @@ import {MonitoringTabComponent} from './monitoring-tab';
 import {html, TemplateResult} from 'lit-element';
 import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
-import './open-issues-action-points/open-issues-action-points';
 import './shared-section-with-tabs-template/shared-section-with-tabs-template';
 import './visits-eligible-for-hact/visits-eligible-for-hact';
 import {
