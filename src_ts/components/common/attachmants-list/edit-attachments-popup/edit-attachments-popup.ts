@@ -14,15 +14,34 @@ import {DataMixin} from '../../mixins/data-mixin';
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened: boolean = true;
   @property() attachmentTypes: DefaultDropdownOption[] = [];
-  savingInProcess: boolean = false;
-  selectedFile: File | null = null;
+  protected savingInProcess: boolean = false;
+  protected selectedFileId: number | null = null;
 
   private endpointName!: string;
   private additionalEndpointData: GenericObject = {};
-  private readonly updateAttachmentsUnsubscribe: Unsubscribe;
+  private updateAttachmentsUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
+  set dialogData(data: IAttachmentPopupData) {
+    if (!data) {
+      return;
+    }
+    const {editedAttachment, attachmentTypes, endpointName, additionalEndpointData}: IAttachmentPopupData = data;
+    this.attachmentTypes = attachmentTypes;
+    this.endpointName = endpointName;
+    this.additionalEndpointData = additionalEndpointData;
+
+    if (!editedAttachment) {
+      return;
+    }
+    this.data = editedAttachment;
+  }
+
+  render(): TemplateResult {
+    return template.call(this);
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
     this.updateAttachmentsUnsubscribe = store.subscribe(
       listAttachmentUpdate((updateInProcess: boolean | null) => {
         // set updating state for spinner
@@ -44,37 +63,14 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     );
   }
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
-  }
-
-  set dialogData(data: IAttachmentPopupData) {
-    if (!data) {
-      return;
-    }
-    const {editedAttachment, attachmentTypes, endpointName, additionalEndpointData}: IAttachmentPopupData = data;
-    this.attachmentTypes = attachmentTypes;
-    this.endpointName = endpointName;
-    this.additionalEndpointData = additionalEndpointData;
-
-    if (!editedAttachment) {
-      return;
-    }
-    this.data = editedAttachment;
-  }
-
-  render(): TemplateResult {
-    return template.call(this);
-  }
-
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateAttachmentsUnsubscribe();
   }
 
-  processRequest(): void {
+  protected processRequest(): void {
     // validate if file is selected for new attachments
-    if (!this.editedData.id && !this.selectedFile) {
+    if (!this.editedData.id && !this.selectedFileId) {
       fireEvent(this, 'toast', {
         text: 'Please, select correct file',
         showCloseBtn: false
@@ -84,8 +80,8 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
     // compose new attachment data
     const data: Partial<IAttachment> = {};
-    if (this.selectedFile) {
-      data.file = this.selectedFile;
+    if (this.selectedFileId) {
+      data.id = this.selectedFileId;
     }
     const typeChanged: boolean = Boolean(
       this.originalData && this.editedData.file_type !== this.originalData.file_type
@@ -109,7 +105,21 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
   }
 
-  onClose(): void {
+  protected onClose(): void {
     fireEvent(this, 'response', {confirmed: false});
+  }
+
+  protected fileSelected({success}: {success?: string; error?: string}): void {
+    if (success) {
+      try {
+        this.selectedFileId = JSON.parse(success).id;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
   }
 }

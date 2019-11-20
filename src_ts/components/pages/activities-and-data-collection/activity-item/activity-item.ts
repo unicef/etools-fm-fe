@@ -207,7 +207,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case ATTACHMENTS_TAB:
         return html`
-          <activity-attachments-tab></activity-attachments-tab>
+          <activity-attachments-tab .activityDetails="${this.activityDetails}"></activity-attachments-tab>
         `;
       case CHECKLIST_TAB:
         return html`

@@ -156,8 +156,17 @@ export function updateChecklistAttachments(
       }
     );
     const requests: (Promise<void> | null)[] = Object.entries(requestsData).map(
-      ([method, data]: [string, RequestChecklistAttachment[]]) =>
-        data.length ? request(url, {method, body: JSON.stringify(data)}) : null
+      ([method, data]: [string, RequestChecklistAttachment[]]) => {
+        if (!data.length) {
+          return null;
+        }
+        if (method === 'DELETE') {
+          const ids: string = data.map(({id}: RequestChecklistAttachment) => id).join(',');
+          return request(`${url}?pk__in=${ids}`, {method});
+        } else {
+          return request(url, {method, body: JSON.stringify(data)});
+        }
+      }
     );
     return Promise.all(requests).then((response: (void | null)[]) =>
       response.every((response: void | null) => response === null)

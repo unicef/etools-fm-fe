@@ -35,8 +35,7 @@ export function addAttachmentToList(
       throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
     }
     dispatch(new SetAttachmentsUpdateState(true));
-    const body: FormData = jsonToFormData(data);
-    return request(url, {method: 'POST', body})
+    return request(`${url}link/`, {method: 'POST', body: JSON.stringify([data])})
       .then(() => dispatch(new SetAttachmentsUpdateError({})))
       .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
       .then(() => {
@@ -57,8 +56,7 @@ export function updateListAttachment(
       throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
     }
     dispatch(new SetAttachmentsUpdateState(true));
-    const body: FormData = jsonToFormData(data);
-    return request(`${url}${id}/`, {method: 'PATCH', body})
+    return request(`${url}${id}/`, {method: 'PATCH', body: JSON.stringify(data)})
       .then(() => dispatch(new SetAttachmentsUpdateError({})))
       .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
       .then(() => {
@@ -85,12 +83,4 @@ export function deleteListAttachment(
         dispatch(new SetAttachmentsUpdateState(false));
       });
   };
-}
-
-function jsonToFormData(json: GenericObject): FormData {
-  const body: FormData = new FormData();
-  Object.keys(json).forEach((key: string) => {
-    body.append(key, json[key]);
-  });
-  return body;
 }

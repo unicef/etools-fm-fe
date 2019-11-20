@@ -123,7 +123,7 @@ export class ChecklistAttachments extends LitElement {
         if (attachment.file_type === originalAttachment.file_type) {
           return null;
         } else {
-          return {id: attachment.id, file_type: attachment.file_type};
+          return {attachment: attachment.id, file_type: attachment.file_type};
         }
       })
       .filter<RequestChecklistAttachment>(
