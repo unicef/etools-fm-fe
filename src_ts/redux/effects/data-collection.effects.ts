@@ -1,11 +1,7 @@
 import {IAsyncAction} from '../middleware';
 import {DataCollectionChecklistActionTypes} from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {
-  DATA_COLLECTION_CHECKLIST,
-  DATA_COLLECTION_CHECKLIST_ITEM,
-  DATA_COLLECTION_OVERALL_FINDING
-} from '../../endpoints/endpoints-list';
+import {DATA_COLLECTION_CHECKLIST, DATA_COLLECTION_OVERALL_FINDING} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
@@ -184,25 +180,6 @@ export function createCollectionChecklist(id: number, data: Partial<DataCollecti
     api: () => {
       const requestInit: RequestInit = {method: 'POST', body: JSON.stringify(data)};
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId: id});
-      return request(url, requestInit);
-    }
-  };
-}
-
-export function updateCollectionChecklist(
-  activityId: number,
-  checklistId: number,
-  data: Partial<DataCollectionChecklist>
-): IAsyncAction {
-  return {
-    types: [
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST,
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS,
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE
-    ],
-    api: () => {
-      const requestInit: RequestInit = {method: 'PATCH', body: JSON.stringify(data)};
-      const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST_ITEM, {activityId, checklistId});
       return request(url, requestInit);
     }
   };
