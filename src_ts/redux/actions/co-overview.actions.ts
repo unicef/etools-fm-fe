@@ -5,20 +5,17 @@ export enum FullReportsActionTypes {
 }
 
 export class FullReportDataRequest {
-  public readonly type: FullReportsActionTypes.FULL_REPORT_DATA_REQUEST =
-    FullReportsActionTypes.FULL_REPORT_DATA_REQUEST;
+  readonly type: FullReportsActionTypes.FULL_REPORT_DATA_REQUEST = FullReportsActionTypes.FULL_REPORT_DATA_REQUEST;
 }
 
 export class FullReportDataSuccess {
-  public readonly type: FullReportsActionTypes.FULL_REPORT_DATA_SUCCESS =
-    FullReportsActionTypes.FULL_REPORT_DATA_SUCCESS;
-  public constructor(public payload: FullReportData) {}
+  readonly type: FullReportsActionTypes.FULL_REPORT_DATA_SUCCESS = FullReportsActionTypes.FULL_REPORT_DATA_SUCCESS;
+  constructor(public payload: FullReportData) {}
 }
 
 export class FullReportDataFailure {
-  public readonly type: FullReportsActionTypes.FULL_REPORT_DATA_FAILURE =
-    FullReportsActionTypes.FULL_REPORT_DATA_FAILURE;
-  public constructor(public payload: GenericObject) {}
+  readonly type: FullReportsActionTypes.FULL_REPORT_DATA_FAILURE = FullReportsActionTypes.FULL_REPORT_DATA_FAILURE;
+  constructor(public payload: GenericObject) {}
 }
 
 export type FullReportsActions = FullReportDataRequest | FullReportDataSuccess | FullReportDataFailure;

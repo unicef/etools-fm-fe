@@ -15,10 +15,12 @@ import {
 import {dataCollection} from '../../../../../redux/reducers/data-collection.reducer';
 import {dataCollectionList} from '../../../../../redux/selectors/data-collection.selectors';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {hasActivityPermission, Permissions} from '../../../../../config/permissions';
 import {activityDetailsData} from '../../../../../redux/selectors/activity-details.selectors';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {IAsyncAction} from '../../../../../redux/middleware';
+import {Unsubscribe} from 'redux';
+import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
+import {ROOT_PATH} from '../../../../../config/config';
 
 addTranslates(ENGLISH, [ACTIVITY_COLLECT_TRANSLATES]);
 store.addReducers({dataCollection});
@@ -29,33 +31,36 @@ type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
 export class DataCollectTab extends MethodsMixin(LitElement) {
   @property({type: Number}) activityId!: number;
   @property({type: Object}) checklistByMethods!: DataCollectByMethods;
-  @property({type: Boolean}) hasEditCollect: boolean = false;
+  @property({type: Boolean}) isReadonly: boolean = false;
 
-  checklistUnsubscribe!: Callback;
+  private checklistUnsubscribe!: Unsubscribe;
+  private activityUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.subscribe(
+    this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {
-        this.hasEditCollect = activityDetails
-          ? hasActivityPermission(Permissions.EDIT_COLLECT_TAB, activityDetails)
-          : false;
+        this.isReadonly = activityDetails ? !activityDetails.permissions.edit.checklists : true;
       })
     );
+
     this.checklistUnsubscribe = store.subscribe(
       dataCollectionList((checklist: DataCollectionChecklist[] | null) => {
         const collect: DataCollectionChecklist[] = checklist || [];
-        this.checklistByMethods = collect.reduce(
-          (byMethods: DataCollectByMethods, item: DataCollectionChecklist) => {
-            const items: DataCollectionChecklist[] = byMethods[item.method] || [];
-            byMethods[item.method] = [...items, item];
-            return byMethods;
-          },
-          {} as DataCollectByMethods
-        );
+        this.checklistByMethods = collect.reduce((byMethods: DataCollectByMethods, item: DataCollectionChecklist) => {
+          const items: DataCollectionChecklist[] = byMethods[item.method] || [];
+          byMethods[item.method] = [...items, item];
+          return byMethods;
+        }, {} as DataCollectByMethods);
       })
     );
     store.dispatch<AsyncEffect>(loadDataCollectionChecklist(this.activityId));
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activityUnsubscribe();
+    this.checklistUnsubscribe();
   }
 
   render(): TemplateResult {
@@ -68,6 +73,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
               <div slot="actions">
                 <paper-icon-button
                   @tap="${() => this.onCreateChecklist(method)}"
+                  ?hidden="${this.isReadonly}"
                   icon="icons:add-box"
                   class="panel-button"
                 ></paper-icon-button>
@@ -87,9 +93,11 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
         <etools-data-table-column class="flex-1" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}
         </etools-data-table-column>
+
         <etools-data-table-column class="flex-1" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
+
         ${method.use_information_source
           ? html`
               <etools-data-table-column class="flex-1" field="text">
@@ -98,22 +106,32 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
             `
           : ''}
       </etools-data-table-header>
+
       ${repeat(
         collect,
         (item: DataCollectionChecklist) => html`
           <etools-data-table-row no-collapse secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
+              <!--  Author  -->
               <div class="col-data flex-1 truncate">${item.author.name}</div>
+
+              <!--  Method Name  -->
               <div class="col-data flex-1 truncate">${this.getMethodType(item.method)}</div>
+
+              <!--  Information Source  -->
               ${method.use_information_source
                 ? html`
                     <div class="col-data flex-1 truncate">${item.information_source}</div>
                   `
                 : ''}
-              ${this.hasEditCollect && method.use_information_source
+
+              <!--  Edit button  -->
+              ${!this.isReadonly
                 ? html`
                     <div class="hover-block">
-                      <iron-icon icon="icons:create" @click="${() => this.onEditChecklist(item)}"></iron-icon>
+                      <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
+                        <iron-icon icon="icons:create"></iron-icon>
+                      </a>
                     </div>
                   `
                 : ''}
@@ -132,7 +150,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
   onCreateChecklist(method: EtoolsMethod): void {
     this.processCreate(method).then(({payload}: IAsyncAction) => {
       if (payload && payload.id) {
-        updateAppLocation(`activities/${this.activityId}/data-collection/${payload.id}`);
+        updateAppLocation(`${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${payload.id}`);
       }
     });
   }
@@ -162,10 +180,6 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
         );
       }
     });
-  }
-
-  onEditChecklist(checklistItem: DataCollectionChecklist): void {
-    updateAppLocation(`activities/${this.activityId}/data-collection/${checklistItem.id}`);
   }
 
   static get styles(): CSSResultArray {

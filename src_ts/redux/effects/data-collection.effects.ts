@@ -135,13 +135,16 @@ export function updateChecklistAttachments(
 ): (dispatch: Dispatch) => Promise<boolean> {
   return () => {
     const requestsData: GenericObject<RequestChecklistAttachment[]> = data.reduce(
-      (requests: GenericObject<RequestChecklistAttachment[]>, attachment: RequestChecklistAttachment) => {
-        if (attachment.id && !attachment.delete) {
-          requests.PATCH.push(attachment);
-        } else if (attachment.id) {
-          requests.DELETE.push({id: attachment.id});
+      (
+        requests: GenericObject<RequestChecklistAttachment[]>,
+        {attachment, id, _delete, file_type}: RequestChecklistAttachment
+      ) => {
+        if (id && !_delete) {
+          requests.PATCH.push({file_type});
+        } else if (id) {
+          requests.DELETE.push({id});
         } else {
-          requests.POST.push(attachment);
+          requests.POST.push({id: attachment, file_type});
         }
         return requests;
       },
@@ -158,7 +161,9 @@ export function updateChecklistAttachments(
         }
         if (method === 'DELETE') {
           const ids: string = data.map(({id}: RequestChecklistAttachment) => id).join(',');
-          return request(`${url}?pk__in=${ids}`, {method});
+          return request(`${url}?id__in=${ids}`, {method});
+        } else if (method === 'POST') {
+          return request(`${url}/link/`, {method, body: JSON.stringify(data)});
         } else {
           return request(url, {method, body: JSON.stringify(data)});
         }

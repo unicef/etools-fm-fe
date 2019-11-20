@@ -113,7 +113,7 @@ export class ChecklistAttachments extends LitElement {
           return {attachment: attachment.attachment, file_type: attachment.file_type};
         } else if (attachment.delete) {
           // remove existed attachment from checklist
-          return {id: attachment.id, delete: true} as RequestChecklistAttachment;
+          return {id: attachment.id, _delete: true} as RequestChecklistAttachment;
         }
 
         // get original attachment and check the changes. only file_type field can be changed

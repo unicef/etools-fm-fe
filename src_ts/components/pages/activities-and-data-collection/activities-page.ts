@@ -13,12 +13,16 @@ import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
 addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({activities});
+export const ACTIVITIES_PAGE: 'activities' = 'activities';
+export const ACTIVITIES_LIST_PAGE: 'list' = 'list';
+export const ACTIVITY_ITEM_PAGE: 'item' = 'item';
+export const DATA_COLLECTION_PAGE: 'data-collection' = 'data-collection';
 
-const PAGE: string = 'activities';
+const PAGE: string = ACTIVITIES_PAGE;
 
-const LIST_ROUTE: string = 'list';
-const ITEM_ROUTE: string = 'item';
-const COLLECT_ROUTE: string = 'data-collection';
+const LIST_ROUTE: string = ACTIVITIES_LIST_PAGE;
+const ITEM_ROUTE: string = ACTIVITY_ITEM_PAGE;
+const COLLECT_ROUTE: string = DATA_COLLECTION_PAGE;
 
 @customElement('activities-page')
 export class ActivitiesPageComponent extends LitElement {

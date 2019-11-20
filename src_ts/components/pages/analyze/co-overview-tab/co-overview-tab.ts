@@ -6,7 +6,7 @@ import {CO_OVERVIEW_TRANSLATES} from '../../../../localization/en/analyze-page/c
 import {addTranslates, ENGLISH} from '../../../../localization/localisation';
 import {CpOutcomesMixin} from '../../../common/mixins/cp-outcomes.mixin';
 
-import {FullReportData} from '../../../../redux/selectors/co-overview.selectors';
+import {fullReportData} from '../../../../redux/selectors/co-overview.selectors';
 import {outputsDataSelector} from '../../../../redux/selectors/static-data.selectors';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -55,7 +55,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
       routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
     );
     this.fullReportsUnsubscribe = store.subscribe(
-      FullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
+      fullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
     );
     this.cpOutputUnsubscribe = store.subscribe(
       outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {

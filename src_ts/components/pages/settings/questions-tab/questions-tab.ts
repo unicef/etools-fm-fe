@@ -143,7 +143,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       : store.dispatch<AsyncEffect>(loadStaticData(CATEGORIES));
 
     Promise.all([methodsPromise, sectionsPromise, categoriesPromise]).then(
-      ([methods__in, sections__in, category__in]: [EtoolsMethod[], EtoolsSection[], EtoolsCategory[]]) => {
+      ([methods__in, sections__in, category__in]: any) => {
         this.methods = methods__in;
         this.sections = sections__in;
         this.categories = category__in;

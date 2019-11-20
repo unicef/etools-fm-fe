@@ -4,6 +4,7 @@ import {InputStyles} from '../../../../../../styles/input-styles';
 import {translate} from '../../../../../../../localization/localisation';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {formatDate} from '../../../../../../utils/date-utility';
+import '@unicef-polymer/etools-date-time/datepicker-lite';
 
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['sections', 'end_date', 'start_date', 'location_site', 'location'];
 
@@ -118,7 +119,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
             <datepicker-lite
               class="without-border"
               value="${this.editedData.end_date || ''}"
-              ?fire-date-has-changed="${!this.isEditMode}"
+              ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('end_date', formatDate(detail.date))}}"
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
