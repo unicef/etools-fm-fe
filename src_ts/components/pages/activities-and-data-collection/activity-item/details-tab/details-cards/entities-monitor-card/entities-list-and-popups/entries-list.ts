@@ -1,7 +1,7 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
-import {translate} from '../../../../../../../localization/localisation';
+import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {translate} from '../../../../../../../../localization/localisation';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {

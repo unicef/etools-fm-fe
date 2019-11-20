@@ -13,7 +13,7 @@ import {
 import {Unsubscribe} from 'redux';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
-  @property() isReadonly: boolean = true;
+  @property() isEditMode: boolean = false;
   @property() isUpdate: boolean = false;
   @property() editedCard: string | null = null;
   @property({type: Boolean}) isLoad: boolean = false;
@@ -45,7 +45,7 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   }
 
   protected save(): void {
-    this.isReadonly = false;
+    this.isEditMode = false;
     const diff: Partial<IActivityDetails> = getDifference<IActivityDetails>(this.originalData || {}, this.editedData, {
       toRequest: true
     });
@@ -53,24 +53,36 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
       this.isUpdate = true;
       store.dispatch<AsyncEffect>(updateActivityDetails(this.editedData.id, diff)).then(() => this.finish());
     } else {
-      this.isReadonly = true;
+      this.isEditMode = true;
       store.dispatch(new SetEditedDetailsCard(null));
     }
   }
 
   protected finish(): void {
-    this.isReadonly = true;
+    this.isEditMode = false;
     this.isUpdate = false;
     store.dispatch(new SetEditedDetailsCard(null));
   }
 
   protected cancel(): void {
-    this.isReadonly = true;
+    this.isEditMode = false;
     this.data = clone(this.originalData);
     store.dispatch(new SetEditedDetailsCard(null));
   }
 
   protected startEdit(): void {
-    this.isReadonly = false;
+    this.isEditMode = true;
+  }
+
+  protected isFieldReadonly(field: string): boolean {
+    return (
+      !this.editedData ||
+      !(this.editedData as IActivityDetails).permissions.edit[field as keyof ActivityPermissionsObject]
+    );
+  }
+
+  protected havePossibilityToEditCard(cardName: string, cardFields: string[]): boolean {
+    const cardFieldsAreReadonly: boolean = cardFields.every((field: string) => this.isFieldReadonly(field));
+    return (!this.editedCard || this.editedCard === cardName) && !cardFieldsAreReadonly;
   }
 }

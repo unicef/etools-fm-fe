@@ -15,6 +15,7 @@ import {addTranslates, ENGLISH} from '../../../localization/localisation';
 import {SITES_TRANSLATES} from '../../../localization/en/settings-page/sites.translates';
 import {QUESTIONS_TRANSLATES} from '../../../localization/en/settings-page/question.translates';
 import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
+import {hasPermission, Permissions} from '../../../config/permissions';
 
 store.addReducers({specificLocations, questions});
 addTranslates(ENGLISH, [SITES_TRANSLATES, QUESTIONS_TRANSLATES]);
@@ -74,6 +75,9 @@ export class FmSettingsComponent extends LitElement {
       routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
         if (routeName !== PAGE) {
           return;
+        }
+        if (!hasPermission(Permissions.VIEW_SETTINGS)) {
+          updateAppLocation('page-not-found');
         }
         this.activeTab = subRouteName as string;
       })

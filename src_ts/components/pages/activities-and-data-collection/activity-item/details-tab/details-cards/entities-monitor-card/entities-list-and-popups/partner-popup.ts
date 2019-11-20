@@ -1,13 +1,13 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {PartnersMixin} from '../../../../../../common/mixins/partners-mixin';
-import {translate} from '../../../../../../../localization/localisation';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
+import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
+import {translate} from '../../../../../../../../localization/localisation';
+import {fireEvent} from '../../../../../../../utils/fire-custom-event';
 import '@unicef-polymer/etools-dialog';
-import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {InputStyles} from '../../../../../../styles/input-styles';
-import {DialogStyles} from '../../../../../../styles/dialog-styles';
-import {SharedStyles} from '../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
+import {simplifyValue} from '../../../../../../../utils/objects-diff';
+import {InputStyles} from '../../../../../../../styles/input-styles';
+import {DialogStyles} from '../../../../../../../styles/dialog-styles';
+import {SharedStyles} from '../../../../../../../styles/shared-styles';
+import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 
 @customElement('partner-popup')
 export class PartnerPopup extends PartnersMixin(LitElement) {

@@ -5,9 +5,9 @@ import '@unicef-polymer/etools-date-time/datepicker-lite';
 import '../../../../common/layout/etools-card';
 import '../../../../common/location-widget/location-widget';
 import {ACTIVITY_DETAILS_TRANSLATES} from '../../../../../localization/en/activities-and-data-collection/activity-details.translates';
-import './details-cards/activity-details-card';
+import './details-cards/activity-details-card/activity-details-card';
 import './details-cards/monitor-information-card';
-import './details-cards/entities-monitor-card';
+import './details-cards/entities-monitor-card/entities-monitor-card';
 import {store} from '../../../../../redux/store';
 import {ActivityDetailsActions} from '../../../../../redux/actions/activity-details.actions';
 

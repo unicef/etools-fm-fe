@@ -13,6 +13,9 @@ const KNOWN_GROUPS: Set<string> = new Set([PME, FM_USER]);
 let currentUserGroups: string[] | null = null;
 
 export enum Permissions {
+  VIEW_SETTINGS = 'VIEW_SETTINGS',
+  VIEW_PLANING = 'VIEW_PLANING',
+  VIEW_ANALYZE = 'VIEW_ANALYZE',
   EDIT_SITES = 'EDIT_SITES',
   EDIT_RATIONALE = 'EDIT_RATIONALE',
   EDIT_LOG_ISSUES = 'EDIT_LOG_ISSUES',
@@ -34,7 +37,9 @@ export enum Permissions {
 
 const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
   [PME]: new Set([
-    Permissions.PME_TEST_PERMISSION,
+    Permissions.VIEW_SETTINGS,
+    Permissions.VIEW_PLANING,
+    Permissions.VIEW_ANALYZE,
     Permissions.EDIT_SITES,
     Permissions.EDIT_LOG_ISSUES,
     Permissions.EDIT_RATIONALE,
@@ -43,6 +48,9 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
     Permissions.EDIT_VISIT_DETAILS
   ]),
   [FM_USER]: new Set([
+    Permissions.VIEW_SETTINGS,
+    Permissions.VIEW_PLANING,
+    Permissions.VIEW_ANALYZE,
     Permissions.FM_USER_TEST_PERMISSION,
     Permissions.EDIT_LOG_ISSUES,
     Permissions.EDIT_RATIONALE,
