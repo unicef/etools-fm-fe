@@ -87,51 +87,32 @@ type CpOutputConfig = {
 
 type FullReportData = {
   id: number;
-  name: string;
+  budget_allocation: string;
   code: string;
+  humanitarian_marker_code: null;
+  humanitarian_marker_name: null;
+  name: string;
   partners: FullReportPartner[];
-  result_links: FullReportResultLink[];
   ram_indicators: RamIndicator[];
 };
 
 type FullReportPartner = {
   id: number;
+  interventions: FullReportIntervention[];
   name: string;
   prog_visit_mr: string;
-  interventions: FullReportIntervention[];
 };
 
 type FullReportIntervention = {
-  pk: number;
+  days_from_last_pv: string;
   number: string;
-  title: string;
+  pd_output_names: any[];
+  pk: number;
   status: string;
-  days_last_visit: string;
-};
-
-type FullReportResultLink = {
-  id: number;
-  intervention: number;
-  cp_output: number;
-  cp_output_name: string;
-  ram_indicators: number[];
-  ram_indicator_names: string[];
-  ll_results: LowResult[];
-};
-
-type LowResult = {
-  applied_indicators: [];
-  code: string;
-  created: string;
-  id: number;
-  modified: string;
-  name: string;
-  result_link: number;
+  title: string;
 };
 
 type RamIndicator = {
-  ram_indicators: NestedIndicator[];
-  cp_output_name: string;
+  name: string;
+  target: string;
 };
-
-type NestedIndicator = {indicator_name: string};

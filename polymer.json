@@ -33,6 +33,8 @@
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js",
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js"
+    "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
   ],
   "extraDependencies": [
     "manifest.json",

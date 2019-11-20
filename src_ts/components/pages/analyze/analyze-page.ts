@@ -73,7 +73,7 @@ export class AnalyzePage extends LitElement {
         `;
       case COUNTRY_OVERVIEW:
         return html`
-          Country Overview
+          <co-overview-tab></co-overview-tab>
         `;
       default:
         return html`

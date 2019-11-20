@@ -51,7 +51,11 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
     'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js',
     'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js'
   ],
-  'analyze_country-overview': ['components/pages/analyze/analyze-page.js']
+  'analyze_country-overview': [
+    'components/pages/analyze/analyze-page.js',
+    'components/pages/analyze/co-overview-tab/co-overview-tab.js',
+    'components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js'
+  ]
 };
 
 export function getFilePathsToImport(routeDetails: IRouteDetails): string[] {
