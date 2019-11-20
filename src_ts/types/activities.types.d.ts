@@ -2,14 +2,8 @@ interface IListActivity {
   id: number;
   reference_number: string;
   activity_type: UserType;
-  tpm_partner: null | number;
-  person_responsible: null | {
-    id: number;
-    name: string;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-  };
+  tpm_partner: null | IActivityTpmPartner;
+  person_responsible: null | ActivityTeamMember;
   location: ISiteParrentLocation;
   location_site: null | Site;
   partners: IActivityPartner[];
@@ -48,6 +42,14 @@ type ActivityTeamMember = {
   middle_name: string;
   last_name: string;
 };
+
+interface IActivityTpmPartner {
+  email: string;
+  id: number;
+  name: string;
+  phone_number: string;
+  vendor_number: string;
+}
 
 interface IActivityPartner {
   id: number;

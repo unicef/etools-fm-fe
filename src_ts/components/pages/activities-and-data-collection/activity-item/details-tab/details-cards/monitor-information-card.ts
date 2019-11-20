@@ -10,11 +10,11 @@ import '@polymer/paper-radio-button/paper-radio-button';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
-import {TEAM_MEMBERS, TPM_PARTNERS} from '../../../../../../endpoints/endpoints-list';
+import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
-import {simplifyValue} from '../../../../../utils/objects-diff';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
+import {simplifyValue} from '../../../../../utils/objects-diff';
 
 export const CARD_NAME: string = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
@@ -27,16 +27,25 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
 const USER_STAFF: UserType = 'staff';
 const USER_TPM: UserType = 'tpm';
 
+type MemberOptions = {
+  userType: UserType;
+  tpmPartner?: IActivityTpmPartner | null;
+};
+
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   userTypes: UserType[] = [USER_STAFF, USER_TPM];
+  users: User[] = [];
   @property() membersOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() userType!: UserType;
 
-  @property() tpmPartner?: EtoolsTPMPartner | null;
-  @property() teamMembers: User[] = [];
-  @property() personalResponsible?: User | null;
+  @property() tpmPartner?: IActivityTpmPartner | null;
+  @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() personalResponsible?: ActivityTeamMember | null;
+
+  private userUnsubscribe!: Callback;
+  private tpmPartnerUnsubscribe!: Callback;
 
   set data(data: IActivityDetails | null) {
     super.data = data;
@@ -46,9 +55,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (this.editedData.activity_type) {
       this.userType = this.editedData.activity_type;
     }
-    this.personalResponsible = (this.editedData.person_responsible as unknown) as User;
-    this.teamMembers = (this.editedData.team_members as unknown) as User[];
-    this.tpmPartner = (this.editedData.tpm_partner as unknown) as EtoolsTPMPartner;
+    this.personalResponsible = this.editedData.person_responsible;
+    this.teamMembers = this.editedData.team_members;
+    this.tpmPartner = this.editedData.tpm_partner;
   }
 
   render(): TemplateResult {
@@ -164,21 +173,22 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   connectedCallback(): void {
     super.connectedCallback();
-    if (this.tpmPartner) {
-      this.loadMembersOptions(this.tpmPartner.id);
-    }
-    store.subscribe(
+    this.userUnsubscribe = store.subscribe(
       staticDataDynamic(
-        (teamMembers: User[] | undefined) => {
-          if (!teamMembers) {
+        (users: User[] | undefined) => {
+          if (!users) {
             return;
           }
-          this.membersOptions = teamMembers;
+          this.users = users;
+          this.getMembersOptions({
+            userType: this.userType,
+            tpmPartner: this.tpmPartner
+          });
         },
-        [TEAM_MEMBERS]
+        [USERS]
       )
     );
-    store.subscribe(
+    this.tpmPartnerUnsubscribe = store.subscribe(
       staticDataDynamic(
         (tpmPartners: EtoolsTPMPartner[] | undefined) => {
           if (!tpmPartners) {
@@ -189,30 +199,52 @@ export class MonitorInformationCard extends BaseDetailsCard {
         [TPM_PARTNERS]
       )
     );
+    const data: IStaticDataState = (store.getState() as IRootState).staticData;
+    if (!data.users) {
+      store.dispatch<AsyncEffect>(loadStaticData(USERS));
+    }
   }
 
-  loadMembersOptions(id?: number | null): void {
-    const params: string = !id ? `?user_type=${USER_STAFF}` : `?user_type=${USER_TPM}&tpm_partner=${id}`;
-    const state: IRootState = store.getState() as IRootState;
-    const isReset: boolean = !!state.staticData.teamMembers;
-    store.dispatch<AsyncEffect>(loadStaticData(TEAM_MEMBERS, {params}, isReset));
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.userUnsubscribe();
+    this.tpmPartnerUnsubscribe();
+  }
+
+  getMembersOptions({userType, tpmPartner}: MemberOptions): void {
+    this.membersOptions = this.users.filter((user: User) => {
+      let isValid: boolean = false;
+      if (userType) {
+        isValid = userType === user.user_type;
+      }
+      if (tpmPartner) {
+        isValid = tpmPartner.id === user.tpm_partner;
+      }
+      return isValid;
+    });
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
-    const id: number | null = tpmPartner ? tpmPartner.id : null;
-    this.tpmPartner = tpmPartner;
-    this.updateModelValue('tpm_partner', id);
-    this.loadMembersOptions(id);
+    if (tpmPartner !== this.tpmPartner) {
+      const id: number | null = tpmPartner ? tpmPartner.id : null;
+      this.tpmPartner = tpmPartner;
+      this.updateModelValue('tpm_partner', id);
+      this.getMembersOptions({userType: USER_TPM, tpmPartner});
+    }
   }
 
   setTeamMembers(members: User[]): void {
-    this.updateModelValue('team_members', members);
-    this.teamMembers = members;
+    if (JSON.stringify(members) !== JSON.stringify(this.teamMembers)) {
+      this.updateModelValue('team_members', members);
+      this.teamMembers = members;
+    }
   }
 
   setPersonalResponsible(responsible: User | null): void {
-    this.updateModelValue('person_responsible', responsible);
-    this.personalResponsible = responsible;
+    if (responsible !== this.personalResponsible) {
+      this.updateModelValue('person_responsible', responsible);
+      this.personalResponsible = responsible;
+    }
   }
 
   setUserType(userType: UserType): void {
@@ -225,19 +257,16 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (userType === USER_TPM && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
-    if (userType === USER_STAFF) {
-      this.setTpmPartner(null);
-    }
+    this.getMembersOptions({userType});
   }
 
   cancel(): void {
     super.cancel();
-    if (this.tpmPartner) {
-      this.loadMembersOptions(this.tpmPartner.id);
-    }
+    this.getMembersOptions({userType: this.userType, tpmPartner: this.tpmPartner});
   }
 
   clearMembers(): void {
+    this.setTpmPartner(null);
     this.setPersonalResponsible(null);
     this.setTeamMembers([]);
   }
