@@ -1,8 +1,9 @@
 import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {ACTIVITIES_LIST, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
+import {ACTIVITIES_LIST, ACTIVITY_CHECKLIST_ATTACHMENTS, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
-import {ActivityDetailsActions} from '../actions/activity-details.actions';
+import {ActivityDetailsActions, ChecklistAttachmentsRequest} from '../actions/activity-details.actions';
+import {Dispatch} from 'redux';
 
 export function requestActivityDetails(id: string): IAsyncAction {
   return {
@@ -69,5 +70,14 @@ export function changeActivityStatus(id: number, activityDetails: Partial<IActiv
       };
       return request(url, options);
     }
+  };
+}
+
+export function loadChecklistAttachments(activityId: number): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
+    return request<PageableChecklistAttachment>(url, {method: 'GET'}).then((response: PageableChecklistAttachment) => {
+      dispatch(new ChecklistAttachmentsRequest(response.results));
+    });
   };
 }

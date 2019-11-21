@@ -50,3 +50,17 @@ type StoredAttachment = {
   uploaded_by: string;
   vendor_number: string;
 };
+
+interface IChecklistAttachment extends IAttachment {
+  checklist: DataCollectionChecklist;
+  partner: null | IActivityPartner;
+  cp_output: null | IActivityCPOutput;
+  intervention: null | IActivityIntervention;
+}
+
+type PageableChecklistAttachment = {
+  count: number;
+  next: number | null;
+  previous: number | null;
+  results: IChecklistAttachment[];
+};

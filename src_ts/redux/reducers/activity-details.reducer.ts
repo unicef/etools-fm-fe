@@ -10,7 +10,8 @@ const INITIAL: IActivityDetailsState = {
   },
   editedCard: null,
   error: null,
-  data: null
+  data: null,
+  checklistAttachments: []
 };
 
 export const activityDetails: Reducer<IActivityDetailsState, any> = (
@@ -109,6 +110,11 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (
         ...state,
         isRequest: {...state.isRequest, statusChange: false},
         error: action.payload
+      };
+    case ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST:
+      return {
+        ...state,
+        checklistAttachments: action.payload
       };
     default:
       return state;

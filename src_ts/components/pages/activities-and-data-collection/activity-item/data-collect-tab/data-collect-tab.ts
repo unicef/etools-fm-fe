@@ -47,14 +47,11 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     this.checklistUnsubscribe = store.subscribe(
       dataCollectionList((checklist: DataCollectionChecklist[] | null) => {
         const collect: DataCollectionChecklist[] = checklist || [];
-        this.checklistByMethods = collect.reduce(
-          (byMethods: DataCollectByMethods, item: DataCollectionChecklist) => {
-            const items: DataCollectionChecklist[] = byMethods[item.method] || [];
-            byMethods[item.method] = [...items, item];
-            return byMethods;
-          },
-          {} as DataCollectByMethods
-        );
+        this.checklistByMethods = collect.reduce((byMethods: DataCollectByMethods, item: DataCollectionChecklist) => {
+          const items: DataCollectionChecklist[] = byMethods[item.method] || [];
+          byMethods[item.method] = [...items, item];
+          return byMethods;
+        }, {} as DataCollectByMethods);
       })
     );
     store.dispatch<AsyncEffect>(loadDataCollectionChecklist(this.activityId));
