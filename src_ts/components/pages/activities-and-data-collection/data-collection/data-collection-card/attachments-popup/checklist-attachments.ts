@@ -88,7 +88,7 @@ export class ChecklistAttachments extends LitElement {
     if (this.isStoredAttachment(attachment)) {
       this.attachments.splice(index, 1);
     } else {
-      attachment.delete = true;
+      attachment._delete = true;
     }
     this.performUpdate();
   }
@@ -111,7 +111,7 @@ export class ChecklistAttachments extends LitElement {
         if (this.isStoredAttachment(attachment)) {
           // link attachment to checklist
           return {attachment: attachment.attachment, file_type: attachment.file_type};
-        } else if (attachment.delete) {
+        } else if (attachment._delete) {
           // remove existed attachment from checklist
           return {id: attachment.id, _delete: true} as RequestChecklistAttachment;
         }
