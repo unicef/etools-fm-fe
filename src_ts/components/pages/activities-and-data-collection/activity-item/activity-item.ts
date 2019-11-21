@@ -37,6 +37,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 import {STAFF} from '../../../common/dropdown-options';
+import {ROOT_PATH} from '../../../../config/config';
 
 store.addReducers({activityDetails});
 addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
@@ -233,7 +234,9 @@ export class NewActivityComponent extends LitElement {
           <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
         `;
       case ADDITIONAL_INFO:
-        return html``;
+        return html`
+          <img src="${ROOT_PATH}/images/additional-info-temp.png" width="100%" />
+        `;
       default:
         return html``;
     }

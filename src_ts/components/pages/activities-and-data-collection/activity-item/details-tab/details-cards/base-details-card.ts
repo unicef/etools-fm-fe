@@ -21,20 +21,23 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   @property({type: Boolean}) isLoad: boolean = false;
 
   private isLoadUnsubscribe!: Unsubscribe;
+  private activityDetailsUnsubscribe!: Unsubscribe;
+  private errorUnsubscribe!: Unsubscribe;
+  private editedCardUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.subscribe(
+    this.activityDetailsUnsubscribe = store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
         this.data = data;
       })
     );
-    store.subscribe(
+    this.errorUnsubscribe = store.subscribe(
       activityDetailsError((errors: GenericObject | null) => {
         this.errors = errors || {};
       })
     );
-    store.subscribe(
+    this.editedCardUnsubscribe = store.subscribe(
       detailsEditedCard((editedCard: null | string) => {
         this.editedCard = editedCard;
       })
@@ -49,6 +52,9 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.isLoadUnsubscribe();
+    this.activityDetailsUnsubscribe();
+    this.errorUnsubscribe();
+    this.editedCardUnsubscribe();
   }
 
   protected save(): void {

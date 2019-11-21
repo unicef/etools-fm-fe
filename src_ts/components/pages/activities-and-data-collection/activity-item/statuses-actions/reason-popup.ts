@@ -29,7 +29,7 @@ export class ChecklistAttachments extends LitElement {
         no-padding
         keep-dialog-open
         ?opened="${this.dialogOpened}"
-        .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
+        .okBtnText="${translate('MAIN.BUTTONS.CONFIRM')}"
         dialog-title="${this.popupTitle}"
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
@@ -39,6 +39,7 @@ export class ChecklistAttachments extends LitElement {
             id="details-input"
             .value="${this.reason}"
             max-rows="3"
+            required
             label="${this.label}"
             placeholder="${translate('MAIN.ENTER') + ` ${this.label}`}"
             @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"

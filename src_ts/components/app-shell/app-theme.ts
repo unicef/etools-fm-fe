@@ -36,6 +36,7 @@ documentContainer.innerHTML = `
         --primary-shade-of-green: #1A9251;
         --primary-shade-of-red: #E32526;
         --reject-color: #88304E;
+        --note-color: #FF9044;
 
         --epc-header: {
           background-color: var( --primary-background-color);

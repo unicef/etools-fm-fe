@@ -13,6 +13,7 @@ import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
+import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
 
 export const CARD_NAME: string = 'activity-details';
 
@@ -33,14 +34,6 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: Site[] | null) => {
-        if (!sites) {
-          return;
-        }
-        this.sitesList = sites;
-      })
-    );
 
     this.locationsUnsubscribe = store.subscribe(
       staticDataDynamic(
@@ -53,6 +46,20 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
         [LOCATIONS_ENDPOINT]
       )
     );
+
+    this.sitesUnsubscribe = store.subscribe(
+      sitesSelector((sites: Site[] | null) => {
+        if (!sites) {
+          return;
+        }
+        this.sitesList = sites;
+      }, false)
+    );
+
+    const state: IRootState = store.getState();
+    if (!state.specificLocations.data) {
+      store.dispatch<AsyncEffect>(loadSiteLocations());
+    }
   }
 
   disconnectedCallback(): void {

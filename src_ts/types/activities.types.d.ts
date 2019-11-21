@@ -141,6 +141,8 @@ type ActivityPermissionsObject = {
   activity_overall_finding: boolean;
   activity_question_overall_finding: boolean;
   action_points: boolean;
+  cancel_reason: boolean;
+  reject_reason: boolean;
 };
 
 type ReasonPopupData = {
@@ -150,4 +152,9 @@ type ReasonPopupData = {
 
 type ReasonPopupResponse = {
   comment: string;
+};
+
+type NoteInfo = {
+  titleKey: string;
+  text: string;
 };

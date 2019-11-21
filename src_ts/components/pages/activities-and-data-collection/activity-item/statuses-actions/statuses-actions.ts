@@ -128,7 +128,8 @@ export class StatusesActionsComponent extends LitElement {
         return;
       }
 
-      const errorText: string = (errors.data && errors.data[0]) || 'please try again later';
+      const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
+      const errorText: string = backendMessage || 'please try again later';
       fireEvent(this, 'toast', {text: `Can not change activity status: ${errorText}`});
     });
   }
