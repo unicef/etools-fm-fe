@@ -136,7 +136,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectSections(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.SECTIONS')}"
-              .options="${this.sections}"
+              .options="${this.sections.length ? this.sections : this.activitySections}"
               option-label="name"
               option-value="id"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('sections')}"
