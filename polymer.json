@@ -20,6 +20,7 @@
     "src/components/pages/activities-and-data-collection/activity-item/activity-item.js",
     "src/components/pages/activities-and-data-collection/activity-item/details-tab/activity-details-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js",
 
@@ -53,41 +54,6 @@
       ],
       "js": {
         "minify": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
-      "bundle": true,
-      "addServiceWorker": true
-    },
-    {
-      "name": "es6-bundled",
-      "browserCapabilities": [
-        "es2015"
-      ],
-      "js": {
-        "compile": "es2015",
-        "minify": true,
-        "transformModulesToAmd": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
-      "bundle": true,
-      "addServiceWorker": true
-    },
-    {
-      "name": "es5-bundled",
-      "js": {
-        "compile": "es5",
-        "minify": true,
-        "transformModulesToAmd": true
       },
       "css": {
         "minify": true
