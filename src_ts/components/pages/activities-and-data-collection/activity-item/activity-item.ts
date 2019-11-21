@@ -207,8 +207,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case ATTACHMENTS_TAB:
         return html`
-//todo add prop to load list
-//change state of activity-item
+          //todo add prop to load list //change state of activity-item
           <activity-attachments-tab .activityDetails="${this.activityDetails}"></activity-attachments-tab>
         `;
       case CHECKLIST_TAB:
