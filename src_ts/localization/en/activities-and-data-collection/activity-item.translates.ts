@@ -15,7 +15,8 @@ import {
   MARK_DATA_COLLECTED,
   SUBMIT_REPORT,
   COMPLETE,
-  CANCEL
+  CANCEL,
+  CANCELLED
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
   ADDITIONAL_INFO,
@@ -54,7 +55,8 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [DATA_COLLECTION]: 'Data Collection',
       [REPORT_FINALIZATION]: 'Report finalization',
       [SUBMITTED]: 'Submitted',
-      [COMPLETED]: 'Completed'
+      [COMPLETED]: 'Completed',
+      [CANCELLED]: 'Cancelled'
     },
     TABS: {
       [DETAILS_TAB]: 'Details',

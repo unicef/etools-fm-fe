@@ -17,6 +17,7 @@ import {activityDetails} from '../../../../redux/reducers/activity-details.reduc
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
+  CANCELLED,
   CHECKLIST,
   COMPLETED,
   DATA_COLLECTION,
@@ -64,6 +65,12 @@ export const STATUSES: IEtoolsStatusModel[] = [
   {status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
   {status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
   {status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
+];
+const CANCELLED_STATUS: IEtoolsStatusModel[] = [
+  {
+    status: CANCELLED,
+    label: translate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
+  }
 ];
 
 @customElement('activity-item')
@@ -128,7 +135,7 @@ export class NewActivityComponent extends LitElement {
       ></etools-loading>
 
       <etools-status
-        .statuses="${STATUSES}"
+        .statuses="${this.getStatuses()}"
         .activeStatus="${this.activityDetails && this.activityDetails.status}"
       ></etools-status>
 
@@ -255,6 +262,13 @@ export class NewActivityComponent extends LitElement {
       const property: string = TABS_PROPERTIES[tab];
       return !property || this.activityDetails!.permissions.view[property as keyof ActivityPermissionsObject];
     });
+  }
+
+  getStatuses(): IEtoolsStatusModel[] {
+    if (!this.activityDetails) {
+      return [];
+    }
+    return this.activityDetails.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
   }
 
   onSelect(selectedTab: HTMLElement): void {
