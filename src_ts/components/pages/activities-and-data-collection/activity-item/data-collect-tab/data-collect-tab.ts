@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResultArray, customElement, css, html, LitElement, property, TemplateResult} from 'lit-element';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -21,6 +21,7 @@ import {IAsyncAction} from '../../../../../redux/middleware';
 import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
+import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 
 addTranslates(ENGLISH, [ACTIVITY_COLLECT_TRANSLATES]);
 store.addReducers({dataCollection});
@@ -40,7 +41,10 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {
-        this.isReadonly = activityDetails ? !activityDetails.permissions.edit.checklists : true;
+        const property: keyof ActivityPermissionsObject = TABS_PROPERTIES[
+          COLLECT_TAB
+        ] as keyof ActivityPermissionsObject;
+        this.isReadonly = activityDetails ? !activityDetails.permissions.edit[property] : true;
       })
     );
 
@@ -141,6 +145,23 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
           </etools-data-table-row>
         `
       )}
+
+      <!--  Empty row  -->
+      ${!collect.length
+        ? html`
+            <etools-data-table-row no-collapse>
+              <div slot="row-data" class="layout horizontal editable-row flex">
+                <div class="col-data flex-1 truncate">-</div>
+                <div class="col-data flex-1 truncate">-</div>
+                ${method.use_information_source
+                  ? html`
+                      <div class="col-data flex-1 truncate">-</div>
+                    `
+                  : ''}
+              </div>
+            </etools-data-table-row>
+          `
+        : ''}
     `;
   }
 
@@ -185,6 +206,15 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
   }
 
   static get styles(): CSSResultArray {
-    return [pageLayoutStyles, CardStyles, FlexLayoutClasses];
+    return [
+      pageLayoutStyles,
+      CardStyles,
+      FlexLayoutClasses,
+      css`
+        .hover-block a {
+          color: var(--secondary-text-color);
+        }
+      `
+    ];
   }
 }

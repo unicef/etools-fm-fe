@@ -19,6 +19,8 @@ import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {openDialog} from '../../../../utils/dialog';
+import {updateAppLocation} from '../../../../../routing/routes';
+import {ACTIVITIES_PAGE} from '../../activities-page';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -124,13 +126,13 @@ export class StatusesActionsComponent extends LitElement {
 
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
       const errors: any = store.getState().activityDetails.error;
-      if (!errors) {
-        return;
+      if (errors) {
+        const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
+        const errorText: string = backendMessage || 'please try again later';
+        fireEvent(this, 'toast', {text: `Can not change activity status: ${errorText}`});
+      } else if (transition.transition === REJECT) {
+        updateAppLocation(`${ACTIVITIES_PAGE}`);
       }
-
-      const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
-      const errorText: string = backendMessage || 'please try again later';
-      fireEvent(this, 'toast', {text: `Can not change activity status: ${errorText}`});
     });
   }
 

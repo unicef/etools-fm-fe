@@ -38,6 +38,7 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 import {STAFF} from '../../../common/dropdown-options';
 import {ROOT_PATH} from '../../../../config/config';
+import {ACTIVITIES_PAGE} from '../activities-page';
 
 store.addReducers({activityDetails});
 addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
@@ -188,7 +189,11 @@ export class NewActivityComponent extends LitElement {
         const isNotLoaded: boolean = !loadedActivityId || `${loadedActivityId}` !== `${activityId}`;
 
         if (this.activityId && isNotLoaded) {
-          store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
+          store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
+            if (store.getState().activityDetails.error) {
+              updateAppLocation(ACTIVITIES_PAGE);
+            }
+          });
         } else {
           this.activityDetails = activityDetailsState.data as IActivityDetails;
           this.checkTab();

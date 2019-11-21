@@ -105,19 +105,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
     this.initFilters();
   }
 
-  static get styles(): CSSResult[] {
-    return [
-      elevationStyles,
-      pageContentHeaderSlottedStyles,
-      pageLayoutStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      SharedStyles,
-      buttonsStyles,
-      ActivitiesListStyles
-    ];
-  }
-
   render(): TemplateResult {
     return template.call(this);
   }
@@ -254,8 +241,23 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
     }
 
     const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = mapFilters(activitiesListFilters, this.filtersData, initialValues);
+    this.filters = mapFilters(activitiesListFilters, this.filtersData, initialValues).filter(
+      (filter: IEtoolsFilter) => filter.selectionOptions!.length
+    );
 
     this.filtersLoading = false;
+  }
+
+  static get styles(): CSSResult[] {
+    return [
+      elevationStyles,
+      pageContentHeaderSlottedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      SharedStyles,
+      buttonsStyles,
+      ActivitiesListStyles
+    ];
   }
 }

@@ -24,10 +24,13 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
-import {DETAILS_TAB} from '../activity-item/activities-tabs';
+import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
 import {translate} from '../../../../localization/localisation';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
+import {ACTIVITIES_PAGE} from '../activities-page';
+import {arrowLeftIcon} from '../../../styles/app-icons';
+import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 
 store.addReducers({dataCollection, activityDetails});
 
@@ -60,6 +63,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             </a>
             | ${this.checklist && this.checklist.id} | ${this.checklist && this.checklist.author.name}
           </div>
+        </div>
+
+        <div slot="title-row-actions">
+          <paper-button class="back-button">
+            <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}" class="layout horizontal">
+              ${arrowLeftIcon} <span>BACK</span>
+            </a>
+          </paper-button>
         </div>
       </page-content-header>
 
@@ -297,6 +308,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       buttonsStyles,
+      FlexLayoutClasses,
       css`
         page-content-header {
           --table-row-height: auto;
@@ -324,6 +336,27 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         data-collection-card:last-child {
           margin-bottom: 25px;
+        }
+
+        .back-button {
+          height: 36px;
+          padding: 0 18px;
+          color: white;
+          background: var(--green-color);
+          font-weight: 500;
+        }
+
+        .back-button a {
+          color: var(--primary-background-color);
+          text-decoration: none;
+          line-height: 21px;
+        }
+
+        .back-button a span {
+          margin-left: 10px;
+        }
+        .back-button a svg {
+          height: 21px;
         }
       `
     ];
