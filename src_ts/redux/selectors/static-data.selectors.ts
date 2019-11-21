@@ -8,6 +8,10 @@ export const outputsDataSelector: Selector<EtoolsCpOutput[] | undefined> = selec
   (store: IRootState) => store.staticData.outputs
 );
 
+export const cpOutcomesDataSelector: Selector<EtoolsCpOutcome[] | undefined> = select<EtoolsCpOutcome[] | undefined>(
+  (store: IRootState) => store.staticData.cpOutcomes
+);
+
 export const partnersDataSelector: Selector<EtoolsPartner[] | undefined> = select<EtoolsPartner[] | undefined>(
   (store: IRootState) => store.staticData.partners
 );

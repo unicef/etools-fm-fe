@@ -4,6 +4,7 @@ import {fireEvent} from '../../../../utils/fire-custom-event';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
+import '@polymer/paper-input/paper-textarea';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {
@@ -35,6 +36,8 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
           <paper-textarea
             class="without-border"
             required
+            always-float-label
+            placeholder="Enter ${translate('ACTIVITY_COLLECT.LABELS.INFO_SOURCE')}"
             label="${translate('ACTIVITY_COLLECT.LABELS.INFO_SOURCE')}"
             .value="${this.editedData.information_source}"
             ?invalid="${this.errors.information_source}"

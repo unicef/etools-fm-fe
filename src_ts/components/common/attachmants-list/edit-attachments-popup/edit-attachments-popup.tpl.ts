@@ -56,14 +56,6 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           dynamic-align
         ></etools-dropdown>
         <div class="file-upload-container">
-          <file-select-input
-            hidden
-            .fileData="${this.editedData.file}"
-            @file-selected="${(event: CustomEvent) => (this.selectedFileId = event.detail.file)}"
-            .hasDelete="${false}"
-            .fileId="${this.editedData.id}"
-          ></file-select-input>
-
           <etools-upload
             .showDeleteBtn="${false}"
             .fileUrl="${this.editedData && this.editedData.file}"

@@ -63,19 +63,21 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
       </page-content-header>
 
-      ${Object.values(this.findingsAndOverall).map(({name, findings, overall}: SortedFindingsAndOverall) => {
-        return html`
-          <data-collection-card
-            .tabName="${name}"
-            .overallInfo="${overall}"
-            .findings="${findings}"
-            .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
-            ?readonly="${this.tabIsReadonly}"
-            @attachments-updated="${() => this.getOverallInfo()}"
-            @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
-          ></data-collection-card>
-        `;
-      })}
+      ${Object.values(this.findingsAndOverall)
+        .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
+        .map(({name, findings, overall}: SortedFindingsAndOverall) => {
+          return html`
+            <data-collection-card
+              .tabName="${name}"
+              .overallInfo="${overall}"
+              .findings="${findings}"
+              .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
+              ?readonly="${this.tabIsReadonly}"
+              @attachments-updated="${() => this.getOverallInfo()}"
+              @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
+            ></data-collection-card>
+          `;
+        })}
     `;
   }
 

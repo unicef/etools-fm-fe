@@ -118,8 +118,8 @@ EtoolsRouter
         routeName: 'analyze',
         subRouteName: params.matchDetails[1],
         path: params.matchDetails[0],
-        queryParams: null,
-        queryParamsString: null,
+        queryParams: params.queryParams,
+        queryParamsString: params.queryParamsString,
         params: null
       };
     }

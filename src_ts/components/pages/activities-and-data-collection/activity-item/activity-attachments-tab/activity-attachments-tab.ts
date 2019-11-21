@@ -4,7 +4,6 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import '../../../../common/attachmants-list/attachments-list';
 import {ACTIVITY_RELATED_DOCUMENTS, ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
-import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 @customElement('activity-attachments-tab')
 export class ActivityAttachmentsTab extends LitElement {
@@ -18,7 +17,7 @@ export class ActivityAttachmentsTab extends LitElement {
             endpoint-name="${ACTIVITY_RELATED_DOCUMENTS}"
             .additionalEndpointData="${{id: this.activityDetails.id}}"
             tab-title-key="ATTACHMENTS_LIST.RELATED_DOCUMENTS"
-            ?readonly="${!hasPermission(Permissions.EDIT_RATIONALE)}"
+            ?readonly="${!this.activityDetails.permissions.edit.attachments}"
           ></attachments-list>
 
           ${this.activityDetails.permissions.view.report_attachments

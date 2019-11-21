@@ -92,7 +92,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
             ${translate('ACTIVITY_DETAILS.CP_OUTPUTS_FOUND', {count: this.cpOutputs.length})}
           </div>
           <etools-dropdown
-            label="${translate('ACTIVITY_DETAILS.PARTNER')}"
+            label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
             .options="${this.cpOutputs}"
             option-label="name"
             option-value="id"

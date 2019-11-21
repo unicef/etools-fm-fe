@@ -1,9 +1,3 @@
-import {
-  CHECKLIST,
-  DATA_COLLECTION,
-  REVIEW
-} from '../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
-
 const PME: 'PME' = 'PME';
 const FM_USER: 'FM User' = 'FM User';
 
@@ -59,17 +53,6 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
   ])
 };
 
-const ACTIVITY_PERMISSIONS_MAP: GenericObject<(details: IActivityDetails) => boolean> = {
-  [Permissions.VIEW_CHECKLIST_TAB]: ({permissions, status}: IActivityDetails) =>
-    permissions.view.activity_question_set && status === CHECKLIST,
-  [Permissions.EDIT_CHECKLIST_TAB]: ({permissions}: IActivityDetails) => permissions.edit.activity_question_set,
-  [Permissions.VIEW_REVIEW_TAB]: ({permissions, status}: IActivityDetails) =>
-    permissions.view.activity_question_set && status === REVIEW,
-  [Permissions.EDIT_COLLECT_TAB]: ({permissions}: IActivityDetails) => permissions.edit.checklists,
-  [Permissions.VIEW_COLLECT_TAB]: ({permissions, status}: IActivityDetails) =>
-    status === DATA_COLLECTION && permissions.view.checklists
-};
-
 export function setUser({groups}: IEtoolsUserModel): void {
   currentUserGroups = groups
     .map((group: UserGroup) => group.name)
@@ -83,8 +66,4 @@ export function hasPermission(permission: Permissions): boolean {
   }
 
   return currentUserGroups.some((groupName: string) => PERMISSIONS_MAP[groupName].has(permission));
-}
-
-export function hasActivityPermission(permissionName: string, activityDetails: IActivityDetails): boolean {
-  return ACTIVITY_PERMISSIONS_MAP[permissionName] && ACTIVITY_PERMISSIONS_MAP[permissionName](activityDetails);
 }

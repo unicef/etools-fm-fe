@@ -31,6 +31,39 @@ type EtoolsCpOutput = {
   parent: number;
 };
 
+type EtoolsCpOutcome = {
+  activity_focus_code: string;
+  activity_focus_name: string;
+  code: string;
+  country_programme: number;
+  created: string;
+  expired: boolean;
+  from_date: string;
+  gic_code: string;
+  gic_name: string;
+  hidden: boolean;
+  humanitarian_marker_code: null;
+  humanitarian_marker_name: null;
+  humanitarian_tag: boolean;
+  id: number;
+  level: number;
+  lft: number;
+  modified: string;
+  name: string;
+  parent: null;
+  ram: boolean;
+  result_type: string;
+  rght: number;
+  sector: null;
+  sic_code: string;
+  sic_name: string;
+  special: boolean;
+  to_date: string;
+  tree_id: number;
+  vision_id: string;
+  wbs: string;
+};
+
 type EtoolsPartner = {
   street_address: string;
   last_assessment_date: null;
@@ -124,7 +157,7 @@ type User = {
   middle_name: string;
   last_name: string;
   user_type: string;
-  tpm_partner: null;
+  tpm_partner: null | number;
 };
 
 type EtoolsLightLocation = {

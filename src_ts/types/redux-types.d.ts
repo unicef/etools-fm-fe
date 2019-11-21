@@ -15,6 +15,7 @@ interface IRootState {
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
+  fullReports: IFullReportsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -46,6 +47,7 @@ interface IStaticDataState {
   users?: User[];
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
+  cpOutcomes?: EtoolsCpOutcome[];
 }
 
 interface ISpecificLocationsState {
@@ -79,6 +81,14 @@ interface IQuestionTemplatesState {
 interface IActivitiesState {
   listData: null | IListData<IListActivity>;
 }
+
+type IFullReportsState = {
+  isRequest: {
+    load: boolean;
+  };
+  data: GenericObject<FullReportData>;
+  error: null | GenericObject;
+};
 
 interface IActivityChecklistState {
   data: null | IChecklistItem[];

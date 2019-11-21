@@ -47,7 +47,7 @@ type RequestChecklistAttachment = {
   id?: number;
   file_type?: number | string;
   attachment?: number;
-  delete?: true;
+  _delete?: true;
 };
 
 type AttachmentDialogResponse = {

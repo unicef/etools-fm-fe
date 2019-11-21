@@ -1,5 +1,9 @@
 import {select} from './create-selectors';
 
+export const dataCollectionErrors: Selector<GenericObject | null> = select<GenericObject | null>(
+  (store: IRootState) => store.dataCollection.errors.checklistCreate
+);
+
 export const dataCollectionList: Selector<DataCollectionChecklist[] | null> = select<DataCollectionChecklist[] | null>(
   (store: IRootState) => store.dataCollection.checklistCollect || null
 );

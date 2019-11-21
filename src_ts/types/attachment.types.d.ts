@@ -10,7 +10,7 @@ interface IAttachment {
 }
 
 interface IEditedAttachment extends IAttachment {
-  delete?: true;
+  _delete?: true;
 }
 
 type AttachmentFile = {

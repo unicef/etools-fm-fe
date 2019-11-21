@@ -164,9 +164,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   }
 
   updateTemplate(id: number, field: 'is_active', value: boolean): void;
-
   updateTemplate(id: number, field: 'specific_details', value: string): void;
-
   updateTemplate(id: number, field: 'specific_details' | 'is_active', value: string | boolean): void {
     // close editedDetails input popover
     this.editedDetails = {opened: false};

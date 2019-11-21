@@ -1,11 +1,7 @@
 import {IAsyncAction} from '../middleware';
 import {DataCollectionChecklistActionTypes} from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {
-  DATA_COLLECTION_CHECKLIST,
-  DATA_COLLECTION_CHECKLIST_ITEM,
-  DATA_COLLECTION_OVERALL_FINDING
-} from '../../endpoints/endpoints-list';
+import {DATA_COLLECTION_CHECKLIST, DATA_COLLECTION_OVERALL_FINDING} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
@@ -139,13 +135,16 @@ export function updateChecklistAttachments(
 ): (dispatch: Dispatch) => Promise<boolean> {
   return () => {
     const requestsData: GenericObject<RequestChecklistAttachment[]> = data.reduce(
-      (requests: GenericObject<RequestChecklistAttachment[]>, attachment: RequestChecklistAttachment) => {
-        if (attachment.id && !attachment.delete) {
-          requests.PATCH.push(attachment);
-        } else if (attachment.id) {
-          requests.DELETE.push({id: attachment.id});
+      (
+        requests: GenericObject<RequestChecklistAttachment[]>,
+        {attachment, id, _delete, file_type}: RequestChecklistAttachment
+      ) => {
+        if (id && !_delete) {
+          requests.PATCH.push({file_type});
+        } else if (id) {
+          requests.DELETE.push({id});
         } else {
-          requests.POST.push(attachment);
+          requests.POST.push({id: attachment, file_type});
         }
         return requests;
       },
@@ -162,7 +161,9 @@ export function updateChecklistAttachments(
         }
         if (method === 'DELETE') {
           const ids: string = data.map(({id}: RequestChecklistAttachment) => id).join(',');
-          return request(`${url}?pk__in=${ids}`, {method});
+          return request(`${url}?id__in=${ids}`, {method});
+        } else if (method === 'POST') {
+          return request(`${url}/link/`, {method, body: JSON.stringify(data)});
         } else {
           return request(url, {method, body: JSON.stringify(data)});
         }
@@ -184,25 +185,6 @@ export function createCollectionChecklist(id: number, data: Partial<DataCollecti
     api: () => {
       const requestInit: RequestInit = {method: 'POST', body: JSON.stringify(data)};
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId: id});
-      return request(url, requestInit);
-    }
-  };
-}
-
-export function updateCollectionChecklist(
-  activityId: number,
-  checklistId: number,
-  data: Partial<DataCollectionChecklist>
-): IAsyncAction {
-  return {
-    types: [
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST,
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS,
-      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE
-    ],
-    api: () => {
-      const requestInit: RequestInit = {method: 'PATCH', body: JSON.stringify(data)};
-      const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST_ITEM, {activityId, checklistId});
       return request(url, requestInit);
     }
   };
