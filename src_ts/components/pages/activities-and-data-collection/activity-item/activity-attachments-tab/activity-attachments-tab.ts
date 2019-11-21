@@ -31,6 +31,8 @@ export class ActivityAttachmentsTab extends LitElement {
                 ></attachments-list>
               `
             : ''}
+
+          <checklist-attachments></checklist-attachments>
         `
       : html``;
   }
