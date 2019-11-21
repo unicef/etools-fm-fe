@@ -132,9 +132,8 @@ export function template(this: ActivityDetailsCard): TemplateResult {
           <div class="layout horizontal flex">
             <etools-dropdown-multi
               class="without-border"
-              .selectedValues="${simplifyValue(this.editedData.sections || [])}"
-              @etools-selected-items-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('sections', detail.selectedItems)}"
+              .selectedValues="${simplifyValue(this.activitySections)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectSections(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.SECTIONS')}"
               .options="${this.sections}"

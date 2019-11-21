@@ -14,6 +14,7 @@ import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
 import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
+import clone from 'ramda/es/clone';
 
 export const CARD_NAME: string = 'activity-details';
 
@@ -23,6 +24,8 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
+  @property() activitySections: Section[] = [];
+
   @query('#locationWidget') private locationWidget!: LocationWidgetComponent;
 
   private sitesUnsubscribe!: Unsubscribe;
@@ -30,6 +33,18 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
 
   render(): TemplateResult {
     return template.call(this);
+  }
+
+  set data(data: IActivityDetails) {
+    super.data = data;
+    this.activitySections = clone(data.sections);
+  }
+
+  selectSections(sections: Section[]): void {
+    if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
+      this.activitySections = [...sections];
+      this.updateModelValue('sections', sections);
+    }
   }
 
   connectedCallback(): void {
