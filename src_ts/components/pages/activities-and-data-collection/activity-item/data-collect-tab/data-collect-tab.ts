@@ -94,7 +94,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
           ${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}
         </etools-data-table-column>
 
-        <etools-data-table-column class="flex-1" field="text">
+        <etools-data-table-column class="${method.use_information_source ? 'flex-1' : 'flex-2'}" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
 
@@ -116,7 +116,9 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
               <div class="col-data flex-1 truncate">${item.author.name}</div>
 
               <!--  Method Name  -->
-              <div class="col-data flex-1 truncate">${this.getMethodType(item.method)}</div>
+              <div class="col-data ${method.use_information_source ? 'flex-1' : 'flex-2'} truncate">
+                ${this.getMethodType(item.method)}
+              </div>
 
               <!--  Information Source  -->
               ${method.use_information_source
