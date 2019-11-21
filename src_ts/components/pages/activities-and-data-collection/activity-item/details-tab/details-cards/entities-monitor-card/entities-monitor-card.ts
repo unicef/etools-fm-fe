@@ -15,11 +15,12 @@ import './entities-list-and-popups/intervention-popup';
 import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
 import {openDialog} from '../../../../../../utils/dialog';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
+import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 
 export const CARD_NAME: string = 'entities-monitor';
 
 @customElement('entities-monitor-card')
-export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetailsCard)) {
+export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutputsMixin(BaseDetailsCard))) {
   @property() activityPartners: IActivityPartner[] = [];
   @property() activityCpOutputs: IActivityCPOutput[] = [];
   @property() activityInterventions: IActivityIntervention[] = [];
@@ -79,23 +80,20 @@ export class EntitiesMonitorCard extends PartnersMixin(CpOutputsMixin(BaseDetail
           outputIds = Array.from(new Set([...outputIds, ...response.cp_outputs]));
           partnerIds = Array.from(new Set([...partnerIds, response.partner]));
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          this.editedData.interventions = [...interventionIds];
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          this.editedData.cp_outputs = [...outputIds];
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          this.editedData.partners = [...partnerIds];
-
+          const interventions: IActivityIntervention[] = this.getActiveEntities<IActivityIntervention>(
+            interventionIds,
+            this.interventions
+          );
           const outputs: IActivityPartner[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
           const partners: IActivityPartner[] = this.getActiveEntities<IActivityPartner>(partnerIds, this.partners);
 
+          this.activityInterventions = [...interventions];
           this.activityCpOutputs = [...outputs];
           this.activityPartners = [...partners];
 
-          this.activityInterventions = [...this.activityInterventions, response];
+          this.editedData.interventions = [...interventions];
+          this.editedData.cp_outputs = [...outputs];
+          this.editedData.partners = [...partners];
         }
       }
     );

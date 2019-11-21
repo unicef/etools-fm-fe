@@ -10,12 +10,16 @@ import './details-cards/monitor-information-card';
 import './details-cards/entities-monitor-card/entities-monitor-card';
 import './details-cards/note-card';
 import {store} from '../../../../../redux/store';
-import {ActivityDetailsActions} from '../../../../../redux/actions/activity-details.actions';
+import {ActivityDetailsActions, SetEditedDetailsCard} from '../../../../../redux/actions/activity-details.actions';
+import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
+import {ACTIVITIES_PAGE} from '../../activities-page';
 
+const PAGE: string = ACTIVITIES_PAGE;
 addTranslates(ENGLISH, [ACTIVITY_DETAILS_TRANSLATES]);
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {
+  private routeUnsubscribe!: Callback;
   @property() set activityId(id: string) {
     if (!id) {
       store.dispatch({
@@ -23,6 +27,23 @@ export class ActivityDetailsTab extends LitElement {
         payload: null
       });
     }
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.routeUnsubscribe = store.subscribe(
+      routeDetailsSelector(({routeName}: IRouteDetails) => {
+        if (routeName !== PAGE) {
+          return;
+        }
+        store.dispatch(new SetEditedDetailsCard(null));
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.routeUnsubscribe();
   }
 
   render(): TemplateResult {
