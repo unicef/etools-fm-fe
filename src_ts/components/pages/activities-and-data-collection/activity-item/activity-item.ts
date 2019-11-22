@@ -38,7 +38,6 @@ import {
 import {Unsubscribe} from 'redux';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 import {STAFF} from '../../../common/dropdown-options';
-import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITIES_PAGE} from '../activities-page';
 
 store.addReducers({activityDetails});
@@ -247,7 +246,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case ADDITIONAL_INFO:
         return html`
-          <img src="${ROOT_PATH}/images/additional-info-temp.png" width="100%" />
+          <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
         `;
       default:
         return html``;

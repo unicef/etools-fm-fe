@@ -141,6 +141,16 @@ interface IDataCollectionState {
   };
 }
 
+interface IAdditionalInfoState {
+  isRequest: {
+    issueTrackingLoad: null | boolean;
+  };
+  issueTracking: LogIssue[];
+  errors: {
+    issueTracking: null | GenericObject;
+  };
+}
+
 type FindingsAndOverall = {
   findings: null | DataCollectionFinding[];
   overall: null | DataCollectionOverall[];
