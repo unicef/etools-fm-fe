@@ -1,4 +1,4 @@
-import {LitElement, html, TemplateResult, customElement, property, CSSResultArray} from 'lit-element';
+import {LitElement, html, TemplateResult, customElement, property, CSSResultArray, css} from 'lit-element';
 import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -10,6 +10,8 @@ import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {LOG_ISSUES} from '../../../../../endpoints/endpoints-list';
 import {EtoolsRouter} from '../../../../../routing/routes';
 import {SharedStyles} from '../../../../styles/shared-styles';
+import {openDialog} from '../../../../utils/dialog';
+import './files-popup';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
@@ -51,7 +53,10 @@ export class IssueTrackerList extends LitElement {
   }
 
   viewFiles(item: LogIssue): void {
-    console.log(item.attachments);
+    openDialog({
+      dialog: 'files-popup',
+      dialogData: item.attachments
+    });
   }
 
   changePageParam(newValue: string | number, paramName: string): void {
@@ -147,6 +152,20 @@ export class IssueTrackerList extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [pageLayoutStyles, SharedStyles, FlexLayoutClasses, CardStyles, elevationStyles];
+    // language=CSS
+    return [
+      pageLayoutStyles,
+      SharedStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      elevationStyles,
+      css`
+        .files-column {
+          color: var(--module-primary);
+          cursor: pointer;
+          font-weight: 500;
+        }
+      `
+    ];
   }
 }
