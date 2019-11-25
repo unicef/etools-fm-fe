@@ -12,7 +12,6 @@ import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {openDialog} from '../../../utils/dialog';
-import './issue-tracker-popup/issue-tracker-popup';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
@@ -23,6 +22,8 @@ import {PartnersMixin} from '../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../common/mixins/cp-outputs-mixin';
 import {SiteMixin} from '../../../common/mixins/site-mixin';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
+import './issue-tracker-popup/issue-tracker-popup';
+import '../../../common/file-components/files-popup';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
   {value: 'new', display_name: 'New'},
@@ -133,12 +134,11 @@ export class IssueTrackerTabComponent extends SiteMixin(
     }
   }
 
-  openViewDialog(issue?: LogIssue): void {
-    openDialog<LogIssue | undefined>({
-      dialog: 'issue-tracker-popup',
-      dialogData: issue,
-      readonly: true
-    }).then(() => {});
+  viewFiles(item: LogIssue): void {
+    openDialog({
+      dialog: 'files-popup',
+      dialogData: item.attachments
+    });
   }
 
   isAllowEdit(logIssue: LogIssue): boolean {
