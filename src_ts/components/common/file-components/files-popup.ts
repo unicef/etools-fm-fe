@@ -1,9 +1,10 @@
-import {LitElement, TemplateResult, html, property, customElement} from 'lit-element';
-import {InputStyles} from '../../../../styles/input-styles';
-import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from '../../../../../localization/localisation';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {LitElement, TemplateResult, html, property, customElement, CSSResult, css} from 'lit-element';
+import {InputStyles} from '../../styles/input-styles';
+import {DialogStyles} from '../../styles/dialog-styles';
+import {translate} from '../../../localization/localisation';
+import {fireEvent} from '../../utils/fire-custom-event';
 import {repeat} from 'lit-html/directives/repeat';
+import '@unicef-polymer/etools-upload/etools-upload';
 
 @customElement('files-popup')
 export class FilesPopup extends LitElement {
@@ -27,16 +28,11 @@ export class FilesPopup extends LitElement {
         dialog-title="${translate('ATTACHMENTS_LIST.TITLE')}"
         @close="${this.onClose}"
       >
-        <div class="layout vertical">
+        <div class="layout vertical files">
           ${repeat(
             this.attachments,
             (attachment: IAttachment) => html`
-              <file-select-input
-                .fileId="${attachment.id}"
-                .fileName="${attachment.filename}"
-                .fileData="${attachment.file}"
-                ?isReadonly="${true}"
-              ></file-select-input>
+              <etools-upload readonly .fileUrl="${attachment.file}"></etools-upload>
             `
           )}
         </div>
@@ -46,5 +42,14 @@ export class FilesPopup extends LitElement {
 
   onClose(): void {
     fireEvent(this, 'response', {confirmed: false});
+  }
+
+  static get styles(): CSSResult {
+    // language=CSS
+    return css`
+      .files {
+        padding: 0 25px;
+      }
+    `;
   }
 }

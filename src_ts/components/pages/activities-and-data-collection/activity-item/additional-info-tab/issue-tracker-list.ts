@@ -11,7 +11,7 @@ import {LOG_ISSUES} from '../../../../../endpoints/endpoints-list';
 import {EtoolsRouter} from '../../../../../routing/routes';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '../../../../utils/dialog';
-import './files-popup';
+import '../../../../common/file-components/files-popup';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
