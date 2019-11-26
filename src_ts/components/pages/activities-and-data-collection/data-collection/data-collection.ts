@@ -159,8 +159,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       dataCollectionChecklistData((data: DataCollectionChecklist | null) => {
         if (data) {
           this.checklist = data;
-          this.originalData = this.checklist.information_source;
-          this.editedData = this.originalData;
+          // this.originalData = this.checklist.information_source;
+          // this.editedData = this.originalData;
+          this.initInformationSource();
         }
       }, false)
     );
@@ -196,6 +197,13 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         this.loadActivityDetails();
       })
     );
+  }
+
+  initInformationSource(): void {
+    if (this.checklist) {
+      this.originalData = this.checklist.information_source;
+      this.editedData = this.originalData;
+    }
   }
 
   disconnectedCallback(): void {
@@ -284,6 +292,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       store.dispatch<AsyncEffect>(loadDataCollectionChecklistInfo(this.activityId, this.checklistId));
     } else {
       this.checklist = dataCollectionState.checklist.data;
+      this.initInformationSource();
     }
   }
 
