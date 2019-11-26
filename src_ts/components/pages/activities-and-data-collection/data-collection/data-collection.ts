@@ -26,7 +26,6 @@ import {requestActivityDetails} from '../../../../redux/effects/activity-details
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
-import {translate} from '../../../../localization/localisation';
 import {addTranslates, ENGLISH, translate} from '../../../../localization/localisation';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
@@ -37,7 +36,6 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-button';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {CardStyles} from '../../../styles/card-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {DATA_COLLECTION_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/data-collection.translates';
 
 addTranslates(ENGLISH, DATA_COLLECTION_TRANSLATES);
@@ -94,6 +92,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
                   .value="${this.editedData}"
                   @value-changed="${({detail}: CustomEvent) => (this.editedData = detail.value)}"
                   label="${translate('SOURCE_OF_INFORMATION.INPUT_LABEL')}"
+                  placeholder="Enter source of information"
                   required
                 >
                 </paper-input>
@@ -108,7 +107,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             </section>
           `
         : ''}
-
       ${Object.values(this.findingsAndOverall)
         .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
         .map(({name, findings, overall}: SortedFindingsAndOverall) => {
