@@ -1,7 +1,11 @@
 import {IAsyncAction} from '../middleware';
-import {DataCollectionChecklistActionTypes} from '../actions/data-collection.actions';
+import {DataCollectionChecklistActionTypes, SetChecklistInformationSource} from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {DATA_COLLECTION_CHECKLIST, DATA_COLLECTION_OVERALL_FINDING} from '../../endpoints/endpoints-list';
+import {
+  DATA_COLLECTION_CHECKLIST,
+  DATA_COLLECTION_OVERALL_FINDING,
+  DATA_COLLECTION_SPECIFIC_CHECKLIST
+} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
@@ -32,6 +36,21 @@ export function loadDataCollectionChecklistInfo(activityId: string, checklistId:
       const resultUrl: string = `${url}${checklistId}/`;
       return request(resultUrl);
     }
+  };
+}
+
+export function updateDataCollectionChecklistInformationSource(
+  activityId: string,
+  checklistId: string,
+  requestData: Partial<DataCollectionChecklist>
+): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(DATA_COLLECTION_SPECIFIC_CHECKLIST, {activityId, checklistId});
+    return request<DataCollectionChecklist>(endpoint.url, {method: 'PATCH', body: JSON.stringify(requestData)}).then(
+      (response: DataCollectionChecklist) => {
+        dispatch(new SetChecklistInformationSource(response));
+      }
+    );
   };
 }
 
