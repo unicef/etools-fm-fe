@@ -1,6 +1,5 @@
 import {LitElement, TemplateResult, customElement, CSSResult, property, css} from 'lit-element';
 import {template} from './pd-ssfa-details.tpl';
-import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
@@ -8,42 +7,34 @@ import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../../styles/card-styles';
 
 @customElement('pd-ssfa-details')
-export class PdSsfaDetails extends InterventionsMixin(LitElement) {
-  @property() interventions: EtoolsIntervention[] = super.interventions;
+export class PdSsfaDetails extends LitElement {
+  @property() activityDetails: IActivityDetails | null = null;
   @property() items: EtoolsIntervention[] = [];
   @property() pageSize: number = 5;
   @property() pageNumber: number = 1;
-  @property() count: number = 0;
 
   render(): TemplateResult {
     return template.call(this);
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.count = this.interventions.length;
-    this.items = this.interventions;
-  }
-
   onPageSizeChange(pageSize: number): void {
     if (this.pageSize != pageSize) {
       this.pageSize = pageSize;
-      const startIndex: number = (this.pageNumber - 1) * this.pageSize;
-      this.items = this.interventions.slice(startIndex, startIndex + this.pageSize);
     }
   }
 
   onPageNumberChange(pageNumber: number): void {
     if (this.pageNumber != pageNumber) {
       this.pageNumber = pageNumber;
-      const startIndex: number = (this.pageNumber - 1) * this.pageSize;
-      this.items = this.interventions.slice(startIndex, startIndex + this.pageSize);
     }
   }
 
-  protected updated(_changedProperties: Map<PropertyKey, unknown>): void {
-    if (_changedProperties.get('interventions')) {
-      this.items = this.interventions.slice();
+  getTargetInterventions(): IActivityIntervention[] {
+    if (this.activityDetails) {
+      const startIndex: number = (this.pageNumber - 1) * this.pageSize;
+      return this.activityDetails.interventions.slice(startIndex, startIndex + this.pageSize);
+    } else {
+      return [];
     }
   }
 
