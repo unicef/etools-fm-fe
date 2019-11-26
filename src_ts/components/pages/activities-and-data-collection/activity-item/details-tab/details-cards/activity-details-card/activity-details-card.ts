@@ -68,7 +68,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
           return;
         }
         this.sitesList = sites;
-      }, false)
+      })
     );
 
     const state: IRootState = store.getState();
