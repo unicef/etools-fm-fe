@@ -10,6 +10,7 @@ const propertiesMap: GenericObject<string> = {
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_REQUEST]: 'checklist',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_SUCCESS]: 'checklist',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE]: 'checklist',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST]: 'checklist',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_REQUEST]: 'findings',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_SUCCESS]: 'findings',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_FAILURE]: 'findings',
@@ -114,6 +115,12 @@ export function dataCollection(
 
     case DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB:
       return {...state, editedFindingsTab: action.payload};
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST:
+      return {
+        ...state,
+        checklist: {data: action.payload, findingsAndOverall: {...state.checklist.findingsAndOverall}}
+      };
     default:
       return state;
   }
