@@ -20,6 +20,7 @@ export class ProportionalProgressBar extends LitElement {
 
   render(): TemplateResult {
     return html`
+      ${this.updateProgressbarStyles()}
       <div class="progressbar-host">
         <!--  Top labels  -->
         <div class="progressbar__header">
@@ -55,11 +56,6 @@ export class ProportionalProgressBar extends LitElement {
     `;
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.updateProgressbarStyles();
-  }
-
   updateProgressbarStyles(): void {
     this.progressbarFooterComputedStyles = {
       display: this.minRequired ? 'flex' : 'none'
@@ -82,7 +78,11 @@ export class ProportionalProgressBar extends LitElement {
   }
 
   getCompletedDivWidth(): string {
-    return `${(this.completed / this.planned) * 100}%`;
+    if (this.completed > this.planned) {
+      return '100%';
+    } else {
+      return `${(this.completed / this.planned) * 100}%`;
+    }
   }
 
   getMinRequiredDivWidth(): string {

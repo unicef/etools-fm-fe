@@ -60,10 +60,30 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                     hactVisit.visits,
                     (activity: HactVisitsActivity) => html`
                       <div slot="row-data-details" class="custom-row-data">
-                        <div class="custom-row-details-content">${activity.name}</div>
-                        <div class="custom-row-details-content">${activity.cp_outputs}</div>
-                        <div class="custom-row-details-content">${activity.interventions}</div>
-                        <div class="custom-row-details-content">${activity.end_date}</div>
+                        <div class="custom-row-details-content custom-row-details-nowrap">
+                          ${activity.reference_number}
+                        </div>
+                        <div class="custom-row-details-content">
+                          ${activity.cp_outputs.map(
+                            (item: IActivityCPOutput) =>
+                              html`
+                                <label class="custom-row-details-content custom-row-details-nowrap">${item.name}</label>
+                              `
+                          )}
+                        </div>
+                        <div class="custom-row-details-content">
+                          ${activity.interventions.map(
+                            (item: IActivityIntervention) =>
+                              html`
+                                <label class="custom-row-details-content custom-row-details-nowrap"
+                                  >${item.title}</label
+                                >
+                              `
+                          )}
+                        </div>
+                        <div class="custom-row-details-content custom-row-details-nowrap">
+                          ${this.formatDate(activity.end_date)}
+                        </div>
                       </div>
                     `
                   )

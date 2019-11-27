@@ -270,7 +270,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [GEOGRAPHIC_COVERAGE]: {
-    template: '/api/v1/field-monitoring/analyze/coverage/geographic/?sections__in='
+    template: '/api/v1/field-monitoring/analyze/coverage/geographic/'
   },
 
   [OPEN_ISSUES_PARTNERS]: {

@@ -21,9 +21,9 @@ export function template(this: MonitoringTabComponent): TemplateResult {
             <proportional-progress-bar
               .completed="${this.completed}"
               .planned="${this.planned}"
-              .completedLabelValue="Completed Visits"
-              .plannedLabelValue="Planned Visits (Up to December)"
-              .completedDivBackgroundColor="#3F9BBC"
+              .completedLabelValue="${'Completed Visits'}"
+              .plannedLabelValue="${'Planned Visits (Up to December)'}"
+              .completedDivBackgroundColor="${'#3F9BBC'}"
             >
             </proportional-progress-bar>
           </div>

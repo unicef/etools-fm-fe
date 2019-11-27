@@ -49,7 +49,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
 
   dispatchGeographicCoverageLoading(): void {
     this.loading = true;
-    const argument: string = this.selectedOptions.length ? this.selectedOptions.join(',') : 'all';
+    const argument: string = this.selectedOptions.length ? `?sections__in=${this.selectedOptions.join(',')}` : '';
     store.dispatch<AsyncEffect>(loadGeographicCoverageBySection(argument));
   }
 

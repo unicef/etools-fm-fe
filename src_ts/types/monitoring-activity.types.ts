@@ -41,10 +41,11 @@ type OpenIssuesActionPoints = {
 };
 
 type HactVisitsActivity = {
-  name: string;
-  cp_outputs: string;
-  interventions: string;
+  id: number;
+  cp_outputs: IActivityCPOutput[];
+  interventions: IActivityIntervention[];
   end_date: string;
+  reference_number: string
 };
 
 type HactVisits = {

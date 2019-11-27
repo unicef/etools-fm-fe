@@ -15,25 +15,34 @@ import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-acti
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends LitElement {
   @property() items!: HactVisits[];
-  private readonly hactVisitsUnsubscribe!: Unsubscribe;
+  private hactVisitsUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
     store.dispatch<AsyncEffect>(loadHactVisits());
-    this.hactVisitsUnsubscribe = store.subscribe(
-      hactVisitsSelector((hactVisits: HactVisits[]) => {
-        this.items = hactVisits;
-      })
-    );
   }
 
   render(): TemplateResult {
     return template.call(this);
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.hactVisitsUnsubscribe = store.subscribe(
+      hactVisitsSelector((hactVisits: HactVisits[]) => {
+        this.items = hactVisits;
+        console.log(this.items);
+      })
+    );
+  }
+
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.hactVisitsUnsubscribe();
+  }
+
+  formatDate(date: string | null): string {
+    return date ? moment(date).format('DD MMM YYYY') : '-';
   }
 
   static get styles(): CSSResult[] {
@@ -58,10 +67,12 @@ export class VisitsEligibleForHact extends LitElement {
         .custom-row-details-content {
           font-size: 12px;
           overflow: hidden;
-          white-space: nowrap;
           text-overflow: ellipsis;
           width: 100px;
           margin: 0.5%;
+        }
+        .custom-row-details-nowrap {
+          white-space: nowrap;
         }
       `
     ];

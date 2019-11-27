@@ -2,7 +2,11 @@ import {CSSResult, customElement, html, LitElement, property, TemplateResult} fr
 import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
 
-//TODO think about name
+type OpenIssuesProgressBarWidth = {
+  log_issues_width: StyleInfo;
+  action_points_width: StyleInfo;
+};
+
 @customElement('open-issues-shared-tab-template')
 export class OpenIssuesSharedTabTemplate extends LitElement {
   @property() data!: OpenIssuesActionPoints[];
@@ -31,16 +35,13 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
               <!--  Progress bar  -->
               <div class="progressbar__content">
                 <!--  Open issues  -->
-                <div
-                  class="progressbar-issues"
-                  style="${styleMap(this.getProgressBarDivWidth(item.log_issues_count, item.action_points_count))}"
-                >
+                <div class="progressbar-issues" style="${styleMap(this.getProgressBarDivWidth(item).log_issues_width)}">
                   <div class="progressbar-value">${item.log_issues_count}</div>
                 </div>
                 <!--  Action points  -->
                 <div
                   class="progressbar-action-points"
-                  style="${styleMap(this.getProgressBarDivWidth(item.action_points_count, item.log_issues_count))}"
+                  style="${styleMap(this.getProgressBarDivWidth(item).action_points_width)}"
                 >
                   <div class="progressbar-value">${item.action_points_count}</div>
                 </div>
@@ -52,12 +53,27 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
     `;
   }
 
-  getProgressBarDivWidth(numerator: number, denominator: number): StyleInfo {
-    const total: number = numerator + denominator;
-    return {
-      // display: numerator ? 'inline' : 'none',
-      width: total > 0 ? `${(numerator / total) * 100}%` : '2%'
-    };
+  getProgressBarDivWidth(item: OpenIssuesActionPoints): OpenIssuesProgressBarWidth {
+    const total: number = item.log_issues_count + item.action_points_count;
+    if (total === 0) {
+      return {
+        log_issues_width: {width: '50%'},
+        action_points_width: {width: '50%'}
+      };
+    } else {
+      const getDisplayByWidth: (width: number) => StyleInfo | null = (width: number) =>
+        width ? null : {display: 'none'};
+      const log_issues_width: number = (item.log_issues_count / total) * 100;
+      const action_points_width: number = (item.action_points_count / total) * 100;
+      return {
+        log_issues_width: Object.assign({}, {width: `${log_issues_width}%`}, getDisplayByWidth(log_issues_width)),
+        action_points_width: Object.assign(
+          {},
+          {width: `${action_points_width}%`},
+          getDisplayByWidth(action_points_width)
+        )
+      };
+    }
   }
 
   static get styles(): CSSResult {
