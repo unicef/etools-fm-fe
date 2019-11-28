@@ -19,6 +19,7 @@ import {
   CANCELLED
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
+  ACTION_POINTS,
   ADDITIONAL_INFO,
   ATTACHMENTS_TAB,
   CHECKLIST_TAB,
@@ -64,7 +65,8 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [CHECKLIST_TAB]: 'Checklist',
       [REVIEW_TAB]: 'Review',
       [COLLECT_TAB]: 'Data Collect',
-      [ADDITIONAL_INFO]: 'Additional Info'
+      [ADDITIONAL_INFO]: 'Additional Info',
+      [ACTION_POINTS]: 'Action Points'
     }
   }
 };

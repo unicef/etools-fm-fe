@@ -54,6 +54,10 @@ export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
 export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
 export const HACT_VISITS: 'hactVisits' = 'hactVisits';
 export const FULL_REPORT: 'fullReport' = 'fullReport';
+export const ACTION_POINTS_LIST: 'actionPointsList' = 'actionPointsList';
+export const ACTION_POINTS_DETAILS: 'actionPointsDetails' = 'actionPointsDetails';
+export const ACTION_POINTS_CATEGORIES: 'actionPointsCategories' = 'actionPointsCategories';
+export const ACTION_POINTS_OFFICES: 'offices' = 'offices';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -287,5 +291,21 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [HACT_VISITS]: {
     template: '/api/v1/field-monitoring/analyze/hact/'
+  },
+
+  [ACTION_POINTS_LIST]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/'
+  },
+
+  [ACTION_POINTS_DETAILS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/<%=id%>'
+  },
+
+  [ACTION_POINTS_CATEGORIES]: {
+    template: '/api/action-points/categories/?module=fm'
+  },
+
+  [ACTION_POINTS_OFFICES]: {
+    template: '/api/offices/'
   }
 };

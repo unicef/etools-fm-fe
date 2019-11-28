@@ -12,6 +12,7 @@ interface IRootState {
   activityDetails: IActivityDetailsState;
   activityChecklist: IActivityChecklistState;
   attachmentsList: IAttachmentsListState;
+  actionPointsList: IActionPointsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
@@ -71,6 +72,14 @@ interface IRationaleState {
 interface IAttachmentsListState {
   rationale_attachments: null | IAttachment[];
   updateInProcess: null | boolean;
+  error: GenericObject;
+}
+
+interface IActionPointsListState {
+  data: ActionPoint[];
+  offices: OfficeSectionType[];
+  categories: ActionPointsCategory[];
+  isUpdateSuccessful: boolean;
   error: GenericObject;
 }
 

@@ -33,6 +33,7 @@ import {
   COLLECT_TAB,
   DETAILS_TAB,
   REVIEW_TAB,
+  ACTION_POINTS,
   TABS_PROPERTIES
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
@@ -52,7 +53,8 @@ const VALID_TABS: Set<string> = new Set([
   CHECKLIST_TAB,
   REVIEW_TAB,
   COLLECT_TAB,
-  ADDITIONAL_INFO
+  ADDITIONAL_INFO,
+  ACTION_POINTS
 ]);
 
 export const STATUSES: IEtoolsStatusModel[] = [
@@ -106,6 +108,11 @@ export class NewActivityComponent extends LitElement {
     {
       tab: ADDITIONAL_INFO,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
+      hidden: false
+    },
+    {
+      tab: ACTION_POINTS,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`),
       hidden: false
     }
   ];
@@ -247,6 +254,10 @@ export class NewActivityComponent extends LitElement {
       case ADDITIONAL_INFO:
         return html`
           <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
+        `;
+      case ACTION_POINTS:
+        return html`
+          <action-points-tab .activityDetails="${this.activityDetails}"></action-points-tab>
         `;
       default:
         return html``;
