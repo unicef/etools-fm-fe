@@ -24,7 +24,8 @@ import {
   CHECKLIST_TAB,
   COLLECT_TAB,
   DETAILS_TAB,
-  REVIEW_TAB
+  REVIEW_TAB,
+  SUMMARY_TAB
 } from '../../../components/pages/activities-and-data-collection/activity-item/activities-tabs';
 
 export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
@@ -64,6 +65,7 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [CHECKLIST_TAB]: 'Checklist',
       [REVIEW_TAB]: 'Review',
       [COLLECT_TAB]: 'Data Collect',
+      [SUMMARY_TAB]: 'Summary',
       [ADDITIONAL_INFO]: 'Additional Info'
     }
   }

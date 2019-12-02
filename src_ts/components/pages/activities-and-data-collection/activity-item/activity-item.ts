@@ -33,6 +33,7 @@ import {
   COLLECT_TAB,
   DETAILS_TAB,
   REVIEW_TAB,
+  SUMMARY_TAB,
   TABS_PROPERTIES
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
@@ -52,6 +53,7 @@ const VALID_TABS: Set<string> = new Set([
   CHECKLIST_TAB,
   REVIEW_TAB,
   COLLECT_TAB,
+  SUMMARY_TAB,
   ADDITIONAL_INFO
 ]);
 
@@ -99,6 +101,11 @@ export class NewActivityComponent extends LitElement {
       hidden: false
     },
     {
+      tab: SUMMARY_TAB,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
+      hidden: false
+    },
+    {
       tab: ATTACHMENTS_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
@@ -113,10 +120,6 @@ export class NewActivityComponent extends LitElement {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
-  }
 
   get personResponsible(): number | null {
     return (
@@ -244,6 +247,10 @@ export class NewActivityComponent extends LitElement {
         return html`
           <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
         `;
+      case SUMMARY_TAB:
+        return html`
+          <activity-summary-tab .activityId="${this.activityId}"></activity-summary-tab>
+        `;
       case ADDITIONAL_INFO:
         return html`
           <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
@@ -298,5 +305,9 @@ export class NewActivityComponent extends LitElement {
       this.activeTab = DETAILS_TAB;
       updateAppLocation(`activities/${this.activityDetails.id}/${DETAILS_TAB}`);
     }
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
   }
 }

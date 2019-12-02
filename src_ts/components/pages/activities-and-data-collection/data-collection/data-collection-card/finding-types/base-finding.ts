@@ -26,7 +26,7 @@ export abstract class BaseFinding<T> extends LitElement {
       </style>
 
       <div class="finding-container layout horizontal start center-justified">
-        <div class="question flex-2 layout horizontal center">${this.questionTemplate()}</div>
+        <div class="question flex-2 layout horizontal center"><slot>${this.questionTemplate()}</slot></div>
         <div class="question-control flex-3 layout horizontal center">${this.controlTemplate()}</div>
       </div>
     `;

@@ -1,9 +1,7 @@
 {
   "entrypoint": "index.html",
   "shell": "src/components/app-shell/app-shell.js",
-  "sources": [
-    "images/**/*"
-  ],
+  "sources": ["images/**/*"],
   "fragments": [
     "src/components/pages/page-not-found.js",
     "src/components/pages/settings/settings-page.js",
@@ -23,6 +21,7 @@
     "src/components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/additional-info-tab/additional-info-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-summary-tab/activity-summary-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js",
 
     "src/components/pages/activities-and-data-collection/data-collection/data-collection.js",
@@ -49,10 +48,7 @@
   "builds": [
     {
       "name": "esm-bundled",
-      "browserCapabilities": [
-        "es2015",
-        "modules"
-      ],
+      "browserCapabilities": ["es2015", "modules"],
       "js": {
         "minify": true
       },

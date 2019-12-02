@@ -45,7 +45,7 @@ type HactVisitsActivity = {
   cp_outputs: IActivityCPOutput[];
   interventions: IActivityIntervention[];
   end_date: string;
-  reference_number: string
+  reference_number: string;
 };
 
 type HactVisits = {
