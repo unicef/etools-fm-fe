@@ -4,6 +4,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import '../../../../common/attachmants-list/attachments-list';
 import {ACTIVITY_RELATED_DOCUMENTS, ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
+import './checklist-attachments';
 
 @customElement('activity-attachments-tab')
 export class ActivityAttachmentsTab extends LitElement {
@@ -28,6 +29,8 @@ export class ActivityAttachmentsTab extends LitElement {
                   tab-title-key="ATTACHMENTS_LIST.REPORT_ATTACHMENTS"
                   ?readonly="${!this.activityDetails.permissions.edit.report_attachments}"
                 ></attachments-list>
+
+                <checklist-attachments .activityDetailsId="${this.activityDetails.id}"></checklist-attachments>
               `
             : ''}
         `

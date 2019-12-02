@@ -23,3 +23,7 @@ export const activityStatusIsChanging: Selector<boolean | null> = select<boolean
 export const activityDetailsError: Selector<null | GenericObject> = select<null | GenericObject>(
   (store: IRootState) => store.activityDetails.error
 );
+
+export const activityChecklistAttachments: Selector<IChecklistAttachment[]> = select<IChecklistAttachment[]>(
+  (store: IRootState) => store.activityDetails.checklistAttachments
+);

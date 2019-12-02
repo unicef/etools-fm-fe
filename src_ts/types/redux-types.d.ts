@@ -109,6 +109,7 @@ interface IActivityDetailsState extends IRequestState {
     update: boolean;
     statusChange: boolean;
   };
+  checklistAttachments: IChecklistAttachment[];
 }
 
 interface IWidgetLocationsState {

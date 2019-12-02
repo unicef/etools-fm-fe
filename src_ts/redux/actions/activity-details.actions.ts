@@ -15,11 +15,19 @@ export enum ActivityDetailsActions {
 
   ACTIVITY_STATUS_CHANGE_REQUEST = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_REQUEST',
   ACTIVITY_STATUS_CHANGE_SUCCESS = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_SUCCESS',
-  ACTIVITY_STATUS_CHANGE_FAILURE = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_FAILURE'
+  ACTIVITY_STATUS_CHANGE_FAILURE = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_FAILURE',
+
+  CHECKLIST_ATTACHMENTS_REQUEST = '[Activity Details Action]: CHECKLIST_ATTACHMENTS_REQUEST'
 }
 
 export class SetEditedDetailsCard {
   readonly type: ActivityDetailsActions.SET_EDITED_DETAILS_CARD = ActivityDetailsActions.SET_EDITED_DETAILS_CARD;
 
   constructor(public payload: string | null) {}
+}
+
+export class ChecklistAttachmentsRequest {
+  readonly type: ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST =
+    ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST;
+  constructor(public payload: IChecklistAttachment[]) {}
 }

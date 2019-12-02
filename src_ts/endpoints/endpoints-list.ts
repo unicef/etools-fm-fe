@@ -34,6 +34,7 @@ export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
+export const ACTIVITY_CHECKLIST_ATTACHMENTS: 'activityChecklistAttachments' = 'activityChecklistAttachments';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
 export const DATA_COLLECTION_CHECKLIST_ITEM: 'dataCollectionChecklistItem' = 'dataCollectionChecklistItem';
@@ -230,6 +231,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTIVITY_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
+  },
+
+  [ACTIVITY_CHECKLIST_ATTACHMENTS]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/attachments/'
   },
 
   [DATA_COLLECTION_CHECKLIST]: {
