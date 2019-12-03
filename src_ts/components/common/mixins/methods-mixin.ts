@@ -47,11 +47,12 @@ export const MethodsMixin = <T extends Constructor<LitElement>>(superclass: T) =
       };
     }
 
-    getMethodName(methodId: number): string {
+    getMethodName(methodId: number, short?: true): string {
       if (!methodId || !this.methods) {
         return '';
       }
+      const property: 'name' | 'short_name' = short ? 'short_name' : 'name';
       const methodData: EtoolsMethod | undefined = this.methods.find((method: EtoolsMethod) => method.id === methodId);
-      return (methodData && methodData.name) || '';
+      return (methodData && methodData[property]) || '';
     }
   };

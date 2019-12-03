@@ -21,7 +21,7 @@ export class ChecklistAttachments extends LitElement {
   popupTitle: string = '';
 
   @query('#link') link!: HTMLLinkElement;
-  private updateUrl!: string;
+  private updateUrl?: string;
   private originalAttachments: IAttachment[] = [];
 
   set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
@@ -40,6 +40,9 @@ export class ChecklistAttachments extends LitElement {
   }
 
   saveChanges(): void {
+    if (!this.updateUrl) {
+      return;
+    }
     this.saveBtnClicked = true;
     const fileTypeNotSelected: boolean = this.attachments.some(
       (attachment: IEditedAttachment | StoredAttachment) =>
