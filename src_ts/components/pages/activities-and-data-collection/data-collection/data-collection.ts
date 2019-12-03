@@ -37,9 +37,11 @@ import '@polymer/paper-button';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {DATA_COLLECTION_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/data-collection.translates';
+import {sortFindingsAndOverall} from '../../../utils/findings-and-overall-sort';
+import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 
 addTranslates(ENGLISH, DATA_COLLECTION_TRANSLATES);
-store.addReducers({dataCollection, activityDetails});
+store.addReducers({findingsComponents, dataCollection, activityDetails});
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'data-collection';
@@ -107,6 +109,8 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             </section>
           `
         : ''}
+
+      <!--  Findings Cards  -->
       ${Object.values(this.findingsAndOverall)
         .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
         .map(({name, findings, overall}: SortedFindingsAndOverall) => {
@@ -171,7 +175,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
      */
     this.findingsAndOverallUnsubscribe = store.subscribe(
       findingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
-        this.findingsAndOverall = this.sortFindingsAndOverall(overall, findings);
+        this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
       }, false)
     );
 
@@ -293,65 +297,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     } else {
       this.checklist = dataCollectionState.checklist.data;
       this.initInformationSource();
-    }
-  }
-
-  /**
-   * combines findings and overall finding in one object by Partner/Cp Output/PD SSFA
-   */
-  private sortFindingsAndOverall(
-    overallData: DataCollectionOverall[] | null,
-    findings: DataCollectionFinding[] | null
-  ): GenericObject<SortedFindingsAndOverall> {
-    if (overallData === null || findings === null) {
-      return {};
-    }
-
-    const findingsAndOverall: GenericObject<SortedFindingsAndOverall> = overallData.reduce(
-      (result: GenericObject<SortedFindingsAndOverall>, overall: DataCollectionOverall) => {
-        // generate unique id
-        const id: string = this.getDataKey(overall);
-        // name exists in findings data, findings will be populated if findings iteration
-        result[id] = {name: '', findings: [], overall};
-        return result;
-      },
-      {}
-    );
-
-    findings.forEach((finding: DataCollectionFinding) => {
-      const id: string = this.getDataKey(finding.activity_question);
-      findingsAndOverall[id].name = this.getTargetName(finding.activity_question);
-      findingsAndOverall[id].findings.push(finding);
-    });
-
-    return findingsAndOverall;
-  }
-
-  private getDataKey(dataObject: DataCollectionOverall | IChecklistItem): string {
-    if (dataObject.partner) {
-      const id: number = typeof dataObject.partner === 'object' ? dataObject.partner.id : dataObject.partner;
-      return `partner_${id}`;
-    } else if (dataObject.cp_output) {
-      const id: number = typeof dataObject.cp_output === 'object' ? dataObject.cp_output.id : dataObject.cp_output;
-      return `cp_output_${id}`;
-    } else if (dataObject.intervention) {
-      const id: number =
-        typeof dataObject.intervention === 'object' ? dataObject.intervention.id : dataObject.intervention;
-      return `intervention_${id}`;
-    } else {
-      return '';
-    }
-  }
-
-  private getTargetName(checklist: IChecklistItem): string {
-    if (checklist.partner) {
-      return `${translate('LEVELS_OPTIONS.PARTNER')}: ${checklist.partner.name}`;
-    } else if (checklist.cp_output) {
-      return `${translate('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
-    } else if (checklist.intervention) {
-      return `${translate('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
-    } else {
-      return '';
     }
   }
 

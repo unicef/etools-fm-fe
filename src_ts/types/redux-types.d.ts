@@ -16,6 +16,8 @@ interface IRootState {
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
   fullReports: IFullReportsState;
+  activitySummary: IActivitySummaryState;
+  findingsComponents: IFindingsComponentsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -127,7 +129,6 @@ interface IDataCollectionState {
     findings: null | boolean;
     overallAndFindingsUpdate: null | boolean;
   };
-  editedFindingsTab: null | string;
   checklistCollect: DataCollectionChecklist[];
   checklist: {
     data: null | DataCollectionChecklist;
@@ -152,10 +153,23 @@ interface IAdditionalInfoState {
   };
 }
 
-type FindingsAndOverall = {
-  findings: null | DataCollectionFinding[];
-  overall: null | DataCollectionOverall[];
+type FindingsAndOverall<T = DataCollectionFinding, U = DataCollectionOverall> = {
+  findings: null | T[];
+  overall: null | U[];
 };
+
+interface IActivitySummaryState {
+  findingsAndOverall: FindingsAndOverall<SummaryFinding, SummaryOverall>;
+  error: null | GenericObject;
+  editedFindingsTab: null | string;
+  updateInProcess: null | boolean;
+  loading: null | boolean;
+}
+
+interface IFindingsComponentsState {
+  editedFindingsComponent: null | string;
+  overallAndFindingsUpdate: null | boolean;
+}
 
 interface IMonitoringActivityState {
   overallActivities: OverallActivities;

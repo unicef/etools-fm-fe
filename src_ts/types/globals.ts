@@ -83,6 +83,7 @@ type EtoolsMethod = {
   id: number;
   name: string;
   use_information_source: boolean;
+  short_name: string;
 };
 
 type SortDetails = {

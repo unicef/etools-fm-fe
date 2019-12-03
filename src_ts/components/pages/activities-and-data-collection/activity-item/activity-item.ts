@@ -249,7 +249,10 @@ export class NewActivityComponent extends LitElement {
         `;
       case SUMMARY_TAB:
         return html`
-          <activity-summary-tab .activityId="${this.activityId}"></activity-summary-tab>
+          <activity-summary-tab
+            .activityId="${this.activityId}"
+            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+          ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
         return html`

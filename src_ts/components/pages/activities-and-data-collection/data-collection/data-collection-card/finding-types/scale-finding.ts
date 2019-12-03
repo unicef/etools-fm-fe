@@ -17,6 +17,7 @@ export class ScaleFinding extends BaseFinding<string | null> {
         }
         :host([is-readonly]) paper-radio-group {
           pointer-events: none;
+          opacity: 0.55;
         }
       </style>
 

@@ -9,6 +9,7 @@ import {
 import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
+import {SetEditedFindingsCard, SetFindingsUpdateState} from '../actions/findings-components.actions';
 
 export function loadDataCollectionChecklist(activityId: number): IAsyncAction {
   return {
@@ -106,18 +107,24 @@ export function updateFindingsAndOverall(
       DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE
     ],
     api: () => {
+      store.dispatch(new SetFindingsUpdateState(true));
       return Promise.all([
         updateFindings(activityId, checklistId, requestData.findings),
         updateOverall(activityId, checklistId, requestData.overall)
-      ]).then(([findings, overall]: [DataCollectionFinding[] | null, DataCollectionOverall | null]) => {
-        let skip: 'findings' | 'overall' | null = null;
-        if (findings === null) {
-          skip = 'findings';
-        } else if (overall === null) {
-          skip = 'overall';
-        }
-        store.dispatch<AsyncEffect>(loadFindingsAndOverall(activityId, checklistId, skip));
-      });
+      ])
+        .then(([findings, overall]: [DataCollectionFinding[] | null, DataCollectionOverall | null]) => {
+          let skip: 'findings' | 'overall' | null = null;
+          if (findings === null) {
+            skip = 'findings';
+          } else if (overall === null) {
+            skip = 'overall';
+          }
+          store.dispatch(new SetEditedFindingsCard(null));
+          store.dispatch<AsyncEffect>(loadFindingsAndOverall(activityId, checklistId, skip));
+        })
+        .finally(() => {
+          store.dispatch(new SetFindingsUpdateState(false));
+        });
     }
   };
 }

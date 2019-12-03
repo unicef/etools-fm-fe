@@ -22,15 +22,7 @@ export enum DataCollectionChecklistActionTypes {
 
   OVERALL_AND_FINDINGS_UPDATE_REQUEST = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_REQUEST',
   OVERALL_AND_FINDINGS_UPDATE_SUCCESS = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_SUCCESS',
-  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE',
-
-  SET_EDITED_CHECKLIST_TAB = '[Data Collection Checklist Action]: SET_EDITED_CHECKLIST_TAB'
-}
-
-export class SetEditedDCChecklistCard {
-  type: DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB =
-    DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB;
-  constructor(public payload: string | null) {}
+  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE'
 }
 
 export class SetChecklistInformationSource {
@@ -61,5 +53,4 @@ export type DataCollectionActions =
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE>
-  | SetEditedDCChecklistCard
   | SetChecklistInformationSource;

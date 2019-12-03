@@ -27,7 +27,6 @@ const INITIAL: IDataCollectionState = {
     findings: null,
     overallAndFindingsUpdate: null
   },
-  editedFindingsTab: null,
   checklistCollect: [],
   checklist: {
     data: null,
@@ -95,8 +94,7 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_SUCCESS:
       return {
         ...state,
-        loading: {...state.loading, overallAndFindingsUpdate: false},
-        editedFindingsTab: null
+        loading: {...state.loading, overallAndFindingsUpdate: false}
       };
 
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS:
@@ -112,9 +110,6 @@ export function dataCollection(
         loading: {...state.loading, [property]: false},
         checklistCollect: [...action.payload]
       };
-
-    case DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB:
-      return {...state, editedFindingsTab: action.payload};
 
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST:
       return {
