@@ -21,6 +21,7 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTupl
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedOptions: string[] = [];
+  lastDispatchedSelectedOptions: string[] = [];
   @property() loading: boolean = false;
   @query('#geomap') private mapElement!: HTMLElement;
   private polygons: Polygon[] = [];
@@ -29,7 +30,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
 
   constructor() {
     super();
-
+    this.dispatchGeographicCoverageLoading();
     this.geographicCoverageUnsubscribe = store.subscribe(
       geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
         this.clearMap();
@@ -62,7 +63,11 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   onDropdownClose(_event: Event): void {
-    this.dispatchGeographicCoverageLoading();
+    const freshOptions: string[] = this.selectedOptions.slice().sort();
+    if (freshOptions.toString() !== this.lastDispatchedSelectedOptions.sort().toString()) {
+      this.dispatchGeographicCoverageLoading();
+      this.lastDispatchedSelectedOptions = this.selectedOptions.slice();
+    }
   }
 
   onRemoveSelectedItem(event: Event): void {

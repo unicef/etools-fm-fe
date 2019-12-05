@@ -19,8 +19,8 @@ export class ProportionalProgressBar extends LitElement {
   private progressbarLabelComputedStyles!: StyleInfo;
 
   render(): TemplateResult {
+    this.updateProgressbarStyles();
     return html`
-      ${this.updateProgressbarStyles()}
       <div class="progressbar-host">
         <!--  Top labels  -->
         <div class="progressbar__header">

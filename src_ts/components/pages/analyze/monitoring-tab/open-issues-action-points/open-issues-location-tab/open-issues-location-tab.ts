@@ -8,10 +8,10 @@ import {openIssuesLocationsSelector} from '../../../../../../redux/selectors/mon
 @customElement('open-issues-location-tab')
 export class OpenIssuesLocationTab extends LitElement {
   @property() openIssuesLocation!: OpenIssuesActionPoints[];
-  private readonly openIssuesActionPointsUnsubscribe!: Unsubscribe;
+  private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
+  connectedCallback(): void {
+    super.connectedCallback();
     store.dispatch<AsyncEffect>(loadOpenIssuesLocations());
     this.openIssuesActionPointsUnsubscribe = store.subscribe(
       openIssuesLocationsSelector((openIssuesLocation: OpenIssuesActionPoints[]) => {

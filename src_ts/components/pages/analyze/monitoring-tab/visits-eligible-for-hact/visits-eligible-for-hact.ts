@@ -17,21 +17,16 @@ export class VisitsEligibleForHact extends LitElement {
   @property() items!: HactVisits[];
   private hactVisitsUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
-    store.dispatch<AsyncEffect>(loadHactVisits());
-  }
-
   render(): TemplateResult {
     return template.call(this);
   }
 
   connectedCallback(): void {
     super.connectedCallback();
+    store.dispatch<AsyncEffect>(loadHactVisits());
     this.hactVisitsUnsubscribe = store.subscribe(
       hactVisitsSelector((hactVisits: HactVisits[]) => {
         this.items = hactVisits;
-        console.log(this.items);
       })
     );
   }
