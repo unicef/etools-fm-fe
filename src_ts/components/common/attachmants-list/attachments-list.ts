@@ -15,7 +15,10 @@ import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer'
 import {fireEvent} from '../../utils/fire-custom-event';
 
 store.addReducers({attachmentsList});
-const FILE_TYPES: DefaultDropdownOption[] = [{display_name: 'SOP', value: 34}, {display_name: 'Other', value: 35}];
+const FILE_TYPES: DefaultDropdownOption[] = [
+  {display_name: 'SOP', value: 34},
+  {display_name: 'Other', value: 35}
+];
 
 @customElement('attachments-list')
 export class AttachmentsListComponent extends LitElement {

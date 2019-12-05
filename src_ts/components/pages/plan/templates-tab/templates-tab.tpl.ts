@@ -160,8 +160,11 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                       ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
                       class="nolabel"
                       @change="${(event: CustomEvent) =>
-                        this.updateTemplate(questionTemplate.id, 'is_active', (event.target as PaperCheckboxElement)
-                          .checked as boolean)}"
+                        this.updateTemplate(
+                          questionTemplate.id,
+                          'is_active',
+                          (event.target as PaperCheckboxElement).checked as boolean
+                        )}"
                     ></paper-checkbox>
                   </div>
 

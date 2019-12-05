@@ -137,9 +137,10 @@ export function updateChecklistAttachments(
         DELETE: []
       }
     );
-    const requests: (Promise<void> | null)[] = Object.entries(requestsData).map(
-      ([method, data]: [string, RequestChecklistAttachment[]]) =>
-        data.length ? request(url, {method, body: JSON.stringify(data)}) : null
+    const requests: (Promise<void> | null)[] = Object.entries(
+      requestsData
+    ).map(([method, data]: [string, RequestChecklistAttachment[]]) =>
+      data.length ? request(url, {method, body: JSON.stringify(data)}) : null
     );
     return Promise.all(requests).then((response: (void | null)[]) =>
       response.every((response: void | null) => response === null)

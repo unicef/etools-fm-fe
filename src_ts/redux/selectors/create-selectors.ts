@@ -21,22 +21,13 @@ export function createSelector<T>(
 }
 
 export function select<T>(selector: StoreSelectorFunction<T>): Selector<T> {
-  return (onChange: (state: T) => void, initialize?: boolean) =>
-    createSelector(
-      selector,
-      onChange,
-      initialize
-    );
+  return (onChange: (state: T) => void, initialize?: boolean) => createSelector(selector, onChange, initialize);
 }
 
 export function dynamicSelect<S, T>(selector: StoreSelectorFunction<S>): DynamicSelector<T | undefined> {
   return (onChange: (state: T | undefined) => void, path: string[] = [], initialize?: boolean) => {
     const composedSelector: StoreSelectorFunction<T | undefined> = composedDynamicSelector(selector, path);
-    return createSelector<T | undefined>(
-      composedSelector,
-      onChange,
-      initialize
-    );
+    return createSelector<T | undefined>(composedSelector, onChange, initialize);
   };
 }
 

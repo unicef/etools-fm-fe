@@ -40,7 +40,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-textarea
               class="validate-input disabled-as-readonly flex without-border"
-              .value="${this.editedModel.prioritization_criteria}"
+              .value="${this.editedData.prioritization_criteria}"
               @value-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('prioritization_criteria', detail.value)}"
               label="${translate('RATIONALE.LABELS.PRIORITIZATION')}"
@@ -57,7 +57,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-textarea
               class="validate-input disabled-as-readonly flex without-border"
-              .value="${this.editedModel.methodology_notes}"
+              .value="${this.editedData.methodology_notes}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('methodology_notes', detail.value)}"
               label="${translate('RATIONALE.LABELS.METHODOLOGY')}"
               placeholder="${this.isReadonly ? '-' : translate('RATIONALE.PLACEHOLDERS.METHODOLOGY')}"
@@ -73,7 +73,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-textarea
               class="validate-input disabled-as-readonly flex without-border"
-              .value="${this.editedModel.modalities}"
+              .value="${this.editedData.modalities}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('modalities', detail.value)}"
               label="${translate('RATIONALE.LABELS.MODALITIES')}"
               placeholder="${this.isReadonly ? '-' : translate('RATIONALE.PLACEHOLDERS.MODALITIES')}"
@@ -89,7 +89,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-input
               class="validate-input disabled-as-readonly flex numeric-input without-border"
-              .value="${this.editedModel.target_visits}"
+              .value="${this.editedData.target_visits}"
               @input="${({target}: CustomEvent) => this.onTargetVisitsChange((target as HTMLInputElement).value)}"
               type="${this.isReadonly ? 'text' : 'number'}"
               label="${translate('RATIONALE.LABELS.VISITS')}"
@@ -106,7 +106,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-textarea
               class="validate-input disabled-as-readonly flex without-border"
-              value="${this.editedModel.partner_engagement}"
+              value="${this.editedData.partner_engagement}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('partner_engagement', detail.value)}"
               label="${translate('RATIONALE.LABELS.PARTNER_ENGAGEMENT')}"
               placeholder="${this.isReadonly ? '-' : translate('RATIONALE.PLACEHOLDERS.PARTNER_ENGAGEMENT')}"
@@ -122,7 +122,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           <div>
             <paper-textarea
               class="validate-input disabled-as-readonly flex without-border"
-              value="${this.editedModel.other_aspects}"
+              value="${this.editedData.other_aspects}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('other_aspects', detail.value)}"
               label="${translate('RATIONALE.LABELS.OTHER')}"
               placeholder="${this.isReadonly ? '-' : translate('RATIONALE.PLACEHOLDERS.OTHER')}"
