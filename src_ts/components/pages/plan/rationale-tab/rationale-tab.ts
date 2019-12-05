@@ -87,10 +87,17 @@ export class RationaleTabComponent extends LitElement {
   }
 
   openPopup(): void {
+<<<<<<< HEAD
     // openDialog<RationaleModalData | undefined>({
     //   dialog: 'rationale-popup',
     //   data: {year: this.selectedYear, model: this.yearPlan}
     // });
+=======
+    openDialog<RationaleModalData | undefined>({
+      dialog: 'rationale-popup',
+      dialogData: {year: this.selectedYear, model: this.yearPlan}
+    });
+>>>>>>> field_monitoring
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {

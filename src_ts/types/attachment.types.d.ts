@@ -10,7 +10,7 @@ interface IAttachment {
 }
 
 interface IEditedAttachment extends IAttachment {
-  delete?: true;
+  _delete?: true;
 }
 
 type AttachmentFile = {
@@ -49,4 +49,18 @@ type StoredAttachment = {
   source: string;
   uploaded_by: string;
   vendor_number: string;
+};
+
+interface IChecklistAttachment extends IAttachment {
+  checklist: DataCollectionChecklist;
+  partner: null | IActivityPartner;
+  cp_output: null | IActivityCPOutput;
+  intervention: null | IActivityIntervention;
+}
+
+type PageableChecklistAttachment = {
+  count: number;
+  next: number | null;
+  previous: number | null;
+  results: IChecklistAttachment[];
 };

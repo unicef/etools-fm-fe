@@ -16,6 +16,7 @@ import {RATIONALE_TRANSLATES} from '../../../localization/en/plan-page/rationale
 import {ISSUE_TRACKER_TRANSLATES} from '../../../localization/en/plan-page/issue-tracker.translates';
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
+import {hasPermission, Permissions} from '../../../config/permissions';
 
 store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
 addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES, ISSUE_TRACKER_TRANSLATES]);
@@ -76,6 +77,9 @@ export class PlanPage extends LitElement {
       routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
         if (routeName !== PAGE) {
           return;
+        }
+        if (!hasPermission(Permissions.VIEW_PLANING)) {
+          updateAppLocation('page-not-found');
         }
         this.activeTab = subRouteName as string;
       })

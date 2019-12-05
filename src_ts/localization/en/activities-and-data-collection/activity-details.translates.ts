@@ -27,6 +27,8 @@ export const ACTIVITY_DETAILS_TRANSLATES: TranslateObject = {
     ADD_ENTRY: 'Add New Item',
     ADD_PARTNER: 'Add Partner',
     ADD_CP_OUTPUT: 'Add CP Output',
-    ADD_INTERVENTION: 'Add PD/SSFA'
+    ADD_INTERVENTION: 'Add PD/SSFA',
+    REJECTION_NOTE: 'Rejection Note',
+    CANCELLATION_NOTE: 'Cancellation Note'
   }
 };

@@ -24,7 +24,7 @@ import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 
 @customElement('questions-tab')
-export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
+export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: IEtoolsFilter[] | null = null;
   @property() listLoadingInProcess: boolean = false;
   categories: EtoolsCategory[] = [];
@@ -99,7 +99,7 @@ export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
   openPopup(question?: IQuestion): void {
     openDialog<IQuestion | undefined>({
       dialog: 'question-popup',
-      data: question
+      dialogData: question
     }).then(({confirmed}: IDialogResponse<any>) => {
       if (!confirmed) {
         return;
@@ -143,7 +143,7 @@ export class QuestionsTabComponent extends ListMixin<IQuestion>(LitElement) {
       : store.dispatch<AsyncEffect>(loadStaticData(CATEGORIES));
 
     Promise.all([methodsPromise, sectionsPromise, categoriesPromise]).then(
-      ([methods__in, sections__in, category__in]: [EtoolsMethod[], EtoolsSection[], EtoolsCategory[]]) => {
+      ([methods__in, sections__in, category__in]: any) => {
         this.methods = methods__in;
         this.sections = sections__in;
         this.categories = category__in;

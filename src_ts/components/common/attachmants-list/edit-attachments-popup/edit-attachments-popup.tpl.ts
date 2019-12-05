@@ -1,9 +1,12 @@
 import '../../file-components/file-select-input';
+import '@unicef-polymer/etools-upload/etools-upload';
 import {EditAttachmentsPopupComponent} from './edit-attachments-popup';
 import {html, TemplateResult} from 'lit-element';
 import {translate} from '../../../../localization/localisation';
 import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
+import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
+import {getEndpoint} from '../../../../endpoints/endpoints';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   // language=HTML
@@ -11,7 +14,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
     ${InputStyles} ${DialogStyles}
     <style>
       .file-upload-container {
-        padding: 20px 0 0;
+        padding: 0 12px;
       }
     </style>
 
@@ -20,11 +23,11 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       dialog-title="${translate(
-        this.editedAttachment.id ? 'ATTACHMENTS_LIST.EDIT_POPUP_TITLE' : 'ATTACHMENTS_LIST.ADD_POPUP_TITLE'
+        this.editedData.id ? 'ATTACHMENTS_LIST.EDIT_POPUP_TITLE' : 'ATTACHMENTS_LIST.ADD_POPUP_TITLE'
       )}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
-      .okBtnText="${translate(this.editedAttachment.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       no-padding
     >
       <etools-loading
@@ -34,9 +37,9 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       <div class="container layout vertical">
         <etools-dropdown
           class="validate-input disabled-as-readonly flex-1"
-          .selected="${this.editedAttachment.file_type}"
+          .selected="${this.editedData.file_type}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
-            (this.editedAttachment.file_type = detail.selectedItem.value)}"
+            (this.editedData.file_type = detail.selectedItem && detail.selectedItem.value)}"
           trigger-value-change-event
           label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
           placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
@@ -53,12 +56,12 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           dynamic-align
         ></etools-dropdown>
         <div class="file-upload-container">
-          <file-select-input
-            .fileData="${this.editedAttachment.file}"
-            @file-selected="${(event: CustomEvent) => (this.selectedFile = event.detail.file)}"
-            .hasDelete="${false}"
-            .fileId="${this.editedAttachment.id}"
-          ></file-select-input>
+          <etools-upload
+            .showDeleteBtn="${false}"
+            .fileUrl="${this.editedData && this.editedData.file}"
+            .uploadEndpoint="${getEndpoint(ATTACHMENTS_STORE).url}"
+            @upload-finished="${(event: CustomEvent) => this.fileSelected(event.detail)}"
+          ></etools-upload>
         </div>
       </div>
     </etools-dialog>

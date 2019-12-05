@@ -6,13 +6,26 @@ import {
   DRAFT,
   REPORT_FINALIZATION,
   REVIEW,
-  SUBMITTED
+  SUBMITTED,
+  MARK_DETAILS_CONFIGURED,
+  MARK_CHECKLIST_CONFIGURED,
+  ASSIGN,
+  ACCEPT,
+  REJECT,
+  MARK_DATA_COLLECTED,
+  SUBMIT_REPORT,
+  COMPLETE,
+  CANCEL,
+  CANCELLED
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
+  ADDITIONAL_INFO,
   ATTACHMENTS_TAB,
   CHECKLIST_TAB,
+  COLLECT_TAB,
   DETAILS_TAB,
-  REVIEW_TAB
+  REVIEW_TAB,
+  SUMMARY_TAB
 } from '../../../components/pages/activities-and-data-collection/activity-item/activities-tabs';
 
 export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
@@ -20,16 +33,20 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
     NEW_ACTIVITY: 'New Activity',
     STATUS_CHANGE: 'Changing Status',
     TRANSITIONS: {
-      [`FROM_${DRAFT}_TO_${CHECKLIST}`]: 'Next',
-      [`FROM_${CHECKLIST}_TO_${REVIEW}`]: 'Review',
-      [`FROM_${REVIEW}_TO_${DATA_COLLECTION}`]: 'Assign & Accept',
-      [`FROM_${REVIEW}_TO_${ASSIGNED}`]: 'Assign',
-      [`FROM_${ASSIGNED}_TO_${DATA_COLLECTION}`]: 'Accept',
-      [`FROM_${DATA_COLLECTION}_TO_${REPORT_FINALIZATION}`]: 'Finalize',
-      [`FROM_${REPORT_FINALIZATION}_TO_${SUBMITTED}`]: 'Submit',
-      [`FROM_${SUBMITTED}_TO_${COMPLETED}`]: 'Complete',
-      REJECT: 'Reject',
-      CANCEL: 'Cancel'
+      [MARK_DETAILS_CONFIGURED]: 'Next',
+      [MARK_CHECKLIST_CONFIGURED]: 'Review',
+      ASSIGN_AND_ACCEPT: 'Assign & Accept',
+      [ASSIGN]: 'Assign',
+      [ACCEPT]: 'Accept',
+      [MARK_DATA_COLLECTED]: 'Finalize',
+      [SUBMIT_REPORT]: 'Submit',
+      [COMPLETE]: 'Complete',
+      [REJECT]: 'Reject',
+      [CANCEL]: 'Cancel'
+    },
+    REASON_FOR_TRANSITION: {
+      [CANCEL]: {LABEL: 'Cancellation comment', TITLE: 'Cancellation reason'},
+      [REJECT]: {LABEL: 'Rejection comment', TITLE: 'Rejection reason'}
     },
     STATUSES: {
       [DRAFT]: 'Draft',
@@ -39,13 +56,17 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [DATA_COLLECTION]: 'Data Collection',
       [REPORT_FINALIZATION]: 'Report finalization',
       [SUBMITTED]: 'Submitted',
-      [COMPLETED]: 'Completed'
+      [COMPLETED]: 'Completed',
+      [CANCELLED]: 'Cancelled'
     },
     TABS: {
       [DETAILS_TAB]: 'Details',
       [ATTACHMENTS_TAB]: 'Attachments',
       [CHECKLIST_TAB]: 'Checklist',
-      [REVIEW_TAB]: 'Review'
+      [REVIEW_TAB]: 'Review',
+      [COLLECT_TAB]: 'Data Collect',
+      [SUMMARY_TAB]: 'Summary',
+      [ADDITIONAL_INFO]: 'Additional Info'
     }
   }
 };

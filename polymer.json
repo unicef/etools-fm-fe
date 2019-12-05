@@ -1,9 +1,7 @@
 {
   "entrypoint": "index.html",
   "shell": "src/components/app-shell/app-shell.js",
-  "sources": [
-    "images/**/*"
-  ],
+  "sources": ["images/**/*"],
   "fragments": [
     "src/components/pages/page-not-found.js",
     "src/components/pages/settings/settings-page.js",
@@ -20,12 +18,24 @@
     "src/components/pages/activities-and-data-collection/activity-item/activity-item.js",
     "src/components/pages/activities-and-data-collection/activity-item/details-tab/activity-details-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js",
     "src/components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js",
-    "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/additional-info-tab/additional-info-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-summary-tab/activity-summary-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js",
 
     "src/components/pages/activities-and-data-collection/data-collection/data-collection.js",
 
-    "src/components/pages/analyze/analyze-page.js"
+    "src/components/pages/analyze/analyze-page.js",
+    "src/components/pages/analyze/monitoring-tab/monitoring-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/partnership-tab/partnership-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/pd-ssfa-tab/pd-ssfa-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/cp-output-tab/cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js",
+    "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
   ],
   "extraDependencies": [
     "manifest.json",
@@ -38,47 +48,9 @@
   "builds": [
     {
       "name": "esm-bundled",
-      "browserCapabilities": [
-        "es2015",
-        "modules"
-      ],
+      "browserCapabilities": ["es2015", "modules"],
       "js": {
         "minify": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
-      "bundle": true,
-      "addServiceWorker": true
-    },
-    {
-      "name": "es6-bundled",
-      "browserCapabilities": [
-        "es2015"
-      ],
-      "js": {
-        "compile": "es2015",
-        "minify": true,
-        "transformModulesToAmd": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
-      "bundle": true,
-      "addServiceWorker": true
-    },
-    {
-      "name": "es5-bundled",
-      "js": {
-        "compile": "es5",
-        "minify": true,
-        "transformModulesToAmd": true
       },
       "css": {
         "minify": true

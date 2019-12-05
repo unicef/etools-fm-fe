@@ -12,6 +12,7 @@ import {Unsubscribe} from 'redux';
 import {
   loadDataCollectionChecklistInfo,
   loadFindingsAndOverall,
+  updateDataCollectionChecklistInformationSource,
   updateFindingsAndOverall
 } from '../../../../redux/effects/data-collection.effects';
 import {
@@ -24,12 +25,23 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
-import {DETAILS_TAB} from '../activity-item/activities-tabs';
-import {translate} from '../../../../localization/localisation';
+import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
+import {addTranslates, ENGLISH, translate} from '../../../../localization/localisation';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
+import {ACTIVITIES_PAGE} from '../activities-page';
+import {arrowLeftIcon} from '../../../styles/app-icons';
+import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import '@polymer/paper-input/paper-input';
+import '@polymer/paper-button';
+import {elevationStyles} from '../../../styles/elevation-styles';
+import {CardStyles} from '../../../styles/card-styles';
+import {DATA_COLLECTION_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/data-collection.translates';
+import {sortFindingsAndOverall} from '../../../utils/findings-and-overall-sort';
+import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 
-store.addReducers({dataCollection, activityDetails});
+addTranslates(ENGLISH, DATA_COLLECTION_TRANSLATES);
+store.addReducers({findingsComponents, dataCollection, activityDetails});
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'data-collection';
@@ -38,6 +50,8 @@ const SUB_ROUTE: string = 'data-collection';
 export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private checklist: DataCollectionChecklist | null = null;
   @property() private findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
+  @property() private editedData: string = '';
+  private originalData: string = '';
   private activityDetails: IActivityDetails | null = null;
   private tabIsReadonly: boolean = true;
 
@@ -61,22 +75,70 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             | ${this.checklist && this.checklist.id} | ${this.checklist && this.checklist.author.name}
           </div>
         </div>
+
+        <div slot="title-row-actions">
+          <paper-button class="back-button">
+            <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}" class="layout horizontal">
+              ${arrowLeftIcon} <span>BACK</span>
+            </a>
+          </paper-button>
+        </div>
       </page-content-header>
 
-      ${Object.values(this.findingsAndOverall).map(({name, findings, overall}: SortedFindingsAndOverall) => {
-        return html`
-          <data-collection-card
-            .tabName="${name}"
-            .overallInfo="${overall}"
-            .findings="${findings}"
-            .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
-            ?readonly="${this.tabIsReadonly}"
-            @attachments-updated="${() => this.getOverallInfo()}"
-            @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
-          ></data-collection-card>
-        `;
-      })}
+      <!--  Information source  -->
+      ${this.checkInformationSource()
+        ? html`
+            <section class="elevation page-content card-container" elevation="1">
+              <div class="information-source">
+                <paper-input
+                  .value="${this.editedData}"
+                  @value-changed="${({detail}: CustomEvent) => (this.editedData = detail.value)}"
+                  label="${translate('SOURCE_OF_INFORMATION.INPUT_LABEL')}"
+                  placeholder="Enter source of information"
+                  required
+                >
+                </paper-input>
+                <iron-collapse ?opened="${this.originalData != this.editedData}">
+                  <div class="layout horizontal end-justified card-buttons">
+                    <paper-button class="save-button" @tap="${() => this.save()}"
+                      >${translate('MAIN.BUTTONS.SAVE')}</paper-button
+                    >
+                  </div>
+                </iron-collapse>
+              </div>
+            </section>
+          `
+        : ''}
+
+      <!--  Findings Cards  -->
+      ${Object.values(this.findingsAndOverall)
+        .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
+        .map(({name, findings, overall}: SortedFindingsAndOverall) => {
+          return html`
+            <data-collection-card
+              .tabName="${name}"
+              .overallInfo="${overall}"
+              .findings="${findings}"
+              .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
+              ?readonly="${this.tabIsReadonly}"
+              @attachments-updated="${() => this.getOverallInfo()}"
+              @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
+            ></data-collection-card>
+          `;
+        })}
     `;
+  }
+
+  save(): void {
+    if (this.activityId === null || this.checklistId === null) {
+      return;
+    }
+    store.dispatch<AsyncEffect>(
+      updateDataCollectionChecklistInformationSource(this.activityId, this.checklistId, {
+        information_source: this.editedData
+      })
+    );
+    this.originalData = this.editedData;
   }
 
   connectedCallback(): void {
@@ -101,6 +163,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       dataCollectionChecklistData((data: DataCollectionChecklist | null) => {
         if (data) {
           this.checklist = data;
+          // this.originalData = this.checklist.information_source;
+          // this.editedData = this.originalData;
+          this.initInformationSource();
         }
       }, false)
     );
@@ -110,7 +175,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
      */
     this.findingsAndOverallUnsubscribe = store.subscribe(
       findingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
-        this.findingsAndOverall = this.sortFindingsAndOverall(overall, findings);
+        this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
       }, false)
     );
 
@@ -138,12 +203,29 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     );
   }
 
+  initInformationSource(): void {
+    if (this.checklist) {
+      this.originalData = this.checklist.information_source;
+      this.editedData = this.originalData;
+    }
+  }
+
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.checklistUnsubscribe();
     this.activityDetailsUnsubscribe();
     this.findingsAndOverallUnsubscribe();
+  }
+
+  checkInformationSource(): boolean {
+    if (!this.methods) {
+      return false;
+    }
+    const methodData: EtoolsMethod | undefined = this.methods.find((method: EtoolsMethod) =>
+      this.checklist ? method.id === this.checklist.method : false
+    );
+    return methodData ? methodData.use_information_source : false;
   }
 
   /**
@@ -214,65 +296,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       store.dispatch<AsyncEffect>(loadDataCollectionChecklistInfo(this.activityId, this.checklistId));
     } else {
       this.checklist = dataCollectionState.checklist.data;
-    }
-  }
-
-  /**
-   * combines findings and overall finding in one object by Partner/Cp Output/PD SSFA
-   */
-  private sortFindingsAndOverall(
-    overallData: DataCollectionOverall[] | null,
-    findings: DataCollectionFinding[] | null
-  ): GenericObject<SortedFindingsAndOverall> {
-    if (overallData === null || findings === null) {
-      return {};
-    }
-
-    const findingsAndOverall: GenericObject<SortedFindingsAndOverall> = overallData.reduce(
-      (result: GenericObject<SortedFindingsAndOverall>, overall: DataCollectionOverall) => {
-        // generate unique id
-        const id: string = this.getDataKey(overall);
-        // name exists in findings data, findings will be populated if findings iteration
-        result[id] = {name: '', findings: [], overall};
-        return result;
-      },
-      {}
-    );
-
-    findings.forEach((finding: DataCollectionFinding) => {
-      const id: string = this.getDataKey(finding.activity_question);
-      findingsAndOverall[id].name = this.getTargetName(finding.activity_question);
-      findingsAndOverall[id].findings.push(finding);
-    });
-
-    return findingsAndOverall;
-  }
-
-  private getDataKey(dataObject: DataCollectionOverall | IChecklistItem): string {
-    if (dataObject.partner) {
-      const id: number = typeof dataObject.partner === 'object' ? dataObject.partner.id : dataObject.partner;
-      return `partner_${id}`;
-    } else if (dataObject.cp_output) {
-      const id: number = typeof dataObject.cp_output === 'object' ? dataObject.cp_output.id : dataObject.cp_output;
-      return `cp_output_${id}`;
-    } else if (dataObject.intervention) {
-      const id: number =
-        typeof dataObject.intervention === 'object' ? dataObject.intervention.id : dataObject.intervention;
-      return `intervention_${id}`;
-    } else {
-      return '';
-    }
-  }
-
-  private getTargetName(checklist: IChecklistItem): string {
-    if (checklist.partner) {
-      return `${translate('LEVELS_OPTIONS.PARTNER')}: ${checklist.partner.name}`;
-    } else if (checklist.cp_output) {
-      return `${translate('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
-    } else if (checklist.intervention) {
-      return `${translate('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
-    } else {
-      return '';
+      this.initInformationSource();
     }
   }
 
@@ -295,7 +319,19 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       buttonsStyles,
+      elevationStyles,
+      CardStyles,
+      FlexLayoutClasses,
       css`
+        .save-button {
+          color: var(--primary-background-color);
+          background-color: var(--primary-color);
+        }
+        .information-source {
+          padding-left: 2%;
+          padding-bottom: 0.5%;
+          padding-right: 2%;
+        }
         page-content-header {
           --table-row-height: auto;
           --table-row-margin: 0;
@@ -322,6 +358,27 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         data-collection-card:last-child {
           margin-bottom: 25px;
+        }
+
+        .back-button {
+          height: 36px;
+          padding: 0 18px;
+          color: white;
+          background: var(--green-color);
+          font-weight: 500;
+        }
+
+        .back-button a {
+          color: var(--primary-background-color);
+          text-decoration: none;
+          line-height: 21px;
+        }
+
+        .back-button a span {
+          margin-left: 10px;
+        }
+        .back-button a svg {
+          height: 21px;
         }
       `
     ];

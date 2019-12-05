@@ -1,9 +1,16 @@
 import {DataCollectionActions, DataCollectionChecklistActionTypes} from '../actions/data-collection.actions';
 
 const propertiesMap: GenericObject<string> = {
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST]: 'checklistCreate',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS]: 'checklistCreate',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE]: 'checklistCreate',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST]: 'checklistCollect',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS]: 'checklistCollect',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE]: 'checklistCollect',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_REQUEST]: 'checklist',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_SUCCESS]: 'checklist',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE]: 'checklist',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST]: 'checklist',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_REQUEST]: 'findings',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_SUCCESS]: 'findings',
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_FAILURE]: 'findings',
@@ -14,11 +21,13 @@ const propertiesMap: GenericObject<string> = {
 
 const INITIAL: IDataCollectionState = {
   loading: {
+    checklistCollect: null,
+    checklistCreate: null,
     checklist: null,
     findings: null,
     overallAndFindingsUpdate: null
   },
-  editedFindingsTab: null,
+  checklistCollect: [],
   checklist: {
     data: null,
     findingsAndOverall: {
@@ -27,6 +36,8 @@ const INITIAL: IDataCollectionState = {
     }
   },
   errors: {
+    checklistCollect: null,
+    checklistCreate: null,
     checklist: null,
     findings: null,
     overallAndFindingsUpdate: null
@@ -43,6 +54,8 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_REQUEST:
     case DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_REQUEST:
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_REQUEST:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST:
       return {
         ...state,
         loading: {...state.loading, [property]: true},
@@ -53,6 +66,8 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE:
     case DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_FAILURE:
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE:
       return {
         ...state,
         loading: {...state.loading, [property]: false},
@@ -79,12 +94,28 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_SUCCESS:
       return {
         ...state,
-        loading: {...state.loading, overallAndFindingsUpdate: false},
-        editedFindingsTab: null
+        loading: {...state.loading, overallAndFindingsUpdate: false}
       };
 
-    case DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB:
-      return {...state, editedFindingsTab: action.payload};
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: {...state.loading, [property]: false},
+        checklistCollect: [...state.checklistCollect, action.payload]
+      };
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: {...state.loading, [property]: false},
+        checklistCollect: [...action.payload]
+      };
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST:
+      return {
+        ...state,
+        checklist: {data: action.payload, findingsAndOverall: {...state.checklist.findingsAndOverall}}
+      };
     default:
       return state;
   }

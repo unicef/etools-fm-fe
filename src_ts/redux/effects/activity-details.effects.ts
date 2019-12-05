@@ -1,9 +1,9 @@
 import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
+import {ACTIVITIES_LIST, ACTIVITY_CHECKLIST_ATTACHMENTS, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
-import {ActivityDetailsActions} from '../actions/activity-details.actions';
-import {ActivityStatus} from '../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
+import {ActivityDetailsActions, ChecklistAttachmentsRequest} from '../actions/activity-details.actions';
+import {Dispatch} from 'redux';
 
 export function requestActivityDetails(id: string): IAsyncAction {
   return {
@@ -16,6 +16,23 @@ export function requestActivityDetails(id: string): IAsyncAction {
       const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, {id});
       const resultUrl: string = `${url}`;
       return request(resultUrl);
+    }
+  };
+}
+
+export function createActivityDetails(): IAsyncAction {
+  return {
+    types: [
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(ACTIVITIES_LIST);
+      const options: RequestInit = {
+        method: 'POST'
+      };
+      return request(url, options);
     }
   };
 }
@@ -38,7 +55,7 @@ export function updateActivityDetails(id: number, activityDetails: Partial<IActi
   };
 }
 
-export function changeActivityStatus(id: number, status: ActivityStatus): IAsyncAction {
+export function changeActivityStatus(id: number, activityDetails: Partial<IActivityDetails>): IAsyncAction {
   return {
     types: [
       ActivityDetailsActions.ACTIVITY_STATUS_CHANGE_REQUEST,
@@ -49,9 +66,18 @@ export function changeActivityStatus(id: number, status: ActivityStatus): IAsync
       const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, {id});
       const options: RequestInit = {
         method: 'PATCH',
-        body: JSON.stringify({status})
+        body: JSON.stringify(activityDetails)
       };
       return request(url, options);
     }
+  };
+}
+
+export function loadChecklistAttachments(activityId: number): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
+    return request<PageableChecklistAttachment>(url, {method: 'GET'}).then((response: PageableChecklistAttachment) => {
+      dispatch(new ChecklistAttachmentsRequest(response.results));
+    });
   };
 }

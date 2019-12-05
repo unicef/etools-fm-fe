@@ -1,6 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {fireEvent} from '../../../utils/fire-custom-event';
-import {clone} from 'ramda';
 import {template} from './edit-attachments-popup.tpl';
 import {store} from '../../../../redux/store';
 import {addAttachmentToList, updateListAttachment} from '../../../../redux/effects/attachments-list.effects';
@@ -9,23 +8,40 @@ import {Unsubscribe} from 'redux';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {DataMixin} from '../../mixins/data-mixin';
 
 @customElement('edit-attachment-popup')
-export class EditAttachmentsPopupComponent extends LitElement {
+export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened: boolean = true;
-  @property() editedAttachment: Partial<IAttachment> = {};
   @property() attachmentTypes: DefaultDropdownOption[] = [];
-  @property() errors: GenericObject = {};
-  savingInProcess: boolean = false;
-  selectedFile: File | null = null;
+  protected savingInProcess: boolean = false;
+  protected selectedFileId: number | null = null;
 
-  private originalData: IAttachment | null = null;
   private endpointName!: string;
   private additionalEndpointData: GenericObject = {};
-  private readonly updateAttachmentsUnsubscribe: Unsubscribe;
+  private updateAttachmentsUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
+  set dialogData(data: IAttachmentPopupData) {
+    if (!data) {
+      return;
+    }
+    const {editedAttachment, attachmentTypes, endpointName, additionalEndpointData}: IAttachmentPopupData = data;
+    this.attachmentTypes = attachmentTypes;
+    this.endpointName = endpointName;
+    this.additionalEndpointData = additionalEndpointData;
+
+    if (!editedAttachment) {
+      return;
+    }
+    this.data = editedAttachment;
+  }
+
+  render(): TemplateResult {
+    return template.call(this);
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
     this.updateAttachmentsUnsubscribe = store.subscribe(
       listAttachmentUpdate((updateInProcess: boolean | null) => {
         // set updating state for spinner
@@ -47,38 +63,14 @@ export class EditAttachmentsPopupComponent extends LitElement {
     );
   }
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
-  }
-
-  set data(data: IAttachmentPopupData) {
-    if (!data) {
-      return;
-    }
-    const {editedAttachment, attachmentTypes, endpointName, additionalEndpointData}: IAttachmentPopupData = data;
-    this.attachmentTypes = attachmentTypes;
-    this.endpointName = endpointName;
-    this.additionalEndpointData = additionalEndpointData;
-
-    if (!editedAttachment) {
-      return;
-    }
-    this.editedAttachment = {...this.editedAttachment, ...editedAttachment};
-    this.originalData = clone(editedAttachment);
-  }
-
-  render(): TemplateResult {
-    return template.call(this);
-  }
-
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateAttachmentsUnsubscribe();
   }
 
-  processRequest(): void {
+  protected processRequest(): void {
     // validate if file is selected for new attachments
-    if (!this.editedAttachment.id && !this.selectedFile) {
+    if (!this.editedData.id && !this.selectedFileId) {
       fireEvent(this, 'toast', {
         text: 'Please, select correct file',
         showCloseBtn: false
@@ -88,14 +80,14 @@ export class EditAttachmentsPopupComponent extends LitElement {
 
     // compose new attachment data
     const data: Partial<IAttachment> = {};
-    if (this.selectedFile) {
-      data.file = this.selectedFile;
+    if (this.selectedFileId) {
+      data.id = this.selectedFileId;
     }
     const typeChanged: boolean = Boolean(
-      this.originalData && this.editedAttachment.file_type !== this.originalData.file_type
+      this.originalData && this.editedData.file_type !== this.originalData.file_type
     );
-    if ((!this.originalData && this.editedAttachment.file_type) || typeChanged) {
-      data.file_type = this.editedAttachment.file_type;
+    if ((!this.originalData && this.editedData.file_type) || typeChanged) {
+      data.file_type = this.editedData.file_type;
     }
 
     // don't save attachment if nothing changed. just close popup
@@ -104,24 +96,30 @@ export class EditAttachmentsPopupComponent extends LitElement {
       return;
     }
 
-    if (this.editedAttachment.id) {
+    if (this.editedData.id) {
       store.dispatch<AsyncEffect>(
-        updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedAttachment.id, data)
+        updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
       );
     } else {
       store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
     }
   }
 
-  onClose(): void {
+  protected onClose(): void {
     fireEvent(this, 'response', {confirmed: false});
   }
 
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
+  protected fileSelected({success}: {success?: string; error?: string}): void {
+    if (success) {
+      try {
+        this.selectedFileId = JSON.parse(success).id;
+      } catch (e) {
+        console.log(e);
+      }
     }
-    delete this.errors[fieldName];
-    this.performUpdate();
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
   }
 }

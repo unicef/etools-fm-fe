@@ -13,12 +13,12 @@ export function template(this: SitesPopupComponent): TemplateResult {
       id="dialog"
       no-padding
       .opened="${this.dialogOpened}"
-      dialog-title="${translate(this.selectedModel.id ? 'SITES.EDIT_SL' : 'SITES.ADD_SL')}"
+      dialog-title="${translate(this.editedData.id ? 'SITES.EDIT_SL' : 'SITES.ADD_SL')}"
       keep-dialog-open
       @confirm-btn-clicked="${() => this.saveSite()}"
       @close="${this.onClose}"
       @iron-overlay-opened="${() => this.mapInitialization()}"
-      .okBtnText="${translate(this.selectedModel.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
     >
       <etools-loading ?active="${this.savingInProcess}" loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}">
       </etools-loading>
@@ -27,7 +27,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
         <div class="layout horizontal">
           <paper-input
             class="validate-input disabled-as-readonly flex-7"
-            .value="${this.selectedModel.name}"
+            .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
             maxlength="100"
             label="${translate('SITES.LABELS.NAME')}"
@@ -43,7 +43,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
           <etools-dropdown
             id="statusDropdown"
             class="validate-input disabled-as-readonly flex-2"
-            .selected="${this.setStatusValue((this.selectedModel && this.selectedModel.is_active) || false)}"
+            .selected="${this.setStatusValue((this.editedData && this.editedData.is_active) || false)}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('is_active', detail.selectedItem.value)}"
             trigger-value-change-event
@@ -63,11 +63,11 @@ export function template(this: SitesPopupComponent): TemplateResult {
           ></etools-dropdown>
         </div>
 
-        ${this.selectedModel.id
+        ${this.editedData.id
           ? html`
               <paper-input
                 class="disabled-as-readonly"
-                .value="${this.selectedModel && this.selectedModel.parent!.name}"
+                .value="${this.editedData && this.editedData.parent!.name}"
                 label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
                 placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
                 disabled

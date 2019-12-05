@@ -28,8 +28,8 @@ export function getDifference<T>(
 ): Partial<T> {
   const {toRequest = false, strongComparison = false, nestedFields = []} = options;
   return Object.keys(modifiedData).reduce((changes: Partial<T>, key: string) => {
-    const originalValue: any = originalData[key as keyof T];
-    let modifiedValue: any = modifiedData[key as keyof T];
+    const originalValue: any = originalData && originalData[key as keyof T];
+    let modifiedValue: any = modifiedData && modifiedData[key as keyof T];
     if (originalValue === null && modifiedValue === null) {
       return changes;
     }

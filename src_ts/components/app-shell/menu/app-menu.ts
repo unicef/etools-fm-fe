@@ -9,6 +9,10 @@ import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
 import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {hasPermission, Permissions} from '../../../config/permissions';
+import {store} from '../../../redux/store';
+import {currentUser} from '../../../redux/selectors/user.selectors';
+import {Unsubscribe} from 'redux';
 
 /**
  * main menu
@@ -26,9 +30,8 @@ export class AppMenu extends LitElement {
   @property({type: Boolean, attribute: 'small-menu'})
   smallMenu: boolean = false;
 
-  static get styles(): CSSResult {
-    return navMenuStyles;
-  }
+  private userUnsubscribe!: Unsubscribe;
+  private userLoaded: boolean = false;
 
   render(): TemplateResult {
     // main template
@@ -67,7 +70,12 @@ export class AppMenu extends LitElement {
           role="navigation"
         >
           <!-- Sidebar item - SETTINGS -->
-          <a class="nav-menu-item" menu-name="settings" href="${this.rootPath + 'settings'}">
+          <a
+            class="nav-menu-item"
+            menu-name="settings"
+            href="${this.rootPath + 'settings'}"
+            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
+          >
             <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
               Settings
@@ -76,7 +84,12 @@ export class AppMenu extends LitElement {
           </a>
 
           <!-- Sidebar item - PLANING -->
-          <a class="nav-menu-item" menu-name="plan" href="${this.rootPath + 'plan'}">
+          <a
+            class="nav-menu-item"
+            menu-name="plan"
+            href="${this.rootPath + 'plan'}"
+            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
+          >
             <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
               Plan
@@ -94,7 +107,12 @@ export class AppMenu extends LitElement {
           </a>
 
           <!-- Sidebar item - ANALYSIS -->
-          <a class="nav-menu-item" menu-name="analyze" href="${this.rootPath + 'analyze'}">
+          <a
+            class="nav-menu-item"
+            menu-name="analyze"
+            href="${this.rootPath + 'analyze'}"
+            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
+          >
             <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
               Analyze
@@ -138,10 +156,31 @@ export class AppMenu extends LitElement {
     `;
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.userUnsubscribe = store.subscribe(
+      currentUser((user: IEtoolsUserModel | null) => {
+        this.userLoaded = Boolean(user);
+        if (this.userLoaded) {
+          this.performUpdate();
+        }
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.userUnsubscribe();
+  }
+
   _toggleSmallMenu(): void {
     this.smallMenu = !this.smallMenu;
     const localStorageVal: number = this.smallMenu ? 1 : 0;
     localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
     fireEvent(this, 'toggle-small-menu', {value: this.smallMenu});
+  }
+
+  static get styles(): CSSResult {
+    return navMenuStyles;
   }
 }

@@ -9,7 +9,7 @@ import {SECTIONS} from '../../../endpoints/endpoints-list';
 // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
 export const SectionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    sections!: EtoolsSection[];
+    sections: EtoolsSection[] = [];
 
     private sectionsUnsubscribe!: Unsubscribe;
 

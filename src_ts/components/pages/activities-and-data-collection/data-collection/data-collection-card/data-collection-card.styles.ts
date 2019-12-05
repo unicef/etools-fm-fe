@@ -18,4 +18,16 @@ export const DataCollectionCardStyles: CSSResult = css`
   .attachments-button iron-icon {
     margin-right: 8px;
   }
+  .question-container {
+    padding: 7px 0;
+    width: 100%;
+  }
+  .question-text {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--primary-text-color);
+  }
+  .question-details {
+    font-size: 9px;
+  }
 `;

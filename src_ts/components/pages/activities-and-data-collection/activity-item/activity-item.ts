@@ -17,6 +17,7 @@ import {activityDetails} from '../../../../redux/reducers/activity-details.reduc
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
+  CANCELLED,
   CHECKLIST,
   COMPLETED,
   DATA_COLLECTION,
@@ -25,10 +26,20 @@ import {
   REVIEW,
   SUBMITTED
 } from './statuses-actions/activity-statuses';
-import {ATTACHMENTS_TAB, CHECKLIST_TAB, DETAILS_TAB, REVIEW_TAB} from './activities-tabs';
+import {
+  ADDITIONAL_INFO,
+  ATTACHMENTS_TAB,
+  CHECKLIST_TAB,
+  COLLECT_TAB,
+  DETAILS_TAB,
+  REVIEW_TAB,
+  SUMMARY_TAB,
+  TABS_PROPERTIES
+} from './activities-tabs';
 import {Unsubscribe} from 'redux';
-import {hasActivityPermission, Permissions} from '../../../../config/permissions';
 import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
+import {STAFF} from '../../../common/dropdown-options';
+import {ACTIVITIES_PAGE} from '../activities-page';
 
 store.addReducers({activityDetails});
 addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
@@ -36,7 +47,15 @@ addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
 
-const VALID_TABS: Set<string> = new Set([DETAILS_TAB, ATTACHMENTS_TAB, CHECKLIST_TAB, REVIEW_TAB]);
+const VALID_TABS: Set<string> = new Set([
+  DETAILS_TAB,
+  ATTACHMENTS_TAB,
+  CHECKLIST_TAB,
+  REVIEW_TAB,
+  COLLECT_TAB,
+  SUMMARY_TAB,
+  ADDITIONAL_INFO
+]);
 
 export const STATUSES: IEtoolsStatusModel[] = [
   {status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
@@ -47,6 +66,12 @@ export const STATUSES: IEtoolsStatusModel[] = [
   {status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
   {status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
   {status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
+];
+const CANCELLED_STATUS: IEtoolsStatusModel[] = [
+  {
+    status: CANCELLED,
+    label: translate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
+  }
 ];
 
 @customElement('activity-item')
@@ -63,18 +88,31 @@ export class NewActivityComponent extends LitElement {
     {
       tab: CHECKLIST_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${CHECKLIST_TAB}`),
-      hidden: false,
-      requiredPermission: Permissions.VIEW_CHECKLIST_TAB
+      hidden: false
     },
     {
       tab: REVIEW_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${REVIEW_TAB}`),
-      hidden: false,
-      requiredPermission: Permissions.VIEW_REVIEW_TAB
+      hidden: false
+    },
+    {
+      tab: COLLECT_TAB,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`),
+      hidden: false
+    },
+    {
+      tab: SUMMARY_TAB,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
+      hidden: false
     },
     {
       tab: ATTACHMENTS_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
+      hidden: false
+    },
+    {
+      tab: ADDITIONAL_INFO,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
       hidden: false
     }
   ];
@@ -82,14 +120,6 @@ export class NewActivityComponent extends LitElement {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
-  private tabPermissions: GenericObject<Permissions> = {
-    [CHECKLIST_TAB]: Permissions.VIEW_CHECKLIST_TAB,
-    [REVIEW_TAB]: Permissions.VIEW_REVIEW_TAB
-  };
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
-  }
 
   get personResponsible(): number | null {
     return (
@@ -107,7 +137,7 @@ export class NewActivityComponent extends LitElement {
       ></etools-loading>
 
       <etools-status
-        .statuses="${STATUSES}"
+        .statuses="${this.getStatuses()}"
         .activeStatus="${this.activityDetails && this.activityDetails.status}"
       ></etools-status>
 
@@ -115,7 +145,11 @@ export class NewActivityComponent extends LitElement {
         <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || ''}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <statuses-actions .activityDetails="${this.activityDetails}"></statuses-actions>
+          <statuses-actions
+            .activityId="${this.activityDetails && this.activityDetails.id}"
+            .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
+            ?is-staff="${this.activityDetails && this.activityDetails.activity_type === STAFF}"
+          ></statuses-actions>
         </div>
 
         <etools-tabs
@@ -164,7 +198,11 @@ export class NewActivityComponent extends LitElement {
         const isNotLoaded: boolean = !loadedActivityId || `${loadedActivityId}` !== `${activityId}`;
 
         if (this.activityId && isNotLoaded) {
-          store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId));
+          store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
+            if (store.getState().activityDetails.error) {
+              updateAppLocation(ACTIVITIES_PAGE);
+            }
+          });
         } else {
           this.activityDetails = activityDetailsState.data as IActivityDetails;
           this.checkTab();
@@ -195,7 +233,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case ATTACHMENTS_TAB:
         return html`
-          <activity-attachments-tab></activity-attachments-tab>
+          <activity-attachments-tab .activityDetails="${this.activityDetails}"></activity-attachments-tab>
         `;
       case CHECKLIST_TAB:
         return html`
@@ -204,6 +242,21 @@ export class NewActivityComponent extends LitElement {
       case REVIEW_TAB:
         return html`
           <activity-review-tab .activityId="${this.activityId}"></activity-review-tab>
+        `;
+      case COLLECT_TAB:
+        return html`
+          <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
+        `;
+      case SUMMARY_TAB:
+        return html`
+          <activity-summary-tab
+            .activityId="${this.activityId}"
+            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+          ></activity-summary-tab>
+        `;
+      case ADDITIONAL_INFO:
+        return html`
+          <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
         `;
       default:
         return html``;
@@ -215,11 +268,16 @@ export class NewActivityComponent extends LitElement {
       return [];
     }
     return this.pageTabs.filter(({tab}: PageTab) => {
-      return (
-        !this.tabPermissions[tab] ||
-        hasActivityPermission(this.tabPermissions[tab], this.activityDetails as IActivityDetails)
-      );
+      const property: string = TABS_PROPERTIES[tab];
+      return !property || this.activityDetails!.permissions.view[property as keyof ActivityPermissionsObject];
     });
+  }
+
+  getStatuses(): IEtoolsStatusModel[] {
+    if (!this.activityDetails) {
+      return [];
+    }
+    return this.activityDetails.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
   }
 
   onSelect(selectedTab: HTMLElement): void {
@@ -239,10 +297,10 @@ export class NewActivityComponent extends LitElement {
     const activeTab: string | null = params && (params.tab as string);
 
     const isValidTab: boolean = VALID_TABS.has(`${activeTab}`);
+    const tabProperty: string = TABS_PROPERTIES[activeTab || ''];
     const canViewTab: boolean =
       isValidTab &&
-      (!this.tabPermissions[activeTab as string] ||
-        hasActivityPermission(`VIEW_${(activeTab as string).toUpperCase()}_TAB`, this.activityDetails));
+      (!tabProperty || this.activityDetails.permissions.view[tabProperty as keyof ActivityPermissionsObject]);
 
     if (canViewTab) {
       this.activeTab = `${activeTab}`;
@@ -250,5 +308,9 @@ export class NewActivityComponent extends LitElement {
       this.activeTab = DETAILS_TAB;
       updateAppLocation(`activities/${this.activityDetails.id}/${DETAILS_TAB}`);
     }
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
   }
 }

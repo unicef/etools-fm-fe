@@ -10,8 +10,11 @@ export const MAIN_TRANSLATES: TranslateObject = {
     BUTTONS: {
       ADD: 'Add',
       SAVE: 'Save',
-      DELETE: 'Delete'
-    }
+      DELETE: 'Delete',
+      CONFIRM: 'Confirm',
+      CANCEL: 'Cancel'
+    },
+    ENTER: 'Enter'
   },
   LEVELS_OPTIONS: {
     PARTNER: 'Partner',

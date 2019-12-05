@@ -34,6 +34,7 @@ export function loadStaticData(
         console.error(`Can not load static data "${dataName}". Reason: request error.`);
         console.error(error);
         delete currentRequests[dataName];
+        dispatch(new AddStaticData(dataName, []));
         return Promise.resolve([]);
       });
     return currentRequests[dataName];

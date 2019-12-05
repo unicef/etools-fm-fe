@@ -133,7 +133,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                 <div class="col-data flex-1">
                   ${logIssue.attachments.length
                     ? html`
-                        <div class="files-column" @click="${() => this.openViewDialog(logIssue)}">
+                        <div class="files-column" @click="${() => this.viewFiles(logIssue)}">
                           ${logIssue.attachments.length} FILES
                         </div>
                       `

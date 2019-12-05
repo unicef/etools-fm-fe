@@ -1,20 +1,20 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../../../localization/localisation';
-import {InputStyles} from '../../../../../../styles/input-styles';
-import {DialogStyles} from '../../../../../../styles/dialog-styles';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
-import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {PartnersMixin} from '../../../../../../common/mixins/partners-mixin';
-import {request} from '../../../../../../../endpoints/request';
-import {getEndpoint} from '../../../../../../../endpoints/endpoints';
-import {OUTPUTS_SHORT} from '../../../../../../../endpoints/endpoints-list';
-import {debounce} from '../../../../../../utils/debouncer';
-import {SharedStyles} from '../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
-import {elevationStyles} from '../../../../../../styles/elevation-styles';
-import {CardStyles} from '../../../../../../styles/card-styles';
+import {translate} from '../../../../../../../../localization/localisation';
+import {InputStyles} from '../../../../../../../styles/input-styles';
+import {DialogStyles} from '../../../../../../../styles/dialog-styles';
+import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {simplifyValue} from '../../../../../../../utils/objects-diff';
+import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
+import {request} from '../../../../../../../../endpoints/request';
+import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
+import {OUTPUTS_SHORT} from '../../../../../../../../endpoints/endpoints-list';
+import {debounce} from '../../../../../../../utils/debouncer';
+import {SharedStyles} from '../../../../../../../styles/shared-styles';
+import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
+import {elevationStyles} from '../../../../../../../styles/elevation-styles';
+import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@unicef-polymer/etools-dialog';
-import {EtoolsRouter} from '../../../../../../../routing/routes';
+import {EtoolsRouter} from '../../../../../../../../routing/routes';
 
 @customElement('cp-output-popup')
 export class CpOutputPopup extends PartnersMixin(LitElement) {
@@ -92,7 +92,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
             ${translate('ACTIVITY_DETAILS.CP_OUTPUTS_FOUND', {count: this.cpOutputs.length})}
           </div>
           <etools-dropdown
-            label="${translate('ACTIVITY_DETAILS.PARTNER')}"
+            label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
             .options="${this.cpOutputs}"
             option-label="name"
             option-value="id"

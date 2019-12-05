@@ -20,7 +20,7 @@ import {SitesTabStyles} from './sites-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 
 @customElement('sites-tab')
-export class SitesTabComponent extends ListMixin<IGroupedSites>(LitElement) {
+export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   @property() items: IGroupedSites[] = [];
 
   @property() listLoadingInProcess: boolean = false;
@@ -121,7 +121,7 @@ export class SitesTabComponent extends ListMixin<IGroupedSites>(LitElement) {
   openDialog(model?: Site): void {
     openDialog<SitesPopupData | undefined>({
       dialog: 'sites-popup',
-      data: {
+      dialogData: {
         model,
         sitesObjects: this.sitesObjects as Site[]
       }

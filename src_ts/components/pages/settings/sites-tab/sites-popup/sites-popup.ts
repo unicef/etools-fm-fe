@@ -1,7 +1,6 @@
 import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
-import {clone} from 'ramda';
 import {store} from '../../../../../redux/store';
 import {sitesUpdateSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
 import {fireEvent} from '../../../../utils/fire-custom-event';
@@ -17,14 +16,14 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
+import {DataMixin} from '../../../../common/mixins/data-mixin';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 
 @customElement('sites-popup')
-export class SitesPopupComponent extends LitElement {
+export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() dialogOpened: boolean = true;
-  @property() errors: GenericObject = {};
-  @property() selectedModel: EditedSite = {is_active: true};
+  @property() editedData: EditedSite = {is_active: true};
   @property() currentCoords: string | null = null;
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
@@ -36,7 +35,6 @@ export class SitesPopupComponent extends LitElement {
 
   @query('#map') private maoElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
-  private originalData: Site | null = null;
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;
   private readonly MapHelper: MapHelper;
@@ -81,7 +79,7 @@ export class SitesPopupComponent extends LitElement {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
   }
 
-  set data(data: SitesPopupData) {
+  set dialogData(data: SitesPopupData) {
     if (!data) {
       return;
     }
@@ -91,8 +89,7 @@ export class SitesPopupComponent extends LitElement {
     if (!model) {
       return;
     }
-    this.selectedModel = {...this.selectedModel, ...model};
-    this.originalData = clone(model);
+    this.data = model;
   }
 
   render(): TemplateResult {
@@ -117,7 +114,7 @@ export class SitesPopupComponent extends LitElement {
     const {lat, lng}: LatLng =
       (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as LatLng);
     if (lat && lng) {
-      this.selectedModel.point = {
+      this.editedData.point = {
         type: 'Point',
         coordinates: [lng, lat]
       };
@@ -125,25 +122,18 @@ export class SitesPopupComponent extends LitElement {
 
     const site: EditedSite =
       this.originalData !== null
-        ? getDifference<EditedSite>(this.originalData, this.selectedModel, {toRequest: true})
-        : this.selectedModel;
+        ? getDifference<EditedSite>(this.originalData, this.editedData, {toRequest: true})
+        : this.editedData;
     const isEmpty: boolean = !Object.keys(site).length;
 
     if (isEmpty) {
       this.dialogOpened = false;
       this.onClose();
     } else if (this.originalData && this.originalData.id) {
-      store.dispatch<AsyncEffect>(updateSiteLocation(this.selectedModel.id as number, site));
+      store.dispatch<AsyncEffect>(updateSiteLocation(this.editedData.id as number, site));
     } else {
-      store.dispatch<AsyncEffect>(addSiteLocation(this.selectedModel as Site));
+      store.dispatch<AsyncEffect>(addSiteLocation(this.editedData as Site));
     }
-  }
-
-  updateModelValue(fieldName: keyof EditedSite, value: any): void {
-    if (!this.selectedModel) {
-      return;
-    }
-    this.selectedModel[fieldName] = value;
   }
 
   setStatusValue(active: boolean): 1 | 0 {
@@ -161,12 +151,12 @@ export class SitesPopupComponent extends LitElement {
       this.renderMarkers();
     }
     const coords: LatLngTuple =
-      (this.selectedModel && this.selectedModel.point && this.selectedModel.point.coordinates) || this.defaultMapCenter;
+      (this.editedData && this.editedData.point && this.editedData.point.coordinates) || this.defaultMapCenter;
     const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
     const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
     this.MapHelper.map!.setView(reversedCoords, zoom);
 
-    const id: number | null = (this.selectedModel && this.selectedModel.id) || null;
+    const id: number | null = (this.editedData && this.editedData.id) || null;
     if (id) {
       this.MapHelper.dynamicMarker =
         this.MapHelper.staticMarkers!.find((marker: any) => marker.staticData.id === id) || null;
@@ -174,14 +164,6 @@ export class SitesPopupComponent extends LitElement {
     }
 
     this.setCoordsString();
-  }
-
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
   }
 
   private renderMarkers(): void {

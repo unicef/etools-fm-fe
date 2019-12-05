@@ -12,7 +12,7 @@ import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 
 @customElement('annual-fm-rationale')
-export class AnnualFmRationale extends DataMixin<IRationale, typeof LitElement>(LitElement) {
+export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   @property() errors: GenericObject = {};
   @property() isReadonly: boolean = true;
   @property() selectedYear: number | undefined;

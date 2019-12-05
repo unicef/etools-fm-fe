@@ -17,10 +17,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       size="md"
       keep-dialog-open
       ?opened="${this.dialogOpened}"
-      dialog-title="${translate(this.editedQuestion.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
+      dialog-title="${translate(this.editedData.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
-      .okBtnText="${translate(this.editedQuestion.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       no-padding
     >
       <etools-loading
@@ -31,7 +31,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       <div class="container layout vertical">
         <paper-textarea
           class="validate-input disabled-as-readonly flex-7"
-          .value="${this.editedQuestion.text}"
+          .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
           max-rows="3"
           required
@@ -45,7 +45,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <etools-dropdown-multi
           class="validate-input disabled-as-readonly flex-2"
-          .selectedValues="${this.editedQuestion.sections}"
+          .selectedValues="${this.editedData.sections}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('sections', detail.selectedItems)}"
           trigger-value-change-event
@@ -64,7 +64,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <etools-dropdown-multi
           class="validate-input disabled-as-readonly flex-2"
-          .selectedValues="${this.editedQuestion.methods}"
+          .selectedValues="${this.editedData.methods}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('methods', detail.selectedItems)}"
           trigger-value-change-event
@@ -85,7 +85,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         <div class="layout horizontal">
           <etools-dropdown
             class="validate-input disabled-as-readonly w50"
-            .selected="${this.editedQuestion.category}"
+            .selected="${this.editedData.category}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('category', detail.selectedItem.id)}"
             trigger-value-change-event
@@ -105,7 +105,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
           <etools-dropdown
             class="validate-input disabled-as-readonly w50"
-            .selected="${this.editedQuestion.level}"
+            .selected="${this.editedData.level}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('level', detail.selectedItem.value)}"
             trigger-value-change-event
@@ -126,14 +126,14 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div class="checkboxes">
           <paper-checkbox
-            ?checked="${this.editedQuestion.is_hact}"
+            ?checked="${this.editedData.is_hact}"
             @change="${(event: CustomEvent) =>
               this.updateModelValue('is_hact', (event.target as PaperCheckboxElement).checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_HACT')}
           </paper-checkbox>
           <paper-checkbox
-            ?checked="${this.editedQuestion.is_active}"
+            ?checked="${this.editedData.is_active}"
             @change="${(event: CustomEvent) =>
               this.updateModelValue('is_active', (event.target as PaperCheckboxElement).checked)}"
           >
@@ -144,7 +144,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         <div class="layout horizontal">
           <etools-dropdown
             class="validate-input disabled-as-readonly w50"
-            .selected="${this.editedQuestion.answer_type}"
+            .selected="${this.editedData.answer_type}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateAnswerType(detail.selectedItem.value)}"
             trigger-value-change-event
@@ -164,7 +164,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
           <etools-dropdown
             class="validate-input disabled-as-readonly w25"
-            ?hidden="${this.editedQuestion.answer_type !== SCALE_TYPE}"
+            ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
             .selected="${this.currentOptionsLength}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.changeOptionsSize(detail.selectedItem && detail.selectedItem.value)}"
@@ -182,11 +182,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div
           class="scales-container"
-          ?hidden="${this.editedQuestion.answer_type !== SCALE_TYPE &&
-            this.editedQuestion.answer_type !== BOOLEAN_TYPE}"
+          ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOLEAN_TYPE}"
         >
           ${repeat(
-            this.editedQuestion.options as Partial<QuestionOption>[],
+            this.editedData.options as Partial<QuestionOption>[],
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
               <div class="layout horizontal center" ?hidden="${option._delete}">

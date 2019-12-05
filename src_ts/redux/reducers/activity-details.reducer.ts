@@ -3,13 +3,15 @@ import {ActivityDetailsActions} from '../actions/activity-details.actions';
 
 const INITIAL: IActivityDetailsState = {
   isRequest: {
+    create: false,
     load: false,
     update: false,
     statusChange: false
   },
   editedCard: null,
   error: null,
-  data: null
+  data: null,
+  checklistAttachments: []
 };
 
 export const activityDetails: Reducer<IActivityDetailsState, any> = (
@@ -46,6 +48,27 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (
         error: action.payload
       };
     }
+
+    // DETAILS CREATE ACTIONS
+    case ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST:
+      return {
+        ...state,
+        isRequest: {...state.isRequest, create: true},
+        error: null
+      };
+    case ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS:
+      return {
+        ...state,
+        isRequest: {...state.isRequest, create: false},
+        data: action.payload,
+        error: null
+      };
+    case ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_FAILURE:
+      return {
+        ...state,
+        isRequest: {...state.isRequest, create: false},
+        error: action.payload
+      };
 
     // DETAILS UPDATE ACTIONS
     case ActivityDetailsActions.ACTIVITY_DETAILS_UPDATE_REQUEST:
@@ -87,6 +110,11 @@ export const activityDetails: Reducer<IActivityDetailsState, any> = (
         ...state,
         isRequest: {...state.isRequest, statusChange: false},
         error: action.payload
+      };
+    case ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST:
+      return {
+        ...state,
+        checklistAttachments: action.payload
       };
     default:
       return state;

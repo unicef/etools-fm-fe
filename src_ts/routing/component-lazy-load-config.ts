@@ -30,7 +30,10 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
     'components/pages/activities-and-data-collection/activity-item/details-tab/activity-details-tab.js',
     'components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js',
     'components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js',
-    'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab.js'
+    'components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js',
+    'components/pages/activities-and-data-collection/activity-item/additional-info-tab/additional-info-tab.js',
+    'components/pages/activities-and-data-collection/activity-item/activity-summary-tab/activity-summary-tab.js',
+    'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js'
   ],
 
   // Activity Data Collection
@@ -40,8 +43,21 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
   ],
 
   // Analyze pages
-  'analyze_monitoring-activity': ['components/pages/analyze/analyze-page.js'],
-  'analyze_country-overview': ['components/pages/analyze/analyze-page.js']
+  'analyze_monitoring-activity': [
+    'components/pages/analyze/analyze-page.js',
+    'components/pages/analyze/monitoring-tab/monitoring-tab.js',
+    'components/pages/analyze/monitoring-tab/coverage/partnership-tab/partnership-tab.js',
+    'components/pages/analyze/monitoring-tab/coverage/pd-ssfa-tab/pd-ssfa-tab.js',
+    'components/pages/analyze/monitoring-tab/coverage/cp-output-tab/cp-output-tab.js',
+    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js',
+    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js',
+    'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js'
+  ],
+  'analyze_country-overview': [
+    'components/pages/analyze/analyze-page.js',
+    'components/pages/analyze/co-overview-tab/co-overview-tab.js',
+    'components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js'
+  ]
 };
 
 export function getFilePathsToImport(routeDetails: IRouteDetails): string[] {

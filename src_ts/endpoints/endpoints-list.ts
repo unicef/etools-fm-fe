@@ -1,5 +1,5 @@
 export const PROFILE_ENDPOINT: 'userProfile' = 'userProfile';
-export const CP_OUTCOMES_ENDPOINT: 'cpOutcomes' = 'cpOutcomes';
+export const CP_OUTCOMES: 'cpOutcomes' = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT: 'locations' = 'locations';
 export const CHANGE_COUNTRY: 'changeCountry' = 'changeCountry';
 export const UNICEF_USER: 'unicefUsers' = 'unicefUsers';
@@ -34,10 +34,29 @@ export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
+export const ACTIVITY_CHECKLIST_ATTACHMENTS: 'activityChecklistAttachments' = 'activityChecklistAttachments';
+export const DATA_COLLECTION_ACTIVITY: 'dataCollectionActivities' = 'dataCollectionActivities';
+export const ACTIVITY_OVERALL_FINDING: 'activityOverallFinding' = 'activityOverallFinding';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
+export const DATA_COLLECTION_CHECKLIST_ITEM: 'dataCollectionChecklistItem' = 'dataCollectionChecklistItem';
+export const DATA_COLLECTION_SPECIFIC_CHECKLIST: 'dataCollectionSpecificChecklist' = 'dataCollectionSpecificChecklist';
 export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
 export const ATTACHMENTS_STORE: 'attachmentsStore' = 'attachmentsStore';
+export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' =
+  'monitoringActivityOverallStatistics';
+export const MONITORING_ACTIVITY_PARTNERS_COVERAGE: 'monitoringActivityPartnersCoverage' =
+  'monitoringActivityPartnersCoverage';
+export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE: 'monitoringActivityInterventionsCoverage' =
+  'monitoringActivityInterventionsCoverage';
+export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE: 'monitoringActivityCpOutputCoverage' =
+  'monitoringActivityCpOutputCoverage';
+export const GEOGRAPHIC_COVERAGE: 'geographicCoverage' = 'geographicCoverage';
+export const OPEN_ISSUES_PARTNERS: 'openIssuesPartners' = 'openIssuesPartners';
+export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
+export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
+export const HACT_VISITS: 'hactVisits' = 'hactVisits';
+export const FULL_REPORT: 'fullReport' = 'fullReport';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -54,10 +73,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
   },
 
-  [CP_OUTCOMES_ENDPOINT]: {
+  [CP_OUTCOMES]: {
     template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
     exp: 60 * 60 * 1000, // 1 hour
     cacheTableName: 'cpOutcomes'
+  },
+
+  [FULL_REPORT]: {
+    template: '/api/reports/results/<%=id%>/full/'
   },
 
   [LOCATIONS_ENDPOINT]: {
@@ -208,12 +231,32 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
   },
 
+  [DATA_COLLECTION_ACTIVITY]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/'
+  },
+
+  [ACTIVITY_OVERALL_FINDING]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/overall-findings/<%=overallId%>/'
+  },
+
   [ACTIVITY_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
   },
 
+  [ACTIVITY_CHECKLIST_ATTACHMENTS]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/attachments/'
+  },
+
   [DATA_COLLECTION_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/'
+  },
+
+  [DATA_COLLECTION_CHECKLIST_ITEM]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/'
+  },
+
+  [DATA_COLLECTION_SPECIFIC_CHECKLIST]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/'
   },
 
   [DATA_COLLECTION_OVERALL_FINDING]: {
@@ -223,5 +266,41 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ATTACHMENTS_STORE]: {
     url: '/api/v2/attachments/upload/'
+  },
+
+  [MONITORING_ACTIVITY_OVERALL_STATISTICS]: {
+    template: '/api/v1/field-monitoring/analyze/overall/'
+  },
+
+  [MONITORING_ACTIVITY_PARTNERS_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/partners/'
+  },
+
+  [MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/interventions/'
+  },
+
+  [MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/cp-outputs/'
+  },
+
+  [GEOGRAPHIC_COVERAGE]: {
+    template: '/api/v1/field-monitoring/analyze/coverage/geographic/'
+  },
+
+  [OPEN_ISSUES_PARTNERS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/partners/'
+  },
+
+  [OPEN_ISSUES_CP_OUTPUT]: {
+    template: '/api/v1/field-monitoring/analyze/issues/cp-outputs/'
+  },
+
+  [OPEN_ISSUES_LOCATIONS]: {
+    template: '/api/v1/field-monitoring/analyze/issues/locations/'
+  },
+
+  [HACT_VISITS]: {
+    template: '/api/v1/field-monitoring/analyze/hact/'
   }
 };

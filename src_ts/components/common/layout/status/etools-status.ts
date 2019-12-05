@@ -1,6 +1,7 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/iron-icons/iron-icons';
-import {completedStatusIcon} from './status-icons';
+import {cancelledStatusIcon, completedStatusIcon} from './status-icons';
+import {CANCELLED} from '../../../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 /**
  * @LitElement
@@ -69,6 +70,10 @@ export class EtoolsStatus extends LitElement {
           background-color: var(--primary-color);
         }
 
+        .status.cancelled .icon {
+          background-color: var(--primary-background-color);
+        }
+
         .status.completed .icon {
           background-color: var(--success-color);
           fill: #ffffff;
@@ -79,18 +84,11 @@ export class EtoolsStatus extends LitElement {
   }
 
   getStatusHtml(item: any, index: number): TemplateResult {
-    const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
     // language=HTML
     return html`
       <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
         <span class="icon">
-          ${completed
-            ? html`
-                ${completedStatusIcon}
-              `
-            : html`
-                ${this.getBaseOneIndex(index)}
-              `}
+          ${this.getIcon(index)}
         </span>
         <span class="label">${item.label}</span>
       </div>
@@ -148,6 +146,26 @@ export class EtoolsStatus extends LitElement {
     if (this.isCompleted(index, activeStatusIndex)) {
       classes.push('completed');
     }
+    if (this.statuses[index].status === CANCELLED) {
+      classes.push('cancelled');
+    }
     return classes.join(' ');
+  }
+
+  getIcon(index: number): TemplateResult {
+    const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
+    if (completed) {
+      return html`
+        ${completedStatusIcon}
+      `;
+    } else if (this.statuses[index].status === CANCELLED) {
+      return html`
+        ${cancelledStatusIcon}
+      `;
+    } else {
+      return html`
+        ${this.getBaseOneIndex(index)}
+      `;
+    }
   }
 }

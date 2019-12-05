@@ -8,14 +8,15 @@ import {template} from './data-collection-card.tpl';
 import {DataCollectionCardStyles} from './data-collection-card.styles';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {store} from '../../../../../redux/store';
-import {
-  editedFindingsTab,
-  updateOverallAndFindingsState
-} from '../../../../../redux/selectors/data-collection.selectors';
-import {SetEditedDCChecklistCard} from '../../../../../redux/actions/data-collection.actions';
 import {Unsubscribe} from 'redux';
 import {BOOLEAN_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {openDialog} from '../../../../utils/dialog';
+import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {
+  editedFindingsTab,
+  updateOverallAndFindingsState
+} from '../../../../../redux/selectors/findings-components.selectors';
+import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
 
 @customElement('data-collection-card')
 export class DataCollectionCard extends LitElement {
@@ -42,7 +43,7 @@ export class DataCollectionCard extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     /**
-     * Subscription on store.dataCollection.editedFindingsTab
+     * Subscription on store.findingsComponents.editedFindingsComponent
      * Toggle isEditMode property
      * Hide edit button if current tub is not edited tab (blockEdit property)
      */
@@ -76,17 +77,17 @@ export class DataCollectionCard extends LitElement {
   }
 
   openAttachmentsPopup(): void {
-    if (!this.overallInfo || !this.attachmentsEndpoint) {
+    if (!this.overallInfo) {
       return;
     }
     openDialog<AttachmentsPopupData, AttachmentDialogResponse>({
       dialog: 'checklist-attachments-popup',
-      data: {
+      dialogData: {
         attachments: this.overallInfo.attachments,
         updateUrl: this.attachmentsEndpoint,
         title: `Attachments for ${this.tabName}`
       },
-      readonly: this.readonly
+      readonly: this.readonly || !this.attachmentsEndpoint
     }).then(({confirmed, response}: IDialogResponse<AttachmentDialogResponse>) => {
       if (!confirmed || (response && response.noChanges)) {
         return;
@@ -112,22 +113,24 @@ export class DataCollectionCard extends LitElement {
         return html`
           <div class="finding-container">
             <text-finding
-              .questionText="${finding.activity_question.question.text}"
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
-            ></text-finding>
+            >
+              ${this.getFindingQuestion(finding)}
+            </text-finding>
           </div>
         `;
       case NUMBER_TYPE:
         return html`
           <div class="finding-container">
             <number-finding
-              .questionText="${finding.activity_question.question.text}"
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
-            ></number-finding>
+            >
+              ${this.getFindingQuestion(finding)}
+            </number-finding>
           </div>
         `;
       case BOOLEAN_TYPE:
@@ -135,17 +138,64 @@ export class DataCollectionCard extends LitElement {
         return html`
           <div class="finding-container">
             <scale-finding
-              .questionText="${finding.activity_question.question.text}"
               .options="${finding.activity_question.question.options}"
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
               @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
-            ></scale-finding>
+            >
+              ${this.getFindingQuestion(finding)}
+            </scale-finding>
           </div>
         `;
       default:
         return html``;
     }
+  }
+
+  protected getFindingQuestion(finding: DataCollectionFinding): TemplateResult {
+    return html`
+      <div class="layout vertical question-container">
+        <div class="question-text">${finding.activity_question.question.text}</div>
+        <div class="question-details">${finding.activity_question.specific_details}</div>
+      </div>
+    `;
+  }
+
+  protected getOverallFindingTemplate(): TemplateResult {
+    return this.overallInfo
+      ? html`
+          <div class="overall-finding">
+            <paper-textarea
+              id="details-input"
+              class="without-border"
+              .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
+              label="Overall finding"
+              ?disabled="${!this.isEditMode}"
+              placeholder="${this.isEditMode ? 'Enter Overall finding' : '-'}"
+              @value-changed="${({detail}: CustomEvent) =>
+                this.updateOverallFinding({narrative_finding: detail.value})}"
+            ></paper-textarea>
+          </div>
+        `
+      : html``;
+  }
+
+  /**
+   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab is readonly and no attachments uploaded
+   */
+  protected getAdditionalButtons(): TemplateResult {
+    const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;
+    const showAttachmentsButton: boolean = Boolean(
+      this.overallInfo && (!isReadonly || this.overallInfo.attachments.length)
+    );
+    return showAttachmentsButton
+      ? html`
+          <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">
+            <iron-icon icon="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></iron-icon>
+            ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
+          </paper-button>
+        `
+      : html``;
   }
 
   /**
@@ -181,7 +231,7 @@ export class DataCollectionCard extends LitElement {
     this.overallInfo = this.originalOverallInfo;
     this.originalOverallInfo = null;
     this.originalFindings = [];
-    store.dispatch(new SetEditedDCChecklistCard(null));
+    store.dispatch(new SetEditedFindingsCard(null));
   }
 
   /**
@@ -232,6 +282,6 @@ export class DataCollectionCard extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [DataCollectionCardStyles];
+    return [DataCollectionCardStyles, FlexLayoutClasses];
   }
 }

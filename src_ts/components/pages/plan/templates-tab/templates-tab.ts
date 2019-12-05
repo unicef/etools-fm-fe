@@ -38,7 +38,7 @@ const ENTER: 13 = 13;
 const ESCAPE: 27 = 27;
 
 @customElement('templates-tab')
-export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitElement) {
+export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
   @property() listLoadingInProcess: boolean = false;
   @property() editedDetails: GenericObject = {opened: false};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
@@ -164,9 +164,7 @@ export class TemplatesTabComponent extends ListMixin<IQuestionTemplate>(LitEleme
   }
 
   updateTemplate(id: number, field: 'is_active', value: boolean): void;
-
   updateTemplate(id: number, field: 'specific_details', value: string): void;
-
   updateTemplate(id: number, field: 'specific_details' | 'is_active', value: string | boolean): void {
     // close editedDetails input popover
     this.editedDetails = {opened: false};

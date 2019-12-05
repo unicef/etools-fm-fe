@@ -7,27 +7,37 @@ import {DataMixin} from '../../../../../common/mixins/data-mixin';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {
   activityDetailsData,
+  activityDetailsError,
   activityDetailsIsLoad,
   detailsEditedCard
 } from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
+import {fireEvent} from '../../../../../utils/fire-custom-event';
 
-export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitElement>(LitElement) {
-  @property() isReadonly: boolean = true;
+export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
+  @property() isEditMode: boolean = false;
   @property() isUpdate: boolean = false;
   @property() editedCard: string | null = null;
   @property({type: Boolean}) isLoad: boolean = false;
 
   private isLoadUnsubscribe!: Unsubscribe;
+  private activityDetailsUnsubscribe!: Unsubscribe;
+  private errorUnsubscribe!: Unsubscribe;
+  private editedCardUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.subscribe(
+    this.activityDetailsUnsubscribe = store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
         this.data = data;
       })
     );
-    store.subscribe(
+    this.errorUnsubscribe = store.subscribe(
+      activityDetailsError((errors: GenericObject | null) => {
+        this.errors = errors || {};
+      })
+    );
+    this.editedCardUnsubscribe = store.subscribe(
       detailsEditedCard((editedCard: null | string) => {
         this.editedCard = editedCard;
       })
@@ -42,10 +52,12 @@ export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitEleme
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.isLoadUnsubscribe();
+    this.activityDetailsUnsubscribe();
+    this.errorUnsubscribe();
+    this.editedCardUnsubscribe();
   }
 
   protected save(): void {
-    this.isReadonly = false;
     const diff: Partial<IActivityDetails> = getDifference<IActivityDetails>(this.originalData || {}, this.editedData, {
       toRequest: true
     });
@@ -53,24 +65,42 @@ export class BaseDetailsCard extends DataMixin<IActivityDetails, typeof LitEleme
       this.isUpdate = true;
       store.dispatch<AsyncEffect>(updateActivityDetails(this.editedData.id, diff)).then(() => this.finish());
     } else {
-      this.isReadonly = true;
+      this.isEditMode = false;
       store.dispatch(new SetEditedDetailsCard(null));
     }
   }
 
   protected finish(): void {
-    this.isReadonly = true;
+    const errors: string[] = this.errors.data || [];
     this.isUpdate = false;
-    store.dispatch(new SetEditedDetailsCard(null));
+    if (!errors.length) {
+      this.isEditMode = false;
+      store.dispatch(new SetEditedDetailsCard(null));
+    }
+    for (const error of errors) {
+      fireEvent(this, 'toast', {text: error});
+    }
   }
 
   protected cancel(): void {
-    this.isReadonly = true;
+    this.isEditMode = false;
     this.data = clone(this.originalData);
     store.dispatch(new SetEditedDetailsCard(null));
   }
 
   protected startEdit(): void {
-    this.isReadonly = false;
+    this.isEditMode = true;
+  }
+
+  protected isFieldReadonly(field: string): boolean {
+    return (
+      !this.editedData ||
+      !(this.editedData as IActivityDetails).permissions.edit[field as keyof ActivityPermissionsObject]
+    );
+  }
+
+  protected havePossibilityToEditCard(cardName: string, cardFields: string[]): boolean {
+    const cardFieldsAreReadonly: boolean = cardFields.every((field: string) => this.isFieldReadonly(field));
+    return (!this.editedCard || this.editedCard === cardName) && !cardFieldsAreReadonly;
   }
 }

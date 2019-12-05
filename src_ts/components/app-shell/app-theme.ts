@@ -16,6 +16,7 @@ documentContainer.innerHTML = `
         --primary-text-color: rgba(0, 0, 0, 0.87);
         --secondary-text-color: rgba(0, 0, 0, 0.54);
         --gray-mid: #9d9d9d;
+        --gray-light-background: #E7E7E7;
 
         --header-color: #ffffff;
         --header-bg-color: var(--primary-color);
@@ -32,9 +33,13 @@ documentContainer.innerHTML = `
 
         --success-color: #72c300;
         --error-color: #ea4022;
+        
+        --red-color: #FF0000;
 
         --primary-shade-of-green: #1A9251;
         --primary-shade-of-red: #E32526;
+        --reject-color: #88304E;
+        --note-color: #FF9044;
 
         --epc-header: {
           background-color: var( --primary-background-color);

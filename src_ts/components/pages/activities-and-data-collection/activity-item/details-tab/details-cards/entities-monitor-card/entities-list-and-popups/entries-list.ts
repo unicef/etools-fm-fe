@@ -1,7 +1,7 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
-import {translate} from '../../../../../../../localization/localisation';
+import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {translate} from '../../../../../../../../localization/localisation';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {
@@ -50,6 +50,10 @@ export class EntriesList extends LitElement {
       .entries-item:hover {
         background-color: var(--secondary-background-color);
       }
+      :host([is-readonly]) .entries-item {
+        cursor: default;
+        pointer-events: none;
+      }
       :host([is-readonly]) .entries-item:hover {
         background-color: var(--primary-background-color);
       }
@@ -93,12 +97,12 @@ export class EntriesList extends LitElement {
           ${repeat(
             this.items,
             (item: any) => html`
-              <div class="entries-item">
+              <div class="entries-item" @click="${() => this.removeEntry(item.id)}">
                 ${this.formatItem(item)}
                 ${!this.isReadonly
                   ? html`
                       <div class="hover-block">
-                        <iron-icon icon="icons:delete" @tap="${() => this.removeEntry(item.id)}"></iron-icon>
+                        <iron-icon icon="icons:delete"></iron-icon>
                       </div>
                     `
                   : ''}

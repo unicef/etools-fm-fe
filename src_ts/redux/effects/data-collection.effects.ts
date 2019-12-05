@@ -1,10 +1,29 @@
 import {IAsyncAction} from '../middleware';
-import {DataCollectionChecklistActionTypes} from '../actions/data-collection.actions';
+import {DataCollectionChecklistActionTypes, SetChecklistInformationSource} from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {DATA_COLLECTION_CHECKLIST, DATA_COLLECTION_OVERALL_FINDING} from '../../endpoints/endpoints-list';
+import {
+  DATA_COLLECTION_CHECKLIST,
+  DATA_COLLECTION_OVERALL_FINDING,
+  DATA_COLLECTION_SPECIFIC_CHECKLIST
+} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
+import {SetEditedFindingsCard, SetFindingsUpdateState} from '../actions/findings-components.actions';
+
+export function loadDataCollectionChecklist(activityId: number): IAsyncAction {
+  return {
+    types: [
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId});
+      return request(`${url}?page_size=all`);
+    }
+  };
+}
 
 export function loadDataCollectionChecklistInfo(activityId: string, checklistId: string): IAsyncAction {
   return {
@@ -18,6 +37,21 @@ export function loadDataCollectionChecklistInfo(activityId: string, checklistId:
       const resultUrl: string = `${url}${checklistId}/`;
       return request(resultUrl);
     }
+  };
+}
+
+export function updateDataCollectionChecklistInformationSource(
+  activityId: string,
+  checklistId: string,
+  requestData: Partial<DataCollectionChecklist>
+): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(DATA_COLLECTION_SPECIFIC_CHECKLIST, {activityId, checklistId});
+    return request<DataCollectionChecklist>(endpoint.url, {method: 'PATCH', body: JSON.stringify(requestData)}).then(
+      (response: DataCollectionChecklist) => {
+        dispatch(new SetChecklistInformationSource(response));
+      }
+    );
   };
 }
 
@@ -73,18 +107,24 @@ export function updateFindingsAndOverall(
       DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE
     ],
     api: () => {
+      store.dispatch(new SetFindingsUpdateState(true));
       return Promise.all([
         updateFindings(activityId, checklistId, requestData.findings),
         updateOverall(activityId, checklistId, requestData.overall)
-      ]).then(([findings, overall]: [DataCollectionFinding[] | null, DataCollectionOverall | null]) => {
-        let skip: 'findings' | 'overall' | null = null;
-        if (findings === null) {
-          skip = 'findings';
-        } else if (overall === null) {
-          skip = 'overall';
-        }
-        store.dispatch<AsyncEffect>(loadFindingsAndOverall(activityId, checklistId, skip));
-      });
+      ])
+        .then(([findings, overall]: [DataCollectionFinding[] | null, DataCollectionOverall | null]) => {
+          let skip: 'findings' | 'overall' | null = null;
+          if (findings === null) {
+            skip = 'findings';
+          } else if (overall === null) {
+            skip = 'overall';
+          }
+          store.dispatch(new SetEditedFindingsCard(null));
+          store.dispatch<AsyncEffect>(loadFindingsAndOverall(activityId, checklistId, skip));
+        })
+        .finally(() => {
+          store.dispatch(new SetFindingsUpdateState(false));
+        });
     }
   };
 }
@@ -121,13 +161,16 @@ export function updateChecklistAttachments(
 ): (dispatch: Dispatch) => Promise<boolean> {
   return () => {
     const requestsData: GenericObject<RequestChecklistAttachment[]> = data.reduce(
-      (requests: GenericObject<RequestChecklistAttachment[]>, attachment: RequestChecklistAttachment) => {
-        if (attachment.id && !attachment.delete) {
-          requests.PATCH.push(attachment);
-        } else if (attachment.id) {
-          requests.DELETE.push({id: attachment.id});
+      (
+        requests: GenericObject<RequestChecklistAttachment[]>,
+        {attachment, id, _delete, file_type}: RequestChecklistAttachment
+      ) => {
+        if (id && !_delete) {
+          requests.PATCH.push({file_type});
+        } else if (id) {
+          requests.DELETE.push({id});
         } else {
-          requests.POST.push(attachment);
+          requests.POST.push({id: attachment, file_type});
         }
         return requests;
       },
@@ -137,13 +180,38 @@ export function updateChecklistAttachments(
         DELETE: []
       }
     );
-    const requests: (Promise<void> | null)[] = Object.entries(
-      requestsData
-    ).map(([method, data]: [string, RequestChecklistAttachment[]]) =>
-      data.length ? request(url, {method, body: JSON.stringify(data)}) : null
+    const requests: (Promise<void> | null)[] = Object.entries(requestsData).map(
+      ([method, data]: [string, RequestChecklistAttachment[]]) => {
+        if (!data.length) {
+          return null;
+        }
+        if (method === 'DELETE') {
+          const ids: string = data.map(({id}: RequestChecklistAttachment) => id).join(',');
+          return request(`${url}?id__in=${ids}`, {method});
+        } else if (method === 'POST') {
+          return request(`${url}/link/`, {method, body: JSON.stringify(data)});
+        } else {
+          return request(url, {method, body: JSON.stringify(data)});
+        }
+      }
     );
     return Promise.all(requests).then((response: (void | null)[]) =>
       response.every((response: void | null) => response === null)
     );
+  };
+}
+
+export function createCollectionChecklist(id: number, data: Partial<DataCollectionChecklist>): IAsyncAction {
+  return {
+    types: [
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_SUCCESS,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE
+    ],
+    api: () => {
+      const requestInit: RequestInit = {method: 'POST', body: JSON.stringify(data)};
+      const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId: id});
+      return request(url, requestInit);
+    }
   };
 }

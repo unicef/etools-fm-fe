@@ -31,6 +31,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
       dialog-title="${translate('ISSUE_TRACKER.POPUP_TITLE')}"
       @iron-overlay-closed="${({target}: CustomEvent) => this.resetData(target)}"
       @confirm-btn-clicked="${() => this.processRequest()}"
+      @close="${this.onClose}"
     >
       <etools-loading
         ?active="${this.isRequest}"
@@ -101,7 +102,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @tap="${() => this.resetFieldError('partner')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('partner', detail.selectedItem && detail.selectedItem.id)}"
-                  hide-search
                   allow-outside-scroll
                 >
                 </etools-dropdown>
@@ -129,7 +129,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   trigger-value-change-event
                   @focus="${() => this.resetFieldError('cp_output')}"
                   @tap="${() => this.resetFieldError('cp_output')}"
-                  hide-search
                   allow-outside-scroll
                 >
                 </etools-dropdown>
@@ -157,7 +156,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @tap="${() => this.resetFieldError('location')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
-                  hide-search
                   allow-outside-scroll
                 >
                 </etools-dropdown>
@@ -178,7 +176,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @tap="${() => this.resetFieldError('location_site')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
-                  hide-search
                   allow-outside-scroll
                 >
                 </etools-dropdown>

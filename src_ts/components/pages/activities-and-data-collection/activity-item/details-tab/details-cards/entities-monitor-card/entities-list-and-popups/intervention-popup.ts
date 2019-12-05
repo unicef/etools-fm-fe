@@ -1,21 +1,21 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {InputStyles} from '../../../../../../styles/input-styles';
-import {DialogStyles} from '../../../../../../styles/dialog-styles';
-import {translate} from '../../../../../../../localization/localisation';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
-import {PartnersMixin} from '../../../../../../common/mixins/partners-mixin';
-import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {elevationStyles} from '../../../../../../styles/elevation-styles';
-import {CardStyles} from '../../../../../../styles/card-styles';
-import {SharedStyles} from '../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
+import {InputStyles} from '../../../../../../../styles/input-styles';
+import {DialogStyles} from '../../../../../../../styles/dialog-styles';
+import {translate} from '../../../../../../../../localization/localisation';
+import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
+import {simplifyValue} from '../../../../../../../utils/objects-diff';
+import {elevationStyles} from '../../../../../../../styles/elevation-styles';
+import {CardStyles} from '../../../../../../../styles/card-styles';
+import {SharedStyles} from '../../../../../../../styles/shared-styles';
+import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import '@unicef-polymer/etools-dialog';
 import '@unicef-polymer/etools-dropdown';
-import {debounce} from '../../../../../../utils/debouncer';
-import {getEndpoint} from '../../../../../../../endpoints/endpoints';
-import {INTERVENTIONS_SHORT, OUTPUTS_SHORT} from '../../../../../../../endpoints/endpoints-list';
-import {request} from '../../../../../../../endpoints/request';
-import {EtoolsRouter} from '../../../../../../../routing/routes';
+import {debounce} from '../../../../../../../utils/debouncer';
+import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
+import {INTERVENTIONS_SHORT, OUTPUTS_SHORT} from '../../../../../../../../endpoints/endpoints-list';
+import {request} from '../../../../../../../../endpoints/request';
+import {EtoolsRouter} from '../../../../../../../../routing/routes';
 import {repeat} from 'lit-html/directives/repeat';
 
 @customElement('intervention-popup')

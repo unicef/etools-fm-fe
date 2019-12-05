@@ -5,7 +5,6 @@ import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {translate} from '../../../localization/localisation';
-import {hasPermission, Permissions} from '../../../config/permissions';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
   // language=HTML
@@ -30,7 +29,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
           <paper-icon-button
             @tap="${() => this.openPopup()}"
             class="panel-button"
-            ?hidden="${!hasPermission(Permissions.EDIT_RATIONALE)}"
+            ?hidden="${this.readonly}"
             icon="add-box"
           ></paper-icon-button>
         </div>
@@ -75,7 +74,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>
 
-                  <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_RATIONALE)}">
+                  <div class="hover-block" ?hidden="${this.readonly}">
                     <paper-icon-button
                       icon="icons:create"
                       @tap="${() => this.openPopup(attachment)}"

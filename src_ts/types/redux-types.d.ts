@@ -14,6 +14,10 @@ interface IRootState {
   attachmentsList: IAttachmentsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
+  monitoringActivities: IMonitoringActivityState;
+  fullReports: IFullReportsState;
+  activitySummary: IActivitySummaryState;
+  findingsComponents: IFindingsComponentsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -45,6 +49,7 @@ interface IStaticDataState {
   users?: User[];
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
+  cpOutcomes?: EtoolsCpOutcome[];
 }
 
 interface ISpecificLocationsState {
@@ -79,6 +84,14 @@ interface IActivitiesState {
   listData: null | IListData<IListActivity>;
 }
 
+type IFullReportsState = {
+  isRequest: {
+    load: boolean;
+  };
+  data: GenericObject<FullReportData>;
+  error: null | GenericObject;
+};
+
 interface IActivityChecklistState {
   data: null | IChecklistItem[];
   editedCard: null | string;
@@ -93,10 +106,12 @@ interface IActivityDetailsState extends IRequestState {
   editedCard: null | string;
   error: null | GenericObject;
   isRequest: {
+    create: boolean;
     load: boolean;
     update: boolean;
     statusChange: boolean;
   };
+  checklistAttachments: IChecklistAttachment[];
 }
 
 interface IWidgetLocationsState {
@@ -108,26 +123,66 @@ interface IWidgetLocationsState {
 
 interface IDataCollectionState {
   loading: {
+    checklistCollect: null | boolean;
+    checklistCreate: null | boolean;
     checklist: null | boolean;
     findings: null | boolean;
     overallAndFindingsUpdate: null | boolean;
   };
-  editedFindingsTab: null | string;
+  checklistCollect: DataCollectionChecklist[];
   checklist: {
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
   };
   errors: {
+    checklistCollect: null | GenericObject;
+    checklistCreate: null | GenericObject;
     checklist: null | GenericObject;
     findings: null | GenericObject;
     overallAndFindingsUpdate: null | GenericObject;
   };
 }
 
-type FindingsAndOverall = {
-  findings: null | DataCollectionFinding[];
-  overall: null | DataCollectionOverall[];
+interface IAdditionalInfoState {
+  isRequest: {
+    issueTrackingLoad: null | boolean;
+  };
+  issueTracking: LogIssue[];
+  errors: {
+    issueTracking: null | GenericObject;
+  };
+}
+
+type FindingsAndOverall<T = DataCollectionFinding, U = DataCollectionOverall> = {
+  findings: null | T[];
+  overall: null | U[];
 };
+
+interface IActivitySummaryState {
+  findingsAndOverall: FindingsAndOverall<SummaryFinding, SummaryOverall>;
+  error: null | GenericObject;
+  editedFindingsTab: null | string;
+  updateInProcess: null | boolean;
+  loading: null | boolean;
+}
+
+interface IFindingsComponentsState {
+  editedFindingsComponent: null | string;
+  overallAndFindingsUpdate: null | boolean;
+}
+
+interface IMonitoringActivityState {
+  overallActivities: OverallActivities;
+  partnersCoverage: PartnersCoverage[];
+  interventionsCoverage: InterventionsCoverage[];
+  cpOutputCoverage: CpOutputCoverage[];
+  geographicCoverage: GeographicCoverage[];
+  openIssuesPartnership: OpenIssuesActionPoints[];
+  openIssuesCpOutput: OpenIssuesActionPoints[];
+  openIssuesLocation: OpenIssuesActionPoints[];
+  lastActivatedTab: string;
+  hactVisits: HactVisits[];
+}
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;
 type DynamicSelector<T> = (onChange: (state: T) => void, path?: string[], initialize?: boolean) => Callback;

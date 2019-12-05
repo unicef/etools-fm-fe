@@ -11,9 +11,19 @@ type DataCollectionChecklist = {
   };
 };
 
+interface ISummaryChecklistItem extends IChecklistItem {
+  findings: CompletedFinding[];
+}
+
 type DataCollectionFinding = {
   id: number;
   activity_question: IChecklistItem;
+  value: null | string | number;
+};
+
+type SummaryFinding = {
+  id: number;
+  activity_question: ISummaryChecklistItem;
   value: null | string | number;
 };
 
@@ -26,20 +36,25 @@ type DataCollectionOverall = {
   attachments: [];
 };
 
+type SummaryOverall = DataCollectionOverall & {
+  findings: CompletedOverallFinding[];
+  on_track: null | boolean;
+};
+
 type SortedFindingsAndOverall = {
   name: string;
   overall: DataCollectionOverall;
   findings: DataCollectionFinding[];
 };
 
-type DataCollectionRequestData = {
-  overall?: Partial<DataCollectionOverall>;
-  findings?: Partial<DataCollectionFinding>[];
+type DataCollectionRequestData<T = DataCollectionFinding, U = DataCollectionOverall> = {
+  overall?: Partial<U>;
+  findings?: Partial<T>[];
 };
 
 type AttachmentsPopupData = {
   attachments: IAttachment[];
-  updateUrl: string;
+  updateUrl?: string;
   title: string;
 };
 
@@ -47,9 +62,28 @@ type RequestChecklistAttachment = {
   id?: number;
   file_type?: number | string;
   attachment?: number;
-  delete?: true;
+  _delete?: true;
 };
 
 type AttachmentDialogResponse = {
   noChanges: boolean;
+};
+
+type CompletedOverallFinding = {
+  author: ActivityTeamMember;
+  method: number;
+  information_source: string;
+  narrative_finding: string;
+};
+
+type CompletedFinding = {
+  id: number;
+  author: ActivityTeamMember;
+  method: number;
+  value: string;
+};
+
+type CollectChecklistParams = {
+  information_source?: string;
+  method: number;
 };

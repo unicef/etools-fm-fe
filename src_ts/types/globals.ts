@@ -20,7 +20,6 @@ type PageTab = {
   tab: string;
   tabLabel: string;
   hidden: boolean;
-  requiredPermission?: string;
 };
 
 interface IEtoolsEndpoint {
@@ -83,6 +82,8 @@ type EtoolsSection = {
 type EtoolsMethod = {
   id: number;
   name: string;
+  use_information_source: boolean;
+  short_name: string;
 };
 
 type SortDetails = {
@@ -102,7 +103,7 @@ type SelectedFile = {
 
 interface IDialog<D> {
   dialog: string;
-  data?: D;
+  dialogData?: D;
   readonly?: boolean;
 }
 
