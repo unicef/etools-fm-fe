@@ -8,7 +8,7 @@ import {CardStyles} from '../../../../../styles/card-styles';
 
 @customElement('pd-ssfa-details')
 export class PdSsfaDetails extends LitElement {
-  @property() activityDetails: IActivityDetails | null = null;
+  @property() interventions: IActivityIntervention[] | null = null;
   @property() items: EtoolsIntervention[] = [];
   @property() pageSize: number = 5;
   @property() pageNumber: number = 1;
@@ -30,9 +30,9 @@ export class PdSsfaDetails extends LitElement {
   }
 
   getTargetInterventions(): IActivityIntervention[] {
-    if (this.activityDetails) {
+    if (this.interventions) {
       const startIndex: number = (this.pageNumber - 1) * this.pageSize;
-      return this.activityDetails.interventions.slice(startIndex, startIndex + this.pageSize);
+      return this.interventions.slice(startIndex, startIndex + this.pageSize);
     } else {
       return [];
     }

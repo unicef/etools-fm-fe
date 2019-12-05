@@ -16,7 +16,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
         <etools-data-table-column class="flex-1 col-data">Progress Reports</etools-data-table-column>
       </etools-data-table-header>
 
-      ${!this.activityDetails || !this.activityDetails.interventions.length
+      ${!this.interventions || !this.interventions.length
         ? html`
             <etools-data-table-row no-collapse>
               <div slot="row-data" class="layout horizontal editable-row flex">
@@ -55,7 +55,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
         id="footer"
         .pageSize="${this.pageSize || undefined}"
         .pageNumber="${this.pageNumber || undefined}"
-        .totalResults="${this.activityDetails ? this.activityDetails.interventions.length : 0}"
+        .totalResults="${this.interventions ? this.interventions.length : 0}"
         @page-size-changed="${(event: CustomEvent) => this.onPageSizeChange(event.detail.value)}"
         @page-number-changed="${(event: CustomEvent) => this.onPageNumberChange(event.detail.value)}"
       >

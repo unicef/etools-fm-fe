@@ -9,14 +9,16 @@ addTranslates(ENGLISH, [ACTIVITY_ADDITIONAL_INFO_TRANSLATES, ISSUE_TRACKER_TRANS
 
 @customElement('additional-info-tab')
 export class AdditionalInfoTab extends LitElement {
-  @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
 
   render(): TemplateResult {
     return html`
       <issue-tracker-list .activityId="${this.activityDetails ? this.activityDetails.id : null}"></issue-tracker-list>
       <div class="pd-ssfa-details-container">
-        <pd-ssfa-details class="pd-ssfa-details" .activityDetails="${this.activityDetails}"></pd-ssfa-details>
+        <pd-ssfa-details
+          class="pd-ssfa-details"
+          .interventions="${this.activityDetails ? this.activityDetails.interventions : null}"
+        ></pd-ssfa-details>
       </div>
     `;
   }
