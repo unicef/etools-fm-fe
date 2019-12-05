@@ -15,6 +15,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
+import {openDialog} from '../../../utils/dialog';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -87,17 +88,10 @@ export class RationaleTabComponent extends LitElement {
   }
 
   openPopup(): void {
-<<<<<<< HEAD
-    // openDialog<RationaleModalData | undefined>({
-    //   dialog: 'rationale-popup',
-    //   data: {year: this.selectedYear, model: this.yearPlan}
-    // });
-=======
     openDialog<RationaleModalData | undefined>({
       dialog: 'rationale-popup',
       dialogData: {year: this.selectedYear, model: this.yearPlan}
     });
->>>>>>> field_monitoring
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {

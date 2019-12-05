@@ -20,6 +20,13 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
 
   private updateRationaleUnsubscribe!: Unsubscribe;
 
+  set editedModel(yearPlan: IRationale) {
+    if (!yearPlan) {
+      return;
+    }
+    this.editedData = yearPlan;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     this.updateRationaleUnsubscribe = store.subscribe(
@@ -50,14 +57,12 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   }
 
   save(): void {
-    // this.performUpdate();
     this.processRequest();
     this.isReadonly = true;
   }
 
   cancel(): void {
-    // this.performUpdate();
-    // this.editedData = JSON.parse(JSON.stringify(this.originalData));
+    this.editedData = JSON.parse(JSON.stringify(this.originalData));
     this.isReadonly = true;
   }
 
