@@ -15,7 +15,6 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
-import {openDialog} from '../../../utils/dialog';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -85,13 +84,6 @@ export class RationaleTabComponent extends LitElement {
   formatValue(value?: string | number): string {
     const isEmptyValue: boolean = value === null || value === undefined || value === '';
     return isEmptyValue ? '...' : (value as string);
-  }
-
-  openPopup(): void {
-    openDialog<RationaleModalData | undefined>({
-      dialog: 'rationale-popup',
-      dialogData: {year: this.selectedYear, model: this.yearPlan}
-    });
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {

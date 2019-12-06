@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResultArray, css, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {store} from '../../../../../redux/store';
 import {updateRationale} from '../../../../../redux/effects/rationale.effects';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -27,6 +27,10 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
     this.editedData = yearPlan;
   }
 
+  render(): TemplateResult {
+    return template.call(this);
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     this.updateRationaleUnsubscribe = store.subscribe(
@@ -45,10 +49,6 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
         }
       }, false)
     );
-  }
-
-  render(): TemplateResult {
-    return template.call(this);
   }
 
   disconnectedCallback(): void {
@@ -84,19 +84,29 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
     }
   }
 
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
-  }
-
   onTargetVisitsChange(value?: string): void {
     this.editedData.target_visits = value && !isNaN(+value) ? +value : 0;
   }
 
+  getChangesDate(date?: string): string {
+    return date ? moment(date).format('DD MMM YYYY') : '';
+  }
+
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      css`
+        .history-info {
+          color: var(--gray-light);
+          font-size: 13px;
+          font-style: italic;
+          margin-right: 20px;
+          letter-spacing: 0.04em;
+        }
+      `
+    ];
   }
 }

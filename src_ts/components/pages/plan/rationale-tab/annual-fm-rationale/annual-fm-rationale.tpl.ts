@@ -31,6 +31,17 @@ export function template(this: AnnualFmRationale): TemplateResult {
       @save="${() => this.save()}"
       @cancel="${() => this.cancel()}"
     >
+      ${this.editedData && this.editedData.history
+        ? html`
+            <div slot="actions">
+              <div class="history-info">
+                Last edited by ${this.editedData.history[0].by_user_display} on
+                ${this.getChangesDate(this.editedData.history[0].created)}
+              </div>
+            </div>
+          `
+        : null}
+
       <div slot="content" class="card-content">
         <etools-loading
           ?active="${this.savingInProcess}"
