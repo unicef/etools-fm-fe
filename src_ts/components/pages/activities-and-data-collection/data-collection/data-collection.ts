@@ -54,7 +54,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
   @property() private editedData: string = '';
   private originalData: string = '';
-  @property() private errors: GenericObject = {};
+  @property() private informationSourceError: string = '';
   private activityDetails: IActivityDetails | null = null;
   private tabIsReadonly: boolean = true;
 
@@ -101,12 +101,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
                   label="${translate('SOURCE_OF_INFORMATION.INPUT_LABEL')}"
                   placeholder="Enter source of information"
                   required
-                  ?invalid="${this.errors.information_source}"
-                  error-message="${this.errors.information_source}"
-                  @focus="${() => this.resetFieldError('information_source')}"
+                  ?invalid="${this.informationSourceError}"
+                  error-message="${this.informationSourceError}"
+                  @focus="${() => (this.informationSourceError = '')}"
                 >
                 </paper-input>
-                <iron-collapse ?opened="${this.originalData != this.editedData || this.errors.information_source}">
+                <iron-collapse ?opened="${this.originalData != this.editedData || this.informationSourceError}">
                   <div class="layout horizontal end-justified card-buttons">
                     <paper-button class="save-button" @tap="${() => this.save()}"
                       >${translate('MAIN.BUTTONS.SAVE')}</paper-button
@@ -171,8 +171,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       dataCollectionChecklistData((data: DataCollectionChecklist | null) => {
         if (data) {
           this.checklist = data;
-          // this.originalData = this.checklist.information_source;
-          // this.editedData = this.originalData;
           this.initInformationSource();
         }
       }, false)
@@ -181,9 +179,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.dataCollectionErrors = store.subscribe(
       dataCollectionChecklistErrorsSelector((errors: GenericObject | null) => {
         if (errors) {
-          this.errors = errors.data;
+          this.informationSourceError = errors.data.information_source[0];
         }
-      })
+      }, false)
     );
 
     /**
@@ -256,15 +254,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       return;
     }
     store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId, 'findings'));
-  }
-
-  // FIXME copy-paste from DataMixin
-  resetFieldError(fieldName: string): void {
-    if (!this.errors) {
-      return;
-    }
-    delete this.errors[fieldName];
-    this.performUpdate();
   }
 
   private initInformationSource(): void {

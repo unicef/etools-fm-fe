@@ -50,7 +50,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
                 trigger-value-change-event
                 @etools-selected-items-changed="${({detail}: CustomEvent) =>
                   this.onSelectionChange(detail.selectedItems)}"
-                @iron-overlay-closed="${(event: Event) => this.onDropdownClose(event)}"
+                @iron-overlay-closed="${() => this.onDropdownClose()}"
                 @remove-selected-item="${(event: Event) => this.onRemoveSelectedItem(event)}"
                 hide-search
                 allow-outside-scroll
