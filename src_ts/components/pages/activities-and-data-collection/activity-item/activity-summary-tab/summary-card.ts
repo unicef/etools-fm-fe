@@ -2,10 +2,10 @@ import {css, CSSResultArray, customElement, html, property, TemplateResult} from
 import {DataCollectionCard} from '../../data-collection/data-collection-card/data-collection-card';
 import '@polymer/paper-toggle-button';
 import {fireEvent} from '../../../../utils/fire-custom-event';
-import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
+import './completed-finding/completed-finding';
 
 @customElement('summary-card')
-export class SummaryCard extends MethodsMixin(DataCollectionCard) {
+export class SummaryCard extends DataCollectionCard {
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
 
   private get filteredOverallFindings(): CompletedOverallFinding[] {
@@ -24,12 +24,13 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
         <div class="flex-2 layout horizontal wrap">
           ${finding.activity_question.findings.map(
             (completedFinding: CompletedFinding) => html`
-              <div class="completed-finding">
-                <div title="${this.getFindingAnswer(completedFinding.value, finding.activity_question.question)}">
-                  ${this.getMethodName(completedFinding.method, true)}
-                  ${completedFinding.author.first_name[0]}${completedFinding.author.last_name[0]}
-                </div>
-              </div>
+              <completed-finding
+                .completedFinding="${completedFinding}"
+                .completedFindingTitle="${this.getFindingAnswer(
+                  completedFinding.value,
+                  finding.activity_question.question
+                )}"
+              ></completed-finding>
             `
           )}
         </div>
@@ -44,12 +45,10 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
             <div class="flex-2 layout horizontal wrap" ?hidden="${!this.filteredOverallFindings.length}">
               ${this.filteredOverallFindings.map(
                 (finding: CompletedOverallFinding) => html`
-                  <div class="completed-finding">
-                    <div title="${finding.narrative_finding}">
-                      ${this.getMethodName(finding.method, true)}
-                      ${finding.author.first_name[0]}${finding.author.last_name[0]}
-                    </div>
-                  </div>
+                  <completed-finding
+                    .completedFinding="${finding}"
+                    .completedFindingTitle="${finding.narrative_finding}"
+                  ></completed-finding>
                 `
               )}
             </div>
@@ -114,17 +113,6 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
     return [
       ...DataCollectionCard.styles,
       css`
-        .completed-finding {
-          width: 50%;
-        }
-        .completed-finding div {
-          position: relative;
-          width: 120px;
-          height: 48px;
-          margin: 12px 0;
-          background-color: var(--gray-light-background);
-          line-height: 48px;
-        }
         paper-toggle-button {
           margin: 0 4px 0 15px;
           --paper-toggle-button-unchecked-button-color: var(--error-color);
