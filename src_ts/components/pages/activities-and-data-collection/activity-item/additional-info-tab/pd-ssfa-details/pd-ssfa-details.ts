@@ -18,13 +18,13 @@ export class PdSsfaDetails extends LitElement {
   }
 
   onPageSizeChange(pageSize: number): void {
-    if (this.pageSize != pageSize) {
+    if (this.pageSize !== pageSize) {
       this.pageSize = pageSize;
     }
   }
 
   onPageNumberChange(pageNumber: number): void {
-    if (this.pageNumber != pageNumber) {
+    if (this.pageNumber !== pageNumber) {
       this.pageNumber = pageNumber;
     }
   }
