@@ -17,6 +17,7 @@ import {
 } from '../../../../redux/effects/data-collection.effects';
 import {
   dataCollectionChecklistData,
+  dataCollectionChecklistErrorsSelector,
   findingsAndOverallData
 } from '../../../../redux/selectors/data-collection.selectors';
 import {dataCollection} from '../../../../redux/reducers/data-collection.reducer';
@@ -39,6 +40,7 @@ import {CardStyles} from '../../../styles/card-styles';
 import {DATA_COLLECTION_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/data-collection.translates';
 import {sortFindingsAndOverall} from '../../../utils/findings-and-overall-sort';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
+import {InputStyles} from '../../../styles/input-styles';
 
 addTranslates(ENGLISH, DATA_COLLECTION_TRANSLATES);
 store.addReducers({findingsComponents, dataCollection, activityDetails});
@@ -52,6 +54,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
   @property() private editedData: string = '';
   private originalData: string = '';
+  @property() private errors: GenericObject = {};
   private activityDetails: IActivityDetails | null = null;
   private tabIsReadonly: boolean = true;
 
@@ -59,11 +62,13 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   private checklistUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private findingsAndOverallUnsubscribe!: Unsubscribe;
+  private dataCollectionErrors!: Unsubscribe;
   private activityId: string | null = null;
   private checklistId: string | null = null;
 
   render(): TemplateResult {
     return html`
+      ${InputStyles}
       <page-content-header>
         <div slot="page-title">
           <div class="method-name">${this.checklist ? this.getMethodName(this.checklist.method) : ''}</div>
@@ -96,9 +101,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
                   label="${translate('SOURCE_OF_INFORMATION.INPUT_LABEL')}"
                   placeholder="Enter source of information"
                   required
+                  ?invalid="${this.errors.information_source}"
+                  error-message="${this.errors.information_source}"
+                  @focus="${() => this.resetFieldError('information_source')}"
                 >
                 </paper-input>
-                <iron-collapse ?opened="${this.originalData != this.editedData}">
+                <iron-collapse ?opened="${this.originalData != this.editedData || this.errors.information_source}">
                   <div class="layout horizontal end-justified card-buttons">
                     <paper-button class="save-button" @tap="${() => this.save()}"
                       >${translate('MAIN.BUTTONS.SAVE')}</paper-button
@@ -170,6 +178,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       }, false)
     );
 
+    this.dataCollectionErrors = store.subscribe(
+      dataCollectionChecklistErrorsSelector((errors: GenericObject | null) => {
+        if (errors) {
+          this.errors = errors.data;
+        }
+      })
+    );
+
     /**
      * Sorts and sets findings and overall data on store.dataCollection.checklist.findingsAndOverall changes
      */
@@ -203,19 +219,13 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     );
   }
 
-  initInformationSource(): void {
-    if (this.checklist) {
-      this.originalData = this.checklist.information_source;
-      this.editedData = this.originalData;
-    }
-  }
-
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.checklistUnsubscribe();
     this.activityDetailsUnsubscribe();
     this.findingsAndOverallUnsubscribe();
+    this.dataCollectionErrors();
   }
 
   checkInformationSource(): boolean {
@@ -246,6 +256,22 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       return;
     }
     store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId, 'findings'));
+  }
+
+  // FIXME copy-paste from DataMixin
+  resetFieldError(fieldName: string): void {
+    if (!this.errors) {
+      return;
+    }
+    delete this.errors[fieldName];
+    this.performUpdate();
+  }
+
+  private initInformationSource(): void {
+    if (this.checklist) {
+      this.originalData = this.checklist.information_source;
+      this.editedData = this.originalData;
+    }
   }
 
   /**

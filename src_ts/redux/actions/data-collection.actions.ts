@@ -31,6 +31,12 @@ export class SetChecklistInformationSource {
   constructor(public payload: DataCollectionChecklist) {}
 }
 
+export class SetChecklistError {
+  type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE =
+    DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE;
+  constructor(public payload: GenericObject) {}
+}
+
 export type DataCollectionActions =
   | MiddlewareLoadingAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_REQUEST>
   | MiddlewareRequestAction<
@@ -53,4 +59,5 @@ export type DataCollectionActions =
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE>
-  | SetChecklistInformationSource;
+  | SetChecklistInformationSource
+  | SetChecklistError;

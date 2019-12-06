@@ -1,5 +1,9 @@
 import {IAsyncAction} from '../middleware';
-import {DataCollectionChecklistActionTypes, SetChecklistInformationSource} from '../actions/data-collection.actions';
+import {
+  DataCollectionChecklistActionTypes,
+  SetChecklistError,
+  SetChecklistInformationSource
+} from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
   DATA_COLLECTION_CHECKLIST,
@@ -44,14 +48,14 @@ export function updateDataCollectionChecklistInformationSource(
   activityId: string,
   checklistId: string,
   requestData: Partial<DataCollectionChecklist>
-): (dispatch: Dispatch) => Promise<void> {
+): (dispatch: Dispatch) => Promise<void | SetChecklistError> {
   return (dispatch: Dispatch) => {
     const endpoint: IResultEndpoint = getEndpoint(DATA_COLLECTION_SPECIFIC_CHECKLIST, {activityId, checklistId});
-    return request<DataCollectionChecklist>(endpoint.url, {method: 'PATCH', body: JSON.stringify(requestData)}).then(
-      (response: DataCollectionChecklist) => {
+    return request<DataCollectionChecklist>(endpoint.url, {method: 'PATCH', body: JSON.stringify(requestData)})
+      .then((response: DataCollectionChecklist) => {
         dispatch(new SetChecklistInformationSource(response));
-      }
-    );
+      })
+      .catch((error: GenericObject) => dispatch(new SetChecklistError(error)));
   };
 }
 

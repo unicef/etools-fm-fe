@@ -1,7 +1,7 @@
 import {select} from './create-selectors';
 
-export const dataCollectionErrors: Selector<GenericObject | null> = select<GenericObject | null>(
-  (store: IRootState) => store.dataCollection.errors.checklistCreate
+export const dataCollectionChecklistErrorsSelector: Selector<GenericObject | null> = select<GenericObject | null>(
+  (store: IRootState) => store.dataCollection.errors.checklist
 );
 
 export const dataCollectionList: Selector<DataCollectionChecklist[] | null> = select<DataCollectionChecklist[] | null>(
