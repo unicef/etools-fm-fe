@@ -256,7 +256,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case ADDITIONAL_INFO:
         return html`
-          <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
+          <additional-info-tab .activityDetails="${this.activityDetails}"></additional-info-tab>
         `;
       default:
         return html``;

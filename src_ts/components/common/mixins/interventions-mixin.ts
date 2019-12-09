@@ -19,7 +19,7 @@ export const InterventionsMixin = <T extends Constructor<LitElement>>(superclass
       const superProps: PropertyDeclarations = super.properties;
       return {
         ...superProps,
-        partners: {type: Array}
+        interventions: {type: Array}
       };
     }
 

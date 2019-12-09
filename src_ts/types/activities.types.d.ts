@@ -64,6 +64,8 @@ interface IActivityCPOutput {
 interface IActivityIntervention {
   id: number;
   title: string;
+  number: string;
+  document_type: string;
 }
 
 interface IChecklistItem {
