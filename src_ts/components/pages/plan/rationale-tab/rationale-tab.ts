@@ -10,7 +10,6 @@ import {fireEvent} from '../../../utils/fire-custom-event';
 import {loadRationale} from '../../../../redux/effects/rationale.effects';
 import {rationaleData} from '../../../../redux/selectors/rationale.selectors';
 import {elevationStyles} from '../../../styles/elevation-styles';
-import {openDialog} from '../../../utils/dialog';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
@@ -85,13 +84,6 @@ export class RationaleTabComponent extends LitElement {
   formatValue(value?: string | number): string {
     const isEmptyValue: boolean = value === null || value === undefined || value === '';
     return isEmptyValue ? '...' : (value as string);
-  }
-
-  openPopup(): void {
-    openDialog<RationaleModalData | undefined>({
-      dialog: 'rationale-popup',
-      dialogData: {year: this.selectedYear, model: this.yearPlan}
-    });
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
