@@ -3,9 +3,10 @@ import {DataCollectionCard} from '../../data-collection/data-collection-card/dat
 import '@polymer/paper-toggle-button';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import './completed-finding/completed-finding';
+import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 
 @customElement('summary-card')
-export class SummaryCard extends DataCollectionCard {
+export class SummaryCard extends MethodsMixin(DataCollectionCard) {
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
 
   private get filteredOverallFindings(): CompletedOverallFinding[] {
@@ -25,11 +26,13 @@ export class SummaryCard extends DataCollectionCard {
           ${finding.activity_question.findings.map(
             (completedFinding: CompletedFinding) => html`
               <completed-finding
+                class="completed-finding"
                 .completedFinding="${completedFinding}"
                 .completedFindingTitle="${this.getFindingAnswer(
                   completedFinding.value,
                   finding.activity_question.question
                 )}"
+                .completedFindingMethod="${this.getMethodName(completedFinding.method, true)}"
               ></completed-finding>
             `
           )}
@@ -46,8 +49,10 @@ export class SummaryCard extends DataCollectionCard {
               ${this.filteredOverallFindings.map(
                 (finding: CompletedOverallFinding) => html`
                   <completed-finding
+                    class="completed-finding"
                     .completedFinding="${finding}"
                     .completedFindingTitle="${finding.narrative_finding}"
+                    .completedFindingMethod="${this.getMethodName(finding.method, true)}"
                   ></completed-finding>
                 `
               )}
@@ -113,6 +118,9 @@ export class SummaryCard extends DataCollectionCard {
     return [
       ...DataCollectionCard.styles,
       css`
+        .completed-finding {
+          flex-basis: 50%;
+        }
         paper-toggle-button {
           margin: 0 4px 0 15px;
           --paper-toggle-button-unchecked-button-color: var(--error-color);
