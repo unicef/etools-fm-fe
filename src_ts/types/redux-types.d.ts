@@ -127,9 +127,11 @@ interface IDataCollectionState {
     checklistCreate: null | boolean;
     checklist: null | boolean;
     findings: null | boolean;
+    dataCollectionMethods: null | boolean;
     overallAndFindingsUpdate: null | boolean;
   };
   checklistCollect: DataCollectionChecklist[];
+  dataCollectionMethods: null | IDataCollectionMethods;
   checklist: {
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
@@ -139,8 +141,14 @@ interface IDataCollectionState {
     checklistCreate: null | GenericObject;
     checklist: null | GenericObject;
     findings: null | GenericObject;
+    dataCollectionMethods: null | GenericObject;
     overallAndFindingsUpdate: null | GenericObject;
   };
+}
+
+interface IDataCollectionMethods {
+  forActivity: number;
+  methods: EtoolsMethod[];
 }
 
 interface IAdditionalInfoState {

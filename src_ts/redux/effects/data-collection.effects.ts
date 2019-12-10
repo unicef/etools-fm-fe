@@ -7,6 +7,7 @@ import {
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
   DATA_COLLECTION_CHECKLIST,
+  DATA_COLLECTION_METHODS,
   DATA_COLLECTION_OVERALL_FINDING,
   DATA_COLLECTION_SPECIFIC_CHECKLIST
 } from '../../endpoints/endpoints-list';
@@ -216,6 +217,23 @@ export function createCollectionChecklist(id: number, data: Partial<DataCollecti
       const requestInit: RequestInit = {method: 'POST', body: JSON.stringify(data)};
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId: id});
       return request(url, requestInit);
+    }
+  };
+}
+
+export function loadDataCollectionMethods(id: number): IAsyncAction {
+  return {
+    types: [
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_REQUEST,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS,
+      DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_METHODS, {activityId: id});
+      return request<EtoolsMethod[]>(url, {method: 'GET'}).then((methods: EtoolsMethod[]) => ({
+        methods,
+        forActivity: id
+      }));
     }
   };
 }

@@ -16,7 +16,10 @@ const propertiesMap: GenericObject<string> = {
   [DataCollectionChecklistActionTypes.FINDINGS_AND_OVERALL_GET_FAILURE]: 'findings',
   [DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_REQUEST]: 'overallAndFindingsUpdate',
   [DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_SUCCESS]: 'overallAndFindingsUpdate',
-  [DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE]: 'overallAndFindingsUpdate'
+  [DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE]: 'overallAndFindingsUpdate',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_REQUEST]: 'dataCollectionMethods',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS]: 'dataCollectionMethods',
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE]: 'dataCollectionMethods'
 };
 
 const INITIAL: IDataCollectionState = {
@@ -25,9 +28,11 @@ const INITIAL: IDataCollectionState = {
     checklistCreate: null,
     checklist: null,
     findings: null,
+    dataCollectionMethods: null,
     overallAndFindingsUpdate: null
   },
   checklistCollect: [],
+  dataCollectionMethods: null,
   checklist: {
     data: null,
     findingsAndOverall: {
@@ -40,6 +45,7 @@ const INITIAL: IDataCollectionState = {
     checklistCreate: null,
     checklist: null,
     findings: null,
+    dataCollectionMethods: null,
     overallAndFindingsUpdate: null
   }
 };
@@ -56,6 +62,7 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_REQUEST:
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_REQUEST:
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_REQUEST:
       return {
         ...state,
         loading: {...state.loading, [property]: true},
@@ -68,6 +75,7 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE:
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CREATE_FAILURE:
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE:
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE:
       return {
         ...state,
         loading: {...state.loading, [property]: false},
@@ -116,6 +124,14 @@ export function dataCollection(
         ...state,
         checklist: {data: action.payload, findingsAndOverall: {...state.checklist.findingsAndOverall}}
       };
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS:
+      return {
+        ...state,
+        loading: {...state.loading, [property]: false},
+        dataCollectionMethods: action.payload
+      };
+
     default:
       return state;
   }
