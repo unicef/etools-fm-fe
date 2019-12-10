@@ -1,4 +1,3 @@
-import './rationale-popup/rationale-popup';
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './rationale-tab.tpl';
 import {store} from '../../../../redux/store';
