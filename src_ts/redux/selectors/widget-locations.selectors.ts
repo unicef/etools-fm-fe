@@ -1,5 +1,13 @@
 import {select} from './create-selectors';
 
+export const widgetLocationsItems: Selector<WidgetLocation[]> = select<WidgetLocation[]>(
+  (store: IRootState) => store.widgetLocations.items
+);
+
+export const widgetLocationsCount: Selector<number> = select<number>(
+  (store: IRootState) => store.widgetLocations.count
+);
+
 export const widgetLocationsData: Selector<WidgetStoreData> = select<WidgetStoreData>(
   (store: IRootState) => store.widgetLocations.data
 );

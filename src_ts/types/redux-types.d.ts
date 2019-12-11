@@ -125,7 +125,12 @@ interface IActivityDetailsState extends IRequestState {
 
 interface IWidgetLocationsState {
   loading: null | boolean;
-  data: WidgetStoreData;
+  items: WidgetLocation[];
+  count: number;
+  page: number;
+  query: string;
+  search: string;
+  hasNext: boolean;
   pathLoading: null | boolean;
   pathCollection: WidgetStoreData;
 }

@@ -1,5 +1,7 @@
 import {LocationWidgetComponent} from './location-widget';
 import {html, TemplateResult} from 'lit-element';
+import {repeat} from 'lit-html/directives/repeat';
+import './lazy-list';
 
 export function template(this: LocationWidgetComponent): TemplateResult {
   return html`
@@ -13,12 +15,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
               readonly
               inline
             >
-              <div
-                ?hidden="${this.loadingInProcess}"
-                slot="suffix"
-                @tap="${() => this.removeFromHistory(index)}"
-                class="close-btn"
-              >
+              <div slot="suffix" @tap="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
               </div>
             </paper-input>
@@ -33,55 +30,56 @@ export function template(this: LocationWidgetComponent): TemplateResult {
             class="search-input"
             type="search"
             value="${this.locationSearch}"
-            @value-changed="${({detail}: CustomEvent) => (this.locationSearch = detail.value)}"
+            @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
             placeholder="Search"
-            ?readonly="${this.loadingInProcess}"
             inline
           >
             <iron-icon icon="search" slot="prefix"></iron-icon>
           </paper-input>
 
           <div class="locations-list">
-            ${this.getListItems(this.currentList, this.loadingInProcess)
-              .filter((item: Site | WidgetLocation) => this.locationsFilter(item))
-              .map((location: Site | WidgetLocation) =>
-                location.hasOwnProperty('geom')
-                  ? html`
-                      <div class="location-line" @tap="${() => this.onLocationLineClick(location as WidgetLocation)}">
+            ${!this.isLeaf
+              ? html`
+                  <lazy-list
+                    .items="${this.items}"
+                    .itemStyle="${this.itemStyle}"
+                    .itemTemplate="${(location: WidgetLocation) => html`
+                      <div class="location-line" @tap="${() => this.onLocationLineClick(location)}">
                         <div class="location-name">
                           <b>${this.getLocationPart(location.name, 'name')}</b>
                           <span class="location-code">${this.getLocationPart(location.name, 'code')}</span>
                         </div>
-                        <div class="gateway-name">${(location as WidgetLocation).gateway.name}</div>
+                        <div class="gateway-name">${location.gateway.name}</div>
                         <div class="deselect-btn"><span>&#10008;</span></div>
                       </div>
-                    `
-                  : html`
+                    `}"
+                    @nextPage="${() => this.loadNextItems()}"
+                  ></lazy-list>
+                `
+              : html`
+                  ${repeat(
+                    this.sitesLocation,
+                    (site: Site) => html`
                       <div
-                        class="site-line ${this.getSiteLineClass(location.id)}"
-                        @tap="${() => this.onSiteLineClick(location as Site)}"
-                        @mouseenter="${() => this.onSiteHoverStart(location as Site)}"
+                        class="site-line ${this.getSiteLineClass(site.id)}"
+                        @tap="${() => this.onSiteLineClick(site)}"
+                        @mouseenter="${() => this.onSiteHoverStart(site)}"
                         @mouseleave="${() => this.onSiteHoverEnd()}"
                       >
                         <div class="location-name">
-                          <b>${location.name}</b>
+                          <b>${site.name}</b>
                         </div>
                         <div class="gateway-name">Site</div>
                         <div class="deselect-btn"><span>&#10008;</span></div>
                       </div>
                     `
-              )}
+                  )}
+                `}
 
-            <div ?hidden="${this.hideEmptySitesMessage(this.currentList, this.loadingInProcess)}" class="missing-sites">
+            <div ?hidden="${this.hideEmptySitesMessage(this.loadingInProcess)}" class="missing-sites">
               There are no sites for this location.. <br />
               You can add missing sites in <a class="link" on-click="goToSettings">Settings</a>
             </div>
-
-            <div class="no-search-results" ?hidden="${this.loadingInProcess}">
-              No locations or sites found. <br />
-              Please, change your search request
-            </div>
-
             <etools-loading ?active="${this.loadingInProcess}"></etools-loading>
           </div>
         </div>

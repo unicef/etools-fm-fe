@@ -1,22 +1,40 @@
 import {
   SaveLocationPath,
-  SaveWidgetLocations,
   SetLocationPathLoading,
-  SetWidgetLocationsLoading
+  AddWidgetLocations,
+  SetWidgetLocationsLoading,
+  SetWidgetLocations
 } from '../actions/widget-locations.actions';
 import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {request} from '../../endpoints/request';
-import {WIDGET_LOCATION_PATH, WIDGET_LOCATIONS} from '../../endpoints/endpoints-list';
+import {WIDGET_LOCATION_PATH, WIDGET_LOCATIONS_CHUNK} from '../../endpoints/endpoints-list';
 
-export function loadWidgetLocations(queryParams: string): (dispatch: Dispatch) => Promise<void> {
-  return (dispatch: Dispatch) => {
-    const endpoint: IResultEndpoint = getEndpoint(WIDGET_LOCATIONS);
-    const url: string = `${endpoint.url}${queryParams}`;
+export function loadLocationsChunk(
+  params: GenericObject = {}
+): (dispatch: Dispatch, getState: () => IRootState) => Promise<void> {
+  return (dispatch: Dispatch, getState: () => IRootState) => {
+    const state: IRootState = getState();
+    const {reload} = params;
+    const {page, query, search} = {...state.widgetLocations, ...params};
+    const endpoint: IResultEndpoint = getEndpoint(WIDGET_LOCATIONS_CHUNK);
+    let url: string = `${endpoint.url}?page=${page}`;
+    if (query) {
+      url = `${url}&${query}`;
+    }
+    if (search) {
+      url = `${url}&search=${search}`;
+    }
     dispatch(new SetWidgetLocationsLoading(true));
 
-    return request<WidgetLocation[]>(url, {method: 'GET'})
-      .then((response: WidgetLocation[]) => dispatch(new SaveWidgetLocations(response, queryParams)))
+    return request<IListData<WidgetLocation>>(url, {method: 'GET'})
+      .then((response: IListData<WidgetLocation>) => {
+        if (reload) {
+          dispatch(new SetWidgetLocations(response, page, search, query));
+        } else {
+          dispatch(new AddWidgetLocations(response, page, search, query));
+        }
+      })
       .then(() => {
         dispatch(new SetWidgetLocationsLoading(false));
       });

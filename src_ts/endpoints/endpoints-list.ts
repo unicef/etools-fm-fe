@@ -29,7 +29,7 @@ export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
 export const USERS: 'users' = 'users';
 export const TEAM_MEMBERS: 'teamMembers' = 'teamMembers';
-export const WIDGET_LOCATIONS: 'widgetLocations' = 'widgetLocations';
+export const WIDGET_LOCATIONS_CHUNK: 'widgetLocationsChunk' = 'widgetLocationsChunk';
 export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
@@ -224,8 +224,8 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/activities/'
   },
 
-  [WIDGET_LOCATIONS]: {
-    url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
+  [WIDGET_LOCATIONS_CHUNK]: {
+    url: '/api/v1/field-monitoring/settings/locations/'
   },
 
   [WIDGET_LOCATION_PATH]: {

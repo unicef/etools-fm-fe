@@ -1,7 +1,6 @@
 import {CSSResultArray, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {template} from './location-widget.tpl';
 import {store} from '../../../redux/store';
-import {loadSiteLocations} from '../../../redux/effects/site-specific-locations.effects';
 import {Unsubscribe} from 'redux';
 import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.selectors';
 import {FitBoundsOptions, LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
@@ -17,16 +16,17 @@ import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
 import {
   widgetLocationPathLoading,
-  widgetLocationsData,
-  widgetLocationsLoading
+  widgetLocationsLoading,
+  widgetLocationsItems
 } from '../../../redux/selectors/widget-locations.selectors';
-import {loadLocationPath, loadWidgetLocations} from '../../../redux/effects/widget-locations.effects';
+import {loadLocationPath, loadLocationsChunk} from '../../../redux/effects/widget-locations.effects';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {getLocationPart} from '../../utils/get-location-part';
 import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
 import {equals} from 'ramda';
+import {debounce} from '../../utils/debouncer';
 
 store.addReducers({widgetLocations, specificLocations});
 
@@ -39,8 +39,12 @@ export class LocationWidgetComponent extends LitElement {
   @property() selectedSites: number[] = [];
   @property({type: Boolean, attribute: 'multiple-sites'}) multipleSites: boolean = false;
 
-  protected currentList: string = 'level=0';
-  protected widgetLocations: GenericObject<(Site | WidgetLocation)[]> = {};
+  // lazy load list
+  @property() items: (WidgetLocation | Site)[] = [];
+  @property() sites: Site[] = [];
+  @property() sitesLocation: Site[] = [];
+  @property() isLeaf: boolean = false;
+
   protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   @property() protected history: WidgetLocation[] = [];
   @property() protected locationSearch: string = '';
@@ -51,11 +55,12 @@ export class LocationWidgetComponent extends LitElement {
   private polygon: Polygon | null = null;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
-  private widgetLocationsUnsubscribe!: Unsubscribe;
   private widgetLoadingUnsubscribe!: Unsubscribe;
   private pathLoadingUnsubscribe!: Unsubscribe;
   private sitesUnsubscribe!: Unsubscribe;
+  private widgetItemsUnsubscribe!: Unsubscribe;
   private sitesLoading: boolean = true;
+  private inputDebounce!: Callback;
 
   static get styles(): CSSResultArray {
     return [
@@ -68,6 +73,72 @@ export class LocationWidgetComponent extends LitElement {
       LocationWidgetStyles,
       leafletStyles
     ];
+  }
+  get itemStyle(): string {
+    // language=CSS
+    return `
+      .site-line,
+      .location-line {
+        position: relative;
+        display: flex;
+        padding: 5px;
+        margin-bottom: 2px;
+      }
+      
+      .site-line:last-child,
+      .location-line:last-child {
+        margin-bottom: 0;
+      }
+      
+      .site-line:hover,
+      .location-line:hover {
+        background-color: var(--gray-06);
+        cursor: pointer;
+      }
+      
+      .site-line .gateway-name,
+      .location-line .gateway-name {
+        flex: none;
+        width: 100px;
+        color: var(--gray-light);
+      }
+      
+      .site-line .location-name,
+      .location-line .location-name {
+        flex: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-right: 5px;
+      }
+      
+      .site-line .deselect-btn,
+      .location-line .deselect-btn {
+        flex: none;
+        width: 50px;
+        text-align: center;
+        color: #dd0000;
+      }
+      
+      .site-line .deselect-btn span,
+      .location-line .deselect-btn span {
+        display: none;
+      }
+      
+      .site-line.selected,
+      .location-line.selected .deselect-btn {
+        background-color: #f3e5bf;
+      }
+      
+      .site-line.selected .deselect-btn span,
+      .location-line.selected .deselect-btn span {
+        display: inline;
+      }
+      
+      .locations-list div:not(.missing-sites) ~ .no-search-results,
+      .locations-list div.missing-sites:not([hidden]) + .no-search-results {
+        display: none;
+      }`;
   }
 
   protected get loadingInProcess(): boolean {
@@ -83,10 +154,19 @@ export class LocationWidgetComponent extends LitElement {
     this.MapHelper = new MapHelper();
     this.mapInitializationProcess = true;
 
-    const state: IRootState = store.getState();
-    if (!state.specificLocations.data) {
-      store.dispatch<AsyncEffect>(loadSiteLocations());
-    }
+    this.inputDebounce = debounce((value: string) => {
+      const state: IRootState = store.getState();
+      const {query} = state.widgetLocations;
+      if (value) {
+        store.dispatch<AsyncEffect>(loadLocationsChunk({search: value, query, page: 1, reload: true}));
+      } else {
+        store.dispatch<AsyncEffect>(loadLocationsChunk({search: '', query, page: 1, reload: true}));
+      }
+    }, 300);
+
+    store
+      .dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', page: 1, reload: true}))
+      .catch(() => fireEvent(this, 'toast', {text: 'Can not Load Locations for Widget'}));
 
     this.currentWorkspaceUnsubscribe = store.subscribe(
       currentWorkspaceSelector((workspace: Workspace | undefined) => {
@@ -104,32 +184,13 @@ export class LocationWidgetComponent extends LitElement {
         if (!sites) {
           return;
         }
-        const convertedSites: GenericObject<Site[]> = locationsInvert(sites)
-          .map((location: IGroupedSites) => [`sites_for_${location.id}`, location.sites] as [string, Site[]])
-          .reduce((reducedLocations: {[key: string]: Site[]}, pair: [string, Site[]]) => {
-            const [key, groupedSites] = pair;
-            return {...reducedLocations, [key]: groupedSites};
-          }, {});
+        this.sites = locationsInvert(sites)
+          .map((location: IGroupedSites) => location.sites)
+          .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
-        this.widgetLocations = Object.assign({}, this.widgetLocations, convertedSites);
         this.sitesLoading = false;
         if (this.selectedSites.length) {
           this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-        }
-      })
-    );
-
-    this.widgetLocationsUnsubscribe = store.subscribe(
-      widgetLocationsData((widgetStoreData: WidgetStoreData) => {
-        if (!widgetStoreData) {
-          return;
-        }
-        this.widgetLocations = {...this.widgetLocations, ...widgetStoreData};
-
-        if (!widgetStoreData['level=0']) {
-          store
-            .dispatch<AsyncEffect>(loadWidgetLocations('level=0'))
-            .catch(() => fireEvent(this, 'toast', {text: 'Can not Load Locations for Widget'}));
         }
       })
     );
@@ -141,6 +202,12 @@ export class LocationWidgetComponent extends LitElement {
         }
         this.listLoading = loading;
       }, false)
+    );
+
+    this.widgetItemsUnsubscribe = store.subscribe(
+      widgetLocationsItems((items: WidgetLocation[]) => {
+        this.items = items;
+      })
     );
 
     this.pathLoadingUnsubscribe = store.subscribe(
@@ -156,17 +223,21 @@ export class LocationWidgetComponent extends LitElement {
     );
   }
 
+  loadNextItems(): void {
+    const state: IRootState = store.getState();
+    const {hasNext, page} = state.widgetLocations;
+    if (hasNext) {
+      store.dispatch<AsyncEffect>(loadLocationsChunk({page: page + 1}));
+    }
+  }
+
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.currentWorkspaceUnsubscribe();
     this.widgetLoadingUnsubscribe();
     this.pathLoadingUnsubscribe();
-    this.widgetLocationsUnsubscribe();
     this.sitesUnsubscribe();
-  }
-
-  getListItems(path: string, loading?: boolean): (Site | WidgetLocation)[] {
-    return (!loading && path && this.widgetLocations[path]) || [];
+    this.widgetItemsUnsubscribe();
   }
 
   onLocationLineClick(location: WidgetLocation): void {
@@ -263,8 +334,10 @@ export class LocationWidgetComponent extends LitElement {
     this.selectLocation(currentLocation as WidgetLocation);
   }
 
-  locationsFilter(location: Site | WidgetLocation): boolean {
-    return !this.locationSearch || location.name.toLocaleLowerCase().includes(this.locationSearch.toLocaleLowerCase());
+  search({value}: {value: string}): void {
+    if (!this.loadingInProcess) {
+      this.inputDebounce(value);
+    }
   }
 
   getHistoryInputLabel(gateway: LocationGateway): string {
@@ -277,10 +350,10 @@ export class LocationWidgetComponent extends LitElement {
     return getLocationPart(location, partToSelect);
   }
 
-  hideEmptySitesMessage(path: string, loading: boolean): boolean {
+  hideEmptySitesMessage(loading: boolean): boolean {
     const lastLocation: WidgetLocation | null = this.getLastLocation();
     const isLeaf: boolean = lastLocation !== null && lastLocation.is_leaf;
-    const isListEmpty: boolean = this.getListItems(path).length === 0;
+    const isListEmpty: boolean = this.sitesLocation.length === 0;
 
     return loading || !isLeaf || !isListEmpty;
   }
@@ -336,9 +409,8 @@ export class LocationWidgetComponent extends LitElement {
       return;
     }
 
-    const sitesList: Site[] = (this.widgetLocations[`sites_for_${selectedLocation}`] || []) as Site[];
     const missingSites: number[] = selectedSites.filter(
-      (siteId: number) => sitesList.findIndex((site: Site) => site.id === siteId) === -1
+      (siteId: number) => this.sites.findIndex((site: Site) => site.id === siteId) === -1
     );
 
     if (missingSites.length !== 0) {
@@ -353,7 +425,7 @@ export class LocationWidgetComponent extends LitElement {
         return;
       }
 
-      const missingSite: Site = sitesList.find((site: Site) => site.id === siteId) as Site;
+      const missingSite: Site = this.sites.find((site: Site) => site.id === siteId) as Site;
       const coords: CoordinatesArray = [...missingSite.point.coordinates].reverse() as CoordinatesArray;
       this.MapHelper.addStaticMarker({coords, staticData: missingSite, popup: missingSite.name});
     });
@@ -370,16 +442,20 @@ export class LocationWidgetComponent extends LitElement {
     this.centerAndDrawBorders(location);
 
     const {is_leaf: isLeaf, id} = location;
-    const parent: string = isLeaf ? `sites_for_${id}` : `parent=${id}`;
-
-    this.selectedLocation = isLeaf ? location.id : null;
-    this.selectPath(parent, isLeaf);
+    this.isLeaf = isLeaf;
+    if (!isLeaf) {
+      store.dispatch<AsyncEffect>(loadLocationsChunk({query: `parent=${id}`, page: 1, reload: true}));
+      this.selectedLocation = null;
+    } else {
+      this.selectedLocation = id;
+      this.sitesLocation = this.sites.filter((site: Site) => site.parent.id === id);
+    }
   }
 
   private centerAndDrawBorders(location: WidgetLocation): void {
     this.clearMap();
 
-    const polygonCoordinates: CoordinatesArray[] = (location.geom.coordinates || []).flat().flat();
+    const polygonCoordinates: CoordinatesArray[] = (location.geom.coordinates || []).flat();
     const pointCoordinates: CoordinatesArray = location.point.coordinates;
     const polygonIsEmpty: boolean = !polygonCoordinates.length;
 
@@ -403,14 +479,6 @@ export class LocationWidgetComponent extends LitElement {
     }
   }
 
-  private selectPath(path: string, isLeaf?: boolean): void {
-    if (!isLeaf && !this.widgetLocations[path]) {
-      store.dispatch<AsyncEffect>(loadWidgetLocations(path));
-    }
-
-    this.currentList = path;
-  }
-
   private mapInitialisation(): void {
     if (!this.mapElement) {
       return;
@@ -432,7 +500,7 @@ export class LocationWidgetComponent extends LitElement {
     // return to initial map state
     this.clearMap();
     this.setInitialMapView();
-    this.selectPath('level=0');
+    store.dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', page: 1, reload: true}));
     this.MapHelper.removeStaticMarkers();
     this.history = [];
   }
