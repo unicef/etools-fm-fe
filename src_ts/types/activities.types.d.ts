@@ -162,3 +162,82 @@ type NoteInfo = {
   titleKey: string;
   text: string;
 };
+
+//TODO search existent type
+type Person = {
+  id: number;
+  name: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+};
+
+type ActionPointsOffice = {
+  id: number;
+  name: string;
+};
+
+type ActionPointsSection = {
+  id: number;
+  name: string;
+};
+
+type ActionPointsCategory = {
+  id: number;
+  module: string;
+  description: string;
+};
+
+type ActionPointsHistory = {
+  id: number;
+  action: string;
+  by_user_display: string;
+  created: string;
+};
+
+type ActionPoint = {
+  id: number;
+  reference_number: string;
+  category: number;
+  author: Person;
+  assigned_by: Person;
+  assigned_to: Person;
+  high_priority: boolean;
+  due_date: string;
+  description: string;
+  office: ActionPointsOffice;
+  section: ActionPointsSection;
+  created: number;
+  date_of_completion?: number;
+  status: string;
+  status_date: string;
+  partner: IActivityPartner | null;
+  intervention: IActivityIntervention | null;
+  cp_output: IActivityCPOutput | null;
+  history: ActionPointsHistory;
+  url: string;
+};
+
+type EditableActionPoint = {
+  id: number | null;
+  category: number | null;
+  assigned_to: number | null;
+  high_priority: boolean;
+  due_date: string | null;
+  description: string;
+  office: number | null;
+  section: number | null;
+  partner: number | null;
+  intervention: number | null;
+  cp_output: number | null;
+};
+
+type ActionPointPopupData = {
+  action_point: ActionPoint | undefined;
+  activity_id: number;
+};
+
+type LiteIntervention = {id: number; name: string};
+type RelatedToFields = 'partner' | 'cp_output' | 'intervention';

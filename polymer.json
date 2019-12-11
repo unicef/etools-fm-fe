@@ -25,6 +25,7 @@
     "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js",
 
     "src/components/pages/activities-and-data-collection/data-collection/data-collection.js",
+    "src/components/pages/activities-and-data-collection/activity-item/action-points-tab/action-points-tab.js",
 
     "src/components/pages/analyze/analyze-page.js",
     "src/components/pages/analyze/monitoring-tab/monitoring-tab.js",
