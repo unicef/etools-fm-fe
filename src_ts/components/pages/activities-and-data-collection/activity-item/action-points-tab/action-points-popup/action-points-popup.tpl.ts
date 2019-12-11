@@ -141,7 +141,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
-          trigger-value-change-event
+          ?trigger-value-change-event="${this.getRelatedNames().length}"
           required
           label="Related Name"
           placeholder="Select Related Name"

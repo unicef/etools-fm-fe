@@ -179,13 +179,7 @@ export class ActionPointsPopup extends InterventionsMixin(
       case OUTPUT:
         return this.outputs;
       case INTERVENTION:
-        if (this.interventions.length === 0) {
-          return this.liteInterventions;
-        } else {
-          return this.interventions.map((item: EtoolsIntervention) => {
-            return {id: item.id, name: item.title};
-          });
-        }
+        return this.getLiteInterventions();
       default:
         return [];
     }
@@ -223,6 +217,15 @@ export class ActionPointsPopup extends InterventionsMixin(
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     setTextareasMaxHeight(this.textareas);
+  }
+
+  private getLiteInterventions(): LiteIntervention[] {
+    if (this.interventions.length && !this.liteInterventions.length) {
+      this.liteInterventions = this.interventions.map((item: EtoolsIntervention) => {
+        return {id: item.id, name: item.title};
+      });
+    }
+    return this.liteInterventions;
   }
 
   private extractIds(actionPoint: ActionPoint): EditableActionPoint {
