@@ -1,6 +1,5 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/paper-tooltip';
-import {styleMap} from 'lit-html/directives/style-map';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
@@ -17,6 +16,14 @@ export class CompletedFindingComponent extends LitElement {
           --paper-tooltip-opacity: 1;
           --paper-tooltip-delay-in: 0ms;
           --paper-tooltip-duration-in: 0ms;
+          --paper-tooltip: {
+            font-size: 13px;
+            box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px,
+              rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
+            width: max-content;
+            max-width: 600px;
+            text-align: left;
+          }
         }
       </style>
       <div class="completed-finding__content">
@@ -30,19 +37,9 @@ export class CompletedFindingComponent extends LitElement {
             `
           : html`
               <label class="completed-finding-title shorted-title">
-                ...
-                <paper-tooltip
-                  position="top"
-                  offset="0"
-                  style="${styleMap({
-                    'min-width': `${
-                      this.completedFindingTitle.toString().length < 50
-                        ? `${this.completedFindingTitle.toString().length * 7}px`
-                        : '600px'
-                    }`
-                  })}"
-                >
-                  ${this.completedFindingTitle}
+                <span id="ellipsis">...</span>
+                <paper-tooltip position="right" offset="5" for="ellipsis">
+                  <div>${this.completedFindingTitle}</div>
                 </paper-tooltip>
               </label>
             `}
@@ -87,10 +84,14 @@ export class CompletedFindingComponent extends LitElement {
 
         .shorted-title {
           display: flex;
-          max-height: 5px;
+          max-height: 10px;
           justify-content: center;
           align-content: center;
           line-height: 5px;
+        }
+
+        .shorted-title #ellipsis {
+          cursor: pointer;
         }
       `
     ];

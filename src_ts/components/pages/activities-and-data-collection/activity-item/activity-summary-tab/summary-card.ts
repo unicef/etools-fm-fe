@@ -64,7 +64,7 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
                 label="Overall finding"
                 ?disabled="${!this.isEditMode}"
-                placeholder="${this.isEditMode ? 'Enter Overall finding' : '-'}"
+                placeholder="${this.isEditMode ? 'Enter Overall finding' : '—'}"
                 @value-changed="${({detail}: CustomEvent) =>
                   this.updateOverallFinding({narrative_finding: detail.value})}"
               ></paper-textarea>

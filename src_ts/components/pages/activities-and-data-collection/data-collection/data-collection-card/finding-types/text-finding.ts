@@ -12,7 +12,7 @@ export class TextFinding extends BaseFinding<string> {
         no-label-float
         .value="${this.value}"
         @value-changed="${({detail}: CustomEvent) => this.valueChanged(detail.value)}"
-        placeholder="-"
+        placeholder="&#8212;"
         ?disabled="${this.isReadonly}"
       >
       </paper-textarea>
