@@ -1,7 +1,10 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/iron-icons/iron-icons';
 import {cancelledStatusIcon, completedStatusIcon} from './status-icons';
-import {CANCELLED} from '../../../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
+import {
+  CANCELLED,
+  COMPLETED
+} from '../../../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 /**
  * @LitElement
@@ -135,7 +138,7 @@ export class EtoolsStatus extends LitElement {
   }
 
   isCompleted(index: number, activeStatusIndex: number): boolean {
-    return index < activeStatusIndex;
+    return index < activeStatusIndex || (index === activeStatusIndex && this.statuses[index].status === COMPLETED);
   }
 
   getStatusClasses(index: number, activeStatusIndex: number): string {

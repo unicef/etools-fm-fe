@@ -8,10 +8,10 @@ import {openIssuesPartnershipSelector} from '../../../../../../redux/selectors/m
 @customElement('open-issues-partnership-tab')
 export class OpenIssuesPartnershipTab extends LitElement {
   @property() openIssuesPartnership!: OpenIssuesActionPoints[];
-  private readonly openIssuesActionPointsUnsubscribe!: Unsubscribe;
+  private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
+  connectedCallback(): void {
+    super.connectedCallback();
     store.dispatch<AsyncEffect>(loadOpenIssuesPartnership());
     this.openIssuesActionPointsUnsubscribe = store.subscribe(
       openIssuesPartnershipSelector((openIssuesPartnership: OpenIssuesActionPoints[]) => {

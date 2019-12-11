@@ -64,6 +64,8 @@ interface IActivityCPOutput {
 interface IActivityIntervention {
   id: number;
   title: string;
+  number: string;
+  document_type: string;
 }
 
 interface IChecklistItem {
@@ -108,41 +110,43 @@ type ActivityTransition = {
 };
 
 type ActivityPermissionsObject = {
-  location: boolean;
-  cp_outputs: boolean;
-  field_office: boolean;
-  id: boolean;
+  partners: boolean;
+  tpm_partner: boolean;
+  sections: boolean;
+  interventions: boolean;
+  location_site_id: boolean;
+  status: boolean;
   activity_type: boolean;
-  attachments: boolean;
+  person_responsible: boolean;
+  tpm_partner_id: boolean;
+  checklists: boolean;
+  cp_outputs: boolean;
+  report_attachments: boolean;
   end_date: boolean;
   created: boolean;
-  status: boolean;
-  start_date: boolean;
-  person_responsible: boolean;
-  tpm_partner: boolean;
-  location_site_id: boolean;
-  tpm_partner_id: boolean;
+  actionpoint: boolean;
+  field_office_id: boolean;
+  field_office: boolean;
   location_site: boolean;
-  modified: boolean;
-  team_members: boolean;
+  id: boolean;
   location_id: boolean;
+  reject_reason: boolean;
+  start_date: boolean;
+  cancel_reason: boolean;
+  attachments: boolean;
   deleted_at: boolean;
-  partners: boolean;
-  person_responsible_id: boolean;
-  checklists: boolean;
-  interventions: boolean;
-  report_attachments: boolean;
   questions: boolean;
   overall_findings: boolean;
-  field_office_id: boolean;
-  sections: boolean;
+  person_responsible_id: boolean;
+  modified: boolean;
+  location: boolean;
+  team_members: boolean;
   activity_question_set: boolean;
+  activity_question_set_review: boolean;
   started_checklist_set: boolean;
   activity_overall_finding: boolean;
-  activity_question_overall_finding: boolean;
+  additional_info: boolean;
   action_points: boolean;
-  cancel_reason: boolean;
-  reject_reason: boolean;
 };
 
 type ReasonPopupData = {
@@ -158,3 +162,82 @@ type NoteInfo = {
   titleKey: string;
   text: string;
 };
+
+//TODO search existent type
+type Person = {
+  id: number;
+  name: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+};
+
+type ActionPointsOffice = {
+  id: number;
+  name: string;
+};
+
+type ActionPointsSection = {
+  id: number;
+  name: string;
+};
+
+type ActionPointsCategory = {
+  id: number;
+  module: string;
+  description: string;
+};
+
+type ActionPointsHistory = {
+  id: number;
+  action: string;
+  by_user_display: string;
+  created: string;
+};
+
+type ActionPoint = {
+  id: number;
+  reference_number: string;
+  category: number;
+  author: Person;
+  assigned_by: Person;
+  assigned_to: Person;
+  high_priority: boolean;
+  due_date: string;
+  description: string;
+  office: ActionPointsOffice;
+  section: ActionPointsSection;
+  created: number;
+  date_of_completion?: number;
+  status: string;
+  status_date: string;
+  partner: IActivityPartner | null;
+  intervention: IActivityIntervention | null;
+  cp_output: IActivityCPOutput | null;
+  history: ActionPointsHistory;
+  url: string;
+};
+
+type EditableActionPoint = {
+  id: number | null;
+  category: number | null;
+  assigned_to: number | null;
+  high_priority: boolean;
+  due_date: string | null;
+  description: string;
+  office: number | null;
+  section: number | null;
+  partner: number | null;
+  intervention: number | null;
+  cp_output: number | null;
+};
+
+type ActionPointPopupData = {
+  action_point: ActionPoint | undefined;
+  activity_id: number;
+};
+
+type LiteIntervention = {id: number; name: string};
+type RelatedToFields = 'partner' | 'cp_output' | 'intervention';

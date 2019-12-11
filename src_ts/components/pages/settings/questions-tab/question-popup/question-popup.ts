@@ -116,38 +116,15 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       return;
     }
 
-    // split options into 2 arrays: options for delete and current options
-    const [optionsToRemove, currentOptions]: EditedQuestionOption[][] = this.editedData.options!.reduce(
-      ([toRemove, current]: EditedQuestionOption[][], option: EditedQuestionOption) => {
-        if (option._delete) {
-          return [[...toRemove, option], [...current]];
-        } else {
-          return [[...toRemove], [...current, option]];
-        }
-      },
-      [[], []]
-    );
-
-    const currentSize: number = currentOptions.length;
+    const currentSize: number = this.editedData.options!.length;
     if (newSize === currentSize) {
       return;
     }
 
-    const newOptionsSize: number = Math.max(newSize, currentOptions.length);
-    this.editedData.options = new Array(newOptionsSize)
-      .fill(null)
-      .map((_null: null, index: number) => {
-        const existedOption: EditedQuestionOption | undefined = currentOptions[index];
-        if (index < newSize) {
-          // try to take existed option or create empty if newSize is bigger than currentOptions.length
-          return existedOption || {label: '', value: `${index + 1}`};
-        } else {
-          // if new size is shorter than currentOptions.length we need to remove existed options with id
-          return existedOption && existedOption.id ? ({...existedOption, _delete: true} as EditedQuestionOption) : null;
-        }
-      })
-      .filter((option: EditedQuestionOption | null) => option !== null)
-      .concat(optionsToRemove) as EditedQuestionOption[];
+    this.editedData.options = new Array(newSize).fill(null).map((_null: null, index: number) => {
+      const existedOption: EditedQuestionOption | undefined = this.editedData.options![index];
+      return existedOption || {label: '', value: `${index + 1}`};
+    });
 
     this.performUpdate();
   }
@@ -200,22 +177,18 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     if (this.errors && this.errors.scale) {
       delete this.errors.scale;
     }
-    const oldOptions: Partial<QuestionOption>[] = (this.originalData && this.originalData.options) || [];
-    const refactoredOptions: EditedQuestionOption[] = oldOptions
-      .map((option: Partial<QuestionOption>) =>
-        option.id ? ({...option, _delete: true} as EditedQuestionOption) : null
-      )
-      .filter((option: EditedQuestionOption | null) => option !== null) as EditedQuestionOption[];
 
     if (type === BOOLEAN_TYPE) {
-      this.editedData.options = [{label: '', value: 'True'}, {label: '', value: 'False'}, ...refactoredOptions];
+      this.editedData.options = [
+        {label: '', value: 'True'},
+        {label: '', value: 'False'}
+      ];
     } else if (type === SCALE_TYPE) {
-      const newOptions: EditedQuestionOption[] = new Array(3)
+      this.editedData.options = new Array(3)
         .fill(null)
         .map((_null: null, index: number) => ({label: '', value: `${index + 1}`}));
-      this.editedData.options = [...newOptions, ...refactoredOptions];
     } else {
-      this.editedData.options = refactoredOptions;
+      this.editedData.options = [];
     }
   }
 

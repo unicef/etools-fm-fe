@@ -5,8 +5,7 @@ import './reason-popup';
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {
   ASSIGN,
-  BACK_TO_CHECKLIST,
-  BACK_TO_DRAFT,
+  BACK_TRANSITIONS,
   REASON_FIELDS,
   REJECT,
   SEPARATE_TRANSITIONS,
@@ -43,8 +42,10 @@ export class StatusesActionsComponent extends LitElement {
   }
 
   protected getBackBtn(): TemplateResult {
-    const transition: ActivityTransition | undefined = this.possibleTransitions.find(
-      ({transition}: ActivityTransition) => transition === BACK_TO_CHECKLIST || transition === BACK_TO_DRAFT
+    const transition:
+      | ActivityTransition
+      | undefined = this.possibleTransitions.find(({transition}: ActivityTransition) =>
+      BACK_TRANSITIONS.has(transition)
     );
     return transition
       ? html`

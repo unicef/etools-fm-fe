@@ -21,9 +21,9 @@ export function template(this: MonitoringTabComponent): TemplateResult {
             <proportional-progress-bar
               .completed="${this.completed}"
               .planned="${this.planned}"
-              .completedLabelValue="${'Completed Visits'}"
-              .plannedLabelValue="${'Planned Visits (Up to December)'}"
-              .completedDivBackgroundColor="${'#3F9BBC'}"
+              completedLabelValue="Completed Visits"
+              plannedLabelValue="Planned Visits (Up to December)"
+              completedDivBackgroundColor="#3F9BBC"
             >
             </proportional-progress-bar>
           </div>
@@ -38,7 +38,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
       <!--  Coverage tabs  -->
       <shared-section-with-tabs-template
         class="monitoring-activity__item"
-        .title="${'Coverage of Active Partnerships'}"
+        sectionTitle="Coverage of Active Partnerships"
         .pageTabs="${COVERAGE_PAGE_TABS}"
         .activeTab="${this.coverageActiveTab}"
         .tabContentMap="${COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP}"
@@ -51,7 +51,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
           ? html`
               <!--  Open issues and Action points  -->
               <shared-section-with-tabs-template
-                .title="${'Open Issues and Action Points'}"
+                sectionTitle="Open Issues and Action Points"
                 .pageTabs="${OPEN_ISSUES_PAGE_TABS}"
                 .activeTab="${this.openIssuesActiveTab}"
                 .tabContentMap="${OPEN_ISSUES_CONTENT_MAP}"

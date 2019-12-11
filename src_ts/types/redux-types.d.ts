@@ -12,10 +12,13 @@ interface IRootState {
   activityDetails: IActivityDetailsState;
   activityChecklist: IActivityChecklistState;
   attachmentsList: IAttachmentsListState;
+  actionPointsList: IActionPointsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
   fullReports: IFullReportsState;
+  activitySummary: IActivitySummaryState;
+  findingsComponents: IFindingsComponentsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -48,6 +51,8 @@ interface IStaticDataState {
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
   cpOutcomes?: EtoolsCpOutcome[];
+  offices?: ActionPointsOffice[];
+  actionPointsCategories?: ActionPointsCategory[];
 }
 
 interface ISpecificLocationsState {
@@ -70,6 +75,12 @@ interface IRationaleState {
 
 interface IAttachmentsListState {
   rationale_attachments: null | IAttachment[];
+  updateInProcess: null | boolean;
+  error: GenericObject;
+}
+
+interface IActionPointsListState {
+  data: ActionPoint[];
   updateInProcess: null | boolean;
   error: GenericObject;
 }
@@ -125,10 +136,11 @@ interface IDataCollectionState {
     checklistCreate: null | boolean;
     checklist: null | boolean;
     findings: null | boolean;
+    dataCollectionMethods: null | boolean;
     overallAndFindingsUpdate: null | boolean;
   };
-  editedFindingsTab: null | string;
   checklistCollect: DataCollectionChecklist[];
+  dataCollectionMethods: null | IDataCollectionMethods;
   checklist: {
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
@@ -138,8 +150,14 @@ interface IDataCollectionState {
     checklistCreate: null | GenericObject;
     checklist: null | GenericObject;
     findings: null | GenericObject;
+    dataCollectionMethods: null | GenericObject;
     overallAndFindingsUpdate: null | GenericObject;
   };
+}
+
+interface IDataCollectionMethods {
+  forActivity: number;
+  methods: EtoolsMethod[];
 }
 
 interface IAdditionalInfoState {
@@ -152,10 +170,23 @@ interface IAdditionalInfoState {
   };
 }
 
-type FindingsAndOverall = {
-  findings: null | DataCollectionFinding[];
-  overall: null | DataCollectionOverall[];
+type FindingsAndOverall<T = DataCollectionFinding, U = DataCollectionOverall> = {
+  findings: null | T[];
+  overall: null | U[];
 };
+
+interface IActivitySummaryState {
+  findingsAndOverall: FindingsAndOverall<SummaryFinding, SummaryOverall>;
+  error: null | GenericObject;
+  editedFindingsTab: null | string;
+  updateInProcess: null | boolean;
+  loading: null | boolean;
+}
+
+interface IFindingsComponentsState {
+  editedFindingsComponent: null | string;
+  overallAndFindingsUpdate: null | boolean;
+}
 
 interface IMonitoringActivityState {
   overallActivities: OverallActivities;

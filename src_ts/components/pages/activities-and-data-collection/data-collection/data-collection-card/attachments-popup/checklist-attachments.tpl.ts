@@ -80,7 +80,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
                 <paper-button
                   class="delete-button"
                   ?hidden="${this.readonly}"
-                  @tap="${() => this.deleteAttachment(attachment, index)}"
+                  @tap="${() => this.deleteAttachment(index)}"
                 >
                   Delete
                 </paper-button>

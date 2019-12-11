@@ -1,7 +1,7 @@
-import {select} from './create-selectors';
+import {dynamicSelect, select} from './create-selectors';
 
-export const dataCollectionErrors: Selector<GenericObject | null> = select<GenericObject | null>(
-  (store: IRootState) => store.dataCollection.errors.checklistCreate
+export const dataCollectionChecklistErrorsSelector: Selector<GenericObject | null> = select<GenericObject | null>(
+  (store: IRootState) => store.dataCollection.errors.checklist
 );
 
 export const dataCollectionList: Selector<DataCollectionChecklist[] | null> = select<DataCollectionChecklist[] | null>(
@@ -16,10 +16,11 @@ export const findingsAndOverallData: Selector<FindingsAndOverall> = select<Findi
   (store: IRootState) => store.dataCollection.checklist.findingsAndOverall
 );
 
-export const editedFindingsTab: Selector<null | string> = select<null | string>(
-  (store: IRootState) => store.dataCollection.editedFindingsTab
+export const dataCollectionMethods: Selector<null | IDataCollectionMethods> = select<null | IDataCollectionMethods>(
+  (store: IRootState) => store.dataCollection.dataCollectionMethods
 );
 
-export const updateOverallAndFindingsState: Selector<null | boolean> = select<null | boolean>(
-  (store: IRootState) => store.dataCollection.loading.overallAndFindingsUpdate
-);
+export const dataCollectionLoading: DynamicSelector<boolean | undefined> = dynamicSelect<
+  GenericObject<null | boolean>,
+  boolean
+>((store: IRootState) => store.dataCollection.loading);

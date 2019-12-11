@@ -188,7 +188,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             this.editedData.options as Partial<QuestionOption>[],
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
-              <div class="layout horizontal center" ?hidden="${option._delete}">
+              <div class="layout horizontal center">
                 <div class="option-index">${option.value}:</div>
                 <paper-input
                   no-label-float

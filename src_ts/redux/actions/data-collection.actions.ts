@@ -3,6 +3,10 @@ export enum DataCollectionChecklistActionTypes {
   DATA_COLLECTION_CREATE_SUCCESS = '[Data Collection Checklist Action]: DATA_COLLECTION_CREATE_SUCCESS',
   DATA_COLLECTION_CREATE_FAILURE = '[Data Collection Checklist Action]: DATA_COLLECTION_CREATE_FAILURE',
 
+  DATA_COLLECTION_METHODS_REQUEST = '[Data Collection Checklist Action]: DATA_COLLECTION_METHODS_REQUEST',
+  DATA_COLLECTION_METHODS_SUCCESS = '[Data Collection Checklist Action]: DATA_COLLECTION_METHODS_SUCCESS',
+  DATA_COLLECTION_METHODS_FAILURE = '[Data Collection Checklist Action]: DATA_COLLECTION_METHODS_FAILURE',
+
   DATA_COLLECTION_UPDATE_REQUEST = '[Data Collection Checklist Action]: DATA_COLLECTION_UPDATE_REQUEST',
   DATA_COLLECTION_UPDATE_SUCCESS = '[Data Collection Checklist Action]: DATA_COLLECTION_UPDATE_SUCCESS',
   DATA_COLLECTION_UPDATE_FAILURE = '[Data Collection Checklist Action]: DATA_COLLECTION_UPDATE_FAILURE',
@@ -22,21 +26,19 @@ export enum DataCollectionChecklistActionTypes {
 
   OVERALL_AND_FINDINGS_UPDATE_REQUEST = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_REQUEST',
   OVERALL_AND_FINDINGS_UPDATE_SUCCESS = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_SUCCESS',
-  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE',
-
-  SET_EDITED_CHECKLIST_TAB = '[Data Collection Checklist Action]: SET_EDITED_CHECKLIST_TAB'
-}
-
-export class SetEditedDCChecklistCard {
-  type: DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB =
-    DataCollectionChecklistActionTypes.SET_EDITED_CHECKLIST_TAB;
-  constructor(public payload: string | null) {}
+  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE'
 }
 
 export class SetChecklistInformationSource {
   type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST =
     DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST;
   constructor(public payload: DataCollectionChecklist) {}
+}
+
+export class SetChecklistError {
+  type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE =
+    DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE;
+  constructor(public payload: GenericObject) {}
 }
 
 export type DataCollectionActions =
@@ -61,5 +63,8 @@ export type DataCollectionActions =
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_REQUEST>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_SUCCESS>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_LIST_FAILURE>
-  | SetEditedDCChecklistCard
-  | SetChecklistInformationSource;
+  | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_REQUEST>
+  | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS>
+  | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE>
+  | SetChecklistInformationSource
+  | SetChecklistError;

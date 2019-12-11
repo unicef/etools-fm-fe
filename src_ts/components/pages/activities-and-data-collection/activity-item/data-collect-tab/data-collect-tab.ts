@@ -1,5 +1,4 @@
 import {CSSResultArray, customElement, css, html, LitElement, property, TemplateResult} from 'lit-element';
-import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
@@ -10,10 +9,15 @@ import {openDialog} from '../../../../utils/dialog';
 import {store} from '../../../../../redux/store';
 import {
   createCollectionChecklist,
-  loadDataCollectionChecklist
+  loadDataCollectionChecklist,
+  loadDataCollectionMethods
 } from '../../../../../redux/effects/data-collection.effects';
 import {dataCollection} from '../../../../../redux/reducers/data-collection.reducer';
-import {dataCollectionList} from '../../../../../redux/selectors/data-collection.selectors';
+import {
+  dataCollectionList,
+  dataCollectionLoading,
+  dataCollectionMethods
+} from '../../../../../redux/selectors/data-collection.selectors';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {activityDetailsData} from '../../../../../redux/selectors/activity-details.selectors';
 import {updateAppLocation} from '../../../../../routing/routes';
@@ -29,16 +33,23 @@ store.addReducers({dataCollection});
 type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
 
 @customElement('data-collect-tab')
-export class DataCollectTab extends MethodsMixin(LitElement) {
+export class DataCollectTab extends LitElement {
   @property({type: Number}) activityId!: number;
-  @property({type: Object}) checklistByMethods!: DataCollectByMethods;
-  @property({type: Boolean}) isReadonly: boolean = false;
+
+  @property({type: Object}) protected checklistByMethods: DataCollectByMethods = {};
+  @property({type: Boolean}) protected isReadonly: boolean = false;
+  @property() protected dataCollectionMethods: EtoolsMethod[] = [];
+  @property() protected methodsLoading: boolean = false;
+  @property() protected dataLoading: boolean = true;
 
   private checklistUnsubscribe!: Unsubscribe;
   private activityUnsubscribe!: Unsubscribe;
+  private methodsUnsubscribe!: Unsubscribe;
+  private methodsLoadingUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
+    // Check permissions
     this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {
         const property: keyof ActivityPermissionsObject = TABS_PROPERTIES[
@@ -48,29 +59,66 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
       })
     );
 
+    // Subscribe on data collection data
     this.checklistUnsubscribe = store.subscribe(
       dataCollectionList((checklist: DataCollectionChecklist[] | null) => {
+        this.dataLoading = false;
         const collect: DataCollectionChecklist[] = checklist || [];
         this.checklistByMethods = collect.reduce((byMethods: DataCollectByMethods, item: DataCollectionChecklist) => {
           const items: DataCollectionChecklist[] = byMethods[item.method] || [];
           byMethods[item.method] = [...items, item];
           return byMethods;
         }, {} as DataCollectByMethods);
-      })
+      }, false)
     );
     store.dispatch<AsyncEffect>(loadDataCollectionChecklist(this.activityId));
+
+    // Load data collection methods or get them from store
+    const dataCollectionMethodsState: null | IDataCollectionMethods = store.getState().dataCollection
+      .dataCollectionMethods;
+    if (dataCollectionMethodsState && dataCollectionMethodsState.forActivity === this.activityId) {
+      this.dataCollectionMethods = dataCollectionMethodsState.methods;
+    } else {
+      store.dispatch<AsyncEffect>(loadDataCollectionMethods(this.activityId));
+    }
+
+    this.methodsUnsubscribe = store.subscribe(
+      dataCollectionMethods((methodsState: null | IDataCollectionMethods) => {
+        if (methodsState) {
+          this.dataCollectionMethods = methodsState.methods;
+        }
+      })
+    );
+
+    // Subscribe on loading
+    this.methodsLoadingUnsubscribe = store.subscribe(
+      dataCollectionLoading(
+        (methodsLoading: boolean | undefined) => {
+          this.methodsLoading = Boolean(methodsLoading);
+        },
+        ['dataCollectionMethods']
+      )
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.activityUnsubscribe();
     this.checklistUnsubscribe();
+    this.methodsUnsubscribe();
+    this.methodsLoadingUnsubscribe();
   }
 
   render(): TemplateResult {
     return html`
+      <!--   Spinner for loading methods   -->
+      <etools-loading
+        ?active="${this.methodsLoading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
       ${repeat(
-        this.methods,
+        this.dataCollectionMethods,
         (method: EtoolsMethod) =>
           html`
             <etools-card class="page-content" card-title="${method.name}" is-collapsible>
@@ -83,6 +131,12 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
                 ></paper-icon-button>
               </div>
               <div slot="content" class="layout vertical">
+                <!--   Spinner for loading data   -->
+                <etools-loading
+                  ?active="${this.dataLoading}"
+                  loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+                ></etools-loading>
+
                 ${this.renderTable(this.checklistByMethods[method.id], method)}
               </div>
             </etools-card>
@@ -166,7 +220,7 @@ export class DataCollectTab extends MethodsMixin(LitElement) {
   }
 
   getMethodType(id: number): string {
-    const method: EtoolsMethod | undefined = this.methods.find((item: EtoolsMethod) => item.id === id);
+    const method: EtoolsMethod | undefined = this.dataCollectionMethods.find((item: EtoolsMethod) => item.id === id);
     return method ? method.name : '';
   }
 

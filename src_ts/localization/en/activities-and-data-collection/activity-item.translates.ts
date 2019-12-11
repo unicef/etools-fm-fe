@@ -19,12 +19,14 @@ import {
   CANCELLED
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
+  ACTION_POINTS,
   ADDITIONAL_INFO,
   ATTACHMENTS_TAB,
   CHECKLIST_TAB,
   COLLECT_TAB,
   DETAILS_TAB,
-  REVIEW_TAB
+  REVIEW_TAB,
+  SUMMARY_TAB
 } from '../../../components/pages/activities-and-data-collection/activity-item/activities-tabs';
 
 export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
@@ -54,7 +56,7 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [ASSIGNED]: 'Assigned',
       [DATA_COLLECTION]: 'Data Collection',
       [REPORT_FINALIZATION]: 'Report finalization',
-      [SUBMITTED]: 'Submitted',
+      [SUBMITTED]: 'Activity Review',
       [COMPLETED]: 'Completed',
       [CANCELLED]: 'Cancelled'
     },
@@ -64,7 +66,9 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [CHECKLIST_TAB]: 'Checklist',
       [REVIEW_TAB]: 'Review',
       [COLLECT_TAB]: 'Data Collect',
-      [ADDITIONAL_INFO]: 'Additional Info'
+      [SUMMARY_TAB]: 'Summary',
+      [ADDITIONAL_INFO]: 'Additional Info',
+      [ACTION_POINTS]: 'Action Points'
     }
   }
 };

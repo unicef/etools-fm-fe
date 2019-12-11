@@ -10,7 +10,7 @@ import {SwitchTab} from '../../../../../redux/actions/monitoring-activity.action
 
 @customElement('shared-section-with-tabs-template')
 export class SharedSectionWithTabsTemplate extends LitElement {
-  @property() title!: string;
+  @property() sectionTitle!: string;
   @property() pageTabs!: PageTab[];
   @property() activeTab!: string;
   @property() tabContentMap: Map<string, TemplateResult> = new Map();
@@ -20,7 +20,7 @@ export class SharedSectionWithTabsTemplate extends LitElement {
     return html`
       <section class="elevation page-content card-container" elevation="1">
         <div class="card-title-box with-bottom-line">
-          <div class="card-title">${this.title}</div>
+          <div class="card-title">${this.sectionTitle}</div>
         </div>
         <etools-tabs
           class="tabs-container"

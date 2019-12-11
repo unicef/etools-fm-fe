@@ -28,7 +28,7 @@ export function updateRationale(
         dispatch(new SetRationale(data));
       })
       .catch((error: any) => {
-        dispatch(new SetRationaleUpdateError(error));
+        dispatch(new SetRationaleUpdateError(error.data));
       })
       .then(() => {
         dispatch(new SetRationaleUpdateState(false));

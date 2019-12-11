@@ -6,14 +6,6 @@ export const RationaleStyles: CSSResult = css`
     display: block;
   }
 
-  .history-info {
-    color: var(--gray-light);
-    font-size: 13px;
-    font-style: italic;
-    margin-right: 20px;
-    letter-spacing: 0.04em;
-  }
-
   .year-dropdown-container {
     padding: 16px 20px 0;
   }

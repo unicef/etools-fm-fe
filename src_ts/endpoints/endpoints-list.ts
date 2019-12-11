@@ -35,8 +35,11 @@ export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityR
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
 export const ACTIVITY_CHECKLIST: 'activityChecklist' = 'activityChecklist';
 export const ACTIVITY_CHECKLIST_ATTACHMENTS: 'activityChecklistAttachments' = 'activityChecklistAttachments';
+export const DATA_COLLECTION_ACTIVITY: 'dataCollectionActivities' = 'dataCollectionActivities';
+export const ACTIVITY_OVERALL_FINDING: 'activityOverallFinding' = 'activityOverallFinding';
 export const ACTIVITY_DETAILS: 'activityDetails' = 'activityDetails';
 export const DATA_COLLECTION_CHECKLIST: 'dataCollectionChecklist' = 'dataCollectionChecklist';
+export const DATA_COLLECTION_METHODS: 'dataCollectionMethods' = 'dataCollectionMethods';
 export const DATA_COLLECTION_CHECKLIST_ITEM: 'dataCollectionChecklistItem' = 'dataCollectionChecklistItem';
 export const DATA_COLLECTION_SPECIFIC_CHECKLIST: 'dataCollectionSpecificChecklist' = 'dataCollectionSpecificChecklist';
 export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
@@ -55,6 +58,10 @@ export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
 export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
 export const HACT_VISITS: 'hactVisits' = 'hactVisits';
 export const FULL_REPORT: 'fullReport' = 'fullReport';
+export const ACTION_POINTS_LIST: 'actionPointsList' = 'actionPointsList';
+export const ACTION_POINTS_DETAILS: 'actionPointsDetails' = 'actionPointsDetails';
+export const ACTION_POINTS_CATEGORIES: 'actionPointsCategories' = 'actionPointsCategories';
+export const ACTION_POINTS_OFFICES: 'offices' = 'offices';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -229,6 +236,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
   },
 
+  [DATA_COLLECTION_ACTIVITY]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/'
+  },
+
+  [ACTIVITY_OVERALL_FINDING]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/overall-findings/<%=overallId%>/'
+  },
+
   [ACTIVITY_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=id%>/questions/'
   },
@@ -239,6 +254,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [DATA_COLLECTION_CHECKLIST]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/'
+  },
+
+  [DATA_COLLECTION_METHODS]: {
+    template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/methods/?page_size=all'
   },
 
   [DATA_COLLECTION_CHECKLIST_ITEM]: {
@@ -292,5 +311,21 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [HACT_VISITS]: {
     template: '/api/v1/field-monitoring/analyze/hact/'
+  },
+
+  [ACTION_POINTS_LIST]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/'
+  },
+
+  [ACTION_POINTS_DETAILS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/<%=id%>'
+  },
+
+  [ACTION_POINTS_CATEGORIES]: {
+    template: '/api/action-points/categories/?module=fm'
+  },
+
+  [ACTION_POINTS_OFFICES]: {
+    template: '/api/offices/'
   }
 };

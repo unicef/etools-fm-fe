@@ -27,10 +27,10 @@ export class MonitoringTabComponent extends LitElement {
   @property() planned: number = 0;
 
   private overallActivitiesUnsubscribe!: Unsubscribe;
-  private readonly lastActivatedTabUnsubscribe: Unsubscribe;
+  private lastActivatedTabUnsubscribe!: Unsubscribe;
 
-  constructor() {
-    super();
+  connectedCallback(): void {
+    super.connectedCallback();
     store.dispatch<AsyncEffect>(loadOverallStatistics());
 
     // conditional tabs routing: Hact visits section appearance depends on whether Coverage 'By partner' tab is active. If it's not, then Open Issues section appear
@@ -44,10 +44,6 @@ export class MonitoringTabComponent extends LitElement {
         this.isHactVisitSectionActivated = this.coverageActiveTab != PARTNER_TAB;
       })
     );
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
     this.overallActivitiesUnsubscribe = store.subscribe(
       overallActivitiesSelector((overallActivities: OverallActivities) => {
         this.completed = overallActivities.visits_completed;

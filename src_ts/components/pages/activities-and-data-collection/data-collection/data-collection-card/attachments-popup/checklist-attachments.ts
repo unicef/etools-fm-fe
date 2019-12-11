@@ -21,14 +21,12 @@ export class ChecklistAttachments extends LitElement {
   popupTitle: string = '';
 
   @query('#link') link!: HTMLLinkElement;
-  private updateUrl!: string;
-  private originalAttachments: IAttachment[] = [];
+  private updateUrl?: string;
 
   set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
     this.updateUrl = updateUrl;
     this.popupTitle = title;
     this.attachments = clone(attachments);
-    this.originalAttachments = attachments;
   }
 
   render(): TemplateResult | void {
@@ -40,6 +38,9 @@ export class ChecklistAttachments extends LitElement {
   }
 
   saveChanges(): void {
+    if (!this.updateUrl) {
+      return;
+    }
     this.saveBtnClicked = true;
     const fileTypeNotSelected: boolean = this.attachments.some(
       (attachment: IEditedAttachment | StoredAttachment) =>
@@ -54,10 +55,10 @@ export class ChecklistAttachments extends LitElement {
 
     store
       .dispatch<AsyncEffect>(updateChecklistAttachments(this.updateUrl, changedData))
-      .then((noChanges: boolean) => {
+      .then(() => {
         this.savingInProcess = false;
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true, response: {noChanges}});
+        fireEvent(this, 'response', {confirmed: true});
       })
       .catch(() => {
         this.savingInProcess = false;
@@ -84,12 +85,8 @@ export class ChecklistAttachments extends LitElement {
     window.URL.revokeObjectURL(url);
   }
 
-  protected deleteAttachment(attachment: StoredAttachment | IEditedAttachment, index: number): void {
-    if (this.isStoredAttachment(attachment)) {
-      this.attachments.splice(index, 1);
-    } else {
-      attachment._delete = true;
-    }
+  protected deleteAttachment(index: number): void {
+    this.attachments.splice(index, 1);
     this.performUpdate();
   }
 
@@ -106,29 +103,11 @@ export class ChecklistAttachments extends LitElement {
   }
 
   private getChanges(): RequestChecklistAttachment[] {
-    return this.attachments
-      .map((attachment: IEditedAttachment | StoredAttachment) => {
-        if (this.isStoredAttachment(attachment)) {
-          // link attachment to checklist
-          return {attachment: attachment.attachment, file_type: attachment.file_type};
-        } else if (attachment._delete) {
-          // remove existed attachment from checklist
-          return {id: attachment.id, _delete: true} as RequestChecklistAttachment;
-        }
-
-        // get original attachment and check the changes. only file_type field can be changed
-        const originalAttachment: IAttachment = this.originalAttachments.find(
-          ({id}: IAttachment) => id === attachment.id
-        ) as IAttachment;
-        if (attachment.file_type === originalAttachment.file_type) {
-          return null;
-        } else {
-          return {attachment: attachment.id, file_type: attachment.file_type};
-        }
-      })
-      .filter<RequestChecklistAttachment>(
-        (attachment: RequestChecklistAttachment | null): attachment is RequestChecklistAttachment => attachment !== null
-      );
+    return this.attachments.map((attachment: IEditedAttachment | StoredAttachment) => {
+      const id: number = this.isStoredAttachment(attachment) ? attachment.attachment : attachment.id;
+      const file_type: number | string = attachment.file_type;
+      return {id, file_type};
+    });
   }
 
   static get styles(): CSSResultArray {

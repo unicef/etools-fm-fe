@@ -33,6 +33,8 @@ import {
   COLLECT_TAB,
   DETAILS_TAB,
   REVIEW_TAB,
+  SUMMARY_TAB,
+  ACTION_POINTS,
   TABS_PROPERTIES
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
@@ -52,7 +54,9 @@ const VALID_TABS: Set<string> = new Set([
   CHECKLIST_TAB,
   REVIEW_TAB,
   COLLECT_TAB,
-  ADDITIONAL_INFO
+  SUMMARY_TAB,
+  ADDITIONAL_INFO,
+  ACTION_POINTS
 ]);
 
 export const STATUSES: IEtoolsStatusModel[] = [
@@ -99,6 +103,11 @@ export class NewActivityComponent extends LitElement {
       hidden: false
     },
     {
+      tab: SUMMARY_TAB,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
+      hidden: false
+    },
+    {
       tab: ATTACHMENTS_TAB,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
@@ -107,16 +116,17 @@ export class NewActivityComponent extends LitElement {
       tab: ADDITIONAL_INFO,
       tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
       hidden: false
+    },
+    {
+      tab: ACTION_POINTS,
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`),
+      hidden: false
     }
   ];
   @property() activeTab!: string;
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
-  }
 
   get personResponsible(): number | null {
     return (
@@ -244,9 +254,20 @@ export class NewActivityComponent extends LitElement {
         return html`
           <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
         `;
+      case SUMMARY_TAB:
+        return html`
+          <activity-summary-tab
+            .activityId="${this.activityId}"
+            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+          ></activity-summary-tab>
+        `;
       case ADDITIONAL_INFO:
         return html`
-          <additional-info-tab .activityId="${this.activityId}"></additional-info-tab>
+          <additional-info-tab .activityDetails="${this.activityDetails}"></additional-info-tab>
+        `;
+      case ACTION_POINTS:
+        return html`
+          <action-points-tab .activityDetails="${this.activityDetails}"></action-points-tab>
         `;
       default:
         return html``;
@@ -298,5 +319,9 @@ export class NewActivityComponent extends LitElement {
       this.activeTab = DETAILS_TAB;
       updateAppLocation(`activities/${this.activityDetails.id}/${DETAILS_TAB}`);
     }
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
   }
 }
