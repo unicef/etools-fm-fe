@@ -64,6 +64,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   cancel(): void {
     this.editedData = JSON.parse(JSON.stringify(this.originalData));
     this.isReadonly = true;
+    this.errors = {};
   }
 
   startEdit(): void {

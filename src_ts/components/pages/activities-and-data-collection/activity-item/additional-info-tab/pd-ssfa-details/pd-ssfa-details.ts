@@ -49,6 +49,12 @@ export class PdSsfaDetails extends LitElement {
         .link-content {
           display: flex;
         }
+        .link-text:hover {
+          cursor: pointer;
+        }
+        .link-content:hover {
+          cursor: pointer;
+        }
         .link-text {
           display: flex;
           align-items: center;

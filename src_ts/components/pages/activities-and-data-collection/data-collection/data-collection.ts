@@ -342,20 +342,22 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
           color: var(--primary-background-color);
           background-color: var(--primary-color);
         }
+
         .information-source {
-          padding-left: 2%;
-          padding-bottom: 0.5%;
-          padding-right: 2%;
+          padding: 0.5% 2% 0.5% 1%;
         }
+
         page-content-header {
           --table-row-height: auto;
           --table-row-margin: 0;
           --title-margin: 18px 0 13px;
         }
+
         .method-name {
           color: var(--primary-text-color);
           font-weight: normal;
         }
+
         .title-description {
           font-size: 12px;
           font-weight: normal;
@@ -392,6 +394,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         .back-button a span {
           margin-left: 10px;
         }
+
         .back-button a svg {
           height: 21px;
         }
