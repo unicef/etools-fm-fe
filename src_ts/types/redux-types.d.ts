@@ -79,7 +79,6 @@ interface IAttachmentsListState {
 
 interface IActionPointsListState {
   data: ActionPoint[];
-  isUpdateSuccessful: boolean;
   updateInProcess: null | boolean;
   error: GenericObject;
 }

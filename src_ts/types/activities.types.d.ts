@@ -234,3 +234,6 @@ type ActionPointPopupData = {
   action_point: ActionPoint | undefined;
   activity_id: number;
 };
+
+type LiteIntervention = {id: number; name: string};
+type RelatedToFields = 'partner' | 'cp_output' | 'intervention';

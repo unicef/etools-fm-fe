@@ -123,7 +123,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           class="without-border flex"
           .selected="${this.selectedRelatedTo}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
-            this.switchRelationContent(detail.selectedItem && detail.selectedItem.value)}"
+            this.setSelectedRelatedTo(detail.selectedItem && detail.selectedItem.value)}"
           trigger-value-change-event
           required
           label="Related To"
@@ -141,7 +141,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
-          ?trigger-value-change-event="${this.relationContent.length}"
+          trigger-value-change-event
           required
           label="Related Name"
           placeholder="Select Related Name"

@@ -4,7 +4,6 @@ import {request} from '../../endpoints/request';
 import {ACTION_POINTS_DETAILS, ACTION_POINTS_LIST} from '../../endpoints/endpoints-list';
 import {
   SetActionPointsList,
-  SetActionPointsUpdateState,
   SetActionPointsUpdateStatus,
   UpdateActionPointError
 } from '../actions/action-points.actions';
@@ -20,47 +19,24 @@ export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Pr
 
 export function updateActionPoint(
   activityId: number,
-  actionPointId: number,
   data: Partial<EditableActionPoint>
 ): (dispatch: Dispatch) => Promise<void | UpdateActionPointError> {
   return (dispatch: Dispatch) => {
-    dispatch(new SetActionPointsUpdateState(false));
-    dispatch(new SetActionPointsUpdateStatus(true));
-    const id: string = `${actionPointId}/`;
+    let id: string = '';
+    let method: string = 'POST';
+    if (data.id) {
+      id = `${data.id}/`;
+      method = 'PATCH';
+    }
     const {url}: IResultEndpoint = getEndpoint(ACTION_POINTS_DETAILS, {activityId, id});
-    return request<ActionPoint>(url, {method: 'PATCH', body: JSON.stringify(data)})
+    dispatch(new SetActionPointsUpdateStatus(true));
+    return request<ActionPoint>(url, {method: method, body: JSON.stringify(data)})
       .then(() => {
         dispatch<AsyncEffect>(loadActionPoints(activityId));
-        dispatch(new SetActionPointsUpdateState(true));
-        dispatch(new SetActionPointsUpdateStatus(false));
       })
       .catch((error: GenericObject) => {
         dispatch(new UpdateActionPointError(error));
-        dispatch(new SetActionPointsUpdateState(false));
-        dispatch(new SetActionPointsUpdateStatus(false));
-      });
-  };
-}
-
-export function createActionPoint(
-  activityId: number,
-  data: Partial<EditableActionPoint>
-): (dispatch: Dispatch) => Promise<void | UpdateActionPointError> {
-  return (dispatch: Dispatch) => {
-    dispatch(new SetActionPointsUpdateState(false));
-    dispatch(new SetActionPointsUpdateStatus(true));
-    const id: string = '';
-    const {url}: IResultEndpoint = getEndpoint(ACTION_POINTS_DETAILS, {activityId, id});
-    return request<ActionPoint>(url, {method: 'POST', body: JSON.stringify(data)})
-      .then(() => {
-        dispatch<AsyncEffect>(loadActionPoints(activityId));
-        dispatch(new SetActionPointsUpdateState(true));
-        dispatch(new SetActionPointsUpdateStatus(false));
       })
-      .catch((error: GenericObject) => {
-        dispatch(new UpdateActionPointError(error));
-        dispatch(new SetActionPointsUpdateState(false));
-        dispatch(new SetActionPointsUpdateStatus(false));
-      });
+      .finally(() => dispatch(new SetActionPointsUpdateStatus(false)));
   };
 }

@@ -3,7 +3,6 @@ import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table';
 import './action-points-popup/action-points-popup';
-import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`
@@ -14,7 +13,7 @@ export function template(this: ActionPointsTab): TemplateResult {
         <div class="card-title counter">Action Points</div>
         <div class="buttons-container">
           <paper-icon-button
-            ?hidden="${!hasPermission(Permissions.ADD_ACTION_POINT)}"
+            ?hidden="${!this.activityDetails.permissions.edit.action_points}"
             @tap="${() => this.openPopup()}"
             class="panel-button"
             data-type="add"
@@ -83,10 +82,7 @@ export function template(this: ActionPointsTab): TemplateResult {
               <div class="col-data flex-1">${this.statusMap.get(item.status)}</div>
               <div class="col-data flex-1">${this.formatDate(item.due_date)}</div>
               <div class="col-data flex-1 editable-row">${item.high_priority ? 'High' : ''}</div>
-              <div
-                class="hover-block"
-                ?hidden="${!hasPermission(Permissions.EDIT_ACTION_POINT) && item.status === 'open'}"
-              >
+              <div class="hover-block" ?hidden="${!this.activityDetails.permissions.edit.action_points}">
                 <iron-icon icon="icons:create" @tap="${() => this.openPopup(item)}"></iron-icon>
               </div>
             </div>

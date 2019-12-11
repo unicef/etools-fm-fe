@@ -3,7 +3,6 @@ import {ActionPointsActions, ActionPointsActionTypes} from '../actions/action-po
 
 const INITIAL_STATE: IActionPointsListState = {
   data: [],
-  isUpdateSuccessful: true,
   updateInProcess: false,
   error: {}
 };
@@ -17,8 +16,6 @@ export const actionPointsList: Reducer<IActionPointsListState, any> = (
       return {...state, data: action.payload};
     case ActionPointsActionTypes.UPDATE_ACTION_POINT_ERROR:
       return {...state, error: action.payload};
-    case ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATE:
-      return {...state, isUpdateSuccessful: action.payload};
     case ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATUS:
       return {...state, updateInProcess: action.payload};
     default:

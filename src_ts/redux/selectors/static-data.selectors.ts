@@ -27,11 +27,3 @@ export const currentWorkspaceSelector: Selector<Workspace | undefined> = select<
 export const staticDataDynamic: DynamicSelector<any> = dynamicSelect<IStaticDataState, any>(
   (store: IRootState) => store.staticData
 );
-
-export const actionPointsOfficesSelector: Selector<ActionPointsOffice[] | undefined> = select<
-  ActionPointsOffice[] | undefined
->((store: IRootState) => store.staticData.offices);
-
-export const actionPointsCategoriesSelector: Selector<ActionPointsCategory[] | undefined> = select<
-  ActionPointsCategory[] | undefined
->((store: IRootState) => store.staticData.actionPointsCategories);

@@ -11,21 +11,14 @@ import {
 import {template} from './action-points-popup.tpl';
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {store} from '../../../../../../redux/store';
-import {
-  actionPointsCategoriesSelector,
-  actionPointsOfficesSelector,
-  staticDataDynamic
-} from '../../../../../../redux/selectors/static-data.selectors';
+import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
 import {ACTION_POINTS_CATEGORIES, ACTION_POINTS_OFFICES, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
 import {SectionsMixin} from '../../../../../common/mixins/sections-mixin';
 import {Unsubscribe} from 'redux';
-import {createActionPoint, updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
-import {
-  actionPointsUpdateSelector,
-  actionPointsUpdateStatusSelector
-} from '../../../../../../redux/selectors/action-points.selectors';
+import {updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
+import {actionPointsUpdateStatusSelector} from '../../../../../../redux/selectors/action-points.selectors';
 import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
 import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
@@ -33,10 +26,6 @@ import {getDifference} from '../../../../../utils/objects-diff';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {setTextareasMaxHeight} from '../../../../../utils/textarea-max-rows-helper';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
-
-//TODO names
-type RelatedType = {id: number; name: string}[];
-type DataFields = 'partner' | 'cp_output' | 'intervention';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -51,18 +40,18 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   @property() savingInProcess: boolean | null = false;
 
-  @property() relationContent: RelatedType = [];
-
   statusOptions: DefaultDropdownOption<string>[] = [
     {value: 'open', display_name: 'Open'},
     {value: 'completed', display_name: 'Completed'}
   ];
 
-  mappings: Map<string, DataFields> = new Map<string, DataFields>([
+  mappings: Map<string, RelatedToFields> = new Map<string, RelatedToFields>([
     [PARTNER, 'partner'],
     [OUTPUT, 'cp_output'],
     [INTERVENTION, 'intervention']
   ]);
+
+  liteInterventions: LiteIntervention[] = [];
 
   set dialogData({action_point, activity_id}: ActionPointPopupData) {
     this.data = action_point
@@ -86,7 +75,6 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   private activityId!: number;
   private userUnsubscribe!: Unsubscribe;
-  private updateActionPointUnsubscribe!: Unsubscribe;
   private updateActionPointStatusUnsubscribe!: Unsubscribe;
   private actionPointsOfficesUnsubscribe!: Unsubscribe;
   private actionPointsCategoriesUnsubscribe!: Unsubscribe;
@@ -123,34 +111,36 @@ export class ActionPointsPopup extends InterventionsMixin(
     this.updateActionPointStatusUnsubscribe = store.subscribe(
       actionPointsUpdateStatusSelector((updateInProcess: boolean | null) => {
         this.savingInProcess = updateInProcess;
-      })
-    );
-
-    this.updateActionPointUnsubscribe = store.subscribe(
-      actionPointsUpdateSelector((isUpdateSuccessful: boolean) => {
-        if (isUpdateSuccessful) {
-          this.dialogOpened = false;
-          this.onClose();
-        } else {
+        if (!this.savingInProcess) {
           this.errors = store.getState().actionPointsList.error.data;
+          if (!this.errors || !Object.keys(this.errors).length) {
+            this.dialogOpened = false;
+            this.onClose();
+          }
         }
       }, false)
     );
 
     this.actionPointsOfficesUnsubscribe = store.subscribe(
-      actionPointsOfficesSelector((offices: ActionPointsOffice[] | undefined) => {
-        if (offices) {
-          this.offices = offices;
-        }
-      })
+      staticDataDynamic(
+        (offices: ActionPointsOffice[] | undefined) => {
+          if (offices) {
+            this.offices = offices;
+          }
+        },
+        [ACTION_POINTS_OFFICES]
+      )
     );
 
     this.actionPointsCategoriesUnsubscribe = store.subscribe(
-      actionPointsCategoriesSelector((categories: ActionPointsCategory[] | undefined) => {
-        if (categories) {
-          this.categories = categories;
-        }
-      })
+      staticDataDynamic(
+        (categories: ActionPointsCategory[] | undefined) => {
+          if (categories) {
+            this.categories = categories;
+          }
+        },
+        [ACTION_POINTS_CATEGORIES]
+      )
     );
   }
 
@@ -159,7 +149,6 @@ export class ActionPointsPopup extends InterventionsMixin(
     this.userUnsubscribe();
     this.actionPointsOfficesUnsubscribe();
     this.actionPointsCategoriesUnsubscribe();
-    this.updateActionPointUnsubscribe();
     this.updateActionPointStatusUnsubscribe();
   }
 
@@ -178,33 +167,31 @@ export class ActionPointsPopup extends InterventionsMixin(
     if (isEmpty) {
       this.dialogOpened = false;
       this.onClose();
-    } else if (!this.editedData.id) {
-      store.dispatch<AsyncEffect>(createActionPoint(this.activityId, this.editedData));
     } else {
-      store.dispatch<AsyncEffect>(updateActionPoint(this.activityId, this.editedData.id, this.editedData));
+      store.dispatch<AsyncEffect>(updateActionPoint(this.activityId, this.editedData));
     }
   }
 
-  getRelatedNames(): RelatedType {
+  getRelatedNames(): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
     switch (this.selectedRelatedTo) {
       case PARTNER:
-        return this.partners.map((item: EtoolsPartner) => {
-          return {id: item.id, name: item.name};
-        });
+        return this.partners;
       case OUTPUT:
-        return this.outputs.map((item: EtoolsCpOutput) => {
-          return {id: item.id, name: item.name};
-        });
+        return this.outputs;
       case INTERVENTION:
-        return this.interventions.map((item: EtoolsIntervention) => {
-          return {id: item.id, name: item.title};
-        });
+        if (this.interventions.length === 0) {
+          return this.liteInterventions;
+        } else {
+          return this.interventions.map((item: EtoolsIntervention) => {
+            return {id: item.id, name: item.title};
+          });
+        }
       default:
         return [];
     }
   }
 
-  switchRelationContent(relationType: string): void {
+  setSelectedRelatedTo(relationType: string): void {
     if (relationType && relationType !== this.selectedRelatedTo) {
       this.selectedRelatedTo = relationType;
       this.editedData.partner = null;
@@ -213,13 +200,10 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  //todo refactor
-  updateEditableDataRelationContent(selectedItem: EtoolsPartner | EtoolsCpOutput | EtoolsIntervention): void {
-    if (this.selectedRelatedTo) {
-      const FIELD: DataFields | undefined = this.mappings.get(this.selectedRelatedTo);
-      if (FIELD) {
-        this.updateModelValue(FIELD, selectedItem && selectedItem.id);
-      }
+  updateEditableDataRelationContent(selectedItem: EtoolsPartner | EtoolsCpOutput | LiteIntervention): void {
+    const FIELD: RelatedToFields | undefined = this.mappings.get(this.selectedRelatedTo || '');
+    if (FIELD) {
+      this.updateModelValue(FIELD, selectedItem && selectedItem.id);
     }
   }
 
