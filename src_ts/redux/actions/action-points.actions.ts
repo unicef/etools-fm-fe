@@ -4,7 +4,9 @@ export enum ActionPointsActionTypes {
   GET_ACTION_POINTS_OFFICES = '[Action points action]: GET_ACTION_POINTS_OFFICES',
   GET_ACTION_POINTS_CATEGORIES = '[Action points action]: GET_ACTION_POINTS_CATEGORIES',
   UPDATE_ACTION_POINT_ERROR = '[Action points action]: UPDATE_ACTION_POINT_ERROR',
-  SET_ACTION_POINTS_UPDATE_STATE = '[Action points action]: SET_ACTION_POINTS_UPDATE_STATE'
+  //todo reduce number of actions produced during creation|update
+  SET_ACTION_POINTS_UPDATE_STATE = '[Action points action]: SET_ACTION_POINTS_UPDATE_STATE',
+  SET_ACTION_POINTS_UPDATE_STATUS = '[Action points action]: SET_ACTION_POINTS_UPDATE_STATUS'
 }
 
 export class SetActionPointsList {
@@ -19,7 +21,7 @@ export class UpdateActionPoint {
 
 export class GetActionPointsOffices {
   readonly type: ActionPointsActionTypes.GET_ACTION_POINTS_OFFICES = ActionPointsActionTypes.GET_ACTION_POINTS_OFFICES;
-  constructor(public payload: OfficeSectionType[]) {}
+  constructor(public payload: ActionPointsOffice[]) {}
 }
 
 export class GetActionPointsCategories {
@@ -39,10 +41,17 @@ export class SetActionPointsUpdateState {
   constructor(public payload: boolean) {}
 }
 
+export class SetActionPointsUpdateStatus {
+  readonly type: ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATUS =
+    ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATUS;
+  constructor(public payload: boolean) {}
+}
+
 export type ActionPointsActions =
   | SetActionPointsList
   | UpdateActionPoint
   | GetActionPointsOffices
   | GetActionPointsCategories
   | UpdateActionPointError
-  | SetActionPointsUpdateState;
+  | SetActionPointsUpdateState
+  | SetActionPointsUpdateStatus;

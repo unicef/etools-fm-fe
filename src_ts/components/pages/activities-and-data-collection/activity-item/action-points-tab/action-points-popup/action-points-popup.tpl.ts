@@ -10,6 +10,7 @@ import {ActionPointsPopup} from './action-points-popup';
 import {translate} from '../../../../../../localization/localisation';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {formatDate} from '../../../../../utils/date-utility';
+import {LEVELS} from '../../../../../common/dropdown-options';
 
 export function template(this: ActionPointsPopup): TemplateResult {
   return html`
@@ -18,12 +19,16 @@ export function template(this: ActionPointsPopup): TemplateResult {
       size="md"
       keep-dialog-open
       ?opened="${this.dialogOpened}"
-      dialog-title="${'Create action point'}"
+      dialog-title="Create action point"
       @confirm-btn-clicked="${() => this.save()}"
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
       no-padding
     >
+      <etools-loading
+        ?active="${this.savingInProcess}"
+        loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <!--     Description   -->
       <paper-textarea
         class="validate-input"
@@ -80,7 +85,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?trigger-value-change-event="${this.sections.length}"
           required
           label="Section"
-          placeholder="Choose section"
+          placeholder="Select Section"
           .options="${this.sections}"
           option-label="name"
           option-value="id"
@@ -98,10 +103,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
           .selected="${this.editedData.office}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('office', detail.selectedItem && detail.selectedItem.id)}"
-          ?trigger-value-change-event="${this.offices.length}"
+          ?trigger-value-change-event="${this.offices && this.offices.length}"
           required
           label="Offices"
-          placeholder="Choose office"
+          placeholder="Select Office"
           .options="${this.offices}"
           option-label="name"
           option-value="id"
@@ -116,31 +121,31 @@ export function template(this: ActionPointsPopup): TemplateResult {
         <!--    Related To    -->
         <etools-dropdown
           class="without-border flex"
-          .selected="${this.getRelationType(this.editedData)}"
+          .selected="${this.selectedRelatedTo}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.switchRelationContent(detail.selectedItem && detail.selectedItem.value)}"
-          ?trigger-value-change-event="${this.relationType.length}"
+          trigger-value-change-event
           required
           label="Related To"
-          placeholder="Choose type"
-          .options="${this.relationType}"
+          placeholder="Select Related To"
+          .options="${LEVELS}"
           option-label="display_name"
           option-value="value"
           allow-outside-scroll
           dynamic-align
         ></etools-dropdown>
 
-        <!--    Content    -->
+        <!--    Related Name    -->
         <etools-dropdown
           class="without-border flex"
-          .selected="${this.getRelatedContent(this.editedData)}"
+          .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
           ?trigger-value-change-event="${this.relationContent.length}"
           required
-          label="Content"
-          placeholder="Choose content"
-          .options="${this.relationContent}"
+          label="Related Name"
+          placeholder="Select Related Name"
+          .options="${this.getRelatedNames()}"
           option-label="name"
           option-value="id"
           allow-outside-scroll
@@ -154,10 +159,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
           @etools-selected-item-changed="${({detail}: CustomEvent) => {
             this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id);
           }}"
-          ?trigger-value-change-event="${this.categories.length}"
+          ?trigger-value-change-event="${this.categories && this.categories.length}"
           required
           label="Categories"
-          placeholder="Choose category"
+          placeholder="Select Category"
           .options="${this.categories}"
           option-label="description"
           option-value="id"

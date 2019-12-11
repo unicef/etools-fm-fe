@@ -49,6 +49,8 @@ interface IStaticDataState {
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
   cpOutcomes?: EtoolsCpOutcome[];
+  offices?: ActionPointsOffice[];
+  actionPointsCategories?: ActionPointsCategory[];
 }
 
 interface ISpecificLocationsState {
@@ -77,9 +79,8 @@ interface IAttachmentsListState {
 
 interface IActionPointsListState {
   data: ActionPoint[];
-  offices: OfficeSectionType[];
-  categories: ActionPointsCategory[];
   isUpdateSuccessful: boolean;
+  updateInProcess: null | boolean;
   error: GenericObject;
 }
 

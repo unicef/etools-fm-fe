@@ -10,5 +10,6 @@ export const TABS_PROPERTIES: GenericObject<string> = {
   [CHECKLIST_TAB]: 'activity_question_set',
   [REVIEW_TAB]: 'activity_question_set_review',
   [COLLECT_TAB]: 'started_checklist_set',
-  [ADDITIONAL_INFO]: 'additional_info'
+  [ADDITIONAL_INFO]: 'additional_info',
+  [ACTION_POINTS]: 'action_points'
 };

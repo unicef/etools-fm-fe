@@ -3,9 +3,8 @@ import {ActionPointsActions, ActionPointsActionTypes} from '../actions/action-po
 
 const INITIAL_STATE: IActionPointsListState = {
   data: [],
-  offices: [],
-  categories: [],
   isUpdateSuccessful: true,
+  updateInProcess: false,
   error: {}
 };
 
@@ -16,14 +15,12 @@ export const actionPointsList: Reducer<IActionPointsListState, any> = (
   switch (action.type) {
     case ActionPointsActionTypes.SET_ACTION_POINTS_LIST:
       return {...state, data: action.payload};
-    case ActionPointsActionTypes.GET_ACTION_POINTS_OFFICES:
-      return {...state, offices: action.payload};
-    case ActionPointsActionTypes.GET_ACTION_POINTS_CATEGORIES:
-      return {...state, categories: action.payload};
     case ActionPointsActionTypes.UPDATE_ACTION_POINT_ERROR:
       return {...state, error: action.payload};
     case ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATE:
       return {...state, isUpdateSuccessful: action.payload};
+    case ActionPointsActionTypes.SET_ACTION_POINTS_UPDATE_STATUS:
+      return {...state, updateInProcess: action.payload};
     default:
       return state;
   }

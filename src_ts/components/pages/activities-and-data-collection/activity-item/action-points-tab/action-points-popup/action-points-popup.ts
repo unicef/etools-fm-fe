@@ -11,22 +11,20 @@ import {
 import {template} from './action-points-popup.tpl';
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {store} from '../../../../../../redux/store';
-import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
-import {USERS} from '../../../../../../endpoints/endpoints-list';
+import {
+  actionPointsCategoriesSelector,
+  actionPointsOfficesSelector,
+  staticDataDynamic
+} from '../../../../../../redux/selectors/static-data.selectors';
+import {ACTION_POINTS_CATEGORIES, ACTION_POINTS_OFFICES, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
 import {SectionsMixin} from '../../../../../common/mixins/sections-mixin';
 import {Unsubscribe} from 'redux';
+import {createActionPoint, updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
 import {
-  createActionPoint,
-  loadActionPointsCategories,
-  loadActionPointsOffices,
-  updateActionPoint
-} from '../../../../../../redux/effects/action-points.effects';
-import {
-  actionPointsCategoriesSelector,
-  actionPointsOfficesSelector,
-  actionPointsUpdateSelector
+  actionPointsUpdateSelector,
+  actionPointsUpdateStatusSelector
 } from '../../../../../../redux/selectors/action-points.selectors';
 import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
 import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
@@ -34,8 +32,11 @@ import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {setTextareasMaxHeight} from '../../../../../utils/textarea-max-rows-helper';
+import {INTERVENTION, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 
+//TODO names
 type RelatedType = {id: number; name: string}[];
+type DataFields = 'partner' | 'cp_output' | 'intervention';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -44,16 +45,12 @@ export class ActionPointsPopup extends InterventionsMixin(
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   @property() dialogOpened: boolean = true;
   @property() users: User[] = [];
-  @property() offices: OfficeSectionType[] = [];
-  @property() categories: ActionPointsCategory[] = [];
+  @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
+  @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
+  @property() selectedRelatedTo: string | null = null;
 
-  @property() relatedMap!: Map<string, RelatedType>;
+  @property() savingInProcess: boolean | null = false;
 
-  relationType: DefaultDropdownOption<string>[] = [
-    {value: 'partner', display_name: 'Partner'},
-    {value: 'cp_output', display_name: 'CP Output'},
-    {value: 'intervention', display_name: 'Intervention'}
-  ];
   @property() relationContent: RelatedType = [];
 
   statusOptions: DefaultDropdownOption<string>[] = [
@@ -61,7 +58,11 @@ export class ActionPointsPopup extends InterventionsMixin(
     {value: 'completed', display_name: 'Completed'}
   ];
 
-  private activityId!: number;
+  mappings: Map<string, DataFields> = new Map<string, DataFields>([
+    [PARTNER, 'partner'],
+    [OUTPUT, 'cp_output'],
+    [INTERVENTION, 'intervention']
+  ]);
 
   set dialogData({action_point, activity_id}: ActionPointPopupData) {
     this.data = action_point
@@ -80,10 +81,13 @@ export class ActionPointsPopup extends InterventionsMixin(
           intervention: null
         };
     this.activityId = activity_id;
+    this.selectedRelatedTo = this.getRelatedTo(this.editedData);
   }
 
+  private activityId!: number;
   private userUnsubscribe!: Unsubscribe;
   private updateActionPointUnsubscribe!: Unsubscribe;
+  private updateActionPointStatusUnsubscribe!: Unsubscribe;
   private actionPointsOfficesUnsubscribe!: Unsubscribe;
   private actionPointsCategoriesUnsubscribe!: Unsubscribe;
 
@@ -97,8 +101,12 @@ export class ActionPointsPopup extends InterventionsMixin(
     if (!data.users) {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
     }
-    store.dispatch<AsyncEffect>(loadActionPointsOffices());
-    store.dispatch<AsyncEffect>(loadActionPointsCategories());
+    if (!this.offices) {
+      store.dispatch<AsyncEffect>(loadStaticData(ACTION_POINTS_OFFICES));
+    }
+    if (!this.categories) {
+      store.dispatch<AsyncEffect>(loadStaticData(ACTION_POINTS_CATEGORIES));
+    }
 
     this.userUnsubscribe = store.subscribe(
       staticDataDynamic(
@@ -110,6 +118,12 @@ export class ActionPointsPopup extends InterventionsMixin(
         },
         [USERS]
       )
+    );
+
+    this.updateActionPointStatusUnsubscribe = store.subscribe(
+      actionPointsUpdateStatusSelector((updateInProcess: boolean | null) => {
+        this.savingInProcess = updateInProcess;
+      })
     );
 
     this.updateActionPointUnsubscribe = store.subscribe(
@@ -124,36 +138,20 @@ export class ActionPointsPopup extends InterventionsMixin(
     );
 
     this.actionPointsOfficesUnsubscribe = store.subscribe(
-      actionPointsOfficesSelector((offices: OfficeSectionType[]) => {
-        this.offices = offices;
+      actionPointsOfficesSelector((offices: ActionPointsOffice[] | undefined) => {
+        if (offices) {
+          this.offices = offices;
+        }
       })
     );
+
     this.actionPointsCategoriesUnsubscribe = store.subscribe(
-      actionPointsCategoriesSelector((categories: ActionPointsCategory[]) => {
-        this.categories = categories;
+      actionPointsCategoriesSelector((categories: ActionPointsCategory[] | undefined) => {
+        if (categories) {
+          this.categories = categories;
+        }
       })
     );
-    //TODO wait for loading or invoke .map on each relatedType update in switchRelationContent() method
-    this.relatedMap = new Map([
-      [
-        this.relationType[0].value,
-        this.partners.map((item: EtoolsPartner) => {
-          return {id: item.id, name: item.name};
-        })
-      ],
-      [
-        this.relationType[1].value,
-        this.outputs.map((item: EtoolsCpOutput) => {
-          return {id: item.id, name: item.name};
-        })
-      ],
-      [
-        this.relationType[2].value,
-        this.interventions.map((item: EtoolsIntervention) => {
-          return {id: item.id, name: item.title};
-        })
-      ]
-    ]);
   }
 
   disconnectedCallback(): void {
@@ -162,6 +160,7 @@ export class ActionPointsPopup extends InterventionsMixin(
     this.actionPointsOfficesUnsubscribe();
     this.actionPointsCategoriesUnsubscribe();
     this.updateActionPointUnsubscribe();
+    this.updateActionPointStatusUnsubscribe();
   }
 
   onClose(): void {
@@ -186,7 +185,63 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  extractIds(actionPoint: ActionPoint): EditableActionPoint {
+  getRelatedNames(): RelatedType {
+    switch (this.selectedRelatedTo) {
+      case PARTNER:
+        return this.partners.map((item: EtoolsPartner) => {
+          return {id: item.id, name: item.name};
+        });
+      case OUTPUT:
+        return this.outputs.map((item: EtoolsCpOutput) => {
+          return {id: item.id, name: item.name};
+        });
+      case INTERVENTION:
+        return this.interventions.map((item: EtoolsIntervention) => {
+          return {id: item.id, name: item.title};
+        });
+      default:
+        return [];
+    }
+  }
+
+  switchRelationContent(relationType: string): void {
+    if (relationType && relationType !== this.selectedRelatedTo) {
+      this.selectedRelatedTo = relationType;
+      this.editedData.partner = null;
+      this.editedData.cp_output = null;
+      this.editedData.intervention = null;
+    }
+  }
+
+  //todo refactor
+  updateEditableDataRelationContent(selectedItem: EtoolsPartner | EtoolsCpOutput | EtoolsIntervention): void {
+    if (this.selectedRelatedTo) {
+      const FIELD: DataFields | undefined = this.mappings.get(this.selectedRelatedTo);
+      if (FIELD) {
+        this.updateModelValue(FIELD, selectedItem && selectedItem.id);
+      }
+    }
+  }
+
+  getSelectedRelatedName(): number | null | undefined {
+    switch (this.selectedRelatedTo) {
+      case PARTNER:
+        return this.editedData.partner;
+      case OUTPUT:
+        return this.editedData.cp_output;
+      case INTERVENTION:
+        return this.editedData.intervention;
+      default:
+        return null;
+    }
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    setTextareasMaxHeight(this.textareas);
+  }
+
+  private extractIds(actionPoint: ActionPoint): EditableActionPoint {
     return {
       id: actionPoint.id,
       category: actionPoint.category,
@@ -202,76 +257,16 @@ export class ActionPointsPopup extends InterventionsMixin(
     };
   }
 
-  getRelationType({partner, cp_output, intervention}: Partial<EditableActionPoint>): string {
+  private getRelatedTo({partner, cp_output, intervention}: Partial<EditableActionPoint>): string | null {
     if (partner) {
-      return this.relationType[0].value;
+      return PARTNER;
     } else if (cp_output) {
-      return this.relationType[1].value;
+      return OUTPUT;
     } else if (intervention) {
-      return this.relationType[2].value;
-    } else {
-      return '-';
-    }
-  }
-  // TODO refactor if it possible
-  switchRelationContent(relationType: string): void {
-    if (!relationType) {
-      return;
-    }
-    this.relationContent = this.relatedMap.get(relationType) || [];
-    if (!this.relationContent.length) {
-      return;
-    }
-    switch (relationType) {
-      case this.relationType[0].value:
-        if (!this.editedData.partner) {
-          this.editedData.partner = this.relationContent[0].id;
-        }
-        this.editedData.cp_output = null;
-        this.editedData.intervention = null;
-        break;
-      case this.relationType[1].value:
-        if (!this.editedData.cp_output) {
-          this.editedData.cp_output = this.relationContent[0].id;
-        }
-        this.editedData.partner = null;
-        this.editedData.intervention = null;
-        break;
-      case this.relationType[2].value:
-        if (!this.editedData.intervention) {
-          this.editedData.intervention = this.relationContent[0].id;
-        }
-        this.editedData.partner = null;
-        this.editedData.cp_output = null;
-        break;
-    }
-  }
-
-  updateEditableDataRelationContent(selectedItem: EtoolsPartner | EtoolsCpOutput | EtoolsIntervention): void {
-    if (this.editedData.partner) {
-      this.updateModelValue('partner', selectedItem && selectedItem.id);
-    } else if (this.editedData.cp_output) {
-      this.updateModelValue('cp_output', selectedItem && selectedItem.id);
-    } else if (this.editedData.intervention) {
-      this.updateModelValue('intervention', selectedItem && selectedItem.id);
-    }
-  }
-
-  getRelatedContent({partner, cp_output, intervention}: Partial<EditableActionPoint>): number | null | undefined {
-    if (partner) {
-      return this.editedData.partner;
-    } else if (cp_output) {
-      return this.editedData.cp_output;
-    } else if (intervention) {
-      return this.editedData.intervention;
+      return INTERVENTION;
     } else {
       return null;
     }
-  }
-
-  protected firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textareas);
   }
 
   static get styles(): CSSResult[] {

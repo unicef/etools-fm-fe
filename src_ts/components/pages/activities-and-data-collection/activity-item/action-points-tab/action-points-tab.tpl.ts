@@ -3,15 +3,18 @@ import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table';
 import './action-points-popup/action-points-popup';
+import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`
     ${InputStyles}
     <section class="elevation page-content card-container" elevation="1">
+      <!--   Card Header   -->
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">Action Points</div>
         <div class="buttons-container">
           <paper-icon-button
+            ?hidden="${!hasPermission(Permissions.ADD_ACTION_POINT)}"
             @tap="${() => this.openPopup()}"
             class="panel-button"
             data-type="add"
@@ -20,6 +23,7 @@ export function template(this: ActionPointsTab): TemplateResult {
         </div>
       </div>
 
+      <!--   Table header   -->
       <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
         <etools-data-table-column class="flex-1 col-data">
           Reference No.
@@ -59,6 +63,8 @@ export function template(this: ActionPointsTab): TemplateResult {
             </etools-data-table-row>
           `
         : ''}
+
+      <!--   Table content   -->
       ${this.items.map(
         (item: ActionPoint) => html`
           <etools-data-table-row secondary-bg-on-hover>
@@ -77,10 +83,15 @@ export function template(this: ActionPointsTab): TemplateResult {
               <div class="col-data flex-1">${this.statusMap.get(item.status)}</div>
               <div class="col-data flex-1">${this.formatDate(item.due_date)}</div>
               <div class="col-data flex-1 editable-row">${item.high_priority ? 'High' : ''}</div>
-              <div class="hover-block">
+              <div
+                class="hover-block"
+                ?hidden="${!hasPermission(Permissions.EDIT_ACTION_POINT) && item.status === 'open'}"
+              >
                 <iron-icon icon="icons:create" @tap="${() => this.openPopup(item)}"></iron-icon>
               </div>
             </div>
+
+            <!--   Collapse content   -->
             <div slot="row-data-details" class="layout horizontal">
               <div class="row-details-content w160px">
                 <div class="rdc-title">Related to</div>

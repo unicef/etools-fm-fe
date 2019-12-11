@@ -170,7 +170,12 @@ type Person = {
   email: string;
 };
 
-type OfficeSectionType = {
+type ActionPointsOffice = {
+  id: number;
+  name: string;
+};
+
+type ActionPointsSection = {
   id: number;
   name: string;
 };
@@ -198,8 +203,8 @@ type ActionPoint = {
   high_priority: boolean;
   due_date: string;
   description: string;
-  office: OfficeSectionType;
-  section: OfficeSectionType;
+  office: ActionPointsOffice;
+  section: ActionPointsSection;
   created: number;
   date_of_completion?: number;
   status: string;
@@ -223,13 +228,6 @@ type EditableActionPoint = {
   partner: number | null;
   intervention: number | null;
   cp_output: number | null;
-};
-
-type Pageable<T> = {
-  count: number;
-  next: number | null;
-  previous: number | null;
-  results: T[];
 };
 
 type ActionPointPopupData = {
