@@ -76,8 +76,10 @@ export function changeActivityStatus(id: number, activityDetails: Partial<IActiv
 export function loadChecklistAttachments(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
-    return request<PageableChecklistAttachment>(url, {method: 'GET'}).then((response: PageableChecklistAttachment) => {
-      dispatch(new ChecklistAttachmentsRequest(response.results));
-    });
+    return request<IListData<IChecklistAttachment>>(url, {method: 'GET'}).then(
+      (response: IListData<IChecklistAttachment>) => {
+        dispatch(new ChecklistAttachmentsRequest(response.results));
+      }
+    );
   };
 }

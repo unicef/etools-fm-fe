@@ -74,6 +74,7 @@ interface IAttachmentsListState {
   rationale_attachments: null | IAttachment[];
   updateInProcess: null | boolean;
   error: GenericObject;
+  attachmentsTypes: AttachmentType[];
 }
 
 interface IQuestionTemplatesState {

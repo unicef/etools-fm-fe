@@ -1,8 +1,8 @@
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './attachments-list.tpl';
-import {loadAttachmentsList} from '../../../redux/effects/attachments-list.effects';
+import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
 import {store} from '../../../redux/store';
-import {attachmentsListSelector} from '../../../redux/selectors/attachments-list.selectors';
+import {attachmentsListSelector, attachmentsTypesSelector} from '../../../redux/selectors/attachments-list.selectors';
 import {elevationStyles} from '../../styles/elevation-styles';
 import {openDialog} from '../../utils/dialog';
 import {Unsubscribe} from 'redux';
@@ -28,14 +28,11 @@ export class AttachmentsListComponent extends LitElement {
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
+  @property() attachmentsTypes: AttachmentType[] = [];
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;
-
-  static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
-  }
-
+  private attachmentsTypesUnsubscribe!: Unsubscribe;
   private _endpointName: string = '';
 
   // on endpoint-name attribute changes
@@ -80,6 +77,21 @@ export class AttachmentsListComponent extends LitElement {
     return template.call(this);
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    this.attachmentsListUnsubscribe = store.subscribe(
+      attachmentsTypesSelector((types: AttachmentType[]) => {
+        this.attachmentsTypes = types;
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.attachmentsTypesUnsubscribe();
+  }
+
   formatDate(value: string, format: string = 'DD MMM YYYY'): string {
     if (!value) {
       return '';
@@ -99,7 +111,9 @@ export class AttachmentsListComponent extends LitElement {
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: FILE_TYPES,
+        attachmentTypes: this.attachmentsTypes.map((item: AttachmentType) => {
+          return {value: item.id, display_name: item.label};
+        }),
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }
@@ -121,5 +135,9 @@ export class AttachmentsListComponent extends LitElement {
       }
       this.debouncedLoading();
     });
+  }
+
+  static get styles(): CSSResult[] {
+    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
   }
 }
