@@ -80,7 +80,7 @@ export class DataCollectionCard extends LitElement {
     if (!this.overallInfo) {
       return;
     }
-    openDialog<AttachmentsPopupData, AttachmentDialogResponse>({
+    openDialog<AttachmentsPopupData>({
       dialog: 'checklist-attachments-popup',
       dialogData: {
         attachments: this.overallInfo.attachments,
@@ -88,8 +88,8 @@ export class DataCollectionCard extends LitElement {
         title: `Attachments for ${this.tabName}`
       },
       readonly: this.readonly || !this.attachmentsEndpoint
-    }).then(({confirmed, response}: IDialogResponse<AttachmentDialogResponse>) => {
-      if (!confirmed || (response && response.noChanges)) {
+    }).then(({confirmed}: IEtoolsDialogResponse) => {
+      if (!confirmed) {
         return;
       }
 
