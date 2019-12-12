@@ -324,7 +324,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       checklistId: this.checklistId,
       overallId: overall.id
     }).url;
-    return `${url}attachments/`;
+    return `${url}attachments/bulk-update/`;
   }
 
   static get styles(): CSSResultArray {
