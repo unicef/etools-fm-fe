@@ -45,9 +45,9 @@ export class LocationWidgetComponent extends LitElement {
   @property() sitesLocation: Site[] = [];
   @property() isLeaf: boolean = false;
 
+  @property({type: String, reflect: true}) locationSearch: string = '';
   protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   @property() protected history: WidgetLocation[] = [];
-  @property() protected locationSearch: string = '';
   @property() private listLoading: boolean = false;
   @property() private pathLoading: boolean = false;
   @property() private mapInitializationProcess: boolean = false;
@@ -335,7 +335,8 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   search({value}: {value: string}): void {
-    if (!this.loadingInProcess) {
+    if (this.locationSearch !== value) {
+      this.locationSearch = value;
       this.inputDebounce(value);
     }
   }
@@ -444,7 +445,7 @@ export class LocationWidgetComponent extends LitElement {
     const {is_leaf: isLeaf, id} = location;
     this.isLeaf = isLeaf;
     if (!isLeaf) {
-      store.dispatch<AsyncEffect>(loadLocationsChunk({query: `parent=${id}`, page: 1, reload: true}));
+      store.dispatch<AsyncEffect>(loadLocationsChunk({query: `parent=${id}`, search: '', page: 1, reload: true}));
       this.selectedLocation = null;
     } else {
       this.selectedLocation = id;
@@ -459,16 +460,18 @@ export class LocationWidgetComponent extends LitElement {
     const pointCoordinates: CoordinatesArray = location.point.coordinates;
     const polygonIsEmpty: boolean = !polygonCoordinates.length;
 
-    const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
-    const reversedCoordinates: CoordinatesArray[] = coordinates.map(
-      (coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray
-    );
-    const options: FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
-    this.MapHelper.map!.flyToBounds(reversedCoordinates, options);
+    if (!polygonIsEmpty || pointCoordinates) {
+      const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
+      const reversedCoordinates: CoordinatesArray[] = coordinates.map(
+        (coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray
+      );
+      const options: FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
+      this.MapHelper.map!.flyToBounds(reversedCoordinates, options);
 
-    if (!polygonIsEmpty) {
-      this.polygon = L.polygon(reversedCoordinates, POLYGON_OPTIONS);
-      this.polygon.addTo(this.MapHelper.map!);
+      if (!polygonIsEmpty) {
+        this.polygon = L.polygon(reversedCoordinates, POLYGON_OPTIONS);
+        this.polygon.addTo(this.MapHelper.map!);
+      }
     }
   }
 
@@ -500,7 +503,8 @@ export class LocationWidgetComponent extends LitElement {
     // return to initial map state
     this.clearMap();
     this.setInitialMapView();
-    store.dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', page: 1, reload: true}));
+    store.dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', search: '', page: 1, reload: true}));
+    this.isLeaf = false;
     this.MapHelper.removeStaticMarkers();
     this.history = [];
   }

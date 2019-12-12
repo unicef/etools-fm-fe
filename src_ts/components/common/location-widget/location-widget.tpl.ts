@@ -29,7 +29,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
           <paper-input
             class="search-input"
             type="search"
-            value="${this.locationSearch}"
+            .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
             placeholder="Search"
             inline
