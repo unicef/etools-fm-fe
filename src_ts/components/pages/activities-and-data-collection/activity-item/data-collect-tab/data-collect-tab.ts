@@ -26,6 +26,8 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
+import '@unicef-polymer/etools-data-table';
+import {classMap} from 'lit-html/directives/class-map';
 
 addTranslates(ENGLISH, [ACTIVITY_COLLECT_TRANSLATES]);
 store.addReducers({dataCollection});
@@ -152,7 +154,10 @@ export class DataCollectTab extends LitElement {
           ${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}
         </etools-data-table-column>
 
-        <etools-data-table-column class="${method.use_information_source ? 'flex-1' : 'flex-2'}" field="text">
+        <etools-data-table-column
+          class="${classMap({'flex-1': method.use_information_source, 'flex-2': !method.use_information_source})}"
+          field="text"
+        >
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
 
@@ -174,7 +179,12 @@ export class DataCollectTab extends LitElement {
               <div class="col-data flex-1 truncate">${item.author.name}</div>
 
               <!--  Method Name  -->
-              <div class="col-data ${method.use_information_source ? 'flex-1' : 'flex-2'} truncate">
+              <div
+                class="col-data truncate ${classMap({
+                  'flex-1': method.use_information_source,
+                  'flex-2': !method.use_information_source
+                })}"
+              >
                 ${this.getMethodType(item.method)}
               </div>
 

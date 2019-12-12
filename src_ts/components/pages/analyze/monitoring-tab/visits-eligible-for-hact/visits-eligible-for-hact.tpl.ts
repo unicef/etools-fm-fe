@@ -42,16 +42,16 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
               </div>
 
               <div slot="row-data-details" class="custom-row-data">
-                <div class="custom-row-details-content">
+                <div class="custom-row-details-content custom-row-details-visit">
                   <div class="rdc-title">Visit</div>
                 </div>
-                <div class="custom-row-details-content">
+                <div class="custom-row-details-content custom-row-details-cp-output">
                   <div class="rdc-title">CP output</div>
                 </div>
-                <div class="custom-row-details-content">
+                <div class="custom-row-details-content custom-row-details-ps-ssfa">
                   <div class="rdc-title">PD/SSFA</div>
                 </div>
-                <div class="custom-row-details-content">
+                <div class="custom-row-details-content custom-row-details-date">
                   <div class="rdc-title">Visit End Date</div>
                 </div>
               </div>
@@ -60,10 +60,10 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                     hactVisit.visits,
                     (activity: HactVisitsActivity) => html`
                       <div slot="row-data-details" class="custom-row-data">
-                        <div class="custom-row-details-content custom-row-details-nowrap">
+                        <div class="custom-row-details-content custom-row-details-nowrap custom-row-details-visit">
                           ${activity.reference_number}
                         </div>
-                        <div class="custom-row-details-content">
+                        <div class="custom-row-details-content custom-row-details-cp-output">
                           ${activity.cp_outputs.map(
                             (item: IActivityCPOutput) =>
                               html`
@@ -71,7 +71,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                               `
                           )}
                         </div>
-                        <div class="custom-row-details-content">
+                        <div class="custom-row-details-content custom-row-details-ps-ssfa">
                           ${activity.interventions.map(
                             (item: IActivityIntervention) =>
                               html`
@@ -81,7 +81,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                               `
                           )}
                         </div>
-                        <div class="custom-row-details-content custom-row-details-nowrap">
+                        <div class="custom-row-details-content custom-row-details-nowrap custom-row-details-date">
                           ${this.formatDate(activity.end_date)}
                         </div>
                       </div>

@@ -74,13 +74,15 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>
 
-                  <div class="hover-block" ?hidden="${this.readonly}">
+                  <div class="hover-block">
                     <paper-icon-button
+                      ?hidden="${this.readonly}"
                       icon="icons:create"
                       @tap="${() => this.openPopup(attachment)}"
                     ></paper-icon-button>
                     <paper-icon-button
                       icon="icons:delete"
+                      ?hidden="${this.readonly}"
                       @tap="${() => this.openDeletePopup(attachment.id)}"
                     ></paper-icon-button>
                   </div>

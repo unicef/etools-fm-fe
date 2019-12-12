@@ -63,12 +63,22 @@ export class VisitsEligibleForHact extends LitElement {
           font-size: 12px;
           overflow: hidden;
           text-overflow: ellipsis;
-          width: 100px;
           margin: 0.5%;
         }
         .custom-row-details-nowrap {
           white-space: nowrap;
         }
+        .custom-row-details-visit {
+          flex-basis: 20%;
+        }
+        .custom-row-details-cp-output {
+          flex-basis: 32%;
+        }
+        .custom-row-details-ps-ssfa {
+          flex-basis: 32%;
+        }
+        .custom-row-details-date {
+          flex-basis: 15%;
       `
     ];
   }
