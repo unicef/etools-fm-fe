@@ -17,6 +17,7 @@ import {QUESTIONS_TRANSLATES} from '../../../localization/en/settings-page/quest
 import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
+import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
 
 store.addReducers({specificLocations, questions});
 addTranslates(ENGLISH, [SITES_TRANSLATES, QUESTIONS_TRANSLATES]);
@@ -26,7 +27,7 @@ const SITES_TAB: string = 'sites';
 const QUESTIONS_TAB: string = 'questions';
 
 @customElement('fm-settings')
-export class FmSettingsComponent extends LitElement {
+export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   pageTabs: PageTab[] = [
     {
       tab: QUESTIONS_TAB,
@@ -42,32 +43,31 @@ export class FmSettingsComponent extends LitElement {
 
   @property() activeTab: string = QUESTIONS_TAB;
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-  }
-
   render(): TemplateResult | void {
-    return html`
-      <page-content-header with-tabs-visible>
-        <h1 slot="page-title">Settings</h1>
+    const canView: boolean = this.canView();
+    return canView
+      ? html`
+          <page-content-header with-tabs-visible>
+            <h1 slot="page-title">Settings</h1>
 
-        <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-          <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
-            <iron-icon icon="file-download"></iron-icon>Export
-          </paper-button>
-        </div>
+            <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
+              <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
+                <iron-icon icon="file-download"></iron-icon>Export
+              </paper-button>
+            </div>
 
-        <etools-tabs
-          id="tabs"
-          slot="tabs"
-          .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
-          .activeTab="${this.activeTab}"
-        ></etools-tabs>
-      </page-content-header>
+            <etools-tabs
+              id="tabs"
+              slot="tabs"
+              .tabs="${this.pageTabs}"
+              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              .activeTab="${this.activeTab}"
+            ></etools-tabs>
+          </page-content-header>
 
-      ${this.getTabElement()}
-    `;
+          ${this.getTabElement()}
+        `
+      : html``;
   }
 
   connectedCallback(): void {
@@ -76,9 +76,6 @@ export class FmSettingsComponent extends LitElement {
       routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
         if (routeName !== PAGE) {
           return;
-        }
-        if (!hasPermission(Permissions.VIEW_SETTINGS)) {
-          updateAppLocation(ACTIVITIES_PAGE);
         }
         this.activeTab = subRouteName as string;
       })
@@ -115,5 +112,19 @@ export class FmSettingsComponent extends LitElement {
     const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
     const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
     window.open(url + params, '_blank');
+  }
+
+  canView(): boolean {
+    if (!this.permissionsReady) {
+      return false;
+    }
+    if (!hasPermission(Permissions.VIEW_SETTINGS)) {
+      updateAppLocation(ACTIVITIES_PAGE);
+    }
+    return true;
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
   }
 }

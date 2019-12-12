@@ -124,3 +124,7 @@ interface IEtoolsStatusModel extends IEtoolsStatusItem {
   // some statuses may share the same position
   statusOptions?: IEtoolsStatusItem[];
 }
+
+interface IEtoolsPage {
+  canView: () => boolean;
+}

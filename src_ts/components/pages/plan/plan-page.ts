@@ -17,6 +17,7 @@ import {ISSUE_TRACKER_TRANSLATES} from '../../../localization/en/plan-page/issue
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {hasPermission, Permissions} from '../../../config/permissions';
+import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
 
 store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
 addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES, ISSUE_TRACKER_TRANSLATES]);
@@ -28,7 +29,7 @@ const ISSUE_TRACKER_TAB: string = 'issue-tracker';
 const TEMPLATES_TAB: string = 'templates';
 
 @customElement('plan-page')
-export class PlanPage extends LitElement {
+export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   pageTabs: PageTab[] = [
     {
       tab: RATIONALE_TAB,
@@ -54,21 +55,24 @@ export class PlanPage extends LitElement {
   }
 
   render(): TemplateResult {
-    return html`
-      <page-content-header with-tabs-visible>
-        <h1 slot="page-title">Plan</h1>
+    const canView: boolean = this.canView();
+    return canView
+      ? html`
+          <page-content-header with-tabs-visible>
+            <h1 slot="page-title">Plan</h1>
 
-        <etools-tabs
-          id="tabs"
-          slot="tabs"
-          .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
-          .activeTab="${this.activeTab}"
-        ></etools-tabs>
-      </page-content-header>
+            <etools-tabs
+              id="tabs"
+              slot="tabs"
+              .tabs="${this.pageTabs}"
+              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              .activeTab="${this.activeTab}"
+            ></etools-tabs>
+          </page-content-header>
 
-      ${this.getTabElement()}
-    `;
+          ${this.getTabElement()}
+        `
+      : html``;
   }
 
   connectedCallback(): void {
@@ -77,9 +81,6 @@ export class PlanPage extends LitElement {
       routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
         if (routeName !== PAGE) {
           return;
-        }
-        if (!hasPermission(Permissions.VIEW_PLANING)) {
-          updateAppLocation('page-not-found');
         }
         this.activeTab = subRouteName as string;
       })
@@ -113,5 +114,15 @@ export class PlanPage extends LitElement {
       return;
     }
     updateAppLocation(`${PAGE}/${tabName}`);
+  }
+
+  canView(): boolean {
+    if (!this.permissionsReady) {
+      return false;
+    }
+    if (!hasPermission(Permissions.VIEW_PLANING)) {
+      updateAppLocation('page-not-found');
+    }
+    return true;
   }
 }
