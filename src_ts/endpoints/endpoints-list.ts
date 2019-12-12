@@ -21,7 +21,6 @@ export const OUTPUTS_SHORT: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
-export const LOG_ISSUES_ATTACHMENTS_DETAILS: 'logIssuesAttachmentsDetails' = 'logIssuesAttachmentsDetails';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 export const RATIONALE: 'rationale' = 'rationale';
@@ -213,11 +212,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [LOG_ISSUES_ATTACHMENTS]: {
-    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
-  },
-
-  [LOG_ISSUES_ATTACHMENTS_DETAILS]: {
-    template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>/'
+    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/bulk-update/'
   },
 
   [ACTIVITIES_LIST]: {

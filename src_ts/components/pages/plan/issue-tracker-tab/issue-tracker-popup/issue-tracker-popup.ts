@@ -23,6 +23,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   isNew: boolean = false;
   isRequest: boolean = false;
   isReadOnly: boolean = false;
+  @property() attachments: StoredAttachment[] = [];
 
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
 
@@ -44,7 +45,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property() dialogOpened: boolean = true;
 
   @property({type: Array})
-  currentFiles: Partial<IAttachment>[] = [];
+  currentFiles: IAttachment[] = [];
 
   @property({type: Array})
   originalFiles: IAttachment[] = [];
@@ -147,6 +148,18 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     store.dispatch<AsyncEffect>(createLogIssue(this.editedData, this.currentFiles));
   }
 
+  attachmentsUploaded(attachments: {success: string[]; error: string[]}): void {
+    try {
+      const parsedAttachments: IAttachment[] = attachments.success.map((jsonAttachment: string) =>
+        JSON.parse(jsonAttachment)
+      );
+      this.currentFiles = [...this.currentFiles, ...parsedAttachments];
+    } catch (e) {
+      console.error(e);
+      fireEvent(this, 'toast', {text: 'Can not upload attachments. Please try again later'});
+    }
+  }
+
   updateIssue(): void {
     if (!this.editedData) {
       return;
@@ -156,17 +169,16 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
       toRequest: true,
       nestedFields: ['options']
     });
-    const newFiles: Partial<IAttachment>[] = this.getNewFiles(this.currentFiles);
-    // const files: File[] = this.etoolsUploadMulti.rawFiles && Array.from(this.etoolsUploadMulti.rawFiles) || [];
-    const deletedFiles: Partial<IAttachment>[] = this.getDeletedFiles(this.currentFiles, this.originalFiles);
-    const changedFiles: Partial<IAttachment>[] = this.getChangedFiles(this.currentFiles);
     const isChanged: boolean = !!Object.keys(data).length;
-    if (!this.editedData.id || (!isChanged && !newFiles.length && !deletedFiles.length && !changedFiles.length)) {
+    if (
+      !this.editedData.id ||
+      (!isChanged && JSON.stringify(this.originalFiles) === JSON.stringify(this.currentFiles))
+    ) {
       this.dialogOpened = false;
       this.onClose();
       return;
     }
-    store.dispatch<AsyncEffect>(updateLogIssue(this.editedData.id, data, newFiles, deletedFiles, changedFiles));
+    store.dispatch<AsyncEffect>(updateLogIssue(this.editedData.id, data, this.currentFiles));
   }
 
   disconnectedCallback(): void {
@@ -200,50 +212,20 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   onChangeFile({id, file}: SelectedFile): void {
     const indexAttachment: number = this.currentFiles.findIndex(
-      (nextAttachment: Partial<IAttachment>) => nextAttachment.id === id
+      (nextAttachment: IAttachment) => nextAttachment.id === id
     );
     if (~indexAttachment) {
-      this.currentFiles.splice(indexAttachment, 1, {id, file});
+      this.currentFiles.splice(indexAttachment, 1, file);
     }
-  }
-
-  onAddFile(file: File): void {
-    this.currentFiles = [
-      ...this.currentFiles,
-      ...[
-        {
-          filename: file.name,
-          file
-        }
-      ]
-    ];
   }
 
   onDeleteFile({id}: SelectedFile): void {
     const indexAttachment: number = this.currentFiles.findIndex(
-      (nextAttachment: Partial<IAttachment>) => nextAttachment.id === id
+      (nextAttachment: IAttachment) => nextAttachment.id === id
     );
     if (~indexAttachment) {
       this.currentFiles.splice(indexAttachment, 1);
       this.currentFiles = [...this.currentFiles];
     }
-  }
-
-  private getChangedFiles(currentFiles: Partial<IAttachment>[]): Partial<IAttachment>[] {
-    return currentFiles.filter(
-      (attachment: Partial<IAttachment>) =>
-        attachment.id && !(typeof attachment.file === 'string' || attachment.file instanceof String)
-    );
-  }
-
-  private getNewFiles(currentFiles: Partial<IAttachment>[]): Partial<IAttachment>[] {
-    return currentFiles.filter((currentFile: Partial<IAttachment>) => !currentFile.id);
-  }
-
-  private getDeletedFiles(currentFiles: Partial<IAttachment>[], originalFiles: IAttachment[]): Partial<IAttachment>[] {
-    return originalFiles.filter(
-      (originalFile: Partial<IAttachment>) =>
-        !currentFiles.some((currentFile: Partial<IAttachment>) => currentFile.id === originalFile.id)
-    );
   }
 }

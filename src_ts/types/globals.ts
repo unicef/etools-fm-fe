@@ -98,7 +98,7 @@ type DefaultDropdownOption<T = number> = {
 
 type SelectedFile = {
   id?: number;
-  file?: File;
+  file: IAttachment;
 };
 
 interface IDialog<D> {

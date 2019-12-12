@@ -3,6 +3,7 @@ import {IssueTrackerPopup} from './issue-tracker-popup';
 import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
+import '@unicef-polymer/etools-upload/etools-upload-multi';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-input/paper-input';
@@ -14,6 +15,8 @@ import '../../../../common/file-components/file-select-input';
 import '../../../../common/file-components/file-select-button';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
+import {getEndpoint} from '../../../../../endpoints/endpoints';
+import {ATTACHMENTS_STORE} from '../../../../../endpoints/endpoints-list';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
   // main template
@@ -202,7 +205,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
         <div>
           ${repeat(
             this.currentFiles,
-            (attachment: Partial<IAttachment>) => html`
+            (attachment: IAttachment) => html`
               <file-select-input
                 .fileId="${attachment.id}"
                 .fileName="${attachment.filename}"
@@ -216,9 +219,12 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ${this.isReadOnly
             ? ''
             : html`
-                <file-select-button
-                  @file-selected="${({detail}: CustomEvent) => this.onAddFile(detail)}"
-                ></file-select-button>
+                <etools-upload-multi
+                  class="with-padding"
+                  ?hidden="${this.readonly}"
+                  @upload-finished="${({detail}: CustomEvent) => this.attachmentsUploaded(detail)}"
+                  .endpointInfo="${{endpoint: getEndpoint(ATTACHMENTS_STORE).url}}"
+                ></etools-upload-multi>
               `}
         </div>
       </div>

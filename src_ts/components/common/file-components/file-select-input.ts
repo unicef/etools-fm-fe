@@ -10,7 +10,7 @@ export class FileSelectInput extends LitElement {
   fileName: string = '';
 
   @property({type: String})
-  fileData?: string | File | null;
+  fileData?: string | null;
 
   @property({type: Boolean})
   hasDelete: boolean = true;
@@ -45,7 +45,7 @@ export class FileSelectInput extends LitElement {
     // language=HTML
     return html`
       <div class="file-selector-container">
-        <input id="file" hidden type="file" @change="${() => this.fileSelected()}" />
+        <input id="file" hidden type="file" />
         <a id="link" target="_blank" hidden></a>
         ${this.hasFileName
           ? html`
@@ -55,20 +55,18 @@ export class FileSelectInput extends LitElement {
               </div>
             `
           : ''}
-        ${this.isReadonly
-          ? ''
-          : html`
-              ${this.hasFileName
+        ${!this.isReadonly
+          ? html`
+              ${!this.hasFileName
                 ? html`
-                    <paper-button class="change-button" @tap="${() => this.selectFile()}">Change</paper-button>
-                  `
-                : html`
                     <paper-button class="upload-button" @tap="${() => this.selectFile()}">
                       <iron-icon icon="file-upload"></iron-icon>
                       Upload File
                     </paper-button>
-                  `}
-            `}
+                  `
+                : ''}
+            `
+          : ''}
         ${this.isStoredFile
           ? html`
               <paper-button class="download-button" @tap="${() => this.downloadFile()}">
@@ -77,7 +75,7 @@ export class FileSelectInput extends LitElement {
               </paper-button>
             `
           : ''}
-        ${!this.isReadonly && this.hasFileData && this.hasDelete
+        ${!this.isReadonly && this.hasDelete
           ? html`
               <paper-button class="delete-button" @tap="${() => this.deleteFile()}">Delete</paper-button>
             `
@@ -112,29 +110,12 @@ export class FileSelectInput extends LitElement {
     }
   }
 
-  fileSelected(): void {
-    const fileList: FileList | null = this.fileInput.files;
-    if (fileList && fileList.length) {
-      const file: File = fileList[0];
-      this.fileName = file.name;
-      this.fileData = file;
-      const detail: SelectedFile = this.fileId ? {id: this.fileId, file} : {file};
-      this.dispatchEvent(
-        new CustomEvent<SelectedFile>('file-selected', {
-          detail,
-          bubbles: true,
-          composed: true
-        })
-      );
-    }
-  }
-
   deleteFile(): void {
     this.fileName = '';
     this.fileData = null;
     if (this.fileId) {
       this.dispatchEvent(
-        new CustomEvent<SelectedFile>('file-deleted', {
+        new CustomEvent<Partial<SelectedFile>>('file-deleted', {
           detail: {id: this.fileId},
           bubbles: true,
           composed: true
