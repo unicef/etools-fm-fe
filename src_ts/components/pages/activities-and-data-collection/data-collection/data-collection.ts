@@ -103,7 +103,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
                   required
                   ?invalid="${this.informationSourceError}"
                   error-message="${this.informationSourceError}"
-                  @focus="${() => (this.informationSourceError = '')}"
                 >
                 </paper-input>
                 <iron-collapse ?opened="${this.originalData != this.editedData || this.informationSourceError}">
@@ -146,7 +145,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         information_source: this.editedData
       })
     );
-    this.originalData = this.editedData;
   }
 
   connectedCallback(): void {
@@ -260,6 +258,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.checklist) {
       this.originalData = this.checklist.information_source;
       this.editedData = this.originalData;
+      this.informationSourceError = '';
     }
   }
 

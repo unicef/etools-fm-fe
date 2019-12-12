@@ -6,6 +6,7 @@ import {SetRationale, SetRationaleUpdateError, SetRationaleUpdateState} from '..
 
 export function loadRationale(year: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
+    dispatch(new SetRationaleUpdateError({}));
     const {url}: IResultEndpoint = getEndpoint(RATIONALE, {year});
     return request<IRationale>(url, {method: 'GET'}).then((response: IRationale) => {
       dispatch(new SetRationale(response));

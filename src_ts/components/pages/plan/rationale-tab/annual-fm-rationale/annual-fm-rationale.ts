@@ -7,9 +7,10 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {template} from './annual-fm-rationale.tpl';
 import {Unsubscribe} from 'redux';
-import {rationaleUpdate} from '../../../../../redux/selectors/rationale.selectors';
+import {rationaleUpdate, rationaleUpdateError} from '../../../../../redux/selectors/rationale.selectors';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
+import {SetRationaleUpdateError} from '../../../../../redux/actions/rationale.actions';
 
 @customElement('annual-fm-rationale')
 export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
@@ -19,6 +20,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   savingInProcess: boolean = false;
 
   private updateRationaleUnsubscribe!: Unsubscribe;
+  private updateRationaleErrorUnsubscribe!: Unsubscribe;
 
   set editedModel(yearPlan: IRationale) {
     if (!yearPlan) {
@@ -33,6 +35,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.errors = store.getState().rationale.error;
     this.updateRationaleUnsubscribe = store.subscribe(
       rationaleUpdate((updateInProcess: boolean | null) => {
         // set updating state for spinner
@@ -49,11 +52,17 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
         }
       }, false)
     );
+    this.updateRationaleErrorUnsubscribe = store.subscribe(
+      rationaleUpdateError((errors: GenericObject | null) => {
+        this.errors = errors ? errors : {};
+      })
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateRationaleUnsubscribe();
+    this.updateRationaleErrorUnsubscribe();
   }
 
   save(): void {
@@ -64,7 +73,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   cancel(): void {
     this.editedData = JSON.parse(JSON.stringify(this.originalData));
     this.isReadonly = true;
-    this.errors = {};
+    store.dispatch(new SetRationaleUpdateError({}));
   }
 
   startEdit(): void {
@@ -87,6 +96,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
 
   onTargetVisitsChange(value?: string): void {
     this.editedData.target_visits = value && !isNaN(+value) ? +value : 0;
+    this.requestUpdate();
   }
 
   getChangesDate(date?: string): string {
