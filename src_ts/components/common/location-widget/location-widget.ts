@@ -43,7 +43,7 @@ export class LocationWidgetComponent extends LitElement {
   @property() items: (WidgetLocation | Site)[] = [];
   @property() sites: Site[] = [];
   @property() sitesLocation: Site[] = [];
-  @property() isLeaf: boolean = false;
+  @property() isSiteList: boolean = false;
 
   @property({type: String, reflect: true}) locationSearch: string = '';
   protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
@@ -334,10 +334,16 @@ export class LocationWidgetComponent extends LitElement {
     this.selectLocation(currentLocation as WidgetLocation);
   }
 
-  search({value}: {value: string}): void {
+  search({value}: {value: string} = {value: ''}): void {
     if (this.locationSearch !== value) {
       this.locationSearch = value;
-      this.inputDebounce(value);
+      if (!this.isSiteList) {
+        this.inputDebounce(value);
+      } else {
+        this.sitesLocation = this.sites.filter((site: Site) => {
+          return site.parent.id === this.selectedLocation && site.name.toLowerCase().includes(value.toLowerCase());
+        });
+      }
     }
   }
 
@@ -443,7 +449,7 @@ export class LocationWidgetComponent extends LitElement {
     this.centerAndDrawBorders(location);
 
     const {is_leaf: isLeaf, id} = location;
-    this.isLeaf = isLeaf;
+    this.isSiteList = isLeaf;
     if (!isLeaf) {
       store.dispatch<AsyncEffect>(loadLocationsChunk({query: `parent=${id}`, search: '', page: 1, reload: true}));
       this.selectedLocation = null;
@@ -504,7 +510,7 @@ export class LocationWidgetComponent extends LitElement {
     this.clearMap();
     this.setInitialMapView();
     store.dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', search: '', page: 1, reload: true}));
-    this.isLeaf = false;
+    this.isSiteList = false;
     this.MapHelper.removeStaticMarkers();
     this.history = [];
   }

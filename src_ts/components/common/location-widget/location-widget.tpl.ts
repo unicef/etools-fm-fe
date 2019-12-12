@@ -38,7 +38,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
           </paper-input>
 
           <div class="locations-list">
-            ${!this.isLeaf
+            ${!this.isSiteList
               ? html`
                   <lazy-list
                     .items="${this.items}"
