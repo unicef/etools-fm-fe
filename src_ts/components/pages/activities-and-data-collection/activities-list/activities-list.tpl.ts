@@ -4,12 +4,17 @@ import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
 import {translate} from '../../../../localization/localisation';
 import {updateQueryParams} from '../../../../routing/routes';
+import {hasPermission, Permissions} from '../../../../config/permissions';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
     <page-content-header with-tabs-visible>
       <h1 slot="page-title">Activities</h1>
-      <div slot="title-row-actions" class="content-header-actions">
+      <div
+        slot="title-row-actions"
+        class="content-header-actions"
+        ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+      >
         <paper-button class="create-new" @tap="${() => this.goNew()}">Create New</paper-button>
       </div>
     </page-content-header>
