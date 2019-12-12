@@ -35,7 +35,7 @@ export function addAttachmentToList(
       throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
     }
     dispatch(new SetAttachmentsUpdateState(true));
-    return request(`${url}link/`, {method: 'POST', body: JSON.stringify([data])})
+    return request(`${url}`, {method: 'POST', body: JSON.stringify(data)})
       .then(() => dispatch(new SetAttachmentsUpdateError({})))
       .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
       .then(() => {

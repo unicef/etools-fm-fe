@@ -78,6 +78,13 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
       return;
     }
 
+    if (!this.editedData.file_type) {
+      this.errors = {
+        file_type: 'File type is required'
+      };
+      return;
+    }
+
     // compose new attachment data
     const data: Partial<IAttachment> = {};
     if (this.selectedFileId) {
