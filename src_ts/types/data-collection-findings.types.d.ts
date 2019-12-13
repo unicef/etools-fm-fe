@@ -65,10 +65,6 @@ type RequestChecklistAttachment = {
   _delete?: true;
 };
 
-type AttachmentDialogResponse = {
-  noChanges: boolean;
-};
-
 type CompletedOverallFinding = {
   author: ActivityTeamMember;
   method: number;

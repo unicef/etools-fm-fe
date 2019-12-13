@@ -87,7 +87,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             class="validate-input disabled-as-readonly w50"
             .selected="${this.editedData.category}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateModelValue('category', detail.selectedItem.id)}"
+              this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id)}"
             trigger-value-change-event
             label="${translate('QUESTIONS.LABELS.CATEGORY')}"
             placeholder="${translate('QUESTIONS.PLACEHOLDERS.CATEGORY')}"
@@ -188,7 +188,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             this.editedData.options as Partial<QuestionOption>[],
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
-              <div class="layout horizontal center" ?hidden="${option._delete}">
+              <div class="layout horizontal center">
                 <div class="option-index">${option.value}:</div>
                 <paper-input
                   no-label-float

@@ -19,10 +19,6 @@ export class ActivityChecklistTab extends LitElement {
   @property() protected sortedChecklist: GenericObject<IChecklistItem[]> = {};
   private activityChecklistUnsubscribe!: Unsubscribe;
 
-  static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles];
-  }
-
   private _activityId: number | null = null;
 
   get activityId(): number | null {
@@ -85,5 +81,9 @@ export class ActivityChecklistTab extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.activityChecklistUnsubscribe();
+  }
+
+  static get styles(): CSSResult[] {
+    return [elevationStyles, SharedStyles, pageLayoutStyles];
   }
 }

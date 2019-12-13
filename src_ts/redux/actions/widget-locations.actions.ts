@@ -1,15 +1,33 @@
 export enum WidgetLocationsActionTypes {
-  SAVE_WIDGET_LOCATIONS_LIST = '[Widget Locations Action]: SAVE_WIDGET_LOCATIONS_LIST',
+  SET_WIDGET_LOCATIONS_LIST = '[Widget Locations Action]: SET_WIDGET_LOCATIONS_LIST',
+  ADD_WIDGET_LOCATIONS_LIST = '[Widget Locations Action]: ADD_WIDGET_LOCATIONS_LIST',
   SAVE_LOCATION_PATH = '[Widget Locations Action]: SAVE_LOCATION_PATH',
   SET_WIDGET_LOCATIONS_LOADING = '[Widget Locations Action]: SET_WIDGET_LOCATIONS_LOADING',
   SET_LOCATION_PATH_LOADING = '[Widget Locations Action]: SET_LOCATION_PATH_LOADING'
 }
 
-export class SaveWidgetLocations {
-  readonly type: WidgetLocationsActionTypes.SAVE_WIDGET_LOCATIONS_LIST =
-    WidgetLocationsActionTypes.SAVE_WIDGET_LOCATIONS_LIST;
+export class AddWidgetLocations {
+  readonly type: WidgetLocationsActionTypes.ADD_WIDGET_LOCATIONS_LIST =
+    WidgetLocationsActionTypes.ADD_WIDGET_LOCATIONS_LIST;
 
-  constructor(public widgetLocations: WidgetLocation[], public requestParams: string) {}
+  constructor(
+    public widgetLocations: IListData<WidgetLocation>,
+    public page: number = 1,
+    public search: string = '',
+    public query: string = ''
+  ) {}
+}
+
+export class SetWidgetLocations {
+  readonly type: WidgetLocationsActionTypes.SET_WIDGET_LOCATIONS_LIST =
+    WidgetLocationsActionTypes.SET_WIDGET_LOCATIONS_LIST;
+
+  constructor(
+    public widgetLocations: IListData<WidgetLocation>,
+    public page: number = 1,
+    public search: string = '',
+    public query: string = ''
+  ) {}
 }
 
 export class SaveLocationPath {
@@ -33,7 +51,8 @@ export class SetLocationPathLoading {
 }
 
 export type WidgetLocationsActions =
-  | SaveWidgetLocations
+  | SetWidgetLocations
   | SetWidgetLocationsLoading
   | SetLocationPathLoading
-  | SaveLocationPath;
+  | SaveLocationPath
+  | AddWidgetLocations;

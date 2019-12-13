@@ -1,11 +1,6 @@
 import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {
-  LOG_ISSUES,
-  LOG_ISSUES_ATTACHMENTS,
-  LOG_ISSUES_ATTACHMENTS_DETAILS,
-  LOG_ISSUES_DETAILS
-} from '../../endpoints/endpoints-list';
+import {LOG_ISSUES, LOG_ISSUES_ATTACHMENTS, LOG_ISSUES_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {IssueTrackerActions} from '../actions/issue-tracker.actions';
 import {EtoolsRouter} from '../../routing/routes';
@@ -25,7 +20,7 @@ export function requestLogIssue(params: IRouteQueryParams): IAsyncAction {
   };
 }
 
-export function createLogIssue(issue: Partial<LogIssue>, files: Partial<IAttachment>[]): IAsyncAction {
+export function createLogIssue(issue: Partial<LogIssue>, files: IAttachment[]): IAsyncAction {
   return {
     types: [
       IssueTrackerActions.ISSUE_TRACKER_UPDATE_REQUEST,
@@ -41,22 +36,13 @@ export function createLogIssue(issue: Partial<LogIssue>, files: Partial<IAttachm
       };
       return request(url, options).then((response: any) => {
         const id: number = response.id;
-        const promises: Promise<void>[] = [];
-        files.forEach((file: Partial<IAttachment>) => promises.push(addAttachment(id, file)));
-        // .catch(() => dispatch(new AddNotification('Can not upload attachment')))));
-        return Promise.all(promises);
+        return updateAttachment(id, files);
       });
     }
   };
 }
 
-export function updateLogIssue(
-  issueId: number,
-  issue: Partial<LogIssue>,
-  newAttachments: Partial<IAttachment>[] = [],
-  deletedAttachments: Partial<IAttachment>[] = [],
-  changedAttachments: Partial<IAttachment>[] = []
-): IAsyncAction {
+export function updateLogIssue(issueId: number, issue: Partial<LogIssue>, attachments: IAttachment[]): IAsyncAction {
   return {
     types: [
       IssueTrackerActions.ISSUE_TRACKER_UPDATE_REQUEST,
@@ -71,65 +57,20 @@ export function updateLogIssue(
         headers: {'Content-Type': 'application/json'}
       };
       return request(url, options).then(() => {
-        const promises: Promise<void>[] = [];
-        changedAttachments.forEach((changedFile: Partial<IAttachment>) =>
-          promises.push(updateAttachment(issueId, changedFile))
-        );
-        deletedAttachments.forEach((deletedFile: Partial<IAttachment>) =>
-          promises.push(deleteAttachment(issueId, deletedFile))
-        );
-        newAttachments.forEach((newFile: Partial<IAttachment>) => promises.push(addAttachment(issueId, newFile)));
-        return Promise.all(promises);
+        return updateAttachment(issueId, attachments);
       });
     }
   };
 }
 
-function addAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
-  const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS, {id: logIssueId});
-  const body: FormData = jsonToFormData(file);
-  const options: RequestInit = {
-    method: 'POST',
-    body
-  };
-  return request(url, options);
-}
-
-function updateAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
-  if (!file || !file.id) {
-    throw new Error('Incorrect file for update');
-  }
-  const endpoint: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS_DETAILS, {
-    logIssueId,
-    attachmentId: file.id
+function updateAttachment(logIssueId: number, attachments: IAttachment[]): Promise<any> {
+  const endpoint: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS, {
+    id: logIssueId
   });
-  const data: any = {file: file.file};
-  const body: FormData = jsonToFormData(data);
+  const data: {id: number}[] = attachments.map((attachment: IAttachment) => ({id: attachment.id}));
   const options: RequestInit = {
-    method: 'PATCH',
-    body
+    method: 'PUT',
+    body: JSON.stringify(data)
   };
   return request(endpoint.url, options);
-}
-
-function deleteAttachment(logIssueId: number, file: Partial<IAttachment>): Promise<any> {
-  if (!file || !file.id) {
-    throw new Error('Incorrect file for deleting');
-  }
-  const endpoint: IResultEndpoint = getEndpoint(LOG_ISSUES_ATTACHMENTS_DETAILS, {
-    logIssueId,
-    attachmentId: file.id
-  });
-  const options: RequestInit = {
-    method: 'DELETE'
-  };
-  return request(endpoint.url, options);
-}
-
-function jsonToFormData(json: any): FormData {
-  const body: FormData = new FormData();
-  Object.keys(json).forEach((key: string) => {
-    body.append(key, json[key]);
-  });
-  return body;
 }

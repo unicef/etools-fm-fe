@@ -39,7 +39,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           class="validate-input disabled-as-readonly flex-1"
           .selected="${this.editedData.file_type}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
-            (this.editedData.file_type = detail.selectedItem && detail.selectedItem.value)}"
+            this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"
           trigger-value-change-event
           label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
           placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"

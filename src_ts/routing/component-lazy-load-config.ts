@@ -33,7 +33,8 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
     'components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js',
     'components/pages/activities-and-data-collection/activity-item/additional-info-tab/additional-info-tab.js',
     'components/pages/activities-and-data-collection/activity-item/activity-summary-tab/activity-summary-tab.js',
-    'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js'
+    'components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js',
+    'components/pages/activities-and-data-collection/activity-item/action-points-tab/action-points-tab.js'
   ],
 
   // Activity Data Collection

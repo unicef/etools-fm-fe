@@ -21,7 +21,6 @@ export const OUTPUTS_SHORT: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
-export const LOG_ISSUES_ATTACHMENTS_DETAILS: 'logIssuesAttachmentsDetails' = 'logIssuesAttachmentsDetails';
 export const QUESTION_TEMPLATES: 'questionTemplates' = 'questionTemplates';
 export const QUESTION_TEMPLATES_WITH_TARGET: 'questionTemplatesWithTarget' = 'questionTemplatesWithTarget';
 export const RATIONALE: 'rationale' = 'rationale';
@@ -29,7 +28,7 @@ export const ACTIVITIES_LIST: 'activities_list' = 'activities_list';
 export const RATIONALE_ATTACHMENTS: 'rationale_attachments' = 'rationale_attachments';
 export const USERS: 'users' = 'users';
 export const TEAM_MEMBERS: 'teamMembers' = 'teamMembers';
-export const WIDGET_LOCATIONS: 'widgetLocations' = 'widgetLocations';
+export const WIDGET_LOCATIONS_CHUNK: 'widgetLocationsChunk' = 'widgetLocationsChunk';
 export const WIDGET_LOCATION_PATH: 'widgetLocationPath' = 'widgetLocationPath';
 export const ACTIVITY_RELATED_DOCUMENTS: 'activityRelatedDocuments' = 'activityRelatedDocuments';
 export const ACTIVITY_REPORT_ATTACHMENTS: 'activityReportAttachments' = 'activityReportAttachments';
@@ -58,6 +57,10 @@ export const OPEN_ISSUES_CP_OUTPUT: 'openIssuesCpOutput' = 'openIssuesCpOutput';
 export const OPEN_ISSUES_LOCATIONS: 'openIssuesLocations' = 'openIssuesLocations';
 export const HACT_VISITS: 'hactVisits' = 'hactVisits';
 export const FULL_REPORT: 'fullReport' = 'fullReport';
+export const ACTION_POINTS_LIST: 'actionPointsList' = 'actionPointsList';
+export const ACTION_POINTS_DETAILS: 'actionPointsDetails' = 'actionPointsDetails';
+export const ACTION_POINTS_CATEGORIES: 'actionPointsCategories' = 'actionPointsCategories';
+export const ACTION_POINTS_OFFICES: 'offices' = 'offices';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -209,19 +212,15 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [LOG_ISSUES_ATTACHMENTS]: {
-    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/'
-  },
-
-  [LOG_ISSUES_ATTACHMENTS_DETAILS]: {
-    template: '/api/v1/field-monitoring/settings/log-issues/<%=logIssueId%>/attachments/<%=attachmentId%>/'
+    template: '/api/v1/field-monitoring/settings/log-issues/<%=id%>/attachments/bulk-update/'
   },
 
   [ACTIVITIES_LIST]: {
     template: '/api/v1/field-monitoring/planning/activities/'
   },
 
-  [WIDGET_LOCATIONS]: {
-    url: '/api/v1/field-monitoring/settings/locations/?page_size=all&'
+  [WIDGET_LOCATIONS_CHUNK]: {
+    url: '/api/v1/field-monitoring/settings/locations/'
   },
 
   [WIDGET_LOCATION_PATH]: {
@@ -307,5 +306,21 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [HACT_VISITS]: {
     template: '/api/v1/field-monitoring/analyze/hact/'
+  },
+
+  [ACTION_POINTS_LIST]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/'
+  },
+
+  [ACTION_POINTS_DETAILS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/<%=id%>'
+  },
+
+  [ACTION_POINTS_CATEGORIES]: {
+    template: '/api/action-points/categories/?module=fm'
+  },
+
+  [ACTION_POINTS_OFFICES]: {
+    template: '/api/offices/'
   }
 };

@@ -5,7 +5,6 @@ export const LocationWidgetStyles: CSSResult = css`
   :host {
     position: relative;
     width: 100%;
-    min-width: 800px;
   }
 
   .widget-container {
@@ -60,45 +59,46 @@ export const LocationWidgetStyles: CSSResult = css`
     overflow: hidden;
   }
 
+  .locations-list {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    height: calc(100% - 43px);
+    position: relative;
+  }
+
   .widget-container .map-and-list .list paper-input {
     margin-top: -20px;
   }
 
-  .widget-container .map-and-list .list .locations-list {
-    position: relative;
-    overflow: hidden;
-    overflow-y: auto;
-    height: calc(100% - 43px);
-  }
-
-  .widget-container .map-and-list .list .site-line,
-  .widget-container .map-and-list .list .location-line {
+  .site-line,
+  .location-line {
     position: relative;
     display: flex;
     padding: 5px;
     margin-bottom: 2px;
   }
 
-  .widget-container .map-and-list .list .site-line:last-child,
-  .widget-container .map-and-list .list .location-line:last-child {
+  .site-line:last-child,
+  .location-line:last-child {
     margin-bottom: 0;
   }
 
-  .widget-container .map-and-list .list .site-line:hover,
-  .widget-container .map-and-list .list .location-line:hover {
+  .site-line:hover,
+  .location-line:hover {
     background-color: var(--gray-06);
     cursor: pointer;
   }
 
-  .widget-container .map-and-list .list .site-line .gateway-name,
-  .widget-container .map-and-list .list .location-line .gateway-name {
+  .site-line .gateway-name,
+  .location-line .gateway-name {
     flex: none;
     width: 100px;
     color: var(--gray-light);
   }
 
-  .widget-container .map-and-list .list .site-line .location-name,
-  .widget-container .map-and-list .list .location-line .location-name {
+  .site-line .location-name,
+  .location-line .location-name {
     flex: auto;
     overflow: hidden;
     white-space: nowrap;
@@ -106,31 +106,32 @@ export const LocationWidgetStyles: CSSResult = css`
     margin-right: 5px;
   }
 
-  .widget-container .map-and-list .list .site-line .deselect-btn,
-  .widget-container .map-and-list .list .location-line .deselect-btn {
+  .site-line .deselect-btn,
+  .location-line .deselect-btn {
     flex: none;
     width: 50px;
     text-align: center;
     color: #dd0000;
   }
 
-  .widget-container .map-and-list .list .site-line .deselect-btn span,
-  .widget-container .map-and-list .list .location-line .deselect-btn span {
+  .site-line .deselect-btn span,
+  .location-line .deselect-btn span {
     display: none;
   }
 
-  .widget-container .map-and-list .list .site-line.selected,
-  .widget-container .map-and-list .list .location-line.selected .deselect-btn {
+  .site-line.selected,
+  .location-line.selected .deselect-btn {
     background-color: #f3e5bf;
   }
 
-  .widget-container .map-and-list .list .site-line.selected .deselect-btn span,
-  .widget-container .map-and-list .list .location-line.selected .deselect-btn span {
+  .site-line.selected .deselect-btn span,
+  .location-line.selected .deselect-btn span {
     display: inline;
   }
-
-  .locations-list div:not(.missing-sites) ~ .no-search-results,
-  .locations-list div.missing-sites:not([hidden]) + .no-search-results {
-    display: none;
+  .missing-sites,
+  .no-search-results {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;

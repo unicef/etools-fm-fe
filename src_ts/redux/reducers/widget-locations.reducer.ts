@@ -3,7 +3,12 @@ import {Reducer} from 'redux';
 
 const INITIAL_STATE: IWidgetLocationsState = {
   loading: null,
-  data: {},
+  items: [],
+  count: 0,
+  page: 1,
+  query: '',
+  search: '',
+  hasNext: false,
   pathLoading: null,
   pathCollection: {}
 };
@@ -12,9 +17,27 @@ export const widgetLocations: Reducer<IWidgetLocationsState, any> = (
   action: WidgetLocationsActions
 ) => {
   switch (action.type) {
-    case WidgetLocationsActionTypes.SAVE_WIDGET_LOCATIONS_LIST:
-      const data: WidgetStoreData = {...state.data, [action.requestParams]: action.widgetLocations};
-      return {...state, data};
+    case WidgetLocationsActionTypes.ADD_WIDGET_LOCATIONS_LIST:
+      const items: WidgetLocation[] = action.widgetLocations.results;
+      return {
+        ...state,
+        page: action.page,
+        query: action.query,
+        search: action.search,
+        items: [...state.items, ...items],
+        count: action.widgetLocations.count,
+        hasNext: !!action.widgetLocations.next
+      };
+    case WidgetLocationsActionTypes.SET_WIDGET_LOCATIONS_LIST:
+      return {
+        ...state,
+        page: action.page,
+        query: action.query,
+        search: action.search,
+        items: [...action.widgetLocations.results],
+        count: action.widgetLocations.count,
+        hasNext: !!action.widgetLocations.next
+      };
     case WidgetLocationsActionTypes.SAVE_LOCATION_PATH:
       const pathCollection: WidgetStoreData = {
         ...state.pathCollection,

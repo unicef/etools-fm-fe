@@ -80,7 +80,7 @@ export class DataCollectionCard extends LitElement {
     if (!this.overallInfo) {
       return;
     }
-    openDialog<AttachmentsPopupData, AttachmentDialogResponse>({
+    openDialog<AttachmentsPopupData>({
       dialog: 'checklist-attachments-popup',
       dialogData: {
         attachments: this.overallInfo.attachments,
@@ -88,8 +88,8 @@ export class DataCollectionCard extends LitElement {
         title: `Attachments for ${this.tabName}`
       },
       readonly: this.readonly || !this.attachmentsEndpoint
-    }).then(({confirmed, response}: IDialogResponse<AttachmentDialogResponse>) => {
-      if (!confirmed || (response && response.noChanges)) {
+    }).then(({confirmed}: IEtoolsDialogResponse) => {
+      if (!confirmed) {
         return;
       }
 
@@ -171,7 +171,7 @@ export class DataCollectionCard extends LitElement {
               .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
               label="Overall finding"
               ?disabled="${!this.isEditMode}"
-              placeholder="${this.isEditMode ? 'Enter Overall finding' : '-'}"
+              placeholder="${this.isEditMode ? 'Enter Overall finding' : '—'}"
               @value-changed="${({detail}: CustomEvent) =>
                 this.updateOverallFinding({narrative_finding: detail.value})}"
             ></paper-textarea>

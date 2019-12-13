@@ -12,6 +12,7 @@ interface IRootState {
   activityDetails: IActivityDetailsState;
   activityChecklist: IActivityChecklistState;
   attachmentsList: IAttachmentsListState;
+  actionPointsList: IActionPointsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
@@ -50,6 +51,8 @@ interface IStaticDataState {
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
   cpOutcomes?: EtoolsCpOutcome[];
+  offices?: ActionPointsOffice[];
+  actionPointsCategories?: ActionPointsCategory[];
 }
 
 interface ISpecificLocationsState {
@@ -82,6 +85,12 @@ type AttachmentsTypesState = {
   activityRelatedDocuments: AttachmentType[];
   activityReportAttachments: AttachmentType[];
 };
+
+interface IActionPointsListState {
+  data: ActionPoint[];
+  updateInProcess: null | boolean;
+  error: GenericObject;
+}
 
 interface IQuestionTemplatesState {
   data: null | IListData<IQuestionTemplate>;
@@ -124,7 +133,12 @@ interface IActivityDetailsState extends IRequestState {
 
 interface IWidgetLocationsState {
   loading: null | boolean;
-  data: WidgetStoreData;
+  items: WidgetLocation[];
+  count: number;
+  page: number;
+  query: string;
+  search: string;
+  hasNext: boolean;
   pathLoading: null | boolean;
   pathCollection: WidgetStoreData;
 }

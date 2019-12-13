@@ -68,6 +68,12 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     this.updateAttachmentsUnsubscribe();
   }
 
+  switchFileType(value: any): void {
+    if (value) {
+      this.editedData.file_type = value;
+    }
+  }
+
   protected processRequest(): void {
     // validate if file is selected for new attachments
     if (!this.editedData.id && !this.selectedFileId) {
@@ -75,6 +81,13 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         text: 'Please, select correct file',
         showCloseBtn: false
       });
+      return;
+    }
+
+    if (!this.editedData.file_type) {
+      this.errors = {
+        file_type: 'File type is required'
+      };
       return;
     }
 

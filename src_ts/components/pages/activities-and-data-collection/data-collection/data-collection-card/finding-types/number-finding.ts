@@ -12,7 +12,7 @@ export class NumberFinding extends BaseFinding<number> {
         .value="${this.value}"
         @keypress="${(event: KeyboardEvent) => this.checkValue(event)}"
         @value-changed="${({detail}: CustomEvent) => this.valueChanged(Number(detail.value))}"
-        placeholder="-"
+        placeholder="&#8212;"
         ?disabled="${this.isReadonly}"
       >
       </paper-input>

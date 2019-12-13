@@ -98,7 +98,7 @@ type DefaultDropdownOption<T = number> = {
 
 type SelectedFile = {
   id?: number;
-  file?: File;
+  file: IAttachment;
 };
 
 interface IDialog<D> {
@@ -123,4 +123,8 @@ interface IEtoolsStatusItem {
 interface IEtoolsStatusModel extends IEtoolsStatusItem {
   // some statuses may share the same position
   statusOptions?: IEtoolsStatusItem[];
+}
+
+interface IEtoolsPage {
+  canView: () => boolean;
 }

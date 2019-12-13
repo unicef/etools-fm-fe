@@ -164,46 +164,7 @@ export function updateChecklistAttachments(
   url: string,
   data: RequestChecklistAttachment[]
 ): (dispatch: Dispatch) => Promise<boolean> {
-  return () => {
-    const requestsData: GenericObject<RequestChecklistAttachment[]> = data.reduce(
-      (
-        requests: GenericObject<RequestChecklistAttachment[]>,
-        {attachment, id, _delete, file_type}: RequestChecklistAttachment
-      ) => {
-        if (id && !_delete) {
-          requests.PATCH.push({file_type});
-        } else if (id) {
-          requests.DELETE.push({id});
-        } else {
-          requests.POST.push({id: attachment, file_type});
-        }
-        return requests;
-      },
-      {
-        POST: [],
-        PATCH: [],
-        DELETE: []
-      }
-    );
-    const requests: (Promise<void> | null)[] = Object.entries(requestsData).map(
-      ([method, data]: [string, RequestChecklistAttachment[]]) => {
-        if (!data.length) {
-          return null;
-        }
-        if (method === 'DELETE') {
-          const ids: string = data.map(({id}: RequestChecklistAttachment) => id).join(',');
-          return request(`${url}?id__in=${ids}`, {method});
-        } else if (method === 'POST') {
-          return request(`${url}/link/`, {method, body: JSON.stringify(data)});
-        } else {
-          return request(url, {method, body: JSON.stringify(data)});
-        }
-      }
-    );
-    return Promise.all(requests).then((response: (void | null)[]) =>
-      response.every((response: void | null) => response === null)
-    );
-  };
+  return () => request(url, {method: 'PUT', body: JSON.stringify(data)});
 }
 
 export function createCollectionChecklist(id: number, data: Partial<DataCollectionChecklist>): IAsyncAction {

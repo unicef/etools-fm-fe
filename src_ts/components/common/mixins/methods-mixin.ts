@@ -47,7 +47,7 @@ export const MethodsMixin = <T extends Constructor<LitElement>>(superclass: T) =
       };
     }
 
-    getMethodName(methodId: number, short?: true): string {
+    getMethodName(methodId: number, short?: boolean): string {
       if (!methodId || !this.methods) {
         return '';
       }

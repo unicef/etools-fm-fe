@@ -41,8 +41,23 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
       if (!this.editedData) {
         return;
       }
+      const preparedValue: any = !Array.isArray(value) ? value : value.map((item: any) => item.id);
+      const equals: boolean = this.checkEquality(this.editedData[fieldName], preparedValue);
+      if (equals) {
+        return;
+      }
       // sets values from inputs to model, refactor arrays with objects to ids arrays
-      this.editedData[fieldName] = !Array.isArray(value) ? value : value.map((item: any) => item.id);
+      this.editedData[fieldName] = preparedValue;
       this.requestUpdate();
+    }
+
+    private checkEquality(valueA: any, valueB: any): boolean {
+      return [valueA].flat().every((value: any, index: number) => {
+        if (Array.isArray(valueB)) {
+          return `${value}` === `${valueB[index]}`;
+        } else {
+          return `${value}` === `${valueB}`;
+        }
+      });
     }
   };

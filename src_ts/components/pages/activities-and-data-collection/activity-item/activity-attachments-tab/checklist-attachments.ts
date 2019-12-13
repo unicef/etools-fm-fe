@@ -44,6 +44,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     this.checklistAttachmentsUnsubscribe = store.subscribe(
       activityChecklistAttachments((checklistAttachments: IChecklistAttachment[]) => {
         this.items = checklistAttachments;
+        console.log('Checklist attachments', this.items);
       }, false)
     );
 
