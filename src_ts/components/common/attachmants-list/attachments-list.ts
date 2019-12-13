@@ -15,10 +15,6 @@ import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer'
 import {fireEvent} from '../../utils/fire-custom-event';
 
 store.addReducers({attachmentsList});
-const FILE_TYPES: DefaultDropdownOption[] = [
-  {display_name: 'SOP', value: 34},
-  {display_name: 'Other', value: 35}
-];
 
 @customElement('attachments-list')
 export class AttachmentsListComponent extends LitElement {
@@ -79,11 +75,20 @@ export class AttachmentsListComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._endpointName];
+    if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
+      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    }
+
     this.attachmentsListUnsubscribe = store.subscribe(
-      attachmentsTypesSelector((types: AttachmentType[]) => {
-        this.attachmentsTypes = types;
-      })
+      attachmentsTypesSelector(
+        (types: AttachmentType[] | undefined) => {
+          if (types) {
+            this.attachmentsTypes = types;
+          }
+        },
+        [this._endpointName]
+      )
     );
   }
 
@@ -102,8 +107,8 @@ export class AttachmentsListComponent extends LitElement {
   }
 
   getTypeDisplayName(id: number): string {
-    const type: DefaultDropdownOption | undefined = FILE_TYPES.find(({value}: DefaultDropdownOption) => value === id);
-    return (type && type.display_name) || '';
+    const type: AttachmentType | undefined = this.attachmentsTypes.find((item: AttachmentType) => item.id === id);
+    return (type && type.label) || '';
   }
 
   openPopup(attachment?: IAttachment): void {
@@ -111,9 +116,7 @@ export class AttachmentsListComponent extends LitElement {
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: this.attachmentsTypes.map((item: AttachmentType) => {
-          return {value: item.id, display_name: item.label};
-        }),
+        attachmentTypes: this.attachmentsTypes,
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }

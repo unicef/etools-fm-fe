@@ -27,7 +27,7 @@ export class SetAttachmentsUpdateError {
 
 export class SetAttachmentsTypes {
   readonly type: AttachmentsActionTypes.SET_ATTACHMENTS_TYPES = AttachmentsActionTypes.SET_ATTACHMENTS_TYPES;
-  constructor(public payload: AttachmentType[]) {}
+  constructor(public payload: {name: string; data: AttachmentType[]}) {}
 }
 
 export type AttachmentsActions =

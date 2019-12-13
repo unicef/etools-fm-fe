@@ -28,7 +28,7 @@ interface IRemmoveAttachmentPopupData {
 
 interface IAttachmentPopupData {
   editedAttachment?: IAttachment;
-  attachmentTypes: DefaultDropdownOption[];
+  attachmentTypes: AttachmentType[];
   endpointName: string;
   additionalEndpointData: GenericObject;
 }

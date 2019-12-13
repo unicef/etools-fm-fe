@@ -2,9 +2,10 @@ import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {request} from '../../endpoints/request';
 import {
-  SetAttachmentsList, SetAttachmentsTypes,
+  SetAttachmentsList,
+  SetAttachmentsTypes,
   SetAttachmentsUpdateError,
-  SetAttachmentsUpdateState,
+  SetAttachmentsUpdateState
 } from '../actions/attachments-list.actions';
 
 export function loadAttachmentsList(
@@ -35,7 +36,7 @@ export function loadAttachmentsTypes(
     }
     return request<AttachmentType[]>(`${url}file-types?page_size=all`, {method: 'GET'}).then(
       (response: AttachmentType[]) => {
-        dispatch(new SetAttachmentsTypes(response));
+        dispatch(new SetAttachmentsTypes({name: endpointName, data: response}));
       }
     );
   };

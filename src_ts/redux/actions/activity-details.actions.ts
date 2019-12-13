@@ -17,7 +17,8 @@ export enum ActivityDetailsActions {
   ACTIVITY_STATUS_CHANGE_SUCCESS = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_SUCCESS',
   ACTIVITY_STATUS_CHANGE_FAILURE = '[Activity Details Action]: ACTIVITY_STATUS_CHANGE_FAILURE',
 
-  CHECKLIST_ATTACHMENTS_REQUEST = '[Activity Details Action]: CHECKLIST_ATTACHMENTS_REQUEST'
+  CHECKLIST_ATTACHMENTS_REQUEST = '[Activity Details Action]: CHECKLIST_ATTACHMENTS_REQUEST',
+  CHECKLIST_ATTACHMENTS_TYPES_REQUEST = '[Activity Details Action]: CHECKLIST_ATTACHMENTS_TYPES_REQUEST'
 }
 
 export class SetEditedDetailsCard {
@@ -30,4 +31,10 @@ export class ChecklistAttachmentsRequest {
   readonly type: ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST =
     ActivityDetailsActions.CHECKLIST_ATTACHMENTS_REQUEST;
   constructor(public payload: IChecklistAttachment[]) {}
+}
+
+export class ChecklistAttachmentsTypesRequest {
+  readonly type: ActivityDetailsActions.CHECKLIST_ATTACHMENTS_TYPES_REQUEST =
+    ActivityDetailsActions.CHECKLIST_ATTACHMENTS_TYPES_REQUEST;
+  constructor(public payload: AttachmentType[]) {}
 }

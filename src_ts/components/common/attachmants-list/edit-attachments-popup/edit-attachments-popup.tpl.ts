@@ -46,8 +46,8 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           required
           hide-search
           .options="${this.attachmentTypes}"
-          option-label="display_name"
-          option-value="value"
+          option-label="label"
+          option-value="id"
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"

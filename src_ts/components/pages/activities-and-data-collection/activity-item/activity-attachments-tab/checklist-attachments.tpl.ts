@@ -71,7 +71,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
                   <div>${this.formatDate(item.modified)}</div>
                 </div>
                 <div class="custom-row-details-content flex-1">
-                  <div>${item.file_type}</div>
+                  <div>${this.getTypeDisplayName(item.file_type)}</div>
                 </div>
                 <div class="custom-row-details-content flex-3">
                   <a href="${item.file}" class="download-link" download="${item.filename}"

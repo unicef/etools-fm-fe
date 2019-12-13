@@ -9,6 +9,7 @@ export const listAttachmentUpdate: Selector<boolean | null> = select<boolean | n
   (store: IRootState) => store.attachmentsList.updateInProcess
 );
 
-export const attachmentsTypesSelector: Selector<AttachmentType[]> = select<AttachmentType[]>(
-  (store: IRootState) => store.attachmentsList.attachmentsTypes
-);
+export const attachmentsTypesSelector: DynamicSelector<AttachmentType[] | undefined> = dynamicSelect<
+  AttachmentsTypesState,
+  AttachmentType[]
+>((store: IRootState) => store.attachmentsList.attachmentsTypes);
