@@ -2,6 +2,7 @@ import {LocationWidgetComponent} from './location-widget';
 import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import './lazy-list';
+import {updateAppLocation} from '../../../routing/routes';
 
 export function template(this: LocationWidgetComponent): TemplateResult {
   return html`
@@ -76,9 +77,13 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                   )}
                 `}
 
-            <div ?hidden="${this.hideEmptySitesMessage(this.loadingInProcess)}" class="missing-sites">
+            <div ?hidden="${!this.isSitesEmpty()}" class="missing-sites">
               There are no sites for this location.. <br />
-              You can add missing sites in <a class="link" on-click="goToSettings">Settings</a>
+              You can add missing sites in <a class="link" @click="${() => updateAppLocation('/settings')}">Settings</a>
+            </div>
+            <div ?hidden="${!this.isSearchEmpty()}" class="no-search-results">
+              No locations or sites found. <br />
+              Please, change your search request
             </div>
             <etools-loading ?active="${this.loadingInProcess}"></etools-loading>
           </div>

@@ -128,9 +128,10 @@ export const LocationWidgetStyles: CSSResult = css`
   .location-line.selected .deselect-btn span {
     display: inline;
   }
-
-  .locations-list div:not(.missing-sites) ~ .no-search-results,
-  .locations-list div.missing-sites:not([hidden]) + .no-search-results {
-    display: none;
+  .missing-sites,
+  .no-search-results {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;

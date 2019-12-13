@@ -357,12 +357,18 @@ export class LocationWidgetComponent extends LitElement {
     return getLocationPart(location, partToSelect);
   }
 
-  hideEmptySitesMessage(loading: boolean): boolean {
+  isSitesEmpty(): boolean {
     const lastLocation: WidgetLocation | null = this.getLastLocation();
-    const isLeaf: boolean = lastLocation !== null && lastLocation.is_leaf;
-    const isListEmpty: boolean = this.sitesLocation.length === 0;
+    const isSitesList: boolean = lastLocation !== null && lastLocation.is_leaf;
+    const isEmptyList: boolean = !this.sitesLocation.length;
+    return (this.loadingInProcess || isEmptyList) && isSitesList && !this.locationSearch;
+  }
 
-    return loading || !isLeaf || !isListEmpty;
+  isSearchEmpty(): boolean {
+    const lastLocation: WidgetLocation | null = this.getLastLocation();
+    const isSitesList: boolean = lastLocation !== null && lastLocation.is_leaf;
+    const isEmptyList: boolean = isSitesList ? !this.sitesLocation.length : !this.items.length;
+    return (this.loadingInProcess || isEmptyList) && !!this.locationSearch;
   }
 
   async updateMap(): Promise<void> {
