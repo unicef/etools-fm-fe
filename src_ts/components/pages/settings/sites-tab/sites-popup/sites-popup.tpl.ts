@@ -62,6 +62,22 @@ export function template(this: SitesPopupComponent): TemplateResult {
             dynamic-align
           ></etools-dropdown>
         </div>
+        <div class="layout horizontal">
+          <paper-input
+            class="validate-input disabled-as-readonly flex-5"
+            .value="${this.latitude}"
+            @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'lat')}"
+            label="Latitude"
+            placeholder="Enter Latitude"
+          ></paper-input>
+          <paper-input
+            class="validate-input disabled-as-readonly flex-5"
+            .value="${this.longitude}"
+            @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'lng')}"
+            label="Longitude"
+            placeholder="Enter Longitude"
+          ></paper-input>
+        </div>
 
         ${this.editedData.id
           ? html`
