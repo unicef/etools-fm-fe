@@ -56,7 +56,7 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [ASSIGNED]: 'Assigned',
       [DATA_COLLECTION]: 'Data Collection',
       [REPORT_FINALIZATION]: 'Report finalization',
-      [SUBMITTED]: 'Activity Review',
+      [SUBMITTED]: 'Report Review',
       [COMPLETED]: 'Completed',
       [CANCELLED]: 'Cancelled'
     },
