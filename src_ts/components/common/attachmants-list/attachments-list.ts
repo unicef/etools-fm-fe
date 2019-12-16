@@ -80,7 +80,7 @@ export class AttachmentsListComponent extends LitElement {
       store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
     }
 
-    this.attachmentsListUnsubscribe = store.subscribe(
+    this.attachmentsTypesUnsubscribe = store.subscribe(
       attachmentsTypesSelector(
         (types: AttachmentType[] | undefined) => {
           if (types) {
