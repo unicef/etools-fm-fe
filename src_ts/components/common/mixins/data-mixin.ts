@@ -52,12 +52,11 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
     }
 
     private checkEquality(valueA: any, valueB: any): boolean {
-      return [valueA].flat().every((value: any, index: number) => {
-        if (Array.isArray(valueB)) {
-          return `${value}` === `${valueB[index]}`;
-        } else {
-          return `${value}` === `${valueB}`;
-        }
-      });
+      const baseValue: any[] = [valueA].flat();
+      const valueToMatch: any[] = [valueB].flat();
+      return (
+        baseValue.length === valueToMatch.length &&
+        baseValue.flat().every((value: any, index: number) => `${value}` === `${valueToMatch[index]}`)
+      );
     }
   };
