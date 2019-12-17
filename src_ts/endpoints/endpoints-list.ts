@@ -70,7 +70,8 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [USERS]: {
     url: '/api/v1/field-monitoring/planning/users/?page_size=all',
     exp: 60 * 60 * 1000, // 1 hour
-    cacheTableName: 'users'
+    cachingKey: 'id',
+    cacheTableName: USERS
   },
 
   [TEAM_MEMBERS]: {
@@ -80,7 +81,8 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [CP_OUTCOMES]: {
     template: '/api/v1/field-monitoring/settings/results/?result_type=outcome',
     exp: 60 * 60 * 1000, // 1 hour
-    cacheTableName: 'cpOutcomes'
+    cachingKey: 'id',
+    cacheTableName: CP_OUTCOMES
   },
 
   [FULL_REPORT]: {
@@ -90,13 +92,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [LOCATIONS_ENDPOINT]: {
     url: '/api/locations-light/',
     exp: 25 * 60 * 60 * 1000, // 25h
-    cacheTableName: 'locations'
+    cachingKey: 'id',
+    cacheTableName: LOCATIONS_ENDPOINT
   },
 
   [CHANGE_COUNTRY]: {
     url: '/api/v3/users/changecountry/'
   },
-
+  //fixme unused endpoint?
   [UNICEF_USER]: {
     url: '/api/v3/users/?verbosity=minimal',
     exp: 60 * 60 * 1000, // 1h
@@ -106,19 +109,22 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [PARTNERS]: {
     url: '/api/v2/partners/',
     exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'partners'
+    cachingKey: 'id',
+    cacheTableName: PARTNERS
   },
 
   [TPM_PARTNERS]: {
     url: '/api/tpm/partners/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'tpm_partners'
+    cachingKey: 'id',
+    cacheTableName: TPM_PARTNERS
   },
 
   [CP_OUTPUTS]: {
     url: '/api/v2/reports/results/?result_type=output',
     exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'cpOutputs'
+    cachingKey: 'id',
+    cacheTableName: CP_OUTPUTS
   },
 
   [OUTPUTS_SHORT]: {
@@ -128,13 +134,15 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [INTERVENTIONS]: {
     url: '/api/v2/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'interventions'
+    cachingKey: 'id',
+    cacheTableName: INTERVENTIONS
   },
 
   [INTERVENTIONS_SHORT]: {
     url: '/api/v1/field-monitoring/planning/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'interventions'
+    cachingKey: 'id',
+    cacheTableName: INTERVENTIONS_SHORT
   },
 
   [SITES_EXPORT]: {
@@ -164,19 +172,22 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [CATEGORIES]: {
     url: '/api/v1/field-monitoring/settings/categories/?page_size=all',
     exp: 24 * 60 * 60 * 1000, // 1 hour
-    cacheTableName: 'cpOutcomes'
+    cachingKey: 'id',
+    cacheTableName: CATEGORIES
   },
 
   [SECTIONS]: {
     url: '/api/v2/reports/sections/',
     exp: 24 * 60 * 60 * 1000, // 1 hour
-    cacheTableName: 'cpOutcomes'
+    cachingKey: 'id',
+    cacheTableName: SECTIONS
   },
 
   [METHODS]: {
     url: '/api/v1/field-monitoring/settings/methods/?page_size=all',
     exp: 24 * 60 * 60 * 1000, // 1 hour
-    cacheTableName: 'cpOutcomes'
+    cachingKey: 'id',
+    cacheTableName: METHODS
   },
 
   [QUESTION_TEMPLATES]: {
