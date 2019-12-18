@@ -155,7 +155,7 @@ export class NewActivityComponent extends LitElement {
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
-            ?is-staff="${this.activityDetails && this.activityDetails.activity_type === STAFF}"
+            ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
         </div>
 

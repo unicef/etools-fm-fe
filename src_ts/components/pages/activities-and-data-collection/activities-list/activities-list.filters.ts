@@ -14,8 +14,8 @@ addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 
 export const activitiesListFilters: IEtoolsFilter[] = [
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.ACTIVITY_TYPE'),
-    filterKey: 'activity_type',
+    filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
+    filterKey: 'monitor_type',
     type: EtoolsFilterTypes.Dropdown,
     selectionOptions: [],
     selectedValue: null,

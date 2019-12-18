@@ -19,7 +19,7 @@ import {simplifyValue} from '../../../../../utils/objects-diff';
 export const CARD_NAME: string = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'tpm_partner',
-  'activity_type',
+  'monitor_type',
   'team_members',
   'person_responsible'
 ];
@@ -50,10 +50,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
   set data(data: IActivityDetails | null) {
     super.data = data;
     if (!data) {
-      this.editedData.activity_type = USER_STAFF;
+      this.editedData.monitor_type = USER_STAFF;
     }
-    if (this.editedData.activity_type) {
-      this.userType = this.editedData.activity_type;
+    if (this.editedData.monitor_type) {
+      this.userType = this.editedData.monitor_type;
     }
     this.personalResponsible = this.editedData.person_responsible;
     this.teamMembers = this.editedData.team_members;
@@ -87,14 +87,14 @@ export class MonitorInformationCard extends BaseDetailsCard {
             <paper-radio-group
               selected="${this.userType}"
               @iron-select="${({detail}: CustomEvent) => this.setUserType(detail.item.name)}"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('activity_type')}"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
             >
               ${repeat(
                 this.userTypes,
                 (type: UserType) => html`
                   <paper-radio-button
                     name="${type}"
-                    ?disabled="${!this.isEditMode || this.isFieldReadonly('activity_type')}"
+                    ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
                   >
                     ${translate(`ACTIVITY_DETAILS.USER_TYPES.${type.toUpperCase()}`)}
                   </paper-radio-button>
@@ -103,7 +103,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             </paper-radio-group>
           </div>
           <div class="layout horizontal">
-            ${this.editedData.activity_type === USER_TPM
+            ${this.editedData.monitor_type === USER_TPM
               ? html`
                   <etools-dropdown
                     class="without-border flex"
@@ -252,7 +252,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       this.clearMembers();
     }
     this.userType = userType;
-    this.updateModelValue('activity_type', userType);
+    this.updateModelValue('monitor_type', userType);
     const state: IRootState = store.getState() as IRootState;
     if (userType === USER_TPM && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));

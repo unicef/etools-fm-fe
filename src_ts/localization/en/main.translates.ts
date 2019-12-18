@@ -27,7 +27,7 @@ export const MAIN_TRANSLATES: TranslateObject = {
     BOOL: 'Boolean',
     LIKERT_SCALE: 'Likert Scale'
   },
-  ACTIVITY_TYPES: {
+  MONITOR_TYPES: {
     STAFF: 'Staff',
     TPM: 'TPM'
   },

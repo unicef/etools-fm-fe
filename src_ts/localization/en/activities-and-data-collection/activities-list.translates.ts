@@ -4,13 +4,13 @@ export const ACTIVITIES_LIST_TRANSLATES: TranslateObject = {
       REFERENCE_NUMBER: 'Reference #',
       START_DATE: 'Start Date',
       LOCATION_AND_SITE: 'Location & Site',
-      ACTIVITY_TYPE: 'Primary FM',
+      MONITOR_TYPE: 'Primary FM',
       TEAM_MEMBERS: 'Team Members',
       CHECKLISTS_COUNT: 'Checklists',
       STATUS: 'Status'
     },
     FILTERS: {
-      ACTIVITY_TYPE: 'Primary FM',
+      MONITOR_TYPE: 'Primary FM',
       TEAM_MEMBERS: 'Team Members',
       PERSON_RESPONSIBLE: 'Person Responsible',
       LOCATION: 'Location',
