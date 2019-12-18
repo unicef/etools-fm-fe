@@ -20,9 +20,10 @@ export const REVERT_DATA_COLLECTED: 'revert_data_collected' = 'revert_data_colle
 export const SUBMIT_REPORT: 'submit_report' = 'submit_report';
 export const COMPLETE: 'complete' = 'complete';
 export const CANCEL: 'cancel' = 'cancel';
+export const REJECT_REPORT: 'reject_report' = 'reject_report';
 
 export const BACK_TRANSITIONS: Set<string> = new Set([BACK_TO_DRAFT, BACK_TO_CHECKLIST, REVERT_DATA_COLLECTED]);
-export const SEPARATE_TRANSITIONS: Set<string> = new Set([REJECT, ...Array.from(BACK_TRANSITIONS)]);
+export const SEPARATE_TRANSITIONS: Set<string> = new Set([REJECT, REJECT_REPORT, ...Array.from(BACK_TRANSITIONS)]);
 
 export const TRANSITIONS_ORDER: string[] = [
   MARK_DETAILS_CONFIGURED,
@@ -36,10 +37,12 @@ export const TRANSITIONS_ORDER: string[] = [
   REVERT_DATA_COLLECTED,
   SUBMIT_REPORT,
   COMPLETE,
-  CANCEL
+  CANCEL,
+  REJECT_REPORT
 ];
 
 export const REASON_FIELDS: GenericObject<keyof IActivityDetails> = {
   [REJECT]: 'reject_reason',
-  [CANCEL]: 'cancel_reason'
+  [CANCEL]: 'cancel_reason',
+  [REJECT_REPORT]: 'report_reject_reason'
 };

@@ -22,6 +22,7 @@ interface IActivityDetails extends IListActivity {
   transitions: ActivityTransition[];
   reject_reason: string;
   cancel_reason: string;
+  report_reject_reason: string;
 }
 
 type ActivityStatus =
