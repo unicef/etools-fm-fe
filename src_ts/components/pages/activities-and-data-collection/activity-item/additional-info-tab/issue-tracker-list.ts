@@ -76,7 +76,6 @@ export class IssueTrackerList extends LitElement {
   }
 
   render(): TemplateResult {
-    console.log('items', this.items);
     return html`
       <section class="elevation page-content card-container" elevation="1">
         <etools-loading
@@ -90,12 +89,7 @@ export class IssueTrackerList extends LitElement {
           <etools-data-table-column class="flex-1" field="related_to_type">
             ${translate('ISSUE_TRACKER.RELATED_TO')}
           </etools-data-table-column>
-          <etools-data-table-column
-            class="flex-2"
-            field="name"
-            sortable
-            @sort-changed="${(event: CustomEvent<SortDetails>) => this.sortList(event.detail)}"
-          >
+          <etools-data-table-column class="flex-2" field="name" sortable>
             ${translate('ISSUE_TRACKER.NAME')}
           </etools-data-table-column>
           <etools-data-table-column class="flex-3" field="issue">
@@ -158,13 +152,15 @@ export class IssueTrackerList extends LitElement {
     `;
   }
 
-  sortList(sortOption: SortDetails): void {
-    this.items.sort((a: LogIssue, b: LogIssue) => {
-      const current: string = a.cp_output?.name || a.partner?.name || '';
-      const next: string = b.cp_output?.name || b.partner?.name || '';
-      return sortOption.direction === 'asc' ? current.localeCompare(next) : next.localeCompare(current);
-    });
-    this.requestUpdate();
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => {
+      const params: GenericObject = {
+        ...this.queryParams,
+        ordering: `${event.detail.direction === 'desc' ? '-' : ''}${event.detail.field}`
+      };
+      this.loadIssues(params);
+    }) as any);
   }
 
   static get styles(): CSSResultArray {
