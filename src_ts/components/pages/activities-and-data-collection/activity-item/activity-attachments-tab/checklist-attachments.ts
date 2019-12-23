@@ -9,15 +9,23 @@ import '@unicef-polymer/etools-data-table';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
-import {loadChecklistAttachments} from '../../../../../redux/effects/activity-details.effects';
-import {activityChecklistAttachments} from '../../../../../redux/selectors/activity-details.selectors';
+import {
+  loadChecklistAttachments,
+  loadChecklistAttachmentsTypes
+} from '../../../../../redux/effects/activity-details.effects';
+import {
+  activityChecklistAttachments,
+  activityChecklistAttachmentsTypes
+} from '../../../../../redux/selectors/activity-details.selectors';
 import {template} from './checklist-attachments.tpl';
 
 @customElement('checklist-attachments')
 export class ChecklistAttachments extends MethodsMixin(LitElement) {
   @property() activityDetailsId: number | null = null;
   @property() items: IChecklistAttachment[] = [];
+  @property() attachmentsTypes: AttachmentType[] = [];
   private checklistAttachmentsUnsubscribe!: Unsubscribe;
+  private checklistAttachmentsTypesUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     return template.call(this);
@@ -25,19 +33,31 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.attachmentsTypes = store.getState().activityDetails.checklistAttachmentsTypes;
     if (this.activityDetailsId) {
       store.dispatch<AsyncEffect>(loadChecklistAttachments(this.activityDetailsId));
+      if (!this.attachmentsTypes.length) {
+        store.dispatch<AsyncEffect>(loadChecklistAttachmentsTypes(this.activityDetailsId));
+      }
     }
+
     this.checklistAttachmentsUnsubscribe = store.subscribe(
       activityChecklistAttachments((checklistAttachments: IChecklistAttachment[]) => {
         this.items = checklistAttachments;
       }, false)
+    );
+
+    this.checklistAttachmentsTypesUnsubscribe = store.subscribe(
+      activityChecklistAttachmentsTypes((checklistAttachmentsTypes: AttachmentType[]) => {
+        this.attachmentsTypes = checklistAttachmentsTypes;
+      })
     );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.checklistAttachmentsUnsubscribe();
+    this.checklistAttachmentsTypesUnsubscribe();
   }
 
   getRelatedInfo({partner, cp_output, intervention}: IChecklistAttachment): {type: string; content: string} {

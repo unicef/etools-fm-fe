@@ -3,6 +3,7 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {request} from '../../endpoints/request';
 import {
   SetAttachmentsList,
+  SetAttachmentsTypes,
   SetAttachmentsUpdateError,
   SetAttachmentsUpdateState
 } from '../actions/attachments-list.actions';
@@ -19,6 +20,23 @@ export function loadAttachmentsList(
     return request<IListData<IAttachment> | IAttachment[]>(`${url}?page_size=all`, {method: 'GET'}).then(
       (response: IListData<IAttachment> | IAttachment[]) => {
         dispatch(new SetAttachmentsList({data: response, name: endpointName}));
+      }
+    );
+  };
+}
+
+export function loadAttachmentsTypes(
+  endpointName: string,
+  endpointData: GenericObject
+): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const {url}: IResultEndpoint = getEndpoint(endpointName, endpointData) || ({} as IResultEndpoint);
+    if (!url) {
+      throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
+    }
+    return request<AttachmentType[]>(`${url}file-types?page_size=all`, {method: 'GET'}).then(
+      (response: AttachmentType[]) => {
+        dispatch(new SetAttachmentsTypes({name: endpointName, data: response}));
       }
     );
   };

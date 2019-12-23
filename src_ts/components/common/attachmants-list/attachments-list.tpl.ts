@@ -5,6 +5,7 @@ import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {translate} from '../../../localization/localisation';
+import {getTypeDisplayName} from '../../utils/attachments-helper';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
   // language=HTML
@@ -68,7 +69,9 @@ export function template(this: AttachmentsListComponent): TemplateResult {
               <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row flex">
                   <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
-                  <div class="col-data flex-1">${this.getTypeDisplayName(attachment.file_type)}</div>
+                  <div class="col-data flex-1">
+                    ${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}
+                  </div>
                   <div class="col-data flex-4 file-link">
                     <iron-icon icon="icons:attachment"></iron-icon>
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>

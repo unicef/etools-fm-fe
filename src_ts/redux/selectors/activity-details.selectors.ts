@@ -27,3 +27,7 @@ export const activityDetailsError: Selector<null | GenericObject> = select<null 
 export const activityChecklistAttachments: Selector<IChecklistAttachment[]> = select<IChecklistAttachment[]>(
   (store: IRootState) => store.activityDetails.checklistAttachments
 );
+
+export const activityChecklistAttachmentsTypes: Selector<AttachmentType[]> = select<AttachmentType[]>(
+  (store: IRootState) => store.activityDetails.checklistAttachmentsTypes
+);

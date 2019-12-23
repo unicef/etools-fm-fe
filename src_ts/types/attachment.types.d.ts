@@ -28,7 +28,7 @@ interface IRemmoveAttachmentPopupData {
 
 interface IAttachmentPopupData {
   editedAttachment?: IAttachment;
-  attachmentTypes: DefaultDropdownOption[];
+  attachmentTypes: AttachmentType[];
   endpointName: string;
   additionalEndpointData: GenericObject;
 }
@@ -58,9 +58,7 @@ interface IChecklistAttachment extends IAttachment {
   intervention: null | IActivityIntervention;
 }
 
-type PageableChecklistAttachment = {
-  count: number;
-  next: number | null;
-  previous: number | null;
-  results: IChecklistAttachment[];
+type AttachmentType = {
+  id: number;
+  label: string;
 };

@@ -1,7 +1,8 @@
 export enum AttachmentsActionTypes {
   SET_ATTACHMENTS_LIST = '[Attachments Action]: SET_ATTACHMENTS_LIST',
   SET_ATTACHMENTS_UPDATE_STATE = '[Attachments Action]: SET_ATTACHMENTS_UPDATE_STATE',
-  SET_ATTACHMENTS_UPDATE_ERROR = '[Attachments Action]: SET_ATTACHMENTS_UPDATE_ERROR'
+  SET_ATTACHMENTS_UPDATE_ERROR = '[Attachments Action]: SET_ATTACHMENTS_UPDATE_ERROR',
+  SET_ATTACHMENTS_TYPES = '[Attachments Action]: SET_ATTACHMENTS_TYPES'
 }
 
 export class SetAttachmentsList {
@@ -24,4 +25,13 @@ export class SetAttachmentsUpdateError {
   constructor(public payload: any) {}
 }
 
-export type AttachmentsActions = SetAttachmentsList | SetAttachmentsUpdateState | SetAttachmentsUpdateError;
+export class SetAttachmentsTypes {
+  readonly type: AttachmentsActionTypes.SET_ATTACHMENTS_TYPES = AttachmentsActionTypes.SET_ATTACHMENTS_TYPES;
+  constructor(public payload: {name: string; data: AttachmentType[]}) {}
+}
+
+export type AttachmentsActions =
+  | SetAttachmentsList
+  | SetAttachmentsUpdateState
+  | SetAttachmentsUpdateError
+  | SetAttachmentsTypes;

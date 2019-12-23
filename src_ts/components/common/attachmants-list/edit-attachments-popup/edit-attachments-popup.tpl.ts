@@ -39,15 +39,15 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           class="validate-input disabled-as-readonly flex-1"
           .selected="${this.editedData.file_type}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
-            (this.editedData.file_type = detail.selectedItem && detail.selectedItem.value)}"
+            this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"
           trigger-value-change-event
           label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
           placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
           required
           hide-search
           .options="${this.attachmentTypes}"
-          option-label="display_name"
-          option-value="value"
+          option-label="label"
+          option-value="id"
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"

@@ -77,7 +77,14 @@ interface IAttachmentsListState {
   rationale_attachments: null | IAttachment[];
   updateInProcess: null | boolean;
   error: GenericObject;
+  attachmentsTypes: AttachmentsTypesState;
 }
+
+type AttachmentsTypesState = {
+  rationale_attachments: AttachmentType[];
+  activityRelatedDocuments: AttachmentType[];
+  activityReportAttachments: AttachmentType[];
+};
 
 interface IActionPointsListState {
   data: ActionPoint[];
@@ -121,6 +128,7 @@ interface IActivityDetailsState extends IRequestState {
     statusChange: boolean;
   };
   checklistAttachments: IChecklistAttachment[];
+  checklistAttachmentsTypes: AttachmentType[];
 }
 
 interface IWidgetLocationsState {

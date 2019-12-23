@@ -1,8 +1,8 @@
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './attachments-list.tpl';
-import {loadAttachmentsList} from '../../../redux/effects/attachments-list.effects';
+import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
 import {store} from '../../../redux/store';
-import {attachmentsListSelector} from '../../../redux/selectors/attachments-list.selectors';
+import {attachmentsListSelector, attachmentsTypesSelector} from '../../../redux/selectors/attachments-list.selectors';
 import {elevationStyles} from '../../styles/elevation-styles';
 import {openDialog} from '../../utils/dialog';
 import {Unsubscribe} from 'redux';
@@ -15,10 +15,6 @@ import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer'
 import {fireEvent} from '../../utils/fire-custom-event';
 
 store.addReducers({attachmentsList});
-const FILE_TYPES: DefaultDropdownOption[] = [
-  {display_name: 'SOP', value: 34},
-  {display_name: 'Other', value: 35}
-];
 
 @customElement('attachments-list')
 export class AttachmentsListComponent extends LitElement {
@@ -28,9 +24,11 @@ export class AttachmentsListComponent extends LitElement {
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
+  @property() attachmentsTypes: AttachmentType[] = [];
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;
+  private attachmentsTypesUnsubscribe!: Unsubscribe;
   private _endpointName: string = '';
 
   // on endpoint-name attribute changes
@@ -75,6 +73,30 @@ export class AttachmentsListComponent extends LitElement {
     return template.call(this);
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._endpointName];
+    if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
+      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    }
+
+    this.attachmentsTypesUnsubscribe = store.subscribe(
+      attachmentsTypesSelector(
+        (types: AttachmentType[] | undefined) => {
+          if (types) {
+            this.attachmentsTypes = types;
+          }
+        },
+        [this._endpointName]
+      )
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.attachmentsTypesUnsubscribe();
+  }
+
   formatDate(value: string, format: string = 'DD MMM YYYY'): string {
     if (!value) {
       return '';
@@ -84,17 +106,12 @@ export class AttachmentsListComponent extends LitElement {
     return date.toString() !== 'Invalid Date' ? moment.utc(date).format(format) : '';
   }
 
-  getTypeDisplayName(id: number): string {
-    const type: DefaultDropdownOption | undefined = FILE_TYPES.find(({value}: DefaultDropdownOption) => value === id);
-    return (type && type.display_name) || '';
-  }
-
   openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: FILE_TYPES,
+        attachmentTypes: this.attachmentsTypes,
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }

@@ -2,7 +2,11 @@ import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {ACTIVITIES_LIST, ACTIVITY_CHECKLIST_ATTACHMENTS, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
-import {ActivityDetailsActions, ChecklistAttachmentsRequest} from '../actions/activity-details.actions';
+import {
+  ActivityDetailsActions,
+  ChecklistAttachmentsRequest,
+  ChecklistAttachmentsTypesRequest
+} from '../actions/activity-details.actions';
 import {Dispatch} from 'redux';
 
 export function requestActivityDetails(id: string): IAsyncAction {
@@ -76,8 +80,21 @@ export function changeActivityStatus(id: number, activityDetails: Partial<IActiv
 export function loadChecklistAttachments(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
-    return request<PageableChecklistAttachment>(url, {method: 'GET'}).then((response: PageableChecklistAttachment) => {
-      dispatch(new ChecklistAttachmentsRequest(response.results));
-    });
+    return request<IListData<IChecklistAttachment>>(url, {method: 'GET'}).then(
+      (response: IListData<IChecklistAttachment>) => {
+        dispatch(new ChecklistAttachmentsRequest(response.results));
+      }
+    );
+  };
+}
+
+export function loadChecklistAttachmentsTypes(activityId: number): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
+    return request<AttachmentType[]>(`${url}file-types?page_size=all`, {method: 'GET'}).then(
+      (response: AttachmentType[]) => {
+        dispatch(new ChecklistAttachmentsTypesRequest(response));
+      }
+    );
   };
 }

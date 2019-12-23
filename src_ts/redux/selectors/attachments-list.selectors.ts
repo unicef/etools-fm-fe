@@ -8,3 +8,8 @@ export const attachmentsListSelector: DynamicSelector<IListData<IAttachment> | u
 export const listAttachmentUpdate: Selector<boolean | null> = select<boolean | null>(
   (store: IRootState) => store.attachmentsList.updateInProcess
 );
+
+export const attachmentsTypesSelector: DynamicSelector<AttachmentType[] | undefined> = dynamicSelect<
+  AttachmentsTypesState,
+  AttachmentType[]
+>((store: IRootState) => store.attachmentsList.attachmentsTypes);

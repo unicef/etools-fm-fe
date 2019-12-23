@@ -13,7 +13,7 @@ import {DataMixin} from '../../mixins/data-mixin';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened: boolean = true;
-  @property() attachmentTypes: DefaultDropdownOption[] = [];
+  @property() attachmentTypes: AttachmentType[] = [];
   protected savingInProcess: boolean = false;
   protected selectedFileId: number | null = null;
 
@@ -66,6 +66,12 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateAttachmentsUnsubscribe();
+  }
+
+  switchFileType(value: any): void {
+    if (value) {
+      this.editedData.file_type = value;
+    }
   }
 
   protected processRequest(): void {
