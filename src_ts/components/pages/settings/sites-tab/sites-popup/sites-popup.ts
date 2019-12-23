@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
@@ -28,8 +28,8 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() editedData: EditedSite = {is_active: true};
   @property() currentCoords: string | null = null;
 
-  @property() latitude: number = 0;
-  @property() longitude: number = 0;
+  @property() latitude: number | null = null;
+  @property() longitude: number | null = null;
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   savingInProcess: boolean = false;
@@ -43,10 +43,12 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;
   private readonly MapHelper: MapHelper;
+  private readonly setLatLngWithDelay: Callback;
 
   constructor() {
     super();
     this.MapHelper = new MapHelper();
+    this.setLatLngWithDelay = debounce(this.updateMapPoint.bind(this), LAT_LNG_DEBOUNCE_TIME);
     this.updateSiteLocationUnsubscribe = store.subscribe(
       sitesUpdateSelector((updateInProcess: boolean | null) => {
         this.savingInProcess = Boolean(updateInProcess);
@@ -80,10 +82,6 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     );
   }
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
-  }
-
   set dialogData(data: SitesPopupData) {
     if (!data) {
       return;
@@ -99,10 +97,6 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   render(): TemplateResult {
     return template.call(this);
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
   }
 
   disconnectedCallback(): void {
@@ -171,20 +165,17 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     this.setCoordsString();
   }
 
-  updateLatLng(value: number, param: string): void {
+  updateLatLng(value: number, param: 'latitude' | 'longitude'): void {
     if (value) {
-      if (param === 'lat') {
-        this.latitude = value;
-      } else if (param === 'lng') {
-        this.longitude = value;
-      }
-      debounce(this.updateMapPoint.bind(this), LAT_LNG_DEBOUNCE_TIME)();
+      this[param] = value;
+      this.setLatLngWithDelay();
     }
   }
 
   updateMapPoint(): void {
-    if (this.MapHelper.dynamicMarker) {
+    if (this.MapHelper.dynamicMarker && this.latitude && this.longitude) {
       this.MapHelper.dynamicMarker.setLatLng([this.latitude, this.longitude]);
+      this.MapHelper.map!.setView([+this.latitude, +this.longitude] as LatLngTuple, 8);
     }
   }
 
@@ -209,5 +200,26 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       this.currentCoords =
         `${translate('MAIN.LATITUDE')} ${lat.toFixed(6)}` + `     ${translate('MAIN.LONGITUDE')} ${lng.toFixed(6)}`;
     }
+  }
+
+  static get styles(): CSSResultArray {
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      leafletStyles,
+      SitesTabStyles,
+      css`
+        .selected-sites-label {
+          padding: 13px 12px;
+          color: #858585;
+          font-size: 17px;
+          display: flex;
+          align-content: center;
+          align-items: flex-end;
+        }
+      `
+    ];
   }
 }
