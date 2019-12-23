@@ -78,8 +78,24 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
         <div class="map" id="map"></div>
 
-        <div ?hidden="${!this.currentCoords}" class="current-coords">
-          ${translate('SITES.SELECTED_SITE')}: ${this.currentCoords}
+        <div class="layout horizontal">
+          <label class="selected-sites-label">
+            ${translate('SITES.SELECTED_SITE')}:
+          </label>
+          <paper-input
+            class="validate-input disabled-as-readonly flex-5"
+            .value="${this.latitude}"
+            @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
+            label="Latitude"
+            placeholder="-"
+          ></paper-input>
+          <paper-input
+            class="validate-input disabled-as-readonly flex-5"
+            .value="${this.longitude}"
+            @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
+            label="Longitude"
+            placeholder="-"
+          ></paper-input>
         </div>
       </div>
     </etools-dialog>

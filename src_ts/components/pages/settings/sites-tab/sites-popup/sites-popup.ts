@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
@@ -17,14 +17,19 @@ import {CardStyles} from '../../../../styles/card-styles';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
+import {debounce} from '../../../../utils/debouncer';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+const LAT_LNG_DEBOUNCE_TIME: number = 700;
 
 @customElement('sites-popup')
 export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() dialogOpened: boolean = true;
   @property() editedData: EditedSite = {is_active: true};
   @property() currentCoords: string | null = null;
+
+  @property() latitude: number | null = null;
+  @property() longitude: number | null = null;
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   savingInProcess: boolean = false;
@@ -33,15 +38,17 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     {id: 1, value: true, display_name: translate('SITES.STATUS.ACTIVE')}
   ];
 
-  @query('#map') private maoElement!: HTMLElement;
+  @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;
   private readonly MapHelper: MapHelper;
+  private readonly setLatLngWithDelay: Callback;
 
   constructor() {
     super();
     this.MapHelper = new MapHelper();
+    this.setLatLngWithDelay = debounce(this.updateMapPoint.bind(this), LAT_LNG_DEBOUNCE_TIME);
     this.updateSiteLocationUnsubscribe = store.subscribe(
       sitesUpdateSelector((updateInProcess: boolean | null) => {
         this.savingInProcess = Boolean(updateInProcess);
@@ -75,10 +82,6 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     );
   }
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, leafletStyles, SitesTabStyles];
-  }
-
   set dialogData(data: SitesPopupData) {
     if (!data) {
       return;
@@ -94,10 +97,6 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   render(): TemplateResult {
     return template.call(this);
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
   }
 
   disconnectedCallback(): void {
@@ -142,7 +141,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   mapInitialization(): void {
     if (!this.MapHelper.map) {
-      this.MapHelper.initMap(this.maoElement);
+      this.MapHelper.initMap(this.mapElement);
       this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
         const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
         this.MapHelper.changeDMLocation([lat, lng]);
@@ -166,6 +165,20 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     this.setCoordsString();
   }
 
+  updateLatLng(value: number, param: 'latitude' | 'longitude'): void {
+    if (value) {
+      this[param] = value;
+      this.setLatLngWithDelay();
+    }
+  }
+
+  updateMapPoint(): void {
+    if (this.MapHelper.dynamicMarker && this.latitude && this.longitude) {
+      this.MapHelper.dynamicMarker.setLatLng([this.latitude, this.longitude]);
+      this.MapHelper.map!.setView([+this.latitude, +this.longitude] as LatLngTuple, 8);
+    }
+  }
+
   private renderMarkers(): void {
     if (!this.MapHelper.map || !this.sitesObjects) {
       return;
@@ -182,8 +195,31 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       this.currentCoords = null;
     } else {
       const {lat, lng} = this.MapHelper.dynamicMarker.getLatLng();
+      this.latitude = lat;
+      this.longitude = lng;
       this.currentCoords =
         `${translate('MAIN.LATITUDE')} ${lat.toFixed(6)}` + `     ${translate('MAIN.LONGITUDE')} ${lng.toFixed(6)}`;
     }
+  }
+
+  static get styles(): CSSResultArray {
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      leafletStyles,
+      SitesTabStyles,
+      css`
+        .selected-sites-label {
+          padding: 13px 12px;
+          color: #858585;
+          font-size: 17px;
+          display: flex;
+          align-content: center;
+          align-items: flex-end;
+        }
+      `
+    ];
   }
 }
