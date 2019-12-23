@@ -4,6 +4,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import '@unicef-polymer/etools-data-table';
 import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';
+import {getTypeDisplayName} from '../../../../utils/attachments-helper';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`
@@ -71,7 +72,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
                   <div>${this.formatDate(item.modified)}</div>
                 </div>
                 <div class="custom-row-details-content flex-1">
-                  <div>${this.getTypeDisplayName(item.file_type)}</div>
+                  <div>${getTypeDisplayName(item.file_type, this.attachmentsTypes)}</div>
                 </div>
                 <div class="custom-row-details-content flex-3">
                   <a href="${item.file}" class="download-link" download="${item.filename}"

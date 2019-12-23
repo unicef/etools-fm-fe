@@ -106,11 +106,6 @@ export class AttachmentsListComponent extends LitElement {
     return date.toString() !== 'Invalid Date' ? moment.utc(date).format(format) : '';
   }
 
-  getTypeDisplayName(id: number): string {
-    const type: AttachmentType | undefined = this.attachmentsTypes.find((item: AttachmentType) => item.id === id);
-    return (type && type.label) || '';
-  }
-
   openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',

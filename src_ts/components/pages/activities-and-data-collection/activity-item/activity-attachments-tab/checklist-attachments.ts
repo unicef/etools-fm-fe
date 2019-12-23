@@ -36,7 +36,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     this.attachmentsTypes = store.getState().activityDetails.checklistAttachmentsTypes;
     if (this.activityDetailsId) {
       store.dispatch<AsyncEffect>(loadChecklistAttachments(this.activityDetailsId));
-      if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
+      if (!this.attachmentsTypes.length) {
         store.dispatch<AsyncEffect>(loadChecklistAttachmentsTypes(this.activityDetailsId));
       }
     }
@@ -44,14 +44,12 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     this.checklistAttachmentsUnsubscribe = store.subscribe(
       activityChecklistAttachments((checklistAttachments: IChecklistAttachment[]) => {
         this.items = checklistAttachments;
-        console.log('Checklist attachments', this.items);
       }, false)
     );
 
     this.checklistAttachmentsTypesUnsubscribe = store.subscribe(
       activityChecklistAttachmentsTypes((checklistAttachmentsTypes: AttachmentType[]) => {
         this.attachmentsTypes = checklistAttachmentsTypes;
-        console.log(this.attachmentsTypes);
       })
     );
   }
@@ -76,12 +74,6 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
 
   formatDate(date: string | null): string {
     return date ? moment(date).format('DD MMM YYYY') : '-';
-  }
-
-  //fixme copy-paste from attachments-list.ts
-  getTypeDisplayName(id: number): string {
-    const type: AttachmentType | undefined = this.attachmentsTypes.find((item: AttachmentType) => item.id === id);
-    return (type && type.label) || '';
   }
 
   static get styles(): CSSResult[] {
