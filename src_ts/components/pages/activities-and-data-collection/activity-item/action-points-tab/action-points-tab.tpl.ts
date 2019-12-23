@@ -95,11 +95,9 @@ export function template(this: ActionPointsTab): TemplateResult {
                   ${this.getRelatedInfo(item).type}
                 </div>
               </div>
-              <div class="row-details-content w160px">
+              <div class="row-details-content">
                 <div class="rdc-title">Content</div>
-                <div class="truncate">
-                  ${this.getRelatedInfo(item).content}
-                </div>
+                <div>${this.getRelatedInfo(item).content}</div>
               </div>
             </div>
           </etools-data-table-row>

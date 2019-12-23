@@ -11,16 +11,12 @@ export class ReviewChecklistItemComponent extends LitElement {
   @property() itemTitle: string = '';
   @property() checklist: IChecklistItem[] = [];
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, ReviewChecklistItemStyles];
-  }
-
   render(): TemplateResult | void {
     return html`
       <style>
         etools-data-table-row {
           --list-row-wrapper: {
-            background-color: var(--primary-background-color) !important;
+            background-color: var(--primary-background-color);
           }
         }
       </style>
@@ -45,5 +41,9 @@ export class ReviewChecklistItemComponent extends LitElement {
         </div>
       </etools-data-table-row>
     `;
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, ReviewChecklistItemStyles];
   }
 }

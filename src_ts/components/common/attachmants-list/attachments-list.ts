@@ -31,11 +31,6 @@ export class AttachmentsListComponent extends LitElement {
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;
-
-  static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
-  }
-
   private _endpointName: string = '';
 
   // on endpoint-name attribute changes
@@ -121,5 +116,9 @@ export class AttachmentsListComponent extends LitElement {
       }
       this.debouncedLoading();
     });
+  }
+
+  static get styles(): CSSResult[] {
+    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
   }
 }
