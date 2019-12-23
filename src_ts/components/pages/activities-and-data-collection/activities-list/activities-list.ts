@@ -13,7 +13,7 @@ import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
 import {ROOT_PATH} from '../../../../config/config';
-import {ACTIVITY_STATUSES, ACTIVITY_TYPES} from '../../../common/dropdown-options';
+import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {mapFilters} from '../../../utils/filters-mapping';
@@ -44,7 +44,7 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
   @property() filtersLoading: boolean = false;
   @property() filters: IEtoolsFilter[] | null = null;
 
-  activityTypes: DefaultDropdownOption<string>[] = ACTIVITY_TYPES;
+  activityTypes: DefaultDropdownOption<string>[] = MONITOR_TYPES;
   activityStatuses: DefaultDropdownOption<string>[] = ACTIVITY_STATUSES;
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
@@ -53,7 +53,7 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
   private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly filtersData: GenericObject = {
-    activity_type: ACTIVITY_TYPES,
+    monitor_type: MONITOR_TYPES,
     status__in: ACTIVITY_STATUSES
   };
 

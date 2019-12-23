@@ -1,7 +1,7 @@
 interface IListActivity {
   id: number;
   reference_number: string;
-  activity_type: UserType;
+  monitor_type: UserType;
   tpm_partner: null | IActivityTpmPartner;
   person_responsible: null | ActivityTeamMember;
   location: ISiteParrentLocation;
@@ -116,7 +116,7 @@ type ActivityPermissionsObject = {
   interventions: boolean;
   location_site_id: boolean;
   status: boolean;
-  activity_type: boolean;
+  monitor_type: boolean;
   person_responsible: boolean;
   tpm_partner_id: boolean;
   checklists: boolean;

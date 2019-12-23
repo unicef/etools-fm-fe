@@ -47,7 +47,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-none w90px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.ACTIVITY_TYPE')}
+          ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
@@ -93,7 +93,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}
               </div>
               <div class="col-data flex-none w90px">
-                ${this.serializeName(activity.activity_type, this.activityTypes, 'display_name', 'value') || '-'}
+                ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
               <div class="col-data flex-2">
                 ${(activity.team_members &&

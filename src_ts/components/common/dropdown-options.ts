@@ -22,7 +22,7 @@ export const PARTNER: 'partner' = 'partner';
 export const OUTPUT: 'output' = 'output';
 export const INTERVENTION: 'intervention' = 'intervention';
 
-// ACTIVITY_TYPES
+// MONITOR_TYPES
 export const STAFF: 'staff' = 'staff';
 export const TPM: 'tpm' = 'tpm';
 
@@ -39,9 +39,9 @@ export const LEVELS: DefaultDropdownOption<string>[] = [
   {value: INTERVENTION, display_name: translate(`LEVELS_OPTIONS.INTERVENTION`)}
 ];
 
-export const ACTIVITY_TYPES: DefaultDropdownOption<string>[] = [
-  {value: STAFF, display_name: translate(`ACTIVITY_TYPES.STAFF`)},
-  {value: TPM, display_name: translate(`ACTIVITY_TYPES.TPM`)}
+export const MONITOR_TYPES: DefaultDropdownOption<string>[] = [
+  {value: STAFF, display_name: translate(`MONITOR_TYPES.STAFF`)},
+  {value: TPM, display_name: translate(`MONITOR_TYPES.TPM`)}
 ];
 
 export const ACTIVITY_STATUSES: DefaultDropdownOption<string>[] = [
