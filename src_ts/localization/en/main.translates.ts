@@ -38,7 +38,7 @@ export const MAIN_TRANSLATES: TranslateObject = {
     ASSIGNED: 'Assigned',
     DATA_COLLECTION: 'Data Collection',
     REPORT_FINALIZATION: 'Report Finalization',
-    SUBMITTED: 'Activity Review',
+    SUBMITTED: 'Report Review',
     COMPLETED: 'Completed',
     CANCELLED: 'Cancelled'
   },
