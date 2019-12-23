@@ -8,6 +8,7 @@ import {
   BACK_TRANSITIONS,
   REASON_FIELDS,
   REJECT,
+  REJECT_REPORT,
   SEPARATE_TRANSITIONS,
   TRANSITIONS_ORDER
 } from './activity-statuses';
@@ -58,7 +59,7 @@ export class StatusesActionsComponent extends LitElement {
 
   protected getRejectBtn(): TemplateResult {
     const transition: ActivityTransition | undefined = this.possibleTransitions.find(
-      ({transition}: ActivityTransition) => transition === REJECT
+      ({transition}: ActivityTransition) => transition === REJECT || transition === REJECT_REPORT
     );
     return transition
       ? html`
@@ -124,7 +125,6 @@ export class StatusesActionsComponent extends LitElement {
     if (!newStatusData) {
       return;
     }
-
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
       const errors: any = store.getState().activityDetails.error;
       if (errors) {

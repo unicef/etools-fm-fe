@@ -16,7 +16,8 @@ import {
   SUBMIT_REPORT,
   COMPLETE,
   CANCEL,
-  CANCELLED
+  CANCELLED,
+  REJECT_REPORT
 } from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 import {
   ACTION_POINTS,
@@ -43,11 +44,13 @@ export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
       [SUBMIT_REPORT]: 'Submit',
       [COMPLETE]: 'Complete',
       [REJECT]: 'Reject',
-      [CANCEL]: 'Cancel'
+      [CANCEL]: 'Cancel',
+      [REJECT_REPORT]: 'Reject Report'
     },
     REASON_FOR_TRANSITION: {
       [CANCEL]: {LABEL: 'Cancellation comment', TITLE: 'Cancellation reason'},
-      [REJECT]: {LABEL: 'Rejection comment', TITLE: 'Rejection reason'}
+      [REJECT]: {LABEL: 'Rejection comment', TITLE: 'Rejection reason'},
+      [REJECT_REPORT]: {LABEL: 'Report rejection comment', TITLE: 'Report rejection reason'}
     },
     STATUSES: {
       [DRAFT]: 'Draft',
