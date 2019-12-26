@@ -32,6 +32,7 @@ export class VisitsEligibleForHact extends LitElement {
         this.loading = false;
       })
     );
+    this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.sortItems(event.detail)) as any);
   }
 
   disconnectedCallback(): void {
@@ -41,6 +42,22 @@ export class VisitsEligibleForHact extends LitElement {
 
   formatDate(date: string | null): string {
     return date ? moment(date).format('DD MMM YYYY') : '-';
+  }
+
+  sortItems(detail: SortDetails): void {
+    switch (detail.field) {
+      case 'name':
+        this.items.sort((a: HactVisits, b: HactVisits) => {
+          return detail.direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        });
+        break;
+      case 'visits_count':
+        this.items.sort((a: HactVisits, b: HactVisits) => {
+          return detail.direction === 'asc' ? a.visits_count - b.visits_count : b.visits_count - a.visits_count;
+        });
+        break;
+    }
+    this.requestUpdate();
   }
 
   static get styles(): CSSResult[] {
