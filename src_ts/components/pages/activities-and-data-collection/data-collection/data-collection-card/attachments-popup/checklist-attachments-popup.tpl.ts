@@ -1,4 +1,4 @@
-import {ChecklistAttachments} from './checklist-attachments';
+import {ChecklistAttachmentsPopup} from './checklist-attachments-popup';
 import {html, TemplateResult} from 'lit-html';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
@@ -12,7 +12,7 @@ import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-button/paper-button';
 import '@polymer/iron-icons/iron-icons';
 
-export function template(this: ChecklistAttachments): TemplateResult {
+export function template(this: ChecklistAttachmentsPopup): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
 

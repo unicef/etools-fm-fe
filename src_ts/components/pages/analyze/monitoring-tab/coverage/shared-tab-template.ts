@@ -1,6 +1,7 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '../../../../common/progressbar/column-item-progress-bar';
 import {repeat} from 'lit-html/directives/repeat';
+import {translate} from '../../../../../localization/localisation';
 
 enum WidthCalculationTargets {
   DAYS = 'days',
@@ -12,10 +13,15 @@ enum WidthCalculationTargets {
 export class SharedTabTemplate extends LitElement {
   @property() label!: string;
   @property() data!: InterventionsCoverage[] | CpOutputCoverage[];
+  @property() loading: boolean = false;
 
   render(): TemplateResult {
     return html`
       <div class="coverage-content">
+        <etools-loading
+          ?active="${this.loading}"
+          loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+        ></etools-loading>
         <!--   Tab content label   -->
         <label class="coverage-label">${this.label}</label>
         ${repeat(

@@ -8,21 +8,27 @@ import {openIssuesPartnershipSelector} from '../../../../../../redux/selectors/m
 @customElement('open-issues-partnership-tab')
 export class OpenIssuesPartnershipTab extends LitElement {
   @property() openIssuesPartnership!: OpenIssuesActionPoints[];
+  @property() loading: boolean = false;
   private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadOpenIssuesPartnership());
     this.openIssuesActionPointsUnsubscribe = store.subscribe(
       openIssuesPartnershipSelector((openIssuesPartnership: OpenIssuesActionPoints[]) => {
         this.openIssuesPartnership = openIssuesPartnership;
+        this.loading = false;
       })
     );
   }
 
   render(): TemplateResult {
     return html`
-      <open-issues-shared-tab-template .data="${this.openIssuesPartnership}"></open-issues-shared-tab-template>
+      <open-issues-shared-tab-template
+        .data="${this.openIssuesPartnership}"
+        .loading="${this.loading}"
+      ></open-issues-shared-tab-template>
     `;
   }
 

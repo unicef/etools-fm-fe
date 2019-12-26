@@ -18,6 +18,7 @@ store.addReducers({actionPointsList});
 export class ActionPointsTab extends LitElement {
   @property() items: ActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
+  @property() loading: boolean = false;
 
   statusMap: Map<string, string> = new Map([
     ['open', 'Open'],
@@ -32,10 +33,12 @@ export class ActionPointsTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadActionPoints(this.activityDetails.id));
     this.actionPointsListUnsubscribe = store.subscribe(
       actionPointsListSelector((actionPointsList: ActionPoint[]) => {
         this.items = actionPointsList;
+        this.loading = false;
       })
     );
   }

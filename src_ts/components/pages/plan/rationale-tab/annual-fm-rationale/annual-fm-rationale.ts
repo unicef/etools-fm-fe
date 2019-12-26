@@ -16,15 +16,15 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   @property() errors: GenericObject = {};
   @property() isReadonly: boolean = true;
   @property() selectedYear: number | undefined;
-  savingInProcess: boolean = false;
+  @property() savingInProcess: boolean = true;
 
   private updateRationaleUnsubscribe!: Unsubscribe;
 
   set editedModel(yearPlan: IRationale) {
-    if (!yearPlan) {
-      return;
+    if (yearPlan) {
+      this.editedData = yearPlan;
+      this.savingInProcess = false;
     }
-    this.editedData = yearPlan;
   }
 
   render(): TemplateResult {

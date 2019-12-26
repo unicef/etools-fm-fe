@@ -15,7 +15,7 @@ import '../../../../common/file-components/files-popup';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
-  @property() isLoad: boolean = false;
+  @property() loading: boolean = false;
   @property() items: LogIssue[] = [];
   @property() queryParams: GenericObject = {
     page: 1,
@@ -32,11 +32,13 @@ export class IssueTrackerList extends LitElement {
   }
 
   loadIssues(params: GenericObject): void {
+    this.loading = true;
     const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
     const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
     request<IListData<LogIssue>>(resultUrl).then((list: IListData<LogIssue>) => {
       this.items = list.results;
       this.count = list.count;
+      this.loading = false;
     });
   }
 
@@ -78,7 +80,7 @@ export class IssueTrackerList extends LitElement {
     return html`
       <section class="elevation page-content card-container" elevation="1">
         <etools-loading
-          ?active="${this.isLoad}"
+          ?active="${this.loading}"
           loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
         ></etools-loading>
         <div class="card-title-box with-bottom-line">

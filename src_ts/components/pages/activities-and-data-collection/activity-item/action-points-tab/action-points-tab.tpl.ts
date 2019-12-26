@@ -3,11 +3,16 @@ import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table';
 import './action-points-popup/action-points-popup';
+import {translate} from '../../../../../localization/localisation';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`
     ${InputStyles}
     <section class="elevation page-content card-container" elevation="1">
+      <etools-loading
+        ?active="${this.loading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <!--   Card Header   -->
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">Action Points</div>

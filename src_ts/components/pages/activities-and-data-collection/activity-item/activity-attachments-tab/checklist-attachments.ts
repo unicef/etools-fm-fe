@@ -17,6 +17,7 @@ import {template} from './checklist-attachments.tpl';
 export class ChecklistAttachments extends MethodsMixin(LitElement) {
   @property() activityDetailsId: number | null = null;
   @property() items: IChecklistAttachment[] = [];
+  @property() loading: boolean = false;
   private checklistAttachmentsUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
@@ -26,11 +27,13 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
     if (this.activityDetailsId) {
+      this.loading = true;
       store.dispatch<AsyncEffect>(loadChecklistAttachments(this.activityDetailsId));
     }
     this.checklistAttachmentsUnsubscribe = store.subscribe(
       activityChecklistAttachments((checklistAttachments: IChecklistAttachment[]) => {
         this.items = checklistAttachments;
+        this.loading = false;
       }, false)
     );
   }

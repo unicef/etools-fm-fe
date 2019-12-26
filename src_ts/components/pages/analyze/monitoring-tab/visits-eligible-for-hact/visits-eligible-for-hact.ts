@@ -15,6 +15,7 @@ import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-acti
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends LitElement {
   @property() items!: HactVisits[];
+  @property() loading: boolean = false;
   private hactVisitsUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
@@ -23,10 +24,12 @@ export class VisitsEligibleForHact extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadHactVisits());
     this.hactVisitsUnsubscribe = store.subscribe(
       hactVisitsSelector((hactVisits: HactVisits[]) => {
         this.items = hactVisits;
+        this.loading = false;
       })
     );
   }

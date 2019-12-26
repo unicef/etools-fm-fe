@@ -4,10 +4,15 @@ import {repeat} from 'lit-html/directives/repeat';
 import '@unicef-polymer/etools-data-table';
 import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';
+import {translate} from '../../../../../localization/localisation';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`
     <section class="elevation page-content card-container" elevation="1">
+      <etools-loading
+        ?active="${this.loading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <div class="card-title-box with-bottom-line">
         <div class="card-title">Checklist Attachments</div>
       </div>

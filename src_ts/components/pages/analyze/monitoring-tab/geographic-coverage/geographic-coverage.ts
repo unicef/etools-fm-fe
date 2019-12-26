@@ -134,10 +134,9 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   private getReversedCoordinates(location: GeographicCoverage): CoordinatesArray[] {
-    return (location.geom.coordinates || [])
-      .flat()
-      .flat()
-      .map((coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray);
+    return (location.geom.coordinates || []).flat().map((coordinate: CoordinatesArray) => {
+      return [...coordinate].reverse() as CoordinatesArray;
+    });
   }
 
   static get styles(): CSSResult[] {

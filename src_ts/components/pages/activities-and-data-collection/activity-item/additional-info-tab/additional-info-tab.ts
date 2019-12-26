@@ -17,7 +17,7 @@ export class AdditionalInfoTab extends LitElement {
       <div class="pd-ssfa-details-container">
         <pd-ssfa-details
           class="pd-ssfa-details"
-          .interventions="${this.activityDetails ? this.activityDetails.interventions : null}"
+          .interventionsData="${this.activityDetails ? this.activityDetails.interventions : null}"
         ></pd-ssfa-details>
       </div>
     `;
