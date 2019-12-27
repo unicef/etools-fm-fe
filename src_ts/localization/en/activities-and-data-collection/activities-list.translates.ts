@@ -5,6 +5,7 @@ export const ACTIVITIES_LIST_TRANSLATES: TranslateObject = {
       START_DATE: 'Start Date',
       LOCATION_AND_SITE: 'Location & Site',
       MONITOR_TYPE: 'Primary FM',
+      PERSON_RESPONSIBLE: 'Person Responsible',
       TEAM_MEMBERS: 'Team Members',
       CHECKLISTS_COUNT: 'Checklists',
       STATUS: 'Status'
