@@ -91,6 +91,16 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
     this.locationWidget.updateMap();
   }
 
+  validateDatepicker(): boolean {
+    const startDate: string = this.editedData.start_date || '';
+    const endDate: string = this.editedData.end_date || '';
+    if (startDate && endDate) {
+      return moment(startDate).isAfter(endDate);
+    } else {
+      return true;
+    }
+  }
+
   protected startEdit(): void {
     super.startEdit();
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
