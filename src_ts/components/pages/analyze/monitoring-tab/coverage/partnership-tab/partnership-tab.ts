@@ -19,14 +19,17 @@ export class PartnershipTab extends LitElement {
     {display_name: '% of Completed ↓', value: SortingTypes.COMPLETED_DESCEND_SORTING_TYPE}
   ];
   @property() selectedSortingOption: SortingTypes = SortingTypes.COMPLETED_ASCEND_SORTING_TYPE;
+  @property() loading: boolean = false;
   private readonly partnersCoverageUnsubscribe: Unsubscribe;
   constructor() {
     super();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadPartnersCoverage());
     this.partnersCoverageUnsubscribe = store.subscribe(
       partnersCoverageSelector((partnersCoverage: PartnersCoverage[]) => {
         this.partnersCoverage = partnersCoverage;
         this.onSelectionChange(this.selectedSortingOption);
+        this.loading = false;
       })
     );
   }

@@ -3,7 +3,7 @@ import {clone} from 'ramda';
 import './finding-types/text-finding';
 import './finding-types/number-finding';
 import './finding-types/scale-finding';
-import './attachments-popup/checklist-attachments';
+import './attachments-popup/checklist-attachments-popup';
 import {template} from './data-collection-card.tpl';
 import {DataCollectionCardStyles} from './data-collection-card.styles';
 import {fireEvent} from '../../../../utils/fire-custom-event';

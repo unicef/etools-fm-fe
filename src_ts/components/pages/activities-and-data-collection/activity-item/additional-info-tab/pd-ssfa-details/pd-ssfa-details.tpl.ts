@@ -1,10 +1,15 @@
 import {PdSsfaDetails} from './pd-ssfa-details';
 import {html, TemplateResult} from 'lit-element';
 import '@unicef-polymer/etools-data-table';
+import {translate} from '../../../../../../localization/localisation';
 
 export function template(this: PdSsfaDetails): TemplateResult {
   return html`
     <section class="elevation page-content card-container" elevation="1">
+      <etools-loading
+        ?active="${this.loading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <div class="card-title-box">
         <div class="card-title counter">PD/SSFA Details</div>
       </div>

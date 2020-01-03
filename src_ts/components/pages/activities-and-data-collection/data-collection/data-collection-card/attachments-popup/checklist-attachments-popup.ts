@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
-import {template} from './checklist-attachments.tpl';
+import {template} from './checklist-attachments-popup.tpl';
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {AttachmentsStyles} from '../../../../../styles/attachments.styles';
 import {clone} from 'ramda';
@@ -8,7 +8,7 @@ import {store} from '../../../../../../redux/store';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 
 @customElement('checklist-attachments-popup')
-export class ChecklistAttachments extends LitElement {
+export class ChecklistAttachmentsPopup extends LitElement {
   @property() dialogOpened: boolean = true;
   @property() saveBtnClicked: boolean = false;
   @property() savingInProcess: boolean = false;

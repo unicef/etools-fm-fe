@@ -8,21 +8,27 @@ import {openIssuesCpOutputSelector} from '../../../../../../redux/selectors/moni
 @customElement('open-issues-cp-output-tab')
 export class OpenIssuesCpOutputTab extends LitElement {
   @property() openIssuesCpOutput!: OpenIssuesActionPoints[];
+  @property() loading: boolean = false;
   private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadOpenIssuesCpOutput());
     this.openIssuesActionPointsUnsubscribe = store.subscribe(
       openIssuesCpOutputSelector((openIssuesCpOutput: OpenIssuesActionPoints[]) => {
         this.openIssuesCpOutput = openIssuesCpOutput;
+        this.loading = false;
       })
     );
   }
 
   render(): TemplateResult {
     return html`
-      <open-issues-shared-tab-template .data="${this.openIssuesCpOutput}"></open-issues-shared-tab-template>
+      <open-issues-shared-tab-template
+        .data="${this.openIssuesCpOutput}"
+        .loading="${this.loading}"
+      ></open-issues-shared-tab-template>
     `;
   }
 

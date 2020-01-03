@@ -24,6 +24,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
   @property() activityDetailsId: number | null = null;
   @property() items: IChecklistAttachment[] = [];
   @property() attachmentsTypes: AttachmentType[] = [];
+  @property() loading: boolean = false;
   private checklistAttachmentsUnsubscribe!: Unsubscribe;
   private checklistAttachmentsTypesUnsubscribe!: Unsubscribe;
 
@@ -35,6 +36,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.attachmentsTypes = store.getState().activityDetails.checklistAttachmentsTypes;
     if (this.activityDetailsId) {
+      this.loading = true;
       store.dispatch<AsyncEffect>(loadChecklistAttachments(this.activityDetailsId));
       if (!this.attachmentsTypes.length) {
         store.dispatch<AsyncEffect>(loadChecklistAttachmentsTypes(this.activityDetailsId));
@@ -44,6 +46,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     this.checklistAttachmentsUnsubscribe = store.subscribe(
       activityChecklistAttachments((checklistAttachments: IChecklistAttachment[]) => {
         this.items = checklistAttachments;
+        this.loading = false;
       }, false)
     );
 

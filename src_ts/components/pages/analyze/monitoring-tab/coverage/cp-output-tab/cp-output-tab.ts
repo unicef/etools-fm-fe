@@ -8,20 +8,27 @@ import '../shared-tab-template';
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {
   @property() private cpOutputCoverage!: CpOutputCoverage[];
+  @property() private loading: boolean = false;
   private readonly label: string = 'Showing CP Outputs that can be monitored at the community level.';
   private readonly cpOutputCoverageUnsubscribe: Unsubscribe;
   constructor() {
     super();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadCpOutputCoverage());
     this.cpOutputCoverageUnsubscribe = store.subscribe(
       cpOutputCoverageSelector((cpOutputCoverage: CpOutputCoverage[]) => {
         this.cpOutputCoverage = cpOutputCoverage;
+        this.loading = false;
       })
     );
   }
   render(): TemplateResult {
     return html`
-      <shared-tab-template .label="${this.label}" .data="${this.cpOutputCoverage}"></shared-tab-template>
+      <shared-tab-template
+        .label="${this.label}"
+        .data="${this.cpOutputCoverage}"
+        .loading="${this.loading}"
+      ></shared-tab-template>
     `;
   }
 

@@ -12,6 +12,13 @@ export class PdSsfaDetails extends LitElement {
   @property() items: EtoolsIntervention[] = [];
   @property() pageSize: number = 5;
   @property() pageNumber: number = 1;
+  @property() loading: boolean = false;
+
+  set interventionsData(interventions: IActivityIntervention[] | null) {
+    this.loading = true;
+    this.interventions = interventions;
+    this.loading = false;
+  }
 
   render(): TemplateResult {
     return template.call(this);

@@ -8,21 +8,27 @@ import {openIssuesLocationsSelector} from '../../../../../../redux/selectors/mon
 @customElement('open-issues-location-tab')
 export class OpenIssuesLocationTab extends LitElement {
   @property() openIssuesLocation!: OpenIssuesActionPoints[];
+  @property() loading: boolean = false;
   private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.loading = true;
     store.dispatch<AsyncEffect>(loadOpenIssuesLocations());
     this.openIssuesActionPointsUnsubscribe = store.subscribe(
       openIssuesLocationsSelector((openIssuesLocation: OpenIssuesActionPoints[]) => {
         this.openIssuesLocation = openIssuesLocation;
+        this.loading = false;
       })
     );
   }
 
   render(): TemplateResult {
     return html`
-      <open-issues-shared-tab-template .data="${this.openIssuesLocation}"></open-issues-shared-tab-template>
+      <open-issues-shared-tab-template
+        .data="${this.openIssuesLocation}"
+        .loading="${this.loading}"
+      ></open-issues-shared-tab-template>
     `;
   }
 

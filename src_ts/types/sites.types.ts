@@ -35,7 +35,7 @@ type GeojsonPoint = {
 };
 
 type LocationGeometry = {
-  coordinates: [[CoordinatesArray[]]];
+  coordinates: [CoordinatesArray[]];
   type: 'MultiPolygon';
 };
 

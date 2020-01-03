@@ -1,14 +1,20 @@
 import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
+import {translate} from '../../../../../localization/localisation';
 
 @customElement('open-issues-shared-tab-template')
 export class OpenIssuesSharedTabTemplate extends LitElement {
   @property() data!: OpenIssuesActionPoints[];
+  @property() loading: boolean = false;
 
   render(): TemplateResult {
     return html`
       <div class="open-issues">
+        <etools-loading
+          ?active="${this.loading}"
+          loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+        ></etools-loading>
         <!--  Legend  -->
         <div class="open-issues__legend">
           <div class="legend">

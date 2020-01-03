@@ -3,10 +3,15 @@ import {PartnershipTab} from './partnership-tab';
 import '../../../../../common/progressbar/proportional-progress-bar';
 import '@unicef-polymer/etools-dropdown';
 import {repeat} from 'lit-html/directives/repeat';
+import {translate} from '../../../../../../localization/localisation';
 
 export function template(this: PartnershipTab): TemplateResult {
   return html`
     <div class="partner-coverage">
+      <etools-loading
+        ?active="${this.loading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <div class="partner-coverage__header">
         <!--  Progress bar legend  -->
         <div class="partner-coverage__header-item">
