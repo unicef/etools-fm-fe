@@ -12,6 +12,7 @@ import {EtoolsRouter} from '../../../../../routing/routes';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '../../../../utils/dialog';
 import '../../../../common/file-components/files-popup';
+import '@unicef-polymer/etools-data-table';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
@@ -149,6 +150,17 @@ export class IssueTrackerList extends LitElement {
         </etools-data-table-footer>
       </section>
     `;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => {
+      const params: GenericObject = {
+        ...this.queryParams,
+        ordering: `${event.detail.direction === 'desc' ? '-' : ''}${event.detail.field}`
+      };
+      this.loadIssues(params);
+    }) as any);
   }
 
   static get styles(): CSSResultArray {
