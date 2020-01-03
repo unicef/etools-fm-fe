@@ -31,7 +31,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
       @save="${() => this.save()}"
       @cancel="${() => this.cancel()}"
     >
-      ${this.editedData && this.editedData.history
+      ${this.editedData && this.editedData.history && this.editedData.history[0]
         ? html`
             <div slot="actions">
               <div class="history-info">
