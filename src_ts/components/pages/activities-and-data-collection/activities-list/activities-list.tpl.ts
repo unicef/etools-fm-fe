@@ -36,7 +36,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
+      <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
         <etools-data-table-column class="col-data flex-none w130px">
           ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
         </etools-data-table-column>
@@ -112,26 +112,31 @@ export function template(this: ActivitiesListComponent): TemplateResult {
             </div>
 
             <div slot="row-data-details" class="layout horizontal">
+              ${activity.tpm_partner
+                ? html`
+                    <div class="row-details-content">
+                      <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS')}</div>
+                      <div class="truncate">${activity.tpm_partner.name}</div>
+                    </div>
+                  `
+                : ''}
+
               <div class="row-details-content">
-                <div class="rdc-title">TMP Partner</div>
-                <div class="truncate">${activity.tpm_partner?.name}</div>
-              </div>
-              <div class="row-details-content">
-                <div class="rdc-title">Partners</div>
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.PARTNERS')}</div>
                 <div class="truncate">
-                  ${activity.partners.map((partner: IActivityPartner) => partner.name).join(' | ')}
+                  ${activity.partners.map((partner: IActivityPartner) => partner.name).join(' | ') || '-'}
                 </div>
               </div>
               <div class="row-details-content">
-                <div class="rdc-title">PD/SSFA</div>
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS')}</div>
                 <div class="truncate">
-                  ${activity.interventions.map((pdssfa: IActivityIntervention) => pdssfa.title).join(' | ')}
+                  ${activity.interventions.map((pdssfa: IActivityIntervention) => pdssfa.title).join(' | ') || '-'}
                 </div>
               </div>
               <div class="row-details-content">
-                <div class="rdc-title">CP Outputs</div>
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS')}</div>
                 <div class="truncate">
-                  ${activity.cp_outputs.map((output: IActivityCPOutput) => output.name).join(' | ')}
+                  ${activity.cp_outputs.map((output: IActivityCPOutput) => output.name).join(' | ') || '-'}
                 </div>
               </div>
             </div>
