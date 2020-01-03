@@ -110,15 +110,17 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               class="without-border"
               value="${this.editedData.start_date || ''}"
               label="${translate('ACTIVITY_DETAILS.START_DATE')}"
+              .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('start_date', formatDate(detail.date))}}"
+                this.updateModelValue('start_date', formatDate(detail.date))}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
             ></datepicker-lite>
             <datepicker-lite
               class="without-border"
               value="${this.editedData.end_date || ''}"
+              .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('end_date', formatDate(detail.date))}}"

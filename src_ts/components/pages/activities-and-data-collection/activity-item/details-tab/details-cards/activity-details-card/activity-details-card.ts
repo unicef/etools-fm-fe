@@ -15,6 +15,7 @@ import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
 import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
 import clone from 'ramda/es/clone';
+import {fireEvent} from '../../../../../../utils/fire-custom-event';
 
 export const CARD_NAME: string = 'activity-details';
 
@@ -89,6 +90,24 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
       return;
     }
     this.locationWidget.updateMap();
+  }
+
+  isStartDateAfterEndDate(): boolean {
+    const startDate: string = this.editedData.start_date || '';
+    const endDate: string = this.editedData.end_date || '';
+    if (startDate && endDate) {
+      return moment(startDate).isBefore(endDate);
+    } else {
+      return false;
+    }
+  }
+
+  protected save(): void {
+    if (this.isStartDateAfterEndDate()) {
+      super.save();
+    } else {
+      fireEvent(this, 'toast', {text: 'Start Date must be before End Date'});
+    }
   }
 
   protected startEdit(): void {

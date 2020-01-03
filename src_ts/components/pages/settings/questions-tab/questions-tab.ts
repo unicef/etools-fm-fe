@@ -22,6 +22,10 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
+import {QUESTIONS_TRANSLATES} from '../../../../localization/en/settings-page/question.translates';
+import {addTranslates, ENGLISH} from '../../../../localization/localisation';
+
+addTranslates(ENGLISH, [QUESTIONS_TRANSLATES]);
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
