@@ -1,5 +1,6 @@
 import {css, CSSResult, customElement, html, LitElement, TemplateResult} from 'lit-element';
 import '@polymer/iron-icons/communication-icons';
+import {translate} from 'lit-translate';
 
 /* eslint-disable max-len */
 
@@ -36,7 +37,7 @@ export class SupportBtn extends LitElement {
         target="_blank"
       >
         <iron-icon icon="communication:textsms"></iron-icon>
-        Support
+        ${translate('MAIN.SUPPORT')}
       </a>
     `;
   }

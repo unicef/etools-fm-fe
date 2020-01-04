@@ -10,6 +10,7 @@ import {
   OPEN_ISSUES_CONTENT_MAP,
   OPEN_ISSUES_PAGE_TABS
 } from './monitoring-tab.navigation.constants';
+import {translate} from 'lit-translate';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`
@@ -21,15 +22,16 @@ export function template(this: MonitoringTabComponent): TemplateResult {
             <proportional-progress-bar
               .completed="${this.completed}"
               .planned="${this.planned}"
-              completedLabelValue="Completed Visits"
-              plannedLabelValue="Planned Visits (Up to December)"
+              completedLabelValue="PROGRESSBAR.COMPLETED_VISITS"
+              plannedLabelValue="PROGRESSBAR.PLANNED_VISITS"
               completedDivBackgroundColor="#3F9BBC"
             >
             </proportional-progress-bar>
           </div>
           <div class="visits-card__item completed-percentage-container">
             <label class="overall-completed-label">
-              ${this.getCompletedPercentage(this.completed, this.planned)} % of visits are completed
+              ${this.getCompletedPercentage(this.completed, this.planned)} %
+              ${translate('ANALYZE.MONITORING_TAB.COMPLETED_VISITS')}
             </label>
           </div>
         </div>
@@ -38,7 +40,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
       <!--  Coverage tabs  -->
       <shared-section-with-tabs-template
         class="monitoring-activity__item"
-        sectionTitle="Coverage of Active Partnerships"
+        .sectionTitle="${translate('ANALYZE.MONITORING_TAB.COVERAGE.TITLE')}"
         .pageTabs="${COVERAGE_PAGE_TABS}"
         .activeTab="${this.coverageActiveTab}"
         .tabContentMap="${COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP}"
@@ -51,7 +53,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
           ? html`
               <!--  Open issues and Action points  -->
               <shared-section-with-tabs-template
-                sectionTitle="Open Issues and Action Points"
+                .sectionTitle="${translate('ANALYZE.MONITORING_TAB.COVERAGE.OPEN_ISSUES.TITLE')}"
                 .pageTabs="${OPEN_ISSUES_PAGE_TABS}"
                 .activeTab="${this.openIssuesActiveTab}"
                 .tabContentMap="${OPEN_ISSUES_CONTENT_MAP}"

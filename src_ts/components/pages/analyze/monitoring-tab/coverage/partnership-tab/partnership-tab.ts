@@ -5,21 +5,32 @@ import {loadPartnersCoverage} from '../../../../../../redux/effects/monitoring-a
 import {template} from './partnership-tab.tpl';
 import {partnersCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 import {partnershipTabStyles} from './partnership-tab.styles';
+import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 
 enum SortingTypes {
   COMPLETED_ASCEND_SORTING_TYPE = 'COMPLETED_ASCEND_SORTING_TYPE',
   COMPLETED_DESCEND_SORTING_TYPE = 'COMPLETED_DESCEND_SORTING_TYPE'
 }
 
+const RAW_SORTING_OPTIONS: DefaultDropdownOption<SortingTypes>[] = [
+  {
+    display_name: 'ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.COMPLETED_ASCEND_SORTING_TYPE',
+    value: SortingTypes.COMPLETED_ASCEND_SORTING_TYPE
+  },
+  {
+    display_name: 'ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.COMPLETED_DESCEND_SORTING_TYPE',
+    value: SortingTypes.COMPLETED_DESCEND_SORTING_TYPE
+  }
+];
+
 @customElement('partnership-tab')
 export class PartnershipTab extends LitElement {
   @property() partnersCoverage!: PartnersCoverage[];
-  sortingOptions: DefaultDropdownOption<SortingTypes>[] = [
-    {display_name: '% of Completed ↑', value: SortingTypes.COMPLETED_ASCEND_SORTING_TYPE},
-    {display_name: '% of Completed ↓', value: SortingTypes.COMPLETED_DESCEND_SORTING_TYPE}
-  ];
+  @property() sortingOptions: DefaultDropdownOption<SortingTypes>[] = applyDropdownTranslation(RAW_SORTING_OPTIONS);
   @property() selectedSortingOption: SortingTypes = SortingTypes.COMPLETED_ASCEND_SORTING_TYPE;
   private readonly partnersCoverageUnsubscribe: Unsubscribe;
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
   constructor() {
     super();
     store.dispatch<AsyncEffect>(loadPartnersCoverage());
@@ -28,6 +39,9 @@ export class PartnershipTab extends LitElement {
         this.partnersCoverage = partnersCoverage;
         this.onSelectionChange(this.selectedSortingOption);
       })
+    );
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.sortingOptions = applyDropdownTranslation(RAW_SORTING_OPTIONS)))
     );
   }
 
@@ -38,6 +52,7 @@ export class PartnershipTab extends LitElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.partnersCoverageUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   sortProgressBars(a: PartnersCoverage, b: PartnersCoverage): number {

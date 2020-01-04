@@ -1,8 +1,8 @@
-import {translate} from '../../localization/localisation';
-
 /**
  * combines findings and overall finding in one object by Partner/Cp Output/PD SSFA
  */
+import {get} from 'lit-translate';
+
 export function sortFindingsAndOverall(
   overallData: (DataCollectionOverall | SummaryOverall)[] | null,
   findings: (DataCollectionFinding | SummaryFinding)[] | null
@@ -27,7 +27,6 @@ export function sortFindingsAndOverall(
     findingsAndOverall[id].name = getTargetName(finding.activity_question);
     findingsAndOverall[id].findings.push(finding);
   });
-
   return findingsAndOverall;
 }
 
@@ -49,11 +48,11 @@ function getDataKey(dataObject: DataCollectionOverall | IChecklistItem | ISummar
 
 function getTargetName(checklist: IChecklistItem | ISummaryChecklistItem): string {
   if (checklist.partner) {
-    return `${translate('LEVELS_OPTIONS.PARTNER')}: ${checklist.partner.name}`;
+    return `${get('LEVELS_OPTIONS.PARTNER')}: ${checklist.partner.name}`;
   } else if (checklist.cp_output) {
-    return `${translate('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
+    return `${get('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
   } else if (checklist.intervention) {
-    return `${translate('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
+    return `${get('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
   } else {
     return '';
   }

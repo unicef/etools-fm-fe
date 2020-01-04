@@ -1,5 +1,4 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../../../../localization/localisation';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '../../../../../../../utils/fire-custom-event';
@@ -15,6 +14,7 @@ import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@unicef-polymer/etools-dialog';
 import {EtoolsRouter} from '../../../../../../../../routing/routes';
+import {translate} from 'lit-translate';
 
 @customElement('cp-output-popup')
 export class CpOutputPopup extends PartnersMixin(LitElement) {

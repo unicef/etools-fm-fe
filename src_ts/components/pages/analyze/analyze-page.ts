@@ -10,47 +10,40 @@ import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
+import {translate} from 'lit-translate';
+import {applyPageTabsTranslation} from '../../utils/translation-helper';
+import {Unsubscribe} from 'redux';
+import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 
 const PAGE: string = 'analyze';
 
 const MONITORING_ACTIVITY: string = 'monitoring-activity';
 const COUNTRY_OVERVIEW: string = 'country-overview';
+const NAVIGATION_TABS: PageTab[] = [
+  {
+    tab: MONITORING_ACTIVITY,
+    tabLabel: 'ANALYZE.NAVIGATION_TABS.MONITORING_ACTIVITY',
+    hidden: false
+  },
+  {
+    tab: COUNTRY_OVERVIEW,
+    tabLabel: 'ANALYZE.NAVIGATION_TABS.COUNTRY_OVERVIEW',
+    hidden: false
+  }
+];
 
 @customElement('analyze-page')
 export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
-  pageTabs: PageTab[] = [
-    {
-      tab: MONITORING_ACTIVITY,
-      tabLabel: 'Monitoring Activity',
-      hidden: false
-    },
-    {
-      tab: COUNTRY_OVERVIEW,
-      tabLabel: 'Country Overview',
-      hidden: false
-    }
-  ];
-
   @property() activeTab: string = MONITORING_ACTIVITY;
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
-        if (routeName !== PAGE) {
-          return;
-        }
-        this.activeTab = subRouteName as string;
-      })
-    );
-  }
+  @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     const canView: boolean = this.canView();
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">Analyze</h1>
+            <h1 slot="page-title">${translate('ANALYZE.TITLE')}</h1>
 
             <etools-tabs
               id="tabs"
@@ -64,6 +57,27 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
           ${this.getTabElement()}
         `
       : html``;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    store.subscribe(
+      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+        if (routeName !== PAGE) {
+          return;
+        }
+        this.activeTab = subRouteName as string;
+      })
+    );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(NAVIGATION_TABS)))
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activeLanguageUnsubscribe();
   }
 
   getTabElement(): TemplateResult {

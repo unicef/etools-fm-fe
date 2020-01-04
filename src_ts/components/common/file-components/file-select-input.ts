@@ -1,5 +1,6 @@
 import {CSSResult, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
+import {translate} from 'lit-translate';
 
 @customElement('file-select-input')
 export class FileSelectInput extends LitElement {
@@ -61,7 +62,7 @@ export class FileSelectInput extends LitElement {
                 ? html`
                     <paper-button class="upload-button" @tap="${() => this.selectFile()}">
                       <iron-icon icon="file-upload"></iron-icon>
-                      Upload File
+                      ${translate('MAIN.UPLOAD')}
                     </paper-button>
                   `
                 : ''}
@@ -71,7 +72,7 @@ export class FileSelectInput extends LitElement {
           ? html`
               <paper-button class="download-button" @tap="${() => this.downloadFile()}">
                 <iron-icon icon="cloud-download" class="dw-icon"></iron-icon>
-                Download
+                ${translate('MAIN.DOWNLOAD')}
               </paper-button>
             `
           : ''}

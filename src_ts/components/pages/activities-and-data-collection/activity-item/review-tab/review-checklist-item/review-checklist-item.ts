@@ -4,7 +4,7 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {ReviewChecklistItemStyles} from './review-checklist-item.styles';
-import {translate} from '../../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 @customElement('review-checklist-item')
 export class ReviewChecklistItemComponent extends LitElement {

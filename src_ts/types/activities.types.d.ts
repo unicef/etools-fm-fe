@@ -151,8 +151,8 @@ type ActivityPermissionsObject = {
 };
 
 type ReasonPopupData = {
-  popupTitle: string;
-  label: string;
+  popupTitle: string | Callback;
+  label: string | Callback;
 };
 
 type ReasonPopupResponse = {

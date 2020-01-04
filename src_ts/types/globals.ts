@@ -18,7 +18,7 @@ type TranslateObject = {
 
 type PageTab = {
   tab: string;
-  tabLabel: string;
+  tabLabel: string | Callback;
   hidden: boolean;
 };
 
@@ -93,7 +93,7 @@ type SortDetails = {
 
 type DefaultDropdownOption<T = number> = {
   value: T;
-  display_name: string;
+  display_name: string | Callback;
 };
 
 type SelectedFile = {
@@ -117,7 +117,7 @@ interface IDialogResponse<R> extends IEtoolsDialogResponse {
 
 interface IEtoolsStatusItem {
   status?: string;
-  label?: string;
+  label?: string | Callback;
 }
 
 interface IEtoolsStatusModel extends IEtoolsStatusItem {

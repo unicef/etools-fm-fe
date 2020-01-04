@@ -5,20 +5,31 @@ import '@unicef-polymer/etools-data-table';
 import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';
+import {translate} from 'lit-translate';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`
     <section class="elevation page-content card-container" elevation="1">
       <div class="card-title-box with-bottom-line">
-        <div class="card-title">Checklist Attachments</div>
+        <div class="card-title">${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.TITLE')}</div>
       </div>
       <div class="hact-visits">
         <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-          <etools-data-table-column class="flex-1">Method</etools-data-table-column>
-          <etools-data-table-column class="flex-1">Data Collector</etools-data-table-column>
-          <etools-data-table-column class="flex-1">Method type</etools-data-table-column>
-          <etools-data-table-column class="flex-1">Related To</etools-data-table-column>
-          <etools-data-table-column class="flex-1">Related Name</etools-data-table-column>
+          <etools-data-table-column class="flex-1"
+            >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.METHOD')}</etools-data-table-column
+          >
+          <etools-data-table-column class="flex-1"
+            >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.DATA_COLLECTOR')}</etools-data-table-column
+          >
+          <etools-data-table-column class="flex-1"
+            >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.METHOD_TYPE')}</etools-data-table-column
+          >
+          <etools-data-table-column class="flex-1"
+            >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.RELATED_TO')}</etools-data-table-column
+          >
+          <etools-data-table-column class="flex-1"
+            >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.RELATED_NAME')}</etools-data-table-column
+          >
         </etools-data-table-header>
         ${!this.items.length
           ? html`
@@ -57,13 +68,13 @@ export function template(this: ChecklistAttachments): TemplateResult {
 
               <div slot="row-data-details" class="custom-row-data-title">
                 <div class="custom-row-details-content flex-1">
-                  <div class="sub-title">Date Uploaded</div>
+                  <div class="sub-title">${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.DATE_UPLOADED')}</div>
                 </div>
                 <div class="custom-row-details-content flex-1">
-                  <div class="sub-title">Document Type</div>
+                  <div class="sub-title">${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.DOCUMENT_TYPE')}</div>
                 </div>
                 <div class="custom-row-details-content flex-3">
-                  <div class="sub-title">File Attachment</div>
+                  <div class="sub-title">${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.FILE_ATTACHMENT')}</div>
                 </div>
               </div>
 

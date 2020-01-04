@@ -8,10 +8,8 @@ import {Unsubscribe} from 'redux';
 import {loadActivityChecklist} from '../../../../../redux/effects/activity-checklist.effects';
 import {activityChecklistData} from '../../../../../redux/selectors/activity-checklist.selectors';
 import './checklist-selection-table/checklist-selection-table';
-import {addTranslates, ENGLISH, translate} from '../../../../../localization/localisation';
-import {ACTIVITY_CHECKLIST_TRANSLATES} from '../../../../../localization/en/activities-and-data-collection/activity-checklist.translates';
+import {translate} from 'lit-translate';
 
-addTranslates(ENGLISH, ACTIVITY_CHECKLIST_TRANSLATES);
 store.addReducers({activityChecklist});
 
 @customElement('activity-checklist-tab')

@@ -1,6 +1,7 @@
 import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
+import {translate} from 'lit-translate';
 
 @customElement('open-issues-shared-tab-template')
 export class OpenIssuesSharedTabTemplate extends LitElement {
@@ -13,11 +14,15 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
         <div class="open-issues__legend">
           <div class="legend">
             <div class="legend__mark legend__mark-issues"></div>
-            <label class="coverage-legend__label">Issues</label>
+            <label class="coverage-legend__label"
+              >${translate('ANALYZE.MONITORING_TAB.COVERAGE.OPEN_ISSUES.ISSUES')}</label
+            >
           </div>
           <div class="legend">
             <div class="legend__mark legend__mark-action-points"></div>
-            <label class="coverage-legend__label">Action Points</label>
+            <label class="coverage-legend__label"
+              >${translate('ANALYZE.MONITORING_TAB.COVERAGE.OPEN_ISSUES.ACTION_POINTS')}</label
+            >
           </div>
         </div>
         ${this.data.map(

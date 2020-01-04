@@ -2,20 +2,22 @@ import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit-element';
 import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
-import {translate} from '../../../../localization/localisation';
 import {updateQueryParams} from '../../../../routing/routes';
 import {hasPermission, Permissions} from '../../../../config/permissions';
+import {translate} from 'lit-translate';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
     <page-content-header with-tabs-visible>
-      <h1 slot="page-title">Activities</h1>
+      <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
         slot="title-row-actions"
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <paper-button class="create-new" @tap="${() => this.goNew()}">Create New</paper-button>
+        <paper-button class="create-new" @tap="${() => this.goNew()}"
+          >${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</paper-button
+        >
       </div>
     </page-content-header>
 

@@ -32,6 +32,8 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {TemplatesStyles} from './templates-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
+import {applyDropdownTranslation} from '../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER: 13 = 13;
@@ -45,12 +47,14 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   partners!: EtoolsPartner[];
   interventions!: EtoolsIntervention[];
   outputs!: EtoolsCpOutput[];
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @query('#details-input') private detailsInput!: HTMLInputElement;
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly questionTemplatesDataUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private methods!: EtoolsMethod[];
   @property() private additionalDataLoadingCount: number = 0;
+  private activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -84,6 +88,11 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     this.onRouteChange(currentRoute);
 
     this.loadAdditionalData('methods');
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.levels = applyDropdownTranslation(LEVELS);
+      })
+    );
   }
 
   static get styles(): CSSResultArray {
@@ -111,6 +120,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.questionTemplatesDataUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   onLevelChanged(level: string): void {

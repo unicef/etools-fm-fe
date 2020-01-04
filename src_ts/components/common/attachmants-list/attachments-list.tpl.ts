@@ -4,7 +4,7 @@ import './edit-attachments-popup/edit-attachments-popup';
 import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit-element';
-import {translate} from '../../../localization/localisation';
+import {translate} from 'lit-translate';
 import {getTypeDisplayName} from '../../utils/attachments-helper';
 
 export function template(this: AttachmentsListComponent): TemplateResult {

@@ -2,7 +2,6 @@ import {ChecklistAttachments} from './checklist-attachments';
 import {html, TemplateResult} from 'lit-html';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
-import {translate} from '../../../../../../localization/localisation';
 import {getEndpoint} from '../../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-upload/etools-upload-multi';
@@ -11,6 +10,7 @@ import '@unicef-polymer/etools-loading';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-button/paper-button';
 import '@polymer/iron-icons/iron-icons';
+import {translate} from 'lit-translate';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`

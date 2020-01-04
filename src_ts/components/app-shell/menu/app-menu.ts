@@ -13,6 +13,7 @@ import {hasPermission, Permissions} from '../../../config/permissions';
 import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
+import {translate} from 'lit-translate';
 
 /**
  * main menu
@@ -38,9 +39,8 @@ export class AppMenu extends LitElement {
     // language=HTML
     return html`
       <div class="menu-header">
-        <span id="app-name">
-          Field <br />
-          Monitoring
+        <span id="app-name" class="app-name">
+          ${translate('NAVIGATION_MENU.TITLE')}
         </span>
 
         <span class="ripple-wrapper main">
@@ -53,7 +53,7 @@ export class AppMenu extends LitElement {
         </span>
 
         <paper-tooltip for="menu-header-top-icon" position="right">
-          Field Monitoring
+          ${translate('NAVIGATION_MENU.TITLE')}
         </paper-tooltip>
 
         <span class="ripple-wrapper">
@@ -78,9 +78,9 @@ export class AppMenu extends LitElement {
           >
             <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Settings
+              ${translate('NAVIGATION_MENU.SETTINGS')}
             </paper-tooltip>
-            <div class="name">Settings</div>
+            <div class="name">${translate('NAVIGATION_MENU.SETTINGS')}</div>
           </a>
 
           <!-- Sidebar item - PLANING -->
@@ -92,18 +92,18 @@ export class AppMenu extends LitElement {
           >
             <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Plan
+              ${translate('NAVIGATION_MENU.PLAN')}
             </paper-tooltip>
-            <div class="name">Plan</div>
+            <div class="name">${translate('NAVIGATION_MENU.PLAN')}</div>
           </a>
 
           <!-- Sidebar item - DATA COLLECTION -->
           <a class="nav-menu-item" menu-name="activities" href="${this.rootPath + 'activities'}">
             <iron-icon id="page1-icon" icon="assignment"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Collect
+              ${translate('NAVIGATION_MENU.COLLECT')}
             </paper-tooltip>
-            <div class="name">Collect</div>
+            <div class="name">${translate('NAVIGATION_MENU.COLLECT')}</div>
           </a>
 
           <!-- Sidebar item - ANALYSIS -->
@@ -115,22 +115,22 @@ export class AppMenu extends LitElement {
           >
             <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              Analyze
+              ${translate('NAVIGATION_MENU.ANALYZE')}
             </paper-tooltip>
-            <div class="name">Analyze</div>
+            <div class="name">${translate('NAVIGATION_MENU.ANALYZE')}</div>
           </a>
         </iron-selector>
 
         <div class="nav-menu-item section-title">
-          <span>eTools Community Channels</span>
+          <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
         </div>
 
         <a class="nav-menu-item lighter-item" href="http://etools.zendesk.com" target="_blank">
           <iron-icon id="knoledge-icon" icon="maps:local-library"></iron-icon>
           <paper-tooltip for="knoledge-icon" position="right">
-            Knowledge base
+            ${translate('NAVIGATION_MENU.KNOWLEDGE_BASE')}
           </paper-tooltip>
-          <div class="name">Knowledge base</div>
+          <div class="name">${translate('NAVIGATION_MENU.KNOWLEDGE_BASE')}</div>
         </a>
 
         <a
@@ -140,17 +140,17 @@ export class AppMenu extends LitElement {
         >
           <iron-icon id="discussion-icon" icon="icons:question-answer"></iron-icon>
           <paper-tooltip for="discussion-icon" position="right">
-            Discussion
+            ${translate('NAVIGATION_MENU.DISCUSSION')}
           </paper-tooltip>
-          <div class="name">Discussion</div>
+          <div class="name">${translate('NAVIGATION_MENU.DISCUSSION')}</div>
         </a>
 
         <a class="nav-menu-item lighter-item last-one" href="http://etoolsinfo.unicef.org" target="_blank">
           <iron-icon id="information-icon" icon="icons:info"></iron-icon>
           <paper-tooltip for="information-icon" position="right">
-            Information
+            ${translate('NAVIGATION_MENU.INFORMATION')}
           </paper-tooltip>
-          <div class="name">Information</div>
+          <div class="name">${translate('NAVIGATION_MENU.INFORMATION')}</div>
         </a>
       </div>
     `;

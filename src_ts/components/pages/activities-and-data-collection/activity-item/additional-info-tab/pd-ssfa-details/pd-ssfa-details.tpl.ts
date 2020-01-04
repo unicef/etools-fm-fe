@@ -1,19 +1,28 @@
 import {PdSsfaDetails} from './pd-ssfa-details';
 import {html, TemplateResult} from 'lit-element';
 import '@unicef-polymer/etools-data-table';
+import {translate} from 'lit-translate';
 
 export function template(this: PdSsfaDetails): TemplateResult {
   return html`
     <section class="elevation page-content card-container" elevation="1">
       <div class="card-title-box">
-        <div class="card-title counter">PD/SSFA Details</div>
+        <div class="card-title counter">${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.TITLE')}</div>
       </div>
 
       <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="flex-1 col-data">Reference Number</etools-data-table-column>
-        <etools-data-table-column class="flex-1 col-data">Document Title</etools-data-table-column>
-        <etools-data-table-column class="flex-1 col-data">Type</etools-data-table-column>
-        <etools-data-table-column class="flex-1 col-data">Progress Reports</etools-data-table-column>
+        <etools-data-table-column class="flex-1 col-data"
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.REFERENCE_NUMBER')}</etools-data-table-column
+        >
+        <etools-data-table-column class="flex-1 col-data"
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.DOCUMENT_TYTLE')}</etools-data-table-column
+        >
+        <etools-data-table-column class="flex-1 col-data"
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.TYPE')}</etools-data-table-column
+        >
+        <etools-data-table-column class="flex-1 col-data"
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.PROGRESS_REPORTS')}</etools-data-table-column
+        >
       </etools-data-table-header>
 
       ${!this.interventions || !this.interventions.length

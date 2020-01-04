@@ -17,7 +17,7 @@ export class MapHelper {
     if (!element) {
       throw new Error('Please provide HTMLElement for map initialization!');
     }
-    L.Icon.Default.imagePath = '/fm/images/';
+    L.Icon.Default.imagePath = '/fm/assets/images/';
     this.map = L.map(element);
     L.tileLayer(TILE_LAYER, {pane: 'tilePane'}).addTo(this.map);
     L.tileLayer(TILE_LAYER_LABELS, {pane: 'overlayPane'}).addTo(this.map);

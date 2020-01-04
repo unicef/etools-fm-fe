@@ -4,6 +4,7 @@ import '@polymer/paper-toggle-button';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
+import {translate} from 'lit-translate';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(DataCollectionCard) {
@@ -64,7 +65,9 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
                 label="Overall finding"
                 ?disabled="${!this.isEditMode}"
-                placeholder="${this.isEditMode ? 'Enter Overall finding' : '—'}"
+                placeholder="${this.isEditMode
+                  ? translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING_PLACEHOLDER')
+                  : '—'}"
                 @value-changed="${({detail}: CustomEvent) =>
                   this.updateOverallFinding({narrative_finding: detail.value})}"
               ></paper-textarea>
@@ -77,13 +80,13 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
   protected getAdditionalButtons(): TemplateResult {
     return html`
       <div class="ontrack-container layout horizontal">
-        Off Track
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
         <paper-toggle-button
           ?readonly="${this.readonly}"
           ?checked="${this.overallInfo?.on_track || false}"
           @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
         ></paper-toggle-button>
-        On Track
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
       </div>
       ${super.getAdditionalButtons()}
     `;

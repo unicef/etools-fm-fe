@@ -5,13 +5,11 @@ import {loadInterventionsCoverage} from '../../../../../../redux/effects/monitor
 import '../../../../../common/progressbar/column-item-progress-bar';
 import '../shared-tab-template';
 import {interventionsCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
+import {translate} from 'lit-translate';
 
 @customElement('pd-ssfa-tab')
 export class PdSsfaTab extends LitElement {
   @property() private interventionsCoverage!: InterventionsCoverage[];
-  private readonly label: string =
-    'Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not\n' +
-    ' been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)';
   private readonly interventionsCoverageUnsubscribe: Unsubscribe;
 
   constructor() {
@@ -26,7 +24,10 @@ export class PdSsfaTab extends LitElement {
 
   render(): TemplateResult {
     return html`
-      <shared-tab-template .label="${this.label}" .data="${this.interventionsCoverage}"></shared-tab-template>
+      <shared-tab-template
+        .label="${translate('ANALYZE.MONITORING_TAB.COVERAGE.PD_SSFA.LABEL')}"
+        .data="${this.interventionsCoverage}"
+      ></shared-tab-template>
     `;
   }
 

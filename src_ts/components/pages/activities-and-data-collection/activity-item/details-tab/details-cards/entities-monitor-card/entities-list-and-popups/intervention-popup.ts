@@ -1,7 +1,6 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
-import {translate} from '../../../../../../../../localization/localisation';
 import {fireEvent} from '../../../../../../../utils/fire-custom-event';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
@@ -17,6 +16,7 @@ import {INTERVENTIONS_SHORT, OUTPUTS_SHORT} from '../../../../../../../../endpoi
 import {request} from '../../../../../../../../endpoints/request';
 import {EtoolsRouter} from '../../../../../../../../routing/routes';
 import {repeat} from 'lit-html/directives/repeat';
+import {translate} from 'lit-translate';
 
 @customElement('intervention-popup')
 export class InterventionPopup extends PartnersMixin(LitElement) {

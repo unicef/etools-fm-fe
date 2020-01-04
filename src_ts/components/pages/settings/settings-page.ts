@@ -11,48 +11,50 @@ import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {questions} from '../../../redux/reducers/questions.reducer';
-import {addTranslates, ENGLISH} from '../../../localization/localisation';
-import {SITES_TRANSLATES} from '../../../localization/en/settings-page/sites.translates';
-import {QUESTIONS_TRANSLATES} from '../../../localization/en/settings-page/question.translates';
 import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
+import {translate} from 'lit-translate';
+import {applyPageTabsTranslation} from '../../utils/translation-helper';
+import {Unsubscribe} from 'redux';
+import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 
 store.addReducers({specificLocations, questions});
-addTranslates(ENGLISH, [SITES_TRANSLATES, QUESTIONS_TRANSLATES]);
 
 const PAGE: string = 'settings';
 const SITES_TAB: string = 'sites';
 const QUESTIONS_TAB: string = 'questions';
+const NAVIGATION_TABS: PageTab[] = [
+  {
+    tab: QUESTIONS_TAB,
+    tabLabel: 'SETTINGS.NAVIGATION_TABS.QUESTIONS',
+    hidden: false
+  },
+  {
+    tab: SITES_TAB,
+    tabLabel: 'SETTINGS.NAVIGATION_TABS.SITES',
+    hidden: false
+  }
+];
 
 @customElement('fm-settings')
 export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
-  pageTabs: PageTab[] = [
-    {
-      tab: QUESTIONS_TAB,
-      tabLabel: 'Questions',
-      hidden: false
-    },
-    {
-      tab: SITES_TAB,
-      tabLabel: 'Sites',
-      hidden: false
-    }
-  ];
+  @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
   @property() activeTab: string = QUESTIONS_TAB;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult | void {
     const canView: boolean = this.canView();
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">Settings</h1>
+            <h1 slot="page-title">${translate('SETTINGS.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
               <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
-                <iron-icon icon="file-download"></iron-icon>Export
+                <iron-icon icon="file-download"></iron-icon>${translate('SETTINGS.EXPORT')}
               </paper-button>
             </div>
 
@@ -80,6 +82,14 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
         this.activeTab = subRouteName as string;
       })
     );
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(NAVIGATION_TABS)))
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activeLanguageUnsubscribe();
   }
 
   onSelect(selectedTab: HTMLElement): void {

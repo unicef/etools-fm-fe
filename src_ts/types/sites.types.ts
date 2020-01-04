@@ -44,7 +44,7 @@ type CoordinatesArray = [number, number];
 type SiteStatusOption = {
   id?: number;
   value: boolean;
-  display_name: string;
+  display_name: string | Callback;
 };
 
 type Workspace = {

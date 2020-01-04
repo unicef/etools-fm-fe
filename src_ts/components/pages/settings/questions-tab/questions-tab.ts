@@ -22,6 +22,8 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
+import {applyDropdownTranslation} from '../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -34,6 +36,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   private readonly questionsDataUnsubscribe: Unsubscribe;
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -64,6 +67,8 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
 
     this.initFilters();
+
+    this.activeLanguageUnsubscribe = store.subscribe(activeLanguageSelector(() => this.initFilters()));
   }
 
   static get styles(): CSSResult[] {
@@ -74,6 +79,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     super.disconnectedCallback();
     this.questionsDataUnsubscribe();
     this.routeDetailsUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   checkParams(params?: IRouteQueryParams | null): boolean {
@@ -151,8 +157,8 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           methods__in,
           sections__in,
           category__in,
-          level__in: LEVELS,
-          answer_type__in: ANSWER_TYPES
+          level__in: applyDropdownTranslation(LEVELS),
+          answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
         const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
         this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);

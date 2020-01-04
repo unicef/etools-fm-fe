@@ -2,11 +2,11 @@ import {html, TemplateResult} from 'lit-element';
 import {DataCollectionCard} from './data-collection-card';
 import {InputStyles} from '../../../../styles/input-styles';
 import {store} from '../../../../../redux/store';
-import {translate} from '../../../../../localization/localisation';
 import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
 import '../../../../common/layout/etools-card';
 import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-loading';
+import {translate} from 'lit-translate';
 
 export function template(this: DataCollectionCard): TemplateResult {
   return html`

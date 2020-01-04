@@ -2,20 +2,21 @@ import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-data-table';
+import {translate} from 'lit-translate';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`
     <section class="elevation page-content card-container" elevation="1">
       <div class="card-title-box with-bottom-line">
-        <div class="card-title">Visits Eligible for HACT Programmatic Visit</div>
+        <div class="card-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.TITLE')}</div>
       </div>
       <div class="hact-visits">
         <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
           <etools-data-table-column class="flex-1" field="name" sortable>
-            Partner
+            ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}
           </etools-data-table-column>
           <etools-data-table-column class="flex-1 hact-visits-label" field="visits_count" sortable>
-            HACT Eligible Visits
+            ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.HACT_ELIGIBLE_VISITS')}
           </etools-data-table-column>
         </etools-data-table-header>
         ${!this.items.length
@@ -43,16 +44,18 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
 
               <div slot="row-data-details" class="custom-row-data">
                 <div class="custom-row-details-content custom-row-details-visit">
-                  <div class="rdc-title">Visit</div>
+                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.VISIT')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-cp-output">
-                  <div class="rdc-title">CP output</div>
+                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.CP_OUTPUT')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-ps-ssfa">
-                  <div class="rdc-title">PD/SSFA</div>
+                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SSFA')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-date">
-                  <div class="rdc-title">Visit End Date</div>
+                  <div class="rdc-title">
+                    ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.VISIT_END_DATE')}
+                  </div>
                 </div>
               </div>
               ${hactVisit.visits.length

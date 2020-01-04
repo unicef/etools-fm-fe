@@ -1,10 +1,8 @@
 import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {addTranslates, ENGLISH} from '../../../../../localization/localisation';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
 import '../../../../common/layout/etools-card';
 import '../../../../common/location-widget/location-widget';
-import {ACTIVITY_DETAILS_TRANSLATES} from '../../../../../localization/en/activities-and-data-collection/activity-details.translates';
 import './details-cards/activity-details-card/activity-details-card';
 import './details-cards/monitor-information-card';
 import './details-cards/entities-monitor-card/entities-monitor-card';
@@ -15,7 +13,6 @@ import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors
 import {ACTIVITIES_PAGE} from '../../activities-page';
 
 const PAGE: string = ACTIVITIES_PAGE;
-addTranslates(ENGLISH, [ACTIVITY_DETAILS_TRANSLATES]);
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {

@@ -1,10 +1,10 @@
 import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../localization/localisation';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import '@polymer/paper-input/paper-textarea';
+import {translate} from 'lit-translate';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {
