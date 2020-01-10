@@ -131,7 +131,7 @@ export class IssueTrackerList extends LitElement {
                   ${logIssue.attachments.length
                     ? html`
                         <div class="files-column" @click="${() => this.viewFiles(logIssue)}">
-                          ${logIssue.attachments.length} FILES
+                          ${logIssue.attachments.length} ${logIssue.attachments.length > 1 ? 'FILES' : 'FILE'}
                         </div>
                       `
                     : ''}
