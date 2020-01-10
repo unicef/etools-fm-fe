@@ -41,6 +41,7 @@ import {MAIN_TRANSLATES} from '../../localization/en/main.translates';
 import {currentUser} from '../../redux/selectors/user.selectors';
 import {setUser} from '../../config/permissions';
 import {appDrawerStyles} from './menu/styles/app-drawer-styles';
+import '@unicef-polymer/etools-loading';
 
 // These are the actions needed by this element.
 
@@ -74,6 +75,12 @@ export class AppShell extends connect(store)(LitElement) {
 
   @property({type: Boolean})
   smallMenu: boolean = false;
+
+  @property()
+  languageLoading: boolean = false;
+
+  @property()
+  languageLoadingText: string = '';
 
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
@@ -123,6 +130,10 @@ export class AppShell extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
 
     store.dispatch<AsyncEffect>(getCurrentUserData());
+    this.addEventListener('global-loading', (({detail}: CustomEvent) => {
+      this.languageLoadingText = detail.message;
+      this.languageLoading = detail.active;
+    }) as any);
   }
 
   disconnectedCallback(): void {
@@ -188,6 +199,10 @@ export class AppShell extends connect(store)(LitElement) {
 
           <!-- Main content -->
           <main role="main" class="main-content">
+            <etools-loading
+              ?active="${this.languageLoading}"
+              loading-text="${this.languageLoadingText}"
+            ></etools-loading>
             <fm-settings
               class="page"
               ?active="${this.isActivePage(this.mainPage, 'settings', this.subPage, 'sites|questions')}"
