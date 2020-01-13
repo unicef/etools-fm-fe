@@ -5,6 +5,7 @@ import {DEFAULT_ROUTE, EtoolsRouter, ROUTE_404, updateAppLocation} from '../../r
 import {ROOT_PATH} from '../../config/config';
 import {ActionCreator, Dispatch} from 'redux';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
+import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 
@@ -19,14 +20,20 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
   const importBase: string = '../../'; // relative to current file
   // start importing components (lazy loading)
   const filesToImport: string[] = getFilePathsToImport(routeDetails);
+
+  dispatch(new GlobalLoadingUpdate('Loading..'));
+  const lazyImports: Promise<any>[] = [];
+
   filesToImport.forEach((filePath: string) => {
-    import(importBase + filePath);
+    lazyImports.push(import(importBase + filePath));
     // .then(() => {
     //     console.log(`component: ${filePath} has been loaded... yey!`);
     // }).catch((importError: any) => {
     //     console.log('component import failed...', importError);
     // });
   });
+
+  Promise.all(lazyImports).finally(() => dispatch(new GlobalLoadingUpdate(null)));
 
   // add page details to redux store, to be used in other components
   dispatch(new UpdateStoreRouteDetails(routeDetails));
