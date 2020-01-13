@@ -36,7 +36,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
+      <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
         <etools-data-table-column class="col-data flex-none w130px">
           ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
         </etools-data-table-column>
@@ -48,6 +48,9 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-none w90px">
           ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data flex-2">
+          ${translate('ACTIVITIES_LIST.COLUMNS.PERSON_RESPONSIBLE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
@@ -70,6 +73,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                 <div class="col-data flex-1">-</div>
                 <div class="col-data flex-none w90px">-</div>
                 <div class="col-data flex-2">-</div>
+                <div class="col-data flex-2">-</div>
                 <div class="col-data flex-none w80px">-</div>
                 <div class="col-data flex-none w100px">-</div>
               </div>
@@ -80,7 +84,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <!-- Table Row items -->
       ${this.items.map(
         (activity: IListActivity) => html`
-          <etools-data-table-row no-collapse>
+          <etools-data-table-row secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-none w130px">
                 <a class="link-cell" href="${`${this.rootPath}activities/${activity.id}/details/`}"
@@ -95,6 +99,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div class="col-data flex-none w90px">
                 ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
+              <div class="col-data flex-2">${activity.person_responsible?.name}</div>
               <div class="col-data flex-2">
                 ${(activity.team_members &&
                   activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ')) ||
@@ -103,6 +108,36 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div class="col-data flex-none w80px">${activity.checklists_count}</div>
               <div class="col-data flex-none w100px">
                 ${this.serializeName(activity.status, this.activityStatuses, 'display_name', 'value')}
+              </div>
+            </div>
+
+            <div slot="row-data-details" class="layout horizontal">
+              ${activity.tpm_partner
+                ? html`
+                    <div class="row-details-content">
+                      <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS')}</div>
+                      <div class="truncate">${activity.tpm_partner.name}</div>
+                    </div>
+                  `
+                : ''}
+
+              <div class="row-details-content">
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.PARTNERS')}</div>
+                <div class="truncate">
+                  ${activity.partners.map((partner: IActivityPartner) => partner.name).join(' | ') || '-'}
+                </div>
+              </div>
+              <div class="row-details-content">
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS')}</div>
+                <div class="truncate">
+                  ${activity.interventions.map((pdssfa: IActivityIntervention) => pdssfa.title).join(' | ') || '-'}
+                </div>
+              </div>
+              <div class="row-details-content">
+                <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS')}</div>
+                <div class="truncate">
+                  ${activity.cp_outputs.map((output: IActivityCPOutput) => output.name).join(' | ') || '-'}
+                </div>
               </div>
             </div>
           </etools-data-table-row>
