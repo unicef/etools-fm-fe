@@ -31,9 +31,6 @@ export function loadStaticData(
         return data;
       })
       .catch((error: any) => {
-        if (error.status === 403) {
-          window.location.href = window.location.origin + '/';
-        }
         console.error(`Can not load static data "${dataName}". Reason: request error.`);
         console.error(error);
         delete currentRequests[dataName];
