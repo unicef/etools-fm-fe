@@ -1,0 +1,225 @@
+import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {template} from './sites-popup.tpl';
+import {Unsubscribe} from 'redux';
+import {store} from '../../../../../redux/store';
+import {sitesUpdateSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
+import {fireEvent} from '../../../../utils/fire-custom-event';
+import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/site-specific-locations.effects';
+import {LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent} from 'leaflet';
+import {getDifference} from '../../../../utils/objects-diff';
+import {MapHelper} from '../../../../common/map-mixin';
+import {translate} from '../../../../../localization/localisation';
+import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
+import {SharedStyles} from '../../../../styles/shared-styles';
+import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
+import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {CardStyles} from '../../../../styles/card-styles';
+import {leafletStyles} from '../../../../styles/leaflet-styles';
+import {SitesTabStyles} from '../sites-tab.styles';
+import {DataMixin} from '../../../../common/mixins/data-mixin';
+import {debounce} from '../../../../utils/debouncer';
+
+const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+const LAT_LNG_DEBOUNCE_TIME: number = 700;
+
+@customElement('sites-popup')
+export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
+  @property() dialogOpened: boolean = true;
+  @property() editedData: EditedSite = {is_active: true};
+  @property() currentCoords: string | null = null;
+
+  @property() latitude: number | null = null;
+  @property() longitude: number | null = null;
+
+  defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
+  savingInProcess: boolean = false;
+  readonly statusOptions: SiteStatusOption[] = [
+    {id: 0, value: false, display_name: translate('SITES.STATUS.INACTIVE')},
+    {id: 1, value: true, display_name: translate('SITES.STATUS.ACTIVE')}
+  ];
+
+  @query('#map') private mapElement!: HTMLElement;
+  private sitesObjects: Site[] | null = null;
+  private readonly updateSiteLocationUnsubscribe: Unsubscribe;
+  private readonly currentWorkspaceUnsubscribe: Unsubscribe;
+  private readonly MapHelper: MapHelper;
+  private readonly setLatLngWithDelay: Callback;
+
+  constructor() {
+    super();
+    this.MapHelper = new MapHelper();
+    this.setLatLngWithDelay = debounce(this.updateMapPoint.bind(this), LAT_LNG_DEBOUNCE_TIME);
+    this.updateSiteLocationUnsubscribe = store.subscribe(
+      sitesUpdateSelector((updateInProcess: boolean | null) => {
+        this.savingInProcess = Boolean(updateInProcess);
+        if (updateInProcess !== false) {
+          return;
+        }
+
+        this.errors = store.getState().specificLocations.errors;
+        if (this.errors && this.errors.point) {
+          fireEvent(this, 'toast', {
+            text: 'Please, select correct location on map',
+            showCloseBtn: false
+          });
+        }
+        if (this.errors && Object.keys(this.errors).length) {
+          return;
+        }
+
+        this.dialogOpened = false;
+        fireEvent(this, 'response', {confirmed: true});
+      }, false)
+    );
+
+    this.currentWorkspaceUnsubscribe = store.subscribe(
+      currentWorkspaceSelector((workspace: Workspace | undefined) => {
+        if (!workspace) {
+          return;
+        }
+        this.defaultMapCenter = (workspace.point && workspace.point.coordinates) || DEFAULT_COORDINATES;
+      })
+    );
+  }
+
+  set dialogData(data: SitesPopupData) {
+    if (!data) {
+      return;
+    }
+    const {model, sitesObjects}: SitesPopupData = data;
+
+    this.sitesObjects = sitesObjects || [];
+    if (!model) {
+      return;
+    }
+    this.data = model;
+  }
+
+  render(): TemplateResult {
+    return template.call(this);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.updateSiteLocationUnsubscribe();
+    this.currentWorkspaceUnsubscribe();
+  }
+
+  onClose(): void {
+    fireEvent(this, 'response', {confirmed: false});
+  }
+
+  saveSite(): void {
+    const {lat, lng}: LatLng =
+      (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as LatLng);
+    if (lat && lng) {
+      this.editedData.point = {
+        type: 'Point',
+        coordinates: [lng, lat]
+      };
+    }
+
+    const site: EditedSite =
+      this.originalData !== null
+        ? getDifference<EditedSite>(this.originalData, this.editedData, {toRequest: true})
+        : this.editedData;
+    const isEmpty: boolean = !Object.keys(site).length;
+
+    if (isEmpty) {
+      this.dialogOpened = false;
+      this.onClose();
+    } else if (this.originalData && this.originalData.id) {
+      store.dispatch<AsyncEffect>(updateSiteLocation(this.editedData.id as number, site));
+    } else {
+      store.dispatch<AsyncEffect>(addSiteLocation(this.editedData as Site));
+    }
+  }
+
+  setStatusValue(active: boolean): 1 | 0 {
+    return active ? 1 : 0;
+  }
+
+  mapInitialization(): void {
+    if (!this.MapHelper.map) {
+      this.MapHelper.initMap(this.mapElement);
+      this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
+        const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
+        this.MapHelper.changeDMLocation([lat, lng]);
+        this.setCoordsString();
+      });
+      this.renderMarkers();
+    }
+    const coords: LatLngTuple =
+      (this.editedData && this.editedData.point && this.editedData.point.coordinates) || this.defaultMapCenter;
+    const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
+    const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
+    this.MapHelper.map!.setView(reversedCoords, zoom);
+
+    const id: number | null = (this.editedData && this.editedData.id) || null;
+    if (id) {
+      this.MapHelper.dynamicMarker =
+        this.MapHelper.staticMarkers!.find((marker: any) => marker.staticData.id === id) || null;
+      this.MapHelper.dynamicMarker!.openPopup();
+    }
+
+    this.setCoordsString();
+  }
+
+  updateLatLng(value: number, param: 'latitude' | 'longitude'): void {
+    if (value) {
+      this[param] = value;
+      this.setLatLngWithDelay();
+    }
+  }
+
+  updateMapPoint(): void {
+    if (this.MapHelper.dynamicMarker && this.latitude && this.longitude) {
+      this.MapHelper.dynamicMarker.setLatLng([this.latitude, this.longitude]);
+      this.MapHelper.map!.setView([+this.latitude, +this.longitude] as LatLngTuple, 8);
+    }
+  }
+
+  private renderMarkers(): void {
+    if (!this.MapHelper.map || !this.sitesObjects) {
+      return;
+    }
+    const sitesCoords: MarkerDataObj[] = this.sitesObjects.map((site: Site) => {
+      const coords: LatLngTuple = [...site.point.coordinates].reverse() as LatLngTuple;
+      return {coords, staticData: site, popup: site.name};
+    });
+    this.MapHelper.setStaticMarkers(sitesCoords);
+  }
+
+  private setCoordsString(): void {
+    if (!this.MapHelper.dynamicMarker) {
+      this.currentCoords = null;
+    } else {
+      const {lat, lng} = this.MapHelper.dynamicMarker.getLatLng();
+      this.latitude = lat;
+      this.longitude = lng;
+      this.currentCoords =
+        `${translate('MAIN.LATITUDE')} ${lat.toFixed(6)}` + `     ${translate('MAIN.LONGITUDE')} ${lng.toFixed(6)}`;
+    }
+  }
+
+  static get styles(): CSSResultArray {
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      leafletStyles,
+      SitesTabStyles,
+      css`
+        .selected-sites-label {
+          padding: 13px 12px;
+          color: #858585;
+          font-size: 17px;
+          display: flex;
+          align-content: center;
+          align-items: flex-end;
+        }
+      `
+    ];
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/components/app-shell/app-shell.js",
+  "sources": ["images/**/*"],
+  "fragments": [
+    "src/components/pages/page-not-found.js",
+    "src/components/pages/settings/settings-page.js",
+    "src/components/pages/settings/sites-tab/sites-tab.js",
+    "src/components/pages/settings/questions-tab/questions-tab.js",
+
+    "src/components/pages/plan/plan-page.js",
+    "src/components/pages/plan/templates-tab/templates-tab.js",
+    "src/components/pages/plan/rationale-tab/rationale-tab.js",
+    "src/components/pages/plan/issue-tracker-tab/issue-tracker-tab.js",
+
+    "src/components/pages/activities-and-data-collection/activities-page.js",
+    "src/components/pages/activities-and-data-collection/activities-list/activities-list.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-item.js",
+    "src/components/pages/activities-and-data-collection/activity-item/details-tab/activity-details-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/checklist-tab/activity-checklist-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/data-collect-tab/data-collect-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/review-tab/activity-review-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/additional-info-tab/additional-info-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-summary-tab/activity-summary-tab.js",
+    "src/components/pages/activities-and-data-collection/activity-item/activity-attachments-tab/activity-attachments-tab.js",
+
+    "src/components/pages/activities-and-data-collection/data-collection/data-collection.js",
+    "src/components/pages/activities-and-data-collection/activity-item/action-points-tab/action-points-tab.js",
+
+    "src/components/pages/analyze/analyze-page.js",
+    "src/components/pages/analyze/monitoring-tab/monitoring-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/partnership-tab/partnership-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/pd-ssfa-tab/pd-ssfa-tab.js",
+    "src/components/pages/analyze/monitoring-tab/coverage/cp-output-tab/cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
+    "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js",
+    "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/web-animations-js/web-animations-next-lite.min.js",
+    "node_modules/leaflet/dist/leaflet.js",
+    "node_modules/moment/min/moment.min.js",
+    "push-manifest.json"
+  ],
+  "builds": [
+    {
+      "name": "esm-bundled",
+      "browserCapabilities": ["es2015", "modules"],
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true
+    }
+  ],
+  "moduleResolution": "node",
+  "npm": true
+}

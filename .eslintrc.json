@@ -1,0 +1,90 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "linebreak-style": "off",
+    "padded-blocks": "off",
+    "brace-style": "off",
+    "new-cap": ["error", {
+      "capIsNewExceptions": ["Polymer", "GestureEventListeners"],
+      "capIsNewExceptionPattern": "^Etools..|..Mixin$"
+    }],
+    "no-var": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "comma-dangle": ["error", "never"],
+    "max-len": "off",
+    "camelcase": "off",
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
+    "block-spacing": "error",
+    "space-in-parens": ["error", "never"],
+    "prefer-promise-reject-errors": "off",
+    "no-dupe-class-members": "off",
+    "no-case-declarations": "off",
+    "no-invalid-this": "off",
+    "guard-for-in": "off",
+    "no-prototype-builtins": "off",
+    "@typescript-eslint/interface-name-prefix": ["error", {
+      "prefixWithI": "always"
+    }],
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/explicit-member-accessibility": ["error", {
+      "accessibility": "no-public"
+    }],
+    "@typescript-eslint/no-parameter-properties": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-function-return-type": ["error", {
+      "allowExpressions": true
+    }],
+    "@typescript-eslint/typedef": ["error", {
+      "variableDeclaration": true
+    }],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-use-before-define": ["error", {
+      "functions": false,
+      "classes": true,
+      "variables": true
+    }],
+    "@typescript-eslint/prefer-string-starts-ends-with": "error",
+    "@typescript-eslint/prefer-includes": "error",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
+    "@typescript-eslint/member-ordering": ["error"],
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "argsIgnorePattern": "^_",
+      "args": "none"
+    }]
+  },
+  "globals": {
+    "moment": true,
+    "Promise": true,
+    "Polymer": true,
+    "EtoolsPmpApp": true,
+    "EtoolsRequestCacheDb": true,
+    "ShadyCSS": true,
+    "Set": true,
+    "L": true
+  }
+}
