@@ -1,14 +1,9 @@
 node_modules/
-bower_components/
 build/
-src/bower_components/
-dist/
+bower_components/
 .tmp
 .idea
 *.sublime-project
 *.sublime-workspace
+src/**/*.js
 
-
-/package-lock.json
-/src/bower_components/
-/gulp-tasks/buildCache.json

@@ -1,14 +1,26 @@
-var express = require('express');
+var express = require('express'); // eslint-disable-line
 
-var app = express();
-var ROOT = __dirname + '/build/';
+const app = express();
+const basedir = __dirname + '/build/'; // eslint-disable-line
 
-app.use('/fm/', express.static(ROOT));
-app.use('/', express.static(ROOT));
+function getSourcesPath(_request) {
+  return basedir + 'esm-bundled/';
+}
+
+app.use('/fm/', (req, res, next) => {
+  express.static(getSourcesPath(req))(req, res, next);
+});
+app.use('/', (req, res, next) => {
+  express.static(getSourcesPath(req))(req, res, next);
+});
+
+app.get(/.*service-worker\.js/, function(req, res) {
+  res.sendFile(getSourcesPath(req) + 'service-worker.js');
+});
 
 app.get('[^.]+', function(req, res) {
-  res.sendFile(ROOT + 'index.html');
+  // handles app access using a different state path than index (otherwise it will not return any file)
+  res.sendFile(getSourcesPath(req) + 'index.html');
 });
 
 app.listen(8080);
-console.log('Server is listening.');

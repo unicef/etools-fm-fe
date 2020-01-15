@@ -1,60 +1,58 @@
+/**
+@license
+Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+
 const gulp = require('gulp');
-const nodemon = require('gulp-nodemon');
-const argv = require('yargs').argv;
-const path = require('path');
+const rename = require('gulp-rename');
+const replace = require('gulp-replace');
+const del = require('del');
+const spawn = require('child_process').spawn;
 
-const COUNTER_PROPERTY_NAME = 'filesChangedCount';
-process.env.BUILD_CACHE_PATH = path.normalize(`${process.cwd()}/gulp-tasks/`);
-process.env.WP_CONFIG_PATH = path.normalize(`${process.cwd()}/gulp-tasks/wp-config.js`);
-process.env.NOT_CHAIN_REBUILD = false;
-process.env.COUNTER_PROPERTY_NAME = COUNTER_PROPERTY_NAME;
-if (argv.develop) {
-    // process.env.ENV = 'development';
-}
-
-const clean = require('./gulp-tasks/clean');
-const preBuild = require('./gulp-tasks/pre-build');
-const postBuild = require('./gulp-tasks/post-build');
-const buildElements = require('./gulp-tasks/build-elements');
-const copyAssets = require('./gulp-tasks/copy-assets');
-const copyImages = require('./gulp-tasks/copy-images');
-const copyBower = require('./gulp-tasks/copy-bower');
-const runTests = require('./gulp-tasks/test');
-const jsLinter = require('./gulp-tasks/js-linter');
-global.config = {
-    appName: 'etoolsApd',
-    polymerJsonPath: path.join(process.cwd(), 'polymer.json'),
-    buildDirectory: 'build'
-};
-global[COUNTER_PROPERTY_NAME] = 99;
-
-const build = require('./gulp-tasks/build');
-
-gulp.task('buildElements', gulp.series(buildElements));
-
-gulp.task('watch', function() {
-    const watcher = gulp.watch(['./src/elements/**/*.*'], gulp.series(buildElements));
-    gulp.watch(['./src/manifest.json', './index.html'], gulp.series(copyAssets));
-    gulp.watch(['./src/images/**/*.*'], gulp.series(copyImages));
-    gulp.watch(['./src/bower_components/**/*.*'], gulp.series(copyBower()));
-
-    watcher.on('all', (eventName, path) => {
-        const isAddOrChange = eventName === 'add' || eventName === 'change';
-        const isTmpFile = !!~path.indexOf('jb_tmp');
-        const isScriptFile = !!~path.indexOf('.js') || !!~path.indexOf('.ts');
-        if (!isAddOrChange || isTmpFile || !isScriptFile) {return;}
-        global[COUNTER_PROPERTY_NAME]++;
-    });
+/**
+ * Cleans the prpl-server build in the server directory.
+ */
+gulp.task('prpl-server:clean', () => {
+  return del('server/build');
 });
 
-gulp.task('lint', gulp.series(jsLinter));
-gulp.task('test', gulp.series(clean, gulp.parallel(buildElements, copyAssets, copyBower()), runTests));
+/**
+ * Copies the prpl-server build to the server directory while renaming the
+ * node_modules directory so services like App Engine will upload it.
+ */
+gulp.task('prpl-server:build', () => {
+  const pattern = 'node_modules';
+  const replacement = 'node_assets';
 
-gulp.task('startServer', () => {nodemon({script: 'express.js'});});
+  return gulp.src('build/**')
+    .pipe(rename(((path) => {
+      path.basename = path.basename.replace(pattern, replacement);
+      path.dirname = path.dirname.replace(pattern, replacement);
+    })))
+    .pipe(replace(pattern, replacement))
+    .pipe(gulp.dest('server/build'));
+});
 
-gulp.task('devBuild', gulp.series(clean, gulp.parallel(buildElements, copyAssets, copyImages, copyBower())));
-gulp.task('prodBuild', gulp.series(clean, preBuild, build, postBuild));
+gulp.task('prpl-server', gulp.series(
+  'prpl-server:clean',
+  'prpl-server:build'
+));
 
-gulp.task('devup', gulp.series('devBuild', gulp.parallel('startServer', 'watch')));
-
-gulp.task('default', gulp.series(['prodBuild']));
+const spawnOptions = {
+  // `shell` option for Windows compatability. See:
+  // https://nodejs.org/api/child_process.html#child_process_spawning_bat_and_cmd_files_on_windows
+  shell: true,
+  stdio: 'inherit'
+};
+/**
+ * Gulp task to run `tsc --watch` and `polymer serve` in parallel.
+ */
+gulp.task('serve', () => {
+  spawn('tsc --skipLibCheck', ['--watch'], spawnOptions);
+  spawn('polymer', ['serve -H 0.0.0.0 -p 8080'], spawnOptions);
+});

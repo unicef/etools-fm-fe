@@ -1,0 +1,77 @@
+import {
+  ASSIGNED,
+  CHECKLIST,
+  COMPLETED,
+  DATA_COLLECTION,
+  DRAFT,
+  REPORT_FINALIZATION,
+  REVIEW,
+  SUBMITTED,
+  MARK_DETAILS_CONFIGURED,
+  MARK_CHECKLIST_CONFIGURED,
+  ASSIGN,
+  ACCEPT,
+  REJECT,
+  MARK_DATA_COLLECTED,
+  SUBMIT_REPORT,
+  COMPLETE,
+  CANCEL,
+  CANCELLED,
+  REJECT_REPORT
+} from '../../../components/pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
+import {
+  ACTION_POINTS,
+  ADDITIONAL_INFO,
+  ATTACHMENTS_TAB,
+  CHECKLIST_TAB,
+  COLLECT_TAB,
+  DETAILS_TAB,
+  REVIEW_TAB,
+  SUMMARY_TAB
+} from '../../../components/pages/activities-and-data-collection/activity-item/activities-tabs';
+
+export const ACTIVITY_ITEM_TRANSLATES: TranslateObject = {
+  ACTIVITY_ITEM: {
+    NEW_ACTIVITY: 'New Activity',
+    STATUS_CHANGE: 'Changing Status',
+    TRANSITIONS: {
+      [MARK_DETAILS_CONFIGURED]: 'Next',
+      [MARK_CHECKLIST_CONFIGURED]: 'Review',
+      ASSIGN_AND_ACCEPT: 'Assign & Accept',
+      [ASSIGN]: 'Assign',
+      [ACCEPT]: 'Accept',
+      [MARK_DATA_COLLECTED]: 'Finalize',
+      [SUBMIT_REPORT]: 'Submit',
+      [COMPLETE]: 'Complete',
+      [REJECT]: 'Reject',
+      [CANCEL]: 'Cancel',
+      [REJECT_REPORT]: 'Reject Report'
+    },
+    REASON_FOR_TRANSITION: {
+      [CANCEL]: {LABEL: 'Cancellation comment', TITLE: 'Cancellation reason'},
+      [REJECT]: {LABEL: 'Rejection comment', TITLE: 'Rejection reason'},
+      [REJECT_REPORT]: {LABEL: 'Report rejection comment', TITLE: 'Report rejection reason'}
+    },
+    STATUSES: {
+      [DRAFT]: 'Draft',
+      [CHECKLIST]: 'Checklist',
+      [REVIEW]: 'Review',
+      [ASSIGNED]: 'Assigned',
+      [DATA_COLLECTION]: 'Data Collection',
+      [REPORT_FINALIZATION]: 'Report finalization',
+      [SUBMITTED]: 'Report Review',
+      [COMPLETED]: 'Completed',
+      [CANCELLED]: 'Cancelled'
+    },
+    TABS: {
+      [DETAILS_TAB]: 'Details',
+      [ATTACHMENTS_TAB]: 'Attachments',
+      [CHECKLIST_TAB]: 'Checklist',
+      [REVIEW_TAB]: 'Review',
+      [COLLECT_TAB]: 'Data Collect',
+      [SUMMARY_TAB]: 'Summary',
+      [ADDITIONAL_INFO]: 'Additional Info',
+      [ACTION_POINTS]: 'Action Points'
+    }
+  }
+};
