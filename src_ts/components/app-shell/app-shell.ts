@@ -41,12 +41,16 @@ import {MAIN_TRANSLATES} from '../../localization/en/main.translates';
 import {currentUser, userSelector} from '../../redux/selectors/user.selectors';
 import {setUser} from '../../config/permissions';
 import {appDrawerStyles} from './menu/styles/app-drawer-styles';
+import '@unicef-polymer/etools-loading';
+import {globalLoadingSelector} from '../../redux/selectors/global-loading.selectors';
+import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 
 // These are the actions needed by this element.
 
 store.addReducers({
   user,
-  country
+  country,
+  globalLoading
 });
 useLanguage(ENGLISH);
 addTranslates(ENGLISH, MAIN_TRANSLATES);
@@ -74,6 +78,9 @@ export class AppShell extends connect(store)(LitElement) {
 
   @property({type: Boolean})
   smallMenu: boolean = false;
+
+  @property()
+  globalLoadingMessage: string | null = null;
 
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
@@ -131,6 +138,11 @@ export class AppShell extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
 
     store.dispatch<AsyncEffect>(getCurrentUserData());
+    store.subscribe(
+      globalLoadingSelector((globalLoadingMessage: string | null) => {
+        this.globalLoadingMessage = globalLoadingMessage;
+      })
+    );
   }
 
   disconnectedCallback(): void {
@@ -196,6 +208,10 @@ export class AppShell extends connect(store)(LitElement) {
 
           <!-- Main content -->
           <main role="main" class="main-content">
+            <etools-loading
+              ?active="${this.globalLoadingMessage}"
+              loading-text="${this.globalLoadingMessage}"
+            ></etools-loading>
             <fm-settings
               class="page"
               ?active="${this.isActivePage(this.mainPage, 'settings', this.subPage, 'sites|questions')}"

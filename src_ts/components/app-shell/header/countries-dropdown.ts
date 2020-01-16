@@ -12,6 +12,7 @@ import {DEFAULT_ROUTE, updateAppLocation} from '../../../routing/routes';
 import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 
 /**
  * @LitElement
@@ -38,7 +39,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     store.subscribe(
       countrySelector((countryState: IRequestState) => {
         this.changeRequestStatus(countryState.isRequest.load);
-        if (!countryState.isRequest && !countryState.error) {
+        if (!countryState.error) {
           this.handleChangedCountry();
         }
         if (!countryState.isRequest && countryState.error && !isEmpty(countryState.error)) {
@@ -135,6 +136,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
           loadingSource: 'country-change'
         };
     fireEvent(this, 'global-loading', detail);
+    store.dispatch(new GlobalLoadingUpdate(detail.message));
   }
 
   protected handleChangedCountry(): void {
