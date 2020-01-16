@@ -38,7 +38,7 @@ import {country} from '../../redux/reducers/country.reducer';
 import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from '../../endpoints/endpoints-list';
 import {addTranslates, ENGLISH, useLanguage} from '../../localization/localisation';
 import {MAIN_TRANSLATES} from '../../localization/en/main.translates';
-import {currentUser} from '../../redux/selectors/user.selectors';
+import {currentUser, userSelector} from '../../redux/selectors/user.selectors';
 import {setUser} from '../../config/permissions';
 import {appDrawerStyles} from './menu/styles/app-drawer-styles';
 
@@ -96,6 +96,14 @@ export class AppShell extends connect(store)(LitElement) {
     } else {
       this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
     }
+
+    store.subscribe(
+      userSelector((userState: IUserState) => {
+        if (userState.error && userState.error.status === 403) {
+          window.location.href = window.location.origin + '/';
+        }
+      })
+    );
 
     store.dispatch<AsyncEffect>(loadStaticData(LOCATIONS_ENDPOINT));
     store.dispatch<AsyncEffect>(loadStaticData(CURRENT_WORKSPACE));
