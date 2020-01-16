@@ -19,20 +19,11 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
 
   const importBase: string = '../../'; // relative to current file
   // start importing components (lazy loading)
-  const filesToImport: string[] = getFilePathsToImport(routeDetails);
+  const lazyImports: Promise<any>[] = getFilePathsToImport(routeDetails).map((filePath: string) =>
+    import(importBase + filePath)
+  );
 
-  dispatch(new GlobalLoadingUpdate('Loading..'));
-  const lazyImports: Promise<any>[] = [];
-
-  filesToImport.forEach((filePath: string) => {
-    lazyImports.push(import(importBase + filePath));
-    // .then(() => {
-    //     console.log(`component: ${filePath} has been loaded... yey!`);
-    // }).catch((importError: any) => {
-    //     console.log('component import failed...', importError);
-    // });
-  });
-
+  dispatch(new GlobalLoadingUpdate('Loading...'));
   Promise.all(lazyImports).finally(() => dispatch(new GlobalLoadingUpdate(null)));
 
   // add page details to redux store, to be used in other components
