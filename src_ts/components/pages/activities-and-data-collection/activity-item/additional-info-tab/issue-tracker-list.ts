@@ -1,5 +1,4 @@
 import {LitElement, html, TemplateResult, customElement, property, CSSResultArray, css} from 'lit-element';
-import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
@@ -13,6 +12,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '../../../../utils/dialog';
 import '../../../../common/file-components/files-popup';
 import '@unicef-polymer/etools-data-table';
+import {translate} from 'lit-translate';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {

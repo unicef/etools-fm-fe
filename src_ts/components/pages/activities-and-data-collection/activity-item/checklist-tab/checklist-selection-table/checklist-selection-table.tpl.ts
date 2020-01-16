@@ -7,10 +7,10 @@ import '@unicef-polymer/etools-loading';
 import '../../../../../common/layout/etools-card';
 import {html, TemplateResult} from 'lit-element';
 import {ChecklistSelectionTable} from './checklist-selection-table';
-import {translate} from '../../../../../../localization/localisation';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {InputStyles} from '../../../../../styles/input-styles';
+import {translate} from 'lit-translate';
 
 export function template(this: ChecklistSelectionTable): TemplateResult {
   return html`
@@ -90,7 +90,10 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                       this.requestUpdate();
                     }}"
                   ></paper-checkbox>
-                  <img src="${ROOT_PATH}images/icon-check.svg" ?hidden="${this.isEditMode || !question.is_enabled}" />
+                  <img
+                    src="${ROOT_PATH}assets/images/icon-check.svg"
+                    ?hidden="${this.isEditMode || !question.is_enabled}"
+                  />
                 </div>
 
                 <!-- Question item Text -->

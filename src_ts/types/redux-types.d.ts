@@ -19,6 +19,7 @@ interface IRootState {
   fullReports: IFullReportsState;
   activitySummary: IActivitySummaryState;
   findingsComponents: IFindingsComponentsState;
+  activeLanguage: IActiveLanguageState;
   globalLoading: IGlobalLoadingState;
 }
 
@@ -217,6 +218,10 @@ interface IMonitoringActivityState {
 
 interface IGlobalLoadingState {
   message: string | null;
+}
+
+interface IActiveLanguageState {
+  activeLanguage: string;
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

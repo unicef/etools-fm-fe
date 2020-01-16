@@ -2,10 +2,10 @@ import '@unicef-polymer/etools-dropdown';
 import '../../../common/attachmants-list/attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {RationaleTabComponent} from './rationale-tab';
-import {translate} from '../../../../localization/localisation';
 import {RATIONALE_ATTACHMENTS} from '../../../../endpoints/endpoints-list';
 import {InputStyles} from '../../../styles/input-styles';
 import './annual-fm-rationale/annual-fm-rationale';
+import {translate} from 'lit-translate';
 
 export function template(this: RationaleTabComponent): TemplateResult {
   // language=HTML

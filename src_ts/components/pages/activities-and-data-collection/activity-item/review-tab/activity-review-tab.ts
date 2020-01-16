@@ -7,14 +7,13 @@ import {activityChecklist} from '../../../../../redux/reducers/activity-checklis
 import {Unsubscribe} from 'redux';
 import {loadActivityChecklist} from '../../../../../redux/effects/activity-checklist.effects';
 import {activityChecklistData} from '../../../../../redux/selectors/activity-checklist.selectors';
-import {addTranslates, ENGLISH, translate} from '../../../../../localization/localisation';
-import {ACTIVITY_REVIEW_TRANSLATES} from '../../../../../localization/en/activities-and-data-collection/activity-review.translates';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import './review-checklist-item/review-checklist-item';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
+import {get} from 'lit-translate';
+import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
-addTranslates(ENGLISH, ACTIVITY_REVIEW_TRANSLATES);
 store.addReducers({activityChecklist});
 
 @customElement('activity-review-tab')
@@ -22,6 +21,7 @@ export class ActivityReviewTab extends LitElement {
   @property() methods: GenericObject<string> = {};
   @property() protected sortedChecklists: IChecklistByMethods[] = [];
   private activityChecklistUnsubscribe!: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResult[] {
     return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
@@ -90,11 +90,16 @@ export class ActivityReviewTab extends LitElement {
         .dispatch<AsyncEffect>(loadStaticData('methods'))
         .then((fetchedData: any) => (this.methods = this.createMethodsLib(fetchedData)));
     }
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => store.dispatch<AsyncEffect>(loadActivityChecklist(this._activityId as number, true)))
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.activityChecklistUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   private sortByMethods(checklist: IChecklistItem[]): GenericObject<IChecklistItem[]> {
@@ -114,11 +119,11 @@ export class ActivityReviewTab extends LitElement {
     return checklist.reduce((sorted: GenericObject<IChecklistItem[]>, item: IChecklistItem) => {
       let key: string;
       if (item.partner) {
-        key = `${translate('LEVELS_OPTIONS.PARTNER')}: ${item.partner.name}`;
+        key = `${get('LEVELS_OPTIONS.PARTNER')}: ${item.partner.name}`;
       } else if (item.cp_output) {
-        key = `${translate('LEVELS_OPTIONS.OUTPUT')}: ${item.cp_output.name}`;
+        key = `${get('LEVELS_OPTIONS.OUTPUT')}: ${item.cp_output.name}`;
       } else if (item.intervention) {
-        key = `${translate('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
+        key = `${get('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
       } else {
         return sorted;
       }

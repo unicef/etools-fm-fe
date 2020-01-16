@@ -3,14 +3,14 @@ import {fireEvent} from '../../../../utils/fire-custom-event';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from '../../../../../localization/localisation';
 import '@polymer/paper-input/paper-textarea';
+import {translate} from 'lit-translate';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
   @property() protected dialogOpened: boolean = true;
-  @property() protected popupTitle: string = '';
-  @property() protected label: string = '';
+  @property() protected popupTitle: string | Callback = '';
+  @property() protected label: string | Callback = '';
   @property() protected reason: string = '';
   @property() protected error: string = '';
 
@@ -30,7 +30,7 @@ export class ChecklistAttachments extends LitElement {
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         .okBtnText="${translate('MAIN.BUTTONS.CONFIRM')}"
-        dialog-title="${this.popupTitle}"
+        dialog-title="${translate(this.popupTitle as string)}"
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
@@ -40,7 +40,7 @@ export class ChecklistAttachments extends LitElement {
             .value="${this.reason}"
             max-rows="3"
             required
-            label="${this.label}"
+            label="${translate(this.label as string)}"
             placeholder="${translate('MAIN.ENTER') + ` ${this.label}`}"
             @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"
             @focus="${() => (this.error = '')}"

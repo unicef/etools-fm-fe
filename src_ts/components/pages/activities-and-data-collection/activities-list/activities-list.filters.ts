@@ -1,6 +1,4 @@
 import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
-import {addTranslates, ENGLISH, translate} from '../../../../localization/localisation';
-import {ACTIVITIES_LIST_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activities-list.translates';
 import {
   CP_OUTPUTS,
   INTERVENTIONS,
@@ -9,8 +7,7 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-
-addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
+import {translate} from 'lit-translate';
 
 export const activitiesListFilters: IEtoolsFilter[] = [
   {

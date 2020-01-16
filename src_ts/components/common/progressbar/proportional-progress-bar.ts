@@ -1,5 +1,6 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
+import {translate} from 'lit-translate';
 
 @customElement('proportional-progress-bar')
 export class ProportionalProgressBar extends LitElement {
@@ -7,8 +8,8 @@ export class ProportionalProgressBar extends LitElement {
   @property() planned: number = 0;
   @property() minRequired: number | null = null;
   @property() daysSinceLastVisit: number | null = null;
-  @property() completedLabelValue: string | null = 'Completed';
-  @property() plannedLabelValue: string | null = 'Planned';
+  @property() completedLabelValue: string | null = 'PROGRESSBAR.COMPLETED';
+  @property() plannedLabelValue: string | null = 'PROGRESSBAR.PLANNED';
   @property() minRequiredLabelValue: string | null = null;
   @property() daysSinceLastVisitLabelValue: string | null = null;
   @property() progressBarLabelsColor: string = 'grey';
@@ -25,10 +26,10 @@ export class ProportionalProgressBar extends LitElement {
         <!--  Top labels  -->
         <div class="progressbar__header">
           <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}"
-            >${this.completedLabelValue}</label
+            >${this.completedLabelValue ? translate(this.completedLabelValue) : this.completedLabelValue}</label
           >
           <label class="progressbar-label" style="${styleMap(this.progressbarLabelComputedStyles)}"
-            >${this.plannedLabelValue}</label
+            >${this.plannedLabelValue ? translate(this.plannedLabelValue) : this.plannedLabelValue}</label
           >
         </div>
         <!--  Progress bar  -->

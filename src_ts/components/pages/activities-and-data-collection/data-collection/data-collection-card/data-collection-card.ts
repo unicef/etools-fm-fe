@@ -17,6 +17,7 @@ import {
   updateOverallAndFindingsState
 } from '../../../../../redux/selectors/findings-components.selectors';
 import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
+import {get, translate} from 'lit-translate';
 
 @customElement('data-collection-card')
 export class DataCollectionCard extends LitElement {
@@ -85,7 +86,7 @@ export class DataCollectionCard extends LitElement {
       dialogData: {
         attachments: this.overallInfo.attachments,
         updateUrl: this.attachmentsEndpoint,
-        title: `Attachments for ${this.tabName}`
+        title: `${get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_POPUP_TITLE')} ${this.tabName}`
       },
       readonly: this.readonly || !this.attachmentsEndpoint
     }).then(({confirmed}: IEtoolsDialogResponse) => {
@@ -97,13 +98,13 @@ export class DataCollectionCard extends LitElement {
     });
   }
 
-  protected getAttachmentsBtnText(attachmentsCount: number): string {
+  protected getAttachmentsBtnText(attachmentsCount: number): Callback {
     if (attachmentsCount === 1) {
-      return `${attachmentsCount} File`;
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
     } else if (attachmentsCount > 1) {
-      return `${attachmentsCount} Files`;
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
     } else {
-      return 'Upload Files';
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
     }
   }
 

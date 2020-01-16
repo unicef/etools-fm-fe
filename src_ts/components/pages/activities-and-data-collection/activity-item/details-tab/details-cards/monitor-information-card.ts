@@ -1,5 +1,4 @@
 import {css, CSSResultArray, customElement, html, property, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../../localization/localisation';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
@@ -15,6 +14,7 @@ import {loadStaticData} from '../../../../../../redux/effects/load-static-data.e
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
+import {translate} from 'lit-translate';
 
 export const CARD_NAME: string = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [

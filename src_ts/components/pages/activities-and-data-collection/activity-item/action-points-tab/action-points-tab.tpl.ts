@@ -3,7 +3,7 @@ import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table';
 import './action-points-popup/action-points-popup';
-import {translate} from '../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`
@@ -15,7 +15,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       ></etools-loading>
       <!--   Card Header   -->
       <div class="card-title-box with-bottom-line">
-        <div class="card-title counter">Action Points</div>
+        <div class="card-title counter">${translate('ACTIVITY_ITEM.ACTION_POINTS.TITLE')}</div>
         <div class="buttons-container">
           <paper-icon-button
             ?hidden="${!this.activityDetails.permissions.edit.action_points}"
@@ -30,25 +30,25 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table header   -->
       <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
         <etools-data-table-column class="flex-1 col-data">
-          Reference No.
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.REFERENCE')}
         </etools-data-table-column>
         <etools-data-table-column class="flex-2 col-data">
-          Description
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.DESCRIPTION')}
         </etools-data-table-column>
         <etools-data-table-column class="flex-2 col-data">
           <div class="assignee">
-            <label>Assignee</label>
-            <label>(Section / Office)</label>
+            <label>${translate('ACTIVITY_ITEM.ACTION_POINTS.ASSIGNEE')}</label>
+            <label>(${translate('ACTIVITY_ITEM.ACTION_POINTS.SECTION_OFFICE')})</label>
           </div>
         </etools-data-table-column>
         <etools-data-table-column class="flex-1 col-data">
-          Status
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.STATUS')}
         </etools-data-table-column>
         <etools-data-table-column class="flex-1 col-data">
-          Due on
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.DUE_ON')}
         </etools-data-table-column>
         <etools-data-table-column class="flex-1 col-data">
-          Priority
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.PRIORITY')}
         </etools-data-table-column>
         <etools-data-table-column></etools-data-table-column>
       </etools-data-table-header>
@@ -95,13 +95,13 @@ export function template(this: ActionPointsTab): TemplateResult {
             <!--   Collapse content   -->
             <div slot="row-data-details" class="layout horizontal">
               <div class="row-details-content w160px">
-                <div class="rdc-title">Related to</div>
+                <div class="rdc-title">${translate('ACTIVITY_ITEM.ACTION_POINTS.RELATED_TO')}</div>
                 <div class="truncate">
                   ${this.getRelatedInfo(item).type}
                 </div>
               </div>
               <div class="row-details-content">
-                <div class="rdc-title">Content</div>
+                <div class="rdc-title">${translate('ACTIVITY_ITEM.ACTION_POINTS.CONTENT')}</div>
                 <div>${this.getRelatedInfo(item).content}</div>
               </div>
             </div>

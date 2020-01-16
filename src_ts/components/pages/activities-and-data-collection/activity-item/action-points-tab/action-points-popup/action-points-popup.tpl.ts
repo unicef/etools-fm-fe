@@ -7,10 +7,9 @@ import {html, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
-import {translate} from '../../../../../../localization/localisation';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {formatDate} from '../../../../../utils/date-utility';
-import {LEVELS} from '../../../../../common/dropdown-options';
+import {translate} from 'lit-translate';
 
 export function template(this: ActionPointsPopup): TemplateResult {
   return html`
@@ -128,7 +127,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           required
           label="Related To"
           placeholder="Select Related To"
-          .options="${LEVELS}"
+          .options="${this.levels}"
           option-label="display_name"
           option-value="value"
           allow-outside-scroll
@@ -182,7 +181,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
             @change="${(event: CustomEvent) =>
               this.updateModelValue('high_priority', (event.target as PaperCheckboxElement).checked)}"
           >
-            High Priority
+            ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
           </paper-checkbox>
         </div>
       </div>

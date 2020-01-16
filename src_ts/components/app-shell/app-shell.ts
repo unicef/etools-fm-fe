@@ -36,8 +36,6 @@ import {loadStaticData} from '../../redux/effects/load-static-data.effect';
 import {user} from '../../redux/reducers/user.reducer';
 import {country} from '../../redux/reducers/country.reducer';
 import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from '../../endpoints/endpoints-list';
-import {addTranslates, ENGLISH, useLanguage} from '../../localization/localisation';
-import {MAIN_TRANSLATES} from '../../localization/en/main.translates';
 import {currentUser, userSelector} from '../../redux/selectors/user.selectors';
 import {setUser} from '../../config/permissions';
 import {appDrawerStyles} from './menu/styles/app-drawer-styles';
@@ -52,8 +50,6 @@ store.addReducers({
   country,
   globalLoading
 });
-useLanguage(ENGLISH);
-addTranslates(ENGLISH, MAIN_TRANSLATES);
 
 /**
  * @customElement

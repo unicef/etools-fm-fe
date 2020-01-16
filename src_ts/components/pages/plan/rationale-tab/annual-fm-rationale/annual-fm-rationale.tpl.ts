@@ -1,6 +1,6 @@
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {AnnualFmRationale} from './annual-fm-rationale';
 import '../../../../common/layout/etools-card';
@@ -35,8 +35,10 @@ export function template(this: AnnualFmRationale): TemplateResult {
         ? html`
             <div slot="actions">
               <div class="history-info">
-                Last edited by ${this.editedData.history[0].by_user_display} on
-                ${this.getChangesDate(this.editedData.history[0].created)}
+                ${translate('RATIONALE.ANNUAL_FM_RATIONALE.LAST_EDITED', {
+                  user: this.editedData.history[0].by_user_display,
+                  date: this.getChangesDate(this.editedData.history[0].created)
+                })}
               </div>
             </div>
           `

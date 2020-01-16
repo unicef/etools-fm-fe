@@ -25,7 +25,9 @@ import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {setTextareasMaxHeight} from '../../../../../utils/textarea-max-rows-helper';
-import {INTERVENTION, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
+import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
+import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -39,11 +41,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   @property() selectedRelatedTo: string | null = null;
 
   @property() savingInProcess: boolean | null = false;
-
-  statusOptions: DefaultDropdownOption<string>[] = [
-    {value: 'open', display_name: 'Open'},
-    {value: 'completed', display_name: 'Completed'}
-  ];
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
 
   mappings: Map<string, RelatedToFields> = new Map<string, RelatedToFields>([
     [PARTNER, 'partner'],
@@ -78,6 +76,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   private updateActionPointStatusUnsubscribe!: Unsubscribe;
   private actionPointsOfficesUnsubscribe!: Unsubscribe;
   private actionPointsCategoriesUnsubscribe!: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     return template.call(this);
@@ -142,6 +141,12 @@ export class ActionPointsPopup extends InterventionsMixin(
         [ACTION_POINTS_CATEGORIES]
       )
     );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.levels = applyDropdownTranslation(LEVELS);
+      })
+    );
   }
 
   disconnectedCallback(): void {
@@ -150,6 +155,7 @@ export class ActionPointsPopup extends InterventionsMixin(
     this.actionPointsOfficesUnsubscribe();
     this.actionPointsCategoriesUnsubscribe();
     this.updateActionPointStatusUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   onClose(): void {

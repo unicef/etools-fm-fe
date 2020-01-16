@@ -1,4 +1,5 @@
 import {css, CSSResult, customElement, html, LitElement, query, TemplateResult} from 'lit-element';
+import {translate} from 'lit-translate';
 
 @customElement('file-select-button')
 export class FileSelectButton extends LitElement {
@@ -31,7 +32,7 @@ export class FileSelectButton extends LitElement {
       <input id="file" hidden type="file" @change="${() => this.fileSelected()}" />
       <paper-button class="upload-button" @tap="${() => this.selectFile()}">
         <iron-icon icon="file-upload"></iron-icon>
-        Upload File
+        ${translate('MAIN.UPLOAD')}
       </paper-button>
     `;
   }

@@ -5,11 +5,11 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import {TemplatesTabComponent} from './templates-tab';
 import {html, TemplateResult} from 'lit-element';
-import {translate} from '../../../../localization/localisation';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {hasPermission, Permissions} from '../../../../config/permissions';
-import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../common/dropdown-options';
+import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {InputStyles} from '../../../styles/input-styles';
+import {translate} from 'lit-translate';
 
 export function template(this: TemplatesTabComponent): TemplateResult {
   return html`
@@ -20,7 +20,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
     >
       <div class="filter">
         <etools-dropdown
-          .options="${LEVELS}"
+          .options="${this.levels}"
           .selected="${(this.queryParams && this.queryParams.level) || undefined}"
           @etools-selected-item-changed="${({detail}: CustomEvent) => this.onLevelChanged(detail.selectedItem.value)}"
           trigger-value-change-event

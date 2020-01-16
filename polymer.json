@@ -1,7 +1,7 @@
 {
   "entrypoint": "index.html",
   "shell": "src/components/app-shell/app-shell.js",
-  "sources": ["images/**/*"],
+  "sources": ["assets/**"],
   "fragments": [
     "src/components/pages/page-not-found.js",
     "src/components/pages/settings/settings-page.js",

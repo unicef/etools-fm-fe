@@ -4,12 +4,12 @@ import {loadCpOutputCoverage} from '../../../../../../redux/effects/monitoring-a
 import {Unsubscribe} from 'redux';
 import {cpOutputCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 import '../shared-tab-template';
+import {translate} from 'lit-translate';
 
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {
   @property() private cpOutputCoverage!: CpOutputCoverage[];
   @property() private loading: boolean = false;
-  private readonly label: string = 'Showing CP Outputs that can be monitored at the community level.';
   private readonly cpOutputCoverageUnsubscribe: Unsubscribe;
   constructor() {
     super();
@@ -25,7 +25,7 @@ export class CpOutputTab extends LitElement {
   render(): TemplateResult {
     return html`
       <shared-tab-template
-        .label="${this.label}"
+        .label="${translate('ANALYZE.MONITORING_TAB.COVERAGE.CP_OUTPUT.LABEL')}"
         .data="${this.cpOutputCoverage}"
         .loading="${this.loading}"
       ></shared-tab-template>

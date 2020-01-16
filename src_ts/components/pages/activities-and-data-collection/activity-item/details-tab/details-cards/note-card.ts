@@ -4,7 +4,7 @@ import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
-import {translate} from '../../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 @customElement('details-note-card')
 export class DetailsNoteCard extends LitElement {
@@ -39,7 +39,7 @@ export class DetailsNoteCard extends LitElement {
     return this.noteInfo
       ? html`
           <section class="elevation note-container" elevation="1">
-            <img class="flag-icon" src="${ROOT_PATH}/images/flag-icon.svg" />
+            <img class="flag-icon" src="${ROOT_PATH}/assets/images/flag-icon.svg" />
 
             <div class="title">${translate(this.noteInfo.titleKey)}</div>
             <div>${this.noteInfo.text}</div>

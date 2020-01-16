@@ -177,4 +177,8 @@ export const navMenuStyles: CSSResult = css`
   .ripple-wrapper {
     position: relative;
   }
+
+  .app-name {
+    max-width: 100px;
+  }
 `;

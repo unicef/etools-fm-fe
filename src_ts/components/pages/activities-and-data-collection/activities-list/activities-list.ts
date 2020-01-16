@@ -1,8 +1,6 @@
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './activities-list.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
-import {addTranslates, ENGLISH} from '../../../../localization/localisation';
-import {ACTIVITIES_LIST_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activities-list.translates';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -33,8 +31,9 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {createActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {activityDetailsData, activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
+import {applyDropdownTranslation} from '../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
-addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
@@ -44,18 +43,19 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
   @property() filtersLoading: boolean = false;
   @property() filters: IEtoolsFilter[] | null = null;
 
-  activityTypes: DefaultDropdownOption<string>[] = MONITOR_TYPES;
-  activityStatuses: DefaultDropdownOption<string>[] = ACTIVITY_STATUSES;
+  @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
+  @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly activitiesDataUnsubscribe: Unsubscribe;
   private readonly activityDataUnsubscribe: Unsubscribe;
   private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
-  private readonly filtersData: GenericObject = {
-    monitor_type: MONITOR_TYPES,
-    status__in: ACTIVITY_STATUSES
+  @property() private filtersData: GenericObject = {
+    monitor_type: applyDropdownTranslation(MONITOR_TYPES),
+    status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
   };
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -103,6 +103,19 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       }, false)
     );
 
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.activityTypes = applyDropdownTranslation(MONITOR_TYPES);
+        this.activityStatuses = applyDropdownTranslation(ACTIVITY_STATUSES);
+        this.filtersData = {
+          ...this.filtersData,
+          monitor_type: applyDropdownTranslation(MONITOR_TYPES),
+          status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
+        };
+        this.initFilters();
+      })
+    );
+
     this.initFilters();
   }
 
@@ -120,6 +133,7 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
     this.activitiesDataUnsubscribe();
     this.activityDataUnsubscribe();
     this.activityErrorUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   formatDate(date: string | null): string {

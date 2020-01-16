@@ -2,8 +2,6 @@ import {CSSResultArray, customElement, css, html, LitElement, property, Template
 import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
-import {addTranslates, ENGLISH, translate} from '../../../../../localization/localisation';
-import {ACTIVITY_COLLECT_TRANSLATES} from '../../../../../localization/en/activities-and-data-collection/activity-collect.translates';
 import './data-collect-popup';
 import {openDialog} from '../../../../utils/dialog';
 import {store} from '../../../../../redux/store';
@@ -28,8 +26,8 @@ import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-data-table';
 import {classMap} from 'lit-html/directives/class-map';
+import {translate} from 'lit-translate';
 
-addTranslates(ENGLISH, [ACTIVITY_COLLECT_TRANSLATES]);
 store.addReducers({dataCollection});
 
 type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
