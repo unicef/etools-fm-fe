@@ -1,42 +1,42 @@
 {
   "ACTIVITIES_LIST": {
-    "TITLE": "Русский Activities",
-    "CREATE_NEW_BUTTON": "Русский Create New",
+    "TITLE": "Localized Activities",
+    "CREATE_NEW_BUTTON": "Localized Create New",
     "COLUMNS": {
-      "REFERENCE_NUMBER": "Русский Reference #",
-      "START_DATE": "Русский Start Date",
-      "LOCATION_AND_SITE": "Русский Location & Site",
-      "MONITOR_TYPE": "Русский Primary FM",
-      "TEAM_MEMBERS": "Русский Team Members",
-      "CHECKLISTS_COUNT": "Русский Checklists",
-      "STATUS": "Русский Status"
+      "REFERENCE_NUMBER": "Localized Reference #",
+      "START_DATE": "Localized Start Date",
+      "LOCATION_AND_SITE": "Localized Location & Site",
+      "MONITOR_TYPE": "Localized Primary FM",
+      "TEAM_MEMBERS": "Localized Team Members",
+      "CHECKLISTS_COUNT": "Localized Checklists",
+      "STATUS": "Localized Status"
     },
     "FILTERS": {
-      "MONITOR_TYPE": "Русский Primary FM",
-      "TEAM_MEMBERS": "Русский Team Members",
-      "PERSON_RESPONSIBLE": "Русский Person Responsible",
-      "LOCATION": "Русский Location",
-      "SITE": "Русский Site",
-      "PARTNERS": "Русский Partners",
-      "TPM_PARTNERS": "Русский TPM Partners",
-      "INTERVENTIONS": "Русский PD/SSFA",
-      "CP_OUTPUTS": "Русский CP Outputs",
-      "STATUS": "Русский Status",
-      "START_DATE": "Русский Start Date",
-      "END_DATE": "Русский End Date"
+      "MONITOR_TYPE": "Localized Primary FM",
+      "TEAM_MEMBERS": "Localized Team Members",
+      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "LOCATION": "Localized Location",
+      "SITE": "Localized Site",
+      "PARTNERS": "Localized Partners",
+      "TPM_PARTNERS": "Localized TPM Partners",
+      "INTERVENTIONS": "Localized PD/SSFA",
+      "CP_OUTPUTS": "Localized CP Outputs",
+      "STATUS": "Localized Status",
+      "START_DATE": "Localized Start Date",
+      "END_DATE": "Localized End Date"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
-    "ISSUE_TRACKER": "Русский Specific issues for Probing/Attention",
+    "ISSUE_TRACKER": "Localized Specific issues for Probing/Attention",
     "PD_SSFA_DETAILS": {
-      "TITLE": "Русский PD/SSFA Details",
-      "REFERENCE_NUMBER": "Русский Reference Number",
-      "DOCUMENT_TYTLE": "Русский Document Title",
-      "TYPE": "Русский Type",
-      "PROGRESS_REPORTS": "Русский Progress Reports"
+      "TITLE": "Localized PD/SSFA Details",
+      "REFERENCE_NUMBER": "Localized Reference Number",
+      "DOCUMENT_TYTLE": "Localized Document Title",
+      "TYPE": "Localized Type",
+      "PROGRESS_REPORTS": "Localized Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Русский Enter Overall finding",
+      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track"
@@ -44,497 +44,497 @@
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "DETAIL_INPUT_PLACEHOLDER": "Русский Enter Specific Details to Probe",
-    "ADD_DETAIL": "Русский Add Detail",
+    "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
+    "ADD_DETAIL": "Localized Add Detail",
     "COLUMNS": {
-      "TEXT": "Русский Checklist Item",
-      "DETAILS": "Русский Specific Details to Probe",
-      "METHODS": "Русский Methods"
+      "TEXT": "Localized Checklist Item",
+      "DETAILS": "Localized Specific Details to Probe",
+      "METHODS": "Localized Methods"
     }
   },
   "ACTIVITY_COLLECT": {
-    "ADD_CHECKLIST": "Русский Add checklist",
+    "ADD_CHECKLIST": "Localized Add checklist",
     "EDIT_CHECKLIST": "Edit checklist",
     "COLUMNS": {
-      "TEAM_MEMBER": "Русский Team Member",
-      "METHOD_TYPE": "Русский Method",
-      "INFO_SOURCE": "Русский Information Source"
+      "TEAM_MEMBER": "Localized Team Member",
+      "METHOD_TYPE": "Localized Method",
+      "INFO_SOURCE": "Localized Information Source"
     },
     "LABELS": {
-      "METHOD": "Русский Method",
-      "INFO_SOURCE": "Русский Information Source"
+      "METHOD": "Localized Method",
+      "INFO_SOURCE": "Localized Information Source"
     }
   },
   "ACTIVITY_DETAILS": {
-    "ACTIVITY_DETAILS": "Русский Activity Details",
-    "MONITOR_INFO": "Русский Monitor Information",
-    "ENTRIES_TO_MONITOR": "Русский Entities to monitor",
-    "START_DATE": "Русский Start Date",
-    "END_DATE": "Русский End Date",
-    "SECTIONS": "Русский Sections",
-    "TEAM_MEMBERS": "Русский Team Members",
-    "PERSONAL_RESPONSIBLE": "Русский Personal Responsible",
-    "TPM_PARTNER": "Русский Third Party Monitor Partner",
-    "USER_TYPE": "Русский Primary Field Monitor is",
+    "ACTIVITY_DETAILS": "Localized Activity Details",
+    "MONITOR_INFO": "Localized Monitor Information",
+    "ENTRIES_TO_MONITOR": "Localized Entities to monitor",
+    "START_DATE": "Localized Start Date",
+    "END_DATE": "Localized End Date",
+    "SECTIONS": "Localized Sections",
+    "TEAM_MEMBERS": "Localized Team Members",
+    "PERSONAL_RESPONSIBLE": "Localized Personal Responsible",
+    "TPM_PARTNER": "Localized Third Party Monitor Partner",
+    "USER_TYPE": "Localized Primary Field Monitor is",
     "USER_TYPES": {
-      "STAFF": "Русский Staff",
-      "TPM": "Русский Third Party Monitor"
+      "STAFF": "Localized Staff",
+      "TPM": "Localized Third Party Monitor"
     },
-    "PARTNER": "Русский Partner",
-    "CP_OUTPUT": "Русский CP Output",
-    "INTERVENTION": "Русский Intervention",
-    "PARTNERS": "Русский Partners",
-    "PARTNER_ORGANIZATION": "Русский Partner Organization",
-    "CP_OUTPUTS": "Русский CP Outputs",
-    "CP_OUTPUTS_FOUND": "Русский {{ count }} CP Outputs were found:",
-    "INTERVENTIONS_FOUND": "Русский {{ count }} PD/SSFA were found:",
-    "INTERVENTIONS": "Русский PD/SSFAs",
-    "CONNECTED_ENTRIES": "Русский Connected entries to be added together with the selected PD/SSFA:",
-    "ADD_ENTRY": "Русский Add New Item",
-    "ADD_PARTNER": "Русский Add Partner",
-    "ADD_CP_OUTPUT": "Русский Add CP Output",
-    "ADD_INTERVENTION": "Русский Add PD/SSFA",
-    "REJECTION_NOTE": "Русский Rejection Note",
-    "CANCELLATION_NOTE": "Русский Cancellation Note",
+    "PARTNER": "Localized Partner",
+    "CP_OUTPUT": "Localized CP Output",
+    "INTERVENTION": "Localized Intervention",
+    "PARTNERS": "Localized Partners",
+    "PARTNER_ORGANIZATION": "Localized Partner Organization",
+    "CP_OUTPUTS": "Localized CP Outputs",
+    "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SSFA were found:",
+    "INTERVENTIONS": "Localized PD/SSFAs",
+    "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SSFA:",
+    "ADD_ENTRY": "Localized Add New Item",
+    "ADD_PARTNER": "Localized Add Partner",
+    "ADD_CP_OUTPUT": "Localized Add CP Output",
+    "ADD_INTERVENTION": "Localized Add PD/SSFA",
+    "REJECTION_NOTE": "Localized Rejection Note",
+    "CANCELLATION_NOTE": "Localized Cancellation Note",
     "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
   },
   "ACTIVITY_ITEM": {
-    "NEW_ACTIVITY": "Русский New Activity",
-    "STATUS_CHANGE": "Русский Changing Status",
+    "NEW_ACTIVITY": "Localized New Activity",
+    "STATUS_CHANGE": "Localized Changing Status",
     "TRANSITIONS": {
-      "mark_details_configured": "Русский Next",
-      "mark_checklist_configured": "Русский Review",
-      "ASSIGN_AND_ACCEPT": "Русский Assign & Accept",
-      "assign": "Русский Assign",
-      "accept": "Русский Accept",
-      "mark_data_collected": "Русский Finalize",
-      "submit_report": "Русский Submit",
-      "complete": "Русский Complete",
-      "reject": "Русский Reject",
-      "cancel": "Русский Cancel",
-      "reject_report": "Русский Reject Report"
+      "mark_details_configured": "Localized Next",
+      "mark_checklist_configured": "Localized Review",
+      "ASSIGN_AND_ACCEPT": "Localized Assign & Accept",
+      "assign": "Localized Assign",
+      "accept": "Localized Accept",
+      "mark_data_collected": "Localized Finalize",
+      "submit_report": "Localized Submit",
+      "complete": "Localized Complete",
+      "reject": "Localized Reject",
+      "cancel": "Localized Cancel",
+      "reject_report": "Localized Reject Report"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Русский Cancellation comment", "TITLE": "Русский Cancellation reason"},
-      "reject": {"LABEL": "Русский Rejection comment", "TITLE": "Русский Rejection reason"},
-      "reject_report": {"LABEL": "Русский Report rejection comment", "TITLE": "Русский Report rejection reason"}
+      "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
+      "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
+      "reject_report": {"LABEL": "Localized Report rejection comment", "TITLE": "Localized Report rejection reason"}
     },
     "STATUSES": {
-      "draft": "Русский Draft",
-      "checklist": "Русский Checklist",
-      "review": "Русский Review",
-      "assigned": "Русский Assigned",
-      "data_collection": "Русский Data Collection",
-      "report_finalization": "Русский Report finalization",
-      "submitted": "Русский Report Review",
-      "completed": "Русский Completed",
-      "cancelled": "Русский Cancelled"
+      "draft": "Localized Draft",
+      "checklist": "Localized Checklist",
+      "review": "Localized Review",
+      "assigned": "Localized Assigned",
+      "data_collection": "Localized Data Collection",
+      "report_finalization": "Localized Report finalization",
+      "submitted": "Localized Report Review",
+      "completed": "Localized Completed",
+      "cancelled": "Localized Cancelled"
     },
     "TABS": {
-      "details": "Русский Details",
-      "attachments": "Русский Attachments",
-      "checklist": "Русский Checklist",
-      "review": "Русский Review",
-      "collect": "Русский Data Collect",
-      "summary": "Русский Summary",
-      "additional-info": "Русский Additional Info",
-      "action-points": "Русский Action Points"
+      "details": "Localized Details",
+      "attachments": "Localized Attachments",
+      "checklist": "Localized Checklist",
+      "review": "Localized Review",
+      "collect": "Localized Data Collect",
+      "summary": "Localized Summary",
+      "additional-info": "Localized Additional Info",
+      "action-points": "Localized Action Points"
     },
     "ACTIVITY_ATTACHMENTS": {
-      "TITLE": "Русский Checklist Attachments",
-      "METHOD": "Русский Method",
-      "DATA_COLLECTOR": "Русский Data Collector",
-      "METHOD_TYPE": "Русский Method type",
-      "RELATED_TO": "Русский Related To",
-      "RELATED_NAME": "Русский Related Name",
-      "DATE_UPLOADED": "Русский Date Uploaded",
-      "DOCUMENT_TYPE": "Русский Document Type",
-      "FILE_ATTACHMENT": "Русский File Attachment"
+      "TITLE": "Localized Checklist Attachments",
+      "METHOD": "Localized Method",
+      "DATA_COLLECTOR": "Localized Data Collector",
+      "METHOD_TYPE": "Localized Method type",
+      "RELATED_TO": "Localized Related To",
+      "RELATED_NAME": "Localized Related Name",
+      "DATE_UPLOADED": "Localized Date Uploaded",
+      "DOCUMENT_TYPE": "Localized Document Type",
+      "FILE_ATTACHMENT": "Localized File Attachment"
     },
     "ACTION_POINTS": {
-      "TITLE": "Русский Action Points",
-      "REFERENCE": "Русский Reference No.",
-      "DESCRIPTION": "Русский Description",
-      "ASSIGNEE": "Русский Assignee",
-      "SECTION_OFFICE": "Русский Section / Office",
-      "STATUS": "Русский Status",
-      "DUE_ON": "Русский Due on",
-      "PRIORITY": "Русский Priority",
-      "RELATED_TO": "Русский Related to",
-      "CONTENT": "Русский Content",
+      "TITLE": "Localized Action Points",
+      "REFERENCE": "Localized Reference No.",
+      "DESCRIPTION": "Localized Description",
+      "ASSIGNEE": "Localized Assignee",
+      "SECTION_OFFICE": "Localized Section / Office",
+      "STATUS": "Localized Status",
+      "DUE_ON": "Localized Due on",
+      "PRIORITY": "Localized Priority",
+      "RELATED_TO": "Localized Related to",
+      "CONTENT": "Localized Content",
       "POPUP": {
-        "HIGH_PRIORITY": "Русский High Priority"
+        "HIGH_PRIORITY": "Localized High Priority"
       }
     },
     "DATA_COLLECTION": {
-      "ATTACHMENTS_POPUP_TITLE": "Русский Attachments for",
+      "ATTACHMENTS_POPUP_TITLE": "Localized Attachments for",
       "ATTACHMENTS_BUTTON_TEXT": {
-        "SINGLE": "Русский {{ count }} File",
-        "MULTIPLE": "Русский {{ count }} Files",
-        "DEFAULT": "Русский Upload Files"
+        "SINGLE": "Localized {{ count }} File",
+        "MULTIPLE": "Localized {{ count }} Files",
+        "DEFAULT": "Localized Upload Files"
       }
     }
   },
   "ACTIVITY_REVIEW": {
     "COLUMNS": {
-      "TEXT": "Русский Checklist Item",
-      "DETAILS": "Русский Specific Details to Probe"
+      "TEXT": "Localized Checklist Item",
+      "DETAILS": "Localized Specific Details to Probe"
     }
   },
   "SOURCE_OF_INFORMATION": {
-    "INPUT_LABEL": "Русский Source of information"
+    "INPUT_LABEL": "Localized Source of information"
   },
   "CO_OVERVIEW": {
-    "CP_OUTCOME": "Русский CP Outcome",
-    "CP_INDICATORS": "Русский CP Indicators",
-    "TARGET": "Русский Target",
-    "PARTNERS": "Русский Partners",
-    "PROG_VISITS": "Русский M.R. Prog. Visits",
-    "PARTNERSHIPS": "Русский Partnerships",
-    "SINCE_LAST_VISIT": "Русский Days Since Last Site Visit",
-    "PD_OUTPUT": "Русский PD Output",
-    "SSFA_EXPECTED_RESULT": "Русский SSFA Expected Result",
+    "CP_OUTCOME": "Localized CP Outcome",
+    "CP_INDICATORS": "Localized CP Indicators",
+    "TARGET": "Localized Target",
+    "PARTNERS": "Localized Partners",
+    "PROG_VISITS": "Localized M.R. Prog. Visits",
+    "PARTNERSHIPS": "Localized Partnerships",
+    "SINCE_LAST_VISIT": "Localized Days Since Last Site Visit",
+    "PD_OUTPUT": "Localized PD Output",
+    "SSFA_EXPECTED_RESULT": "Localized SSFA Expected Result",
     "PLACEHOLDER": {
-      "CP_OUTCOME": "Русский Select CP Outcome"
+      "CP_OUTCOME": "Localized Select CP Outcome"
     }
   },
   "ISSUE_TRACKER": {
-    "CP_OUTPUT": "Русский CP Output",
-    "PARTNER": "Русский Partner",
-    "LOCATION": "Русский Location",
-    "SITE": "Русский Site",
-    "LOCATION_SITE": "Русский Location & Site",
-    "IS_NEW": "Русский Show only New",
-    "RELATED_TO_TYPE": "Русский Issue Related To",
+    "CP_OUTPUT": "Localized CP Output",
+    "PARTNER": "Localized Partner",
+    "LOCATION": "Localized Location",
+    "SITE": "Localized Site",
+    "LOCATION_SITE": "Localized Location & Site",
+    "IS_NEW": "Localized Show only New",
+    "RELATED_TO_TYPE": "Localized Issue Related To",
     "RELATED_TYPE": {
-      "CP_OUTPUT": "Русский Cp Output",
-      "PARTNER": "Русский Partner",
-      "LOCATION": "Русский Location/Site"
+      "CP_OUTPUT": "Localized Cp Output",
+      "PARTNER": "Localized Partner",
+      "LOCATION": "Localized Location/Site"
     },
-    "STATUS": "Русский Status",
+    "STATUS": "Localized Status",
     "STATUSES": {
-      "NEW": "Русский New",
-      "PAST": "Русский Past"
+      "NEW": "Localized New",
+      "PAST": "Localized Past"
     },
     "PLACEHOLDER": {
-      "CP_OUTPUT": "Русский Select CP Output",
-      "PARTNER": "Русский Select Partner",
-      "LOCATION": "Русский Select Location",
-      "SITE": "Русский Select Site",
-      "STATUS": "Русский Select Status",
-      "ISSUE": "Русский Enter Issue For Attention/Probing"
+      "CP_OUTPUT": "Localized Select CP Output",
+      "PARTNER": "Localized Select Partner",
+      "LOCATION": "Localized Select Location",
+      "SITE": "Localized Select Site",
+      "STATUS": "Localized Select Status",
+      "ISSUE": "Localized Enter Issue For Attention/Probing"
     },
-    "POPUP_TITLE": "Русский Log Issue",
-    "RELATED_TO": "Русский Related To",
-    "NAME": "Русский Name",
-    "ISSUE": "Русский Issue For Attention/Probing",
-    "ATTACHMENTS": "Русский Attachment(s)",
-    "ATTACHMENT": "Русский Attachment",
-    "UPLOAD_LABEL": "Русский Attach file",
-    "TABLE_CAPTION": "Русский {{ start }} - {{ end }} of {{ count }} Issues to show",
-    "LAST_MODIFIED_BY": "Русский Last Modified By",
-    "AUTHOR": "Русский Issue Raised By",
-    "CLOSED_BY": "Русский Issue Closed By",
+    "POPUP_TITLE": "Localized Log Issue",
+    "RELATED_TO": "Localized Related To",
+    "NAME": "Localized Name",
+    "ISSUE": "Localized Issue For Attention/Probing",
+    "ATTACHMENTS": "Localized Attachment(s)",
+    "ATTACHMENT": "Localized Attachment",
+    "UPLOAD_LABEL": "Localized Attach file",
+    "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Issues to show",
+    "LAST_MODIFIED_BY": "Localized Last Modified By",
+    "AUTHOR": "Localized Issue Raised By",
+    "CLOSED_BY": "Localized Issue Closed By",
     "ATTACHMENTS_FILES": {
       "SINGLE": "FILE",
       "MULTIPLE": "FILES"
     }
   },
   "RATIONALE": {
-    "TITLE": "Русский Annual Field Monitoring Rationale",
-    "POPUP_TITLE": "Русский Rationale",
-    "YEAR_DRD_LABEL": "Русский Year",
-    "YEAR_DRD_PLACEHOLDER": "Русский Select Year",
+    "TITLE": "Localized Annual Field Monitoring Rationale",
+    "POPUP_TITLE": "Localized Rationale",
+    "YEAR_DRD_LABEL": "Localized Year",
+    "YEAR_DRD_PLACEHOLDER": "Localized Select Year",
     "LABELS": {
-      "PRIORITIZATION": "Русский Prioritization Criteria",
-      "METHODOLOGY": "Русский Methodology Notes & Standards",
-      "MODALITIES": "Русский Modalities",
-      "VISITS": "Русский Target Visits For The Year",
-      "PARTNER_ENGAGEMENT": "Русский Partner Engagement",
-      "OTHER": "Русский Other Comments"
+      "PRIORITIZATION": "Localized Prioritization Criteria",
+      "METHODOLOGY": "Localized Methodology Notes & Standards",
+      "MODALITIES": "Localized Modalities",
+      "VISITS": "Localized Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Localized Partner Engagement",
+      "OTHER": "Localized Other Comments"
     },
     "PLACEHOLDERS": {
-      "PRIORITIZATION": "Русский Enter Prioritization Criteria",
-      "METHODOLOGY": "Русский Enter Methodology Notes & Standards",
-      "MODALITIES": "Русский Enter Modalities",
-      "VISITS": "Русский Enter Target Visits For The Year",
-      "PARTNER_ENGAGEMENT": "Русский Enter Partner Engagement",
-      "OTHER": "Русский Enter Other Comments"
+      "PRIORITIZATION": "Localized Enter Prioritization Criteria",
+      "METHODOLOGY": "Localized Enter Methodology Notes & Standards",
+      "MODALITIES": "Localized Enter Modalities",
+      "VISITS": "Localized Enter Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Localized Enter Partner Engagement",
+      "OTHER": "Localized Enter Other Comments"
     },
     "HELPER_TEXTS": {
-      "PRIORITIZATION": "Русский e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response",
-      "METHODOLOGY": "Русский e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs",
-      "MODALITIES": "Русский e.g Staff, UNV, SSAs, TPMs to undertake field monitoring",
-      "PARTNER_ENGAGEMENT": "Русский e.g any arrangements established for join visits"
+      "PRIORITIZATION": "Localized e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response",
+      "METHODOLOGY": "Localized e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs",
+      "MODALITIES": "Localized e.g Staff, UNV, SSAs, TPMs to undertake field monitoring",
+      "PARTNER_ENGAGEMENT": "Localized e.g any arrangements established for join visits"
     },
     "ANNUAL_FM_RATIONALE": {
-      "LAST_EDITED": "Русский Last edited by {{ user }} on {{ date }}"
+      "LAST_EDITED": "Localized Last edited by {{ user }} on {{ date }}"
     }
   },
   "TEMPLATES": {
     "FILTERS": {
-      "LEVEL_LABEL": "Русский Select Level",
-      "LEVEL_PLACEHOLDER": "Русский Select Level",
-      "OUTPUT_LABEL": "Русский Select Output",
-      "OUTPUT_PLACEHOLDER": "Русский Select Output",
-      "PARTNER_LABEL": "Русский Select Partner",
-      "PARTNER_PLACEHOLDER": "Русский Select Partner",
-      "INTERVENTION_LABEL": "Русский Select PD/SSFA",
-      "INTERVENTION_PLACEHOLDER": "Русский Select PD/SSFA"
+      "LEVEL_LABEL": "Localized Select Level",
+      "LEVEL_PLACEHOLDER": "Localized Select Level",
+      "OUTPUT_LABEL": "Localized Select Output",
+      "OUTPUT_PLACEHOLDER": "Localized Select Output",
+      "PARTNER_LABEL": "Localized Select Partner",
+      "PARTNER_PLACEHOLDER": "Localized Select Partner",
+      "INTERVENTION_LABEL": "Localized Select PD/SSFA",
+      "INTERVENTION_PLACEHOLDER": "Localized Select PD/SSFA"
     },
     "COLUMNS": {
-      "DETAILS": "Русский Specific Details to Probe",
-      "TEXT": "Русский Checklist Item",
-      "METHODS": "Русский Methods"
+      "DETAILS": "Localized Specific Details to Probe",
+      "TEXT": "Localized Checklist Item",
+      "METHODS": "Localized Methods"
     },
-    "DETAIL_INPUT_PLACEHOLDER": "Русский Enter Specific Details to Probe",
-    "ADD_DETAIL": "Русский Add Detail"
+    "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
+    "ADD_DETAIL": "Localized Add Detail"
   },
   "QUESTIONS": {
-    "EDIT_POPUP_TITLE": "Русский Edit Question",
-    "ADD_POPUP_TITLE": "Русский Add Question",
+    "EDIT_POPUP_TITLE": "Localized Edit Question",
+    "ADD_POPUP_TITLE": "Localized Add Question",
     "PLACEHOLDERS": {
-      "QUESTION": "Русский Enter Question Text",
-      "SECTIONS": "Русский Select Sections",
-      "METHODS": "Русский Select Collection Methods",
-      "CATEGORY": "Русский Select Group",
-      "LEVEL": "Русский Select Question Target Level",
-      "ANSWER_TYPE": "Русский Select Answer Type",
-      "SCALE_SIZE": "Русский Select Scale Size"
+      "QUESTION": "Localized Enter Question Text",
+      "SECTIONS": "Localized Select Sections",
+      "METHODS": "Localized Select Collection Methods",
+      "CATEGORY": "Localized Select Group",
+      "LEVEL": "Localized Select Question Target Level",
+      "ANSWER_TYPE": "Localized Select Answer Type",
+      "SCALE_SIZE": "Localized Select Scale Size"
     },
     "LABELS": {
-      "QUESTION": "Русский Question",
-      "LEVEL": "Русский Question Target Level",
-      "SECTIONS": "Русский Sections",
-      "METHODS": "Русский Collection Methods",
-      "CATEGORY": "Русский Group",
-      "ANSWER_TYPE": "Русский Answer Type",
-      "IS_HACT": "Русский Counts towards HACT",
-      "IS_ACTIVE": "Русский Is Active",
-      "SCALE_SIZE": "Русский Scale Size"
+      "QUESTION": "Localized Question",
+      "LEVEL": "Localized Question Target Level",
+      "SECTIONS": "Localized Sections",
+      "METHODS": "Localized Collection Methods",
+      "CATEGORY": "Localized Group",
+      "ANSWER_TYPE": "Localized Answer Type",
+      "IS_HACT": "Localized Counts towards HACT",
+      "IS_ACTIVE": "Localized Is Active",
+      "SCALE_SIZE": "Localized Scale Size"
     },
-    "TABLE_CAPTION": "Русский {{ start }} - {{ end }} of {{ count }} Questions to show",
+    "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
-      "TEXT": "Русский Question Text",
-      "LEVEL": "Русский Relating to",
-      "METHODS": "Русский Collection Methods",
-      "ANSWER_TYPE": "Русский Measurement Type",
-      "CATEGORY": "Русский Group",
-      "IS_ACTIVE": "Русский Active",
-      "SECTIONS": "Русский Sections",
-      "IS_HACT": "Русский Counts towards HACT",
-      "ANSWER_OPTIONS": "Русский Reporting Details"
+      "TEXT": "Localized Question Text",
+      "LEVEL": "Localized Relating to",
+      "METHODS": "Localized Collection Methods",
+      "ANSWER_TYPE": "Localized Measurement Type",
+      "CATEGORY": "Localized Group",
+      "IS_ACTIVE": "Localized Active",
+      "SECTIONS": "Localized Sections",
+      "IS_HACT": "Localized Counts towards HACT",
+      "ANSWER_OPTIONS": "Localized Reporting Details"
     },
     "DETAILS": {
-      "1": "Русский Sections",
-      "2": "Русский Counts for HACT",
-      "3": "Русский Reporting Details"
+      "1": "Localized Sections",
+      "2": "Localized Counts for HACT",
+      "3": "Localized Reporting Details"
     },
     "LEVEL": {
-      "PARTNER": "Русский Partner",
-      "OUTPUT": "Русский Output",
-      "INTERVENTION": "Русский PD/SSFA"
+      "PARTNER": "Localized Partner",
+      "OUTPUT": "Localized Output",
+      "INTERVENTION": "Localized PD/SSFA"
     }
   },
   "SITES": {
     "PLACEHOLDERS": {
-      "SEARCH": "Русский Search location or site",
-      "NAME": "Русский Enter Name Of Site",
-      "STATUS": "Русский Select Site Status",
-      "ADMIN_LOCATION": "Русский Empty Field"
+      "SEARCH": "Localized Search location or site",
+      "NAME": "Localized Enter Name Of Site",
+      "STATUS": "Localized Select Site Status",
+      "ADMIN_LOCATION": "Localized Empty Field"
     },
     "LABELS": {
-      "NAME": "Русский Name Of Site",
-      "STATUS": "Русский Is Active Status",
-      "ADMIN_LOCATION": "Русский Parent Administrative Location"
+      "NAME": "Localized Name Of Site",
+      "STATUS": "Localized Is Active Status",
+      "ADMIN_LOCATION": "Localized Parent Administrative Location"
     },
-    "SHOW_INACTIVE": "Русский Show inactive sites",
-    "TABLE_CAPTION": "Русский Sites Locations",
+    "SHOW_INACTIVE": "Localized Show inactive sites",
+    "TABLE_CAPTION": "Localized Sites Locations",
     "COLUMNS": {
-      "ADMIN_LEVEL": "Русский Admin Level",
-      "STATUS": "Русский Is Active",
-      "NAME": "Русский Name"
+      "ADMIN_LEVEL": "Localized Admin Level",
+      "STATUS": "Localized Is Active",
+      "NAME": "Localized Name"
     },
-    "REMOVE_CONFIRMATION": "Русский Are you sure that you want to delete this Site Specific Location?",
-    "SELECTED_SITE": "Русский Selected site",
-    "ADD_SL": "Русский Add Site Specific Location",
-    "EDIT_SL": "Русский Edit Site Specific Location",
+    "REMOVE_CONFIRMATION": "Localized Are you sure that you want to delete this Site Specific Location?",
+    "SELECTED_SITE": "Localized Selected site",
+    "ADD_SL": "Localized Add Site Specific Location",
+    "EDIT_SL": "Localized Edit Site Specific Location",
     "STATUS": {
-      "ACTIVE": "Русский Active",
-      "INACTIVE": "Русский Not Active"
+      "ACTIVE": "Localized Active",
+      "INACTIVE": "Localized Not Active"
     }
   },
   "MAIN": {
-    "SAVING_DATA_IN_PROCESS": "Русский Saving Data",
-    "LOADING_DATA_IN_PROCESS": "Русский Loading Data",
-    "LOADING_FILTERS_DATA": "Русский Loading Filters",
-    "REMOVING_DATA_IN_PROCESS": "Русский Deleting Data",
-    "EMPTY_FIELD": "Русский Empty Field",
-    "LATITUDE": "Русский Latitude",
-    "LONGITUDE": "Русский Longitude",
+    "SAVING_DATA_IN_PROCESS": "Localized Saving Data",
+    "LOADING_DATA_IN_PROCESS": "Localized Loading Data",
+    "LOADING_FILTERS_DATA": "Localized Loading Filters",
+    "REMOVING_DATA_IN_PROCESS": "Localized Deleting Data",
+    "EMPTY_FIELD": "Localized Empty Field",
+    "LATITUDE": "Localized Latitude",
+    "LONGITUDE": "Localized Longitude",
     "BUTTONS": {
-      "ADD": "Русский Add",
-      "SAVE": "Русский Save",
-      "DELETE": "Русский Delete",
-      "CONFIRM": "Русский Confirm",
-      "CANCEL": "Русский Cancel",
+      "ADD": "Localized Add",
+      "SAVE": "Localized Save",
+      "DELETE": "Localized Delete",
+      "CONFIRM": "Localized Confirm",
+      "CANCEL": "Localized Cancel",
       "OK": "Ok"
     },
-    "ENTER": "Русский Enter",
-    "UPLOAD": "Русский Upload File",
-    "DOWNLOAD": "Русский Download",
-    "SUPPORT": "Русский Support"
+    "ENTER": "Localized Enter",
+    "UPLOAD": "Localized Upload File",
+    "DOWNLOAD": "Localized Download",
+    "SUPPORT": "Localized Support"
   },
   "LEVELS_OPTIONS": {
-    "PARTNER": "Русский Partner",
-    "OUTPUT": "Русский Output",
-    "INTERVENTION": "Русский PD/SSFA"
+    "PARTNER": "Localized Partner",
+    "OUTPUT": "Localized Output",
+    "INTERVENTION": "Localized PD/SSFA"
   },
   "ANSWER_TYPE_OPTIONS": {
-    "TEXT": "Русский Text",
-    "NUMBER": "Русский Number",
-    "BOOL": "Русский Boolean",
-    "LIKERT_SCALE": "Русский Likert Scale"
+    "TEXT": "Localized Text",
+    "NUMBER": "Localized Number",
+    "BOOL": "Localized Boolean",
+    "LIKERT_SCALE": "Localized Likert Scale"
   },
   "MONITOR_TYPES": {
-    "STAFF": "Русский Staff",
-    "TPM": "Русский TPM"
+    "STAFF": "Localized Staff",
+    "TPM": "Localized TPM"
   },
   "ACTIVITY_STATUSES": {
-    "DRAFT": "Русский Draft",
-    "CHECKLIST": "Русский Checklist",
-    "REVIEW": "Русский Review",
-    "ASSIGNED": "Русский Assigned",
-    "DATA_COLLECTION": "Русский Data Collection",
-    "REPORT_FINALIZATION": "Русский Report Finalization",
-    "SUBMITTED": "Русский Report Review",
-    "COMPLETED": "Русский Completed",
-    "CANCELLED": "Русский Cancelled"
+    "DRAFT": "Localized Draft",
+    "CHECKLIST": "Localized Checklist",
+    "REVIEW": "Localized Review",
+    "ASSIGNED": "Localized Assigned",
+    "DATA_COLLECTION": "Localized Data Collection",
+    "REPORT_FINALIZATION": "Localized Report Finalization",
+    "SUBMITTED": "Localized Report Review",
+    "COMPLETED": "Localized Completed",
+    "CANCELLED": "Localized Cancelled"
   },
   "ATTACHMENTS_LIST": {
-    "TITLE": "Русский Attachments",
-    "RELATED_DOCUMENTS": "Русский Related Documents",
-    "REPORT_ATTACHMENTS": "Русский Report Attachments",
-    "EDIT_POPUP_TITLE": "Русский Edit Attachment",
-    "ADD_POPUP_TITLE": "Русский Add Attachment",
-    "DELETE_POPUP_TITLE": "Русский Delete attachment?",
-    "FILE_TYPE_LABEL": "Русский Document Type",
-    "FILE_TYPE_PLACEHOLDER": "Русский Select Document Type",
+    "TITLE": "Localized Attachments",
+    "RELATED_DOCUMENTS": "Localized Related Documents",
+    "REPORT_ATTACHMENTS": "Localized Report Attachments",
+    "EDIT_POPUP_TITLE": "Localized Edit Attachment",
+    "ADD_POPUP_TITLE": "Localized Add Attachment",
+    "DELETE_POPUP_TITLE": "Localized Delete attachment?",
+    "FILE_TYPE_LABEL": "Localized Document Type",
+    "FILE_TYPE_PLACEHOLDER": "Localized Select Document Type",
     "COLUMNS": {
-      "CREATED": "Русский Date Uploaded",
-      "FILE_TYPE": "Русский Document Type",
-      "FILE": "Русский File Attachment"
+      "CREATED": "Localized Date Uploaded",
+      "FILE_TYPE": "Localized Document Type",
+      "FILE": "Localized File Attachment"
     }
   },
   "NAVIGATION_MENU": {
-    "TITLE": "Русский Field Monitoring",
-    "SETTINGS": "Русский Settings",
-    "PLAN": "Русский Plan",
-    "COLLECT": "Русский Collect",
-    "ANALYZE": "Русский Analyze",
-    "COMMUNITY_CHANNELS": "Русский eTools Community Channels",
-    "KNOWLEDGE_BASE": "Русский Knowledge Base",
-    "DISCUSSION": "Русский Discussion",
-    "INFORMATION": "Русский Information"
+    "TITLE": "Localized Field Monitoring",
+    "SETTINGS": "Localized Settings",
+    "PLAN": "Localized Plan",
+    "COLLECT": "Localized Collect",
+    "ANALYZE": "Localized Analyze",
+    "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
+    "KNOWLEDGE_BASE": "Localized Knowledge Base",
+    "DISCUSSION": "Localized Discussion",
+    "INFORMATION": "Localized Information"
   },
   "FILTERS_ELEMENT": {
-    "TITLE": "Русский Filters",
-    "CLEAR_ALL": "Русский CLEAR ALL"
+    "TITLE": "Localized Filters",
+    "CLEAR_ALL": "Localized CLEAR ALL"
   },
   "LOCATION_WIDGET": {
-    "GATEWAY_NAME": "Русский Site",
+    "GATEWAY_NAME": "Localized Site",
     "MISSING_SITES": {
-      "NO_SITES": "Русский There are no sites for this location..",
-      "ADD_MISSING": "Русский You can add missing sites in "
+      "NO_SITES": "Localized There are no sites for this location..",
+      "ADD_MISSING": "Localized You can add missing sites in "
     },
     "NO_SEARCH_RESULTS": {
-      "NO_LOCATIONS": "Русский No locations or sites found. ",
-      "CHANGE_REQUEST": "Русский Please, change your search request"
+      "NO_LOCATIONS": "Localized No locations or sites found. ",
+      "CHANGE_REQUEST": "Localized Please, change your search request"
     }
   },
   "PAGE_NOT_FOUND": {
-    "HEADER": "Русский Oops! You hit a 404",
-    "CONTENT_DOESNT_EXIST": "Русский The page you're looking for doesn't seem to exist. Head back ",
-    "HOME": "Русский home",
-    "TRY_AGAIN": "Русский and try again?"
+    "HEADER": "Localized Oops! You hit a 404",
+    "CONTENT_DOESNT_EXIST": "Localized The page you're looking for doesn't seem to exist. Head back ",
+    "HOME": "Localized home",
+    "TRY_AGAIN": "Localized and try again?"
   },
   "SETTINGS": {
-    "TITLE": "Русский Settings",
-    "EXPORT": "Русский Export",
+    "TITLE": "Localized Settings",
+    "EXPORT": "Localized Export",
     "NAVIGATION_TABS": {
-      "QUESTIONS": "Русский Questions",
-      "SITES": "Русский Sites"
+      "QUESTIONS": "Localized Questions",
+      "SITES": "Localized Sites"
     }
   },
   "PLAN": {
-    "TITLE": "Русский Plan",
+    "TITLE": "Localized Plan",
     "NAVIGATION_TABS": {
-      "RATIONALE": "Русский Rationale",
-      "ISSUE_TRACKER": "Русский Issue Tracker",
-      "TEMPLATE": "Русский Templates"
+      "RATIONALE": "Localized Rationale",
+      "ISSUE_TRACKER": "Localized Issue Tracker",
+      "TEMPLATE": "Localized Templates"
     }
   },
   "ANALYZE": {
-    "TITLE": "Русский Analyze",
+    "TITLE": "Localized Analyze",
     "NAVIGATION_TABS": {
-      "MONITORING_ACTIVITY": "Русский Monitoring Activity",
-      "COUNTRY_OVERVIEW": "Русский Country Overview"
+      "MONITORING_ACTIVITY": "Localized Monitoring Activity",
+      "COUNTRY_OVERVIEW": "Localized Country Overview"
     },
     "MONITORING_TAB": {
-      "COMPLETED_VISITS": " Русский of visits are completed",
+      "COMPLETED_VISITS": " Localized of visits are completed",
       "NAVIGATION_TABS": {
-        "BY_PARTNER": "Русский By Partner",
-        "BY_PD_SSFA": "Русский By PD/SSFA",
-        "BY_CP_OUTPUT": "Русский By CP Output",
-        "BY_LOCATION": "Русский By Location"
+        "BY_PARTNER": "Localized By Partner",
+        "BY_PD_SSFA": "Localized By PD/SSFA",
+        "BY_CP_OUTPUT": "Localized By CP Output",
+        "BY_LOCATION": "Localized By Location"
       },
       "VISITS_ELIGIBLE_FOR_HACT": {
-        "TITLE": "Русский Visits Eligible for HACT Programmatic Visit",
-        "PARTNER": "Русский Partner",
-        "HACT_ELIGIBLE_VISITS": "Русский HACT Eligible Visits",
-        "VISIT": "Русский Visit",
-        "CP_OUTPUT": "Русский CP output",
-        "PD_SSFA": "Русский PD/SSFA",
-        "VISIT_END_DATE": "Русский Visit End Date"
+        "TITLE": "Localized Visits Eligible for HACT Programmatic Visit",
+        "PARTNER": "Localized Partner",
+        "HACT_ELIGIBLE_VISITS": "Localized HACT Eligible Visits",
+        "VISIT": "Localized Visit",
+        "CP_OUTPUT": "Localized CP output",
+        "PD_SSFA": "Localized PD/SSFA",
+        "VISIT_END_DATE": "Localized Visit End Date"
       },
       "GEOGRAPHIC_COVERAGE": {
-        "TITLE": "Русский Geographic coverage",
-        "COMPLETED_VISITS": "Русский Completed visits",
-        "NO_VISITS": "Русский No visits"
+        "TITLE": "Localized Geographic coverage",
+        "COMPLETED_VISITS": "Localized Completed visits",
+        "NO_VISITS": "Localized No visits"
       },
       "COVERAGE": {
-        "TITLE": "Русский Coverage of Active Partnerships",
+        "TITLE": "Localized Coverage of Active Partnerships",
         "CP_OUTPUT": {
-          "LABEL": "Русский Showing CP Outputs that can be monitored at the community level."
+          "LABEL": "Localized Showing CP Outputs that can be monitored at the community level."
         },
         "PARTNERSHIP": {
-          "COMPLETED_ASCEND_SORTING_TYPE": "Русский % of Completed ↑",
-          "COMPLETED_DESCEND_SORTING_TYPE": "Русский % of Completed ↓",
-          "COMPLETED_TASKS": "Русский Completed Tasks",
-          "MINIMUM_REQUIRED": "Русский Minimum Required Programmatic Visits",
-          "SORT_BY": "Русский Sort by",
-          "MINIMUM_REQUIRED_VISITS": "Русский Minimum Required ",
-          "DAYS_SINCE_LAST_VISIT": "Русский Days Since Last Visit "
+          "COMPLETED_ASCEND_SORTING_TYPE": "Localized % of Completed ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "Localized % of Completed ↓",
+          "COMPLETED_TASKS": "Localized Completed Tasks",
+          "MINIMUM_REQUIRED": "Localized Minimum Required Programmatic Visits",
+          "SORT_BY": "Localized Sort by",
+          "MINIMUM_REQUIRED_VISITS": "Localized Minimum Required ",
+          "DAYS_SINCE_LAST_VISIT": "Localized Days Since Last Visit "
         },
         "PD_SSFA": {
-          "LABEL": "Русский Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
+          "LABEL": "Localized Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
         },
         "OPEN_ISSUES": {
-          "TITLE": "Русский Open Issues and Action Points",
-          "ISSUES": "Русский Issues",
-          "ACTION_POINTS": "Русский Action Points"
+          "TITLE": "Localized Open Issues and Action Points",
+          "ISSUES": "Localized Issues",
+          "ACTION_POINTS": "Localized Action Points"
         },
         "SHARED_TAB": {
-          "DAYS_SINCE_LAST_VISIT": "Русский Days Since Last Visit",
-          "AVERAGE_DAYS_SINCE": "Русский Average Days Between Visits"
+          "DAYS_SINCE_LAST_VISIT": "Localized Days Since Last Visit",
+          "AVERAGE_DAYS_SINCE": "Localized Average Days Between Visits"
         }
       }
     }
   },
   "PROGRESSBAR": {
-    "COMPLETED": "Русский Completed",
-    "PLANNED": "Русский Planned",
-    "COMPLETED_VISITS": "Русский Completed Visits",
-    "PLANNED_VISITS": "Русский Planned Visits (Up to December)"
+    "COMPLETED": "Localized Completed",
+    "PLANNED": "Localized Planned",
+    "COMPLETED_VISITS": "Localized Completed Visits",
+    "PLANNED_VISITS": "Localized Planned Visits (Up to December)"
   }
 }
