@@ -43,6 +43,10 @@ import '@unicef-polymer/etools-loading';
 import {globalLoadingSelector} from '../../redux/selectors/global-loading.selectors';
 import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 
+import {registerTranslateConfig, use} from 'lit-translate';
+
+registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
+
 // These are the actions needed by this element.
 
 store.addReducers({
@@ -83,6 +87,7 @@ export class AppShell extends connect(store)(LitElement) {
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
+  private hasLoadedStrings: boolean = false;
 
   constructor() {
     super();
@@ -125,7 +130,9 @@ export class AppShell extends connect(store)(LitElement) {
     return [appDrawerStyles, AppShellStyles, RouterStyles];
   }
 
-  connectedCallback(): void {
+  async connectedCallback(): Promise<void> {
+    await use('en');
+    this.hasLoadedStrings = true;
     super.connectedCallback();
 
     installRouter((location: Location) =>
@@ -260,6 +267,10 @@ export class AppShell extends connect(store)(LitElement) {
       return this.isActiveSubPage(currentSubPageName, expectedSubPageNames);
     }
     return true;
+  }
+
+  protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
+    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
   }
 
   private _updateDrawerStyles(): void {

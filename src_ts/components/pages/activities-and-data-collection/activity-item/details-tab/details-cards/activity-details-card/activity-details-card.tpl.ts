@@ -116,6 +116,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
                 this.updateModelValue('start_date', formatDate(detail.date))}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
+              selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
             <datepicker-lite
               class="without-border"
@@ -127,6 +128,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
+              selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
           </div>
 

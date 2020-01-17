@@ -187,7 +187,7 @@ export class EtoolsFilters extends LitElement {
         fire-date-has-changed
         @date-has-changed="${this.filterDateChange}"
         data-filter-key="${f.filterKey}"
-        .selectedDateDisplayFormat="D MMM YYYY"
+        selected-date-display-format="D MMM YYYY"
       >
       </datepicker-lite>
     `;
