@@ -184,6 +184,16 @@ export function template(this: ActionPointsPopup): TemplateResult {
             ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
           </paper-checkbox>
         </div>
+
+        ${this.url
+          ? html`
+              <div class="without-border flex">
+                <a class="link-cell action-point-link" href="${this.url}" target="_blank"
+                  >Go To action points to complete<paper-icon-button icon="icons:launch"></paper-icon-button
+                ></a>
+              </div>
+            `
+          : ''}
       </div>
     </etools-dialog>
   `;
