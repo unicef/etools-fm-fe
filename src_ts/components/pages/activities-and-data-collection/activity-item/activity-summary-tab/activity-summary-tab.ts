@@ -20,6 +20,7 @@ export class ActivitySummaryTab extends LitElement {
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
 
   @property() protected findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
+  @property() private rawFindingsAndOverall: FindingsAndOverall = {overall: null, findings: null};
 
   private findingsAndOverallUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
@@ -53,13 +54,17 @@ export class ActivitySummaryTab extends LitElement {
      */
     this.findingsAndOverallUnsubscribe = store.subscribe(
       summaryFindingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
+        this.rawFindingsAndOverall = {overall, findings};
         this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
       }, false)
     );
 
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector(() => {
-        store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
+        this.findingsAndOverall = sortFindingsAndOverall(
+          this.rawFindingsAndOverall.overall,
+          this.rawFindingsAndOverall.findings
+        );
       })
     );
   }
