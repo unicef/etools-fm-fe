@@ -45,13 +45,13 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         <etools-data-table-column class="col-data flex-none w110px">
           ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1">
+        <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-none w90px">
           ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2">
+        <etools-data-table-column class="col-data flex-1">
           ${translate('ACTIVITIES_LIST.COLUMNS.PERSON_RESPONSIBLE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-2">
@@ -72,9 +72,9 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-none w130px">-</div>
                 <div class="col-data flex-none w110px">-</div>
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-none w90px">-</div>
                 <div class="col-data flex-2">-</div>
+                <div class="col-data flex-none w90px">-</div>
+                <div class="col-data flex-1">-</div>
                 <div class="col-data flex-2">-</div>
                 <div class="col-data flex-none w80px">-</div>
                 <div class="col-data flex-none w100px">-</div>
@@ -94,14 +94,14 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                 >
               </div>
               <div class="col-data flex-none w110px">${this.formatDate(activity.start_date)}</div>
-              <div class="col-data flex-1">
+              <div class="col-data flex-2">
                 ${activity.location && activity.location.name}
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}
               </div>
               <div class="col-data flex-none w90px">
                 ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
-              <div class="col-data flex-2">${activity.person_responsible?.name}</div>
+              <div class="col-data flex-1">${activity.person_responsible?.name}</div>
               <div class="col-data flex-2">
                 ${(activity.team_members &&
                   activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ')) ||
