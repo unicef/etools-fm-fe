@@ -257,7 +257,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (userType === USER_TPM && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
-    this.getMembersOptions({userType});
+    this.getMembersOptions({userType: userType, tpmPartner: this.tpmPartner});
   }
 
   cancel(): void {

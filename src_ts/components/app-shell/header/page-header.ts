@@ -18,12 +18,12 @@ import {fireEvent} from '../../utils/fire-custom-event';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 
-import {registerTranslateConfig, use} from 'lit-translate';
+import {use} from 'lit-translate';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 
-registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
+// registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
 store.addReducers({
   activeLanguage
@@ -71,16 +71,12 @@ export class PageHeader extends connect(store)(LitElement) {
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
   //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [
-    {value: 'en', display_name: 'English'},
-    {value: 'ru', display_name: 'Русский'}
-  ];
+  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
 
   @property() selectedLanguage: string = 'en';
 
   constructor() {
     super();
-    use(this.selectedLanguage);
     store.subscribe(
       currentUser((userDataState: IEtoolsUserModel | null) => {
         if (!userDataState) {
@@ -151,7 +147,8 @@ export class PageHeader extends connect(store)(LitElement) {
               hide-search
               allow-outside-scroll
               no-label-float
-              dynamic-align
+              .minWidth="160px"
+              .autoWidth="${true}"
             ></etools-dropdown>
 
             <countries-dropdown class="dropdowns__item"></countries-dropdown>

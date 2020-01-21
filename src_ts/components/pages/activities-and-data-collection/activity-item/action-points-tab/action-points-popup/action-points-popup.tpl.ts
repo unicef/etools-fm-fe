@@ -73,6 +73,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           label="Due on"
           @date-has-changed="${({detail}: CustomEvent) => this.updateModelValue('due_date', formatDate(detail.date))}"
           dynamic-align
+          selected-date-display-format="D MMM YYYY"
         ></datepicker-lite>
 
         <!--    Section     -->
