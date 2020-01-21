@@ -28,6 +28,7 @@ import {setTextareasMaxHeight} from '../../../../../utils/textarea-max-rows-help
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
+import {CardStyles} from '../../../../../styles/card-styles';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -42,6 +43,7 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   @property() savingInProcess: boolean | null = false;
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
+  @property() url: string | null = null;
 
   mappings: Map<string, RelatedToFields> = new Map<string, RelatedToFields>([
     [PARTNER, 'partner'],
@@ -52,21 +54,24 @@ export class ActionPointsPopup extends InterventionsMixin(
   liteInterventions: LiteIntervention[] = [];
 
   set dialogData({action_point, activity_id}: ActionPointPopupData) {
-    this.data = action_point
-      ? this.extractIds(action_point)
-      : {
-          id: null,
-          description: '',
-          category: null,
-          assigned_to: null,
-          section: null,
-          office: null,
-          due_date: null,
-          high_priority: false,
-          partner: null,
-          cp_output: null,
-          intervention: null
-        };
+    if (action_point) {
+      this.data = this.extractIds(action_point);
+      this.url = action_point.url;
+    } else {
+      this.data = {
+        id: null,
+        description: '',
+        category: null,
+        assigned_to: null,
+        section: null,
+        office: null,
+        due_date: null,
+        high_priority: false,
+        partner: null,
+        cp_output: null,
+        intervention: null
+      };
+    }
     this.activityId = activity_id;
     this.selectedRelatedTo = this.getRelatedTo(this.editedData);
   }
@@ -264,6 +269,7 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   static get styles(): CSSResult[] {
     return [
+      CardStyles,
       css`
         .grid-container {
           display: grid;
@@ -275,7 +281,8 @@ export class ActionPointsPopup extends InterventionsMixin(
           height: 62px;
         }
 
-        .priority {
+        .priority,
+        .action-point-link {
           display: flex;
           align-items: center;
           padding: 0 12px;
