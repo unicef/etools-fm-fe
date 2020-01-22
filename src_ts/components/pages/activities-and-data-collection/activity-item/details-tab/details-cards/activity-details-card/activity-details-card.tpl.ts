@@ -107,7 +107,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <div class="layout horizontal">
           <div class="layout horizontal flex">
             <datepicker-lite
-              class="without-border"
+              class="without-border datepicker-width"
               value="${this.editedData.start_date || ''}"
               label="${translate('ACTIVITY_DETAILS.START_DATE')}"
               .autoValidate="${true}"
@@ -119,7 +119,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
             <datepicker-lite
-              class="without-border"
+              class="without-border datepicker-width"
               value="${this.editedData.end_date || ''}"
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"

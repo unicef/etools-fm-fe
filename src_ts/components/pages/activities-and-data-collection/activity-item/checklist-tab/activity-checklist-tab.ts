@@ -15,7 +15,7 @@ store.addReducers({activityChecklist});
 
 @customElement('activity-checklist-tab')
 export class ActivityChecklistTab extends LitElement {
-  @property() protected sortedChecklist: GenericObject<IChecklistItem[]> = {};
+  @property() protected sortedChecklist: GenericObject<IChecklistItem[]> | null = null;
   private activityChecklistUnsubscribe!: Unsubscribe;
 
   private _activityId: number | null = null;
@@ -36,22 +36,32 @@ export class ActivityChecklistTab extends LitElement {
   // language=HTML
   render(): TemplateResult {
     return html`
-      ${Object.keys(this.sortedChecklist).length
-        ? Object.entries(this.sortedChecklist).map(
-            ([title, checklist]: [string, IChecklistItem[]]) => html`
-              <checklist-selection-table
-                .tableTitle="${title}"
-                .questionsList="${checklist}"
-                .activityId="${this.activityId}"
-              >
-              </checklist-selection-table>
-            `
-          )
-        : html`
-            <section class="elevation page-content" elevation="1">
-              <div>${translate('ACTIVITY_CHECKLIST.NO_QUESTIONS_FOUND')}</div>
-            </section>
-          `}
+      <!-- Spinner -->
+      <etools-loading
+        ?active="${!this.sortedChecklist}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
+      ${this.sortedChecklist
+        ? html`
+            ${Object.keys(this.sortedChecklist).length
+              ? Object.entries(this.sortedChecklist).map(
+                  ([title, checklist]: [string, IChecklistItem[]]) => html`
+                    <checklist-selection-table
+                      .tableTitle="${title}"
+                      .questionsList="${checklist}"
+                      .activityId="${this.activityId}"
+                    >
+                    </checklist-selection-table>
+                  `
+                )
+              : html`
+                  <section class="elevation page-content" elevation="1">
+                    <div>${translate('ACTIVITY_CHECKLIST.NO_QUESTIONS_FOUND')}</div>
+                  </section>
+                `}
+          `
+        : ''}
     `;
   }
 
