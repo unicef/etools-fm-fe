@@ -65,5 +65,8 @@
     }
   ],
   "moduleResolution": "node",
-  "npm": true
+  "npm": true,
+  "lint": {
+    "ignoreWarnings": ["non-literal-import"]
+  }
 }

@@ -5,9 +5,11 @@ import {Unsubscribe} from 'redux';
 import {LitElement} from 'lit-element';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
-// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
+/* @polymerMixin */
 export const SiteMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
+    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     locations: IGroupedSites[] = [];
     private sitesUnsubscribe!: Unsubscribe;
 
