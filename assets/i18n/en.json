@@ -75,7 +75,7 @@
     "END_DATE": "End Date",
     "SECTIONS": "Sections",
     "TEAM_MEMBERS": "Team Members",
-    "PERSONAL_RESPONSIBLE": "Personal Responsible",
+    "PERSON_RESPONSIBLE": "Person Responsible",
     "TPM_PARTNER": "Third Party Monitor Partner",
     "USER_TYPE": "Primary Field Monitor is",
     "USER_TYPES": {

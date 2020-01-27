@@ -74,7 +74,7 @@
     "END_DATE": "Localized End Date",
     "SECTIONS": "Localized Sections",
     "TEAM_MEMBERS": "Localized Team Members",
-    "PERSONAL_RESPONSIBLE": "Localized Personal Responsible",
+    "PERSON_RESPONSIBLE": "Localized Person Responsible",
     "TPM_PARTNER": "Localized Third Party Monitor Partner",
     "USER_TYPE": "Localized Primary Field Monitor is",
     "USER_TYPES": {
