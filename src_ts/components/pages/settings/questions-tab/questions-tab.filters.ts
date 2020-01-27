@@ -1,5 +1,5 @@
 import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
-import {translate} from '../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 export const questionsFilters: IEtoolsFilter[] = [
   {

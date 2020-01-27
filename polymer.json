@@ -1,7 +1,7 @@
 {
   "entrypoint": "index.html",
   "shell": "src/components/app-shell/app-shell.js",
-  "sources": ["images/**/*"],
+  "sources": ["assets/**"],
   "fragments": [
     "src/components/pages/page-not-found.js",
     "src/components/pages/settings/settings-page.js",
@@ -43,6 +43,7 @@
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/web-animations-js/web-animations-next-lite.min.js",
     "node_modules/leaflet/dist/leaflet.js",
+    "node_modules/leaflet/dist/leaflet.css",
     "node_modules/moment/min/moment.min.js",
     "push-manifest.json"
   ],
@@ -64,5 +65,8 @@
     }
   ],
   "moduleResolution": "node",
-  "npm": true
+  "npm": true,
+  "lint": {
+    "ignoreWarnings": ["non-literal-import"]
+  }
 }

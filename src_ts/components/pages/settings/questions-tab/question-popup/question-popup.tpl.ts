@@ -3,12 +3,12 @@ import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
 import {QuestionPopupComponent} from './question-popup';
-import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {BOOLEAN_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
+import {translate} from 'lit-translate';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
   return html`

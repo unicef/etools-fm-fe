@@ -3,6 +3,7 @@ import '@polymer/paper-toast/paper-toast';
 import '@polymer/paper-button/paper-button';
 import {PaperToastElement} from '@polymer/paper-toast/paper-toast';
 import {PaperButtonElement} from '@polymer/paper-button/paper-button';
+import {translate} from 'lit-translate';
 
 /**
  * @LitElement
@@ -69,7 +70,7 @@ export class EtoolsToast extends LitElement {
     return html`
       <paper-toast id="toast" class="toast-general-style" @iron-overlay-closed="${() => this.toastClosed()}">
         <paper-button id="confirmBtn" @tap="${() => this.confirmToast()}" class="toast-dismiss-btn-general-style">
-          Ok
+          ${translate('MAIN.BUTTONS.OK')}
         </paper-button>
       </paper-toast>
     `;

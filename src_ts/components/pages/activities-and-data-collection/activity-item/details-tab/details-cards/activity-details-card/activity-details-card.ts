@@ -123,6 +123,9 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
       FlexLayoutClasses,
       CardStyles,
       css`
+        .datepicker-width {
+          flex-basis: 30%;
+        }
         .card-content {
           padding-bottom: 10px;
         }

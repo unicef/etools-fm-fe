@@ -102,7 +102,7 @@ export class EtoolsTabs extends LitElement {
           ${item.tabLabel}
           ${item.showTabCounter
             ? html`
-                (item.counter)
+                ${item.counter}
               `
             : ''}
         </span>

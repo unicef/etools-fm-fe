@@ -27,7 +27,6 @@ import {requestActivityDetails} from '../../../../redux/effects/activity-details
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
-import {addTranslates, ENGLISH, translate} from '../../../../localization/localisation';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
 import {ACTIVITIES_PAGE} from '../activities-page';
@@ -37,12 +36,11 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-button';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {CardStyles} from '../../../styles/card-styles';
-import {DATA_COLLECTION_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/data-collection.translates';
 import {sortFindingsAndOverall} from '../../../utils/findings-and-overall-sort';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
+import {translate} from 'lit-translate';
 
-addTranslates(ENGLISH, DATA_COLLECTION_TRANSLATES);
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
 const PAGE: string = 'activities';

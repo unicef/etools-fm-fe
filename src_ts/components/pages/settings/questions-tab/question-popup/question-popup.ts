@@ -23,6 +23,8 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
+import {applyDropdownTranslation} from '../../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -33,8 +35,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
   readonly methods: EtoolsMethod[] = store.getState().staticData.methods || [];
   readonly categories: EtoolsCategory[] = store.getState().staticData.categories || [];
-  readonly levels: DefaultDropdownOption<string>[] = LEVELS;
-  readonly answerTypes: AnswerTypeOption[] = ANSWER_TYPES;
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
+  @property() answerTypes: AnswerTypeOption[] = applyDropdownTranslation(ANSWER_TYPES);
   readonly scaleSizes: DefaultDropdownOption[] = [
     {value: 3, display_name: '3'},
     {value: 5, display_name: '5'},
@@ -48,6 +50,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   };
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -69,6 +72,13 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
         this.dialogOpened = false;
         fireEvent(this, 'response', {confirmed: true});
       }, false)
+    );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.levels = applyDropdownTranslation(LEVELS);
+        this.answerTypes = applyDropdownTranslation(ANSWER_TYPES);
+      })
     );
   }
 
@@ -97,6 +107,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateQuestionUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   updateAnswerType(newType: QuestionAnswerType): void {

@@ -1,6 +1,5 @@
 import {html, TemplateResult} from 'lit-html';
 import {IssueTrackerTabComponent} from './issue-tracker-tab';
-import {translate} from '../../../../localization/localisation';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {repeat} from 'lit-html/directives/repeat';
 import '@polymer/paper-toggle-button';
@@ -8,6 +7,7 @@ import '@unicef-polymer/etools-data-table';
 import '@unicef-polymer/etools-dropdown';
 import {prettyDate} from '../../../utils/date-utility';
 import {simplifyValue} from '../../../utils/objects-diff';
+import {translate} from 'lit-translate';
 
 export function template(this: IssueTrackerTabComponent): TemplateResult {
   // language=HTML
@@ -134,7 +134,9 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                   ${logIssue.attachments.length
                     ? html`
                         <div class="files-column" @click="${() => this.viewFiles(logIssue)}">
-                          ${logIssue.attachments.length} ${logIssue.attachments.length > 1 ? 'FILES' : 'FILE'}
+                          ${logIssue.attachments.length > 1
+                            ? translate('ISSUE_TRACKER.ATTACHMENTS_FILES.MULTIPLE')
+                            : translate('ISSUE_TRACKER.ATTACHMENTS_FILES.SINGLE')}
                         </div>
                       `
                     : ''}

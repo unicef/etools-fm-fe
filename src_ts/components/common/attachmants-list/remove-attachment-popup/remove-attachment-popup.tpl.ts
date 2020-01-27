@@ -1,6 +1,6 @@
 import {RemoveAttachmentPopupComponent} from './remove-attachment-popup';
 import {html, TemplateResult} from 'lit-element';
-import {translate} from '../../../../localization/localisation';
+import {translate} from 'lit-translate';
 import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
 

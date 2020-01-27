@@ -4,9 +4,11 @@ import {Unsubscribe} from 'redux';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 
-// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
+/* @polymerMixin */
 export const PagePermissionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
+    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     permissionsReady: boolean = false;
 
     private userUnsubscribe!: Unsubscribe;

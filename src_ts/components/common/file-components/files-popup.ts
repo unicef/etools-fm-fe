@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, html, property, customElement, CSSResult, css} from 'lit-element';
 import {InputStyles} from '../../styles/input-styles';
 import {DialogStyles} from '../../styles/dialog-styles';
-import {translate} from '../../../localization/localisation';
+import {translate} from 'lit-translate';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {repeat} from 'lit-html/directives/repeat';
 import '@unicef-polymer/etools-upload/etools-upload';

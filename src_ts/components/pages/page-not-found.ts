@@ -4,6 +4,7 @@ import {SharedStyles} from '../styles/shared-styles';
 import {ROOT_PATH} from '../../config/config';
 import {pageLayoutStyles} from '../styles/page-layout-styles';
 import {elevationStyles} from '../styles/elevation-styles';
+import {translate} from 'lit-translate';
 
 /**
  * @customElement
@@ -21,10 +22,11 @@ export class PageNotFound extends LitElement {
   render(): TemplateResult {
     return html`
       <section class="page-content elevation" elevation="1">
-        <h2>Oops! You hit a 404</h2>
+        <h2>${translate('PAGE_NOT_FOUND.HEADER')}</h2>
         <p>
-          The page you're looking for doesn't seem to exist. Head back <a href="${this.rootPath}">home</a> and try
-          again?
+          ${translate('PAGE_NOT_FOUND.CONTENT_DOESNT_EXIST')}<a href="${this.rootPath}"
+            >${translate('PAGE_NOT_FOUND.HOME')}</a
+          >${translate('PAGE_NOT_FOUND.TRY_AGAIN')}
         </p>
       </section>
     `;

@@ -1,7 +1,7 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '../../../../common/progressbar/column-item-progress-bar';
 import {repeat} from 'lit-html/directives/repeat';
-import {translate} from '../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 enum WidthCalculationTargets {
   DAYS = 'days',
@@ -35,7 +35,7 @@ export class SharedTabTemplate extends LitElement {
               <column-item-progress-bar
                 .progressValue="${item.days_since_visit}"
                 .width="${this.calculateProgressBarWidth(item, WidthCalculationTargets.DAYS)}"
-                .labelValue="${'Days Since Last Visit'}"
+                .labelValue="${translate('ANALYZE.MONITORING_TAB.COVERAGE.SHARED_TAB.DAYS_SINCE_LAST_VISIT')}"
                 .completedDivBackgroundColor="${item.days_since_visit
                   ? this.computeCompletedDivBackgroundColor(item)
                   : 'green'}"
@@ -45,7 +45,7 @@ export class SharedTabTemplate extends LitElement {
               <column-item-progress-bar
                 .progressValue="${item.avg_days_between_visits}"
                 .width="${this.calculateProgressBarWidth(item, WidthCalculationTargets.AVG)}"
-                .labelValue="${'Average Days Between Visits'}"
+                .labelValue="${translate('ANALYZE.MONITORING_TAB.COVERAGE.SHARED_TAB.AVERAGE_DAYS_SINCE')}"
                 .completedDivBackgroundColor="${item.avg_days_between_visits ? '#D8D8D8' : 'green'}"
               >
               </column-item-progress-bar>

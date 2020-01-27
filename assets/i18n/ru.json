@@ -1,0 +1,541 @@
+{
+  "ACTIVITIES_LIST": {
+    "TITLE": "Localized Activities",
+    "CREATE_NEW_BUTTON": "Localized Create New",
+    "COLUMNS": {
+      "REFERENCE_NUMBER": "Localized Reference #",
+      "START_DATE": "Localized Start Date",
+      "LOCATION_AND_SITE": "Localized Location & Site",
+      "MONITOR_TYPE": "Localized Primary FM",
+      "TEAM_MEMBERS": "Localized Team Members",
+      "CHECKLISTS_COUNT": "Localized Checklists",
+      "STATUS": "Localized Status"
+    },
+    "FILTERS": {
+      "MONITOR_TYPE": "Localized Primary FM",
+      "TEAM_MEMBERS": "Localized Team Members",
+      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "LOCATION": "Localized Location",
+      "SITE": "Localized Site",
+      "PARTNERS": "Localized Partners",
+      "TPM_PARTNERS": "Localized TPM Partners",
+      "INTERVENTIONS": "Localized PD/SSFA",
+      "CP_OUTPUTS": "Localized CP Outputs",
+      "STATUS": "Localized Status",
+      "START_DATE": "Localized Start Date",
+      "END_DATE": "Localized End Date"
+    }
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "Localized Specific issues for Probing/Attention",
+    "PD_SSFA_DETAILS": {
+      "TITLE": "Localized PD/SSFA Details",
+      "REFERENCE_NUMBER": "Localized Reference Number",
+      "DOCUMENT_TYTLE": "Localized Document Title",
+      "TYPE": "Localized Type",
+      "PROGRESS_REPORTS": "Localized Progress Reports"
+    },
+    "SUMMARY": {
+      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
+      "ADDITIONAL_BUTTONS": {
+        "OFF_TRACK": "Off Track",
+        "ON_TRACK": "On Track"
+      }
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this question. Please add them in settings or planing or select another sections in activity details",
+    "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
+    "ADD_DETAIL": "Localized Add Detail",
+    "COLUMNS": {
+      "TEXT": "Localized Checklist Item",
+      "DETAILS": "Localized Specific Details to Probe",
+      "METHODS": "Localized Methods"
+    }
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "Localized Add checklist",
+    "EDIT_CHECKLIST": "Edit checklist",
+    "COLUMNS": {
+      "TEAM_MEMBER": "Localized Team Member",
+      "METHOD_TYPE": "Localized Method",
+      "INFO_SOURCE": "Localized Information Source"
+    },
+    "LABELS": {
+      "METHOD": "Localized Method",
+      "INFO_SOURCE": "Localized Information Source"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "Localized Activity Details",
+    "MONITOR_INFO": "Localized Monitor Information",
+    "ENTRIES_TO_MONITOR": "Localized Entities to monitor",
+    "START_DATE": "Localized Start Date",
+    "END_DATE": "Localized End Date",
+    "SECTIONS": "Localized Sections",
+    "TEAM_MEMBERS": "Localized Team Members",
+    "PERSONAL_RESPONSIBLE": "Localized Personal Responsible",
+    "TPM_PARTNER": "Localized Third Party Monitor Partner",
+    "USER_TYPE": "Localized Primary Field Monitor is",
+    "USER_TYPES": {
+      "STAFF": "Localized Staff",
+      "TPM": "Localized Third Party Monitor"
+    },
+    "PARTNER": "Localized Partner",
+    "CP_OUTPUT": "Localized CP Output",
+    "INTERVENTION": "Localized Intervention",
+    "PARTNERS": "Localized Partners",
+    "PARTNER_ORGANIZATION": "Localized Partner Organization",
+    "CP_OUTPUTS": "Localized CP Outputs",
+    "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SSFA were found:",
+    "INTERVENTIONS": "Localized PD/SSFAs",
+    "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SSFA:",
+    "ADD_ENTRY": "Localized Add New Item",
+    "ADD_PARTNER": "Localized Add Partner",
+    "ADD_CP_OUTPUT": "Localized Add CP Output",
+    "ADD_INTERVENTION": "Localized Add PD/SSFA",
+    "REJECTION_NOTE": "Localized Rejection Note",
+    "CANCELLATION_NOTE": "Localized Cancellation Note",
+    "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
+  },
+  "ACTIVITY_ITEM": {
+    "NEW_ACTIVITY": "Localized New Activity",
+    "STATUS_CHANGE": "Localized Changing Status",
+    "TRANSITIONS": {
+      "mark_details_configured": "Localized Next",
+      "mark_checklist_configured": "Localized Review",
+      "ASSIGN_AND_ACCEPT": "Localized Assign & Accept",
+      "assign": "Localized Assign",
+      "accept": "Localized Accept",
+      "mark_data_collected": "Localized Finalize",
+      "submit_report": "Localized Submit",
+      "complete": "Localized Complete",
+      "reject": "Localized Reject",
+      "cancel": "Localized Cancel",
+      "reject_report": "Localized Reject Report"
+    },
+    "REASON_FOR_TRANSITION": {
+      "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
+      "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
+      "reject_report": {"LABEL": "Localized Report rejection comment", "TITLE": "Localized Report rejection reason"}
+    },
+    "STATUSES": {
+      "draft": "Localized Draft",
+      "checklist": "Localized Checklist",
+      "review": "Localized Review",
+      "assigned": "Localized Assigned",
+      "data_collection": "Localized Data Collection",
+      "report_finalization": "Localized Report finalization",
+      "submitted": "Localized Report Review",
+      "completed": "Localized Completed",
+      "cancelled": "Localized Cancelled"
+    },
+    "TABS": {
+      "details": "Localized Details",
+      "attachments": "Localized Attachments",
+      "checklist": "Localized Checklist",
+      "review": "Localized Review",
+      "collect": "Localized Data Collect",
+      "summary": "Localized Summary",
+      "additional-info": "Localized Additional Info",
+      "action-points": "Localized Action Points"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "TITLE": "Localized Checklist Attachments",
+      "METHOD": "Localized Method",
+      "DATA_COLLECTOR": "Localized Data Collector",
+      "METHOD_TYPE": "Localized Method type",
+      "RELATED_TO": "Localized Related To",
+      "RELATED_NAME": "Localized Related Name",
+      "DATE_UPLOADED": "Localized Date Uploaded",
+      "DOCUMENT_TYPE": "Localized Document Type",
+      "FILE_ATTACHMENT": "Localized File Attachment"
+    },
+    "ACTION_POINTS": {
+      "TITLE": "Localized Action Points",
+      "REFERENCE": "Localized Reference No.",
+      "DESCRIPTION": "Localized Description",
+      "ASSIGNEE": "Localized Assignee",
+      "SECTION_OFFICE": "Localized Section / Office",
+      "STATUS": "Localized Status",
+      "DUE_ON": "Localized Due on",
+      "PRIORITY": "Localized Priority",
+      "RELATED_TO": "Localized Related to",
+      "CONTENT": "Localized Content",
+      "POPUP": {
+        "HIGH_PRIORITY": "Localized High Priority"
+      }
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_POPUP_TITLE": "Localized Attachments for",
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "SINGLE": "Localized {{ count }} File",
+        "MULTIPLE": "Localized {{ count }} Files",
+        "DEFAULT": "Localized Upload Files"
+      }
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "TEXT": "Localized Checklist Item",
+      "DETAILS": "Localized Specific Details to Probe"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "Localized Source of information"
+  },
+  "CO_OVERVIEW": {
+    "CP_OUTCOME": "Localized CP Outcome",
+    "CP_INDICATORS": "Localized CP Indicators",
+    "TARGET": "Localized Target",
+    "PARTNERS": "Localized Partners",
+    "PROG_VISITS": "Localized M.R. Prog. Visits",
+    "PARTNERSHIPS": "Localized Partnerships",
+    "SINCE_LAST_VISIT": "Localized Days Since Last Site Visit",
+    "PD_OUTPUT": "Localized PD Output",
+    "SSFA_EXPECTED_RESULT": "Localized SSFA Expected Result",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "Localized Select CP Outcome"
+    }
+  },
+  "ISSUE_TRACKER": {
+    "CP_OUTPUT": "Localized CP Output",
+    "PARTNER": "Localized Partner",
+    "LOCATION": "Localized Location",
+    "SITE": "Localized Site",
+    "LOCATION_SITE": "Localized Location & Site",
+    "IS_NEW": "Localized Show only New",
+    "RELATED_TO_TYPE": "Localized Issue Related To",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "Localized Cp Output",
+      "PARTNER": "Localized Partner",
+      "LOCATION": "Localized Location/Site"
+    },
+    "STATUS": "Localized Status",
+    "STATUSES": {
+      "NEW": "Localized New",
+      "PAST": "Localized Past"
+    },
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "Localized Select CP Output",
+      "PARTNER": "Localized Select Partner",
+      "LOCATION": "Localized Select Location",
+      "SITE": "Localized Select Site",
+      "STATUS": "Localized Select Status",
+      "ISSUE": "Localized Enter Issue For Attention/Probing"
+    },
+    "POPUP_TITLE": "Localized Log Issue",
+    "RELATED_TO": "Localized Related To",
+    "NAME": "Localized Name",
+    "ISSUE": "Localized Issue For Attention/Probing",
+    "ATTACHMENTS": "Localized Attachment(s)",
+    "ATTACHMENT": "Localized Attachment",
+    "UPLOAD_LABEL": "Localized Attach file",
+    "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Issues to show",
+    "LAST_MODIFIED_BY": "Localized Last Modified By",
+    "AUTHOR": "Localized Issue Raised By",
+    "CLOSED_BY": "Localized Issue Closed By",
+    "ATTACHMENTS_FILES": {
+      "SINGLE": "FILE",
+      "MULTIPLE": "FILES"
+    }
+  },
+  "RATIONALE": {
+    "TITLE": "Localized Annual Field Monitoring Rationale",
+    "POPUP_TITLE": "Localized Rationale",
+    "YEAR_DRD_LABEL": "Localized Year",
+    "YEAR_DRD_PLACEHOLDER": "Localized Select Year",
+    "LABELS": {
+      "PRIORITIZATION": "Localized Prioritization Criteria",
+      "METHODOLOGY": "Localized Methodology Notes & Standards",
+      "MODALITIES": "Localized Modalities",
+      "VISITS": "Localized Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Localized Partner Engagement",
+      "OTHER": "Localized Other Comments"
+    },
+    "PLACEHOLDERS": {
+      "PRIORITIZATION": "Localized Enter Prioritization Criteria",
+      "METHODOLOGY": "Localized Enter Methodology Notes & Standards",
+      "MODALITIES": "Localized Enter Modalities",
+      "VISITS": "Localized Enter Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Localized Enter Partner Engagement",
+      "OTHER": "Localized Enter Other Comments"
+    },
+    "HELPER_TEXTS": {
+      "PRIORITIZATION": "Localized e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response",
+      "METHODOLOGY": "Localized e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs",
+      "MODALITIES": "Localized e.g Staff, UNV, SSAs, TPMs to undertake field monitoring",
+      "PARTNER_ENGAGEMENT": "Localized e.g any arrangements established for join visits"
+    },
+    "ANNUAL_FM_RATIONALE": {
+      "LAST_EDITED": "Localized Last edited by {{ user }} on {{ date }}"
+    }
+  },
+  "TEMPLATES": {
+    "FILTERS": {
+      "LEVEL_LABEL": "Localized Select Level",
+      "LEVEL_PLACEHOLDER": "Localized Select Level",
+      "OUTPUT_LABEL": "Localized Select Output",
+      "OUTPUT_PLACEHOLDER": "Localized Select Output",
+      "PARTNER_LABEL": "Localized Select Partner",
+      "PARTNER_PLACEHOLDER": "Localized Select Partner",
+      "INTERVENTION_LABEL": "Localized Select PD/SSFA",
+      "INTERVENTION_PLACEHOLDER": "Localized Select PD/SSFA"
+    },
+    "COLUMNS": {
+      "DETAILS": "Localized Specific Details to Probe",
+      "TEXT": "Localized Checklist Item",
+      "METHODS": "Localized Methods"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
+    "ADD_DETAIL": "Localized Add Detail"
+  },
+  "QUESTIONS": {
+    "EDIT_POPUP_TITLE": "Localized Edit Question",
+    "ADD_POPUP_TITLE": "Localized Add Question",
+    "PLACEHOLDERS": {
+      "QUESTION": "Localized Enter Question Text",
+      "SECTIONS": "Localized Select Sections",
+      "METHODS": "Localized Select Collection Methods",
+      "CATEGORY": "Localized Select Group",
+      "LEVEL": "Localized Select Question Target Level",
+      "ANSWER_TYPE": "Localized Select Answer Type",
+      "SCALE_SIZE": "Localized Select Scale Size"
+    },
+    "LABELS": {
+      "QUESTION": "Localized Question",
+      "LEVEL": "Localized Question Target Level",
+      "SECTIONS": "Localized Sections",
+      "METHODS": "Localized Collection Methods",
+      "CATEGORY": "Localized Group",
+      "ANSWER_TYPE": "Localized Answer Type",
+      "IS_HACT": "Localized Counts towards HACT",
+      "IS_ACTIVE": "Localized Is Active",
+      "SCALE_SIZE": "Localized Scale Size"
+    },
+    "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
+    "COLUMNS": {
+      "TEXT": "Localized Question Text",
+      "LEVEL": "Localized Relating to",
+      "METHODS": "Localized Collection Methods",
+      "ANSWER_TYPE": "Localized Measurement Type",
+      "CATEGORY": "Localized Group",
+      "IS_ACTIVE": "Localized Active",
+      "SECTIONS": "Localized Sections",
+      "IS_HACT": "Localized Counts towards HACT",
+      "ANSWER_OPTIONS": "Localized Reporting Details"
+    },
+    "DETAILS": {
+      "1": "Localized Sections",
+      "2": "Localized Counts for HACT",
+      "3": "Localized Reporting Details"
+    },
+    "LEVEL": {
+      "PARTNER": "Localized Partner",
+      "OUTPUT": "Localized Output",
+      "INTERVENTION": "Localized PD/SSFA"
+    }
+  },
+  "SITES": {
+    "PLACEHOLDERS": {
+      "SEARCH": "Localized Search location or site",
+      "NAME": "Localized Enter Name Of Site",
+      "STATUS": "Localized Select Site Status",
+      "ADMIN_LOCATION": "Localized Empty Field"
+    },
+    "LABELS": {
+      "NAME": "Localized Name Of Site",
+      "STATUS": "Localized Is Active Status",
+      "ADMIN_LOCATION": "Localized Parent Administrative Location"
+    },
+    "SHOW_INACTIVE": "Localized Show inactive sites",
+    "TABLE_CAPTION": "Localized Sites Locations",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "Localized Admin Level",
+      "STATUS": "Localized Is Active",
+      "NAME": "Localized Name"
+    },
+    "REMOVE_CONFIRMATION": "Localized Are you sure that you want to delete this Site Specific Location?",
+    "SELECTED_SITE": "Localized Selected site",
+    "ADD_SL": "Localized Add Site Specific Location",
+    "EDIT_SL": "Localized Edit Site Specific Location",
+    "STATUS": {
+      "ACTIVE": "Localized Active",
+      "INACTIVE": "Localized Not Active"
+    }
+  },
+  "MAIN": {
+    "SAVING_DATA_IN_PROCESS": "Localized Saving Data",
+    "LOADING_DATA_IN_PROCESS": "Localized Loading Data",
+    "LOADING_FILTERS_DATA": "Localized Loading Filters",
+    "REMOVING_DATA_IN_PROCESS": "Localized Deleting Data",
+    "EMPTY_FIELD": "Localized Empty Field",
+    "LATITUDE": "Localized Latitude",
+    "LONGITUDE": "Localized Longitude",
+    "BUTTONS": {
+      "ADD": "Localized Add",
+      "SAVE": "Localized Save",
+      "DELETE": "Localized Delete",
+      "CONFIRM": "Localized Confirm",
+      "CANCEL": "Localized Cancel",
+      "OK": "Ok"
+    },
+    "ENTER": "Localized Enter",
+    "UPLOAD": "Localized Upload File",
+    "DOWNLOAD": "Localized Download",
+    "SUPPORT": "Localized Support"
+  },
+  "LEVELS_OPTIONS": {
+    "PARTNER": "Localized Partner",
+    "OUTPUT": "Localized Output",
+    "INTERVENTION": "Localized PD/SSFA"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "TEXT": "Localized Text",
+    "NUMBER": "Localized Number",
+    "BOOL": "Localized Boolean",
+    "LIKERT_SCALE": "Localized Likert Scale"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "Localized Staff",
+    "TPM": "Localized TPM"
+  },
+  "ACTIVITY_STATUSES": {
+    "DRAFT": "Localized Draft",
+    "CHECKLIST": "Localized Checklist",
+    "REVIEW": "Localized Review",
+    "ASSIGNED": "Localized Assigned",
+    "DATA_COLLECTION": "Localized Data Collection",
+    "REPORT_FINALIZATION": "Localized Report Finalization",
+    "SUBMITTED": "Localized Report Review",
+    "COMPLETED": "Localized Completed",
+    "CANCELLED": "Localized Cancelled"
+  },
+  "ATTACHMENTS_LIST": {
+    "TITLE": "Localized Attachments",
+    "RELATED_DOCUMENTS": "Localized Related Documents",
+    "REPORT_ATTACHMENTS": "Localized Report Attachments",
+    "EDIT_POPUP_TITLE": "Localized Edit Attachment",
+    "ADD_POPUP_TITLE": "Localized Add Attachment",
+    "DELETE_POPUP_TITLE": "Localized Delete attachment?",
+    "FILE_TYPE_LABEL": "Localized Document Type",
+    "FILE_TYPE_PLACEHOLDER": "Localized Select Document Type",
+    "COLUMNS": {
+      "CREATED": "Localized Date Uploaded",
+      "FILE_TYPE": "Localized Document Type",
+      "FILE": "Localized File Attachment"
+    }
+  },
+  "NAVIGATION_MENU": {
+    "TITLE": "Localized Field Monitoring",
+    "SETTINGS": "Localized Settings",
+    "PLAN": "Localized Plan",
+    "COLLECT": "Localized Collect",
+    "ANALYZE": "Localized Analyze",
+    "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
+    "KNOWLEDGE_BASE": "Localized Knowledge Base",
+    "DISCUSSION": "Localized Discussion",
+    "INFORMATION": "Localized Information"
+  },
+  "FILTERS_ELEMENT": {
+    "TITLE": "Localized Filters",
+    "CLEAR_ALL": "Localized CLEAR ALL"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "Localized Site",
+    "MISSING_SITES": {
+      "NO_SITES": "Localized There are no sites for this location..",
+      "ADD_MISSING": "Localized You can add missing sites in "
+    },
+    "NO_SEARCH_RESULTS": {
+      "NO_LOCATIONS": "Localized No locations or sites found. ",
+      "CHANGE_REQUEST": "Localized Please, change your search request"
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "HEADER": "Localized Oops! You hit a 404",
+    "CONTENT_DOESNT_EXIST": "Localized The page you're looking for doesn't seem to exist. Head back ",
+    "HOME": "Localized home",
+    "TRY_AGAIN": "Localized and try again?"
+  },
+  "SETTINGS": {
+    "TITLE": "Localized Settings",
+    "EXPORT": "Localized Export",
+    "NAVIGATION_TABS": {
+      "QUESTIONS": "Localized Questions",
+      "SITES": "Localized Sites"
+    }
+  },
+  "PLAN": {
+    "TITLE": "Localized Plan",
+    "NAVIGATION_TABS": {
+      "RATIONALE": "Localized Rationale",
+      "ISSUE_TRACKER": "Localized Issue Tracker",
+      "TEMPLATE": "Localized Templates"
+    }
+  },
+  "ANALYZE": {
+    "TITLE": "Localized Analyze",
+    "NAVIGATION_TABS": {
+      "MONITORING_ACTIVITY": "Localized Monitoring Activity",
+      "COUNTRY_OVERVIEW": "Localized Country Overview"
+    },
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": " Localized of visits are completed",
+      "NAVIGATION_TABS": {
+        "BY_PARTNER": "Localized By Partner",
+        "BY_PD_SSFA": "Localized By PD/SSFA",
+        "BY_CP_OUTPUT": "Localized By CP Output",
+        "BY_LOCATION": "Localized By Location"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "TITLE": "Localized Visits Eligible for HACT Programmatic Visit",
+        "PARTNER": "Localized Partner",
+        "HACT_ELIGIBLE_VISITS": "Localized HACT Eligible Visits",
+        "VISIT": "Localized Visit",
+        "CP_OUTPUT": "Localized CP output",
+        "PD_SSFA": "Localized PD/SSFA",
+        "VISIT_END_DATE": "Localized Visit End Date"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "TITLE": "Localized Geographic coverage",
+        "COMPLETED_VISITS": "Localized Completed visits",
+        "NO_VISITS": "Localized No visits"
+      },
+      "COVERAGE": {
+        "TITLE": "Localized Coverage of Active Partnerships",
+        "CP_OUTPUT": {
+          "LABEL": "Localized Showing CP Outputs that can be monitored at the community level."
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "Localized % of Completed ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "Localized % of Completed ↓",
+          "COMPLETED_TASKS": "Localized Completed Tasks",
+          "MINIMUM_REQUIRED": "Localized Minimum Required Programmatic Visits",
+          "SORT_BY": "Localized Sort by",
+          "MINIMUM_REQUIRED_VISITS": "Localized Minimum Required ",
+          "DAYS_SINCE_LAST_VISIT": "Localized Days Since Last Visit "
+        },
+        "PD_SSFA": {
+          "LABEL": "Localized Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
+        },
+        "OPEN_ISSUES": {
+          "TITLE": "Localized Open Issues and Action Points",
+          "ISSUES": "Localized Issues",
+          "ACTION_POINTS": "Localized Action Points"
+        },
+        "SHARED_TAB": {
+          "DAYS_SINCE_LAST_VISIT": "Localized Days Since Last Visit",
+          "AVERAGE_DAYS_SINCE": "Localized Average Days Between Visits"
+        }
+      }
+    }
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "Localized Completed",
+    "PLANNED": "Localized Planned",
+    "COMPLETED_VISITS": "Localized Completed Visits",
+    "PLANNED_VISITS": "Localized Planned Visits (Up to December)"
+  }
+}

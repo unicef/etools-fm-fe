@@ -8,7 +8,6 @@ import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/
 import {LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent} from 'leaflet';
 import {getDifference} from '../../../../utils/objects-diff';
 import {MapHelper} from '../../../../common/map-mixin';
-import {translate} from '../../../../../localization/localisation';
 import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -18,6 +17,10 @@ import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {debounce} from '../../../../utils/debouncer';
+import {translate} from 'lit-translate';
+import {applyDropdownTranslation} from '../../../../utils/translation-helper';
+import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
+import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 const LAT_LNG_DEBOUNCE_TIME: number = 700;
@@ -33,10 +36,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   savingInProcess: boolean = false;
-  readonly statusOptions: SiteStatusOption[] = [
-    {id: 0, value: false, display_name: translate('SITES.STATUS.INACTIVE')},
-    {id: 1, value: true, display_name: translate('SITES.STATUS.ACTIVE')}
-  ];
+  @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
   @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
@@ -44,6 +44,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;
   private readonly MapHelper: MapHelper;
   private readonly setLatLngWithDelay: Callback;
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -80,6 +81,12 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         this.defaultMapCenter = (workspace.point && workspace.point.coordinates) || DEFAULT_COORDINATES;
       })
     );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.statusOptions = applyDropdownTranslation(STATUS_OPTIONS);
+      })
+    );
   }
 
   set dialogData(data: SitesPopupData) {
@@ -103,6 +110,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     super.disconnectedCallback();
     this.updateSiteLocationUnsubscribe();
     this.currentWorkspaceUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   onClose(): void {

@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../../../localization/localisation';
 import {EntitiesMonitorCard} from './entities-monitor-card';
 import {CARD_NAME} from './entities-monitor-card';
+import {translate} from 'lit-translate';
 
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['cp_outputs', 'partners', 'interventions'];
 

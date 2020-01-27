@@ -19,6 +19,8 @@ interface IRootState {
   fullReports: IFullReportsState;
   activitySummary: IActivitySummaryState;
   findingsComponents: IFindingsComponentsState;
+  activeLanguage: IActiveLanguageState;
+  globalLoading: IGlobalLoadingState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -212,6 +214,14 @@ interface IMonitoringActivityState {
   openIssuesLocation: OpenIssuesActionPoints[];
   lastActivatedTab: string;
   hactVisits: HactVisits[];
+}
+
+interface IGlobalLoadingState {
+  message: string | null;
+}
+
+interface IActiveLanguageState {
+  activeLanguage: string;
 }
 
 type Selector<T> = (onChange: (state: T) => void, initialize?: boolean) => Callback;

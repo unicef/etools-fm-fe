@@ -6,9 +6,11 @@ import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {INTERVENTIONS} from '../../../endpoints/endpoints-list';
 
-// eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
+/* @polymerMixin */
 export const InterventionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
+    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     interventions: EtoolsIntervention[] = [];
 
     private interventionsUnsubscribe!: Unsubscribe;
