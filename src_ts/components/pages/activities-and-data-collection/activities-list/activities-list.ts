@@ -28,8 +28,7 @@ import {CardStyles} from '../../../styles/card-styles';
 import {buttonsStyles} from '../../../styles/button-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
-import {createActivityDetails} from '../../../../redux/effects/activity-details.effects';
-import {activityDetailsData, activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
+import {activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
@@ -48,7 +47,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly activitiesDataUnsubscribe: Unsubscribe;
-  private readonly activityDataUnsubscribe: Unsubscribe;
   private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   @property() private filtersData: GenericObject = {
@@ -83,7 +81,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
         }
         this.count = data.count;
         this.items = data.results;
-        console.log('items', this.items);
       }, false)
     );
 
@@ -91,14 +88,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       activityDetailsError((error: null | GenericObject) => {
         if (error) {
           fireEvent(this, 'toast', {text: 'Can not create Activity'});
-        }
-      }, false)
-    );
-
-    this.activityDataUnsubscribe = store.subscribe(
-      activityDetailsData((data: IActivityDetails | null) => {
-        if (data) {
-          updateAppLocation(`activities/${data.id}`);
         }
       }, false)
     );
@@ -124,14 +113,13 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
   }
 
   goNew(): void {
-    store.dispatch<AsyncEffect>(createActivityDetails());
+    updateAppLocation(`activities/new`);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.activitiesDataUnsubscribe();
-    this.activityDataUnsubscribe();
     this.activityErrorUnsubscribe();
     this.activeLanguageUnsubscribe();
   }
