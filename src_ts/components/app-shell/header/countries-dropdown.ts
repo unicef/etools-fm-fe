@@ -13,6 +13,7 @@ import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
+import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 
 /**
  * @LitElement
@@ -123,7 +124,10 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   }
 
   protected triggerCountryChangeRequest(selectedCountryId: number): void {
-    store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId));
+    localStorage.clear();
+    etoolsCustomDexieDb
+      .delete()
+      .finally(() => store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId)));
   }
 
   protected changeRequestStatus(isRequest: boolean): void {
