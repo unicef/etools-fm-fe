@@ -208,7 +208,7 @@
     "IS_NEW": "Localized Show only New",
     "RELATED_TO_TYPE": "Localized Issue Related To",
     "RELATED_TYPE": {
-      "CP_OUTPUT": "Localized Cp Output",
+      "CP_OUTPUT": "Localized CP Output",
       "PARTNER": "Localized Partner",
       "LOCATION": "Localized Location/Site"
     },
@@ -226,6 +226,9 @@
       "ISSUE": "Localized Enter Issue For Attention/Probing"
     },
     "POPUP_TITLE": "Localized Log Issue",
+    "POPUP_ERROR_CP_OUTPUT": "Localized CP Output is not provided",
+    "POPUP_ERROR_PARTNER": "Localized Partner is not provided",
+    "POPUP_ERROR_LOCATION": "Localized Location is not provided",
     "RELATED_TO": "Localized Related To",
     "NAME": "Localized Name",
     "ISSUE": "Localized Issue For Attention/Probing",
