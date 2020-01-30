@@ -30,7 +30,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
       <div class="container layout vertical">
         <paper-textarea
-          class="validate-input disabled-as-readonly flex-7"
+          class="validate-input disabled-as-readonly flex-7 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
           max-rows="3"
