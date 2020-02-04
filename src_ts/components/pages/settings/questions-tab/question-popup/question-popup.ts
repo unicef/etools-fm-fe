@@ -1,4 +1,5 @@
 import {
+  css,
   CSSResultArray,
   customElement,
   LitElement,
@@ -83,7 +84,18 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionPopupStyles];
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      QuestionPopupStyles,
+      css`
+        .question-textarea {
+          padding-bottom: 1%;
+        }
+      `
+    ];
   }
 
   set dialogData(data: IQuestion) {
