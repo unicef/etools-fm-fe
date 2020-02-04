@@ -209,7 +209,7 @@
     "IS_NEW": "Show only New",
     "RELATED_TO_TYPE": "Issue Related To",
     "RELATED_TYPE": {
-      "CP_OUTPUT": "Cp Output",
+      "CP_OUTPUT": "CP Output",
       "PARTNER": "Partner",
       "LOCATION": "Location/Site"
     },
@@ -227,6 +227,9 @@
       "ISSUE": "Enter Issue For Attention/Probing"
     },
     "POPUP_TITLE": "Log Issue",
+    "POPUP_ERROR_CP_OUTPUT": "CP Output is not provided",
+    "POPUP_ERROR_PARTNER": "Partner is not provided",
+    "POPUP_ERROR_LOCATION": "Location is not provided",
     "RELATED_TO": "Related To",
     "NAME": "Name",
     "ISSUE": "Issue For Attention/Probing",

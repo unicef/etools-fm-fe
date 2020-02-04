@@ -17,6 +17,7 @@ import {SiteMixin} from '../../../../common/mixins/site-mixin';
 import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
+import {translate} from 'lit-translate';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
@@ -117,16 +118,16 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   validate(): boolean {
     const type: RelatedType = this.relatedToType;
     if (type === 'cp_output' && !this.editedData.cp_output) {
-      this.errors = {...this.errors, ...{cp_output: 'Cp Output is not provided'}};
+      this.errors = {...this.errors, ...{cp_output: translate('ISSUE_TRACKER.POPUP_ERROR_CP_OUTPUT')}};
       return false;
     }
     if (type === 'partner' && !this.editedData.partner) {
-      this.errors = {...this.errors, ...{partner: 'Partner is not provided'}};
+      this.errors = {...this.errors, ...{partner: translate('ISSUE_TRACKER.POPUP_ERROR_PARTNER')}};
       return false;
     }
     if (type === 'location') {
       if (!this.editedData.location) {
-        this.errors = {...this.errors, ...{location: 'Location is not provided'}};
+        this.errors = {...this.errors, ...{location: translate('ISSUE_TRACKER.POPUP_ERROR_LOCATION')}};
         return false;
       }
     }
