@@ -17,7 +17,7 @@ import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
-import {ANSWER_TYPES, BOOLEAN_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
+import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
@@ -201,7 +201,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       delete this.errors.scale;
     }
 
-    if (type === BOOLEAN_TYPE) {
+    if (type === BOOL_TYPE) {
       this.editedData.options = [
         {label: '', value: 'True'},
         {label: '', value: 'False'}

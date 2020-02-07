@@ -1,24 +1,19 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '../../../common/layout/page-content-header/page-content-header';
-import './data-collection-card/data-collection-card';
-import {SharedStyles} from '../../../styles/shared-styles';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {buttonsStyles} from '../../../styles/button-styles';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../../routing/routes';
 import {Unsubscribe} from 'redux';
 import {
+  loadBlueprint,
   loadDataCollectionChecklistInfo,
-  loadFindingsAndOverall,
-  updateDataCollectionChecklistInformationSource,
-  updateFindingsAndOverall
+  updateBlueprintValue
 } from '../../../../redux/effects/data-collection.effects';
 import {
-  dataCollectionChecklistData,
-  dataCollectionChecklistErrorsSelector,
-  findingsAndOverallData
+  dataCollectionChecklistBlueprint,
+  dataCollectionChecklistData
 } from '../../../../redux/selectors/data-collection.selectors';
 import {dataCollection} from '../../../../redux/reducers/data-collection.reducer';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
@@ -27,19 +22,14 @@ import {requestActivityDetails} from '../../../../redux/effects/activity-details
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
-import {getEndpoint} from '../../../../endpoints/endpoints';
-import {DATA_COLLECTION_OVERALL_FINDING} from '../../../../endpoints/endpoints-list';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-button';
-import {elevationStyles} from '../../../styles/elevation-styles';
-import {CardStyles} from '../../../styles/card-styles';
-import {sortFindingsAndOverall} from '../../../utils/findings-and-overall-sort';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {SharedStyles} from '../../../styles/shared-styles';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -49,18 +39,14 @@ const SUB_ROUTE: string = 'data-collection';
 @customElement('data-collection-checklist')
 export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private checklist: DataCollectionChecklist | null = null;
-  @property() private findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
-  @property() private editedData: string = '';
-  private originalData: string = '';
-  @property() private informationSourceError: string = '';
+  @property() private checklistFormJson: ChecklistFormJson | null = null;
   private activityDetails: IActivityDetails | null = null;
   private tabIsReadonly: boolean = true;
 
   private routeDetailsUnsubscribe!: Unsubscribe;
   private checklistUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
-  private findingsAndOverallUnsubscribe!: Unsubscribe;
-  private dataCollectionErrors!: Unsubscribe;
+  private blueprintUnsubscribe!: Unsubscribe;
   private activityId: string | null = null;
   private checklistId: string | null = null;
 
@@ -69,7 +55,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       ${InputStyles}
       <page-content-header>
         <div slot="page-title">
-          <div class="method-name">${this.checklist ? this.getMethodName(this.checklist.method) : ''}</div>
+          <div class="method-name">${this.checklistFormJson?.blueprint.title}</div>
 
           <div class="title-description">
             <a href="${ROOT_PATH}${PAGE}/${this.activityId}/${DETAILS_TAB}">
@@ -88,61 +74,24 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
       </page-content-header>
 
-      <!--  Information source  -->
-      ${this.checkInformationSource()
+      ${this.checklistFormJson
         ? html`
-            <section class="elevation page-content card-container" elevation="1">
-              <div class="information-source">
-                <paper-input
-                  .value="${this.editedData}"
-                  @value-changed="${({detail}: CustomEvent) => (this.editedData = detail.value)}"
-                  label="${translate('SOURCE_OF_INFORMATION.INPUT_LABEL')}"
-                  placeholder="Enter source of information"
-                  required
-                  ?invalid="${this.informationSourceError}"
-                  error-message="${this.informationSourceError}"
-                >
-                </paper-input>
-                <iron-collapse ?opened="${this.originalData != this.editedData || this.informationSourceError}">
-                  <div class="layout horizontal end-justified card-buttons">
-                    <paper-button class="save-button" @tap="${() => this.save()}"
-                      >${translate('MAIN.BUTTONS.SAVE')}</paper-button
-                    >
-                  </div>
-                </iron-collapse>
-              </div>
-            </section>
+            <form-builder-group
+              .groupStructure="${this.checklistFormJson.blueprint.structure}"
+              .groupValue="${this.checklistFormJson.value}"
+              .metadata="${this.checklistFormJson.blueprint.metadata}"
+              .readonly="${this.tabIsReadonly}"
+              @value-changed="${(event: CustomEvent) => this.save(event)}"
+            ></form-builder-group>
           `
         : ''}
-
-      <!--  Findings Cards  -->
-      ${Object.values(this.findingsAndOverall)
-        .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
-        .map(({name, findings, overall}: SortedFindingsAndOverall) => {
-          return html`
-            <data-collection-card
-              .tabName="${name}"
-              .overallInfo="${overall}"
-              .findings="${findings}"
-              .attachmentsEndpoint="${this.getAttachmentsEndpoint(overall)}"
-              ?readonly="${this.tabIsReadonly}"
-              @attachments-updated="${() => this.getOverallInfo()}"
-              @update-data="${({detail}: CustomEvent) => this.updateOverallAndFindings(detail)}"
-            ></data-collection-card>
-          `;
-        })}
     `;
   }
 
-  save(): void {
-    if (this.activityId === null || this.checklistId === null) {
-      return;
+  save(event: CustomEvent): void {
+    if (this.activityId && this.checklistId) {
+      store.dispatch<AsyncEffect>(updateBlueprintValue(this.activityId, this.checklistId, event.detail.value));
     }
-    store.dispatch<AsyncEffect>(
-      updateDataCollectionChecklistInformationSource(this.activityId, this.checklistId, {
-        information_source: this.editedData
-      })
-    );
   }
 
   connectedCallback(): void {
@@ -167,25 +116,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       dataCollectionChecklistData((data: DataCollectionChecklist | null) => {
         if (data) {
           this.checklist = data;
-          this.initInformationSource();
         }
       }, false)
     );
 
-    this.dataCollectionErrors = store.subscribe(
-      dataCollectionChecklistErrorsSelector((errors: GenericObject | null) => {
-        if (errors) {
-          this.informationSourceError = errors.data.information_source[0];
-        }
-      }, false)
-    );
-
-    /**
-     * Sorts and sets findings and overall data on store.dataCollection.checklist.findingsAndOverall changes
-     */
-    this.findingsAndOverallUnsubscribe = store.subscribe(
-      findingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
-        this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
+    this.blueprintUnsubscribe = store.subscribe(
+      dataCollectionChecklistBlueprint((dataCollectionJson: ChecklistFormJson | null) => {
+        console.log('blueprint', dataCollectionJson);
+        this.checklistFormJson = dataCollectionJson;
       }, false)
     );
 
@@ -207,6 +145,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         this.activityId = activityId;
         this.checklistId = checklistId;
+        if (this.activityId && this.checklistId) {
+          store.dispatch<AsyncEffect>(loadBlueprint(this.activityId, this.checklistId));
+        }
 
         this.loadActivityDetails();
       })
@@ -218,46 +159,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.routeDetailsUnsubscribe();
     this.checklistUnsubscribe();
     this.activityDetailsUnsubscribe();
-    this.findingsAndOverallUnsubscribe();
-    this.dataCollectionErrors();
-  }
-
-  checkInformationSource(): boolean {
-    if (!this.methods) {
-      return false;
-    }
-    const methodData: EtoolsMethod | undefined = this.methods.find((method: EtoolsMethod) =>
-      this.checklist ? method.id === this.checklist.method : false
-    );
-    return methodData ? methodData.use_information_source : false;
-  }
-
-  /**
-   * Updates Findings on @update-data event from data-collection-card component
-   */
-  updateOverallAndFindings(requestData: DataCollectionRequestData): void {
-    if (this.activityId === null || this.checklistId === null) {
-      return;
-    }
-    store.dispatch<AsyncEffect>(updateFindingsAndOverall(this.activityId, this.checklistId, requestData));
-  }
-
-  /**
-   * Requests Overall Findings info
-   */
-  getOverallInfo(): void {
-    if (this.activityId === null || this.checklistId === null) {
-      return;
-    }
-    store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId, 'findings'));
-  }
-
-  private initInformationSource(): void {
-    if (this.checklist) {
-      this.originalData = this.checklist.information_source;
-      this.editedData = this.originalData;
-      this.informationSourceError = '';
-    }
+    this.blueprintUnsubscribe();
   }
 
   /**
@@ -297,7 +199,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     }
 
     this.tabIsReadonly = !this.activityDetails.permissions.edit.started_checklist_set;
-    store.dispatch<AsyncEffect>(loadFindingsAndOverall(this.activityId, this.checklistId));
 
     const dataCollectionState: IDataCollectionState = store.getState().dataCollection;
     const loadedChecklistId: number | null =
@@ -308,20 +209,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
       store.dispatch<AsyncEffect>(loadDataCollectionChecklistInfo(this.activityId, this.checklistId));
     } else {
       this.checklist = dataCollectionState.checklist.data;
-      this.initInformationSource();
     }
-  }
-
-  private getAttachmentsEndpoint(overall: DataCollectionOverall): string | undefined {
-    if (!this.activityId || !this.checklistId || !overall) {
-      return;
-    }
-    const url: string = getEndpoint(DATA_COLLECTION_OVERALL_FINDING, {
-      activityId: this.activityId,
-      checklistId: this.checklistId,
-      overallId: overall.id
-    }).url;
-    return `${url}attachments/bulk-update/`;
   }
 
   static get styles(): CSSResultArray {
@@ -329,21 +217,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     return [
       SharedStyles,
       pageContentHeaderSlottedStyles,
-      pageLayoutStyles,
       buttonsStyles,
-      elevationStyles,
-      CardStyles,
       FlexLayoutClasses,
       css`
-        .save-button {
-          color: var(--primary-background-color);
-          background-color: var(--primary-color);
-        }
-
-        .information-source {
-          padding: 0.5% 2% 0.5% 1%;
-        }
-
         page-content-header {
           --table-row-height: auto;
           --table-row-margin: 0;
@@ -363,15 +239,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         .title-description a {
           text-decoration: none;
-        }
-
-        data-collection-card {
-          display: block;
-          margin: 25px 25px 0;
-        }
-
-        data-collection-card:last-child {
-          margin-bottom: 25px;
         }
 
         .back-button {

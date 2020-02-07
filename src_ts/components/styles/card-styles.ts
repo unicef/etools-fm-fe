@@ -6,7 +6,7 @@ export const CardStyles: CSSResult = css`
     position: relative;
     display: flex;
     align-items: center;
-    height: 60px;
+    min-height: 60px;
     padding: 0 10px 0 25px;
   }
 

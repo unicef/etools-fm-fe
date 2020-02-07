@@ -397,6 +397,8 @@
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Localized Text",
     "NUMBER": "Localized Number",
+    "NUMBER_INTEGER_TYPE": "Localized Integer number",
+    "NUMBER_FLOAT_TYPE": "Localized Float number",
     "BOOL": "Localized Boolean",
     "LIKERT_SCALE": "Localized Likert Scale"
   },

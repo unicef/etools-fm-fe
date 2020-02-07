@@ -53,6 +53,8 @@ export class PageContentHeader extends LitElement {
       .title-row {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
         margin: var(--table-row-margin, 30px 0 0);
         padding: 0 24px;
         height: var(--table-row-height, 36px);
@@ -60,7 +62,6 @@ export class PageContentHeader extends LitElement {
 
       .title-row h1 {
         display: flex;
-        flex: 1;
         margin: var(--title-margin);
         @apply --page-title;
       }
@@ -79,6 +80,20 @@ export class PageContentHeader extends LitElement {
 
         .title-row h1 {
           font-size: 18px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .title-row {
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          margin-bottom: 3%;
+        }
+        .title-row h1 {
+          font-size: 18px;
+          width: 100%;
         }
       }
     `;

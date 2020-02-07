@@ -1,13 +1,20 @@
 import {customElement, html, TemplateResult} from 'lit-element';
-import {BaseFinding} from './base-finding';
+import {BaseField} from './base-field';
 import '@polymer/paper-input/paper-input';
 
-@customElement('number-finding')
-export class NumberFinding extends BaseFinding<number> {
+@customElement('number-field')
+export class NumberField extends BaseField<number> {
   protected controlTemplate(): TemplateResult {
     return html`
+      <style>
+        @media (max-width: 380px) {
+          .no-padding-left {
+            padding-left: 0;
+          }
+        }
+      </style>
       <paper-input
-        class="without-border"
+        class="without-border no-padding-left"
         no-label-float
         .value="${this.value}"
         @keypress="${(event: KeyboardEvent) => this.checkValue(event)}"

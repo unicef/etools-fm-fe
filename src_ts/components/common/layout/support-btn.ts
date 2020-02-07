@@ -26,6 +26,12 @@ export class SupportBtn extends LitElement {
       iron-icon {
         margin-right: 4px;
       }
+
+      @media (max-width: 650px) {
+        .support-text {
+          display: none;
+        }
+      }
     `;
   }
 
@@ -37,7 +43,7 @@ export class SupportBtn extends LitElement {
         target="_blank"
       >
         <iron-icon icon="communication:textsms"></iron-icon>
-        ${translate('MAIN.SUPPORT')}
+        <span class="support-text">${translate('MAIN.SUPPORT')}</span>
       </a>
     `;
   }

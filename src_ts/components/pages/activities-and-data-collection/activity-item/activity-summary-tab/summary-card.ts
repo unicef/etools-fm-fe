@@ -1,14 +1,61 @@
-import {css, CSSResultArray, customElement, html, property, TemplateResult} from 'lit-element';
-import {DataCollectionCard} from '../../data-collection/data-collection-card/data-collection-card';
+import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/paper-toggle-button';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
-import {translate} from 'lit-translate';
+import {get, translate} from 'lit-translate';
+import {template} from './summary-card.tpl';
+import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {FormBuilderCardStyles} from '../../data-collection/data-collection-card/form-builder-card.styles';
+import {openDialog} from '../../../../utils/dialog';
+import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
+import {store} from '../../../../../redux/store';
+import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
+import '../../data-collection/data-collection-card/finding-types/text-field';
+import '../../data-collection/data-collection-card/finding-types/number-field';
+import '../../data-collection/data-collection-card/finding-types/scale-field';
+import './summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 
 @customElement('summary-card')
-export class SummaryCard extends MethodsMixin(DataCollectionCard) {
+export class SummaryCard extends MethodsMixin(LitElement) {
+  @property({type: String}) cardId: string = (Math.random() * 100000000).toFixed();
+  @property({type: String}) tabName: string = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
+  @property({type: Array}) findings: SummaryFinding[] = [];
+  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  attachmentsEndpoint?: string;
+
+  @property() protected isEditMode: boolean = false;
+  @property() protected blockEdit: boolean = false;
+  @property() protected updateInProcess: boolean = false;
+
+  private originalOverallInfo: SummaryOverall | null = null;
+  private originalFindings: SummaryFinding[] = [];
+
+  render(): TemplateResult | void {
+    return template.call(this);
+  }
+
+  openAttachmentsPopup(): void {
+    if (!this.overallInfo) {
+      return;
+    }
+    openDialog<AttachmentsPopupData>({
+      dialog: 'summary-checklist-attachments-popup',
+      dialogData: {
+        attachments: this.overallInfo.attachments,
+        updateUrl: this.attachmentsEndpoint,
+        title: `${get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_POPUP_TITLE')} ${this.tabName}`
+      },
+      readonly: this.readonly || !this.attachmentsEndpoint
+    }).then(({confirmed}: IEtoolsDialogResponse) => {
+      if (!confirmed) {
+        return;
+      }
+
+      fireEvent(this, 'attachments-updated');
+    });
+  }
 
   private get filteredOverallFindings(): CompletedOverallFinding[] {
     return (
@@ -77,6 +124,11 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
       : html``;
   }
 
+  protected updateOverallFinding(newData: Partial<SummaryOverall>): void {
+    const oldData: Partial<SummaryOverall> = this.overallInfo || {};
+    this.overallInfo = {...oldData, ...newData} as SummaryOverall;
+  }
+
   protected getAdditionalButtons(): TemplateResult {
     return html`
       <div class="ontrack-container layout horizontal">
@@ -88,8 +140,143 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
         ></paper-toggle-button>
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
       </div>
-      ${super.getAdditionalButtons()}
+      ${this.getAttachmentsButton()}
     `;
+  }
+
+  /**
+   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab is readonly and no attachments uploaded
+   */
+  protected getAttachmentsButton(): TemplateResult {
+    const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;
+    const showAttachmentsButton: boolean = Boolean(
+      this.overallInfo && (!isReadonly || this.overallInfo.attachments.length)
+    );
+    return showAttachmentsButton
+      ? html`
+          <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">
+            <iron-icon icon="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></iron-icon>
+            ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
+          </paper-button>
+        `
+      : html``;
+  }
+
+  protected getAttachmentsBtnText(attachmentsCount: number): Callback {
+    if (attachmentsCount === 1) {
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
+    } else if (attachmentsCount > 1) {
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
+    } else {
+      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
+    }
+  }
+
+  protected getFindingTemplate(finding: SummaryFinding): TemplateResult {
+    switch (finding.activity_question.question.answer_type) {
+      case TEXT_TYPE:
+        return html`
+          <div class="finding-container">
+            <text-field
+              ?is-readonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            >
+              ${this.getFindingQuestion(finding)}
+            </text-field>
+          </div>
+        `;
+      case NUMBER_TYPE:
+        return html`
+          <div class="finding-container">
+            <number-field
+              ?is-readonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            >
+              ${this.getFindingQuestion(finding)}
+            </number-field>
+          </div>
+        `;
+      case BOOL_TYPE:
+      case SCALE_TYPE:
+        return html`
+          <div class="finding-container">
+            <scale-field
+              .options="${finding.activity_question.question.options}"
+              ?is-readonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            >
+              ${this.getFindingQuestion(finding)}
+            </scale-field>
+          </div>
+        `;
+      default:
+        return html``;
+    }
+  }
+
+  /**
+   * Gets data changes, fires event
+   */
+  protected saveChanges(): void {
+    const overall: Partial<DataCollectionOverall> | null = this.getOverallInfoChanges();
+    const findings: Partial<SummaryFinding>[] | null = this.getFindingsChanges();
+    if (!overall && !findings) {
+      this.cancelEdit();
+    } else {
+      fireEvent(this, 'update-data', {findings, overall});
+    }
+  }
+
+  /**
+   * Reverts all changes to original data, resets original data fields, cancel edit using store.dispatch
+   */
+  protected cancelEdit(): void {
+    this.findings = this.originalFindings;
+    this.overallInfo = this.originalOverallInfo;
+    this.originalOverallInfo = null;
+    this.originalFindings = [];
+    store.dispatch(new SetEditedFindingsCard(null));
+  }
+
+  /**
+   * On finding item input changes
+   * we need to run performUpdate for cancelEdit() correct behaviour
+   */
+  protected updateFinding(finding: SummaryFinding, value: any): void {
+    finding.value = value;
+    this.performUpdate();
+  }
+
+  /**
+   * Compares narrative_finding field, returns null if narrative_finding is not changed
+   */
+  private getOverallInfoChanges(): Partial<SummaryOverall> | null {
+    if (!this.originalOverallInfo || !this.overallInfo) {
+      return null;
+    }
+    const finding: string | null =
+      this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding
+        ? this.overallInfo.narrative_finding
+        : null;
+    return finding
+      ? {
+          id: this.overallInfo.id,
+          narrative_finding: finding
+        }
+      : null;
+  }
+
+  /**
+   * Compares and returns changed findings
+   */
+  private getFindingsChanges(): Partial<SummaryFinding>[] | null {
+    const changes: Partial<SummaryFinding>[] = this.findings
+      .filter((finding: SummaryFinding, index: number) => finding.value !== this.originalFindings[index].value)
+      .map(({id, value}: SummaryFinding) => ({id, value}));
+    return changes.length ? changes : null;
   }
 
   private toggleChange(onTrackState: boolean): void {
@@ -119,7 +306,8 @@ export class SummaryCard extends MethodsMixin(DataCollectionCard) {
   static get styles(): CSSResultArray {
     // language=CSS
     return [
-      ...DataCollectionCard.styles,
+      FormBuilderCardStyles,
+      FlexLayoutClasses,
       css`
         .completed-finding {
           flex-basis: 50%;

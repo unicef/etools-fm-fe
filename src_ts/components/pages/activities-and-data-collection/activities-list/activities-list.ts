@@ -83,7 +83,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
         }
         this.count = data.count;
         this.items = data.results;
-        console.log('items', this.items);
       }, false)
     );
 

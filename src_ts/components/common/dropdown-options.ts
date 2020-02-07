@@ -11,10 +11,15 @@ import {
 } from '../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 // ANSWER_TYPES
+export const FILE_TYPE: 'file' = 'file';
 export const TEXT_TYPE: 'text' = 'text';
 export const NUMBER_TYPE: 'number' = 'number';
-export const BOOLEAN_TYPE: 'bool' = 'bool';
+export const BOOL_TYPE: 'bool' = 'bool';
 export const SCALE_TYPE: 'likert_scale' = 'likert_scale';
+
+// Data collection Json specific types
+export const NUMBER_INTEGER_TYPE: 'number-integer' = 'number-integer';
+export const NUMBER_FLOAT_TYPE: 'number-float' = 'number-float';
 
 // LEVELS
 export const PARTNER: 'partner' = 'partner';
@@ -27,8 +32,9 @@ export const TPM: 'tpm' = 'tpm';
 
 export const ANSWER_TYPES: AnswerTypeOption[] = [
   {value: TEXT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.TEXT`},
-  {value: NUMBER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER`},
-  {value: BOOLEAN_TYPE, display_name: `ANSWER_TYPE_OPTIONS.BOOL`},
+  {value: NUMBER_INTEGER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER_INTEGER_TYPE`},
+  {value: NUMBER_FLOAT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER_FLOAT_TYPE`},
+  {value: BOOL_TYPE, display_name: `ANSWER_TYPE_OPTIONS.BOOL`},
   {value: SCALE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.LIKERT_SCALE`}
 ];
 
