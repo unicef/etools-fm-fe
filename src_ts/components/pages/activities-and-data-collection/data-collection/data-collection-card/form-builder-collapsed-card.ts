@@ -93,7 +93,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
       if (this.isEditMode) {
         const tmp: GenericObject = clone(this.originalValue);
         tmp.attachments = response.attachments;
-        fireEvent(this, 'value-changed', this.value);
+        fireEvent(this, 'value-changed', tmp);
       } else {
         this.saveChanges();
       }

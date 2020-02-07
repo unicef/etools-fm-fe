@@ -25,7 +25,6 @@ export class FormBuilderCard extends LitElement implements IFormBuilderCard {
   }
   @property() metadata!: BlueprintMetadata;
   @property() parentGroupName: string = '';
-  @property() isEditMode: boolean = true;
   @property() showSaveButton: boolean = false;
   @property() readonly: boolean = true;
 
@@ -42,7 +41,7 @@ export class FormBuilderCard extends LitElement implements IFormBuilderCard {
           .metadata="${this.metadata}"
           .parentGroupName="${this.parentGroupName}"
           .readonly="${this.readonly}"
-          .isEditMode="${this.isEditMode}"
+          .isEditMode="${true}"
           @value-changed="${(event: CustomEvent) => this.cardValueChanged(event)}"
         ></form-builder-group>
         <iron-collapse ?opened="${this.showSaveButton && !this.cardInvalid}">
@@ -63,7 +62,6 @@ export class FormBuilderCard extends LitElement implements IFormBuilderCard {
   }
 
   saveChanges(): void {
-    this.isEditMode = false;
     fireEvent(this, 'value-changed', {value: this.value});
   }
 
