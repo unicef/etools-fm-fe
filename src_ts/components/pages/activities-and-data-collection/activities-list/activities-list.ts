@@ -1,4 +1,4 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './activities-list.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {Unsubscribe} from 'redux';
@@ -83,7 +83,6 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
         }
         this.count = data.count;
         this.items = data.results;
-        console.log('items', this.items);
       }, false)
     );
 
@@ -153,6 +152,22 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       (collectionItem: GenericObject) => `${collectionItem[valueField]}` === `${id}`
     );
     return item ? item[labelField] : '';
+  }
+
+  //fixme move common logic to utils function? (sites-tab)
+  searchKeyDown({detail}: CustomEvent): void {
+    const {value} = detail;
+    const currentValue: number | string = (this.queryParams && this.queryParams.search) || 0;
+    if (value === null || value === currentValue || value === undefined) {
+      return;
+    }
+
+    if (!value.length) {
+      updateQueryParams({search: null});
+    }
+    if (value.length > 1) {
+      updateQueryParams({search: value, page: 1});
+    }
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
@@ -272,7 +287,18 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       CardStyles,
       SharedStyles,
       buttonsStyles,
-      ActivitiesListStyles
+      ActivitiesListStyles,
+      css`
+        .search-container {
+          display: flex;
+        }
+        .search-input {
+          margin-right: 16px;
+        }
+        .search-filters {
+          flex-grow: 1;
+        }
+      `
     ];
   }
 }

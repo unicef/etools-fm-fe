@@ -7,10 +7,12 @@
       "START_DATE": "Localized Start Date",
       "LOCATION_AND_SITE": "Localized Location & Site",
       "MONITOR_TYPE": "Localized Primary FM",
+      "PERSON_RESPONSIBLE": "Localized Person Responsible",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status"
     },
+    "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
       "MONITOR_TYPE": "Localized Primary FM",
       "TEAM_MEMBERS": "Localized Team Members",
