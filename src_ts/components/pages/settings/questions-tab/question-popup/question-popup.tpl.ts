@@ -74,6 +74,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           .options="${this.methods}"
           option-label="name"
           option-value="id"
+          required
           ?invalid="${this.errors && this.errors.methods}"
           .errorMessage="${this.errors && this.errors.methods}"
           @focus="${() => this.resetFieldError('methods')}"
