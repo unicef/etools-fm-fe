@@ -12,11 +12,11 @@ import '@unicef-polymer/etools-dialog';
 import '@unicef-polymer/etools-dropdown';
 import {debounce} from '../../../../../../../utils/debouncer';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
-import {INTERVENTIONS_SHORT, OUTPUTS_SHORT} from '../../../../../../../../endpoints/endpoints-list';
 import {request} from '../../../../../../../../endpoints/request';
 import {EtoolsRouter} from '../../../../../../../../routing/routes';
 import {repeat} from 'lit-html/directives/repeat';
 import {translate} from 'lit-translate';
+import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpoints-list';
 
 @customElement('intervention-popup')
 export class InterventionPopup extends PartnersMixin(LitElement) {
@@ -123,7 +123,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
     this.loadingInterventions = debounce((params: QueryParams) => {
-      const {url}: IResultEndpoint = getEndpoint(INTERVENTIONS_SHORT);
+      const {url}: IResultEndpoint = getEndpoint(INTERVENTIONS);
       this.queryParams = {...this.queryParams, ...params};
       const queryString: string = EtoolsRouter.encodeParams(this.queryParams);
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
@@ -132,7 +132,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       );
     }, 100);
     this.loadingOutputs = debounce((ids: number[] = []) => {
-      const {url} = getEndpoint(OUTPUTS_SHORT);
+      const {url} = getEndpoint(CP_OUTPUTS);
       const queryString: string = EtoolsRouter.encodeParams({partners__in: ids});
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
       request<EtoolsCpOutputShort[]>(endpoint).then((response: EtoolsCpOutputShort[]) => (this.outputs = response));

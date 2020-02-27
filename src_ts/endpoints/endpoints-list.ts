@@ -15,9 +15,7 @@ export const METHODS: 'methods' = 'methods';
 export const PARTNERS: 'partners' = 'partners';
 export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
-export const INTERVENTIONS_SHORT: 'interventionsShort' = 'interventionsShort';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
-export const OUTPUTS_SHORT: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
@@ -107,7 +105,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [PARTNERS]: {
-    url: '/api/v2/partners/',
+    url: '/api/v2/partners/?verbosity=minimal',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: PARTNERS
@@ -121,28 +119,17 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [CP_OUTPUTS]: {
-    url: '/api/v2/reports/results/?result_type=output',
+    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: CP_OUTPUTS
   },
 
-  [OUTPUTS_SHORT]: {
-    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all'
-  },
-
   [INTERVENTIONS]: {
-    url: '/api/v2/interventions/?page_size=all',
-    exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'id',
-    cacheTableName: INTERVENTIONS
-  },
-
-  [INTERVENTIONS_SHORT]: {
     url: '/api/v1/field-monitoring/planning/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
-    cacheTableName: INTERVENTIONS_SHORT
+    cacheTableName: INTERVENTIONS
   },
 
   [SITES_EXPORT]: {
