@@ -242,7 +242,10 @@ export class NewActivityComponent extends LitElement {
         `;
       case CHECKLIST_TAB:
         return html`
-          <activity-checklist-tab .activityId="${this.activityId}"></activity-checklist-tab>
+          <activity-checklist-tab
+            .activityId="${this.activityId}"
+            .activityDetails="${this.activityDetails}"
+          ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
         return html`

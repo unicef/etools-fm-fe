@@ -15,6 +15,7 @@ store.addReducers({activityChecklist});
 
 @customElement('activity-checklist-tab')
 export class ActivityChecklistTab extends LitElement {
+  @property() activityDetails: IActivityDetails | null = null;
   @property() protected sortedChecklist: GenericObject<IChecklistItem[]> | null = null;
   private activityChecklistUnsubscribe!: Unsubscribe;
 
@@ -51,6 +52,7 @@ export class ActivityChecklistTab extends LitElement {
                       .tableTitle="${title}"
                       .questionsList="${checklist}"
                       .activityId="${this.activityId}"
+                      .activityDetails="${this.activityDetails}"
                     >
                     </checklist-selection-table>
                   `
@@ -90,7 +92,6 @@ export class ActivityChecklistTab extends LitElement {
           sorted[key].push(item);
           return sorted;
         }, {});
-        console.log('checklist', this.sortedChecklist);
       }, false)
     );
 
