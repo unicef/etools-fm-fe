@@ -68,8 +68,10 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
   }
 
   cancelEdit(): void {
-    this.value = clone(this.originalValue);
-    this.isEditMode = false;
+    this.requestUpdate().then(() => {
+      this.value = clone(this.originalValue);
+      this.isEditMode = false;
+    });
   }
 
   openAttachmentsPopup(): void {
@@ -101,8 +103,10 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
   }
 
   valueChanged(event: CustomEvent, name: string): void {
-    this.value[name] = event.detail.value;
     event.stopPropagation();
+    if (this.value[name] !== event.detail.value) {
+      this.value[name] = event.detail.value;
+    }
   }
 
   saveChanges(): void {

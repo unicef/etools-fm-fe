@@ -34,18 +34,18 @@ export enum StructureTypes {
 
 @customElement('form-builder-group')
 export class FormBuilderGroup extends LitElement implements IFormBuilderAbstractGroup {
-  @property() groupStructure!: BlueprintGroup;
-  @property() set groupValue(value: GenericObject) {
+  @property({type: Object}) groupStructure!: BlueprintGroup;
+  @property({type: Object}) metadata!: BlueprintMetadata;
+  @property({type: String}) parentGroupName: string = '';
+  @property({type: Boolean}) isEditMode: boolean = false;
+  @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
+  set groupValue(value: GenericObject) {
     this.originalValue = value;
     this.value = clone(value);
   }
-  @property() metadata!: BlueprintMetadata;
-  @property() parentGroupName: string = '';
-  @property() isEditMode: boolean = false;
-  @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
 
   protected originalValue: GenericObject = {};
-  protected value: GenericObject = {};
+  @property() protected value: GenericObject = {};
 
   render(): TemplateResult {
     if (!this.groupStructure || !this.metadata) {

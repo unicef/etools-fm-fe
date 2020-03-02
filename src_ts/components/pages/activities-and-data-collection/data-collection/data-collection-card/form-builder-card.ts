@@ -25,8 +25,8 @@ export class FormBuilderCard extends LitElement implements IFormBuilderCard {
   }
   @property() metadata!: BlueprintMetadata;
   @property() parentGroupName: string = '';
+  @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
   @property() showSaveButton: boolean = false;
-  @property() readonly: boolean = true;
 
   protected originalValue: GenericObject = {};
   protected value: GenericObject = {};
