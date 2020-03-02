@@ -37,7 +37,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   @property({type: Object}) groupStructure!: BlueprintGroup;
   @property({type: Object}) metadata!: BlueprintMetadata;
   @property({type: String}) parentGroupName: string = '';
-  @property({type: Boolean}) isEditMode: boolean = false;
+  @property({type: Boolean}) isEditMode: boolean = true;
   @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
   set groupValue(value: GenericObject) {
     this.originalValue = value;
@@ -53,7 +53,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
     }
 
     return html`
-      ${InputStyles}
+      ${this.renderInlineStyles()}
       ${this.groupStructure.children.map((child: BlueprintGroup | BlueprintField) => this.renderChild(child))}
     `;
   }
@@ -90,18 +90,19 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   }
 
   renderWideField({name, label, placeholder, required}: BlueprintField): TemplateResult {
+    const isReadonly: boolean = !this.isEditMode || this.readonly;
     return html`
-      <paper-input
+      <paper-textarea
         class="wide-input disabled-as-readonly"
         always-float-label
         .value="${this.value[name]}"
         label="${label}"
-        placeholder="${placeholder}"
+        placeholder="${isReadonly ? '—' : placeholder}"
         ?required="${required}"
-        ?disabled="${!this.isEditMode || this.readonly}"
+        ?disabled="${isReadonly}"
         @value-changed="${(event: CustomEvent) => this.valueChanged(event, name)}"
       >
-      </paper-input>
+      </paper-textarea>
     `;
   }
 
@@ -206,6 +207,10 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
     fireEvent(this, 'value-changed', {value: this.value});
   }
 
+  renderInlineStyles(): TemplateResult {
+    return InputStyles;
+  }
+
   static get styles(): CSSResultArray {
     // language=CSS
     return [
@@ -235,7 +240,12 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
         .wide-input {
           display: block;
           width: 100%;
-          padding: 0 25px 0 45px;
+          padding: 12px 30px 15px 45px;
+          box-sizing: border-box;
+        }
+
+        .actions-container {
+          padding: 0 25px 5px 45px;
           box-sizing: border-box;
         }
       `
