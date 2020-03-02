@@ -2,11 +2,15 @@ import {css, CSSResultArray, html, LitElement, property, TemplateResult} from 'l
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
+import {FieldValidator, validate} from '../../../../../utils/validations.helper';
 
 export abstract class BaseField<T> extends LitElement {
   @property({type: String}) questionText: string = '';
   @property({type: Boolean, attribute: 'is-readonly'}) isReadonly: boolean = false;
+  @property({type: Boolean, attribute: 'required', reflect: true}) required: boolean = false;
   @property() value: T | null = null;
+  @property() errorMessage: string | null = null;
+  validators: FieldValidator[] = [];
 
   protected render(): TemplateResult {
     return html`
@@ -41,9 +45,30 @@ export abstract class BaseField<T> extends LitElement {
   protected valueChanged(newValue: T): void {
     if (newValue !== this.value) {
       this.value = newValue;
+      this.validateField();
       fireEvent(this, 'value-changed', {value: newValue});
     }
   }
+
+  protected validateField(): void {
+    let errorMessage: string | null = null;
+    if (this.required && !this.value) {
+      errorMessage = 'This field is required!';
+    } else {
+      errorMessage = this.metaValidation();
+    }
+    if (this.errorMessage !== errorMessage) {
+      fireEvent(this, 'error-changed', {error: errorMessage});
+      this.errorMessage = errorMessage;
+    }
+  }
+
+  protected metaValidation(): string | null {
+    const message: string | null = validate(this.validators, this.value);
+    return message ? message : this.customValidation();
+  }
+
+  protected abstract customValidation(): string | null;
 
   protected abstract controlTemplate(): TemplateResult;
 
@@ -69,7 +94,7 @@ export abstract class BaseField<T> extends LitElement {
 
         .question-control,
         .question {
-          min-height: 48px;
+          min-height: 57px;
           display: flex;
           align-items: center;
         }

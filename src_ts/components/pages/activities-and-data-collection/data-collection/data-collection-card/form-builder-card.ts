@@ -18,7 +18,7 @@ export class FormBuilderCard extends FormBuilderGroup implements IFormBuilderCar
 
   render(): TemplateResult {
     return html`
-      <section class="elevation page-content card-container" elevation="1">
+      <section class="elevation page-content card-container form-card" elevation="1">
         ${super.render()}
 
         <iron-collapse ?opened="${this.showSaveButton}">
@@ -39,6 +39,10 @@ export class FormBuilderCard extends FormBuilderGroup implements IFormBuilderCar
   }
 
   saveChanges(): void {
+    if (Object.keys(this.errors).length) {
+      fireEvent(this, 'toast', {text: 'Please check all fields and try again'});
+      return;
+    }
     fireEvent(this, 'value-changed', {value: this.value});
     this.showSaveButton = false;
   }

@@ -21,8 +21,14 @@ export class TextField extends BaseField<string> {
         @value-changed="${({detail}: CustomEvent) => this.valueChanged(detail.value)}"
         placeholder="&#8212;"
         ?disabled="${this.isReadonly}"
+        ?invalid="${this.errorMessage}"
+        error-message="${this.errorMessage}"
       >
       </paper-textarea>
     `;
+  }
+
+  protected customValidation(): string | null {
+    return null;
   }
 }

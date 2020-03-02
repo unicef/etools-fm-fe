@@ -40,6 +40,7 @@ const SUB_ROUTE: string = 'data-collection';
 export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private checklist: DataCollectionChecklist | null = null;
   @property() private checklistFormJson: ChecklistFormJson | null = null;
+  @property() private formErrors: GenericObject = {};
   private activityDetails: IActivityDetails | null = null;
   private tabIsReadonly: boolean = true;
 
@@ -81,6 +82,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
               .groupValue="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
               .readonly="${this.tabIsReadonly}"
+              .errors="${this.formErrors}"
               @value-changed="${(event: CustomEvent) => this.save(event)}"
             ></form-builder-group>
           `
@@ -90,7 +92,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
   save(event: CustomEvent): void {
     if (this.activityId && this.checklistId) {
-      store.dispatch<AsyncEffect>(updateBlueprintValue(this.activityId, this.checklistId, event.detail.value));
+      store
+        .dispatch<AsyncEffect>(updateBlueprintValue(this.activityId, this.checklistId, event.detail.value))
+        .catch((error: GenericObject) => (this.formErrors = error.data));
     }
   }
 
@@ -122,7 +126,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
     this.blueprintUnsubscribe = store.subscribe(
       dataCollectionChecklistBlueprint((dataCollectionJson: ChecklistFormJson | null) => {
-        console.log('blueprint', dataCollectionJson);
         this.checklistFormJson = dataCollectionJson;
       }, false)
     );

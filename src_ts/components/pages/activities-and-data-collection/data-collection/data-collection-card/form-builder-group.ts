@@ -2,6 +2,7 @@ import {customElement, LitElement, property, TemplateResult, html, CSSResultArra
 import './finding-types/text-field';
 import './finding-types/number-field';
 import './finding-types/scale-field';
+import './finding-types/wide-field';
 import '@polymer/paper-input/paper-textarea';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -39,6 +40,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   @property({type: String}) parentGroupName: string = '';
   @property({type: Boolean}) isEditMode: boolean = true;
   @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
+  @property() errors: GenericObject = {};
   set groupValue(value: GenericObject) {
     this.originalValue = value;
     this.value = clone(value);
@@ -89,31 +91,40 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
     }
   }
 
-  renderWideField({name, label, placeholder, required}: BlueprintField): TemplateResult {
-    const isReadonly: boolean = !this.isEditMode || this.readonly;
+  renderWideField({name, label, placeholder, required, validations}: BlueprintField): TemplateResult {
     return html`
-      <paper-textarea
-        class="wide-input disabled-as-readonly"
-        always-float-label
+      <wide-field
+        ?is-readonly="${!this.isEditMode || this.readonly}"
+        ?required="${required}"
         .value="${this.value[name]}"
         label="${label}"
-        placeholder="${isReadonly ? '—' : placeholder}"
-        ?required="${required}"
-        ?disabled="${isReadonly}"
+        placeholder="${placeholder}"
+        .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
         @value-changed="${(event: CustomEvent) => this.valueChanged(event, name)}"
-      >
-      </paper-textarea>
+        @error-changed="${(event: CustomEvent) => this.errorChanged(event, name)}"
+      ></wide-field>
     `;
   }
 
-  renderStandardField({input_type, name, label, help_text, options_key}: BlueprintField): TemplateResult {
+  renderStandardField({
+    input_type,
+    name,
+    label,
+    help_text,
+    options_key,
+    required,
+    validations
+  }: BlueprintField): TemplateResult {
     switch (input_type) {
       case TEXT_TYPE:
         return html`
           <text-field
             ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?required="${required}"
             .value="${this.value[name]}"
+            .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
             @value-changed="${(event: CustomEvent) => this.valueChanged(event, name)}"
+            @error-changed="${(event: CustomEvent) => this.errorChanged(event, name)}"
           >
             ${this.renderFieldLabel(label, help_text)}
           </text-field>
@@ -124,8 +135,11 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
         return html`
           <number-field
             ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?required="${required}"
             .value="${this.value[name]}"
+            .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
             @value-changed="${(event: CustomEvent) => this.valueChanged(event, name)}"
+            @error-changed="${(event: CustomEvent) => this.errorChanged(event, name)}"
           >
             ${this.renderFieldLabel(label, help_text)}
           </number-field>
@@ -136,8 +150,11 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           <scale-field
             .options="${this.metadata.options[options_key || '']?.values || []}"
             ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?required="${required}"
             .value="${this.value[name]}"
+            .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
             @value-changed="${(event: CustomEvent) => this.valueChanged(event, name)}"
+            @error-changed="${(event: CustomEvent) => this.errorChanged(event, name)}"
           >
             ${this.renderFieldLabel(label, help_text)}
           </scale-field>
@@ -171,6 +188,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           .isEditMode="${this.isEditMode}"
           .readonly="${this.readonly}"
           @value-changed="${(event: CustomEvent) => this.valueChanged(event, groupStructure.name)}"
+          @error-changed="${(event: CustomEvent) => this.errorChanged(event, groupStructure.name)}"
         ></form-builder-group>
       `;
     } else if (isCard && isCollapsed) {
@@ -182,6 +200,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           .parentGroupName="${this.groupStructure.name}"
           .readonly="${this.readonly}"
           @value-changed="${(event: CustomEvent) => this.valueChanged(event, groupStructure.name)}"
+          @error-changed="${(event: CustomEvent) => this.errorChanged(event, groupStructure.name)}"
         ></form-builder-collapsed-card>
       `;
     } else if (isCard) {
@@ -193,6 +212,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           .parentGroupName="${this.groupStructure.name}"
           .readonly="${this.readonly}"
           @value-changed="${(event: CustomEvent) => this.valueChanged(event, groupStructure.name)}"
+          @error-changed="${(event: CustomEvent) => this.errorChanged(event, groupStructure.name)}"
         ></form-builder-card>
       `;
     } else {
@@ -205,6 +225,18 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
     this.value[name] = event.detail.value;
     event.stopPropagation();
     fireEvent(this, 'value-changed', {value: this.value});
+  }
+
+  errorChanged(event: CustomEvent, name: string): void {
+    const errorMessage: string | null = event.detail.error;
+    if (errorMessage) {
+      this.errors[name] = errorMessage;
+    } else {
+      delete this.errors[name];
+    }
+    event.stopPropagation();
+    const errors: GenericObject | null = Object.keys(this.errors).length ? this.errors : null;
+    fireEvent(this, 'error-changed', {error: errors});
   }
 
   renderInlineStyles(): TemplateResult {
@@ -223,6 +255,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       FormBuilderCardStyles,
       css`
         .save-button {
+          margin-top: 8px;
           color: var(--primary-background-color);
           background-color: var(--primary-color);
         }
@@ -237,16 +270,13 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           background-color: var(--secondary-background-color);
         }
 
-        .wide-input {
-          display: block;
-          width: 100%;
-          padding: 12px 30px 15px 45px;
-          box-sizing: border-box;
-        }
-
         .actions-container {
           padding: 0 25px 5px 45px;
           box-sizing: border-box;
+        }
+
+        .card-container.form-card {
+          padding: 12px 0 15px;
         }
       `
     ];

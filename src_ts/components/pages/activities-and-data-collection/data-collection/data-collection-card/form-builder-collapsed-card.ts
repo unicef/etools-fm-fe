@@ -106,6 +106,10 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
   }
 
   saveChanges(): void {
+    if (Object.keys(this.errors).length) {
+      fireEvent(this, 'toast', {text: 'Please check all fields and try again'});
+      return;
+    }
     this.isEditMode = false;
     fireEvent(this, 'value-changed', {value: this.value});
   }

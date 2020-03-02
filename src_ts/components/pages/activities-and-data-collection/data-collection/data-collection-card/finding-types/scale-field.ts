@@ -74,4 +74,8 @@ export class ScaleField extends BaseField<string | null> {
     const newValue: string = item.get('name');
     this.valueChanged(newValue);
   }
+
+  protected customValidation(): string | null {
+    return null;
+  }
 }

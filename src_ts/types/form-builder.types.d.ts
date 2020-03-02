@@ -30,7 +30,7 @@ type BlueprintField = {
   required: boolean;
   input_type: 'text' | 'likert_scale' | 'bool' | 'number' | 'number-integer' | 'number-float'; // add more
   label: string;
-  validations: [];
+  validations: string[];
   help_text: string;
   placeholder: string;
   default_value: null;
@@ -40,7 +40,7 @@ type BlueprintField = {
 /** Metadata for blueprint structure */
 type BlueprintMetadata = {
   options: GenericObject<BlueprintMetadataOptions>;
-  validations: {};
+  validations: GenericObject;
   offline_enabled: boolean;
   allow_multiple_responses: boolean;
 };

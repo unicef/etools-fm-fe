@@ -17,21 +17,18 @@ export class NumberField extends BaseField<number> {
         class="without-border no-padding-left"
         no-label-float
         .value="${this.value}"
-        @keypress="${(event: KeyboardEvent) => this.checkValue(event)}"
-        @value-changed="${({detail}: CustomEvent) => this.valueChanged(Number(detail.value))}"
+        @value-changed="${({detail}: CustomEvent) => this.valueChanged(detail.value)}"
         placeholder="&#8212;"
+        ?invalid="${this.errorMessage}"
+        error-message="${this.errorMessage}"
         ?disabled="${this.isReadonly}"
       >
       </paper-input>
     `;
   }
 
-  protected checkValue(event: KeyboardEvent): void {
-    const currentValue: string = !this.value && this.value !== 0 ? '' : `${this.value}`;
-    const newValue: string = `${currentValue}${String.fromCharCode(event.keyCode)}`;
-    const newNumberValue: number = Number(newValue);
-    if (isNaN(newNumberValue)) {
-      event.preventDefault();
-    }
+  protected customValidation(): string | null {
+    return this.value && isNaN(this.value) ? 'Must be a number' : null;
+    // return !this.value || isNaN(this.value) ? 'Must be a number' : null;
   }
 }
