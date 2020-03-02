@@ -250,7 +250,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case COLLECT_TAB:
         return html`
-          <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
+          <data-collect-tab activity-id="${this.activityId}"></data-collect-tab>
         `;
       case SUMMARY_TAB:
         return html`
