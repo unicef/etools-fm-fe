@@ -26,7 +26,10 @@ export enum DataCollectionChecklistActionTypes {
 
   OVERALL_AND_FINDINGS_UPDATE_REQUEST = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_REQUEST',
   OVERALL_AND_FINDINGS_UPDATE_SUCCESS = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_SUCCESS',
-  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE'
+  OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE',
+
+  LOAD_BLUEPRINT = '[Data Collection Checklist Action]: LOAD_BLUEPRINT',
+  UPDATE_BLUEPRINT_VALUE = '[Data Collection Checklist Action]: UPDATE_BLUEPRINT_VALUE'
 }
 
 export class SetChecklistInformationSource {
@@ -39,6 +42,17 @@ export class SetChecklistError {
   type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE =
     DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_GET_FAILURE;
   constructor(public payload: GenericObject) {}
+}
+
+export class LoadBlueprint {
+  type: DataCollectionChecklistActionTypes.LOAD_BLUEPRINT = DataCollectionChecklistActionTypes.LOAD_BLUEPRINT;
+  constructor(public payload: ChecklistFormJson) {}
+}
+
+export class UpdateBlueprintValue {
+  type: DataCollectionChecklistActionTypes.UPDATE_BLUEPRINT_VALUE =
+    DataCollectionChecklistActionTypes.UPDATE_BLUEPRINT_VALUE;
+  constructor(public payload: any) {}
 }
 
 export type DataCollectionActions =
@@ -67,4 +81,6 @@ export type DataCollectionActions =
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS>
   | MiddlewareRequestAction<DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE>
   | SetChecklistInformationSource
-  | SetChecklistError;
+  | SetChecklistError
+  | LoadBlueprint
+  | UpdateBlueprintValue;

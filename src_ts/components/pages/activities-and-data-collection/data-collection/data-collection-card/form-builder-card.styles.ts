@@ -1,6 +1,6 @@
 import {css, CSSResult} from 'lit-element';
 // language=CSS
-export const DataCollectionCardStyles: CSSResult = css`
+export const FormBuilderCardStyles: CSSResult = css`
   .overall-finding {
     padding: 15px 25px 20px 45px;
     background-color: var(--secondary-background-color);
@@ -29,5 +29,11 @@ export const DataCollectionCardStyles: CSSResult = css`
   }
   .question-details {
     font-size: 9px;
+  }
+
+  @media (max-width: 380px) {
+    .overall-finding {
+      padding: 5px;
+    }
   }
 `;

@@ -157,6 +157,7 @@ interface IDataCollectionState {
   checklistCollect: DataCollectionChecklist[];
   dataCollectionMethods: null | IDataCollectionMethods;
   checklist: {
+    blueprint: null | ChecklistFormJson;
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
   };

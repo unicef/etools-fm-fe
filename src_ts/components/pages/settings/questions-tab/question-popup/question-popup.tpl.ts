@@ -5,7 +5,7 @@ import {html, TemplateResult} from 'lit-element';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit-html/directives/repeat';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
-import {BOOLEAN_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
+import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
@@ -182,7 +182,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div
           class="scales-container"
-          ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOLEAN_TYPE}"
+          ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOL_TYPE}"
         >
           ${repeat(
             this.editedData.options as Partial<QuestionOption>[],

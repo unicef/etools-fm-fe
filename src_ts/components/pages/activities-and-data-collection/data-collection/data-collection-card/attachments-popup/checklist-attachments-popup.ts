@@ -1,10 +1,8 @@
-import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './checklist-attachments-popup.tpl';
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {AttachmentsStyles} from '../../../../../styles/attachments.styles';
 import {clone} from 'ramda';
-import {updateChecklistAttachments} from '../../../../../../redux/effects/data-collection.effects';
-import {store} from '../../../../../../redux/store';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 
 @customElement('checklist-attachments-popup')
@@ -12,21 +10,18 @@ export class ChecklistAttachmentsPopup extends LitElement {
   @property() dialogOpened: boolean = true;
   @property() saveBtnClicked: boolean = false;
   @property() savingInProcess: boolean = false;
-  @property() attachments: (StoredAttachment | IEditedAttachment)[] = [];
-  @property() attachmentTypes: DefaultDropdownOption[] = [
-    {display_name: 'SOP', value: 34},
-    {display_name: 'Other', value: 35}
-  ];
+  @property() attachments: GenericObject[] = [];
+
+  @property() metadata!: BlueprintMetadata;
   readonly: boolean = false;
   popupTitle: string = '';
 
   @query('#link') link!: HTMLLinkElement;
-  private updateUrl?: string;
 
-  set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
-    this.updateUrl = updateUrl;
+  set dialogData({attachments, title, metadata}: FormBuilderAttachmentsPopupData) {
     this.popupTitle = title;
     this.attachments = clone(attachments);
+    this.metadata = clone(metadata);
   }
 
   render(): TemplateResult | void {
@@ -38,32 +33,12 @@ export class ChecklistAttachmentsPopup extends LitElement {
   }
 
   saveChanges(): void {
-    if (!this.updateUrl) {
-      return;
-    }
-    this.saveBtnClicked = true;
-    const fileTypeNotSelected: boolean = this.attachments.some(
-      (attachment: IEditedAttachment | StoredAttachment) =>
-        !attachment.file_type && !attachment.hasOwnProperty('delete')
-    );
+    const fileTypeNotSelected: boolean = this.attachments.some((attachment: GenericObject) => !attachment.file_type);
     if (fileTypeNotSelected) {
       return;
     }
 
-    this.savingInProcess = true;
-    const changedData: RequestChecklistAttachment[] = this.getChanges();
-
-    store
-      .dispatch<AsyncEffect>(updateChecklistAttachments(this.updateUrl, changedData))
-      .then(() => {
-        this.savingInProcess = false;
-        this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
-      })
-      .catch(() => {
-        this.savingInProcess = false;
-        fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
-      });
+    fireEvent(this, 'response', {confirmed: true, attachments: this.attachments});
   }
 
   protected attachmentsUploaded(attachments: {success: string[]; error: string[]}): void {
@@ -71,15 +46,22 @@ export class ChecklistAttachmentsPopup extends LitElement {
       const parsedAttachments: StoredAttachment[] = attachments.success.map((jsonAttachment: string) =>
         JSON.parse(jsonAttachment)
       );
-      this.attachments = [...this.attachments, ...parsedAttachments];
+      this.attachments = [...this.attachments, ...parsedAttachments].map((item: GenericObject) => {
+        return {
+          attachment: `${item.attachment}`,
+          file_type: Number(item.file_type),
+          filename: item.filename,
+          url: item.url || item.file_link
+        };
+      });
     } catch (e) {
       console.error(e);
       fireEvent(this, 'toast', {text: 'Can not upload attachments. Please try again later'});
     }
   }
 
-  protected downloadFile(attachment: StoredAttachment | IAttachment): void {
-    const url: string = this.isStoredAttachment(attachment) ? attachment.file_link : (attachment.file as string);
+  protected downloadFile(attachment: GenericObject): void {
+    const url: string = attachment.url;
     this.link.href = url;
     this.link.click();
     window.URL.revokeObjectURL(url);
@@ -90,7 +72,7 @@ export class ChecklistAttachmentsPopup extends LitElement {
     this.performUpdate();
   }
 
-  protected changeFileType(attachment: IEditedAttachment | StoredAttachment, type: DefaultDropdownOption | null): void {
+  protected changeFileType(attachment: GenericObject, type: DefaultDropdownOption | null): void {
     const newType: null | number = type && type.value;
     if (newType && attachment.file_type !== newType) {
       attachment.file_type = newType;
@@ -98,19 +80,54 @@ export class ChecklistAttachmentsPopup extends LitElement {
     }
   }
 
-  private isStoredAttachment(attachment: StoredAttachment | IAttachment): attachment is StoredAttachment {
-    return !attachment.hasOwnProperty('hyperlink');
-  }
-
-  private getChanges(): RequestChecklistAttachment[] {
-    return this.attachments.map((attachment: IEditedAttachment | StoredAttachment) => {
-      const id: number = this.isStoredAttachment(attachment) ? attachment.attachment : attachment.id;
-      const file_type: number | string = attachment.file_type;
-      return {id, file_type};
-    });
-  }
-
   static get styles(): CSSResultArray {
-    return [SharedStyles, AttachmentsStyles];
+    return [
+      SharedStyles,
+      AttachmentsStyles,
+      css`
+        .file-selector__type-dropdown {
+          flex-basis: 25%;
+        }
+        .file-selector__filename {
+          flex-basis: 35%;
+        }
+        .file-selector__download {
+          flex-basis: 10%;
+        }
+        .file-selector__delete {
+          flex-basis: 10%;
+        }
+        .file-selector-container.with-type-dropdown {
+          flex-wrap: nowrap;
+        }
+        @media (max-width: 380px) {
+          .file-selector-container.with-type-dropdown {
+            justify-content: center;
+          }
+          .file-selector-container.with-type-dropdown etools-dropdown.type-dropdown {
+            flex-basis: 90%;
+          }
+          .file-selector__filename {
+            flex-basis: 90%;
+          }
+          .file-selector__download {
+            flex-basis: 5%;
+          }
+          .file-selector__delete {
+            flex-basis: 5%;
+          }
+        }
+        @media (max-width: 600px) {
+          etools-dropdown {
+            padding: 0;
+          }
+          .file-selector-container.with-type-dropdown {
+            border-bottom: 1px solid lightgrey;
+            flex-wrap: wrap;
+            padding-bottom: 10px;
+          }
+        }
+      `
+    ];
   }
 }

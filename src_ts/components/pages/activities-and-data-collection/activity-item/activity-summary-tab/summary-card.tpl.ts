@@ -1,5 +1,4 @@
 import {html, TemplateResult} from 'lit-element';
-import {DataCollectionCard} from './data-collection-card';
 import {InputStyles} from '../../../../styles/input-styles';
 import {store} from '../../../../../redux/store';
 import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
@@ -7,8 +6,9 @@ import '../../../../common/layout/etools-card';
 import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-loading';
 import {translate} from 'lit-translate';
+import {SummaryCard} from './summary-card';
 
-export function template(this: DataCollectionCard): TemplateResult {
+export function template(this: SummaryCard): TemplateResult {
   return html`
     ${InputStyles}
     <etools-card
@@ -37,7 +37,7 @@ export function template(this: DataCollectionCard): TemplateResult {
         ${this.getOverallFindingTemplate()}
 
         <!-- Findings table with different findings types -->
-        ${this.findings.map((finding: DataCollectionFinding) => this.getFindingTemplate(finding))}
+        ${this.findings.map((finding: SummaryFinding) => this.getFindingTemplate(finding))}
       </div>
     </etools-card>
   `;

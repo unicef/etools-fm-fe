@@ -63,6 +63,63 @@ export class EtoolsCard extends LitElement {
         .edit-button[edit] {
           color: var(--primary-color);
         }
+
+        .flex-header {
+          display: flex;
+          align-items: center;
+          padding-top: auto;
+          flex-wrap: nowrap;
+        }
+        .flex-header__collapse {
+          flex-basis: auto;
+        }
+        .flex-header__title {
+          font-size: 18px;
+          flex-basis: auto;
+          flex-grow: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .flex-header__actions {
+          order: 1;
+          width: auto;
+          display: flex;
+          flex-basis: auto;
+        }
+        .flex-header__edit {
+          order: 2;
+        }
+        @media (max-width: 380px) {
+          .card-title-box[is-collapsible] {
+            padding-left: 0;
+            padding-right: 0;
+          }
+          .flex-header {
+            align-items: baseline;
+            padding-top: 10px;
+            flex-wrap: wrap;
+          }
+          .flex-header__collapse {
+            flex-basis: 20%;
+          }
+          .flex-header__title {
+            flex-basis: 60%;
+            overflow: unset;
+            white-space: unset;
+            text-overflow: unset;
+          }
+          .flex-header__actions {
+            order: 2;
+            width: 100%;
+            border-top: 1px solid lightgrey;
+            justify-content: flex-end;
+          }
+          .flex-header__edit {
+            order: 1;
+            flex-basis: 20%;
+          }
+        }
       `
     ];
   }
@@ -92,18 +149,18 @@ export class EtoolsCard extends LitElement {
   protected render(): TemplateResult {
     return html`
       <div class="elevation card-container" elevation="1">
-        <header class="card-title-box with-bottom-line" ?is-collapsible="${this.isCollapsible}">
+        <header class="card-title-box with-bottom-line flex-header" ?is-collapsible="${this.isCollapsible}">
           ${this.isCollapsible
             ? html`
                 <paper-icon-button
+                  class="flex-header__collapse"
                   @tap="${() => this.toggleCollapse()}"
                   icon="${this.collapsed ? 'expand-more' : 'expand-less'}"
                 ></paper-icon-button>
               `
             : ''}
-          <div class="card-title">${this.cardTitle}</div>
-          <div class="layout horizontal center">
-            <slot name="actions"></slot>
+          <div class="flex-header__title">${this.cardTitle}</div>
+          <div class="layout horizontal center flex-header__edit">
             ${this.isEditable
               ? html`
                   <paper-icon-button
@@ -116,6 +173,7 @@ export class EtoolsCard extends LitElement {
                 `
               : ''}
           </div>
+          <div class="flex-header__actions"><slot name="actions"></slot></div>
         </header>
         <iron-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">

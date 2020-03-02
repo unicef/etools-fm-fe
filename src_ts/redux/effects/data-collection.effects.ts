@@ -1,11 +1,13 @@
 import {IAsyncAction} from '../middleware';
 import {
   DataCollectionChecklistActionTypes,
+  LoadBlueprint,
   SetChecklistError,
   SetChecklistInformationSource
 } from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
+  DATA_COLLECTION_BLUEPRINT,
   DATA_COLLECTION_CHECKLIST,
   DATA_COLLECTION_METHODS,
   DATA_COLLECTION_OVERALL_FINDING,
@@ -196,5 +198,29 @@ export function loadDataCollectionMethods(id: number): IAsyncAction {
         forActivity: id
       }));
     }
+  };
+}
+
+export function loadBlueprint(activityId: string, checklistId: string): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(DATA_COLLECTION_BLUEPRINT, {activityId, checklistId});
+    return request<ChecklistFormJson>(endpoint.url, {method: 'GET'}).then((response: ChecklistFormJson) => {
+      dispatch(new LoadBlueprint(response));
+    });
+  };
+}
+
+export function updateBlueprintValue(
+  activityId: string,
+  checklistId: string,
+  data: any
+): (dispatch: Dispatch) => Promise<void> {
+  return (dispatch: Dispatch) => {
+    const endpoint: IResultEndpoint = getEndpoint(DATA_COLLECTION_BLUEPRINT, {activityId, checklistId});
+    return request<ChecklistFormJson>(endpoint.url, {method: 'POST', body: JSON.stringify(data)}).then(
+      (response: ChecklistFormJson) => {
+        dispatch(new LoadBlueprint(response));
+      }
+    );
   };
 }

@@ -398,6 +398,8 @@
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Text",
     "NUMBER": "Number",
+    "NUMBER_INTEGER_TYPE": "Integer number",
+    "NUMBER_FLOAT_TYPE": "Float number",
     "BOOL": "Boolean",
     "LIKERT_SCALE": "Likert Scale"
   },

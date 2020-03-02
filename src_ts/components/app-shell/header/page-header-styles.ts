@@ -3,8 +3,7 @@ import {css, CSSResult} from 'lit-element';
 // language=CSS
 export const pageHeaderStyles: CSSResult = css`
   app-toolbar {
-    padding: 0 16px 0 0;
-    height: 60px;
+    padding: 0;
   }
 
   .titlebar {
@@ -12,17 +11,15 @@ export const pageHeaderStyles: CSSResult = css`
   }
 
   #menuButton {
-    display: block;
+    display: flex;
     color: var(--header-color);
   }
 
   support-btn {
-    margin-left: 24px;
     color: var(--header-color);
   }
 
   etools-profile-dropdown {
-    margin-left: 16px;
   }
 
   .titlebar {

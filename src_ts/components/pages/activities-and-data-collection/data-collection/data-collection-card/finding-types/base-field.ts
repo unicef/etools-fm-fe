@@ -2,11 +2,15 @@ import {css, CSSResultArray, html, LitElement, property, TemplateResult} from 'l
 import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
+import {FieldValidator, validate} from '../../../../../utils/validations.helper';
 
-export abstract class BaseFinding<T> extends LitElement {
+export abstract class BaseField<T> extends LitElement {
   @property({type: String}) questionText: string = '';
   @property({type: Boolean, attribute: 'is-readonly'}) isReadonly: boolean = false;
+  @property({type: Boolean, attribute: 'required', reflect: true}) required: boolean = false;
   @property() value: T | null = null;
+  @property() errorMessage: string | null = null;
+  validators: FieldValidator[] = [];
 
   protected render(): TemplateResult {
     return html`
@@ -25,9 +29,9 @@ export abstract class BaseFinding<T> extends LitElement {
         }
       </style>
 
-      <div class="finding-container layout horizontal start center-justified">
-        <div class="question flex-2 layout horizontal center"><slot>${this.questionTemplate()}</slot></div>
-        <div class="question-control flex-3 layout horizontal center">${this.controlTemplate()}</div>
+      <div class="finding-container">
+        <div class="question"><slot>${this.questionTemplate()}</slot></div>
+        <div class="question-control">${this.controlTemplate()}</div>
       </div>
     `;
   }
@@ -41,9 +45,30 @@ export abstract class BaseFinding<T> extends LitElement {
   protected valueChanged(newValue: T): void {
     if (newValue !== this.value) {
       this.value = newValue;
+      this.validateField();
       fireEvent(this, 'value-changed', {value: newValue});
     }
   }
+
+  protected validateField(): void {
+    let errorMessage: string | null = null;
+    if (this.required && !this.value) {
+      errorMessage = 'This field is required!';
+    } else {
+      errorMessage = this.metaValidation();
+    }
+    if (this.errorMessage !== errorMessage) {
+      fireEvent(this, 'error-changed', {error: errorMessage});
+      this.errorMessage = errorMessage;
+    }
+  }
+
+  protected metaValidation(): string | null {
+    const message: string | null = validate(this.validators, this.value);
+    return message ? message : this.customValidation();
+  }
+
+  protected abstract customValidation(): string | null;
 
   protected abstract controlTemplate(): TemplateResult;
 
@@ -61,12 +86,23 @@ export abstract class BaseFinding<T> extends LitElement {
 
         .finding-container {
           width: 100%;
-          min-height: 48px;
+          display: flex;
+        }
+        .flex-wrapping {
+          flex-wrap: wrap;
         }
 
         .question-control,
         .question {
-          min-height: 48px;
+          min-height: 57px;
+          display: flex;
+          align-items: center;
+        }
+        .question {
+          flex: 2;
+        }
+        .question-control {
+          flex: 3;
         }
 
         paper-input,
@@ -78,6 +114,19 @@ export abstract class BaseFinding<T> extends LitElement {
           font-weight: 500;
           font-size: 13px;
           color: var(--primary-text-color);
+        }
+
+        @media (max-width: 1080px) {
+          :host {
+            padding: 0 15px;
+          }
+          .finding-container {
+            flex-direction: column;
+          }
+          .question,
+          .question-control {
+            flex: 0 1 auto;
+          }
         }
       `
     ];

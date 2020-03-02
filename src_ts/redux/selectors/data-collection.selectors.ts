@@ -24,3 +24,7 @@ export const dataCollectionLoading: DynamicSelector<boolean | undefined> = dynam
   GenericObject<null | boolean>,
   boolean
 >((store: IRootState) => store.dataCollection.loading);
+
+export const dataCollectionChecklistBlueprint: Selector<ChecklistFormJson | null> = select<ChecklistFormJson | null>(
+  (store: IRootState) => store.dataCollection.checklist.blueprint
+);

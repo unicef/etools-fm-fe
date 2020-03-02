@@ -34,7 +34,7 @@ type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
 
 @customElement('data-collect-tab')
 export class DataCollectTab extends LitElement {
-  @property({type: Number}) activityId!: number;
+  @property({type: Number, attribute: 'activity-id', reflect: true}) activityId!: number;
 
   @property({type: Object}) protected checklistByMethods: DataCollectByMethods = {};
   @property({type: Boolean}) protected isReadonly: boolean = false;

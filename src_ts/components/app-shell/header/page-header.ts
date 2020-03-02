@@ -103,9 +103,36 @@ export class PageHeader extends connect(store)(LitElement) {
         .dropdowns {
           display: flex;
           width: 160px;
+          margin-left: 10px;
+          margin-right: 10px;
         }
         .dropdowns__item {
           flex-basis: 50%;
+        }
+        .header {
+          flex-wrap: wrap;
+          height: 100%;
+          justify-content: space-between;
+        }
+        .nav-menu-button {
+          min-width: 70px;
+        }
+        .header__item {
+          display: flex;
+          align-items: center;
+        }
+        .header__left-group {
+        }
+        .header__right-group {
+          justify-content: space-evenly;
+        }
+        .logo {
+          margin-left: 20px;
+        }
+        @media (max-width: 380px) {
+          .header__item {
+            flex-grow: 1;
+          }
         }
       `
     ];
@@ -122,18 +149,28 @@ export class PageHeader extends connect(store)(LitElement) {
         }
       </style>
 
-      <app-toolbar sticky class="content-align">
-        <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
-        <div class="titlebar content-align">
+      <app-toolbar sticky class="content-align header">
+        <div class="header__item header__left-group">
+          <paper-icon-button
+            id="menuButton"
+            class="nav-menu-button"
+            icon="menu"
+            @tap="${() => this.menuBtnClicked()}"
+          ></paper-icon-button>
           <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src="${this.rootPath}assets/images/etools-logo-color-white.svg" alt="eTools" />
+          <img
+            id="app-logo"
+            class="logo"
+            src="${this.rootPath}assets/images/etools-logo-color-white.svg"
+            alt="eTools"
+          />
           ${this.isStaging
             ? html`
                 <div class="envWarning">- STAGING TESTING ENVIRONMENT</div>
               `
             : ''}
         </div>
-        <div class="content-align">
+        <div class="header__item header__right-group">
           <div class="dropdowns">
             <etools-dropdown
               class="dropdowns__item"
