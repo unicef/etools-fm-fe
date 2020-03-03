@@ -126,7 +126,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
     this.blueprintUnsubscribe = store.subscribe(
       dataCollectionChecklistBlueprint((dataCollectionJson: ChecklistFormJson | null) => {
-        console.log('value updated')
         this.checklistFormJson = dataCollectionJson;
       }, false)
     );

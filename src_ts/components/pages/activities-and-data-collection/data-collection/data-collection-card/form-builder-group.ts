@@ -194,7 +194,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       return html`
         <form-builder-group
           .groupStructure="${groupStructure}"
-          .groupValue="${this.value[groupStructure.name]}"
+          .value="${this.value[groupStructure.name]}"
           .metadata="${this.metadata}"
           .parentGroupName="${this.groupStructure.name}"
           .readonly="${this.readonly}"
@@ -207,7 +207,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       return html`
         <form-builder-collapsed-card
           .groupStructure="${groupStructure}"
-          .groupValue="${this.value[groupStructure.name]}"
+          .value="${this.value[groupStructure.name]}"
           .metadata="${this.metadata}"
           .parentGroupName="${this.groupStructure.name}"
           .readonly="${this.readonly}"
@@ -220,7 +220,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       return html`
         <form-builder-card
           .groupStructure="${groupStructure}"
-          .groupValue="${this.value[groupStructure.name]}"
+          .value="${this.value[groupStructure.name]}"
           .metadata="${this.metadata}"
           .parentGroupName="${this.groupStructure.name}"
           .readonly="${this.readonly}"

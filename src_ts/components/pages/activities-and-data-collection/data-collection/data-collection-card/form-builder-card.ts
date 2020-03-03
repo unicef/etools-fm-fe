@@ -18,7 +18,7 @@ export class FormBuilderCard extends FormBuilderGroup implements IFormBuilderCar
    * @param value
    */
   set value(value: GenericObject) {
-    if (this.showSaveButton) {
+    if (!this.showSaveButton) {
       this._value = clone(value);
     }
     this.originalValue = value;

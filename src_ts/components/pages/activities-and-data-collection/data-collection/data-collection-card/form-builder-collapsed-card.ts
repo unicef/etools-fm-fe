@@ -22,7 +22,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     this._readonly = state;
   }
   get readonly(): boolean {
-    return this._readonly || this.isEditMode;
+    return this._readonly || !this.isEditMode;
   }
   @property() private isEditMode: boolean = false;
   @property({type: Boolean, attribute: 'readonly', reflect: true}) private _readonly: boolean = true;
