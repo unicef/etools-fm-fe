@@ -38,7 +38,6 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   @property({type: Object}) groupStructure!: BlueprintGroup;
   @property({type: Object}) metadata!: BlueprintMetadata;
   @property({type: String}) parentGroupName: string = '';
-  @property({type: Boolean}) isEditMode: boolean = true;
   @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
   set errors(errors: GenericObject | string[] | null) {
     if (Array.isArray(errors)) {
@@ -105,7 +104,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   renderWideField({name, label, placeholder, required, validations}: BlueprintField): TemplateResult {
     return html`
       <wide-field
-        ?is-readonly="${!this.isEditMode || this.readonly}"
+        ?is-readonly="${this.readonly}"
         ?required="${required}"
         .value="${this.value[name]}"
         label="${label}"
@@ -131,7 +130,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       case TEXT_TYPE:
         return html`
           <text-field
-            ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?is-readonly="${this.readonly}"
             ?required="${required}"
             .value="${this.value[name]}"
             .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
@@ -147,7 +146,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       case NUMBER_TYPE:
         return html`
           <number-field
-            ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?is-readonly="${this.readonly}"
             ?required="${required}"
             .value="${this.value[name]}"
             .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
@@ -163,7 +162,7 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
         return html`
           <scale-field
             .options="${this.metadata.options[options_key || '']?.values || []}"
-            ?is-readonly="${!this.isEditMode || this.readonly}"
+            ?is-readonly="${this.readonly}"
             ?required="${required}"
             .value="${this.value[name]}"
             .validators="${validations.map((validation: string) => this.metadata.validations[validation])}"
@@ -200,7 +199,6 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
           .groupValue="${this.value[groupStructure.name]}"
           .metadata="${this.metadata}"
           .parentGroupName="${this.groupStructure.name}"
-          .isEditMode="${this.isEditMode}"
           .readonly="${this.readonly}"
           .errors="${this._errors[groupStructure.name] || null}"
           @value-changed="${(event: CustomEvent) => this.valueChanged(event, groupStructure.name)}"

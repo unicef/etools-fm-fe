@@ -6,7 +6,6 @@ export interface IFormBuilderAbstractGroup {
   groupValue: GenericObject; // setter. _originalValue = groupValue, _value = clone(groupValue);
   parentGroupName: string;
   metadata: BlueprintMetadata;
-  isEditMode: boolean; // !must be true by default!
 
   // _originalValue: GenericObject; //private property
   // _value: GenericObject; //private property
@@ -71,11 +70,6 @@ interface IFormBuilderCard extends IFormBuilderAbstractGroup {
  *  Allows to render attachment group and handles their logic
  */
 export interface IFormBuilderCollapsedCard extends IFormBuilderAbstractGroup, IFormBuilderCard {
-  /**
-   * Overrides parent property.
-   * Don't pass this property from parent element. This component must have inner control for isEditMode
-   */
-  isEditMode: boolean; // !must be false by default!
   /**
    * Extend renderGroup() method. It must handle additional type:
    *

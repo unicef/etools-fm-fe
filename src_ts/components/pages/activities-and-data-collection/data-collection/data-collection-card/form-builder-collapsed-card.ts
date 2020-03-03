@@ -13,7 +13,15 @@ const INTERVENTION_KEY: string = 'intervention';
 
 @customElement('form-builder-collapsed-card')
 export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormBuilderCollapsedCard, IFormBuilderCard {
-  @property() isEditMode: boolean = false;
+  set readonly(state: boolean) {
+    this._readonly = state;
+  }
+  get readonly(): boolean {
+    return this._readonly || this.isEditMode;
+  }
+  @property() private isEditMode: boolean = false;
+
+  @property({type: Boolean, attribute: 'readonly', reflect: true}) private _readonly: boolean = true;
 
   set errors(errors: GenericObject | string[] | null) {
     if (Array.isArray(errors)) {
@@ -41,7 +49,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
         <etools-card
           card-title="${this.retrieveTitle(this.parentGroupName) + ': ' + this.groupStructure.title}"
           is-collapsible
-          ?is-editable="${!this.readonly}"
+          ?is-editable="${!this._readonly}"
           ?edit="${this.isEditMode}"
           @start-edit="${() => this.startEdit()}"
           @save="${() => this.saveChanges()}"
@@ -97,7 +105,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
   }
 
   startEdit(): void {
-    if (this.readonly) {
+    if (this._readonly) {
       return;
     }
     this.isEditMode = true;
@@ -138,7 +146,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
           ': ' +
           this.groupStructure.title}`
       },
-      readonly: this.readonly
+      readonly: this._readonly
     }).then((response: GenericObject) => {
       if (!response.confirmed) {
         return;
