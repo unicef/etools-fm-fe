@@ -3,12 +3,10 @@ import {TemplateResult} from 'lit-element';
 /** Component for rendering BlueprintGroup with group.extra.type.includes('abstract') or group.name === 'root' */
 export interface IFormBuilderAbstractGroup {
   groupStructure: BlueprintGroup;
-  groupValue: GenericObject; // setter. _originalValue = groupValue, _value = clone(groupValue);
-  parentGroupName: string;
   metadata: BlueprintMetadata;
-
-  // _originalValue: GenericObject; //private property
-  // _value: GenericObject; //private property
+  parentGroupName: string;
+  readonly: boolean;
+  value: GenericObject;
 
   /**
    * Updates groupValue object by this.value[fieldName] = event.details.value

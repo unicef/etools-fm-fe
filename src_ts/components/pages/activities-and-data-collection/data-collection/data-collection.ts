@@ -79,7 +79,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         ? html`
             <form-builder-group
               .groupStructure="${this.checklistFormJson.blueprint.structure}"
-              .groupValue="${this.checklistFormJson.value}"
+              .value="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
               .readonly="${this.tabIsReadonly}"
               .errors="${this.formErrors}"

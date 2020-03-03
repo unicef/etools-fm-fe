@@ -18,7 +18,6 @@ import {
   SCALE_TYPE,
   TEXT_TYPE
 } from '../../../../common/dropdown-options';
-import {clone} from 'ramda';
 import {FormBuilderCardStyles} from './form-builder-card.styles';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {IFormBuilderAbstractGroup} from '../../../../../types/form-builder.interfaces';
@@ -39,6 +38,15 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
   @property({type: Object}) metadata!: BlueprintMetadata;
   @property({type: String}) parentGroupName: string = '';
   @property({type: Boolean, attribute: 'readonly', reflect: true}) readonly: boolean = true;
+  @property({type: Object}) value: GenericObject = {};
+
+  /**
+   * Setter for handling error.
+   * Normally we wouldn't have errors as string or string[] for FormGroups.
+   * In cases they appear - show toast with error text and reset it.
+   * Otherwise it will be impossible to clear that error from field elements
+   * @param errors
+   */
   set errors(errors: GenericObject | string[] | null) {
     if (Array.isArray(errors)) {
       fireEvent(this, 'toast', {text: errors[0]});
@@ -47,16 +55,6 @@ export class FormBuilderGroup extends LitElement implements IFormBuilderAbstract
       this._errors = errors;
     }
   }
-  set groupValue(value: GenericObject) {
-    if (this.originalValue === value) {
-      return;
-    }
-    this.originalValue = value;
-    this.value = clone(value);
-  }
-
-  protected originalValue: GenericObject = {};
-  @property() protected value: GenericObject = {};
   @property() protected _errors: GenericObject = {};
 
   render(): TemplateResult {

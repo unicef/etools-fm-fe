@@ -13,6 +13,11 @@ const INTERVENTION_KEY: string = 'intervention';
 
 @customElement('form-builder-collapsed-card')
 export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormBuilderCollapsedCard, IFormBuilderCard {
+  /**
+   * Overrides readonly property
+   * In collapsed card it must consider isEditMode property,
+   * components inside card are readonly if isEditMode is off or if card is readonly
+   */
   set readonly(state: boolean) {
     this._readonly = state;
   }
@@ -20,9 +25,13 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     return this._readonly || this.isEditMode;
   }
   @property() private isEditMode: boolean = false;
-
   @property({type: Boolean, attribute: 'readonly', reflect: true}) private _readonly: boolean = true;
 
+  /**
+   * Overrides errors setter
+   * In collapsed card it must consider isEditMode property,
+   * We must to enable isEditMode if errors comes from backend
+   */
   set errors(errors: GenericObject | string[] | null) {
     if (Array.isArray(errors)) {
       fireEvent(this, 'toast', {text: errors[0]});
@@ -35,13 +44,28 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     }
   }
 
-  set groupValue(value: GenericObject) {
+  /**
+   * Overrides value property
+   * We need to save originalValue to have Cancel possibility in collapsed card.
+   * Don't override current edited value if isEditMode enabled
+   * (It can be happened if other sibling card or component updates their value during current card edition)
+   */
+  set value(value: GenericObject) {
     this.originalValue = value;
     if (!this.isEditMode) {
-      this.value = clone(value);
+      this._value = clone(value);
     }
   }
+  get value(): GenericObject {
+    return this._value;
+  }
+  @property() private _value: GenericObject = {};
+  private originalValue: GenericObject = {};
 
+  /**
+   * Extends parent render method for handling additional types (StructureTypes.ATTACHMENTS_BUTTON in our case)
+   * and adds etools-card as container wrapper
+   */
   render(): TemplateResult {
     return html`
       ${this.renderInlineStyles()}
@@ -67,6 +91,10 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     `;
   }
 
+  /**
+   * Filters StructureTypes.ATTACHMENTS_BUTTON type. It will be rendered as button,
+   * allows parent renderChild method to render other types
+   */
   renderGroupChildren(): TemplateResult[] {
     return this.groupStructure.children
       .filter(({styling}: BlueprintGroup | BlueprintField) => !styling.includes(StructureTypes.ATTACHMENTS_BUTTON))
@@ -111,17 +139,26 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     this.isEditMode = true;
   }
 
+  /**
+   * We need to rerender view to update all changes that was happen,
+   * because only fields are updating during @value-change event.
+   * Only then we can reset all changed values to their original
+   */
   cancelEdit(): void {
     this.requestUpdate().then(() => {
-      this.value = clone(this.originalValue);
+      this._value = clone(this.originalValue);
       this.isEditMode = false;
     });
   }
 
+  /**
+   * Updates value property, stops event propagation.
+   * We need to fire value-changed event only after save button click
+   */
   valueChanged(event: CustomEvent, name: string): void {
     event.stopPropagation();
-    if (this.value[name] !== event.detail.value) {
-      this.value[name] = event.detail.value;
+    if (this._value[name] !== event.detail.value) {
+      this._value[name] = event.detail.value;
     }
   }
 
@@ -134,6 +171,11 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
     fireEvent(this, 'value-changed', {value: this.value});
   }
 
+  /**
+   * Tries to save changed attachments on popup confirm
+   * Generates value-changed event with originalValue clone if isEditMode enabled.
+   * In this case it will take only attachments changes and ignore other changes that may happen during card edit
+   */
   openAttachmentsPopup(): void {
     openDialog<FormBuilderAttachmentsPopupData>({
       dialog: 'checklist-attachments-popup',
@@ -151,7 +193,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
       if (!response.confirmed) {
         return;
       }
-      this.value.attachments = response.attachments;
+      this._value.attachments = response.attachments;
       if (this.isEditMode) {
         const tmp: GenericObject = clone(this.originalValue);
         tmp.attachments = response.attachments;
