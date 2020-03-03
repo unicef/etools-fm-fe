@@ -39,7 +39,7 @@ export class FormBuilderCard extends FormBuilderGroup implements IFormBuilderCar
   }
 
   saveChanges(): void {
-    if (Object.keys(this.errors).length) {
+    if (Object.keys(this._errors).length) {
       fireEvent(this, 'toast', {text: 'Please check all fields and try again'});
       return;
     }

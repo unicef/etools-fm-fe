@@ -27,8 +27,13 @@ export class NumberField extends BaseField<number> {
     `;
   }
 
-  protected customValidation(): string | null {
-    return this.value && isNaN(this.value) ? 'Must be a number' : null;
-    // return !this.value || isNaN(this.value) ? 'Must be a number' : null;
+  protected valueChanged(newValue: number): void {
+    const formatted: number = Number(newValue);
+    const isNumber: boolean = !isNaN(formatted) && `${newValue}` !== '' && `${newValue}` !== 'null';
+    super.valueChanged(isNumber ? formatted : newValue);
+  }
+
+  protected customValidation(value: number): string | null {
+    return value && isNaN(value) ? 'Must be a number' : null;
   }
 }

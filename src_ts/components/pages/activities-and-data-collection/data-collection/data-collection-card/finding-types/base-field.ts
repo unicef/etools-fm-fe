@@ -9,8 +9,15 @@ export abstract class BaseField<T> extends LitElement {
   @property({type: Boolean, attribute: 'is-readonly'}) isReadonly: boolean = false;
   @property({type: Boolean, attribute: 'required', reflect: true}) required: boolean = false;
   @property() value: T | null = null;
-  @property() errorMessage: string | null = null;
   validators: FieldValidator[] = [];
+  set errorMessage(message: string | null) {
+    this._errorMessage = message;
+  }
+  get errorMessage(): string | null {
+    return this.isReadonly ? null : this._errorMessage;
+  }
+
+  @property() protected _errorMessage: string | null = null;
 
   protected render(): TemplateResult {
     return html`
@@ -43,32 +50,32 @@ export abstract class BaseField<T> extends LitElement {
   }
 
   protected valueChanged(newValue: T): void {
+    this.validateField(newValue);
     if (newValue !== this.value) {
       this.value = newValue;
-      this.validateField();
       fireEvent(this, 'value-changed', {value: newValue});
     }
   }
 
-  protected validateField(): void {
-    let errorMessage: string | null = null;
-    if (this.required && !this.value) {
+  protected validateField(value: T): void {
+    let errorMessage: string | null;
+    if (this.required && !value) {
       errorMessage = 'This field is required!';
     } else {
-      errorMessage = this.metaValidation();
+      errorMessage = this.metaValidation(value);
     }
-    if (this.errorMessage !== errorMessage) {
+    if (this._errorMessage !== errorMessage) {
       fireEvent(this, 'error-changed', {error: errorMessage});
-      this.errorMessage = errorMessage;
+      this._errorMessage = errorMessage;
     }
   }
 
-  protected metaValidation(): string | null {
-    const message: string | null = validate(this.validators, this.value);
-    return message ? message : this.customValidation();
+  protected metaValidation(value: T): string | null {
+    const message: string | null = validate(this.validators, value);
+    return message ? message : this.customValidation(value);
   }
 
-  protected abstract customValidation(): string | null;
+  protected abstract customValidation(value: T): string | null;
 
   protected abstract controlTemplate(): TemplateResult;
 

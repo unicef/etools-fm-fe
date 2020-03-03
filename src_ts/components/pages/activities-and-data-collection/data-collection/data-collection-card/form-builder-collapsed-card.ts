@@ -15,6 +15,18 @@ const INTERVENTION_KEY: string = 'intervention';
 export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormBuilderCollapsedCard, IFormBuilderCard {
   @property() isEditMode: boolean = false;
 
+  set errors(errors: GenericObject | string[] | null) {
+    if (Array.isArray(errors)) {
+      fireEvent(this, 'toast', {text: errors[0]});
+      fireEvent(this, 'error-changed', {error: null});
+    } else if (errors) {
+      this._errors = errors;
+    }
+    if (errors) {
+      this.isEditMode = true;
+    }
+  }
+
   set groupValue(value: GenericObject) {
     this.originalValue = value;
     if (!this.isEditMode) {
@@ -106,7 +118,7 @@ export class FormBuilderCollapsedCard extends FormBuilderGroup implements IFormB
   }
 
   saveChanges(): void {
-    if (Object.keys(this.errors).length) {
+    if (Object.keys(this._errors).length) {
       fireEvent(this, 'toast', {text: 'Please check all fields and try again'});
       return;
     }
