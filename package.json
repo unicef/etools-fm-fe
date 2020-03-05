@@ -61,6 +61,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "test-pkg-form-builder": "0.0.3",
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {

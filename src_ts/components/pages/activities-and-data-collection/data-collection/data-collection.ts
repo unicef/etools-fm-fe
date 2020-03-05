@@ -30,6 +30,7 @@ import '@polymer/paper-button';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
+import 'test-pkg-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 

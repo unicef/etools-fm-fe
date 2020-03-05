@@ -6,7 +6,7 @@ import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {FormBuilderCardStyles} from '../../data-collection/data-collection-card/form-builder-card.styles';
+import {FormBuilderCardStyles} from 'test-pkg-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {store} from '../../../../../redux/store';
