@@ -30,7 +30,10 @@ import '@polymer/paper-button';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
-import 'test-pkg-form-builder';
+import '@unicef-polymer/etools-form-builder';
+import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
+import {getEndpoint} from '../../../../endpoints/endpoints';
+import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -101,6 +104,8 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
+    AttachmentsHelper.initialize(attachmentsEndpoint);
     /**
      * On Activity data changes.
      * Load checklist data if activity loaded successfully

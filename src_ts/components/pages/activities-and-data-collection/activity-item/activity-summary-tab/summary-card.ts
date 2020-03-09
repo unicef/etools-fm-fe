@@ -6,15 +6,11 @@ import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {FormBuilderCardStyles} from 'test-pkg-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {store} from '../../../../../redux/store';
 import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
-import '../../data-collection/data-collection-card/finding-types/text-field';
-import '../../data-collection/data-collection-card/finding-types/number-field';
-import '../../data-collection/data-collection-card/finding-types/scale-field';
-import './summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
