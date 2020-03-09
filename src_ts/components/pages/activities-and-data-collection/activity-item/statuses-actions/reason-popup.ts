@@ -4,7 +4,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@polymer/paper-input/paper-textarea';
-import {translate} from 'lit-translate';
+import {get, translate} from 'lit-translate';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
@@ -41,7 +41,7 @@ export class ChecklistAttachments extends LitElement {
             max-rows="3"
             required
             label="${translate(this.label as string)}"
-            placeholder="${translate('MAIN.ENTER') + ` ${this.label}`}"
+            placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
             @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"
             @focus="${() => (this.error = '')}"
             ?invalid="${Boolean(this.error)}"
