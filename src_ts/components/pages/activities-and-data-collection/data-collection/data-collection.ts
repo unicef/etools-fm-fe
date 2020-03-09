@@ -81,14 +81,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
       ${this.checklistFormJson
         ? html`
-            <form-builder-group
+            <form-abstract-group
               .groupStructure="${this.checklistFormJson.blueprint.structure}"
               .value="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
               .readonly="${this.tabIsReadonly}"
               .errors="${this.formErrors}"
               @value-changed="${(event: CustomEvent) => this.save(event)}"
-            ></form-builder-group>
+            ></form-abstract-group>
           `
         : ''}
     `;
