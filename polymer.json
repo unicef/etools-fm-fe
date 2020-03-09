@@ -36,12 +36,7 @@
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js",
     "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
-    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js",
-
-    "src/components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-collapsed-card.js",
-    "src/components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-card.js",
-    "src/components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-group.js",
-    "src/components/pages/activities-and-data-collection/data-collection/data-collection-card/attachments-popup/checklist-attachments-popup.js"
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
   ],
   "extraDependencies": [
     "manifest.json",
