@@ -1,6 +1,6 @@
 import {
   SetSiteLocationsUpdatingError,
-  SetSpecificLocatinos,
+  SetSpecificLocations,
   StartSiteLocationsUpdating,
   StopSiteLocationsUpdating
 } from '../actions/site-specific-locations.actions';
@@ -25,7 +25,7 @@ export function loadSiteLocations(): (dispatch: Dispatch) => Promise<void> {
           results: response,
           current: url
         };
-        dispatch(new SetSpecificLocatinos(respObject));
+        dispatch(new SetSpecificLocations(respObject));
       });
   };
 }
