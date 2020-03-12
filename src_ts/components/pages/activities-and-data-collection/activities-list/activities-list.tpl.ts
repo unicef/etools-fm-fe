@@ -21,8 +21,21 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       </div>
     </page-content-header>
 
-    <section class="elevation page-content card-container filters-section" elevation="1">
+    <section class="elevation page-content card-container filters-section search-container" elevation="1">
+      <div class="search-input">
+        <paper-input
+          type="search"
+          .value="${this.queryParams && this.queryParams.search}"
+          placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
+          @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
+          inline
+        >
+          <iron-icon icon="search" slot="prefix"></iron-icon>
+        </paper-input>
+      </div>
+
       <etools-filters
+        class="search-filters"
         .filterLoadingInProcess="${this.filtersLoading}"
         .filters="${this.filters || []}"
         @filter-change="${(event: CustomEvent) => updateQueryParams({...event.detail, page: 1})}"
