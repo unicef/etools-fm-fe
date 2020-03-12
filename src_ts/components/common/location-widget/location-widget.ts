@@ -461,7 +461,7 @@ export class LocationWidgetComponent extends LitElement {
       this.selectedLocation = null;
     } else {
       this.selectedLocation = id;
-      this.sitesLocation = this.sites.filter((site: Site) => site.parent.id === id);
+      this.sitesLocation = this.sites.filter((site: Site) => site.parent.id === id && site.is_active);
     }
   }
 

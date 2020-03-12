@@ -5,7 +5,7 @@ export enum SitesActionsTypes {
   SET_SITE_LOCATIONS_UPDATING_ERROR = '[Sites Action]:SET_SITE_LOCATIONS_UPDATING_ERROR'
 }
 
-export class SetSpecificLocatinos {
+export class SetSpecificLocations {
   readonly type: SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST = SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST;
 
   constructor(public payload: IStatedListData<Site>) {}
@@ -27,7 +27,7 @@ export class SetSiteLocationsUpdatingError {
 }
 
 export type SiteLocationsActions =
-  | SetSpecificLocatinos
+  | SetSpecificLocations
   | StartSiteLocationsUpdating
   | StopSiteLocationsUpdating
   | SetSiteLocationsUpdatingError;
