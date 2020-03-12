@@ -1,6 +1,7 @@
 type EtoolsCpOutput = {
   id: number;
   name: string;
+  parent: number;
 };
 
 type EtoolsCpOutcome = {
