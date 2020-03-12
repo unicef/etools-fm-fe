@@ -187,7 +187,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           : ''}
 
         <paper-textarea
-          class="validate-input disabled-as-readonly preparation-input-container"
+          class="validate-input disabled-as-readonly preparation-input-container issue-tracker-input"
           .value=${this.editedData.issue}
           max-rows="3"
           label="${translate('ISSUE_TRACKER.ISSUE')}"

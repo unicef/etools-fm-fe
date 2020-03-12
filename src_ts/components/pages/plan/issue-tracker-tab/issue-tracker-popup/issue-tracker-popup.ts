@@ -64,7 +64,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
         }
 
         // check errors on update(create) complete
-        this.errors = store.getState().issueTracker.error;
+        this.errors = store.getState().issueTracker.error?.data;
         if (this.errors && Object.keys(this.errors).length) {
           return;
         }
