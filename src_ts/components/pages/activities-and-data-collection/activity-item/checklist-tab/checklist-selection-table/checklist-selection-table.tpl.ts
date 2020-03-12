@@ -18,7 +18,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
     <etools-card
       card-title="${this.tableTitle}"
       is-collapsible
-      ?is-editable="${this.activityDetails?.permissions.edit}"
+      ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode}"
       ?hide-edit-button="${this.blockEdit}"
       @start-edit="${() => this.enableEditMode()}"

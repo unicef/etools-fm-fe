@@ -15,7 +15,7 @@ store.addReducers({activityChecklist});
 
 @customElement('activity-checklist-tab')
 export class ActivityChecklistTab extends LitElement {
-  @property() activityDetails: IActivityDetails | null = null;
+  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
   @property() protected sortedChecklist: GenericObject<IChecklistItem[]> | null = null;
   private activityChecklistUnsubscribe!: Unsubscribe;
 
@@ -52,7 +52,7 @@ export class ActivityChecklistTab extends LitElement {
                       .tableTitle="${title}"
                       .questionsList="${checklist}"
                       .activityId="${this.activityId}"
-                      .activityDetails="${this.activityDetails}"
+                      ?editable="${this.readonly}"
                     >
                     </checklist-selection-table>
                   `

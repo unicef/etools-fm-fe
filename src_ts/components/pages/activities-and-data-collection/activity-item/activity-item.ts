@@ -244,7 +244,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-checklist-tab
             .activityId="${this.activityId}"
-            .activityDetails="${this.activityDetails}"
+            ?readonly="${!this.activityDetails?.permissions.edit.checklists}"
           ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
