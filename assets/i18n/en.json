@@ -12,6 +12,7 @@
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status"
     },
+    "REFERENCE_NO": "Reference #",
     "FILTERS": {
       "MONITOR_TYPE": "Primary FM",
       "TEAM_MEMBERS": "Team Members",
@@ -280,8 +281,8 @@
     "FILTERS": {
       "LEVEL_LABEL": "Select Level",
       "LEVEL_PLACEHOLDER": "Select Level",
-      "OUTPUT_LABEL": "Select Output",
-      "OUTPUT_PLACEHOLDER": "Select Output",
+      "OUTPUT_LABEL": "Select CP Output",
+      "OUTPUT_PLACEHOLDER": "Select CP Output",
       "PARTNER_LABEL": "Select Partner",
       "PARTNER_PLACEHOLDER": "Select Partner",
       "INTERVENTION_LABEL": "Select PD/SSFA",
@@ -337,7 +338,7 @@
     },
     "LEVEL": {
       "PARTNER": "Partner",
-      "OUTPUT": "Output",
+      "OUTPUT": "CP Output",
       "INTERVENTION": "PD/SSFA"
     }
   },
@@ -392,7 +393,7 @@
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",
-    "OUTPUT": "Output",
+    "OUTPUT": "CP Output",
     "INTERVENTION": "PD/SSFA"
   },
   "ANSWER_TYPE_OPTIONS": {

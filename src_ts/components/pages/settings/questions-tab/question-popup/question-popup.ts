@@ -47,7 +47,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   @property() editedData: IEditedQuestion = {
     options: [],
     answer_type: ANSWER_TYPES[0].value,
-    level: LEVELS[0].value
+    level: LEVELS[0].value,
+    is_active: true
   };
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;

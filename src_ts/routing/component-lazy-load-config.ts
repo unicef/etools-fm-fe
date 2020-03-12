@@ -40,11 +40,7 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
   // Activity Data Collection
   'activities_data-collection': [
     'components/pages/activities-and-data-collection/activities-page.js',
-    'components/pages/activities-and-data-collection/data-collection/data-collection.js',
-    'components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-group.js',
-    'components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-collapsed-card.js',
-    'components/pages/activities-and-data-collection/data-collection/data-collection-card/form-builder-card.js',
-    'components/pages/activities-and-data-collection/data-collection/data-collection-card/attachments-popup/checklist-attachments-popup.js'
+    'components/pages/activities-and-data-collection/data-collection/data-collection.js'
   ],
 
   // Analyze pages

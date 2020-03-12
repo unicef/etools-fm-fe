@@ -30,6 +30,10 @@ import '@polymer/paper-button';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
+import '@unicef-polymer/etools-form-builder';
+import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
+import {getEndpoint} from '../../../../endpoints/endpoints';
+import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -77,14 +81,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
       ${this.checklistFormJson
         ? html`
-            <form-builder-group
+            <form-abstract-group
               .groupStructure="${this.checklistFormJson.blueprint.structure}"
-              .groupValue="${this.checklistFormJson.value}"
+              .value="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
               .readonly="${this.tabIsReadonly}"
               .errors="${this.formErrors}"
               @value-changed="${(event: CustomEvent) => this.save(event)}"
-            ></form-builder-group>
+            ></form-abstract-group>
           `
         : ''}
     `;
@@ -100,6 +104,8 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
+    AttachmentsHelper.initialize(attachmentsEndpoint);
     /**
      * On Activity data changes.
      * Load checklist data if activity loaded successfully

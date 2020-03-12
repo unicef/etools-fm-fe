@@ -7,10 +7,12 @@
       "START_DATE": "Localized Start Date",
       "LOCATION_AND_SITE": "Localized Location & Site",
       "MONITOR_TYPE": "Localized Primary FM",
+      "PERSON_RESPONSIBLE": "Localized Person Responsible",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status"
     },
+    "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
       "MONITOR_TYPE": "Localized Primary FM",
       "TEAM_MEMBERS": "Localized Team Members",
@@ -279,8 +281,8 @@
     "FILTERS": {
       "LEVEL_LABEL": "Localized Select Level",
       "LEVEL_PLACEHOLDER": "Localized Select Level",
-      "OUTPUT_LABEL": "Localized Select Output",
-      "OUTPUT_PLACEHOLDER": "Localized Select Output",
+      "OUTPUT_LABEL": "Localized Select CP Output",
+      "OUTPUT_PLACEHOLDER": "Localized Select CP Output",
       "PARTNER_LABEL": "Localized Select Partner",
       "PARTNER_PLACEHOLDER": "Localized Select Partner",
       "INTERVENTION_LABEL": "Localized Select PD/SSFA",
@@ -336,7 +338,7 @@
     },
     "LEVEL": {
       "PARTNER": "Localized Partner",
-      "OUTPUT": "Localized Output",
+      "OUTPUT": "Localized CP Output",
       "INTERVENTION": "Localized PD/SSFA"
     }
   },
@@ -391,7 +393,7 @@
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
-    "OUTPUT": "Localized Output",
+    "OUTPUT": "Localized CP Output",
     "INTERVENTION": "Localized PD/SSFA"
   },
   "ANSWER_TYPE_OPTIONS": {

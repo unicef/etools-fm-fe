@@ -5,7 +5,6 @@ import {
   CP_OUTCOMES,
   CP_OUTPUTS,
   INTERVENTIONS,
-  INTERVENTIONS_SHORT,
   LOCATIONS_ENDPOINT,
   METHODS,
   PARTNERS,
@@ -25,7 +24,6 @@ etoolsCustomDexieDb.version(1).stores({
   [TPM_PARTNERS]: 'id',
   [CP_OUTPUTS]: 'id',
   [INTERVENTIONS]: 'id',
-  [INTERVENTIONS_SHORT]: 'id',
   [CATEGORIES]: 'id',
   [SECTIONS]: 'id',
   [METHODS]: 'id'
