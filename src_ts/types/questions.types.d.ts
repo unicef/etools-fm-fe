@@ -17,7 +17,7 @@ type IEditedQuestion = Partial<IQuestion<EditedQuestionOption>>;
 
 type QuestionOption = {
   id: number;
-  value: string;
+  value: string | boolean;
   label: string;
   _delete?: true;
 };
