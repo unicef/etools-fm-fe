@@ -38,3 +38,9 @@ export class ChecklistAttachmentsTypesRequest {
     ActivityDetailsActions.CHECKLIST_ATTACHMENTS_TYPES_REQUEST;
   constructor(public payload: AttachmentType[]) {}
 }
+
+export class ActivityDetailsCreation {
+  readonly type: ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS =
+    ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS;
+  constructor(public payload: IActivityDetails) {}
+}

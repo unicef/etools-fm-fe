@@ -204,8 +204,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
     if (type === BOOL_TYPE) {
       this.editedData.options = [
-        {label: '', value: 'True'},
-        {label: '', value: 'False'}
+        {label: '', value: true},
+        {label: '', value: false}
       ];
     } else if (type === SCALE_TYPE) {
       this.editedData.options = new Array(3)

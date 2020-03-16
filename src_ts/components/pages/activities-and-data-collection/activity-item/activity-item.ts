@@ -77,7 +77,7 @@ const CANCELLED_STATUS: IEtoolsStatusModel[] = [
 @customElement('activity-item')
 export class NewActivityComponent extends LitElement {
   @property() activityId: string | null = null;
-  @property() activityDetails?: IActivityDetails;
+  @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating: boolean = false;
   pageTabs: PageTab[] = [
     {
@@ -126,13 +126,6 @@ export class NewActivityComponent extends LitElement {
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
 
-  get personResponsible(): number | null {
-    return (
-      (this.activityDetails && this.activityDetails.person_responsible && this.activityDetails.person_responsible.id) ||
-      null
-    );
-  }
-
   render(): TemplateResult {
     // language=HTML
     return html`
@@ -143,11 +136,11 @@ export class NewActivityComponent extends LitElement {
 
       <etools-status
         .statuses="${this.getStatuses()}"
-        .activeStatus="${this.activityDetails && this.activityDetails.status}"
+        .activeStatus="${this.activityDetails?.status || DRAFT}"
       ></etools-status>
 
       <page-content-header with-tabs-visible>
-        <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || ''}</h1>
+        <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || 'New'}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
           <statuses-actions
@@ -197,25 +190,29 @@ export class NewActivityComponent extends LitElement {
         }
         this.activityId = activityId;
 
-        const activityDetailsState: IActivityDetailsState = store.getState().activityDetails;
-        const loadedActivityId: number | null =
-          activityDetailsState && activityDetailsState.data && activityDetailsState.data.id;
-        const isNotLoaded: boolean = !loadedActivityId || `${loadedActivityId}` !== `${activityId}`;
-
-        if (this.activityId && isNotLoaded) {
-          store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
-            if (store.getState().activityDetails.error) {
-              updateAppLocation(ACTIVITIES_PAGE);
-            }
-          });
-        } else {
-          this.activityDetails = activityDetailsState.data as IActivityDetails;
+        if (this.activityId === 'new') {
+          this.activityDetails = null;
           this.checkTab();
+        } else {
+          const activityDetailsState: IActivityDetailsState = store.getState().activityDetails;
+          const loadedActivityId: number | null =
+            activityDetailsState && activityDetailsState.data && activityDetailsState.data.id;
+          const isNotLoaded: boolean = !loadedActivityId || `${loadedActivityId}` !== `${activityId}`;
+
+          if (this.activityId && isNotLoaded) {
+            store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
+              if (store.getState().activityDetails.error) {
+                updateAppLocation(ACTIVITIES_PAGE);
+              }
+            });
+          } else {
+            this.activityDetails = activityDetailsState.data as IActivityDetails;
+            this.checkTab();
+          }
         }
       })
     );
 
-    // On update status flag changes
     this.isLoadUnsubscribe = store.subscribe(
       activityStatusIsChanging((isLoad: boolean | null) => {
         this.isStatusUpdating = Boolean(isLoad);
@@ -273,20 +270,14 @@ export class NewActivityComponent extends LitElement {
   }
 
   getTabList(): PageTab[] {
-    if (!this.activityDetails) {
-      return [];
-    }
     return this.pageTabs.filter(({tab}: PageTab) => {
       const property: string = TABS_PROPERTIES[tab];
-      return !property || this.activityDetails!.permissions.view[property as keyof ActivityPermissionsObject];
+      return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
     });
   }
 
   getStatuses(): IEtoolsStatusModel[] {
-    if (!this.activityDetails) {
-      return [];
-    }
-    return this.activityDetails.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
+    return this.activityDetails?.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
   }
 
   onSelect(selectedTab: HTMLElement): void {
@@ -298,25 +289,26 @@ export class NewActivityComponent extends LitElement {
   }
 
   private checkTab(): void {
-    if (!this.activityDetails) {
-      return;
-    }
-
     const {params}: IRouteDetails = store.getState().app.routeDetails;
     const activeTab: string | null = params && (params.tab as string);
 
     const isValidTab: boolean = VALID_TABS.has(`${activeTab}`);
     const tabProperty: string = TABS_PROPERTIES[activeTab || ''];
     const canViewTab: boolean =
-      isValidTab &&
-      (!tabProperty || this.activityDetails.permissions.view[tabProperty as keyof ActivityPermissionsObject]);
+      isValidTab && (!tabProperty || this.checkActivityDetailsPermissions(this.activityDetails, tabProperty));
 
     if (canViewTab) {
       this.activeTab = `${activeTab}`;
     } else {
       this.activeTab = DETAILS_TAB;
-      updateAppLocation(`activities/${this.activityDetails.id}/${DETAILS_TAB}`);
+      updateAppLocation(`activities/${this.activityDetails?.id || 'new'}/${DETAILS_TAB}`);
     }
+  }
+
+  private checkActivityDetailsPermissions(activityDetails: IActivityDetails | null, property: string): boolean {
+    if (activityDetails) {
+      return activityDetails.permissions.view[property as keyof ActivityPermissionsObject];
+    } else return property === DETAILS_TAB;
   }
 
   static get styles(): CSSResultArray {
