@@ -35,7 +35,7 @@ export class IssueTrackerList extends LitElement {
   loadIssues(params: GenericObject): void {
     this.loading = true;
     const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
-    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
+    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}&status=new`;
     request<IListData<LogIssue>>(resultUrl).then((list: IListData<LogIssue>) => {
       this.items = list.results;
       this.count = list.count;
