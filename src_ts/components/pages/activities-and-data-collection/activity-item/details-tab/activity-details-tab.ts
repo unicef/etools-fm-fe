@@ -16,15 +16,8 @@ const PAGE: string = ACTIVITIES_PAGE;
 
 @customElement('activity-details-tab')
 export class ActivityDetailsTab extends LitElement {
+  @property() activityId: string | null = null;
   private routeUnsubscribe!: Callback;
-  @property() set activityId(id: string) {
-    if (!id) {
-      store.dispatch({
-        type: ActivityDetailsActions.ACTIVITY_DETAILS_GET_SUCCESS,
-        payload: null
-      });
-    }
-  }
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -36,6 +29,12 @@ export class ActivityDetailsTab extends LitElement {
         store.dispatch(new SetEditedDetailsCard(null));
       })
     );
+    if (!this.activityId || this.activityId === 'new') {
+      store.dispatch({
+        type: ActivityDetailsActions.ACTIVITY_DETAILS_GET_SUCCESS,
+        payload: null
+      });
+    }
   }
 
   disconnectedCallback(): void {
@@ -43,13 +42,21 @@ export class ActivityDetailsTab extends LitElement {
     this.routeUnsubscribe();
   }
 
+  checkActivityId(): TemplateResult {
+    return this.activityId === 'new'
+      ? html``
+      : html`
+          <monitor-information-card class="page-content"></monitor-information-card>
+          <entities-monitor-card class="page-content"></entities-monitor-card>
+        `;
+  }
+
   render(): TemplateResult {
     // language=HTML
     return html`
       <details-note-card></details-note-card>
       <activity-details-card class="page-content"></activity-details-card>
-      <monitor-information-card class="page-content"></monitor-information-card>
-      <entities-monitor-card class="page-content"></entities-monitor-card>
+      ${this.checkActivityId()}
     `;
   }
 

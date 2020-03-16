@@ -24,7 +24,7 @@ export function requestActivityDetails(id: string): IAsyncAction {
   };
 }
 
-export function createActivityDetails(): IAsyncAction {
+export function createActivityDetails(activityDetails: Partial<IActivityDetails>): IAsyncAction {
   return {
     types: [
       ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
@@ -34,7 +34,8 @@ export function createActivityDetails(): IAsyncAction {
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(ACTIVITIES_LIST);
       const options: RequestInit = {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify(activityDetails)
       };
       return request(url, options);
     }
