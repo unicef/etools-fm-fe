@@ -2,9 +2,11 @@ import {LitElement} from 'lit-element';
 import clone from 'ramda/es/clone';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
-// eslint-disable-next-line @typescript-eslint/typedef
+/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
+/* @polymerMixin */
 export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass: B) =>
   class extends superclass {
+    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     editedData: Partial<T> = {};
     originalData!: T | null;
     errors: GenericObject = {};

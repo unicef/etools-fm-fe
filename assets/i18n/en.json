@@ -1,0 +1,548 @@
+{
+  "ACTIVITIES_LIST": {
+    "TITLE": "Activities",
+    "CREATE_NEW_BUTTON": "Create New",
+    "COLUMNS": {
+      "REFERENCE_NUMBER": "Reference #",
+      "START_DATE": "Start Date",
+      "LOCATION_AND_SITE": "Location & Site",
+      "MONITOR_TYPE": "Primary FM",
+      "PERSON_RESPONSIBLE": "Person Responsible",
+      "TEAM_MEMBERS": "Team Members",
+      "CHECKLISTS_COUNT": "Checklists",
+      "STATUS": "Status"
+    },
+    "REFERENCE_NO": "Reference #",
+    "FILTERS": {
+      "MONITOR_TYPE": "Primary FM",
+      "TEAM_MEMBERS": "Team Members",
+      "PERSON_RESPONSIBLE": "Person Responsible",
+      "LOCATION": "Location",
+      "SITE": "Site",
+      "PARTNERS": "Partners",
+      "TPM_PARTNERS": "TPM Partners",
+      "INTERVENTIONS": "PD/SSFA",
+      "CP_OUTPUTS": "CP Outputs",
+      "STATUS": "Status",
+      "START_DATE": "Start Date",
+      "END_DATE": "End Date"
+    }
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "Specific issues for Probing/Attention",
+    "PD_SSFA_DETAILS": {
+      "TITLE": "PD/SSFA Details",
+      "REFERENCE_NUMBER": "Reference Number",
+      "DOCUMENT_TYTLE": "Document Title",
+      "TYPE": "Type",
+      "PROGRESS_REPORTS": "Progress Reports"
+    },
+    "SUMMARY": {
+      "OVERALL_FINDING_PLACEHOLDER": "Enter Overall finding",
+      "ADDITIONAL_BUTTONS": {
+        "OFF_TRACK": "Off Track",
+        "ON_TRACK": "On Track"
+      }
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "NO_QUESTIONS_FOUND": "No applicable questions found for this question. Please add them in settings or planing or select another sections in activity details",
+    "DETAIL_INPUT_PLACEHOLDER": "Enter Specific Details to Probe",
+    "ADD_DETAIL": "Add Detail",
+    "COLUMNS": {
+      "TEXT": "Checklist Item",
+      "DETAILS": "Specific Details to Probe",
+      "METHODS": "Methods"
+    }
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "Add checklist",
+    "EDIT_CHECKLIST": "Edit checklist",
+    "COLUMNS": {
+      "TEAM_MEMBER": "Team Member",
+      "METHOD_TYPE": "Method",
+      "INFO_SOURCE": "Information Source"
+    },
+    "LABELS": {
+      "METHOD": "Method",
+      "INFO_SOURCE": "Information Source"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "Activity Details",
+    "MONITOR_INFO": "Monitor Information",
+    "ENTRIES_TO_MONITOR": "Entities to monitor",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "SECTIONS": "Sections",
+    "TEAM_MEMBERS": "Team Members",
+    "PERSON_RESPONSIBLE": "Person Responsible",
+    "TPM_PARTNER": "Third Party Monitor Partner",
+    "USER_TYPE": "Primary Field Monitor is",
+    "USER_TYPES": {
+      "STAFF": "Staff",
+      "TPM": "Third Party Monitor"
+    },
+    "PARTNER": "Partner",
+    "CP_OUTPUT": "CP Output",
+    "INTERVENTION": "Intervention",
+    "PARTNERS": "Partners",
+    "PARTNER_ORGANIZATION": "Partner Organization",
+    "CP_OUTPUTS": "CP Outputs",
+    "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
+    "INTERVENTIONS_FOUND": "{{ count }} PD/SSFA were found:",
+    "INTERVENTIONS": "PD/SSFAs",
+    "CONNECTED_ENTRIES": "Connected entries to be added together with the selected PD/SSFA:",
+    "ADD_ENTRY": "Add New Item",
+    "ADD_PARTNER": "Add Partner",
+    "ADD_CP_OUTPUT": "Add CP Output",
+    "ADD_INTERVENTION": "Add PD/SSFA",
+    "REJECTION_NOTE": "Rejection Note",
+    "CANCELLATION_NOTE": "Cancellation Note",
+    "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
+  },
+  "ACTIVITY_ITEM": {
+    "NEW_ACTIVITY": "New Activity",
+    "STATUS_CHANGE": "Changing Status",
+    "TRANSITIONS": {
+      "mark_details_configured": "Next",
+      "mark_checklist_configured": "Review",
+      "ASSIGN_AND_ACCEPT": "Assign & Accept",
+      "assign": "Assign",
+      "accept": "Accept",
+      "mark_data_collected": "Finalize",
+      "submit_report": "Submit",
+      "complete": "Complete",
+      "reject": "Reject",
+      "cancel": "Cancel",
+      "reject_report": "Reject Report"
+    },
+    "REASON_FOR_TRANSITION": {
+      "cancel": {"LABEL": "Cancellation comment", "TITLE": "Cancellation reason"},
+      "reject": {"LABEL": "Rejection comment", "TITLE": "Rejection reason"},
+      "reject_report": {"LABEL": "Report rejection comment", "TITLE": "Report rejection reason"}
+    },
+    "STATUSES": {
+      "draft": "Draft",
+      "checklist": "Checklist",
+      "review": "Review",
+      "assigned": "Assigned",
+      "data_collection": "Data Collection",
+      "report_finalization": "Report finalization",
+      "submitted": "Report Review",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "TABS": {
+      "details": "Details",
+      "attachments": "Attachments",
+      "checklist": "Checklist",
+      "review": "Review",
+      "collect": "Data Collect",
+      "summary": "Summary",
+      "additional-info": "Additional Info",
+      "action-points": "Action Points"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "TITLE": "Checklist Attachments",
+      "METHOD": "Method",
+      "DATA_COLLECTOR": "Data Collector",
+      "METHOD_TYPE": "Method type",
+      "RELATED_TO": "Related To",
+      "RELATED_NAME": "Related Name",
+      "DATE_UPLOADED": "Date Uploaded",
+      "DOCUMENT_TYPE": "Document Type",
+      "FILE_ATTACHMENT": "File Attachment"
+    },
+    "ACTION_POINTS": {
+      "TITLE": "Action Points",
+      "REFERENCE": "Reference No.",
+      "DESCRIPTION": "Description",
+      "ASSIGNEE": "Assignee",
+      "SECTION_OFFICE": "Section / Office",
+      "STATUS": "Status",
+      "DUE_ON": "Due on",
+      "PRIORITY": "Priority",
+      "RELATED_TO": "Related to",
+      "CONTENT": "Content",
+      "POPUP": {
+        "HIGH_PRIORITY": "High Priority"
+      }
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_POPUP_TITLE": "Attachments for",
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "SINGLE": "{{ count }} File",
+        "MULTIPLE": "{{ count }} Files",
+        "DEFAULT": "Upload Files"
+      }
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "TEXT": "Checklist Item",
+      "DETAILS": "Specific Details to Probe"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "Source of information"
+  },
+  "CO_OVERVIEW": {
+    "CP_OUTCOME": "CP Outcome",
+    "CP_INDICATORS": "CP Indicators",
+    "TARGET": "Target",
+    "PARTNERS": "Partners",
+    "PROG_VISITS": "M.R. Prog. Visits",
+    "PARTNERSHIPS": "Partnerships",
+    "SINCE_LAST_VISIT": "Days Since Last Site Visit",
+    "PD_OUTPUT": "PD Output",
+    "SSFA_EXPECTED_RESULT": "SSFA Expected Result",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "Select CP Outcome"
+    }
+  },
+  "ISSUE_TRACKER": {
+    "CP_OUTPUT": "CP Output",
+    "PARTNER": "Partner",
+    "LOCATION": "Location",
+    "SITE": "Site",
+    "LOCATION_SITE": "Location & Site",
+    "IS_NEW": "Show only New",
+    "RELATED_TO_TYPE": "Issue Related To",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "CP Output",
+      "PARTNER": "Partner",
+      "LOCATION": "Location/Site"
+    },
+    "STATUS": "Status",
+    "STATUSES": {
+      "NEW": "New",
+      "PAST": "Past"
+    },
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "Select CP Output",
+      "PARTNER": "Select Partner",
+      "LOCATION": "Select Location",
+      "SITE": "Select Site",
+      "STATUS": "Select Status",
+      "ISSUE": "Enter Issue For Attention/Probing"
+    },
+    "POPUP_TITLE": "Log Issue",
+    "POPUP_ERROR_CP_OUTPUT": "CP Output is not provided",
+    "POPUP_ERROR_PARTNER": "Partner is not provided",
+    "POPUP_ERROR_LOCATION": "Location is not provided",
+    "RELATED_TO": "Related To",
+    "NAME": "Name",
+    "ISSUE": "Issue For Attention/Probing",
+    "ATTACHMENTS": "Attachment(s)",
+    "ATTACHMENT": "Attachment",
+    "UPLOAD_LABEL": "Attach file",
+    "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Issues to show",
+    "LAST_MODIFIED_BY": "Last Modified By",
+    "AUTHOR": "Issue Raised By",
+    "CLOSED_BY": "Issue Closed By",
+    "ATTACHMENTS_FILES": {
+      "SINGLE": "FILE",
+      "MULTIPLE": "FILES"
+    }
+  },
+  "RATIONALE": {
+    "TITLE": "Annual Field Monitoring Rationale",
+    "POPUP_TITLE": "Rationale",
+    "YEAR_DRD_LABEL": "Year",
+    "YEAR_DRD_PLACEHOLDER": "Select Year",
+    "LABELS": {
+      "PRIORITIZATION": "Prioritization Criteria",
+      "METHODOLOGY": "Methodology Notes & Standards",
+      "MODALITIES": "Modalities",
+      "VISITS": "Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Partner Engagement",
+      "OTHER": "Other Comments"
+    },
+    "PLACEHOLDERS": {
+      "PRIORITIZATION": "Enter Prioritization Criteria",
+      "METHODOLOGY": "Enter Methodology Notes & Standards",
+      "MODALITIES": "Enter Modalities",
+      "VISITS": "Enter Target Visits For The Year",
+      "PARTNER_ENGAGEMENT": "Enter Partner Engagement",
+      "OTHER": "Enter Other Comments"
+    },
+    "HELPER_TEXTS": {
+      "PRIORITIZATION": "e.g Geographic areas where results are most challenged, outputs associated with a humanitarian response",
+      "METHODOLOGY": "e.g Variations on standard methodology and rationale, specifications on minimum number and type of FGDs",
+      "MODALITIES": "e.g Staff, UNV, SSAs, TPMs to undertake field monitoring",
+      "PARTNER_ENGAGEMENT": "e.g any arrangements established for join visits"
+    },
+    "ANNUAL_FM_RATIONALE": {
+      "LAST_EDITED": "Last edited by {{ user }} on {{ date }}"
+    }
+  },
+  "TEMPLATES": {
+    "FILTERS": {
+      "LEVEL_LABEL": "Select Level",
+      "LEVEL_PLACEHOLDER": "Select Level",
+      "OUTPUT_LABEL": "Select CP Output",
+      "OUTPUT_PLACEHOLDER": "Select CP Output",
+      "PARTNER_LABEL": "Select Partner",
+      "PARTNER_PLACEHOLDER": "Select Partner",
+      "INTERVENTION_LABEL": "Select PD/SSFA",
+      "INTERVENTION_PLACEHOLDER": "Select PD/SSFA"
+    },
+    "COLUMNS": {
+      "DETAILS": "Specific Details to Probe",
+      "TEXT": "Checklist Item",
+      "METHODS": "Methods"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "Enter Specific Details to Probe",
+    "ADD_DETAIL": "Add Detail"
+  },
+  "QUESTIONS": {
+    "EDIT_POPUP_TITLE": "Edit Question",
+    "ADD_POPUP_TITLE": "Add Question",
+    "PLACEHOLDERS": {
+      "QUESTION": "Enter Question Text",
+      "SECTIONS": "Select Sections",
+      "METHODS": "Select Collection Methods",
+      "CATEGORY": "Select Group",
+      "LEVEL": "Select Question Target Level",
+      "ANSWER_TYPE": "Select Answer Type",
+      "SCALE_SIZE": "Select Scale Size"
+    },
+    "LABELS": {
+      "QUESTION": "Question",
+      "LEVEL": "Question Target Level",
+      "SECTIONS": "Sections",
+      "METHODS": "Collection Methods",
+      "CATEGORY": "Group",
+      "ANSWER_TYPE": "Answer Type",
+      "IS_HACT": "Counts towards HACT",
+      "IS_ACTIVE": "Is Active",
+      "SCALE_SIZE": "Scale Size"
+    },
+    "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Questions to show",
+    "COLUMNS": {
+      "TEXT": "Question Text",
+      "LEVEL": "Relating to",
+      "METHODS": "Collection Methods",
+      "ANSWER_TYPE": "Measurement Type",
+      "CATEGORY": "Group",
+      "IS_ACTIVE": "Active",
+      "SECTIONS": "Sections",
+      "IS_HACT": "Counts towards HACT",
+      "ANSWER_OPTIONS": "Reporting Details"
+    },
+    "DETAILS": {
+      "1": "Sections",
+      "2": "Counts for HACT",
+      "3": "Reporting Details"
+    },
+    "LEVEL": {
+      "PARTNER": "Partner",
+      "OUTPUT": "CP Output",
+      "INTERVENTION": "PD/SSFA"
+    }
+  },
+  "SITES": {
+    "PLACEHOLDERS": {
+      "SEARCH": "Search location or site",
+      "NAME": "Enter Name Of Site",
+      "STATUS": "Select Site Status",
+      "ADMIN_LOCATION": "Empty Field"
+    },
+    "LABELS": {
+      "NAME": "Name Of Site",
+      "STATUS": "Is Active Status",
+      "ADMIN_LOCATION": "Parent Administrative Location"
+    },
+    "SHOW_INACTIVE": "Show inactive sites",
+    "TABLE_CAPTION": "Sites Locations",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "Admin Level",
+      "STATUS": "Is Active",
+      "NAME": "Name"
+    },
+    "REMOVE_CONFIRMATION": "Are you sure that you want to delete this Site Specific Location?",
+    "SELECTED_SITE": "Selected site",
+    "ADD_SL": "Add Site Specific Location",
+    "EDIT_SL": "Edit Site Specific Location",
+    "STATUS": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Not Active"
+    }
+  },
+  "MAIN": {
+    "SAVING_DATA_IN_PROCESS": "Saving Data",
+    "LOADING_DATA_IN_PROCESS": "Loading Data",
+    "LOADING_FILTERS_DATA": "Loading Filters",
+    "REMOVING_DATA_IN_PROCESS": "Deleting Data",
+    "EMPTY_FIELD": "Empty Field",
+    "LATITUDE": "Latitude",
+    "LONGITUDE": "Longitude",
+    "BUTTONS": {
+      "ADD": "Add",
+      "SAVE": "Save",
+      "DELETE": "Delete",
+      "CONFIRM": "Confirm",
+      "CANCEL": "Cancel",
+      "OK": "Ok"
+    },
+    "ENTER": "Enter",
+    "UPLOAD": "Upload File",
+    "DOWNLOAD": "Download",
+    "SUPPORT": "Support"
+  },
+  "LEVELS_OPTIONS": {
+    "PARTNER": "Partner",
+    "OUTPUT": "CP Output",
+    "INTERVENTION": "PD/SSFA"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "TEXT": "Text",
+    "NUMBER": "Number",
+    "NUMBER_INTEGER_TYPE": "Integer number",
+    "NUMBER_FLOAT_TYPE": "Float number",
+    "BOOL": "Boolean",
+    "LIKERT_SCALE": "Likert Scale"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "Staff",
+    "TPM": "TPM"
+  },
+  "ACTIVITY_STATUSES": {
+    "DRAFT": "Draft",
+    "CHECKLIST": "Checklist",
+    "REVIEW": "Review",
+    "ASSIGNED": "Assigned",
+    "DATA_COLLECTION": "Data Collection",
+    "REPORT_FINALIZATION": "Report Finalization",
+    "SUBMITTED": "Report Review",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled"
+  },
+  "ATTACHMENTS_LIST": {
+    "TITLE": "Attachments",
+    "RELATED_DOCUMENTS": "Related Documents",
+    "REPORT_ATTACHMENTS": "Report Attachments",
+    "EDIT_POPUP_TITLE": "Edit Attachment",
+    "ADD_POPUP_TITLE": "Add Attachment",
+    "DELETE_POPUP_TITLE": "Delete attachment?",
+    "FILE_TYPE_LABEL": "Document Type",
+    "FILE_TYPE_PLACEHOLDER": "Select Document Type",
+    "COLUMNS": {
+      "CREATED": "Date Uploaded",
+      "FILE_TYPE": "Document Type",
+      "FILE": "File Attachment"
+    }
+  },
+  "NAVIGATION_MENU": {
+    "TITLE": "Field Monitoring",
+    "SETTINGS": "Settings",
+    "PLAN": "Plan",
+    "COLLECT": "Collect",
+    "ANALYZE": "Analyze",
+    "COMMUNITY_CHANNELS": "eTools Community Channels",
+    "KNOWLEDGE_BASE": "Knowledge Base",
+    "DISCUSSION": "Discussion",
+    "INFORMATION": "Information"
+  },
+  "FILTERS_ELEMENT": {
+    "TITLE": "Filters",
+    "CLEAR_ALL": "CLEAR ALL"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "Site",
+    "MISSING_SITES": {
+      "NO_SITES": "There are no sites for this location..",
+      "ADD_MISSING": "You can add missing sites in "
+    },
+    "NO_SEARCH_RESULTS": {
+      "NO_LOCATIONS": "No locations or sites found. ",
+      "CHANGE_REQUEST": "Please, change your search request"
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "HEADER": "Oops! You hit a 404",
+    "CONTENT_DOESNT_EXIST": "The page you're looking for doesn't seem to exist. Head back ",
+    "HOME": "home",
+    "TRY_AGAIN": " and try again?"
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "EXPORT": "Export",
+    "NAVIGATION_TABS": {
+      "QUESTIONS": "Questions",
+      "SITES": "Sites"
+    }
+  },
+  "PLAN": {
+    "TITLE": "Plan",
+    "NAVIGATION_TABS": {
+      "RATIONALE": "Rationale",
+      "ISSUE_TRACKER": "Issue Tracker",
+      "TEMPLATE": "Templates"
+    }
+  },
+  "ANALYZE": {
+    "TITLE": "Analyze",
+    "NAVIGATION_TABS": {
+      "MONITORING_ACTIVITY": "Monitoring Activity",
+      "COUNTRY_OVERVIEW": "Country Overview"
+    },
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": " of visits are completed",
+      "NAVIGATION_TABS": {
+        "BY_PARTNER": "By Partner",
+        "BY_PD_SSFA": "By PD/SSFA",
+        "BY_CP_OUTPUT": "By CP Output",
+        "BY_LOCATION": "By Location"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "TITLE": "Visits Eligible for HACT Programmatic Visit",
+        "PARTNER": "Partner",
+        "HACT_ELIGIBLE_VISITS": "HACT Eligible Visits",
+        "VISIT": "Visit",
+        "CP_OUTPUT": "CP output",
+        "PD_SSFA": "PD/SSFA",
+        "VISIT_END_DATE": "Visit End Date"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "TITLE": "Geographic coverage",
+        "COMPLETED_VISITS": "Completed visits",
+        "NO_VISITS": "No visits"
+      },
+      "COVERAGE": {
+        "TITLE": "Coverage of Active Partnerships",
+        "CP_OUTPUT": {
+          "LABEL": "Showing CP Outputs that can be monitored at the community level."
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "% of Completed ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "% of Completed ↓",
+          "COMPLETED_TASKS": "Completed Tasks",
+          "MINIMUM_REQUIRED": "Minimum Required Programmatic Visits",
+          "SORT_BY": "Sort by",
+          "MINIMUM_REQUIRED_VISITS": "Minimum Required ",
+          "DAYS_SINCE_LAST_VISIT": "Days Since Last Visit "
+        },
+        "PD_SSFA": {
+          "LABEL": "Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
+        },
+        "OPEN_ISSUES": {
+          "TITLE": "Open Issues and Action Points",
+          "ISSUES": "Issues",
+          "ACTION_POINTS": "Action Points"
+        },
+        "SHARED_TAB": {
+          "DAYS_SINCE_LAST_VISIT": "Days Since Last Visit",
+          "AVERAGE_DAYS_SINCE": "Average Days Between Visits"
+        }
+      }
+    }
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "Completed",
+    "PLANNED": "Planned",
+    "COMPLETED_VISITS": "Completed Visits",
+    "PLANNED_VISITS": "Planned Visits (Up to December)"
+  }
+}

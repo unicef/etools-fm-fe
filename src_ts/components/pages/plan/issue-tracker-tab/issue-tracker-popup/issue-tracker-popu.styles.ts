@@ -7,4 +7,8 @@ export const IssueTrackerPopupStyles: CSSResult = css`
     font-size: 12px;
     padding: 0 12px;
   }
+
+  .issue-tracker-input {
+    padding-bottom: 10px;
+  }
 `;

@@ -53,8 +53,14 @@ type DataCollectionRequestData<T = DataCollectionFinding, U = DataCollectionOver
 };
 
 type AttachmentsPopupData = {
-  attachments: IAttachment[];
   updateUrl?: string;
+  attachments: (StoredAttachment | IEditedAttachment)[];
+  title: string;
+};
+
+type FormBuilderAttachmentsPopupData = {
+  attachments: GenericObject[];
+  metadata: BlueprintMetadata;
   title: string;
 };
 

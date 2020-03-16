@@ -19,7 +19,8 @@ const propertiesMap: GenericObject<string> = {
   [DataCollectionChecklistActionTypes.OVERALL_AND_FINDINGS_UPDATE_FAILURE]: 'overallAndFindingsUpdate',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_REQUEST]: 'dataCollectionMethods',
   [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS]: 'dataCollectionMethods',
-  [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE]: 'dataCollectionMethods'
+  [DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_FAILURE]: 'dataCollectionMethods',
+  [DataCollectionChecklistActionTypes.LOAD_BLUEPRINT]: 'blueprint'
 };
 
 const INITIAL: IDataCollectionState = {
@@ -34,6 +35,7 @@ const INITIAL: IDataCollectionState = {
   checklistCollect: [],
   dataCollectionMethods: null,
   checklist: {
+    blueprint: null,
     data: null,
     findingsAndOverall: {
       findings: null,
@@ -122,7 +124,11 @@ export function dataCollection(
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_UPDATE_REQUEST:
       return {
         ...state,
-        checklist: {data: action.payload, findingsAndOverall: {...state.checklist.findingsAndOverall}}
+        checklist: {
+          data: action.payload,
+          findingsAndOverall: {...state.checklist.findingsAndOverall},
+          blueprint: state.checklist.blueprint
+        }
       };
 
     case DataCollectionChecklistActionTypes.DATA_COLLECTION_METHODS_SUCCESS:
@@ -130,6 +136,16 @@ export function dataCollection(
         ...state,
         loading: {...state.loading, [property]: false},
         dataCollectionMethods: action.payload
+      };
+
+    case DataCollectionChecklistActionTypes.LOAD_BLUEPRINT:
+      return {
+        ...state,
+        checklist: {
+          blueprint: action.payload,
+          data: state.checklist.data,
+          findingsAndOverall: {...state.checklist.findingsAndOverall}
+        }
       };
 
     default:

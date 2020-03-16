@@ -24,11 +24,11 @@ type QuestionOption = {
 
 type EditedQuestionOption = Partial<QuestionOption>;
 
-type QuestionAnswerType = 'likert_scale' | 'bool' | 'number' | 'text';
+type QuestionAnswerType = 'likert_scale' | 'bool' | 'number' | 'number-integer' | 'number-float' | 'text';
 
 type AnswerTypeOption = {
   value: QuestionAnswerType;
-  display_name: string;
+  display_name: string | Callback;
 };
 
 type Serialized = {

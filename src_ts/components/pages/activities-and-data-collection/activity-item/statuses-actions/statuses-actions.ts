@@ -14,13 +14,13 @@ import {
 } from './activity-statuses';
 import {arrowLeftIcon} from '../../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {translate} from '../../../../../localization/localisation';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {openDialog} from '../../../../utils/dialog';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {ACTIVITIES_PAGE} from '../../activities-page';
+import {translate} from 'lit-translate';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -87,7 +87,7 @@ export class StatusesActionsComponent extends LitElement {
       : html``;
   }
 
-  private getMainBtnText(transitionName: string): string {
+  private getMainBtnText(transitionName: string): string | Callback {
     const key: string = transitionName === ASSIGN && this.isStaff ? 'ASSIGN_AND_ACCEPT' : transitionName;
     return translate(`ACTIVITY_ITEM.TRANSITIONS.${key}`);
   }
@@ -141,8 +141,8 @@ export class StatusesActionsComponent extends LitElement {
     return openDialog<ReasonPopupData, ReasonPopupResponse>({
       dialog: 'reason-popup',
       dialogData: {
-        popupTitle: translate(`ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.TITLE`),
-        label: translate(`ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.LABEL`)
+        popupTitle: `ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.TITLE`,
+        label: `ACTIVITY_ITEM.REASON_FOR_TRANSITION.${transition.transition}.LABEL`
       }
     }).then(({confirmed, response}: IDialogResponse<ReasonPopupResponse>) => {
       if (!confirmed || !response) {

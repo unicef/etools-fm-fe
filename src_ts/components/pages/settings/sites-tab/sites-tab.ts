@@ -38,18 +38,6 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     }, 100);
   }
 
-  static get styles(): CSSResult[] {
-    return [
-      elevationStyles,
-      SharedStyles,
-      pageLayoutStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      SitesTabStyles,
-      leafletStyles
-    ];
-  }
-
   render(): TemplateResult | void {
     return template.apply(this);
   }
@@ -223,5 +211,17 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     const startIndex: number = page * pageSize - pageSize;
     const endIndex: number = page * pageSize;
     return sitesObject.slice(startIndex, endIndex);
+  }
+
+  static get styles(): CSSResult[] {
+    return [
+      elevationStyles,
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      SitesTabStyles,
+      leafletStyles
+    ];
   }
 }

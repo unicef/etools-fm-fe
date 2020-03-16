@@ -10,7 +10,7 @@ import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
 import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/config';
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
 import {isEmpty} from 'ramda';
@@ -18,6 +18,16 @@ import {fireEvent} from '../../utils/fire-custom-event';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 
+import {use} from 'lit-translate';
+import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
+import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
+
+// registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
+
+store.addReducers({
+  activeLanguage
+});
 /**
  * page header element
  * @LitElement
@@ -60,6 +70,11 @@ export class PageHeader extends connect(store)(LitElement) {
   @property({type: Array})
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
+  //TODO list loading
+  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
+
+  @property() selectedLanguage: string = 'en';
+
   constructor() {
     super();
     store.subscribe(
@@ -82,32 +97,99 @@ export class PageHeader extends connect(store)(LitElement) {
   }
 
   static get styles(): CSSResultArray {
-    return [pageHeaderStyles];
+    return [
+      pageHeaderStyles,
+      css`
+        .dropdowns {
+          display: flex;
+          width: 160px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .dropdowns__item {
+          flex-basis: 50%;
+        }
+        .header {
+          flex-wrap: wrap;
+          height: 100%;
+          justify-content: space-between;
+        }
+        .nav-menu-button {
+          min-width: 70px;
+        }
+        .header__item {
+          display: flex;
+          align-items: center;
+        }
+        .header__left-group {
+        }
+        .header__right-group {
+          justify-content: space-evenly;
+        }
+        .logo {
+          margin-left: 20px;
+        }
+        @media (max-width: 380px) {
+          .header__item {
+            flex-grow: 1;
+          }
+        }
+      `
+    ];
   }
 
   render(): TemplateResult {
     // main template
     // language=HTML
     return html`
+      ${countriesDropdownStyles}
       <style>
         app-toolbar {
           background-color: ${this.headerColor};
         }
       </style>
 
-      <app-toolbar sticky class="content-align">
-        <paper-icon-button id="menuButton" icon="menu" @tap="${() => this.menuBtnClicked()}"></paper-icon-button>
-        <div class="titlebar content-align">
+      <app-toolbar sticky class="content-align header">
+        <div class="header__item header__left-group">
+          <paper-icon-button
+            id="menuButton"
+            class="nav-menu-button"
+            icon="menu"
+            @tap="${() => this.menuBtnClicked()}"
+          ></paper-icon-button>
           <etools-app-selector id="selector"></etools-app-selector>
-          <img id="app-logo" src="${this.rootPath}images/etools-logo-color-white.svg" alt="eTools" />
+          <img
+            id="app-logo"
+            class="logo"
+            src="${this.rootPath}assets/images/etools-logo-color-white.svg"
+            alt="eTools"
+          />
           ${this.isStaging
             ? html`
                 <div class="envWarning">- STAGING TESTING ENVIRONMENT</div>
               `
             : ''}
         </div>
-        <div class="content-align">
-          <countries-dropdown></countries-dropdown>
+        <div class="header__item header__right-group">
+          <div class="dropdowns">
+            <etools-dropdown
+              class="dropdowns__item"
+              .selected="${this.selectedLanguage}"
+              .options="${this.languages}"
+              option-label="display_name"
+              option-value="value"
+              @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                this.languageChanged(detail.selectedItem.value)}"
+              trigger-value-change-event
+              hide-search
+              allow-outside-scroll
+              no-label-float
+              .minWidth="160px"
+              .autoWidth="${true}"
+            ></etools-dropdown>
+
+            <countries-dropdown class="dropdowns__item"></countries-dropdown>
+          </div>
 
           <support-btn></support-btn>
 
@@ -151,6 +233,10 @@ export class PageHeader extends connect(store)(LitElement) {
   menuBtnClicked(): void {
     store.dispatch(new UpdateDrawerState(true));
     // fireEvent(this, 'drawer');
+  }
+
+  languageChanged(language: string): void {
+    use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
   }
 
   protected profileSaveLoadingMsgDisplay(show: boolean = true): void {

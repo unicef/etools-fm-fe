@@ -6,8 +6,8 @@ import '@unicef-polymer/etools-dropdown';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
 import {SitesTabComponent} from './sites-tab';
-import {translate} from '../../../../localization/localisation';
 import {hasPermission, Permissions} from '../../../../config/permissions';
+import {translate} from 'lit-translate';
 
 export function template(this: SitesTabComponent): TemplateResult {
   return html`

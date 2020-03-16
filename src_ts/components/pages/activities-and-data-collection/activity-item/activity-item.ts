@@ -10,7 +10,6 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {buttonsStyles} from '../../../styles/button-styles';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {addTranslates, ENGLISH, translate} from '../../../../localization/localisation';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {activityDetailsData, activityStatusIsChanging} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
@@ -38,12 +37,11 @@ import {
   TABS_PROPERTIES
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
-import {ACTIVITY_ITEM_TRANSLATES} from '../../../../localization/en/activities-and-data-collection/activity-item.translates';
 import {STAFF} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
+import {translate} from 'lit-translate';
 
 store.addReducers({activityDetails});
-addTranslates(ENGLISH, [ACTIVITY_ITEM_TRANSLATES]);
 
 const PAGE: string = 'activities';
 const SUB_ROUTE: string = 'item';
@@ -252,7 +250,7 @@ export class NewActivityComponent extends LitElement {
         `;
       case COLLECT_TAB:
         return html`
-          <data-collect-tab .activityId="${this.activityId}"></data-collect-tab>
+          <data-collect-tab activity-id="${this.activityId}"></data-collect-tab>
         `;
       case SUMMARY_TAB:
         return html`

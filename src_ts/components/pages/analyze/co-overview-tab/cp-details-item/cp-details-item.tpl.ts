@@ -4,7 +4,7 @@ import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
-import {translate} from '../../../../../localization/localisation';
+import {translate} from 'lit-translate';
 
 export function template(this: CpDetailsItem): TemplateResult {
   return html`

@@ -1,5 +1,4 @@
 import {css, CSSResultArray, customElement, html, property, TemplateResult} from 'lit-element';
-import {translate} from '../../../../../../localization/localisation';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
@@ -15,6 +14,7 @@ import {loadStaticData} from '../../../../../../redux/effects/load-static-data.e
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
+import {translate} from 'lit-translate';
 
 export const CARD_NAME: string = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
@@ -42,7 +42,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
-  @property() personalResponsible?: ActivityTeamMember | null;
+  @property() personResponsible?: ActivityTeamMember | null;
 
   private userUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;
@@ -55,7 +55,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (this.editedData.monitor_type) {
       this.userType = this.editedData.monitor_type;
     }
-    this.personalResponsible = this.editedData.person_responsible;
+    this.personResponsible = this.editedData.person_responsible;
     this.teamMembers = this.editedData.team_members;
     this.tpmPartner = this.editedData.tpm_partner;
   }
@@ -148,11 +148,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
             <etools-dropdown
               class="without-border flex"
-              .selected="${simplifyValue(this.personalResponsible)}"
+              .selected="${simplifyValue(this.personResponsible)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.setPersonalResponsible(detail.selectedItem)}"
+                this.setPersonResponsible(detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
-              label="${translate('ACTIVITY_DETAILS.PERSONAL_RESPONSIBLE')}"
+              label="${translate('ACTIVITY_DETAILS.PERSON_RESPONSIBLE')}"
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
@@ -240,10 +240,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
     }
   }
 
-  setPersonalResponsible(responsible: User | null): void {
-    if (responsible !== this.personalResponsible) {
+  setPersonResponsible(responsible: User | null): void {
+    if (responsible !== this.personResponsible) {
       this.updateModelValue('person_responsible', responsible);
-      this.personalResponsible = responsible;
+      this.personResponsible = responsible;
     }
   }
 
@@ -257,7 +257,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (userType === USER_TPM && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
-    this.getMembersOptions({userType});
+    this.getMembersOptions({userType: userType, tpmPartner: this.tpmPartner});
   }
 
   cancel(): void {
@@ -267,7 +267,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   clearMembers(): void {
     this.setTpmPartner(null);
-    this.setPersonalResponsible(null);
+    this.setPersonResponsible(null);
     this.setTeamMembers([]);
   }
 

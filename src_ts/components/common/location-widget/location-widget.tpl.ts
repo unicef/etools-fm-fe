@@ -3,6 +3,7 @@ import {html, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import './lazy-list';
 import {updateAppLocation} from '../../../routing/routes';
+import {translate} from 'lit-translate';
 
 export function template(this: LocationWidgetComponent): TemplateResult {
   return html`
@@ -70,7 +71,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                         <div class="location-name">
                           <b>${site.name}</b>
                         </div>
-                        <div class="gateway-name">Site</div>
+                        <div class="gateway-name">${translate('LOCATION_WIDGET.GATEWAY_NAME')}</div>
                         <div class="deselect-btn"><span>&#10008;</span></div>
                       </div>
                     `
@@ -78,12 +79,16 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                 `}
 
             <div ?hidden="${!this.isSitesEmpty()}" class="missing-sites">
-              There are no sites for this location.. <br />
-              You can add missing sites in <a class="link" @click="${() => updateAppLocation('/settings')}">Settings</a>
+              ${translate('LOCATION_WIDGET.MISSING_SITES.NO_SITES')}<br />
+              ${translate('LOCATION_WIDGET.MISSING_SITES.ADD_MISSING')}<a
+                class="link"
+                @click="${() => updateAppLocation('/settings')}"
+                >${translate('NAVIGATION_MENU.SETTINGS')}</a
+              >
             </div>
             <div ?hidden="${!this.isSearchEmpty()}" class="no-search-results">
-              No locations or sites found. <br />
-              Please, change your search request
+              ${translate('LOCATION_WIDGET.NO_SEARCH_RESULTS.NO_LOCATIONS')}<br />
+              ${translate('LOCATION_WIDGET.NO_SEARCH_RESULTS.CHANGE_REQUEST')}
             </div>
             <etools-loading ?active="${this.loadingInProcess}"></etools-loading>
           </div>

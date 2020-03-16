@@ -1,7 +1,5 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '../../common/layout/page-content-header/page-content-header';
-import {addTranslates, ENGLISH} from '../../../localization/localisation';
-import {ACTIVITIES_LIST_TRANSLATES} from '../../../localization/en/activities-and-data-collection/activities-list.translates';
 import {store} from '../../../redux/store';
 import {activities} from '../../../redux/reducers/activities.reducer';
 import {SharedStyles} from '../../styles/shared-styles';
@@ -11,7 +9,6 @@ import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
-addTranslates(ENGLISH, [ACTIVITIES_LIST_TRANSLATES]);
 store.addReducers({activities});
 export const ACTIVITIES_PAGE: 'activities' = 'activities';
 export const ACTIVITIES_LIST_PAGE: 'list' = 'list';

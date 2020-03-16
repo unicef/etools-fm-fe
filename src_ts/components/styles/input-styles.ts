@@ -35,7 +35,6 @@ export const InputStyles: TemplateResult = html`
       box-sizing: border-box;
 
       --paper-input-container-input: {
-        display: block !important;
         font-size: 15px;
         box-sizing: border-box;
         white-space: nowrap;
@@ -206,7 +205,7 @@ export const InputStyles: TemplateResult = html`
     paper-input[required].readonly-required,
     paper-input[required]:not([disabled]) {
       --paper-input-container-label: {
-        background: url('/fm/images/required.svg') no-repeat 98% 14%/7px;
+        background: url('/fm/assets/images/required.svg') no-repeat 98% 14%/7px;
         width: auto !important;
         max-width: 90%;
         right: auto;
@@ -217,7 +216,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-currency-amount-input.required:not([disabled]) {
       --etools-currency-container-label: {
-        background: url('/fm/images/required.svg') no-repeat 98% 14%/7px;
+        background: url('/fm/assets/images/required.svg') no-repeat 98% 14%/7px;
         width: auto !important;
         max-width: 90%;
         right: auto;

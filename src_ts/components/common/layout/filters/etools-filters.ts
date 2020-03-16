@@ -14,8 +14,8 @@ import '@polymer/paper-item/paper-item-body';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
-import {translate} from '../../../../localization/localisation';
 import {PaperMenuButton} from '@polymer/paper-menu-button/paper-menu-button';
+import {translate} from 'lit-translate';
 
 export enum EtoolsFilterTypes {
   Search,
@@ -26,7 +26,7 @@ export enum EtoolsFilterTypes {
 }
 
 export interface IEtoolsFilter {
-  filterName: string;
+  filterName: string | Callback;
   filterKey: string;
   type: EtoolsFilterTypes;
   selected: boolean; // flag filter as selected from filters menu
@@ -187,7 +187,7 @@ export class EtoolsFilters extends LitElement {
         fire-date-has-changed
         @date-has-changed="${this.filterDateChange}"
         data-filter-key="${f.filterKey}"
-        .selectedDateDisplayFormat="D MMM YYYY"
+        selected-date-display-format="D MMM YYYY"
       >
       </datepicker-lite>
     `;
@@ -232,13 +232,13 @@ export class EtoolsFilters extends LitElement {
         <paper-menu-button id="filterMenu" ignore-select horizontal-align="right">
           <paper-button class="button" slot="dropdown-trigger">
             <iron-icon icon="filter-list"></iron-icon>
-            Filters
+            ${translate('FILTERS_ELEMENT.TITLE')}
           </paper-button>
           ${!this.filterLoadingInProcess
             ? html`
                 <div slot="dropdown-content" class="clear-all-filters">
                   <paper-button @tap="${this.clearAllFilterValues}" class="secondary-btn">
-                    CLEAR ALL
+                    ${translate('FILTERS_ELEMENT.CLEAR_ALL')}
                   </paper-button>
                 </div>
                 <paper-listbox slot="dropdown-content" multi>

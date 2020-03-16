@@ -1,10 +1,10 @@
 import {html, TemplateResult} from 'lit-element';
 import {ActivityDetailsCard, CARD_NAME} from './activity-details-card';
 import {InputStyles} from '../../../../../../styles/input-styles';
-import {translate} from '../../../../../../../localization/localisation';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {formatDate} from '../../../../../../utils/date-utility';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
+import {translate} from 'lit-translate';
 
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['sections', 'end_date', 'start_date', 'location_site', 'location'];
 
@@ -39,7 +39,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
                 <!--      Title        -->
                 <div class="flex-auto">
                   <span class=" layout horizontal center" @tap="${() => this.widgetToggle()}">
-                    <iron-icon icon="maps:map"></iron-icon>Select Location/Site with Widget
+                    <iron-icon icon="maps:map"></iron-icon>${translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION')}
                   </span>
                 </div>
 
@@ -107,7 +107,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <div class="layout horizontal">
           <div class="layout horizontal flex">
             <datepicker-lite
-              class="without-border"
+              class="without-border datepicker-width"
               value="${this.editedData.start_date || ''}"
               label="${translate('ACTIVITY_DETAILS.START_DATE')}"
               .autoValidate="${true}"
@@ -116,9 +116,10 @@ export function template(this: ActivityDetailsCard): TemplateResult {
                 this.updateModelValue('start_date', formatDate(detail.date))}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
+              selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
             <datepicker-lite
-              class="without-border"
+              class="without-border datepicker-width"
               value="${this.editedData.end_date || ''}"
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
@@ -127,6 +128,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
+              selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
           </div>
 

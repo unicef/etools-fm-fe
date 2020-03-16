@@ -15,9 +15,7 @@ export const METHODS: 'methods' = 'methods';
 export const PARTNERS: 'partners' = 'partners';
 export const TPM_PARTNERS: 'tpmPartners' = 'tpmPartners';
 export const INTERVENTIONS: 'interventions' = 'interventions';
-export const INTERVENTIONS_SHORT: 'interventionsShort' = 'interventionsShort';
 export const CP_OUTPUTS: 'outputs' = 'outputs';
-export const OUTPUTS_SHORT: 'planningOutputs' = 'planningOutputs';
 export const LOG_ISSUES: 'logIssues' = 'logIssues';
 export const LOG_ISSUES_DETAILS: 'logIssuesDetails' = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS: 'logIssuesAttachments' = 'logIssuesAttachments';
@@ -42,6 +40,7 @@ export const DATA_COLLECTION_METHODS: 'dataCollectionMethods' = 'dataCollectionM
 export const DATA_COLLECTION_CHECKLIST_ITEM: 'dataCollectionChecklistItem' = 'dataCollectionChecklistItem';
 export const DATA_COLLECTION_SPECIFIC_CHECKLIST: 'dataCollectionSpecificChecklist' = 'dataCollectionSpecificChecklist';
 export const DATA_COLLECTION_OVERALL_FINDING: 'dataCollectionOverallFinding' = 'dataCollectionOverallFinding';
+export const DATA_COLLECTION_BLUEPRINT: 'dataCollectionBlueprint' = 'dataCollectionBlueprint';
 export const ATTACHMENTS_STORE: 'attachmentsStore' = 'attachmentsStore';
 export const MONITORING_ACTIVITY_OVERALL_STATISTICS: 'monitoringActivityOverallStatistics' =
   'monitoringActivityOverallStatistics';
@@ -107,7 +106,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [PARTNERS]: {
-    url: '/api/v2/partners/',
+    url: '/api/v2/partners/?verbosity=minimal',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: PARTNERS
@@ -121,28 +120,17 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [CP_OUTPUTS]: {
-    url: '/api/v2/reports/results/?result_type=output',
+    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: CP_OUTPUTS
   },
 
-  [OUTPUTS_SHORT]: {
-    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all'
-  },
-
   [INTERVENTIONS]: {
-    url: '/api/v2/interventions/?page_size=all',
-    exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'id',
-    cacheTableName: INTERVENTIONS
-  },
-
-  [INTERVENTIONS_SHORT]: {
     url: '/api/v1/field-monitoring/planning/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
-    cacheTableName: INTERVENTIONS_SHORT
+    cacheTableName: INTERVENTIONS
   },
 
   [SITES_EXPORT]: {
@@ -277,6 +265,11 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [DATA_COLLECTION_OVERALL_FINDING]: {
     template:
       '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/overall/<%=overallId%>/'
+  },
+
+  [DATA_COLLECTION_BLUEPRINT]: {
+    template:
+      '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/checklists/<%=checklistId%>/blueprint/'
   },
 
   [ATTACHMENTS_STORE]: {

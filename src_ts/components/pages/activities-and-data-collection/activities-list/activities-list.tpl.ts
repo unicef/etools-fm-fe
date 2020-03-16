@@ -2,25 +2,40 @@ import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit-element';
 import '@unicef-polymer/etools-data-table';
 import '../../../common/layout/filters/etools-filters';
-import {translate} from '../../../../localization/localisation';
 import {updateQueryParams} from '../../../../routing/routes';
 import {hasPermission, Permissions} from '../../../../config/permissions';
+import {translate} from 'lit-translate';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
     <page-content-header with-tabs-visible>
-      <h1 slot="page-title">Activities</h1>
+      <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
         slot="title-row-actions"
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <paper-button class="create-new" @tap="${() => this.goNew()}">Create New</paper-button>
+        <paper-button class="create-new" @tap="${() => this.goNew()}"
+          >${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</paper-button
+        >
       </div>
     </page-content-header>
 
-    <section class="elevation page-content card-container filters-section" elevation="1">
+    <section class="elevation page-content card-container filters-section search-container" elevation="1">
+      <div class="search-input">
+        <paper-input
+          type="search"
+          .value="${this.queryParams && this.queryParams.search}"
+          placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
+          @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
+          inline
+        >
+          <iron-icon icon="search" slot="prefix"></iron-icon>
+        </paper-input>
+      </div>
+
       <etools-filters
+        class="search-filters"
         .filterLoadingInProcess="${this.filtersLoading}"
         .filters="${this.filters || []}"
         @filter-change="${(event: CustomEvent) => updateQueryParams({...event.detail, page: 1})}"
@@ -43,13 +58,13 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         <etools-data-table-column class="col-data flex-none w110px">
           ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1">
+        <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-none w90px">
           ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2">
+        <etools-data-table-column class="col-data flex-1">
           ${translate('ACTIVITIES_LIST.COLUMNS.PERSON_RESPONSIBLE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-2">
@@ -70,9 +85,9 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-none w130px">-</div>
                 <div class="col-data flex-none w110px">-</div>
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-none w90px">-</div>
                 <div class="col-data flex-2">-</div>
+                <div class="col-data flex-none w90px">-</div>
+                <div class="col-data flex-1">-</div>
                 <div class="col-data flex-2">-</div>
                 <div class="col-data flex-none w80px">-</div>
                 <div class="col-data flex-none w100px">-</div>
@@ -92,14 +107,14 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                 >
               </div>
               <div class="col-data flex-none w110px">${this.formatDate(activity.start_date)}</div>
-              <div class="col-data flex-1">
+              <div class="col-data flex-2">
                 ${activity.location && activity.location.name}
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}
               </div>
               <div class="col-data flex-none w90px">
                 ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
-              <div class="col-data flex-2">${activity.person_responsible?.name}</div>
+              <div class="col-data flex-1">${activity.person_responsible?.name}</div>
               <div class="col-data flex-2">
                 ${(activity.team_members &&
                   activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ')) ||

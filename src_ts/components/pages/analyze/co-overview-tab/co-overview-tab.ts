@@ -2,8 +2,6 @@ import {CSSResult, customElement, LitElement, property, TemplateResult} from 'li
 import {CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
 import {updateQueryParams} from '../../../../routing/routes';
 import {fireEvent} from '../../../utils/fire-custom-event';
-import {CO_OVERVIEW_TRANSLATES} from '../../../../localization/en/analyze-page/co-overview.translates';
-import {addTranslates, ENGLISH} from '../../../../localization/localisation';
 import {CpOutcomesMixin} from '../../../common/mixins/cp-outcomes.mixin';
 
 import {fullReportData} from '../../../../redux/selectors/co-overview.selectors';
@@ -26,7 +24,6 @@ import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
 
 store.addReducers({fullReports});
-addTranslates(ENGLISH, [CO_OVERVIEW_TRANSLATES]);
 
 @customElement('co-overview-tab')
 export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {

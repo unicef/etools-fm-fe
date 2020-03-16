@@ -10,6 +10,7 @@ import {Unsubscribe} from 'redux';
 import {summaryFindingsAndOverallData} from '../../../../../redux/selectors/activity-summary.selectors';
 import {findingsComponents} from '../../../../../redux/reducers/findings-components.reducer';
 import './summary-card';
+import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 store.addReducers({activitySummary, findingsComponents});
 
@@ -19,8 +20,10 @@ export class ActivitySummaryTab extends LitElement {
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
 
   @property() protected findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
+  @property() private rawFindingsAndOverall: FindingsAndOverall = {overall: null, findings: null};
 
   private findingsAndOverallUnsubscribe!: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     return html`
@@ -51,14 +54,25 @@ export class ActivitySummaryTab extends LitElement {
      */
     this.findingsAndOverallUnsubscribe = store.subscribe(
       summaryFindingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
+        this.rawFindingsAndOverall = {overall, findings};
         this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
       }, false)
+    );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.findingsAndOverall = sortFindingsAndOverall(
+          this.rawFindingsAndOverall.overall,
+          this.rawFindingsAndOverall.findings
+        );
+      })
     );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.findingsAndOverallUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   /**

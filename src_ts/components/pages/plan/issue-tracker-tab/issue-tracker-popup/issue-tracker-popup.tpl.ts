@@ -1,6 +1,5 @@
 import {html, TemplateResult} from 'lit-html';
 import {IssueTrackerPopup} from './issue-tracker-popup';
-import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
 import '@unicef-polymer/etools-upload/etools-upload-multi';
@@ -17,6 +16,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../endpoints/endpoints-list';
+import {translate} from 'lit-translate';
 
 export function template(this: IssueTrackerPopup): TemplateResult {
   // main template
@@ -187,7 +187,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           : ''}
 
         <paper-textarea
-          class="validate-input disabled-as-readonly preparation-input-container"
+          class="validate-input disabled-as-readonly preparation-input-container issue-tracker-input"
           .value=${this.editedData.issue}
           max-rows="3"
           label="${translate('ISSUE_TRACKER.ISSUE')}"

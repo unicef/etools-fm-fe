@@ -3,11 +3,11 @@ import '../../../common/layout/filters/etools-filters';
 import './question-popup/question-popup';
 import {html, TemplateResult} from 'lit-element';
 import {QuestionsTabComponent} from './questions-tab';
-import {translate} from '../../../../localization/localisation';
 import {updateQueryParams} from '../../../../routing/routes';
 import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
+import {translate} from 'lit-translate';
 
 export function template(this: QuestionsTabComponent): TemplateResult {
   return html`
@@ -93,7 +93,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 <div class="truncate">${this.serializeName(question.category, this.categories) || '-'}</div>
               </div>
               <div class="col-data w45px flex-none truncate">
-                <img src="${ROOT_PATH}images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
+                <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
               </div>
               <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}">
                 <iron-icon icon="icons:create" @tap="${() => this.openPopup(question)}"></iron-icon>
@@ -112,7 +112,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 <div class="image">
                   ${question.is_hact
                     ? html`
-                        <img src="${ROOT_PATH}images/icon-check.svg" />
+                        <img src="${ROOT_PATH}assets/images/icon-check.svg" />
                       `
                     : '-'}
                 </div>

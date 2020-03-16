@@ -1,4 +1,5 @@
 import {
+  css,
   CSSResultArray,
   customElement,
   LitElement,
@@ -16,13 +17,15 @@ import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
-import {ANSWER_TYPES, BOOLEAN_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
+import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
+import {applyDropdownTranslation} from '../../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -33,8 +36,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
   readonly methods: EtoolsMethod[] = store.getState().staticData.methods || [];
   readonly categories: EtoolsCategory[] = store.getState().staticData.categories || [];
-  readonly levels: DefaultDropdownOption<string>[] = LEVELS;
-  readonly answerTypes: AnswerTypeOption[] = ANSWER_TYPES;
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
+  @property() answerTypes: AnswerTypeOption[] = applyDropdownTranslation(ANSWER_TYPES);
   readonly scaleSizes: DefaultDropdownOption[] = [
     {value: 3, display_name: '3'},
     {value: 5, display_name: '5'},
@@ -44,10 +47,12 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   @property() editedData: IEditedQuestion = {
     options: [],
     answer_type: ANSWER_TYPES[0].value,
-    level: LEVELS[0].value
+    level: LEVELS[0].value,
+    is_active: true
   };
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;
+  private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -70,10 +75,28 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
         fireEvent(this, 'response', {confirmed: true});
       }, false)
     );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.levels = applyDropdownTranslation(LEVELS);
+        this.answerTypes = applyDropdownTranslation(ANSWER_TYPES);
+      })
+    );
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionPopupStyles];
+    return [
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      QuestionPopupStyles,
+      css`
+        .question-textarea {
+          padding-bottom: 1%;
+        }
+      `
+    ];
   }
 
   set dialogData(data: IQuestion) {
@@ -97,6 +120,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.updateQuestionUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   updateAnswerType(newType: QuestionAnswerType): void {
@@ -178,7 +202,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       delete this.errors.scale;
     }
 
-    if (type === BOOLEAN_TYPE) {
+    if (type === BOOL_TYPE) {
       this.editedData.options = [
         {label: '', value: 'True'},
         {label: '', value: 'False'}

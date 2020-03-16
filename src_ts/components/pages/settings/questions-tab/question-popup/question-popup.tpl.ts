@@ -3,12 +3,12 @@ import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
 import {QuestionPopupComponent} from './question-popup';
-import {translate} from '../../../../../localization/localisation';
 import {repeat} from 'lit-html/directives/repeat';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
-import {BOOLEAN_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
+import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
+import {translate} from 'lit-translate';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
   return html`
@@ -30,7 +30,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
       <div class="container layout vertical">
         <paper-textarea
-          class="validate-input disabled-as-readonly flex-7"
+          class="validate-input disabled-as-readonly flex-7 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
           max-rows="3"
@@ -74,6 +74,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           .options="${this.methods}"
           option-label="name"
           option-value="id"
+          required
           ?invalid="${this.errors && this.errors.methods}"
           .errorMessage="${this.errors && this.errors.methods}"
           @focus="${() => this.resetFieldError('methods')}"
@@ -182,7 +183,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div
           class="scales-container"
-          ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOLEAN_TYPE}"
+          ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOL_TYPE}"
         >
           ${repeat(
             this.editedData.options as Partial<QuestionOption>[],

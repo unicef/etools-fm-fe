@@ -8,58 +8,55 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
-import {addTranslates, ENGLISH} from '../../../localization/localisation';
-import {TEMPLATES_TRANSLATES} from '../../../localization/en/plan-page/templates-tab.translates';
 import {questionTemplates} from '../../../redux/reducers/templates.reducer';
 import {rationale} from '../../../redux/reducers/rationale.reducer';
-import {RATIONALE_TRANSLATES} from '../../../localization/en/plan-page/rationale-tab.translates';
-import {ISSUE_TRACKER_TRANSLATES} from '../../../localization/en/plan-page/issue-tracker.translates';
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
+import {applyPageTabsTranslation} from '../../utils/translation-helper';
+import {Unsubscribe} from 'redux';
+import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
+import {translate} from 'lit-translate';
 
 store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
-addTranslates(ENGLISH, [TEMPLATES_TRANSLATES, RATIONALE_TRANSLATES, ISSUE_TRACKER_TRANSLATES]);
 
 const PAGE: string = 'plan';
 
 const RATIONALE_TAB: string = 'rationale';
 const ISSUE_TRACKER_TAB: string = 'issue-tracker';
 const TEMPLATES_TAB: string = 'templates';
+const NAVIGATION_TABS: PageTab[] = [
+  {
+    tab: RATIONALE_TAB,
+    tabLabel: 'PLAN.NAVIGATION_TABS.RATIONALE',
+    hidden: false
+  },
+  {
+    tab: ISSUE_TRACKER_TAB,
+    tabLabel: 'PLAN.NAVIGATION_TABS.ISSUE_TRACKER',
+    hidden: false
+  },
+  {
+    tab: TEMPLATES_TAB,
+    tabLabel: 'PLAN.NAVIGATION_TABS.TEMPLATE',
+    hidden: false
+  }
+];
 
 @customElement('plan-page')
 export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
-  pageTabs: PageTab[] = [
-    {
-      tab: RATIONALE_TAB,
-      tabLabel: 'Rationale',
-      hidden: false
-    },
-    {
-      tab: ISSUE_TRACKER_TAB,
-      tabLabel: 'Issue Tracker',
-      hidden: false
-    },
-    {
-      tab: TEMPLATES_TAB,
-      tabLabel: 'Templates',
-      hidden: false
-    }
-  ];
+  @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
   @property() activeTab: string = ISSUE_TRACKER_TAB;
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-  }
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     const canView: boolean = this.canView();
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">Plan</h1>
+            <h1 slot="page-title">${translate('PLAN.TITLE')}</h1>
 
             <etools-tabs
               id="tabs"
@@ -85,6 +82,14 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
         this.activeTab = subRouteName as string;
       })
     );
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(NAVIGATION_TABS)))
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activeLanguageUnsubscribe();
   }
 
   getTabElement(): TemplateResult {
@@ -124,5 +129,9 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
       updateAppLocation('page-not-found');
     }
     return true;
+  }
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
   }
 }
