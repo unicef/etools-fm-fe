@@ -244,7 +244,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-checklist-tab
             .activityId="${this.activityId}"
-            ?readonly="${!this.activityDetails?.permissions.edit.started_checklist_set}"
+            ?readonly="${!this.checkEditPermission(CHECKLIST_TAB)}"
           ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
@@ -259,7 +259,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-summary-tab
             .activityId="${this.activityId}"
-            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+            ?readonly="${!this.checkEditPermission(SUMMARY_TAB)}"
           ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
@@ -298,6 +298,10 @@ export class NewActivityComponent extends LitElement {
       return;
     }
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
+  }
+
+  private checkEditPermission(target: string): boolean {
+    return !!this.activityDetails?.permissions.edit[(TABS_PROPERTIES[target] || '') as keyof ActivityPermissionsObject];
   }
 
   private checkTab(): void {
