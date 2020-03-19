@@ -1,7 +1,5 @@
 import {html, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../styles/input-styles';
-import {store} from '../../../../../redux/store';
-import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
 import '../../../../common/layout/etools-card';
 import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-loading';
@@ -17,7 +15,7 @@ export function template(this: SummaryCard): TemplateResult {
       ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode && !this.updateInProcess}"
       ?hide-edit-button="${this.blockEdit}"
-      @start-edit="${() => store.dispatch(new SetEditedFindingsCard(this.cardId))}"
+      @start-edit="${() => (this.isEditMode = true)}"
       @save="${() => this.saveChanges()}"
       @cancel="${() => this.cancelEdit()}"
     >
