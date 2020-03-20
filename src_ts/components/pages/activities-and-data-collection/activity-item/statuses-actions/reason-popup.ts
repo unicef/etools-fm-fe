@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
@@ -22,7 +22,6 @@ export class ChecklistAttachments extends LitElement {
   render(): TemplateResult | void {
     return html`
       ${InputStyles} ${DialogStyles}
-
       <etools-dialog
         id="dialog"
         size="md"
@@ -34,11 +33,10 @@ export class ChecklistAttachments extends LitElement {
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
-        <div class="container">
+        <div class="reason-container">
           <paper-textarea
             id="details-input"
             .value="${this.reason}"
-            max-rows="3"
             required
             label="${translate(this.label as string)}"
             placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
@@ -65,6 +63,15 @@ export class ChecklistAttachments extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles];
+    return [
+      SharedStyles,
+      css`
+        .reason-container {
+          overflow-y: auto;
+          overflow-x: hidden;
+          max-height: 150px;
+        }
+      `
+    ];
   }
 }
