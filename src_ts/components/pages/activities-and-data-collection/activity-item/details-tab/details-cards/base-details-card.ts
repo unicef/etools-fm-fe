@@ -79,7 +79,10 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   }
 
   protected finish(): void {
-    const errors: string[] = this.errors.data || [];
+    let errors: string[] = [];
+    if (this.errors.data) {
+      errors = Array.isArray(this.errors.data) ? this.errors.data : [this.errors.data];
+    }
     this.isUpdate = false;
     if (!errors.length) {
       this.isEditMode = false;
