@@ -273,10 +273,20 @@ export class NewActivityComponent extends LitElement {
   }
 
   getTabList(): PageTab[] {
-    return this.pageTabs.filter(({tab}: PageTab) => {
-      const property: string = TABS_PROPERTIES[tab];
-      return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
-    });
+    if (this.activityId === 'new') {
+      return [
+        {
+          tab: DETAILS_TAB,
+          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+          hidden: false
+        }
+      ];
+    } else {
+      return this.pageTabs.filter(({tab}: PageTab) => {
+        const property: string = TABS_PROPERTIES[tab];
+        return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
+      });
+    }
   }
 
   getStatuses(): IEtoolsStatusModel[] {
