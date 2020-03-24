@@ -65,6 +65,7 @@ export class ChecklistAttachments extends LitElement {
   }
 
   static get styles(): CSSResultArray {
+    // language=css
     return [SharedStyles];
   }
 }

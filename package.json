@@ -61,7 +61,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "@unicef-polymer/etools-form-builder": "0.1.5",
+    "@unicef-polymer/etools-form-builder": "0.1.7",
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
