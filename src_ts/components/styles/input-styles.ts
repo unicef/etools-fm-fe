@@ -35,6 +35,7 @@ export const InputStyles: TemplateResult = html`
       box-sizing: border-box;
 
       --paper-input-container-input: {
+        display: block !important;
         font-size: 15px;
         box-sizing: border-box;
         white-space: nowrap;
@@ -62,6 +63,7 @@ export const InputStyles: TemplateResult = html`
         color: var(--gray-20) !important;
       }
       --iron-autogrow-textarea: {
+        display: block;
         padding: 0;
       }
     }

@@ -241,7 +241,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-checklist-tab
             .activityId="${this.activityId}"
-            ?readonly="${!this.activityDetails?.permissions.edit.started_checklist_set}"
+            ?readonly="${!this.checkEditPermission(CHECKLIST_TAB)}"
           ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
@@ -256,7 +256,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-summary-tab
             .activityId="${this.activityId}"
-            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+            ?readonly="${!this.checkEditPermission(SUMMARY_TAB)}"
           ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
@@ -273,10 +273,20 @@ export class NewActivityComponent extends LitElement {
   }
 
   getTabList(): PageTab[] {
-    return this.pageTabs.filter(({tab}: PageTab) => {
-      const property: string = TABS_PROPERTIES[tab];
-      return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
-    });
+    if (this.activityId === 'new') {
+      return [
+        {
+          tab: DETAILS_TAB,
+          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+          hidden: false
+        }
+      ];
+    } else {
+      return this.pageTabs.filter(({tab}: PageTab) => {
+        const property: string = TABS_PROPERTIES[tab];
+        return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
+      });
+    }
   }
 
   getStatuses(): IEtoolsStatusModel[] {
@@ -289,6 +299,10 @@ export class NewActivityComponent extends LitElement {
       return;
     }
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
+  }
+
+  private checkEditPermission(target: string): boolean {
+    return !!this.activityDetails?.permissions.edit[(TABS_PROPERTIES[target] || '') as keyof ActivityPermissionsObject];
   }
 
   private checkTab(): void {
