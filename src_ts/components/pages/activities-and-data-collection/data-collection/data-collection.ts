@@ -21,7 +21,7 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
-import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
+import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
@@ -210,13 +210,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.activityId === null || this.checklistId === null || this.activityDetails === null) {
       return;
     }
-
-    if (!this.activityDetails.permissions.view.started_checklist_set) {
+    const key: keyof ActivityPermissionsObject = (TABS_PROPERTIES[COLLECT_TAB] ||
+      '') as keyof ActivityPermissionsObject;
+    if (!this.activityDetails.permissions.view[key]) {
       updateAppLocation('page-not-found');
       return;
     }
 
-    this.tabIsReadonly = !this.activityDetails.permissions.edit.started_checklist_set;
+    this.tabIsReadonly = !this.activityDetails.permissions.edit[key];
 
     const dataCollectionState: IDataCollectionState = store.getState().dataCollection;
     const loadedChecklistId: number | null =
