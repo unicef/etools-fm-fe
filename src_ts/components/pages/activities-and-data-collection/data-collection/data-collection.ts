@@ -34,6 +34,7 @@ import '@unicef-polymer/etools-form-builder';
 import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
+import {translate} from 'lit-translate';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -54,10 +55,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   private blueprintUnsubscribe!: Unsubscribe;
   private activityId: string | null = null;
   private checklistId: string | null = null;
+  private isLoad: boolean = true;
 
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <page-content-header>
         <div slot="page-title">
           <div class="method-name">${this.checklistFormJson?.blueprint.title}</div>
@@ -115,6 +121,8 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         if (data) {
           this.activityDetails = data;
           this.loadChecklist();
+        } else {
+          this.isLoad = false;
         }
       }, false)
     );
@@ -133,6 +141,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.blueprintUnsubscribe = store.subscribe(
       dataCollectionChecklistBlueprint((dataCollectionJson: ChecklistFormJson | null) => {
         this.checklistFormJson = dataCollectionJson;
+        this.isLoad = false;
       }, false)
     );
 
