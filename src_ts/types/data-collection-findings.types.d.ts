@@ -76,6 +76,7 @@ type CompletedOverallFinding = {
   method: number;
   information_source: string;
   narrative_finding: string;
+  checklist: number;
 };
 
 type CompletedFinding = {
@@ -83,6 +84,7 @@ type CompletedFinding = {
   author: ActivityTeamMember;
   method: number;
   value: string;
+  checklist: number;
 };
 
 type CollectChecklistParams = {

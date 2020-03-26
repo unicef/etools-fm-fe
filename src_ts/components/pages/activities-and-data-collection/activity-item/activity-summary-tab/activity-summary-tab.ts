@@ -11,6 +11,9 @@ import {summaryFindingsAndOverallData} from '../../../../../redux/selectors/acti
 import {findingsComponents} from '../../../../../redux/reducers/findings-components.reducer';
 import './summary-card';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
+import {SaveRoute} from '../../../../../redux/actions/app.actions';
+import {ACTIVITIES_PAGE} from '../../activities-page';
+import {SUMMARY_TAB} from '../activities-tabs';
 
 store.addReducers({activitySummary, findingsComponents});
 
@@ -33,6 +36,7 @@ export class ActivitySummaryTab extends LitElement {
           return html`
             <div class="findings-block">
               <summary-card
+                .activityId="${this.activityId}"
                 .tabName="${name}"
                 .overallInfo="${overall}"
                 .findings="${findings}"
@@ -47,6 +51,7 @@ export class ActivitySummaryTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    store.dispatch(new SaveRoute(`${ACTIVITIES_PAGE}/${this.activityId}/${SUMMARY_TAB}`));
     store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
 
     /**
