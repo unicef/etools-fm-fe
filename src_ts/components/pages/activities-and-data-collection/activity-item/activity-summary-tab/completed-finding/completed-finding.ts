@@ -73,6 +73,11 @@ export class CompletedFindingComponent extends LitElement {
           align-items: center;
         }
 
+        .completed-finding__content > *,
+        .completed-finding__content:hover {
+          cursor: pointer;
+        }
+
         .method-name-label {
           width: 34px;
           text-align: center;
