@@ -27,6 +27,7 @@ type StoreSelectorFunction<T> = (store: IRootState) => T;
 
 interface IAppState {
   routeDetails: IRouteDetails;
+  previousRoute: string | null;
   drawerOpened: boolean;
 }
 

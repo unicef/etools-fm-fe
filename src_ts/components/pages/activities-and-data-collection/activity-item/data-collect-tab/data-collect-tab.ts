@@ -27,6 +27,7 @@ import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-data-table';
 import {classMap} from 'lit-html/directives/class-map';
 import {translate} from 'lit-translate';
+import {SaveRoute} from '../../../../../redux/actions/app.actions';
 
 store.addReducers({dataCollection});
 
@@ -49,6 +50,7 @@ export class DataCollectTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    store.dispatch(new SaveRoute(null));
     // Check permissions
     this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {

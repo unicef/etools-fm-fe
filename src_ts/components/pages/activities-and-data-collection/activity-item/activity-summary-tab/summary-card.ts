@@ -13,6 +13,7 @@ import {clone} from 'ramda';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
+  @property() activityId: number | null = null;
   @property({type: String}) tabName: string = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
@@ -81,6 +82,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                   finding.activity_question.question
                 )}"
                 .completedFindingMethod="${this.getMethodName(completedFinding.method, true)}"
+                .activityId="${this.activityId}"
               ></completed-finding>
             `
           )}
@@ -101,6 +103,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                     .completedFinding="${finding}"
                     .completedFindingTitle="${finding.narrative_finding}"
                     .completedFindingMethod="${this.getMethodName(finding.method, true)}"
+                    .activityId="${this.activityId}"
                   ></completed-finding>
                 `
               )}

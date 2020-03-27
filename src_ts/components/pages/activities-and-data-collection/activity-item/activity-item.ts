@@ -40,6 +40,7 @@ import {Unsubscribe} from 'redux';
 import {STAFF} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
+import {SaveRoute} from '../../../../redux/actions/app.actions';
 
 store.addReducers({activityDetails});
 
@@ -165,7 +166,7 @@ export class NewActivityComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-
+    store.dispatch(new SaveRoute(null));
     // On Activity data changes
     this.activityDetailsUnsubscribe = store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
