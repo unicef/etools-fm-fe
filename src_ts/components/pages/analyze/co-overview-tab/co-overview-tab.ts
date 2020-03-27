@@ -36,6 +36,8 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   @property({type: Object})
   fullReports: GenericObject<FullReportData> = {};
 
+  @property() isLoad: boolean = true;
+
   private cpOutputs: EtoolsCpOutput[] = [];
   private routeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
@@ -56,12 +58,13 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     );
     this.cpOutputUnsubscribe = store.subscribe(
       outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
+        this.isLoad = false;
         if (!outputs) {
           return;
         }
         this.cpOutputs = outputs;
         this.refreshData();
-      })
+      }, false)
     );
     const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
