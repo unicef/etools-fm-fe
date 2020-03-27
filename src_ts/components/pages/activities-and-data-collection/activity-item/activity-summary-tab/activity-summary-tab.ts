@@ -11,6 +11,8 @@ import {summaryFindingsAndOverallData} from '../../../../../redux/selectors/acti
 import {findingsComponents} from '../../../../../redux/reducers/findings-components.reducer';
 import './summary-card';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
+import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
+import {translate} from 'lit-translate';
 
 store.addReducers({activitySummary, findingsComponents});
 
@@ -24,9 +26,15 @@ export class ActivitySummaryTab extends LitElement {
 
   private findingsAndOverallUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
+  private routeDetailsUnsubscribe!: Unsubscribe;
+  private isLoad: boolean = true;
 
   render(): TemplateResult {
     return html`
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       ${Object.values(this.findingsAndOverall)
         .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
         .map(({name, findings, overall}: SortedFindingsAndOverall) => {
@@ -47,7 +55,12 @@ export class ActivitySummaryTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
+    this.routeDetailsUnsubscribe = store.subscribe(
+      routeDetailsSelector(({params}: IRouteDetails) => {
+        this.activityId = params && (params.id as number);
+        store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
+      })
+    );
 
     /**
      * Sorts and sets findings and overall data on store.dataCollection.checklist.findingsAndOverall changes
@@ -56,6 +69,7 @@ export class ActivitySummaryTab extends LitElement {
       summaryFindingsAndOverallData(({overall, findings}: FindingsAndOverall) => {
         this.rawFindingsAndOverall = {overall, findings};
         this.findingsAndOverall = sortFindingsAndOverall(overall, findings);
+        this.isLoad = false;
       }, false)
     );
 
@@ -73,6 +87,7 @@ export class ActivitySummaryTab extends LitElement {
     super.disconnectedCallback();
     this.findingsAndOverallUnsubscribe();
     this.activeLanguageUnsubscribe();
+    this.routeDetailsUnsubscribe();
   }
 
   /**
