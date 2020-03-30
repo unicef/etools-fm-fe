@@ -63,7 +63,6 @@ export const InputStyles: TemplateResult = html`
         color: var(--gray-20) !important;
       }
       --iron-autogrow-textarea: {
-        display: block;
         padding: 0;
       }
     }
@@ -154,7 +153,7 @@ export const InputStyles: TemplateResult = html`
       }
       --paper-input-container-underline: {
         border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
-        border-color: rgba(0, 0, 0, 0.2) !important;
+        display: block !important;
       }
       --paper-input-container-underline-focus: {
         display: none;
