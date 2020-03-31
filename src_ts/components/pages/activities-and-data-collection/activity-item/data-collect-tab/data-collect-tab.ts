@@ -195,16 +195,11 @@ export class DataCollectTab extends LitElement {
                   `
                 : ''}
 
-              <!--  Edit button  -->
-              ${!this.isReadonly
-                ? html`
-                    <div class="hover-block">
-                      <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
-                        <iron-icon icon="icons:create"></iron-icon>
-                      </a>
-                    </div>
-                  `
-                : ''}
+              <div class="hover-block">
+                <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
+                  <iron-icon icon="${this.isReadonly ? 'icons:visibility' : 'icons:create'}"></iron-icon>
+                </a>
+              </div>
             </div>
           </etools-data-table-row>
         `
