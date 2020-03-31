@@ -16,6 +16,7 @@ import '@polymer/paper-input/paper-textarea';
 import {get, translate} from 'lit-translate';
 import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
+import {CardStyles} from '../../../../styles/card-styles';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
@@ -45,18 +46,20 @@ export class ChecklistAttachments extends LitElement {
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
-        <paper-textarea
-          id="details-input"
-          .value="${this.reason}"
-          required
-          label="${translate(this.label as string)}"
-          placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
-          @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"
-          @focus="${() => (this.error = '')}"
-          ?invalid="${Boolean(this.error)}"
-          error-message="${this.error}"
-          maxRows="3"
-        ></paper-textarea>
+        <div class="container">
+          <paper-textarea
+            id="details-input"
+            .value="${this.reason}"
+            required
+            label="${translate(this.label as string)}"
+            placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
+            @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"
+            @focus="${() => (this.error = '')}"
+            ?invalid="${Boolean(this.error)}"
+            error-message="${this.error}"
+            max-rows="3"
+          ></paper-textarea>
+        </div>
       </etools-dialog>
     `;
   }
@@ -79,6 +82,6 @@ export class ChecklistAttachments extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles];
+    return [SharedStyles, CardStyles];
   }
 }
