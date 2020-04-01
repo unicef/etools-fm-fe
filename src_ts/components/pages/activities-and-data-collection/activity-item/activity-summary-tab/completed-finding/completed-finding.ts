@@ -1,11 +1,15 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/paper-tooltip';
+import {updateAppLocation} from '../../../../../../routing/routes';
+import {ROOT_PATH} from '../../../../../../config/config';
+import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
   @property() completedFinding!: CompletedFinding | CompletedOverallFinding;
   @property() completedFindingTitle: string = '';
   @property() completedFindingMethod: string = '';
+  @property() activityId: number | null = null;
 
   render(): TemplateResult {
     return html`
@@ -26,7 +30,7 @@ export class CompletedFindingComponent extends LitElement {
           }
         }
       </style>
-      <div class="completed-finding__content">
+      <div class="completed-finding__content" @click="${() => this.goToDataCollection()}">
         <label class="method-name-label">${this.completedFindingMethod}</label>
         <label class="author-label">
           ${this.completedFinding.author.first_name[0]}${this.completedFinding.author.last_name[0]}
@@ -47,6 +51,12 @@ export class CompletedFindingComponent extends LitElement {
     `;
   }
 
+  goToDataCollection(): void {
+    updateAppLocation(
+      `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
+    );
+  }
+
   static get styles(): CSSResultArray {
     // language=CSS
     return [
@@ -61,6 +71,11 @@ export class CompletedFindingComponent extends LitElement {
           display: flex;
           justify-content: center;
           align-items: center;
+        }
+
+        .completed-finding__content > *,
+        .completed-finding__content:hover {
+          cursor: pointer;
         }
 
         .method-name-label {

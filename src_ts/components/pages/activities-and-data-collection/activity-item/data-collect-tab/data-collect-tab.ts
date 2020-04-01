@@ -27,6 +27,7 @@ import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-data-table';
 import {classMap} from 'lit-html/directives/class-map';
 import {translate} from 'lit-translate';
+import {SaveRoute} from '../../../../../redux/actions/app.actions';
 
 store.addReducers({dataCollection});
 
@@ -49,6 +50,7 @@ export class DataCollectTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    store.dispatch(new SaveRoute(null));
     // Check permissions
     this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {
@@ -193,16 +195,11 @@ export class DataCollectTab extends LitElement {
                   `
                 : ''}
 
-              <!--  Edit button  -->
-              ${!this.isReadonly
-                ? html`
-                    <div class="hover-block">
-                      <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
-                        <iron-icon icon="icons:create"></iron-icon>
-                      </a>
-                    </div>
-                  `
-                : ''}
+              <div class="hover-block">
+                <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
+                  <iron-icon icon="${this.isReadonly ? 'icons:visibility' : 'icons:create'}"></iron-icon>
+                </a>
+              </div>
             </div>
           </etools-data-table-row>
         `

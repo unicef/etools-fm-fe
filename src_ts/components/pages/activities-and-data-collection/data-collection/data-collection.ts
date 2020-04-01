@@ -56,6 +56,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   private activityId: string | null = null;
   private checklistId: string | null = null;
   private isLoad: boolean = true;
+  private readonly previousRoute: string | null = store.getState().app.previousRoute;
 
   render(): TemplateResult {
     return html`
@@ -78,7 +79,10 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         <div slot="title-row-actions">
           <paper-button class="back-button">
-            <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}" class="layout horizontal">
+            <a
+              href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+              class="layout horizontal"
+            >
               ${arrowLeftIcon} <span>BACK</span>
             </a>
           </paper-button>

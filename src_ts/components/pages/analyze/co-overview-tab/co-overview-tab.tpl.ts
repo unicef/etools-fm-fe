@@ -10,6 +10,10 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
   return html`
     ${InputStyles}
     <section class="elevation page-content layout horizontal" elevation="1">
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <etools-dropdown
         .selected="${(this.queryParams && this.queryParams.cp_outcome) || undefined}"
         label="${translate('CO_OVERVIEW.CP_OUTCOME')}"
