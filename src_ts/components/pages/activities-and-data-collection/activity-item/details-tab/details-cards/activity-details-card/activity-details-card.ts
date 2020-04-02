@@ -100,7 +100,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
     if (startDate && endDate) {
       return moment(startDate).isBefore(endDate);
     } else {
-      return false;
+      return !endDate || !startDate;
     }
   }
 
