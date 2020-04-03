@@ -30,7 +30,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       ></etools-loading>
       <!--     Description   -->
       <paper-textarea
-        class="validate-input"
+        class="validate-input additional-padding"
         .value="${this.editedData.description}"
         @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
         required
@@ -46,7 +46,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       <div class="grid-container">
         <!--    Assignee    -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.editedData.assigned_to}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('assigned_to', detail.selectedItem && detail.selectedItem.id)}"
@@ -78,7 +78,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Section     -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.editedData.section}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('section', detail.selectedItem && detail.selectedItem.id)}"
@@ -99,7 +99,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Offices    -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.editedData.office}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('office', detail.selectedItem && detail.selectedItem.id)}"
@@ -120,7 +120,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Related To    -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.selectedRelatedTo}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.setSelectedRelatedTo(detail.selectedItem && detail.selectedItem.value)}"
@@ -137,7 +137,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Related Name    -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
@@ -154,7 +154,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--   Categories   -->
         <etools-dropdown
-          class="without-border flex"
+          class="without-border flex additional-padding"
           .selected="${this.editedData.category}"
           @etools-selected-item-changed="${({detail}: CustomEvent) => {
             this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id);
@@ -175,7 +175,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
         ></etools-dropdown>
 
         <!--    Priority    -->
-        <div class="without-border flex priority-container">
+        <div class="without-border flex priority-container additional-padding">
           <paper-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"
