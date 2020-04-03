@@ -91,3 +91,9 @@ type CollectChecklistParams = {
   information_source?: string;
   method: number;
 };
+
+type DataCollectionItemRemoval = {
+  activityId: number;
+  checklistId: number;
+  dialogOpened: boolean;
+};
