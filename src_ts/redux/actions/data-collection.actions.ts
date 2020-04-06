@@ -29,7 +29,10 @@ export enum DataCollectionChecklistActionTypes {
   OVERALL_AND_FINDINGS_UPDATE_FAILURE = '[Data Collection Checklist Action]: OVERALL_AND_FINDINGS_UPDATE_FAILURE',
 
   LOAD_BLUEPRINT = '[Data Collection Checklist Action]: LOAD_BLUEPRINT',
-  UPDATE_BLUEPRINT_VALUE = '[Data Collection Checklist Action]: UPDATE_BLUEPRINT_VALUE'
+  UPDATE_BLUEPRINT_VALUE = '[Data Collection Checklist Action]: UPDATE_BLUEPRINT_VALUE',
+
+  DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_IN_PROGRESS = '[Data Collection Checklist Action]: DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL',
+  DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_FAILURE = '[Data Collection Checklist Action]: DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_FAILURE'
 }
 
 export class SetChecklistInformationSource {
@@ -53,6 +56,18 @@ export class UpdateBlueprintValue {
   type: DataCollectionChecklistActionTypes.UPDATE_BLUEPRINT_VALUE =
     DataCollectionChecklistActionTypes.UPDATE_BLUEPRINT_VALUE;
   constructor(public payload: any) {}
+}
+
+export class DataCollectionChecklistItemRemovalInProgress {
+  type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_IN_PROGRESS =
+    DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_IN_PROGRESS;
+  constructor(public payload: boolean) {}
+}
+
+export class DataCollectionChecklistItemRemovalFailure {
+  type: DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_FAILURE =
+    DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_FAILURE;
+  constructor(public payload: GenericObject) {}
 }
 
 export type DataCollectionActions =
@@ -83,4 +98,6 @@ export type DataCollectionActions =
   | SetChecklistInformationSource
   | SetChecklistError
   | LoadBlueprint
-  | UpdateBlueprintValue;
+  | UpdateBlueprintValue
+  | DataCollectionChecklistItemRemovalInProgress
+  | DataCollectionChecklistItemRemovalFailure;

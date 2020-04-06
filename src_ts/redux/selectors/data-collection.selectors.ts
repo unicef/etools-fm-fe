@@ -16,6 +16,10 @@ export const findingsAndOverallData: Selector<FindingsAndOverall> = select<Findi
   (store: IRootState) => store.dataCollection.checklist.findingsAndOverall
 );
 
+export const removalInProgress: Selector<boolean> = select<boolean>(
+  (store: IRootState) => store.dataCollection.checklist.removalInProgress
+);
+
 export const dataCollectionMethods: Selector<null | IDataCollectionMethods> = select<null | IDataCollectionMethods>(
   (store: IRootState) => store.dataCollection.dataCollectionMethods
 );
