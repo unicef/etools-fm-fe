@@ -161,6 +161,7 @@ interface IDataCollectionState {
     blueprint: null | ChecklistFormJson;
     data: null | DataCollectionChecklist;
     findingsAndOverall: FindingsAndOverall;
+    removalInProgress: boolean;
   };
   errors: {
     checklistCollect: null | GenericObject;
@@ -169,6 +170,7 @@ interface IDataCollectionState {
     findings: null | GenericObject;
     dataCollectionMethods: null | GenericObject;
     overallAndFindingsUpdate: null | GenericObject;
+    dataCollectionChecklistItemRemovalFailure: null | GenericObject;
   };
 }
 

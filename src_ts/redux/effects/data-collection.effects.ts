@@ -3,12 +3,15 @@ import {
   DataCollectionChecklistActionTypes,
   LoadBlueprint,
   SetChecklistError,
-  SetChecklistInformationSource
+  SetChecklistInformationSource,
+  DataCollectionChecklistItemRemovalInProgress,
+  DataCollectionChecklistItemRemovalFailure
 } from '../actions/data-collection.actions';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {
   DATA_COLLECTION_BLUEPRINT,
   DATA_COLLECTION_CHECKLIST,
+  DATA_COLLECTION_CHECKLIST_ITEM,
   DATA_COLLECTION_METHODS,
   DATA_COLLECTION_OVERALL_FINDING,
   DATA_COLLECTION_SPECIFIC_CHECKLIST
@@ -181,6 +184,27 @@ export function createCollectionChecklist(id: number, data: Partial<DataCollecti
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId: id});
       return request(url, requestInit);
     }
+  };
+}
+
+export function deleteDataCollectionChecklistItem(
+  activityId: number,
+  checklistId: number
+): (dispatch: Dispatch) => Promise<void> {
+  const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST_ITEM, {
+    activityId: activityId,
+    checklistId: checklistId
+  });
+  return (dispatch: Dispatch) => {
+    dispatch(new DataCollectionChecklistItemRemovalInProgress(true));
+    return request<void>(url, {method: 'DELETE'})
+      .then(() => {
+        dispatch<AsyncEffect>(loadDataCollectionChecklist(activityId));
+      })
+      .catch((error: GenericObject) => {
+        dispatch(new DataCollectionChecklistItemRemovalFailure(error));
+      })
+      .finally(() => dispatch(new DataCollectionChecklistItemRemovalInProgress(false)));
   };
 }
 

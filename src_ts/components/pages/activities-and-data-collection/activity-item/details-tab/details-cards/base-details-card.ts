@@ -69,7 +69,9 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
       } else {
         store.dispatch<AsyncEffect>(createActivityDetails(diff)).then(({payload}: ActivityDetailsCreation) => {
           this.finish();
-          updateAppLocation(`activities/${payload.id}/details/`);
+          if (payload && payload.id) {
+            updateAppLocation(`activities/${payload.id}/details/`);
+          }
         });
       }
     } else {

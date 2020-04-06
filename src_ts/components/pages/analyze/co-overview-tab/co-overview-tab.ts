@@ -36,7 +36,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   @property({type: Object})
   fullReports: GenericObject<FullReportData> = {};
 
-  @property() isLoad: boolean = true;
+  @property() isLoad: boolean = false;
 
   private cpOutputs: EtoolsCpOutput[] = [];
   private routeUnsubscribe!: Unsubscribe;
@@ -140,6 +140,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   private loadStaticData(): void {
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
     if (!data.outputs) {
+      this.isLoad = true;
       store.dispatch<AsyncEffect>(loadStaticData(CP_OUTPUTS));
     }
   }

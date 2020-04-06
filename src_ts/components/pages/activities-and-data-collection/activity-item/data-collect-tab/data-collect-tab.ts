@@ -28,6 +28,7 @@ import '@unicef-polymer/etools-data-table';
 import {classMap} from 'lit-html/directives/class-map';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
+import './remove-data-collect-popup';
 
 store.addReducers({dataCollection});
 
@@ -199,6 +200,10 @@ export class DataCollectTab extends LitElement {
                 <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
                   <iron-icon icon="${this.isReadonly ? 'icons:visibility' : 'icons:create'}"></iron-icon>
                 </a>
+                <paper-icon-button
+                  icon="icons:delete"
+                  @tap="${() => this.openDeletePopup(item.id)}"
+                ></paper-icon-button>
               </div>
             </div>
           </etools-data-table-row>
@@ -260,6 +265,17 @@ export class DataCollectTab extends LitElement {
             information_source: response.information_source
           })
         );
+      }
+    });
+  }
+
+  openDeletePopup(id: number): void {
+    openDialog<DataCollectionItemRemoval>({
+      dialog: 'remove-data-collect-popup',
+      dialogData: {activityId: this.activityId, checklistId: id, dialogOpened: true}
+    }).then(({confirmed}: IDialogResponse<any>) => {
+      if (!confirmed) {
+        return;
       }
     });
   }

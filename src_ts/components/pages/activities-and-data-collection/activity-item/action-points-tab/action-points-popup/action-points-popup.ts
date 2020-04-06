@@ -175,7 +175,7 @@ export class ActionPointsPopup extends InterventionsMixin(
         : this.editedData;
     const isEmpty: boolean = !Object.keys(target).length;
 
-    if (isEmpty) {
+    if (isEmpty && this.editedData.id) {
       this.dialogOpened = false;
       this.onClose();
     } else {
@@ -290,6 +290,10 @@ export class ActionPointsPopup extends InterventionsMixin(
 
         datepicker-lite {
           white-space: nowrap;
+        }
+
+        .additional-padding {
+          padding-bottom: 8px;
         }
       `
     ];

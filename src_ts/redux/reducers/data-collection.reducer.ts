@@ -40,7 +40,8 @@ const INITIAL: IDataCollectionState = {
     findingsAndOverall: {
       findings: null,
       overall: null
-    }
+    },
+    removalInProgress: false
   },
   errors: {
     checklistCollect: null,
@@ -48,7 +49,8 @@ const INITIAL: IDataCollectionState = {
     checklist: null,
     findings: null,
     dataCollectionMethods: null,
-    overallAndFindingsUpdate: null
+    overallAndFindingsUpdate: null,
+    dataCollectionChecklistItemRemovalFailure: null
   }
 };
 
@@ -127,7 +129,8 @@ export function dataCollection(
         checklist: {
           data: action.payload,
           findingsAndOverall: {...state.checklist.findingsAndOverall},
-          blueprint: state.checklist.blueprint
+          blueprint: state.checklist.blueprint,
+          removalInProgress: state.checklist.removalInProgress
         }
       };
 
@@ -144,7 +147,26 @@ export function dataCollection(
         checklist: {
           blueprint: action.payload,
           data: state.checklist.data,
+          removalInProgress: state.checklist.removalInProgress,
           findingsAndOverall: {...state.checklist.findingsAndOverall}
+        }
+      };
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_IN_PROGRESS:
+      return {
+        ...state,
+        checklist: {
+          ...state.checklist,
+          removalInProgress: action.payload
+        }
+      };
+
+    case DataCollectionChecklistActionTypes.DATA_COLLECTION_CHECKLIST_ITEM_REMOVAL_FAILURE:
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          dataCollectionChecklistItemRemovalFailure: action.payload
         }
       };
 

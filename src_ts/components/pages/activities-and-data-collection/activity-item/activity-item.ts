@@ -126,10 +126,16 @@ export class NewActivityComponent extends LitElement {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
+  private isLoad: boolean = false;
 
   render(): TemplateResult {
     // language=HTML
     return html`
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
       <etools-loading
         ?active="${this.isStatusUpdating}"
         loading-text="${translate('ACTIVITY_ITEM.STATUS_CHANGE')}"
@@ -167,6 +173,7 @@ export class NewActivityComponent extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     store.dispatch(new SaveRoute(null));
+    this.isLoad = true;
     // On Activity data changes
     this.activityDetailsUnsubscribe = store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
@@ -314,7 +321,7 @@ export class NewActivityComponent extends LitElement {
     const tabProperty: string = TABS_PROPERTIES[activeTab || ''];
     const canViewTab: boolean =
       isValidTab && (!tabProperty || this.checkActivityDetailsPermissions(this.activityDetails, tabProperty));
-
+    this.isLoad = false;
     if (canViewTab) {
       this.activeTab = `${activeTab}`;
     } else {
