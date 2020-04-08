@@ -133,6 +133,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
           option-value="value"
           allow-outside-scroll
           dynamic-align
+          ?invalid="${this.errors && this.errors.related_to}"
+          .errorMessage="${this.errors && this.errors.related_to}"
+          @focus="${() => this.resetFieldError('related_to')}"
+          @tap="${() => this.resetFieldError('related_to')}"
         ></etools-dropdown>
 
         <!--    Related Name    -->
@@ -150,6 +154,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
           option-value="id"
           allow-outside-scroll
           dynamic-align
+          ?invalid="${this.errors && this.errors.related_name}"
+          .errorMessage="${this.errors && this.errors.related_name}"
+          @focus="${() => this.resetFieldError('related_name')}"
+          @tap="${() => this.resetFieldError('related_name')}"
         ></etools-dropdown>
 
         <!--   Categories   -->
