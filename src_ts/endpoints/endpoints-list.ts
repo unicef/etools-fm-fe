@@ -106,7 +106,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [PARTNERS]: {
-    url: '/api/v2/partners/?verbosity=minimal',
+    url: '/api/v1/field-monitoring/planning/partners/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: PARTNERS
