@@ -175,7 +175,8 @@
         "SINGLE": "Localized {{ count }} File",
         "MULTIPLE": "Localized {{ count }} Files",
         "DEFAULT": "Localized Upload Files"
-      }
+      },
+      "DELETE_ITEM": "Localized Delete item?"
     }
   },
   "ACTIVITY_REVIEW": {

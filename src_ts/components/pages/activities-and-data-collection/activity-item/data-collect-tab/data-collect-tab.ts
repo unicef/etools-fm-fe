@@ -201,6 +201,7 @@ export class DataCollectTab extends LitElement {
                   <iron-icon icon="${this.isReadonly ? 'icons:visibility' : 'icons:create'}"></iron-icon>
                 </a>
                 <paper-icon-button
+                  ?hidden="${this.isReadonly}"
                   icon="icons:delete"
                   @tap="${() => this.openDeletePopup(item.id)}"
                 ></paper-icon-button>
