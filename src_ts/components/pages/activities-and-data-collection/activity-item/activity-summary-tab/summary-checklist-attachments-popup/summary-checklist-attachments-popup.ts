@@ -69,8 +69,14 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
 
   protected attachmentsUploaded(attachments: {success: string[]; error: string[]}): void {
     try {
-      const parsedAttachments: StoredAttachment[] = attachments.success.map((jsonAttachment: string) =>
-        JSON.parse(jsonAttachment)
+      const parsedAttachments: StoredAttachment[] = attachments.success.map(
+        (jsonAttachment: string | StoredAttachment) => {
+          if (typeof jsonAttachment === 'string') {
+            return JSON.parse(jsonAttachment);
+          } else {
+            return jsonAttachment;
+          }
+        }
       );
       this.attachments = [...this.attachments, ...parsedAttachments];
     } catch (e) {
