@@ -33,7 +33,7 @@ export class RemoveDataCollectPopup extends LitElement {
         // check errors on request complete
         const errors: GenericObject = store.getState().dataCollection.errors.dataCollectionChecklistItemRemovalFailure;
         if (errors && Object.keys(errors).length) {
-          fireEvent(this, 'toast', {text: errors.data});
+          fireEvent(this, 'toast', {text: errors.data.detail});
           return;
         }
 
@@ -58,7 +58,7 @@ export class RemoveDataCollectPopup extends LitElement {
         @close="${this.onClose}"
       >
         <div class="container layout horizontal">
-          <div>${translate('ATTACHMENTS_LIST.DELETE_POPUP_TITLE')}</div>
+          <div>${translate('ACTIVITY_ITEM.DATA_COLLECTION.DELETE_ITEM')}</div>
         </div>
       </etools-dialog>
     `;
