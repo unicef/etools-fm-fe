@@ -151,9 +151,13 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   attachmentsUploaded(attachments: {success: string[]; error: string[]}): void {
     try {
-      const parsedAttachments: IAttachment[] = attachments.success.map((jsonAttachment: string) =>
-        JSON.parse(jsonAttachment)
-      );
+      const parsedAttachments: IAttachment[] = attachments.success.map((jsonAttachment: string | IAttachment) => {
+        if (typeof jsonAttachment === 'string') {
+          return JSON.parse(jsonAttachment);
+        } else {
+          return jsonAttachment;
+        }
+      });
       this.currentFiles = [...this.currentFiles, ...parsedAttachments];
     } catch (e) {
       console.error(e);

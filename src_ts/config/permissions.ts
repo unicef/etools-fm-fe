@@ -1,8 +1,9 @@
 const PME: 'PME' = 'PME';
 const FM_USER: 'FM User' = 'FM User';
+const UNICEF_USER: 'UNICEF User' = 'UNICEF User';
 
 // Add groups that are used in PERMISSIONS_MAP
-const KNOWN_GROUPS: Set<string> = new Set([PME, FM_USER]);
+const KNOWN_GROUPS: Set<string> = new Set([PME, FM_USER, UNICEF_USER]);
 
 let currentUserGroups: string[] | null = null;
 // TODO: remove unused permissions
@@ -59,7 +60,8 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
     Permissions.ADD_ACTION_POINT,
     Permissions.EDIT_ACTION_POINT,
     Permissions.CREATE_VISIT
-  ])
+  ]),
+  [UNICEF_USER]: new Set([Permissions.VIEW_SETTINGS, Permissions.VIEW_PLANING, Permissions.VIEW_ANALYZE])
 };
 
 export function setUser({groups}: IEtoolsUserModel): void {

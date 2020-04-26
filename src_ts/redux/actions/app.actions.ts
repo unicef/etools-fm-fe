@@ -1,7 +1,8 @@
 export enum AppActionTypes {
   UPDATE_ROUTE_DETAILS = '[App Actions]: UPDATE_ROUTE_DETAILS',
   UPDATE_QUERY_PARAMS = '[App Actions]: UPDATE_QUERY_PARAMS',
-  UPDATE_DRAWER_STATE = '[App Actions]: UPDATE_DRAWER_STATE'
+  UPDATE_DRAWER_STATE = '[App Actions]: UPDATE_DRAWER_STATE',
+  SAVE_ROUTE = '[App Actions]: SAVE_ROUTE'
 }
 
 export class UpdateStoreRouteDetails {
@@ -22,4 +23,9 @@ export class UpdateDrawerState {
   constructor(public opened: boolean) {}
 }
 
-export type AppAction = UpdateStoreRouteDetails | UpdateDrawerState | UpdateQueryParams;
+export class SaveRoute {
+  readonly type: AppActionTypes.SAVE_ROUTE = AppActionTypes.SAVE_ROUTE;
+  constructor(public previousRoute: string | null) {}
+}
+
+export type AppAction = UpdateStoreRouteDetails | UpdateDrawerState | UpdateQueryParams | SaveRoute;

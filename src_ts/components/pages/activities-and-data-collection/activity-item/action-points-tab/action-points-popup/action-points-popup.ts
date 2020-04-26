@@ -175,11 +175,14 @@ export class ActionPointsPopup extends InterventionsMixin(
         : this.editedData;
     const isEmpty: boolean = !Object.keys(target).length;
 
-    if (isEmpty) {
+    if (isEmpty && this.editedData.id) {
       this.dialogOpened = false;
       this.onClose();
     } else {
-      store.dispatch<AsyncEffect>(updateActionPoint(this.activityId, this.editedData));
+      this.checkRequiredFields();
+      if (!Object.keys(this.errors).length) {
+        store.dispatch<AsyncEffect>(updateActionPoint(this.activityId, this.editedData));
+      }
     }
   }
 
@@ -228,6 +231,31 @@ export class ActionPointsPopup extends InterventionsMixin(
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     setTextareasMaxHeight(this.textareas);
+  }
+
+  private checkRequiredFields(): void {
+    const errorMessage: string = 'This field is required';
+    if (!this.editedData.description) {
+      this.errors.description = errorMessage;
+    }
+    if (!this.editedData.assigned_to) {
+      this.errors.assigned_to = errorMessage;
+    }
+    if (!this.editedData.section) {
+      this.errors.section = errorMessage;
+    }
+    if (!this.editedData.office) {
+      this.errors.office = errorMessage;
+    }
+    if (!this.selectedRelatedTo) {
+      this.errors.related_to = errorMessage;
+    }
+    if (!this.getSelectedRelatedName()) {
+      this.errors.related_name = errorMessage;
+    }
+    if (!this.editedData.category) {
+      this.errors.category = errorMessage;
+    }
   }
 
   private getLiteInterventions(): LiteIntervention[] {
@@ -290,6 +318,10 @@ export class ActionPointsPopup extends InterventionsMixin(
 
         datepicker-lite {
           white-space: nowrap;
+        }
+
+        .additional-padding {
+          padding-bottom: 8px;
         }
       `
     ];

@@ -280,9 +280,11 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       css`
         .search-container {
           display: flex;
+          min-height: 73px;
         }
         .search-input {
           margin-right: 16px;
+          margin-bottom: 5px;
         }
         .search-filters {
           flex-grow: 1;

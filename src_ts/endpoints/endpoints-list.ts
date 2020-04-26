@@ -60,6 +60,7 @@ export const ACTION_POINTS_LIST: 'actionPointsList' = 'actionPointsList';
 export const ACTION_POINTS_DETAILS: 'actionPointsDetails' = 'actionPointsDetails';
 export const ACTION_POINTS_CATEGORIES: 'actionPointsCategories' = 'actionPointsCategories';
 export const ACTION_POINTS_OFFICES: 'offices' = 'offices';
+export const FEATURES_FLAGS: 'flags' = 'flags';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -106,7 +107,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [PARTNERS]: {
-    url: '/api/v2/partners/?verbosity=minimal',
+    url: '/api/v1/field-monitoring/planning/partners/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: PARTNERS
@@ -326,5 +327,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTION_POINTS_OFFICES]: {
     template: '/api/offices/'
+  },
+
+  [FEATURES_FLAGS]: {
+    url: '/api/v2/environment/flags/'
   }
 };

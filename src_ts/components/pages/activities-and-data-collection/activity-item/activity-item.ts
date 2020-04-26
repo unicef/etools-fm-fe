@@ -40,6 +40,7 @@ import {Unsubscribe} from 'redux';
 import {STAFF} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
+import {SaveRoute} from '../../../../redux/actions/app.actions';
 
 store.addReducers({activityDetails});
 
@@ -125,10 +126,16 @@ export class NewActivityComponent extends LitElement {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
+  private isLoad: boolean = false;
 
   render(): TemplateResult {
     // language=HTML
     return html`
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
       <etools-loading
         ?active="${this.isStatusUpdating}"
         loading-text="${translate('ACTIVITY_ITEM.STATUS_CHANGE')}"
@@ -165,7 +172,8 @@ export class NewActivityComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-
+    store.dispatch(new SaveRoute(null));
+    this.isLoad = true;
     // On Activity data changes
     this.activityDetailsUnsubscribe = store.subscribe(
       activityDetailsData((data: IActivityDetails | null) => {
@@ -239,7 +247,10 @@ export class NewActivityComponent extends LitElement {
         `;
       case CHECKLIST_TAB:
         return html`
-          <activity-checklist-tab .activityId="${this.activityId}"></activity-checklist-tab>
+          <activity-checklist-tab
+            .activityId="${this.activityId}"
+            ?readonly="${!this.checkEditPermission(CHECKLIST_TAB)}"
+          ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
         return html`
@@ -253,7 +264,7 @@ export class NewActivityComponent extends LitElement {
         return html`
           <activity-summary-tab
             .activityId="${this.activityId}"
-            ?readonly="${!this.activityDetails!.permissions.edit.activity_overall_finding}"
+            ?readonly="${!this.checkEditPermission(SUMMARY_TAB)}"
           ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
@@ -270,10 +281,20 @@ export class NewActivityComponent extends LitElement {
   }
 
   getTabList(): PageTab[] {
-    return this.pageTabs.filter(({tab}: PageTab) => {
-      const property: string = TABS_PROPERTIES[tab];
-      return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
-    });
+    if (this.activityId === 'new') {
+      return [
+        {
+          tab: DETAILS_TAB,
+          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+          hidden: false
+        }
+      ];
+    } else {
+      return this.pageTabs.filter(({tab}: PageTab) => {
+        const property: string = TABS_PROPERTIES[tab];
+        return !property || this.checkActivityDetailsPermissions(this.activityDetails, property);
+      });
+    }
   }
 
   getStatuses(): IEtoolsStatusModel[] {
@@ -288,6 +309,10 @@ export class NewActivityComponent extends LitElement {
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
   }
 
+  private checkEditPermission(target: string): boolean {
+    return !!this.activityDetails?.permissions.edit[(TABS_PROPERTIES[target] || '') as keyof ActivityPermissionsObject];
+  }
+
   private checkTab(): void {
     const {params}: IRouteDetails = store.getState().app.routeDetails;
     const activeTab: string | null = params && (params.tab as string);
@@ -296,7 +321,7 @@ export class NewActivityComponent extends LitElement {
     const tabProperty: string = TABS_PROPERTIES[activeTab || ''];
     const canViewTab: boolean =
       isValidTab && (!tabProperty || this.checkActivityDetailsPermissions(this.activityDetails, tabProperty));
-
+    this.isLoad = false;
     if (canViewTab) {
       this.activeTab = `${activeTab}`;
     } else {

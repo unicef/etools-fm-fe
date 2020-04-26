@@ -1,13 +1,26 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {
+  CSSResultArray,
+  customElement,
+  html,
+  LitElement,
+  property,
+  PropertyValues,
+  query,
+  TemplateResult
+} from 'lit-element';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@polymer/paper-input/paper-textarea';
 import {get, translate} from 'lit-translate';
+import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
+import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
+import {CardStyles} from '../../../../styles/card-styles';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
+  @query('#details-input') textarea!: PaperTextareaElement;
   @property() protected dialogOpened: boolean = true;
   @property() protected popupTitle: string | Callback = '';
   @property() protected label: string | Callback = '';
@@ -22,7 +35,6 @@ export class ChecklistAttachments extends LitElement {
   render(): TemplateResult | void {
     return html`
       ${InputStyles} ${DialogStyles}
-
       <etools-dialog
         id="dialog"
         size="md"
@@ -38,7 +50,6 @@ export class ChecklistAttachments extends LitElement {
           <paper-textarea
             id="details-input"
             .value="${this.reason}"
-            max-rows="3"
             required
             label="${translate(this.label as string)}"
             placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
@@ -46,6 +57,7 @@ export class ChecklistAttachments extends LitElement {
             @focus="${() => (this.error = '')}"
             ?invalid="${Boolean(this.error)}"
             error-message="${this.error}"
+            max-rows="3"
           ></paper-textarea>
         </div>
       </etools-dialog>
@@ -64,7 +76,12 @@ export class ChecklistAttachments extends LitElement {
     fireEvent(this, 'response', {confirmed: true, response: {comment: this.reason}});
   }
 
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    setTextareasMaxHeight(this.textarea);
+  }
+
   static get styles(): CSSResultArray {
-    return [SharedStyles];
+    return [SharedStyles, CardStyles];
   }
 }

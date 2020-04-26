@@ -26,7 +26,9 @@ export class ChecklistSelectionTable extends LitElement {
   @property() isEditMode: boolean = false;
   @property() editedDetails: GenericObject = {opened: false};
   @property() loadingInProcess: boolean = false;
-  tableTitle: string = 'wer';
+  @property() activityDetails: IActivityDetails | null = null;
+  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  tableTitle: string = '';
   activityId!: number;
 
   @property() protected blockEdit: boolean = false;

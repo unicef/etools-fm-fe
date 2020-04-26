@@ -3,6 +3,7 @@ import {AppAction, AppActionTypes} from '../actions/app.actions';
 
 const INITIAL_STATE: IAppState = {
   routeDetails: {} as IRouteDetails,
+  previousRoute: null,
   drawerOpened: false
 };
 
@@ -23,6 +24,11 @@ const app: Reducer<IAppState, any> = (state: IAppState = INITIAL_STATE, action: 
       return {
         ...state,
         drawerOpened: action.opened
+      };
+    case AppActionTypes.SAVE_ROUTE:
+      return {
+        ...state,
+        previousRoute: action.previousRoute
       };
     default:
       return state;

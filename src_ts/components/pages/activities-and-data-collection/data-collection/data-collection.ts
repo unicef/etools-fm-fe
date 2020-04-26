@@ -21,7 +21,7 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
-import {COLLECT_TAB, DETAILS_TAB} from '../activity-item/activities-tabs';
+import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
@@ -34,6 +34,7 @@ import '@unicef-polymer/etools-form-builder';
 import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
+import {translate} from 'lit-translate';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -54,10 +55,16 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   private blueprintUnsubscribe!: Unsubscribe;
   private activityId: string | null = null;
   private checklistId: string | null = null;
+  private isLoad: boolean = true;
+  private readonly previousRoute: string | null = store.getState().app.previousRoute;
 
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <etools-loading
+        ?active="${this.isLoad}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
       <page-content-header>
         <div slot="page-title">
           <div class="method-name">${this.checklistFormJson?.blueprint.title}</div>
@@ -72,7 +79,10 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         <div slot="title-row-actions">
           <paper-button class="back-button">
-            <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}" class="layout horizontal">
+            <a
+              href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+              class="layout horizontal"
+            >
               ${arrowLeftIcon} <span>BACK</span>
             </a>
           </paper-button>
@@ -115,6 +125,8 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         if (data) {
           this.activityDetails = data;
           this.loadChecklist();
+        } else {
+          this.isLoad = false;
         }
       }, false)
     );
@@ -133,6 +145,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.blueprintUnsubscribe = store.subscribe(
       dataCollectionChecklistBlueprint((dataCollectionJson: ChecklistFormJson | null) => {
         this.checklistFormJson = dataCollectionJson;
+        this.isLoad = false;
       }, false)
     );
 
@@ -201,13 +214,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.activityId === null || this.checklistId === null || this.activityDetails === null) {
       return;
     }
-
-    if (!this.activityDetails.permissions.view.started_checklist_set) {
+    const key: keyof ActivityPermissionsObject = (TABS_PROPERTIES[COLLECT_TAB] ||
+      '') as keyof ActivityPermissionsObject;
+    if (!this.activityDetails.permissions.view[key]) {
       updateAppLocation('page-not-found');
       return;
     }
 
-    this.tabIsReadonly = !this.activityDetails.permissions.edit.started_checklist_set;
+    this.tabIsReadonly = !this.activityDetails.permissions.edit[key];
 
     const dataCollectionState: IDataCollectionState = store.getState().dataCollection;
     const loadedChecklistId: number | null =

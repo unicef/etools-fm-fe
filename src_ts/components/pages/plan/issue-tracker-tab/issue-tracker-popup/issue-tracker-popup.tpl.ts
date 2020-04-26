@@ -2,7 +2,6 @@ import {html, TemplateResult} from 'lit-html';
 import {IssueTrackerPopup} from './issue-tracker-popup';
 import {repeat} from 'lit-html/directives/repeat';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
-import '@unicef-polymer/etools-upload/etools-upload-multi';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-input/paper-input';

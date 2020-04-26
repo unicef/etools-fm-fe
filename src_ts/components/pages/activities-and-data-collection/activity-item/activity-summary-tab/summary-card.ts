@@ -9,12 +9,11 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
-import {store} from '../../../../../redux/store';
-import {SetEditedFindingsCard} from '../../../../../redux/actions/findings-components.actions';
+import {clone} from 'ramda';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
-  @property({type: String}) cardId: string = (Math.random() * 100000000).toFixed();
+  @property() activityId: number | null = null;
   @property({type: String}) tabName: string = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
@@ -30,6 +29,12 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   render(): TemplateResult | void {
     return template.call(this);
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.originalFindings = clone(this.findings);
+    this.originalOverallInfo = clone(this.overallInfo);
   }
 
   openAttachmentsPopup(): void {
@@ -77,6 +82,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                   finding.activity_question.question
                 )}"
                 .completedFindingMethod="${this.getMethodName(completedFinding.method, true)}"
+                .activityId="${this.activityId}"
               ></completed-finding>
             `
           )}
@@ -97,6 +103,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                     .completedFinding="${finding}"
                     .completedFindingTitle="${finding.narrative_finding}"
                     .completedFindingMethod="${this.getMethodName(finding.method, true)}"
+                    .activityId="${this.activityId}"
                   ></completed-finding>
                 `
               )}
@@ -223,6 +230,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       this.cancelEdit();
     } else {
       fireEvent(this, 'update-data', {findings, overall});
+      this.isEditMode = false;
     }
   }
 
@@ -230,11 +238,9 @@ export class SummaryCard extends MethodsMixin(LitElement) {
    * Reverts all changes to original data, resets original data fields, cancel edit using store.dispatch
    */
   protected cancelEdit(): void {
-    this.findings = this.originalFindings;
-    this.overallInfo = this.originalOverallInfo;
-    this.originalOverallInfo = null;
-    this.originalFindings = [];
-    store.dispatch(new SetEditedFindingsCard(null));
+    this.findings = clone(this.originalFindings);
+    this.overallInfo = clone(this.originalOverallInfo);
+    this.isEditMode = false;
   }
 
   /**

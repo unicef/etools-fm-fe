@@ -14,6 +14,7 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@unicef-polymer/etools-form-builder';
 
 import {AppShellStyles} from './app-shell-styles';
 import {RouterStyles} from './router-style';
@@ -44,6 +45,7 @@ import {globalLoadingSelector} from '../../redux/selectors/global-loading.select
 import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
+import {checkEnvFlags} from '../utils/check-flags';
 
 registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -140,7 +142,7 @@ export class AppShell extends connect(store)(LitElement) {
     );
     installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
 
-    store.dispatch<AsyncEffect>(getCurrentUserData());
+    checkEnvFlags().then(() => store.dispatch<AsyncEffect>(getCurrentUserData()));
     store.subscribe(
       globalLoadingSelector((globalLoadingMessage: string | null) => {
         this.globalLoadingMessage = globalLoadingMessage;

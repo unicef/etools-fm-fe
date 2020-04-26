@@ -94,6 +94,12 @@ export class PageHeader extends connect(store)(LitElement) {
         }
       })
     );
+    // TODO remove test code.
+    // @ts-ignore
+    window.enableExampleLanguage = () => {
+      this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
+      this.performUpdate();
+    };
   }
 
   static get styles(): CSSResultArray {
@@ -102,12 +108,8 @@ export class PageHeader extends connect(store)(LitElement) {
       css`
         .dropdowns {
           display: flex;
-          width: 160px;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-        .dropdowns__item {
-          flex-basis: 50%;
+          margin-right: 5px;
+          max-width: 200px;
         }
         .header {
           flex-wrap: wrap;
@@ -173,7 +175,6 @@ export class PageHeader extends connect(store)(LitElement) {
         <div class="header__item header__right-group">
           <div class="dropdowns">
             <etools-dropdown
-              class="dropdowns__item"
               .selected="${this.selectedLanguage}"
               .options="${this.languages}"
               option-label="display_name"
@@ -188,7 +189,7 @@ export class PageHeader extends connect(store)(LitElement) {
               .autoWidth="${true}"
             ></etools-dropdown>
 
-            <countries-dropdown class="dropdowns__item"></countries-dropdown>
+            <countries-dropdown></countries-dropdown>
           </div>
 
           <support-btn></support-btn>

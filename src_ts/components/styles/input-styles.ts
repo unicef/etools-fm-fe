@@ -35,6 +35,7 @@ export const InputStyles: TemplateResult = html`
       box-sizing: border-box;
 
       --paper-input-container-input: {
+        display: block !important;
         font-size: 15px;
         box-sizing: border-box;
         white-space: nowrap;
@@ -152,7 +153,7 @@ export const InputStyles: TemplateResult = html`
       }
       --paper-input-container-underline: {
         border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
-        border-color: rgba(0, 0, 0, 0.2) !important;
+        display: block !important;
       }
       --paper-input-container-underline-focus: {
         display: none;

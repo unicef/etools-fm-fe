@@ -36,6 +36,7 @@ export const etoolsFiltersStyles: CSSResult = css`
     flex-basis: 0.000000001px;
 
     margin-right: auto;
+    margin-bottom: var(--etools-filters-margin-bottom);
   }
 
   #filters .filter {
