@@ -42,7 +42,7 @@
     "@types/leaflet": "^1.5.1",
     "@types/ramda": "^0.26.43",
     "@unicef-polymer/etools-ajax": "^4.0.0",
-    "@unicef-polymer/etools-app-selector": "^3.1.1",
+    "@unicef-polymer/etools-app-selector": "^3.1.5",
     "@unicef-polymer/etools-content-panel": "^3.0.5",
     "@unicef-polymer/etools-data-table": "^3.0.0-rc.1",
     "@unicef-polymer/etools-date-time": "^1.0.0-rc.3",
