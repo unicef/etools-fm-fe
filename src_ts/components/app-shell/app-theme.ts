@@ -19,7 +19,7 @@ documentContainer.innerHTML = `
         --gray-light-background: #E7E7E7;
 
         --header-color: #ffffff;
-        --header-bg-color: var(--primary-color);
+        --header-bg-color: var(--dark-theme-background-color);
         --nonprod-header-color: #233944;
         --nonprod-text-warn-color: #e6e600;
 
