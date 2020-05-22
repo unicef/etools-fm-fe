@@ -167,7 +167,7 @@ export class PageHeader extends connect(store)(LitElement) {
             icon="menu"
             @tap="${() => this.menuBtnClicked()}"
           ></paper-icon-button>
-          <etools-app-selector id="selector"></etools-app-selector>
+          <etools-app-selector id="selector" .user="${this.profile}"></etools-app-selector>
           <img
             id="app-logo"
             class="logo"
