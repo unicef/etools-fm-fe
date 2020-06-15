@@ -32,8 +32,7 @@ export const TPM: 'tpm' = 'tpm';
 
 export const ANSWER_TYPES: AnswerTypeOption[] = [
   {value: TEXT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.TEXT`},
-  {value: NUMBER_INTEGER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER_INTEGER_TYPE`},
-  {value: NUMBER_FLOAT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER_FLOAT_TYPE`},
+  {value: NUMBER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER`},
   {value: BOOL_TYPE, display_name: `ANSWER_TYPE_OPTIONS.BOOL`},
   {value: SCALE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.LIKERT_SCALE`}
 ];
