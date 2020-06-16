@@ -10,6 +10,8 @@ import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
+import '@polymer/paper-radio-group/paper-radio-group';
+import '@polymer/paper-radio-button/paper-radio-button';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -23,6 +25,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
   @property() protected updateInProcess: boolean = false;
+
+  @property() protected onTrackValue: boolean | null = false;
+  @property() protected offTrackValue: boolean | null = false;
+  @property() protected noneTrackValue: boolean | null = false;
+  @property() protected selectedRadio: string = 'none';
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -134,15 +141,20 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   protected getAdditionalButtons(): TemplateResult {
     return html`
-      <div class="ontrack-container layout horizontal">
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        <paper-toggle-button
-          ?readonly="${this.readonly}"
-          ?checked="${this.overallInfo?.on_track || false}"
-          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
-        ></paper-toggle-button>
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
-      </div>
+      <paper-radio-group
+        selected="${this.selectedRadio}"
+        @iron-select="${({detail}: CustomEvent) => this.toggleChange(detail.item.name)}"
+      >
+        <paper-radio-button name="none" ?disabled="${this.readonly}">
+          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING')}
+        </paper-radio-button>
+        <paper-radio-button name="off-track" ?disabled="${this.readonly}">
+          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
+        </paper-radio-button>
+        <paper-radio-button name="on-track" ?disabled="${this.readonly}">
+          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
+        </paper-radio-button>
+      </paper-radio-group>
       ${this.getAttachmentsButton()}
     `;
   }
@@ -281,14 +293,28 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     return changes.length ? changes : null;
   }
 
-  private toggleChange(onTrackState: boolean): void {
+  private toggleChange(onTrackState: string): void {
     if (!this.overallInfo) {
       return;
     }
-    if (Boolean(this.overallInfo.on_track) !== onTrackState) {
+
+    if (onTrackState !== 'none') {
+      if (onTrackState === 'on-track') {
+        this.onTrackValue = true;
+        this.selectedRadio = 'on-track';
+      }
+      if (onTrackState === 'off-track') {
+        this.onTrackValue = false;
+        this.selectedRadio = 'off-track';
+      }
+    } else {
+      this.onTrackValue = null;
+      this.selectedRadio = 'none';
+    }
+    if (this.overallInfo.on_track != this.onTrackValue) {
       const overall: Partial<SummaryOverall> = {
         id: this.overallInfo.id,
-        on_track: onTrackState
+        on_track: this.onTrackValue
       };
       fireEvent(this, 'update-data', {overall});
     }
