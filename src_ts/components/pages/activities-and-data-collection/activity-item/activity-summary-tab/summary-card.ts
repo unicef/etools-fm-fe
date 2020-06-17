@@ -26,10 +26,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected blockEdit: boolean = false;
   @property() protected updateInProcess: boolean = false;
 
-  @property() protected onTrackValue: boolean | null = false;
-  @property() protected offTrackValue: boolean | null = false;
-  @property() protected noneTrackValue: boolean | null = false;
-  @property() protected selectedRadio: string = 'none';
+  @property() protected onTrackValue: boolean | null = null;
+  @property() protected trackStatusText: string = '';
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -140,23 +138,36 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   }
 
   protected getAdditionalButtons(): TemplateResult {
-    return html`
-      <paper-radio-group
-        selected="${this.selectedRadio}"
-        @iron-select="${({detail}: CustomEvent) => this.toggleChange(detail.item.name)}"
-      >
-        <paper-radio-button name="none" ?disabled="${this.readonly}">
-          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING')}
-        </paper-radio-button>
-        <paper-radio-button name="off-track" ?disabled="${this.readonly}">
-          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        </paper-radio-button>
-        <paper-radio-button name="on-track" ?disabled="${this.readonly}">
-          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
-        </paper-radio-button>
-      </paper-radio-group>
-      ${this.getAttachmentsButton()}
+    const buttons: TemplateResult = html`
+      <div class="ontrack-container layout horizontal">
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
+        <paper-toggle-button
+          ?readonly="${this.readonly}"
+          ?checked="${this.overallInfo?.on_track || false}"
+          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
+        ></paper-toggle-button>
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
+      </div>
     `;
+    if (this.overallInfo?.on_track == null) {
+      this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
+    } else {
+      if (this.overallInfo?.on_track) {
+        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
+      } else {
+        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
+      }
+    }
+
+    if (this.isEditMode) {
+      return html`
+        ${buttons} ${this.getAttachmentsButton()}
+      `;
+    } else {
+      return html`
+        ${translate(this.trackStatusText)} ${this.getAttachmentsButton()}
+      `;
+    }
   }
 
   /**
@@ -238,6 +249,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected saveChanges(): void {
     const overall: Partial<DataCollectionOverall> | null = this.getOverallInfoChanges();
     const findings: Partial<SummaryFinding>[] | null = this.getFindingsChanges();
+    this.updateTrackStatus();
     if (!overall && !findings) {
       this.cancelEdit();
     } else {
@@ -290,34 +302,16 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const changes: Partial<SummaryFinding>[] = this.findings
       .filter((finding: SummaryFinding, index: number) => finding.value !== this.originalFindings[index].value)
       .map(({id, value}: SummaryFinding) => ({id, value}));
+
     return changes.length ? changes : null;
   }
 
-  private toggleChange(onTrackState: string): void {
+  private toggleChange(onTrackState: boolean): void {
     if (!this.overallInfo) {
       return;
     }
-
-    if (onTrackState !== 'none') {
-      if (onTrackState === 'on-track') {
-        this.onTrackValue = true;
-        this.selectedRadio = 'on-track';
-      }
-      if (onTrackState === 'off-track') {
-        this.onTrackValue = false;
-        this.selectedRadio = 'off-track';
-      }
-    } else {
-      this.onTrackValue = null;
-      this.selectedRadio = 'none';
-    }
-    if (this.overallInfo.on_track != this.onTrackValue) {
-      const overall: Partial<SummaryOverall> = {
-        id: this.overallInfo.id,
-        on_track: this.onTrackValue
-      };
-      fireEvent(this, 'update-data', {overall});
-    }
+    console.log('onchange', this.overallInfo);
+    this.onTrackValue = onTrackState;
   }
 
   private getFindingAnswer(value: string, question: IChecklistQuestion): string {
@@ -329,6 +323,21 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       );
       return (option && option.label) || '';
     }
+  }
+
+  /**
+   * Update the track status for overall findings
+   */
+  private updateTrackStatus(): Partial<SummaryOverall> | null {
+    if (this.overallInfo) {
+      const overall: Partial<SummaryOverall> = {
+        id: this.overallInfo.id,
+        on_track: this.onTrackValue
+      };
+      fireEvent(this, 'update-data', {overall});
+      return overall;
+    }
+    return null;
   }
 
   static get styles(): CSSResultArray {
