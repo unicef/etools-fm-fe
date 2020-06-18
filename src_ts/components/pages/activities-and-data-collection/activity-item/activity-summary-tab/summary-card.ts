@@ -28,6 +28,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   @property() protected onTrackValue: boolean | null = null;
   @property() protected trackStatusText: string = '';
+  @property() protected trackStatusColor: string = '';
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -151,12 +152,16 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     `;
     if (this.overallInfo?.on_track == null) {
       this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
+      this.trackStatusColor = 'red';
     } else {
       if (this.overallInfo?.on_track) {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
+        this.trackStatusColor = 'blue';
       } else {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
+        this.trackStatusColor = 'orange';
       }
+      this.trackStatusColor = 'orange';
     }
 
     if (this.isEditMode) {
@@ -165,7 +170,12 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       `;
     } else {
       return html`
-        ${translate(this.trackStatusText)} ${this.getAttachmentsButton()}
+        <paper-radio-group>
+          <paper-radio-button name="mata" checked class="epc-header-radio-button orange">
+            test
+          </paper-radio-button>
+        </paper-radio-group>
+        ${this.getAttachmentsButton()}
       `;
     }
   }

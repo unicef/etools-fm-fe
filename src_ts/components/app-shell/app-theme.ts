@@ -133,6 +133,25 @@ documentContainer.innerHTML = `
         --paper-input-container-underline: {
           border-color: rgba(0, 0, 0, 0.2) !important;
         }
+
+        .epc-header-radio-button {
+          min-width: 120px;
+        }
+
+        paper-radio-button.red {
+          --paper-radio-button-checked-color: var(--primary-shade-of-red);
+          --paper-radio-button-unchecked-color: var(--primary-shade-of-red);
+          border: solid 1px var(--primary-shade-of-red);
+        }
+        paper-radio-button.orange {
+          --paper-radio-button-checked-color: var(--primary-shade-of-orange);
+          --paper-radio-button-unchecked-color: var(--primary-shade-of-orange);
+          border: solid 1px var(--primary-shade-of-orange);
+        }
+        paper-radio-button.green {
+          --paper-radio-button-checked-color: var(--primary-shade-of-green);
+          --paper-radio-button-unchecked-color: var(--primary-shade-of-green);
+        }
       }
     </style>
   </custom-style>`;
