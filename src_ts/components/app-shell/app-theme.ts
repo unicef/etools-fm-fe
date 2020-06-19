@@ -38,6 +38,7 @@ documentContainer.innerHTML = `
 
         --primary-shade-of-green: #1A9251;
         --primary-shade-of-red: #E32526;
+        --primary-shade-of-orange: orange;
         --reject-color: #88304E;
         --note-color: #FF9044;
 
@@ -134,6 +135,7 @@ documentContainer.innerHTML = `
           border-color: rgba(0, 0, 0, 0.2) !important;
         }
       }
+
     </style>
   </custom-style>`;
 
