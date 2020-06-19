@@ -337,9 +337,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     return null;
   }
 
-  /**
-   * Update the track status for overall findings
-   */
   private findingsStatusButton(): TemplateResult {
     return html`
       <div class="ontrack-container layout horizontal">
