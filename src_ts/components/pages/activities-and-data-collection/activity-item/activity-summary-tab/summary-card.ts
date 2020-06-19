@@ -12,6 +12,7 @@ import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/
 import {clone} from 'ramda';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
+import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -29,6 +30,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected onTrackValue: boolean | null = null;
   @property() protected trackStatusText: string = '';
   @property() protected trackStatusColor: string = '';
+  @property() protected orginalTrackStatus: boolean | null = null;
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -152,16 +154,15 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     `;
     if (this.overallInfo?.on_track == null) {
       this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
-      this.trackStatusColor = 'red';
+      this.trackStatusColor = 'noTrack';
     } else {
       if (this.overallInfo?.on_track) {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
-        this.trackStatusColor = 'blue';
+        this.trackStatusColor = '';
       } else {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
-        this.trackStatusColor = 'orange';
+        this.trackStatusColor = 'offTrack';
       }
-      this.trackStatusColor = 'orange';
     }
 
     if (this.isEditMode) {
@@ -171,8 +172,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     } else {
       return html`
         <paper-radio-group>
-          <paper-radio-button name="mata" checked class="epc-header-radio-button orange">
-            test
+          <paper-radio-button name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
+            ${translate(this.trackStatusText)}
           </paper-radio-button>
         </paper-radio-group>
         ${this.getAttachmentsButton()}
@@ -320,7 +321,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (!this.overallInfo) {
       return;
     }
-    console.log('onchange', this.overallInfo);
     this.onTrackValue = onTrackState;
   }
 
@@ -345,7 +345,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         on_track: this.onTrackValue
       };
       fireEvent(this, 'update-data', {overall});
-      return overall;
     }
     return null;
   }
@@ -355,6 +354,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     return [
       FormBuilderCardStyles,
       FlexLayoutClasses,
+      RadioButtonStyles,
       css`
         .completed-finding {
           flex-basis: 50%;
