@@ -141,35 +141,23 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   }
 
   protected getAdditionalButtons(): TemplateResult {
-    const buttons: TemplateResult = html`
-      <div class="ontrack-container layout horizontal">
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        <paper-toggle-button
-          ?readonly="${this.readonly}"
-          ?checked="${this.overallInfo?.on_track || false}"
-          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
-        ></paper-toggle-button>
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
-      </div>
-    `;
-    if (this.overallInfo?.on_track == null) {
-      this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
-      this.trackStatusColor = 'noTrack';
-    } else {
-      if (this.overallInfo?.on_track) {
-        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
-        this.trackStatusColor = '';
-      } else {
-        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
-        this.trackStatusColor = 'offTrack';
-      }
-    }
-
     if (this.isEditMode) {
       return html`
-        ${buttons} ${this.getAttachmentsButton()}
+        ${this.findingsStatusButton()} ${this.getAttachmentsButton()}
       `;
     } else {
+      if (this.overallInfo?.on_track == null) {
+        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
+        this.trackStatusColor = 'noFinding';
+      } else {
+        if (this.overallInfo?.on_track) {
+          this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
+          this.trackStatusColor = '';
+        } else {
+          this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
+          this.trackStatusColor = 'offTrack';
+        }
+      }
       return html`
         <paper-radio-group>
           <paper-radio-button name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
@@ -347,6 +335,23 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       fireEvent(this, 'update-data', {overall});
     }
     return null;
+  }
+
+  /**
+   * Update the track status for overall findings
+   */
+  private findingsStatusButton(): TemplateResult {
+    return html`
+      <div class="ontrack-container layout horizontal">
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
+        <paper-toggle-button
+          ?readonly="${this.readonly}"
+          ?checked="${this.overallInfo?.on_track || false}"
+          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
+        ></paper-toggle-button>
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
+      </div>
+    `;
   }
 
   static get styles(): CSSResultArray {

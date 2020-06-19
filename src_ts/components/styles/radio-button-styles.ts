@@ -5,7 +5,7 @@ export const RadioButtonStyles: CSSResult = css`
   .epc-header-radio-button {
     min-width: 120px;
   }
-  paper-radio-button.noTrack {
+  paper-radio-button.noFinding {
     --paper-radio-button-checked-color: var(--primary-shade-of-orange);
     --paper-radio-button-unchecked-color: var(--primary-shade-of-orange);
   }
