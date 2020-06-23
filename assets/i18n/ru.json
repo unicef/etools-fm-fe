@@ -42,7 +42,7 @@
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
-        "NO_FINDING": "No Finding"
+        "NOT_MONITORED": "Not Monitored"
       }
     }
   },
