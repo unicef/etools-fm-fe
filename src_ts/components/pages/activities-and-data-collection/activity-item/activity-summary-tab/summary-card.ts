@@ -248,12 +248,16 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected saveChanges(): void {
     const overall: Partial<DataCollectionOverall> | null = this.getOverallInfoChanges();
     const findings: Partial<SummaryFinding>[] | null = this.getFindingsChanges();
+
     this.updateTrackStatus();
     if (!overall && !findings) {
       this.cancelEdit();
     } else {
       fireEvent(this, 'update-data', {findings, overall});
       this.isEditMode = false;
+      if (this.originalOverallInfo && overall) {
+        this.originalOverallInfo.narrative_finding = overall.narrative_finding;
+      }
     }
   }
 
