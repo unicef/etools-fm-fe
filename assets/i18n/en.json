@@ -29,7 +29,7 @@
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
-    "ISSUE_TRACKER": "Specific issues for Probing/Attention",
+    "ISSUE_TRACKER": "Points of note",
     "PD_SSFA_DETAILS": {
       "TITLE": "PD/SSFA Details",
       "REFERENCE_NUMBER": "Reference Number",
@@ -42,7 +42,7 @@
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
-        "NO_FINDING": "No Finding"
+        "NOT_MONITORED": "Not Monitored"
       }
     }
   },
@@ -210,7 +210,7 @@
     "SITE": "Site",
     "LOCATION_SITE": "Location & Site",
     "IS_NEW": "Show only New",
-    "RELATED_TO_TYPE": "Issue Related To",
+    "RELATED_TO_TYPE": "Points of Note Related To",
     "RELATED_TYPE": {
       "CP_OUTPUT": "CP Output",
       "PARTNER": "Partner",
@@ -227,22 +227,22 @@
       "LOCATION": "Select Location",
       "SITE": "Select Site",
       "STATUS": "Select Status",
-      "ISSUE": "Enter Issue For Attention/Probing"
+      "ISSUE": "Enter Points of Note"
     },
-    "POPUP_TITLE": "Log Issue",
+    "POPUP_TITLE": "Add Points of Note",
     "POPUP_ERROR_CP_OUTPUT": "CP Output is not provided",
     "POPUP_ERROR_PARTNER": "Partner is not provided",
     "POPUP_ERROR_LOCATION": "Location is not provided",
     "RELATED_TO": "Related To",
     "NAME": "Name",
-    "ISSUE": "Issue For Attention/Probing",
+    "ISSUE": "Points of Note",
     "ATTACHMENTS": "Attachment(s)",
     "ATTACHMENT": "Attachment",
     "UPLOAD_LABEL": "Attach file",
-    "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Issues to show",
+    "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Notes to show",
     "LAST_MODIFIED_BY": "Last Modified By",
-    "AUTHOR": "Issue Raised By",
-    "CLOSED_BY": "Issue Closed By",
+    "AUTHOR": "Points of Note Raised By",
+    "CLOSED_BY": "Notes Closed By",
     "ATTACHMENTS_FILES": {
       "SINGLE": "FILE",
       "MULTIPLE": "FILES"
@@ -480,7 +480,7 @@
     "TITLE": "Plan",
     "NAVIGATION_TABS": {
       "RATIONALE": "Rationale",
-      "ISSUE_TRACKER": "Issue Tracker",
+      "ISSUE_TRACKER": "Points of Note",
       "TEMPLATE": "Templates"
     }
   },
@@ -530,8 +530,8 @@
           "LABEL": "Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
         },
         "OPEN_ISSUES": {
-          "TITLE": "Open Issues and Action Points",
-          "ISSUES": "Issues",
+          "TITLE": "Open Notes and Action Points",
+          "ISSUES": "Points of Note",
           "ACTION_POINTS": "Action Points"
         },
         "SHARED_TAB": {

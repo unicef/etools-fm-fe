@@ -147,8 +147,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       `;
     } else {
       if (this.overallInfo?.on_track == null) {
-        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NO_FINDING';
-        this.trackStatusColor = 'noFinding';
+        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NOT_MONITORED';
+        this.trackStatusColor = 'notMonitored';
       } else {
         if (this.overallInfo?.on_track) {
           this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
