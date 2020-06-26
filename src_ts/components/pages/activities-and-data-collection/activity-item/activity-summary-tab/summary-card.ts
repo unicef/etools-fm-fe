@@ -254,10 +254,17 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       this.cancelEdit();
     } else {
       fireEvent(this, 'update-data', {findings, overall});
-      this.isEditMode = false;
-      if (this.originalOverallInfo && overall) {
+      if (this.originalOverallInfo?.narrative_finding && overall && overall.narrative_finding) {
         this.originalOverallInfo.narrative_finding = overall.narrative_finding;
       }
+      this.originalFindings.forEach((item: Partial<SummaryFinding>) =>
+        findings?.find((finding: Partial<SummaryFinding>) => {
+          if (item.id == finding.id) {
+            item.value = finding.value;
+          }
+        })
+      );
+      this.isEditMode = false;
     }
   }
 
