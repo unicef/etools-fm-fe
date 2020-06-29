@@ -47,7 +47,7 @@
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "NO_QUESTIONS_FOUND": "No applicable questions found for this question. Please add them in settings or planing or select another sections in activity details",
+    "NO_QUESTIONS_FOUND": "No applicable questions found for this section. Please add them in settings or planning or select another section in activity details",
     "DETAIL_INPUT_PLACEHOLDER": "Enter Specific Details to Probe",
     "ADD_DETAIL": "Add Detail",
     "COLUMNS": {
