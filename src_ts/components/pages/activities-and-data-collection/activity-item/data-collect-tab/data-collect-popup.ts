@@ -30,7 +30,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
           : translate('ACTIVITY_COLLECT.EDIT_CHECKLIST')}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.createChecklist()}"
-        @close="${() => this.onClose}"
+        @close="${() => this.onClose()}"
       >
         <div class="container layout vertical">
           <paper-textarea
