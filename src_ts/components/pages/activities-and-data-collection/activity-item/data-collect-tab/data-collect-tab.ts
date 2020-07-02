@@ -259,6 +259,9 @@ export class DataCollectTab extends LitElement {
     return openDialog<DataCollectionChecklist>({
       dialog: 'data-collect-popup'
     }).then(({response, confirmed}: IDialogResponse<Partial<DataCollectionChecklist>>) => {
+      if (!confirmed) {
+        return false;
+      }
       if (confirmed && response) {
         return store.dispatch<AsyncEffect>(
           createCollectionChecklist(this.activityId, {

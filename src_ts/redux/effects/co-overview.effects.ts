@@ -11,7 +11,7 @@ export function loadFullReport(id: number): (dispatch: Dispatch) => Promise<void
     const {url}: IResultEndpoint = getEndpoint(FULL_REPORT, {id});
     return request<FullReportData>(url, {method: 'GET'})
       .then((response: FullReportData) => {
-        dispatch(new FullReportDataSuccess({id, ...response}));
+        dispatch(new FullReportDataSuccess({...response, id}));
       })
       .catch((error: GenericObject) => {
         store.dispatch(new FullReportDataFailure(error));
