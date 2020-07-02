@@ -10,7 +10,6 @@ import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 
 const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDetails) => (dispatch: Dispatch) => {
-  console.log('loadPageComponents', routeDetails);
   if (!routeDetails) {
     // invalid route => redirect to 404 page
     updateAppLocation(ROUTE_404, true);

@@ -36,7 +36,6 @@ export class Router {
   getRouteDetails(path?: string): IRouteDetails | null {
     let routeDetails: IRouteDetails | null = null;
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
-    console.log('Router.getRouteDetails.locationPath: ', locationPath);
 
     const qsStartIndex: number = locationPath.indexOf('?');
     let qs: string = '';
