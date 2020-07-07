@@ -40,12 +40,12 @@ export class ActivitySummaryTab extends LitElement {
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
       ${repeat(
-        Object.values(this.findingsAndOverall).filter(({findings}: SortedFindingsAndOverall) =>
-          Boolean(findings.length)
-        ),
-        item => Date.now(),
-        ({name, findings, overall}: SortedFindingsAndOverall) => {
-          return html`
+      Object.values(this.findingsAndOverall).filter(({findings}: SortedFindingsAndOverall) =>
+        Boolean(findings.length)
+      ),
+      (_item: any) => Date.now(),
+      ({name, findings, overall}: SortedFindingsAndOverall) => {
+        return html`
             <div class="findings-block">
               <summary-card
                 .activityId="${this.activityId}"
@@ -57,8 +57,8 @@ export class ActivitySummaryTab extends LitElement {
               ></summary-card>
             </div>
           `;
-        }
-      )}
+      }
+    )}
     `;
   }
 
