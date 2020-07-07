@@ -74,7 +74,7 @@ export function template(this: ActionPointsTab): TemplateResult {
           <etools-data-table-row secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-1">
-                <a class="link-cell link-content">
+                <a class="link-cell link-content" href="/apd/action-points/detail/${item.id}/" target="_blank">
                   <label class="link-text">${item.reference_number}</label>
                   <paper-icon-button icon="icons:launch"></paper-icon-button>
                 </a>

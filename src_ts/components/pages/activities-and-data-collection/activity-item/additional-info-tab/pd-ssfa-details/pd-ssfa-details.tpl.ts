@@ -46,7 +46,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
           <etools-data-table-row no-collapse secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-1">
-                <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/" target="_blank">
+                <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/details" target="_blank">
                   <paper-icon-button icon="icons:launch"></paper-icon-button>
                   <label class="link-text">${intervention.number}</label>
                 </a>
@@ -56,7 +56,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
               <div class="col-data flex-1">
                 <a
                   class="link-cell link-content"
-                  href="/pmp/interventions/${intervention.id}/progress/"
+                  href="/pmp/interventions/${intervention.id}/progress"
                   target="_blank"
                 >
                   <paper-icon-button icon="icons:launch"></paper-icon-button>

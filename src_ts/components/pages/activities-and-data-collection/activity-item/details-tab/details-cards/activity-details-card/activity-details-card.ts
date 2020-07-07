@@ -98,7 +98,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
     const startDate: string = this.editedData.start_date || '';
     const endDate: string = this.editedData.end_date || '';
     if (startDate && endDate) {
-      return moment(startDate).isBefore(endDate);
+      return moment(startDate).isSameOrBefore(endDate);
     } else {
       return !endDate || !startDate;
     }
