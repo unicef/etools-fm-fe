@@ -254,6 +254,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       this.cancelEdit();
     } else {
       fireEvent(this, 'update-data', {findings, overall});
+      this.orginalTrackStatus = this.onTrackValue;
       if (this.originalOverallInfo?.narrative_finding && overall && overall.narrative_finding) {
         this.originalOverallInfo.narrative_finding = overall.narrative_finding;
       }
@@ -339,6 +340,9 @@ export class SummaryCard extends MethodsMixin(LitElement) {
    */
   private updateTrackStatus(): Partial<SummaryOverall> | null {
     if (this.overallInfo) {
+      if (this.originalOverallInfo) {
+        this.originalOverallInfo.on_track = this.onTrackValue;
+      }
       const overall: Partial<SummaryOverall> = {
         id: this.overallInfo.id,
         on_track: this.onTrackValue
