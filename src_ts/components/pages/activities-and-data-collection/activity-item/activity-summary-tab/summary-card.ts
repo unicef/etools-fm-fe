@@ -21,16 +21,14 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  attachmentsEndpoint?: string;
-
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
   @property() protected updateInProcess: boolean = false;
-
   @property() protected onTrackValue: boolean | null = null;
   @property() protected trackStatusText: string = '';
   @property() protected trackStatusColor: string = '';
   @property() protected orginalTrackStatus: boolean | null = null;
+  attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
