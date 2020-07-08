@@ -21,16 +21,14 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  attachmentsEndpoint?: string;
-
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
   @property() protected updateInProcess: boolean = false;
-
   @property() protected onTrackValue: boolean | null = null;
   @property() protected trackStatusText: string = '';
   @property() protected trackStatusColor: string = '';
   @property() protected orginalTrackStatus: boolean | null = null;
+  attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -249,21 +247,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const overall: Partial<DataCollectionOverall> | null = this.getOverallInfoChanges();
     const findings: Partial<SummaryFinding>[] | null = this.getFindingsChanges();
 
-    this.updateTrackStatus();
     if (!overall && !findings) {
       this.cancelEdit();
     } else {
       fireEvent(this, 'update-data', {findings, overall});
-      if (this.originalOverallInfo?.narrative_finding && overall && overall.narrative_finding) {
-        this.originalOverallInfo.narrative_finding = overall.narrative_finding;
-      }
-      this.originalFindings.forEach((item: Partial<SummaryFinding>) =>
-        findings?.find((finding: Partial<SummaryFinding>) => {
-          if (item.id == finding.id) {
-            item.value = finding.value;
-          }
-        })
-      );
       this.isEditMode = false;
     }
   }
@@ -293,16 +280,18 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (!this.originalOverallInfo || !this.overallInfo) {
       return null;
     }
-    const finding: string | null =
-      this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding
-        ? this.overallInfo.narrative_finding
-        : null;
-    return finding
-      ? {
-          id: this.overallInfo.id,
-          narrative_finding: finding
-        }
-      : null;
+    const changes: GenericObject = {};
+    if (this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding) {
+      changes.narrative_finding = this.overallInfo.narrative_finding;
+    }
+    if (this.onTrackValue !== this.originalOverallInfo.on_track) {
+      changes.on_track = this.onTrackValue;
+    }
+    if (Object.keys(changes).length) {
+      changes.id = this.overallInfo.id;
+      return changes;
+    }
+    return null;
   }
 
   /**
@@ -332,20 +321,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       );
       return (option && option.label) || '';
     }
-  }
-
-  /**
-   * Update the track status for overall findings
-   */
-  private updateTrackStatus(): Partial<SummaryOverall> | null {
-    if (this.overallInfo) {
-      const overall: Partial<SummaryOverall> = {
-        id: this.overallInfo.id,
-        on_track: this.onTrackValue
-      };
-      fireEvent(this, 'update-data', {overall});
-    }
-    return null;
   }
 
   private findingsStatusButton(): TemplateResult {
