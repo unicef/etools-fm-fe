@@ -26,6 +26,7 @@ import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer'
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
 import {equals} from 'ramda';
+import clone from 'ramda/es/clone';
 import {debounce} from '../../utils/debouncer';
 
 store.addReducers({widgetLocations, specificLocations});
@@ -84,25 +85,25 @@ export class LocationWidgetComponent extends LitElement {
         padding: 5px;
         margin-bottom: 2px;
       }
-      
+
       .site-line:last-child,
       .location-line:last-child {
         margin-bottom: 0;
       }
-      
+
       .site-line:hover,
       .location-line:hover {
         background-color: var(--gray-06);
         cursor: pointer;
       }
-      
+
       .site-line .gateway-name,
       .location-line .gateway-name {
         flex: none;
         width: 100px;
         color: var(--gray-light);
       }
-      
+
       .site-line .location-name,
       .location-line .location-name {
         flex: auto;
@@ -111,7 +112,7 @@ export class LocationWidgetComponent extends LitElement {
         text-overflow: ellipsis;
         margin-right: 5px;
       }
-      
+
       .site-line .deselect-btn,
       .location-line .deselect-btn {
         flex: none;
@@ -119,22 +120,22 @@ export class LocationWidgetComponent extends LitElement {
         text-align: center;
         color: #dd0000;
       }
-      
+
       .site-line .deselect-btn span,
       .location-line .deselect-btn span {
         display: none;
       }
-      
+
       .site-line.selected,
       .location-line.selected .deselect-btn {
         background-color: #f3e5bf;
       }
-      
+
       .site-line.selected .deselect-btn span,
       .location-line.selected .deselect-btn span {
         display: inline;
       }
-      
+
       .locations-list div:not(.missing-sites) ~ .no-search-results,
       .locations-list div.missing-sites:not([hidden]) + .no-search-results {
         display: none;
@@ -474,9 +475,8 @@ export class LocationWidgetComponent extends LitElement {
 
     if (!polygonIsEmpty || pointCoordinates) {
       const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
-      const reversedCoordinates: CoordinatesArray[] = coordinates.map(
-        (coordinate: CoordinatesArray) => [...coordinate].reverse() as CoordinatesArray
-      );
+      const reversedCoordinates: any[] = this.reverseNestedArray(clone(coordinates));
+
       const options: FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
       this.MapHelper.map!.flyToBounds(reversedCoordinates, options);
 
@@ -485,6 +485,17 @@ export class LocationWidgetComponent extends LitElement {
         this.polygon.addTo(this.MapHelper.map!);
       }
     }
+  }
+
+  private reverseNestedArray(arr: any[]): any[] {
+    if (arr[0] && !Array.isArray(arr[0][0])) {
+      return arr.map((point: []) => {
+        return point.reverse();
+      })
+    } else {
+      arr.map((subArr: []) => this.reverseNestedArray(subArr))
+    }
+    return arr;
   }
 
   private clearMap(): void {
