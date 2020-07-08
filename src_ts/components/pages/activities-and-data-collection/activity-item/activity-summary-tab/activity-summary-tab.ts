@@ -16,6 +16,7 @@ import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {SUMMARY_TAB} from '../activities-tabs';
+import {repeat} from 'lit-html/directives/repeat';
 
 store.addReducers({activitySummary, findingsComponents});
 
@@ -38,10 +39,13 @@ export class ActivitySummaryTab extends LitElement {
         ?active="${this.isLoad}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      ${Object.values(this.findingsAndOverall)
-        .filter(({findings}: SortedFindingsAndOverall) => Boolean(findings.length))
-        .map(({name, findings, overall}: SortedFindingsAndOverall) => {
-          return html`
+      ${repeat(
+      Object.values(this.findingsAndOverall).filter(({findings}: SortedFindingsAndOverall) =>
+        Boolean(findings.length)
+      ),
+      (_item: any) => Date.now(),
+      ({name, findings, overall}: SortedFindingsAndOverall) => {
+        return html`
             <div class="findings-block">
               <summary-card
                 .activityId="${this.activityId}"
@@ -53,7 +57,8 @@ export class ActivitySummaryTab extends LitElement {
               ></summary-card>
             </div>
           `;
-        })}
+      }
+    )}
     `;
   }
 

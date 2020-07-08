@@ -97,11 +97,11 @@ export class EntriesList extends LitElement {
           ${repeat(
             this.items,
             (item: any) => html`
-              <div class="entries-item" @click="${() => this.removeEntry(item.id)}">
+              <div class="entries-item">
                 ${this.formatItem(item)}
                 ${!this.isReadonly
                   ? html`
-                      <div class="hover-block">
+                      <div class="hover-block" @click="${() => this.removeEntry(item.id)}">
                         <iron-icon icon="icons:delete"></iron-icon>
                       </div>
                     `

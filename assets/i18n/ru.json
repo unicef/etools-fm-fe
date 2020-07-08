@@ -41,12 +41,13 @@
       "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
-        "ON_TRACK": "On Track"
+        "ON_TRACK": "On Track",
+        "NOT_MONITORED": "Not Monitored"
       }
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this question. Please add them in settings or planing or select another sections in activity details",
+    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this section. Please add them in settings or planning or select another section in activity details",
     "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
     "ADD_DETAIL": "Localized Add Detail",
     "COLUMNS": {

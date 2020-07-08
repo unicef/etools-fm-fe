@@ -34,6 +34,7 @@ type DataCollectionOverall = {
   intervention: null | number;
   narrative_finding: string;
   attachments: [];
+  on_track: boolean | null;
 };
 
 type SummaryOverall = DataCollectionOverall & {

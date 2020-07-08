@@ -22,6 +22,7 @@ import {use} from 'lit-translate';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
+import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -75,6 +76,8 @@ export class PageHeader extends connect(store)(LitElement) {
 
   @property() selectedLanguage: string = 'en';
 
+  @property() refreshInProgress: boolean = false;
+
   constructor() {
     super();
     store.subscribe(
@@ -95,6 +98,7 @@ export class PageHeader extends connect(store)(LitElement) {
       })
     );
     // TODO remove test code.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     window.enableExampleLanguage = () => {
       this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
@@ -106,6 +110,10 @@ export class PageHeader extends connect(store)(LitElement) {
     return [
       pageHeaderStyles,
       css`
+        .refresh-button {
+          color: #bcc1c6;
+          margin-right: 10px;
+        }
         .dropdowns {
           display: flex;
           margin-right: 5px;
@@ -159,7 +167,7 @@ export class PageHeader extends connect(store)(LitElement) {
             icon="menu"
             @tap="${() => this.menuBtnClicked()}"
           ></paper-icon-button>
-          <etools-app-selector id="selector"></etools-app-selector>
+          <etools-app-selector id="selector" .user="${this.profile}"></etools-app-selector>
           <img
             id="app-logo"
             class="logo"
@@ -203,6 +211,7 @@ export class PageHeader extends connect(store)(LitElement) {
             @sign-out="${this._signOut}"
           >
           </etools-profile-dropdown>
+          <paper-icon-button class="refresh-button" icon="refresh" @tap="${() => this.refresh()}"> </paper-icon-button>
         </div>
       </app-toolbar>
     `;
@@ -238,6 +247,14 @@ export class PageHeader extends connect(store)(LitElement) {
 
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
+  }
+
+  refresh(): void {
+    if (!this.refreshInProgress) {
+      this.refreshInProgress = true;
+      localStorage.clear();
+      etoolsCustomDexieDb.delete().finally(() => window.location.reload());
+    }
   }
 
   protected profileSaveLoadingMsgDisplay(show: boolean = true): void {

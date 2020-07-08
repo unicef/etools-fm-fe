@@ -19,8 +19,8 @@ documentContainer.innerHTML = `
         --gray-light-background: #E7E7E7;
 
         --header-color: #ffffff;
-        --header-bg-color: var(--primary-color);
-        --nonprod-header-color: #233944;
+        --header-bg-color: var(--dark-theme-background-color);
+        --nonprod-header-color: #a94442;
         --nonprod-text-warn-color: #e6e600;
 
         --light-divider-color: rgba(0, 0, 0, 0.12);
@@ -33,11 +33,12 @@ documentContainer.innerHTML = `
 
         --success-color: #72c300;
         --error-color: #ea4022;
-        
+
         --red-color: #FF0000;
 
         --primary-shade-of-green: #1A9251;
         --primary-shade-of-red: #E32526;
+        --primary-shade-of-orange: orange;
         --reject-color: #88304E;
         --note-color: #FF9044;
 
@@ -134,6 +135,7 @@ documentContainer.innerHTML = `
           border-color: rgba(0, 0, 0, 0.2) !important;
         }
       }
+
     </style>
   </custom-style>`;
 

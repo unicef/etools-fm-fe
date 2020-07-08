@@ -10,6 +10,9 @@ import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
+import '@polymer/paper-radio-group/paper-radio-group';
+import '@polymer/paper-radio-button/paper-radio-button';
+import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -18,11 +21,14 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
   @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  attachmentsEndpoint?: string;
-
   @property() protected isEditMode: boolean = false;
   @property() protected blockEdit: boolean = false;
   @property() protected updateInProcess: boolean = false;
+  @property() protected onTrackValue: boolean | null = null;
+  @property() protected trackStatusText: string = '';
+  @property() protected trackStatusColor: string = '';
+  @property() protected orginalTrackStatus: boolean | null = null;
+  attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
@@ -133,18 +139,32 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   }
 
   protected getAdditionalButtons(): TemplateResult {
-    return html`
-      <div class="ontrack-container layout horizontal">
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        <paper-toggle-button
-          ?readonly="${this.readonly}"
-          ?checked="${this.overallInfo?.on_track || false}"
-          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
-        ></paper-toggle-button>
-        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
-      </div>
-      ${this.getAttachmentsButton()}
-    `;
+    if (this.isEditMode) {
+      return html`
+        ${this.findingsStatusButton()} ${this.getAttachmentsButton()}
+      `;
+    } else {
+      if (this.overallInfo?.on_track == null) {
+        this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NOT_MONITORED';
+        this.trackStatusColor = 'notMonitored';
+      } else {
+        if (this.overallInfo?.on_track) {
+          this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK';
+          this.trackStatusColor = '';
+        } else {
+          this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK';
+          this.trackStatusColor = 'offTrack';
+        }
+      }
+      return html`
+        <paper-radio-group>
+          <paper-radio-button name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
+            ${translate(this.trackStatusText)}
+          </paper-radio-button>
+        </paper-radio-group>
+        ${this.getAttachmentsButton()}
+      `;
+    }
   }
 
   /**
@@ -226,6 +246,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected saveChanges(): void {
     const overall: Partial<DataCollectionOverall> | null = this.getOverallInfoChanges();
     const findings: Partial<SummaryFinding>[] | null = this.getFindingsChanges();
+
     if (!overall && !findings) {
       this.cancelEdit();
     } else {
@@ -259,16 +280,18 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (!this.originalOverallInfo || !this.overallInfo) {
       return null;
     }
-    const finding: string | null =
-      this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding
-        ? this.overallInfo.narrative_finding
-        : null;
-    return finding
-      ? {
-          id: this.overallInfo.id,
-          narrative_finding: finding
-        }
-      : null;
+    const changes: GenericObject = {};
+    if (this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding) {
+      changes.narrative_finding = this.overallInfo.narrative_finding;
+    }
+    if (this.onTrackValue !== this.originalOverallInfo.on_track) {
+      changes.on_track = this.onTrackValue;
+    }
+    if (Object.keys(changes).length) {
+      changes.id = this.overallInfo.id;
+      return changes;
+    }
+    return null;
   }
 
   /**
@@ -278,6 +301,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const changes: Partial<SummaryFinding>[] = this.findings
       .filter((finding: SummaryFinding, index: number) => finding.value !== this.originalFindings[index].value)
       .map(({id, value}: SummaryFinding) => ({id, value}));
+
     return changes.length ? changes : null;
   }
 
@@ -285,13 +309,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (!this.overallInfo) {
       return;
     }
-    if (Boolean(this.overallInfo.on_track) !== onTrackState) {
-      const overall: Partial<SummaryOverall> = {
-        id: this.overallInfo.id,
-        on_track: onTrackState
-      };
-      fireEvent(this, 'update-data', {overall});
-    }
+    this.onTrackValue = onTrackState;
   }
 
   private getFindingAnswer(value: string, question: IChecklistQuestion): string {
@@ -305,11 +323,26 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     }
   }
 
+  private findingsStatusButton(): TemplateResult {
+    return html`
+      <div class="ontrack-container layout horizontal">
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
+        <paper-toggle-button
+          ?readonly="${this.readonly}"
+          ?checked="${this.overallInfo?.on_track || false}"
+          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
+        ></paper-toggle-button>
+        ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
+      </div>
+    `;
+  }
+
   static get styles(): CSSResultArray {
     // language=CSS
     return [
       FormBuilderCardStyles,
       FlexLayoutClasses,
+      RadioButtonStyles,
       css`
         .completed-finding {
           flex-basis: 50%;

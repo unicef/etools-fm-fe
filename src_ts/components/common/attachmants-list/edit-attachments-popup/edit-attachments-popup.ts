@@ -122,10 +122,10 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     fireEvent(this, 'response', {confirmed: false});
   }
 
-  protected fileSelected({success}: {success?: string; error?: string}): void {
+  protected fileSelected({success}: {success?: any; error?: string}): void {
     if (success) {
       try {
-        this.selectedFileId = JSON.parse(success).id;
+        this.selectedFileId = success.id;
       } catch (e) {
         console.log(e);
       }
