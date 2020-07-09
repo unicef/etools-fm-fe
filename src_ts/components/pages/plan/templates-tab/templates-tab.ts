@@ -41,7 +41,7 @@ const ESCAPE: 27 = 27;
 
 @customElement('templates-tab')
 export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
-  @property() listLoadingInProcess: boolean = false;
+  @property() listLoadingInProcess = false;
   @property() editedDetails: GenericObject = {opened: false};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   partners!: EtoolsPartner[];
@@ -53,7 +53,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   private readonly questionTemplatesDataUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private methods!: EtoolsMethod[];
-  @property() private additionalDataLoadingCount: number = 0;
+  @property() private additionalDataLoadingCount = 0;
   private activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {

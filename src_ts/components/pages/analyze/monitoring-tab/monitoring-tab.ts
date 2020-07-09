@@ -23,8 +23,8 @@ export class MonitoringTabComponent extends LitElement {
   coverageActiveTab: string = PARTNER_TAB;
   openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
   @property() isHactVisitSectionActivated: boolean = this.coverageActiveTab == PARTNER_TAB;
-  @property() completed: number = 0;
-  @property() planned: number = 0;
+  @property() completed = 0;
+  @property() planned = 0;
 
   private overallActivitiesUnsubscribe!: Unsubscribe;
   private lastActivatedTabUnsubscribe!: Unsubscribe;

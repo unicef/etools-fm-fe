@@ -17,16 +17,16 @@ import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
   @property() activityId: number | null = null;
-  @property({type: String}) tabName: string = '';
+  @property({type: String}) tabName = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  @property() protected isEditMode: boolean = false;
-  @property() protected blockEdit: boolean = false;
-  @property() protected updateInProcess: boolean = false;
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
+  @property() protected isEditMode = false;
+  @property() protected blockEdit = false;
+  @property() protected updateInProcess = false;
   @property() protected onTrackValue: boolean | null = null;
-  @property() protected trackStatusText: string = '';
-  @property() protected trackStatusColor: string = '';
+  @property() protected trackStatusText = '';
+  @property() protected trackStatusColor = '';
   @property() protected orginalTrackStatus: boolean | null = null;
   attachmentsEndpoint?: string;
 
@@ -140,9 +140,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   protected getAdditionalButtons(): TemplateResult {
     if (this.isEditMode) {
-      return html`
-        ${this.findingsStatusButton()} ${this.getAttachmentsButton()}
-      `;
+      return html` ${this.findingsStatusButton()} ${this.getAttachmentsButton()} `;
     } else {
       if (this.overallInfo?.on_track == null) {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NOT_MONITORED';
@@ -172,9 +170,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
    */
   protected getAttachmentsButton(): TemplateResult {
     const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;
-    const showAttachmentsButton: boolean = Boolean(
-      this.overallInfo && (!isReadonly || this.overallInfo.attachments.length)
-    );
+    const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
           <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">

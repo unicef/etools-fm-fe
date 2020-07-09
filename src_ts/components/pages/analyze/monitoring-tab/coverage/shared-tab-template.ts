@@ -13,7 +13,7 @@ enum WidthCalculationTargets {
 export class SharedTabTemplate extends LitElement {
   @property() label!: string;
   @property() data!: InterventionsCoverage[] | CpOutputCoverage[];
-  @property() loading: boolean = false;
+  @property() loading = false;
 
   render(): TemplateResult {
     return html`

@@ -24,7 +24,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
   @property() activityDetailsId: number | null = null;
   @property() items: IChecklistAttachment[] = [];
   @property() attachmentsTypes: AttachmentType[] = [];
-  @property() loading: boolean = false;
+  @property() loading = false;
   private checklistAttachmentsUnsubscribe!: Unsubscribe;
   private checklistAttachmentsTypesUnsubscribe!: Unsubscribe;
 

@@ -12,7 +12,7 @@ import {removalInProgress} from '../../../../../redux/selectors/data-collection.
 export class RemoveDataCollectPopup extends LitElement {
   @property() activityId!: number;
   @property() checklistId!: number;
-  @property() dialogOpened: boolean = false;
+  @property() dialogOpened = false;
 
   set dialogData({activityId, checklistId, dialogOpened}: DataCollectionItemRemoval) {
     this.activityId = activityId;

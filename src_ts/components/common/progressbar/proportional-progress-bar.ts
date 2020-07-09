@@ -4,16 +4,16 @@ import {translate} from 'lit-translate';
 
 @customElement('proportional-progress-bar')
 export class ProportionalProgressBar extends LitElement {
-  @property() completed: number = 0;
-  @property() planned: number = 0;
+  @property() completed = 0;
+  @property() planned = 0;
   @property() minRequired: number | null = null;
   @property() daysSinceLastVisit: number | null = null;
   @property() completedLabelValue: string | null = 'PROGRESSBAR.COMPLETED';
   @property() plannedLabelValue: string | null = 'PROGRESSBAR.PLANNED';
   @property() minRequiredLabelValue: string | null = null;
   @property() daysSinceLastVisitLabelValue: string | null = null;
-  @property() progressBarLabelsColor: string = 'grey';
-  @property() completedDivBackgroundColor: string = '#48B6C2';
+  @property() progressBarLabelsColor = 'grey';
+  @property() completedDivBackgroundColor = '#48B6C2';
   private progressbarFooterComputedStyles!: StyleInfo;
   private progressbarMinRequiredComputedStyles!: StyleInfo;
   private progressbarCompletedComputedStyles!: StyleInfo;

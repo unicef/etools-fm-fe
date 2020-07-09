@@ -18,7 +18,7 @@ export function requestActivityDetails(id: string): IAsyncAction {
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, {id});
-      const resultUrl: string = `${url}`;
+      const resultUrl = `${url}`;
       return request(resultUrl);
     }
   };

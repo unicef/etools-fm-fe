@@ -28,7 +28,7 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: IEtoolsFilter[] | null = null;
-  @property() listLoadingInProcess: boolean = false;
+  @property() listLoadingInProcess = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];

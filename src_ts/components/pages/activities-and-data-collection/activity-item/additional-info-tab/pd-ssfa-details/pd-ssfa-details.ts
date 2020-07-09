@@ -10,9 +10,9 @@ import {CardStyles} from '../../../../../styles/card-styles';
 export class PdSsfaDetails extends LitElement {
   @property() interventions: IActivityIntervention[] | null = null;
   @property() items: EtoolsIntervention[] = [];
-  @property() pageSize: number = 5;
-  @property() pageNumber: number = 1;
-  @property() loading: boolean = false;
+  @property() pageSize = 5;
+  @property() pageNumber = 1;
+  @property() loading = false;
 
   set interventionsData(interventions: IActivityIntervention[] | null) {
     this.loading = true;

@@ -16,7 +16,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 
-export const CARD_NAME: string = 'monitor-information';
+export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'tpm_partner',
   'monitor_type',
@@ -67,7 +67,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
         ?is-editable="${(!this.editedCard || this.editedCard === CARD_NAME) &&
-          !ELEMENT_FIELDS.every((field: string) => this.isFieldReadonly(field))}"
+        !ELEMENT_FIELDS.every((field: string) => this.isFieldReadonly(field))}"
         ?edit="${this.isEditMode}"
         @start-edit="${() => this.startEdit()}"
         @save="${() => this.save()}"
@@ -213,7 +213,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
     this.membersOptions = this.users.filter((user: User) => {
-      let isValid: boolean = false;
+      let isValid = false;
       if (userType) {
         isValid = userType === user.user_type;
       }

@@ -29,7 +29,7 @@ export class PartnershipTab extends LitElement {
   @property() partnersCoverage!: PartnersCoverage[];
   @property() sortingOptions: DefaultDropdownOption<SortingTypes>[] = applyDropdownTranslation(RAW_SORTING_OPTIONS);
   @property() selectedSortingOption: SortingTypes = SortingTypes.COMPLETED_ASCEND_SORTING_TYPE;
-  @property() loading: boolean = false;
+  @property() loading = false;
   private readonly partnersCoverageUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
   constructor() {

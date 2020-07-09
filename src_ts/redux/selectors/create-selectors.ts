@@ -3,7 +3,7 @@ import {store} from '../store';
 export function createSelector<T>(
   selector: StoreSelectorFunction<T>,
   onChange: (state: T) => void,
-  initialize: boolean = true
+  initialize = true
 ): Callback {
   let currentState: T = selector(store.getState() as IRootState);
   if (initialize) {

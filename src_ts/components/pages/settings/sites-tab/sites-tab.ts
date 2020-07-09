@@ -23,7 +23,7 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   @property() items: IGroupedSites[] = [];
 
-  @property() listLoadingInProcess: boolean = false;
+  @property() listLoadingInProcess = false;
   private sitesObjects: Site[] | null = null;
 
   private readonly debouncedLoading: Callback;

@@ -44,8 +44,8 @@ import {SaveRoute} from '../../../../redux/actions/app.actions';
 
 store.addReducers({activityDetails});
 
-const PAGE: string = 'activities';
-const SUB_ROUTE: string = 'item';
+const PAGE = 'activities';
+const SUB_ROUTE = 'item';
 
 const VALID_TABS: Set<string> = new Set([
   DETAILS_TAB,
@@ -79,7 +79,7 @@ const CANCELLED_STATUS: IEtoolsStatusModel[] = [
 export class NewActivityComponent extends LitElement {
   @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
-  @property() isStatusUpdating: boolean = false;
+  @property() isStatusUpdating = false;
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
@@ -126,7 +126,7 @@ export class NewActivityComponent extends LitElement {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
-  private isLoad: boolean = false;
+  private isLoad = false;
 
   render(): TemplateResult {
     // language=HTML
@@ -238,13 +238,9 @@ export class NewActivityComponent extends LitElement {
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case DETAILS_TAB:
-        return html`
-          <activity-details-tab .activityId="${this.activityId}"></activity-details-tab>
-        `;
+        return html` <activity-details-tab .activityId="${this.activityId}"></activity-details-tab> `;
       case ATTACHMENTS_TAB:
-        return html`
-          <activity-attachments-tab .activityDetails="${this.activityDetails}"></activity-attachments-tab>
-        `;
+        return html` <activity-attachments-tab .activityDetails="${this.activityDetails}"></activity-attachments-tab> `;
       case CHECKLIST_TAB:
         return html`
           <activity-checklist-tab
@@ -253,13 +249,9 @@ export class NewActivityComponent extends LitElement {
           ></activity-checklist-tab>
         `;
       case REVIEW_TAB:
-        return html`
-          <activity-review-tab .activityId="${this.activityId}"></activity-review-tab>
-        `;
+        return html` <activity-review-tab .activityId="${this.activityId}"></activity-review-tab> `;
       case COLLECT_TAB:
-        return html`
-          <data-collect-tab activity-id="${this.activityId}"></data-collect-tab>
-        `;
+        return html` <data-collect-tab activity-id="${this.activityId}"></data-collect-tab> `;
       case SUMMARY_TAB:
         return html`
           <activity-summary-tab
@@ -268,13 +260,9 @@ export class NewActivityComponent extends LitElement {
           ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
-        return html`
-          <additional-info-tab .activityDetails="${this.activityDetails}"></additional-info-tab>
-        `;
+        return html` <additional-info-tab .activityDetails="${this.activityDetails}"></additional-info-tab> `;
       case ACTION_POINTS:
-        return html`
-          <action-points-tab .activityDetails="${this.activityDetails}"></action-points-tab>
-        `;
+        return html` <action-points-tab .activityDetails="${this.activityDetails}"></action-points-tab> `;
       default:
         return html``;
     }

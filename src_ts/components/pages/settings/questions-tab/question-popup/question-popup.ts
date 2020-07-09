@@ -29,8 +29,8 @@ import {activeLanguageSelector} from '../../../../../redux/selectors/active-lang
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
-  savingInProcess: boolean = false;
-  @property() dialogOpened: boolean = true;
+  savingInProcess = false;
+  @property() dialogOpened = true;
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
 
   readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
@@ -176,7 +176,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
             nestedFields: ['options']
           })
         : this.editedData;
-    const isEmpty: boolean = !Object.keys(question).length;
+    const isEmpty = !Object.keys(question).length;
 
     if (isEmpty) {
       this.dialogOpened = false;

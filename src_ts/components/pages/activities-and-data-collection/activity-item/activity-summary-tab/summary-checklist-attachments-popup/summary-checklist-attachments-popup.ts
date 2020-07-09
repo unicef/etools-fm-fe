@@ -9,17 +9,17 @@ import {template} from './summary-checklist-attachments-popup.tpl';
 
 @customElement('summary-checklist-attachments-popup')
 export class SummaryChecklistAttachmentsPopup extends LitElement {
-  @property() dialogOpened: boolean = true;
-  @property() saveBtnClicked: boolean = false;
-  @property() savingInProcess: boolean = false;
+  @property() dialogOpened = true;
+  @property() saveBtnClicked = false;
+  @property() savingInProcess = false;
   @property() attachments: (StoredAttachment | IEditedAttachment)[] = [];
   @property() attachmentTypes: DefaultDropdownOption[] = [
     {display_name: 'SOP', value: 34},
     {display_name: 'Other', value: 35}
   ];
 
-  readonly: boolean = false;
-  popupTitle: string = '';
+  readonly = false;
+  popupTitle = '';
 
   @query('#link') link!: HTMLLinkElement;
   private updateUrl?: string;

@@ -9,7 +9,7 @@ import {currentUser} from '../../../redux/selectors/user.selectors';
 export const PagePermissionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-    permissionsReady: boolean = false;
+    permissionsReady = false;
 
     private userUnsubscribe!: Unsubscribe;
 

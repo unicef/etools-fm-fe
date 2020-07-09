@@ -36,7 +36,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   @property({type: Object})
   fullReports: GenericObject<FullReportData> = {};
 
-  @property() isLoad: boolean = false;
+  @property() isLoad = false;
 
   private cpOutputs: EtoolsCpOutput[] = [];
   private routeUnsubscribe!: Unsubscribe;
@@ -126,7 +126,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     }
 
     const fullReportId: number | null = (this.queryParams && +this.queryParams.cp_output) || null;
-    const exists: boolean = !!this.filteredCpOutputs.find(
+    const exists = !!this.filteredCpOutputs.find(
       (filteredCpOutoput: EtoolsCpOutput) => filteredCpOutoput.id === fullReportId
     );
 

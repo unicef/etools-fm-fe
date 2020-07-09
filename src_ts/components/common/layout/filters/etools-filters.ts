@@ -44,7 +44,7 @@ export interface IEtoolsFilter {
 @customElement('etools-filters')
 export class EtoolsFilters extends LitElement {
   @property()
-  filterLoadingInProcess: boolean = false;
+  filterLoadingInProcess = false;
   @query('#filterMenu') paperButton!: PaperMenuButton;
   private lastSelectedValues: any = null;
 

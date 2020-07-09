@@ -22,7 +22,7 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTupl
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedOptions: string[] = [];
   lastDispatchedSelectedOptions: string[] = [];
-  @property() loading: boolean = false;
+  @property() loading = false;
   @query('#geomap') private mapElement!: HTMLElement;
   private polygons: Polygon[] = [];
   private mapHelper!: MapHelper;
@@ -79,7 +79,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   getPolygonOptions(geographicCoverageItem: GeographicCoverage): PolylineOptions {
-    let color: string = 'grey';
+    let color = 'grey';
     if (geographicCoverageItem.completed_visits == 0) {
       color = 'var(--mark-no-visits-color)';
     } else if (1 <= geographicCoverageItem.completed_visits && geographicCoverageItem.completed_visits <= 5) {
@@ -106,7 +106,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   initMap(): void {
     this.mapHelper = new MapHelper();
     this.mapHelper.initMap(this.mapElement);
-    const zoom: number = 6;
+    const zoom = 6;
     this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
   }
 

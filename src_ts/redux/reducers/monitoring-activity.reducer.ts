@@ -1,7 +1,7 @@
 import {Reducer} from 'redux';
 import {MonitoringActivityActions, MonitoringActivityActionTypes} from '../actions/monitoring-activity.actions';
 
-const PARTNER_TAB: string = 'partner';
+const PARTNER_TAB = 'partner';
 
 const INITIAL_STATE: IMonitoringActivityState = {
   overallActivities: {

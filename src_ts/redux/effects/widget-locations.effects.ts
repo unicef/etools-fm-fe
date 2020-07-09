@@ -18,7 +18,7 @@ export function loadLocationsChunk(
     const {reload} = params;
     const {page, query, search} = {...state.widgetLocations, ...params};
     const endpoint: IResultEndpoint = getEndpoint(WIDGET_LOCATIONS_CHUNK);
-    let url: string = `${endpoint.url}?page=${page}`;
+    let url = `${endpoint.url}?page=${page}`;
     if (query) {
       url = `${url}&${query}`;
     }

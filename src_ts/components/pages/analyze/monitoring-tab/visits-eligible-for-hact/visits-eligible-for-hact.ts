@@ -15,7 +15,7 @@ import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-acti
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends LitElement {
   @property() items!: HactVisits[];
-  @property() loading: boolean = false;
+  @property() loading = false;
   private hactVisitsUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {

@@ -39,10 +39,10 @@ export class DataCollectTab extends LitElement {
   @property({type: Number, attribute: 'activity-id', reflect: true}) activityId!: number;
 
   @property({type: Object}) protected checklistByMethods: DataCollectByMethods = {};
-  @property({type: Boolean}) protected isReadonly: boolean = false;
+  @property({type: Boolean}) protected isReadonly = false;
   @property() protected dataCollectionMethods: EtoolsMethod[] = [];
-  @property() protected methodsLoading: boolean = false;
-  @property() protected dataLoading: boolean = true;
+  @property() protected methodsLoading = false;
+  @property() protected dataLoading = true;
 
   private checklistUnsubscribe!: Unsubscribe;
   private activityUnsubscribe!: Unsubscribe;
@@ -191,9 +191,7 @@ export class DataCollectTab extends LitElement {
 
               <!--  Information Source  -->
               ${method.use_information_source
-                ? html`
-                    <div class="col-data flex-1 truncate">${item.information_source}</div>
-                  `
+                ? html` <div class="col-data flex-1 truncate">${item.information_source}</div> `
                 : ''}
 
               <div class="hover-block">
@@ -218,11 +216,7 @@ export class DataCollectTab extends LitElement {
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-1 truncate">-</div>
                 <div class="col-data flex-1 truncate">-</div>
-                ${method.use_information_source
-                  ? html`
-                      <div class="col-data flex-1 truncate">-</div>
-                    `
-                  : ''}
+                ${method.use_information_source ? html` <div class="col-data flex-1 truncate">-</div> ` : ''}
               </div>
             </etools-data-table-row>
           `

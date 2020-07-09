@@ -15,9 +15,9 @@ import {SetRationaleUpdateError} from '../../../../../redux/actions/rationale.ac
 @customElement('annual-fm-rationale')
 export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   @property() errors: GenericObject = {};
-  @property() isReadonly: boolean = true;
+  @property() isReadonly = true;
   @property() selectedYear: number | undefined;
-  @property() savingInProcess: boolean = true;
+  @property() savingInProcess = true;
 
   private updateRationaleUnsubscribe!: Unsubscribe;
   private updateRationaleErrorUnsubscribe!: Unsubscribe;
@@ -87,7 +87,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
       this.originalData !== null
         ? getDifference<Partial<IRationale>>(this.originalData, this.editedData, {toRequest: true})
         : this.editedData;
-    const isEmpty: boolean = !Object.keys(data).length;
+    const isEmpty = !Object.keys(data).length;
 
     if (!isEmpty && this.selectedYear) {
       store.dispatch<AsyncEffect>(updateRationale(this.selectedYear, data));

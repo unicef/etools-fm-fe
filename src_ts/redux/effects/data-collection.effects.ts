@@ -44,7 +44,7 @@ export function loadDataCollectionChecklistInfo(activityId: string, checklistId:
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId});
-      const resultUrl: string = `${url}${checklistId}/`;
+      const resultUrl = `${url}${checklistId}/`;
       return request(resultUrl);
     }
   };
@@ -82,8 +82,8 @@ export function loadFindingsAndOverall(
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId});
-      const findingsUrl: string = `${url}${checklistId}/findings/?page_size=all`;
-      const overallUrl: string = `${url}${checklistId}/overall/?page_size=all`;
+      const findingsUrl = `${url}${checklistId}/findings/?page_size=all`;
+      const overallUrl = `${url}${checklistId}/overall/?page_size=all`;
       return Promise.all([
         skip === 'findings' ? null : request<DataCollectionFinding[]>(findingsUrl),
         skip === 'overall' ? null : request<DataCollectionOverall[]>(overallUrl)
@@ -161,7 +161,7 @@ function updateFindings(
     return null;
   }
   const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_CHECKLIST, {activityId});
-  const findingsUrl: string = `${url}${checklistId}/findings/`;
+  const findingsUrl = `${url}${checklistId}/findings/`;
   return request(findingsUrl, {method: 'PATCH', body: JSON.stringify(findings)});
 }
 

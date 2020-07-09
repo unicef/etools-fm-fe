@@ -5,8 +5,8 @@ import {translate} from 'lit-translate';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {
-  @property({type: Boolean, attribute: 'is-readonly'}) isReadonly: boolean = true;
-  @property() nameList: string = '';
+  @property({type: Boolean, attribute: 'is-readonly'}) isReadonly = true;
+  @property() nameList = '';
   @property() items: [] = [];
   @property() formatItem!: (item: any) => void;
 

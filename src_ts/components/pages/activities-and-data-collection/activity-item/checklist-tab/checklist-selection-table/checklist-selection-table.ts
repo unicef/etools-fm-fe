@@ -23,15 +23,15 @@ const ESCAPE: 27 = 27;
 @customElement('checklist-selection-table')
 export class ChecklistSelectionTable extends LitElement {
   @property({type: Array}) questionsList: IChecklistItem[] = [];
-  @property() isEditMode: boolean = false;
+  @property() isEditMode = false;
   @property() editedDetails: GenericObject = {opened: false};
-  @property() loadingInProcess: boolean = false;
+  @property() loadingInProcess = false;
   @property() activityDetails: IActivityDetails | null = null;
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  tableTitle: string = '';
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
+  tableTitle = '';
   activityId!: number;
 
-  @property() protected blockEdit: boolean = false;
+  @property() protected blockEdit = false;
 
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private methods!: EtoolsMethod[];

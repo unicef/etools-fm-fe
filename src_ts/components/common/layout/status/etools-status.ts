@@ -16,7 +16,7 @@ export class EtoolsStatus extends LitElement {
   @property({type: String})
   activeStatus!: string;
   @property({type: Number})
-  activeStatusIndex: number = 0;
+  activeStatusIndex = 0;
   @property({type: Array})
   statuses: IEtoolsStatusModel[] = [];
 
@@ -158,17 +158,11 @@ export class EtoolsStatus extends LitElement {
   getIcon(index: number): TemplateResult {
     const completed: boolean = this.isCompleted(index, this.activeStatusIndex);
     if (completed) {
-      return html`
-        ${completedStatusIcon}
-      `;
+      return html` ${completedStatusIcon} `;
     } else if (this.statuses[index].status === CANCELLED) {
-      return html`
-        ${cancelledStatusIcon}
-      `;
+      return html` ${cancelledStatusIcon} `;
     } else {
-      return html`
-        ${this.getBaseOneIndex(index)}
-      `;
+      return html` ${this.getBaseOneIndex(index)} `;
     }
   }
 }
