@@ -117,7 +117,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
           updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
         );
       } else {
-        // create
         this.handleExistingFileChange(data);
       }
     } else {
