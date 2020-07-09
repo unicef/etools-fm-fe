@@ -20,8 +20,8 @@ export function loadSummaryFindingsAndOverall(activityId: number, skip?: 'findin
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_ACTIVITY, {activityId});
-      const findingsUrl: string = `${url}findings/?page_size=all`;
-      const overallUrl: string = `${url}overall-findings/?page_size=all`;
+      const findingsUrl = `${url}findings/?page_size=all`;
+      const overallUrl = `${url}overall-findings/?page_size=all`;
       return Promise.all([
         skip === 'findings' ? null : request<SummaryFinding[]>(findingsUrl),
         skip === 'overall' ? null : request<SummaryOverall[]>(overallUrl)
@@ -93,6 +93,6 @@ function updateSummaryFindings(
     return null;
   }
   const {url}: IResultEndpoint = getEndpoint(DATA_COLLECTION_ACTIVITY, {activityId});
-  const findingsUrl: string = `${url}findings/`;
+  const findingsUrl = `${url}findings/`;
   return request(findingsUrl, {method: 'PATCH', body: JSON.stringify(findings)});
 }

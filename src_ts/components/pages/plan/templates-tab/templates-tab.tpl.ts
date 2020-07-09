@@ -184,11 +184,9 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                       )}"
                   >
                     ${(questionTemplate.template && questionTemplate.template.specific_details) ||
-                      (hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)
-                        ? html`
-                            <span class="detail-placeholder">${translate('TEMPLATES.ADD_DETAIL')}</span>
-                          `
-                        : '-')}
+                    (hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)
+                      ? html` <span class="detail-placeholder">${translate('TEMPLATES.ADD_DETAIL')}</span> `
+                      : '-')}
                   </div>
 
                   <!-- Question Methods -->

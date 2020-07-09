@@ -21,11 +21,11 @@ import {translate} from 'lit-translate';
 
 store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
 
-const PAGE: string = 'plan';
+const PAGE = 'plan';
 
-const RATIONALE_TAB: string = 'rationale';
-const ISSUE_TRACKER_TAB: string = 'issue-tracker';
-const TEMPLATES_TAB: string = 'templates';
+const RATIONALE_TAB = 'rationale';
+const ISSUE_TRACKER_TAB = 'issue-tracker';
+const TEMPLATES_TAB = 'templates';
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: RATIONALE_TAB,
@@ -95,21 +95,13 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case RATIONALE_TAB:
-        return html`
-          <rationale-tab></rationale-tab>
-        `;
+        return html` <rationale-tab></rationale-tab> `;
       case ISSUE_TRACKER_TAB:
-        return html`
-          <issue-tracker-tab></issue-tracker-tab>
-        `;
+        return html` <issue-tracker-tab></issue-tracker-tab> `;
       case TEMPLATES_TAB:
-        return html`
-          <templates-tab></templates-tab>
-        `;
+        return html` <templates-tab></templates-tab> `;
       default:
-        return html`
-          Tab Not Found
-        `;
+        return html` Tab Not Found `;
     }
   }
 

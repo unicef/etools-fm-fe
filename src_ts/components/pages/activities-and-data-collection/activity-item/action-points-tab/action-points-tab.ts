@@ -18,7 +18,7 @@ store.addReducers({actionPointsList});
 export class ActionPointsTab extends LitElement {
   @property() items: ActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
-  @property() loading: boolean = false;
+  @property() loading = false;
 
   statusMap: Map<string, string> = new Map([
     ['open', 'Open'],

@@ -6,7 +6,7 @@ import {UpdateQueryParams} from '../redux/actions/app.actions';
 import {equals} from 'ramda';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
-const routeParamRegex: string = '([^\\/?#=+]+)';
+const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter
   // .addRoute(new RegExp('^engagements/list$'),
@@ -155,7 +155,7 @@ EtoolsRouter
 /**
  * Utility used to update location based on routes and dispatch navigate action (optional)
  */
-export function updateAppLocation(newLocation: string, dispatchNavigation: boolean = true): void {
+export function updateAppLocation(newLocation: string, dispatchNavigation = true): void {
   const _newLocation: string = EtoolsRouter.prepareLocationPath(newLocation);
   let navigationCallback: (() => void) | null = null;
   if (dispatchNavigation) {
@@ -166,7 +166,7 @@ export function updateAppLocation(newLocation: string, dispatchNavigation: boole
   EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate: boolean = true): boolean {
+export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate = true): boolean {
   const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
   const queryParams: IRouteQueryParams | null = details && details.queryParams;
@@ -196,5 +196,5 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
   return true;
 }
 
-export const ROUTE_404: string = '/page-not-found';
-export const DEFAULT_ROUTE: string = '/settings/questions';
+export const ROUTE_404 = '/page-not-found';
+export const DEFAULT_ROUTE = '/settings/questions';

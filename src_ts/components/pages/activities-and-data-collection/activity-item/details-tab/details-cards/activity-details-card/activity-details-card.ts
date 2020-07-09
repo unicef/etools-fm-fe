@@ -17,11 +17,11 @@ import {loadSiteLocations} from '../../../../../../../redux/effects/site-specifi
 import clone from 'ramda/es/clone';
 import {fireEvent} from '../../../../../../utils/fire-custom-event';
 
-export const CARD_NAME: string = 'activity-details';
+export const CARD_NAME = 'activity-details';
 
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
-  @property() widgetOpened: boolean = false;
+  @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 

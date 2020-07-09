@@ -22,7 +22,7 @@ function setMaxHeight(paperTextarea: PaperTextareaElement): void {
   }
 
   const textareaAutogrowStyles: CSSStyleDeclaration = window.getComputedStyle(textareaAutoGrow, null) || {};
-  const maxRows: number = Number(paperTextarea.getAttribute('max-rows'));
+  const maxRows = Number(paperTextarea.getAttribute('max-rows'));
 
   if (!maxRows || maxRows <= 1) {
     return;

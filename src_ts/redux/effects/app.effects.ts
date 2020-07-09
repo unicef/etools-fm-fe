@@ -16,7 +16,7 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
     return;
   }
 
-  const importBase: string = '../../'; // relative to current file
+  const importBase = '../../'; // relative to current file
   // start importing components (lazy loading)
   const lazyImports: Promise<any>[] = getFilePathsToImport(routeDetails).map((filePath: string) =>
     import(importBase + filePath)

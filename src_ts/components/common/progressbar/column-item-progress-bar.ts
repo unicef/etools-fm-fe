@@ -4,9 +4,9 @@ import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
 @customElement('column-item-progress-bar')
 export class ColumnItemProgressBar extends LitElement {
   @property() progressValue: number | null = null;
-  @property() width: string = '0';
+  @property() width = '0';
   @property() labelValue: string | null = null;
-  @property() completedDivBackgroundColor: string = '#D8D8D8';
+  @property() completedDivBackgroundColor = '#D8D8D8';
   private widthComputedStyle!: StyleInfo;
 
   render(): TemplateResult {

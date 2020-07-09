@@ -8,16 +8,16 @@ export class FileSelectInput extends LitElement {
   fileId: number | null = null;
 
   @property({type: String})
-  fileName: string = '';
+  fileName = '';
 
   @property({type: String})
   fileData?: string | null;
 
   @property({type: Boolean})
-  hasDelete: boolean = true;
+  hasDelete = true;
 
   @property({type: Boolean})
-  isReadonly: boolean = false;
+  isReadonly = false;
 
   @query('#file')
   fileInput!: HTMLInputElement;
@@ -77,9 +77,7 @@ export class FileSelectInput extends LitElement {
             `
           : ''}
         ${!this.isReadonly && this.hasDelete
-          ? html`
-              <paper-button class="delete-button" @tap="${() => this.deleteFile()}">Delete</paper-button>
-            `
+          ? html` <paper-button class="delete-button" @tap="${() => this.deleteFile()}">Delete</paper-button> `
           : ''}
       </div>
     `;
@@ -91,11 +89,7 @@ export class FileSelectInput extends LitElement {
       this.fileName = '';
     }
     if (!this.hasFileName && typeof this.fileData === 'string') {
-      this.fileName =
-        this.fileData
-          .split('?')[0]
-          .split('/')
-          .pop() || '';
+      this.fileName = this.fileData.split('?')[0].split('/').pop() || '';
     }
   }
 

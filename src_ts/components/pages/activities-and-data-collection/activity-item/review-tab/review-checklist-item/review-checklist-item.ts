@@ -8,7 +8,7 @@ import {translate} from 'lit-translate';
 
 @customElement('review-checklist-item')
 export class ReviewChecklistItemComponent extends LitElement {
-  @property() itemTitle: string = '';
+  @property() itemTitle = '';
   @property() checklist: IChecklistItem[] = [];
 
   render(): TemplateResult | void {

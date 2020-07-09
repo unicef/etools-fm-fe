@@ -44,10 +44,6 @@
     "no-invalid-this": "off",
     "guard-for-in": "off",
     "no-prototype-builtins": "off",
-    "@typescript-eslint/interface-name-prefix": ["error", {
-      "prefixWithI": "always"
-    }],
-    "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/explicit-member-accessibility": ["error", {
       "accessibility": "no-public"
     }],

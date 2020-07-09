@@ -23,16 +23,16 @@ import {translate} from 'lit-translate';
 @customElement('app-menu')
 export class AppMenu extends LitElement {
   @property({type: String, attribute: 'selected-option'})
-  selectedOption: string = '';
+  selectedOption = '';
 
   @property({type: String})
   rootPath: string = ROOT_PATH;
 
   @property({type: Boolean, attribute: 'small-menu'})
-  smallMenu: boolean = false;
+  smallMenu = false;
 
   private userUnsubscribe!: Unsubscribe;
-  private userLoaded: boolean = false;
+  private userLoaded = false;
 
   render(): TemplateResult {
     // main template

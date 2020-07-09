@@ -11,7 +11,7 @@ import {translate} from 'lit-translate';
 
 @customElement('partner-popup')
 export class PartnerPopup extends PartnersMixin(LitElement) {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() partner: EtoolsPartner | null = null;
 
   static get styles(): CSSResultArray {

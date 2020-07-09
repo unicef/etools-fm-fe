@@ -16,10 +16,10 @@ import {fireEvent} from '../../../../../utils/fire-custom-event';
 import {updateAppLocation} from '../../../../../../routing/routes';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
-  @property() isEditMode: boolean = false;
-  @property() isUpdate: boolean = false;
+  @property() isEditMode = false;
+  @property() isUpdate = false;
   @property() editedCard: string | null = null;
-  @property({type: Boolean}) isLoad: boolean = false;
+  @property({type: Boolean}) isLoad = false;
 
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;

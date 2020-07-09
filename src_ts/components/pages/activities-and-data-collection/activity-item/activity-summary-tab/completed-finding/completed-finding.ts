@@ -7,8 +7,8 @@ import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
   @property() completedFinding!: CompletedFinding | CompletedOverallFinding;
-  @property() completedFindingTitle: string = '';
-  @property() completedFindingMethod: string = '';
+  @property() completedFindingTitle = '';
+  @property() completedFindingMethod = '';
   @property() activityId: number | null = null;
 
   render(): TemplateResult {
@@ -36,9 +36,7 @@ export class CompletedFindingComponent extends LitElement {
           ${this.completedFinding.author.first_name[0]}${this.completedFinding.author.last_name[0]}
         </label>
         ${this.completedFindingTitle.toString().length < 4
-          ? html`
-              <label class="completed-finding-title">${this.completedFindingTitle}</label>
-            `
+          ? html` <label class="completed-finding-title">${this.completedFindingTitle}</label> `
           : html`
               <label class="completed-finding-title shorted-title">
                 <span id="ellipsis">...</span>

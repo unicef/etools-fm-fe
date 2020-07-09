@@ -23,11 +23,11 @@ import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
-const LAT_LNG_DEBOUNCE_TIME: number = 700;
+const LAT_LNG_DEBOUNCE_TIME = 700;
 
 @customElement('sites-popup')
 export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() editedData: EditedSite = {is_active: true};
   @property() currentCoords: string | null = null;
 
@@ -35,7 +35,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() longitude: number | null = null;
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
-  savingInProcess: boolean = false;
+  savingInProcess = false;
   @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
   @query('#map') private mapElement!: HTMLElement;
@@ -131,7 +131,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       this.originalData !== null
         ? getDifference<EditedSite>(this.originalData, this.editedData, {toRequest: true})
         : this.editedData;
-    const isEmpty: boolean = !Object.keys(site).length;
+    const isEmpty = !Object.keys(site).length;
 
     if (isEmpty) {
       this.dialogOpened = false;

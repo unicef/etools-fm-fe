@@ -20,7 +20,7 @@ import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpo
 
 @customElement('intervention-popup')
 export class InterventionPopup extends PartnersMixin(LitElement) {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() selectedPartners: EtoolsPartner[] = [];
   @property() selectedCpOutputs: EtoolsCpOutput[] = [];
   @property() selectedIntervention?: EtoolsInterventionShort;

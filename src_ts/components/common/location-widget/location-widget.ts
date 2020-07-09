@@ -38,20 +38,20 @@ const POLYGON_OPTIONS: PolylineOptions = {color: '#eddaa3', stroke: false, fillO
 export class LocationWidgetComponent extends LitElement {
   @property() selectedLocation: string | null = null;
   @property() selectedSites: number[] = [];
-  @property({type: Boolean, attribute: 'multiple-sites'}) multipleSites: boolean = false;
+  @property({type: Boolean, attribute: 'multiple-sites'}) multipleSites = false;
 
   // lazy load list
   @property() items: (WidgetLocation | Site)[] = [];
   @property() sites: Site[] = [];
   @property() sitesLocation: Site[] = [];
-  @property() isSiteList: boolean = false;
+  @property() isSiteList = false;
 
-  @property({type: String, reflect: true}) locationSearch: string = '';
+  @property({type: String, reflect: true}) locationSearch = '';
   protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   @property() protected history: WidgetLocation[] = [];
-  @property() private listLoading: boolean = false;
-  @property() private pathLoading: boolean = false;
-  @property() private mapInitializationProcess: boolean = false;
+  @property() private listLoading = false;
+  @property() private pathLoading = false;
+  @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
   private polygon: Polygon | null = null;
   private MapHelper!: MapHelper;
@@ -60,7 +60,7 @@ export class LocationWidgetComponent extends LitElement {
   private pathLoadingUnsubscribe!: Unsubscribe;
   private sitesUnsubscribe!: Unsubscribe;
   private widgetItemsUnsubscribe!: Unsubscribe;
-  private sitesLoading: boolean = true;
+  private sitesLoading = true;
   private inputDebounce!: Callback;
 
   static get styles(): CSSResultArray {
@@ -354,14 +354,14 @@ export class LocationWidgetComponent extends LitElement {
     return !level && !name ? '' : `${levelString}${name}`;
   }
 
-  getLocationPart(location: string = '', partToSelect: string): string {
+  getLocationPart(location = '', partToSelect: string): string {
     return getLocationPart(location, partToSelect);
   }
 
   isSitesEmpty(): boolean {
     const lastLocation: WidgetLocation | null = this.getLastLocation();
     const isSitesList: boolean = lastLocation !== null && lastLocation.is_leaf;
-    const isEmptyList: boolean = !this.sitesLocation.length;
+    const isEmptyList = !this.sitesLocation.length;
     return (this.loadingInProcess || isEmptyList) && isSitesList && !this.locationSearch;
   }
 
@@ -471,7 +471,7 @@ export class LocationWidgetComponent extends LitElement {
 
     const polygonCoordinates: CoordinatesArray[] = (location.geom.coordinates || []).flat();
     const pointCoordinates: CoordinatesArray = location.point.coordinates;
-    const polygonIsEmpty: boolean = !polygonCoordinates.length;
+    const polygonIsEmpty = !polygonCoordinates.length;
 
     if (!polygonIsEmpty || pointCoordinates) {
       const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
@@ -491,9 +491,9 @@ export class LocationWidgetComponent extends LitElement {
     if (arr[0] && !Array.isArray(arr[0][0])) {
       return arr.map((point: []) => {
         return point.reverse();
-      })
+      });
     } else {
-      arr.map((subArr: []) => this.reverseNestedArray(subArr))
+      arr.map((subArr: []) => this.reverseNestedArray(subArr));
     }
     return arr;
   }
@@ -518,7 +518,7 @@ export class LocationWidgetComponent extends LitElement {
 
   private setInitialMapView(): void {
     const reversedCoords: LatLngTuple = [...this.defaultMapCenter].reverse() as LatLngTuple;
-    const zoom: number = 6;
+    const zoom = 6;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }
 

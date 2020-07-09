@@ -26,7 +26,7 @@ import {translate} from 'lit-translate';
 export class StatusesActionsComponent extends LitElement {
   @property({type: Number}) activityId: number | null = null;
   @property({type: String}) possibleTransitions: ActivityTransition[] = [];
-  @property({type: Boolean, attribute: 'is-staff'}) isStaff: boolean = false;
+  @property({type: Boolean, attribute: 'is-staff'}) isStaff = false;
 
   render(): TemplateResult {
     // language=HTML
@@ -77,7 +77,7 @@ export class StatusesActionsComponent extends LitElement {
         (transitionA: ActivityTransition, transitionB: ActivityTransition) =>
           TRANSITIONS_ORDER.indexOf(transitionA.transition) - TRANSITIONS_ORDER.indexOf(transitionB.transition)
       );
-    const className: string = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
+    const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
           <paper-button class="${className}" @tap="${() => this.changeStatus(mainTransition)}">

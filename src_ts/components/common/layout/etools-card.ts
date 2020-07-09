@@ -12,16 +12,16 @@ export class EtoolsCard extends LitElement {
   cardTitle!: string;
 
   @property({type: Boolean, attribute: 'is-editable'})
-  isEditable: boolean = false;
+  isEditable = false;
 
   @property({type: Boolean, attribute: 'is-collapsible'})
-  isCollapsible: boolean = false;
+  isCollapsible = false;
 
   @property({type: Boolean, attribute: 'hide-edit-button'})
-  hideEditButton: boolean = false;
+  hideEditButton = false;
 
-  @property({type: Boolean}) collapsed: boolean = false;
-  @property({type: Boolean}) edit: boolean = false;
+  @property({type: Boolean}) collapsed = false;
+  @property({type: Boolean}) edit = false;
 
   static get styles(): CSSResultArray {
     // language=CSS

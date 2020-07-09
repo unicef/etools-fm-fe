@@ -9,7 +9,7 @@ import {translate} from 'lit-translate';
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {
   @property() private cpOutputCoverage!: CpOutputCoverage[];
-  @property() private loading: boolean = false;
+  @property() private loading = false;
   private readonly cpOutputCoverageUnsubscribe: Unsubscribe;
   constructor() {
     super();

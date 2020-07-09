@@ -43,7 +43,7 @@ export function validate(validators: FieldValidator[], value: any): string | nul
 function checkValidation(validation: FieldValidator, value: number | string | null): string | null {
   switch (validation.name) {
     case Validations.MAX_LENGTH:
-      const maxLength: number = Number(validation[Validations.MAX_LENGTH]);
+      const maxLength = Number(validation[Validations.MAX_LENGTH]);
       return String(value).length < maxLength ? null : `Text must be less than ${maxLength} character`;
     case Validations.REGEX:
       return null;

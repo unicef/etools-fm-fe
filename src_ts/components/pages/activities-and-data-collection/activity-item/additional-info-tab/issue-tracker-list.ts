@@ -16,13 +16,13 @@ import {translate} from 'lit-translate';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
-  @property() loading: boolean = false;
+  @property() loading = false;
   @property() items: LogIssue[] = [];
   @property() queryParams: GenericObject = {
     page: 1,
     page_size: 5
   };
-  @property() count: number = 0;
+  @property() count = 0;
   _activityId: string | null = null;
   @property() set activityId(activityId: string) {
     this.queryParams = {
@@ -35,7 +35,7 @@ export class IssueTrackerList extends LitElement {
   loadIssues(params: GenericObject): void {
     this.loading = true;
     const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
-    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}&status=new`;
+    const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}&status=new`;
     request<IListData<LogIssue>>(resultUrl).then((list: IListData<LogIssue>) => {
       this.items = list.results;
       this.count = list.count;

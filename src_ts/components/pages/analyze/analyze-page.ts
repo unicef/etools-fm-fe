@@ -15,10 +15,10 @@ import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 
-const PAGE: string = 'analyze';
+const PAGE = 'analyze';
 
-const MONITORING_ACTIVITY: string = 'monitoring-activity';
-const COUNTRY_OVERVIEW: string = 'country-overview';
+const MONITORING_ACTIVITY = 'monitoring-activity';
+const COUNTRY_OVERVIEW = 'country-overview';
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: MONITORING_ACTIVITY,
@@ -83,17 +83,11 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case MONITORING_ACTIVITY:
-        return html`
-          <monitoring-tab></monitoring-tab>
-        `;
+        return html` <monitoring-tab></monitoring-tab> `;
       case COUNTRY_OVERVIEW:
-        return html`
-          <co-overview-tab></co-overview-tab>
-        `;
+        return html` <co-overview-tab></co-overview-tab> `;
       default:
-        return html`
-          Tab Not Found
-        `;
+        return html` Tab Not Found `;
     }
   }
 
