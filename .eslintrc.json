@@ -53,9 +53,6 @@
     "@typescript-eslint/explicit-function-return-type": ["error", {
       "allowExpressions": true
     }],
-    "@typescript-eslint/typedef": ["error", {
-      "variableDeclaration": true
-    }],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-use-before-define": ["error", {
