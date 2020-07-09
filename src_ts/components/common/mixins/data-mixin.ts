@@ -1,5 +1,6 @@
 import {LitElement} from 'lit-element';
 import clone from 'ramda/es/clone';
+import equals from 'ramda/es/equals';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
@@ -54,11 +55,21 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
     }
 
     private checkEquality(valueA: any, valueB: any): boolean {
-      const baseValue: any[] = [valueA].flat();
-      const valueToMatch: any[] = [valueB].flat();
-      return (
-        baseValue.length === valueToMatch.length &&
-        baseValue.flat().every((value: any, index: number) => `${value}` === `${valueToMatch[index]}`)
-      );
+      if (typeof valueA === 'number') {
+        valueA = valueA.toString();
+      }
+
+      if (typeof valueB === 'number') {
+        valueB = valueB.toString();
+      }
+
+      return equals(valueA, valueB);
+
+      // const baseValue: any[] = [valueA].flat();
+      // const valueToMatch: any[] = [valueB].flat();
+      // return (
+      //   baseValue.length === valueToMatch.length &&
+      //   baseValue.flat().every((value: any, index: number) => `${value}` === `${valueToMatch[index]}`)
+      // );
     }
   };
