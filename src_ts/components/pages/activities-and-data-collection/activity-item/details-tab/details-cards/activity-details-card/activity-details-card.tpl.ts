@@ -34,7 +34,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
 
         <!--    Collapsed location Widget    -->
         ${this.isEditMode && !this.isFieldReadonly('location')
-          ? html`
+      ? html`
               <div class="widget-dropdown">
                 <!--      Title        -->
                 <div class="flex-auto">
@@ -59,19 +59,19 @@ export function template(this: ActivityDetailsCard): TemplateResult {
                     id="locationWidget"
                     .selectedLocation="${simplifyValue(this.editedData.location)}"
                     .selectedSites="${this.editedData.location_site
-                      ? [simplifyValue(this.editedData.location_site)]
-                      : []}"
+          ? [simplifyValue(this.editedData.location_site)]
+          : []}"
                     @sites-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location_site', detail.sites[0] || null);
-                    }}"
+          this.updateModelValue('location_site', detail.sites[0] || null);
+        }}"
                     @location-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location', detail.location);
-                    }}"
+          this.updateModelValue('location', detail.location);
+        }}"
                   ></location-widget>
                 </iron-collapse>
               </div>
             `
-          : ''}
+      : ''}
 
         <!--    Inputs for displaying Location and Site fields    -->
         <div class="layout horizontal location-inputs">
@@ -113,7 +113,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('start_date', formatDate(detail.date))}"
+      this.updateModelValue('start_date', detail.date ? formatDate(detail.date) : '')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               selected-date-display-format="D MMM YYYY"
@@ -124,7 +124,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('end_date', formatDate(detail.date))}}"
+      this.updateModelValue('end_date', detail.date ? formatDate(detail.date) : '')}}"
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
