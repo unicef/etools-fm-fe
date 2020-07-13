@@ -49,7 +49,6 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
-
     this.routeUnsubscribe = store.subscribe(
       routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
     );
@@ -64,7 +63,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
         }
         this.cpOutputs = outputs;
         this.refreshData();
-      }, false)
+      })
     );
     const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
