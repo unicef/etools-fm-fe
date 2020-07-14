@@ -22,6 +22,7 @@ import {
 import {loadLocationPath, loadLocationsChunk} from '../../../redux/effects/widget-locations.effects';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {getLocationPart} from '../../utils/get-location-part';
+import {reverseNestedArray} from '../../utils/map-helper';
 import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
@@ -475,7 +476,7 @@ export class LocationWidgetComponent extends LitElement {
 
     if (!polygonIsEmpty || pointCoordinates) {
       const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
-      const reversedCoordinates: any[] = this.reverseNestedArray(clone(coordinates));
+      const reversedCoordinates: any[] = reverseNestedArray(clone(coordinates));
 
       const options: FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
       this.MapHelper.map!.flyToBounds(reversedCoordinates, options);
@@ -485,17 +486,6 @@ export class LocationWidgetComponent extends LitElement {
         this.polygon.addTo(this.MapHelper.map!);
       }
     }
-  }
-
-  private reverseNestedArray(arr: any[]): any[] {
-    if (arr[0] && !Array.isArray(arr[0][0])) {
-      return arr.map((point: []) => {
-        return point.reverse();
-      });
-    } else {
-      arr.map((subArr: []) => this.reverseNestedArray(subArr));
-    }
-    return arr;
   }
 
   private clearMap(): void {
@@ -519,6 +509,7 @@ export class LocationWidgetComponent extends LitElement {
   private setInitialMapView(): void {
     const reversedCoords: LatLngTuple = [...this.defaultMapCenter].reverse() as LatLngTuple;
     const zoom = 6;
+    debugger;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }
 
