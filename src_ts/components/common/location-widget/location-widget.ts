@@ -509,7 +509,6 @@ export class LocationWidgetComponent extends LitElement {
   private setInitialMapView(): void {
     const reversedCoords: LatLngTuple = [...this.defaultMapCenter].reverse() as LatLngTuple;
     const zoom = 6;
-    debugger;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }
 
