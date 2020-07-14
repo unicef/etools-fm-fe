@@ -173,6 +173,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.tpmPartnerUnsubscribe = store.subscribe(
+      staticDataDynamic(
+        (tpmPartners: EtoolsTPMPartner[] | undefined) => {
+          if (!tpmPartners) {
+            return;
+          }
+          this.tpmPartnersOptions = tpmPartners;
+        },
+        [TPM_PARTNERS]
+      )
+    );
     this.userUnsubscribe = store.subscribe(
       staticDataDynamic(
         (users: User[] | undefined) => {
@@ -188,17 +199,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
         [USERS]
       )
     );
-    this.tpmPartnerUnsubscribe = store.subscribe(
-      staticDataDynamic(
-        (tpmPartners: EtoolsTPMPartner[] | undefined) => {
-          if (!tpmPartners) {
-            return;
-          }
-          this.tpmPartnersOptions = tpmPartners;
-        },
-        [TPM_PARTNERS]
-      )
-    );
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
     if (!data.users) {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
@@ -212,6 +212,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
+    if (userType === USER_TPM && !this.tpmPartnersOptions.length) {
+      this.membersOptions = [];
+      return;
+    }
     this.membersOptions = this.users.filter((user: User) => {
       let isValid = false;
       if (userType) {
