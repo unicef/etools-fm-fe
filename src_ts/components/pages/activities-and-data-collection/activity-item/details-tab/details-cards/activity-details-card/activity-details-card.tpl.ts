@@ -113,7 +113,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('start_date', formatDate(detail.date))}"
+                this.updateModelValue('start_date', detail.date ? formatDate(detail.date) : '')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               selected-date-display-format="D MMM YYYY"
@@ -124,7 +124,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('end_date', formatDate(detail.date))}}"
+                this.updateModelValue('end_date', detail.date ? formatDate(detail.date) : '')}}"
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
