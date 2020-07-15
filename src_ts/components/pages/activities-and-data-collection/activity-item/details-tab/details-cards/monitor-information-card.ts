@@ -15,6 +15,7 @@ import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
+import {then} from 'ramda';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
@@ -173,6 +174,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   connectedCallback(): void {
     super.connectedCallback();
+
     this.tpmPartnerUnsubscribe = store.subscribe(
       staticDataDynamic(
         (tpmPartners: EtoolsTPMPartner[] | undefined) => {
@@ -212,17 +214,13 @@ export class MonitorInformationCard extends BaseDetailsCard {
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
-    if (userType === USER_TPM && !this.tpmPartnersOptions.length) {
-      this.membersOptions = [];
-      return;
-    }
     this.membersOptions = this.users.filter((user: User) => {
       let isValid = false;
       if (userType) {
         isValid = userType === user.user_type;
       }
-      if (tpmPartner) {
-        isValid = tpmPartner.id === user.tpm_partner;
+      if (userType === USER_TPM) {
+        isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
       }
       return isValid;
     });
