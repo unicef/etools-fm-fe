@@ -15,7 +15,6 @@ import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
-import {then} from 'ramda';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
@@ -174,18 +173,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    this.tpmPartnerUnsubscribe = store.subscribe(
-      staticDataDynamic(
-        (tpmPartners: EtoolsTPMPartner[] | undefined) => {
-          if (!tpmPartners) {
-            return;
-          }
-          this.tpmPartnersOptions = tpmPartners;
-        },
-        [TPM_PARTNERS]
-      )
-    );
     this.userUnsubscribe = store.subscribe(
       staticDataDynamic(
         (users: User[] | undefined) => {
@@ -199,6 +186,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
           });
         },
         [USERS]
+      )
+    );
+    this.tpmPartnerUnsubscribe = store.subscribe(
+      staticDataDynamic(
+        (tpmPartners: EtoolsTPMPartner[] | undefined) => {
+          if (!tpmPartners) {
+            return;
+          }
+          this.tpmPartnersOptions = tpmPartners;
+        },
+        [TPM_PARTNERS]
       )
     );
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
