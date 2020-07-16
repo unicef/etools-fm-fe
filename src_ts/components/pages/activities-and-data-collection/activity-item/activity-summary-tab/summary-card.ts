@@ -13,6 +13,7 @@ import {clone} from 'ramda';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
+import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
