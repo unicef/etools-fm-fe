@@ -57,6 +57,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         // check errors on update(create) complete
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
+          fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
           return;
         }
 
@@ -147,14 +148,14 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     return modifiedFields.length === 1 && modifiedFields[0] === 'file_type';
   }
 
-  private handleExistingFileChange(data: Partial<IAttachment>) {
+  private handleExistingFileChange(data: Partial<IAttachment>): void {
     data.file_type = this.editedData.file_type;
     // Because the attachment item has the same id as the uploaded file it can not be edited per se,
     // To simulate an edit , the existing item has to be deleted and a new one created
-    store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data)).then(() => {
-      store.dispatch<AsyncEffect>(
-        deleteListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id!)
-      );
-    });
+    store.dispatch<AsyncEffect>(
+      deleteListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id!, () => {
+        store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
+      })
+    );
   }
 }

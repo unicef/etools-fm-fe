@@ -86,7 +86,8 @@ export function updateListAttachment(
 export function deleteListAttachment(
   endpointName: string,
   endpointData: GenericObject,
-  id: number
+  id: number,
+  thenCallback?: () => void
 ): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(endpointName, endpointData) || ({} as IResultEndpoint);
@@ -95,7 +96,12 @@ export function deleteListAttachment(
     }
     dispatch(new SetAttachmentsUpdateState(true));
     return request(`${url}${id}/`, {method: 'DELETE'})
-      .then(() => dispatch(new SetAttachmentsUpdateError({})))
+      .then(() => {
+        dispatch(new SetAttachmentsUpdateError({}));
+        if (thenCallback) {
+          thenCallback();
+        }
+      })
       .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
       .then(() => {
         dispatch(new SetAttachmentsUpdateState(false));
