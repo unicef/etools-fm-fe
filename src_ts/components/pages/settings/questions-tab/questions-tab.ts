@@ -24,6 +24,7 @@ import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
+import {clone} from 'ramda';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -103,6 +104,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   openPopup(question?: IQuestion): void {
+    if (question) {
+      question = clone(question);
+    }
     openDialog<IQuestion | undefined>({
       dialog: 'question-popup',
       dialogData: question
