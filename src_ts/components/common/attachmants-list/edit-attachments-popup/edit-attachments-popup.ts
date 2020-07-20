@@ -2,11 +2,7 @@ import {CSSResultArray, customElement, LitElement, property, TemplateResult} fro
 import {fireEvent} from '../../../utils/fire-custom-event';
 import {template} from './edit-attachments-popup.tpl';
 import {store} from '../../../../redux/store';
-import {
-  addAttachmentToList,
-  updateListAttachment,
-  deleteListAttachment
-} from '../../../../redux/effects/attachments-list.effects';
+import {addAttachmentToList, updateListAttachment} from '../../../../redux/effects/attachments-list.effects';
 import {listAttachmentUpdate} from '../../../../redux/selectors/attachments-list.selectors';
 import {Unsubscribe} from 'redux';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -57,6 +53,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         // check errors on update(create) complete
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
+          fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
           return;
         }
 
@@ -116,8 +113,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         store.dispatch<AsyncEffect>(
           updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
         );
-      } else {
-        this.handleExistingFileChange(data);
       }
     } else {
       store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
@@ -145,16 +140,5 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {
     const modifiedFields = Object.keys(data);
     return modifiedFields.length === 1 && modifiedFields[0] === 'file_type';
-  }
-
-  private handleExistingFileChange(data: Partial<IAttachment>) {
-    data.file_type = this.editedData.file_type;
-    // Because the attachment item has the same id as the uploaded file it can not be edited per se,
-    // To simulate an edit , the existing item has to be deleted and a new one created
-    store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data)).then(() => {
-      store.dispatch<AsyncEffect>(
-        deleteListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id!)
-      );
-    });
   }
 }
