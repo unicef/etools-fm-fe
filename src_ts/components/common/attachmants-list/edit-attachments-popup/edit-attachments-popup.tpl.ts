@@ -57,7 +57,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
         ></etools-dropdown>
         <div class="file-upload-container">
           <etools-upload
-            .showDeleteBtn="${false}"
+            .readonly="${this.editedData && this.editedData.file}"
             .fileUrl="${this.editedData && this.editedData.file}"
             .uploadEndpoint="${getEndpoint(ATTACHMENTS_STORE).url}"
             @upload-finished="${(event: CustomEvent) => this.fileSelected(event.detail)}"
