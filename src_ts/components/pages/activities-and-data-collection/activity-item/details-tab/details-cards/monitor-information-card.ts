@@ -217,8 +217,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
       if (userType) {
         isValid = userType === user.user_type;
       }
-      if (tpmPartner) {
-        isValid = tpmPartner.id === user.tpm_partner;
+      if (userType === USER_TPM) {
+        isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
       }
       return isValid;
     });
