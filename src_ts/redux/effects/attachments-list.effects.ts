@@ -95,9 +95,7 @@ export function deleteListAttachment(
     }
     dispatch(new SetAttachmentsUpdateState(true));
     return request(`${url}${id}/`, {method: 'DELETE'})
-      .then(() => {
-        dispatch(new SetAttachmentsUpdateError({}));
-      })
+      .then(() => dispatch(new SetAttachmentsUpdateError({})))
       .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
       .then(() => {
         dispatch(new SetAttachmentsUpdateState(false));
