@@ -38,9 +38,7 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
 
   set data(data: IActivityDetails) {
     super.data = data;
-    if (data) {
-      this.activitySections = clone(data.sections);
-    }
+    this.activitySections = data ? clone(data.sections) : [];
   }
 
   selectSections(sections: Section[]): void {
