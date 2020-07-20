@@ -16,7 +16,6 @@ import {addQuestion, updateQuestion} from '../../../../../redux/effects/question
 import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
-import {formatServerErrorAsText} from '@unicef-polymer/etools-ajax/ajax-error-parser';
 import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
 import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -68,7 +67,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
         // check errors on update(create) complete
         this.errors = store.getState().questions.error;
         if (this.errors && Object.keys(this.errors).length) {
-          fireEvent(this, 'toast', {text: formatServerErrorAsText(this.errors)});
+          fireEvent(this, 'toast', {text: Object.values(this.errors).join('\n')});
           return;
         }
 
