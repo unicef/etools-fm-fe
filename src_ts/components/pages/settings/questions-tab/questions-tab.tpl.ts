@@ -55,7 +55,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
         <etools-data-table-column class="flex-1 col-data" field="category__name" sortable>
           ${translate('QUESTIONS.COLUMNS.CATEGORY')}
         </etools-data-table-column>
-        <etools-data-table-column class="w45px flex-none col-data" field="is_active" sortable>
+        <etools-data-table-column class="w60px flex-none col-data" field="is_active" sortable>
           ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
         </etools-data-table-column>
       </etools-data-table-header>

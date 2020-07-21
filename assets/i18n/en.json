@@ -323,12 +323,12 @@
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
-      "TEXT": "Question Text",
-      "LEVEL": "Relating to",
+      "TEXT": "Question",
+      "LEVEL": "Question Target Level",
       "METHODS": "Collection Methods",
-      "ANSWER_TYPE": "Measurement Type",
+      "ANSWER_TYPE": "Answer Type",
       "CATEGORY": "Group",
-      "IS_ACTIVE": "Active",
+      "IS_ACTIVE": "Is Active",
       "SECTIONS": "Sections",
       "IS_HACT": "Counts towards HACT",
       "ANSWER_OPTIONS": "Reporting Details"
