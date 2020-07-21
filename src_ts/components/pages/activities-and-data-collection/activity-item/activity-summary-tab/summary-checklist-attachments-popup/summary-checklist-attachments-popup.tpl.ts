@@ -55,8 +55,8 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                   ?disabled="${this.readonly}"
                   hide-search
                   .options="${this.attachmentTypes}"
-                  option-label="display_name"
-                  option-value="value"
+                  option-label="label"
+                  option-value="id"
                   ?invalid="${!attachment.file_type && this.saveBtnClicked}"
                   .errorMessage="File Type is required"
                   allow-outside-scroll
