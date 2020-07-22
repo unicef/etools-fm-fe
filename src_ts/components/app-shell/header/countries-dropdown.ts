@@ -6,8 +6,10 @@ import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown'
 import {customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
+import {countrySelector} from '../../../redux/selectors/country.selectors';
 import {DEFAULT_ROUTE, updateAppLocation} from '../../../routing/routes';
 import {ROOT_PATH} from '../../../config/config';
+import {isEmpty} from 'ramda';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
@@ -31,6 +33,24 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   userData!: IEtoolsUserModel;
 
   @query('#countrySelector') private countryDropdown!: EtoolsDropdownEl;
+
+  constructor() {
+    super();
+    store.subscribe(
+      countrySelector((countryState: IRequestState) => {
+        this.changeRequestStatus(countryState.isRequest.load);
+        if (countryState.isRequest.load) {
+          return;
+        }
+        if (!countryState.error) {
+          this.handleChangedCountry();
+        }
+        if (!countryState.isRequest && countryState.error && !isEmpty(countryState.error)) {
+          this.handleCountryChangeError(countryState.error);
+        }
+      })
+    );
+  }
 
   render(): TemplateResult {
     // main template
@@ -106,14 +126,9 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   }
 
   protected triggerCountryChangeRequest(selectedCountryId: number): void {
-    this.changeRequestStatus(true);
     localStorage.clear();
     etoolsCustomDexieDb.delete().finally(() => {
-      store
-        .dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId))
-        .then(() => this.handleChangedCountry())
-        .catch((error: GenericObject) => this.handleCountryChangeError(error))
-        .then(() => this.changeRequestStatus(false));
+      store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId));
     });
   }
 
@@ -137,7 +152,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     document.location.assign(window.location.origin + ROOT_PATH);
   }
 
-  protected handleCountryChangeError(error: GenericObject): void {
+  protected handleCountryChangeError(error: any): void {
     logError('Country change failed!', 'countries-dropdown', error);
     this.countryDropdown.set('selected', this.currentCountry.id);
     fireEvent(this, 'toast', {text: 'Something went wrong changing your workspace. Please try again'});
