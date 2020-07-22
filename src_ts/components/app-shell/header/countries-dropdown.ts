@@ -109,13 +109,11 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     this.changeRequestStatus(true);
     localStorage.clear();
     etoolsCustomDexieDb.delete().finally(() => {
-      store.dispatch<AsyncEffect>(
-        changeCurrentUserCountry(selectedCountryId)
-          .api()
-          .then(() => this.handleChangedCountry())
-          .catch((error: GenericObject) => this.handleCountryChangeError(error))
-          .then(() => this.changeRequestStatus(false))
-      );
+      store
+        .dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId))
+        .then(() => this.handleChangedCountry())
+        .catch((error: GenericObject) => this.handleCountryChangeError(error))
+        .then(() => this.changeRequestStatus(false));
     });
   }
 
