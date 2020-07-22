@@ -13,10 +13,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
   @property() saveBtnClicked = false;
   @property() savingInProcess = false;
   @property() attachments: (StoredAttachment | IEditedAttachment)[] = [];
-  @property() attachmentTypes: DefaultDropdownOption[] = [
-    {display_name: 'SOP', value: 34},
-    {display_name: 'Other', value: 35}
-  ];
+  @property() attachmentTypes: AttachmentType[] | undefined = [];
 
   readonly = false;
   popupTitle = '';
@@ -24,11 +21,13 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
   @query('#link') link!: HTMLLinkElement;
   private updateUrl?: string;
 
-  set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
+  set dialogData({attachments, title, updateUrl, attachmentTypes}: AttachmentsPopupData) {
     this.updateUrl = updateUrl;
     this.popupTitle = title;
+    this.attachmentTypes = attachmentTypes;
     this.attachments = clone(attachments);
   }
+
 
   render(): TemplateResult | void {
     return template.call(this);
