@@ -323,12 +323,12 @@
     },
     "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
-      "TEXT": "Localized Question Text",
-      "LEVEL": "Localized Relating to",
+      "TEXT": "Localized Question",
+      "LEVEL": "Localized Question Target Level",
       "METHODS": "Localized Collection Methods",
-      "ANSWER_TYPE": "Localized Measurement Type",
+      "ANSWER_TYPE": "Localized Answer Type",
       "CATEGORY": "Localized Group",
-      "IS_ACTIVE": "Localized Active",
+      "IS_ACTIVE": "Localized Is Active",
       "SECTIONS": "Localized Sections",
       "IS_HACT": "Localized Counts towards HACT",
       "ANSWER_OPTIONS": "Localized Reporting Details"
