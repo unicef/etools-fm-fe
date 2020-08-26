@@ -8,7 +8,7 @@ import {ACTIVITIES_LIST} from '../../endpoints/endpoints-list';
 export function loadActivitiesList(params: IRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTIVITIES_LIST);
-    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
+    const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}`;
     return request<IListData<IListActivity>>(resultUrl, {method: 'GET'}).then((response: IListData<IListActivity>) => {
       dispatch(new SetActivitiesList(response));
     });

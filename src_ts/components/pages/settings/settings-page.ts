@@ -22,9 +22,9 @@ import {activeLanguageSelector} from '../../../redux/selectors/active-language.s
 
 store.addReducers({specificLocations, questions});
 
-const PAGE: string = 'settings';
-const SITES_TAB: string = 'sites';
-const QUESTIONS_TAB: string = 'questions';
+const PAGE = 'settings';
+const SITES_TAB = 'sites';
+const QUESTIONS_TAB = 'questions';
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: QUESTIONS_TAB,
@@ -103,17 +103,11 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case SITES_TAB:
-        return html`
-          <sites-tab></sites-tab>
-        `;
+        return html` <sites-tab></sites-tab> `;
       case QUESTIONS_TAB:
-        return html`
-          <questions-tab></questions-tab>
-        `;
+        return html` <questions-tab></questions-tab> `;
       default:
-        return html`
-          Tab Not Found
-        `;
+        return html` Tab Not Found `;
     }
   }
 

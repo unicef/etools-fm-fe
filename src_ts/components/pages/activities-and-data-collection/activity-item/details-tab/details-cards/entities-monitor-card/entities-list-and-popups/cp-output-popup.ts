@@ -18,7 +18,7 @@ import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
 
 @customElement('cp-output-popup')
 export class CpOutputPopup extends PartnersMixin(LitElement) {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() selectedCpOutput?: EtoolsCpOutput;
   @property() cpOutputs: EtoolsCpOutput[] = [];
   @property() selectedPartners: EtoolsPartner[] = [];

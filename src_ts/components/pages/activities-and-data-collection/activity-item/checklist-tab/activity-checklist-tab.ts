@@ -15,7 +15,7 @@ store.addReducers({activityChecklist});
 
 @customElement('activity-checklist-tab')
 export class ActivityChecklistTab extends LitElement {
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
   @property() protected sortedChecklist: GenericObject<IChecklistItem[]> | null = null;
   private activityChecklistUnsubscribe!: Unsubscribe;
 

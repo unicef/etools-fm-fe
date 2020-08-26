@@ -7,7 +7,7 @@ import {LitElement} from 'lit-element';
 export const ListMixin = <T extends Constructor<LitElement>>() => <L>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-    count: number = 0;
+    count = 0;
     queryParams: GenericObject | null = null;
     items: L[] = [];
 

@@ -13,7 +13,7 @@ export function loadQuestionTemplates(
   return (dispatch: Dispatch) => {
     const endpointName: string = target ? QUESTION_TEMPLATES_WITH_TARGET : QUESTION_TEMPLATES;
     const {url}: IResultEndpoint = getEndpoint(endpointName, {level, target});
-    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
+    const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}`;
     return request<IListData<IQuestionTemplate>>(resultUrl, {method: 'GET'}).then(
       (response: IListData<IQuestionTemplate>) => {
         dispatch(new SetQuestionTemplatesList(response));

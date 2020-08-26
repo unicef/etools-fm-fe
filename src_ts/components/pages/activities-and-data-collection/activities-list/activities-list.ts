@@ -37,9 +37,9 @@ store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
 export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitElement) {
-  @property() loadingInProcess: boolean = false;
+  @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
-  @property() filtersLoading: boolean = false;
+  @property() filtersLoading = false;
   @property() filters: IEtoolsFilter[] | null = null;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
@@ -128,12 +128,7 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
     return date ? moment(date).format('DD MMM YYYY') : '-';
   }
 
-  serializeName(
-    id: number | string,
-    collection: GenericObject[],
-    labelField: string = 'name',
-    valueField: string = 'id'
-  ): string {
+  serializeName(id: number | string, collection: GenericObject[], labelField = 'name', valueField = 'id'): string {
     if (!id || !collection) {
       return '';
     }

@@ -23,7 +23,7 @@ store.addReducers({activitySummary, findingsComponents});
 @customElement('activity-summary-tab')
 export class ActivitySummaryTab extends LitElement {
   @property() activityId: number | null = null;
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
 
   @property() protected findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
   @property() private rawFindingsAndOverall: FindingsAndOverall = {overall: null, findings: null};
@@ -31,7 +31,7 @@ export class ActivitySummaryTab extends LitElement {
   private findingsAndOverallUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
-  private isLoad: boolean = true;
+  private isLoad = true;
 
   render(): TemplateResult {
     return html`
@@ -40,12 +40,12 @@ export class ActivitySummaryTab extends LitElement {
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
       ${repeat(
-      Object.values(this.findingsAndOverall).filter(({findings}: SortedFindingsAndOverall) =>
-        Boolean(findings.length)
-      ),
-      (_item: any) => Date.now(),
-      ({name, findings, overall}: SortedFindingsAndOverall) => {
-        return html`
+        Object.values(this.findingsAndOverall).filter(({findings}: SortedFindingsAndOverall) =>
+          Boolean(findings.length)
+        ),
+        (_item: any) => Date.now(),
+        ({name, findings, overall}: SortedFindingsAndOverall) => {
+          return html`
             <div class="findings-block">
               <summary-card
                 .activityId="${this.activityId}"
@@ -57,8 +57,8 @@ export class ActivitySummaryTab extends LitElement {
               ></summary-card>
             </div>
           `;
-      }
-    )}
+        }
+      )}
     `;
   }
 

@@ -8,7 +8,7 @@ import {EtoolsRouter} from '../../routing/routes';
 export function loadQuestions(params: IRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(QUESTIONS_LIST);
-    const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
+    const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}`;
     return request<IListData<IQuestion>>(resultUrl, {method: 'GET'}).then((response: IListData<IQuestion>) => {
       dispatch(new SetQuestionsList(response));
     });

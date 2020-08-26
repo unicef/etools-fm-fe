@@ -8,7 +8,7 @@ import '@unicef-polymer/etools-upload/etools-upload';
 
 @customElement('files-popup')
 export class FilesPopup extends LitElement {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() attachments: IAttachment[] = [];
 
   set dialogData(attachments: IAttachment[]) {
@@ -38,9 +38,7 @@ export class FilesPopup extends LitElement {
         <div class="layout vertical files">
           ${repeat(
             this.attachments,
-            (attachment: IAttachment) => html`
-              <etools-upload readonly .fileUrl="${attachment.file}"></etools-upload>
-            `
+            (attachment: IAttachment) => html` <etools-upload readonly .fileUrl="${attachment.file}"></etools-upload> `
           )}
         </div>
       </etools-dialog>

@@ -6,7 +6,7 @@ import {translate} from 'lit-translate';
 @customElement('open-issues-shared-tab-template')
 export class OpenIssuesSharedTabTemplate extends LitElement {
   @property() data!: OpenIssuesActionPoints[];
-  @property() loading: boolean = false;
+  @property() loading = false;
 
   render(): TemplateResult {
     return html`

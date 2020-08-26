@@ -4,7 +4,7 @@ export function isValidDate(date: any): boolean {
   return !(date instanceof Date) ? false : date.toString() !== 'Invalid Date';
 }
 
-export function prettyDate(dateString: string, format?: string, placeholder: string = '-'): string | '' | Response {
+export function prettyDate(dateString: string, format?: string, placeholder = '-'): string | '' | Response {
   const date: Date | null = convertDate(dateString);
   return !date ? (placeholder ? placeholder : '') : _utcDate(date, format);
 }
@@ -13,7 +13,7 @@ function _utcDate(date: any, format?: string): string {
   return !date ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
 }
 
-export function formatDate(date: Date, format: string = 'YYYY-MM-DD'): string {
+export function formatDate(date: Date, format = 'YYYY-MM-DD'): string {
   return moment(date).format(format);
 }
 

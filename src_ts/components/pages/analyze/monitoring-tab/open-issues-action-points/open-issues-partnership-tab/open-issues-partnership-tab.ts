@@ -8,7 +8,7 @@ import {openIssuesPartnershipSelector} from '../../../../../../redux/selectors/m
 @customElement('open-issues-partnership-tab')
 export class OpenIssuesPartnershipTab extends LitElement {
   @property() openIssuesPartnership!: OpenIssuesActionPoints[];
-  @property() loading: boolean = false;
+  @property() loading = false;
   private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {

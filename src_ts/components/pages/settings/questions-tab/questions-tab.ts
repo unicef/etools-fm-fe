@@ -24,11 +24,12 @@ import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
+import {clone} from 'ramda';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: IEtoolsFilter[] | null = null;
-  @property() listLoadingInProcess: boolean = false;
+  @property() listLoadingInProcess = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -83,9 +84,13 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   checkParams(params?: IRouteQueryParams | null): boolean {
-    const invalid: boolean = !params || !params.page || !params.page_size;
+    let invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
       updateQueryParams({page: 1, page_size: 10});
+    } else if (params!.page !== 1 && this.isFilterChange(params)) {
+      invalid = true;
+      // if filters changed and not on first page, reset to the first page to avoid error of missing data for the current page
+      updateQueryParams({page: 1, page_size: params!.page_size});
     }
     return !invalid;
   }
@@ -103,6 +108,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   openPopup(question?: IQuestion): void {
+    if (question) {
+      question = clone(question);
+    }
     openDialog<IQuestion | undefined>({
       dialog: 'question-popup',
       dialogData: question
@@ -132,6 +140,15 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       this.queryParams = queryParams;
       this.debouncedLoading(this.queryParams);
     }
+  }
+
+  private isFilterChange(queryParams?: IRouteQueryParams | null): boolean {
+    if (!queryParams || !this.queryParams) {
+      return false;
+    }
+    return (this.filters || []).some((filter) => {
+      return JSON.stringify(queryParams[filter.filterKey]) !== JSON.stringify(this.queryParams![filter.filterKey]);
+    });
   }
 
   private initFilters(): void {

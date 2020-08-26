@@ -5,7 +5,7 @@ import {etoolsCustomDexieDb} from './dexieDb';
 class RequestBase {
   lastAjaxRequest: any;
   reqProgress: any;
-  etoolsAjaxCacheListsExpireMapTable: string = 'listsExpireMapTable';
+  etoolsAjaxCacheListsExpireMapTable = 'listsExpireMapTable';
 
   get etoolsAjaxCacheDb(): Dexie {
     return etoolsCustomDexieDb;
@@ -56,12 +56,7 @@ function getHeaders(init: RequestInit = {}): GenericObject {
 function getToken(): string {
   const cookieObj: GenericObject = document.cookie
     .split(';')
-    .map((pair: string): string[] =>
-      pair
-        .trim()
-        .split('=')
-        .map(decodeURIComponent)
-    )
+    .map((pair: string): string[] => pair.trim().split('=').map(decodeURIComponent))
     .reduce((a: GenericObject, [key, value]: string[]): GenericObject => {
       try {
         a[key] = JSON.parse(value);

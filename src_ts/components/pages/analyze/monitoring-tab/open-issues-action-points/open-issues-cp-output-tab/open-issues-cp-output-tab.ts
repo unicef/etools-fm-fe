@@ -8,7 +8,7 @@ import {openIssuesCpOutputSelector} from '../../../../../../redux/selectors/moni
 @customElement('open-issues-cp-output-tab')
 export class OpenIssuesCpOutputTab extends LitElement {
   @property() openIssuesCpOutput!: OpenIssuesActionPoints[];
-  @property() loading: boolean = false;
+  @property() loading = false;
   private openIssuesActionPointsUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {

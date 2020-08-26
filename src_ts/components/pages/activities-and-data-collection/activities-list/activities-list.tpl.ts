@@ -123,7 +123,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div class="col-data flex-2">
                 ${(activity.team_members &&
                   activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ')) ||
-                  '-'}
+                '-'}
               </div>
               <div class="col-data flex-none w80px">${activity.checklists_count}</div>
               <div class="col-data flex-none w100px">

@@ -35,7 +35,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   CpOutputsMixin(PartnersMixin(ListMixin()<LogIssue>(LitElement)))
 ) {
   @property({type: Boolean})
-  isLoad: boolean = false;
+  isLoad = false;
 
   @property()
   filters: IEtoolsFilter[] | null = [];

@@ -106,11 +106,9 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                     this.showDetailsInput(currentTarget as HTMLElement, question.id, question.specific_details)}"
                 >
                   ${question.specific_details ||
-                    (this.isEditMode
-                      ? html`
-                          <span class="detail-placeholder">${translate('ACTIVITY_CHECKLIST.ADD_DETAIL')}</span>
-                        `
-                      : '-')}
+                  (this.isEditMode
+                    ? html` <span class="detail-placeholder">${translate('ACTIVITY_CHECKLIST.ADD_DETAIL')}</span> `
+                    : '-')}
                 </div>
 
                 <!-- Question Methods -->

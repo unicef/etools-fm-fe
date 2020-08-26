@@ -9,26 +9,25 @@ import {template} from './summary-checklist-attachments-popup.tpl';
 
 @customElement('summary-checklist-attachments-popup')
 export class SummaryChecklistAttachmentsPopup extends LitElement {
-  @property() dialogOpened: boolean = true;
-  @property() saveBtnClicked: boolean = false;
-  @property() savingInProcess: boolean = false;
+  @property() dialogOpened = true;
+  @property() saveBtnClicked = false;
+  @property() savingInProcess = false;
   @property() attachments: (StoredAttachment | IEditedAttachment)[] = [];
-  @property() attachmentTypes: DefaultDropdownOption[] = [
-    {display_name: 'SOP', value: 34},
-    {display_name: 'Other', value: 35}
-  ];
+  @property() attachmentTypes: AttachmentType[] | undefined = [];
 
-  readonly: boolean = false;
-  popupTitle: string = '';
+  readonly = false;
+  popupTitle = '';
 
   @query('#link') link!: HTMLLinkElement;
   private updateUrl?: string;
 
-  set dialogData({attachments, title, updateUrl}: AttachmentsPopupData) {
+  set dialogData({attachments, title, updateUrl, attachmentTypes}: AttachmentsPopupData) {
     this.updateUrl = updateUrl;
     this.popupTitle = title;
+    this.attachmentTypes = attachmentTypes;
     this.attachments = clone(attachments);
   }
+
 
   render(): TemplateResult | void {
     return template.call(this);

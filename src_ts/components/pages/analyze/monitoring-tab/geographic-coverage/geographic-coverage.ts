@@ -14,7 +14,8 @@ import {loadGeographicCoverageBySection} from '../../../../../redux/effects/moni
 import {SectionsMixin} from '../../../../common/mixins/sections-mixin';
 import {geographicCoverageSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {geographicCoverageStyles} from './geographic-coverage.styles';
-import {equals} from 'ramda';
+import {reverseNestedArray} from '../../../../utils/map-helper';
+import {equals, clone} from 'ramda';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
 
@@ -22,7 +23,7 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTupl
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedOptions: string[] = [];
   lastDispatchedSelectedOptions: string[] = [];
-  @property() loading: boolean = false;
+  @property() loading = false;
   @query('#geomap') private mapElement!: HTMLElement;
   private polygons: Polygon[] = [];
   private mapHelper!: MapHelper;
@@ -38,9 +39,15 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     this.geographicCoverageUnsubscribe = store.subscribe(
       geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
         this.clearMap();
+        geographicCoverage = clone(geographicCoverage);
         geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item));
         if (geographicCoverage.length) {
-          const target: LatLngTuple = this.getReversedCoordinates(geographicCoverage[0])[0] || DEFAULT_COORDINATES;
+          let viewCoordinates: any = geographicCoverage[0].geom.coordinates;
+          // coordinates are nested arrays, navigate to last level to get valid Lat and Lng
+          while (Array.isArray(viewCoordinates) && viewCoordinates[0] && Array.isArray(viewCoordinates[0][0])) {
+            viewCoordinates = viewCoordinates[0];
+          }
+          const target: LatLngTuple = viewCoordinates[0] || DEFAULT_COORDINATES;
           this.mapHelper.map!.setView(target, 6);
         }
         this.loading = false;
@@ -79,7 +86,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   getPolygonOptions(geographicCoverageItem: GeographicCoverage): PolylineOptions {
-    let color: string = 'grey';
+    let color = 'grey';
     if (geographicCoverageItem.completed_visits == 0) {
       color = 'var(--mark-no-visits-color)';
     } else if (1 <= geographicCoverageItem.completed_visits && geographicCoverageItem.completed_visits <= 5) {
@@ -106,7 +113,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   initMap(): void {
     this.mapHelper = new MapHelper();
     this.mapHelper.initMap(this.mapElement);
-    const zoom: number = 6;
+    const zoom = 6;
     this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
   }
 
@@ -134,9 +141,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   private getReversedCoordinates(location: GeographicCoverage): CoordinatesArray[] {
-    return (location.geom.coordinates || []).flat().map((coordinate: CoordinatesArray) => {
-      return [...coordinate].reverse() as CoordinatesArray;
-    });
+    return reverseNestedArray(location.geom.coordinates || []);
   }
 
   static get styles(): CSSResult[] {

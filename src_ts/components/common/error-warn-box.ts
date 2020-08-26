@@ -10,10 +10,10 @@ import '@polymer/paper-button/paper-button.js';
 @customElement('etools-error-warn-box')
 export class EtoolsErrorWarnBox extends LitElement {
   @property({type: String})
-  alertType: string = 'warning';
+  alertType = 'warning';
 
   @property({type: String})
-  title: string = 'Error messages';
+  title = 'Error messages';
 
   @property({type: Array})
   messages: string[] = [];
@@ -129,9 +129,7 @@ export class EtoolsErrorWarnBox extends LitElement {
   }
 
   getErrorHTML(msg: string): TemplateResult {
-    return html`
-      <li class="cancel-li-display">${msg}</li>
-    `;
+    return html` <li class="cancel-li-display">${msg}</li> `;
   }
 
   resetErrors(): void {

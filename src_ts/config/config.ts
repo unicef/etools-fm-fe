@@ -1,10 +1,10 @@
-const PROD_DOMAIN: string = 'etools.unicef.org';
-const STAGING_DOMAIN: string = 'etools-staging.unicef.org';
-const DEV_DOMAIN: string = 'etools-dev.unicef.org';
-const DEMO_DOMAIN: string = 'etools-demo.unicef.org';
+const PROD_DOMAIN = 'etools.unicef.org';
+const STAGING_DOMAIN = 'etools-staging.unicef.org';
+const DEV_DOMAIN = 'etools-dev.unicef.org';
+const DEMO_DOMAIN = 'etools-demo.unicef.org';
 
-export const SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY: string = 'etoolsAppSmallMenuIsActive';
-export const ROOT_PATH: string = '/fm/';
+export const SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY = 'etoolsAppSmallMenuIsActive';
+export const ROOT_PATH = '/fm/';
 
 export function isProductionServer(): boolean {
   const location: string = window.location.href;

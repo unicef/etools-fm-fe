@@ -37,12 +37,12 @@ store.addReducers({
 @customElement('page-header')
 export class PageHeader extends connect(store)(LitElement) {
   @property({type: Boolean})
-  isStaging: boolean = false;
+  isStaging = false;
 
   rootPath: string = ROOT_PATH;
 
   @property({type: String})
-  headerColor: string = 'var(--header-bg-color)';
+  headerColor = 'var(--header-bg-color)';
 
   @property({type: Object})
   profile!: IEtoolsUserModel;
@@ -74,9 +74,9 @@ export class PageHeader extends connect(store)(LitElement) {
   //TODO list loading
   languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
 
-  @property() selectedLanguage: string = 'en';
+  @property() selectedLanguage = 'en';
 
-  @property() refreshInProgress: boolean = false;
+  @property() refreshInProgress = false;
 
   constructor() {
     super();
@@ -174,11 +174,7 @@ export class PageHeader extends connect(store)(LitElement) {
             src="${this.rootPath}assets/images/etools-logo-color-white.svg"
             alt="eTools"
           />
-          ${this.isStaging
-            ? html`
-                <div class="envWarning">- STAGING TESTING ENVIRONMENT</div>
-              `
-            : ''}
+          ${this.isStaging ? html` <div class="envWarning">- STAGING TESTING ENVIRONMENT</div> ` : ''}
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
@@ -257,7 +253,7 @@ export class PageHeader extends connect(store)(LitElement) {
     }
   }
 
-  protected profileSaveLoadingMsgDisplay(show: boolean = true): void {
+  protected profileSaveLoadingMsgDisplay(show = true): void {
     fireEvent(this, 'global-loading', {
       active: show,
       loadingSource: 'profile-save'

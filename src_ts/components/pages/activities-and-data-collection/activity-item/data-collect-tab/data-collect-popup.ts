@@ -8,8 +8,8 @@ import {translate} from 'lit-translate';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {
-  @property() dialogOpened: boolean = true;
-  @property({type: Boolean}) isNew: boolean = true;
+  @property() dialogOpened = true;
+  @property({type: Boolean}) isNew = true;
 
   set dialogData(data: DataCollectionChecklist) {
     this.isNew = !data;
@@ -53,7 +53,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
   }
 
   validate(): boolean {
-    let isValid: boolean = true;
+    let isValid = true;
     if (!this.editedData.information_source) {
       this.errors = {...this.errors, information_source: 'Information source is required'};
       isValid = false;

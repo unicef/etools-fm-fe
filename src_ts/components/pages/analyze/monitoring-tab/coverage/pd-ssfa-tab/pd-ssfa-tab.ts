@@ -10,7 +10,7 @@ import {translate} from 'lit-translate';
 @customElement('pd-ssfa-tab')
 export class PdSsfaTab extends LitElement {
   @property() private interventionsCoverage!: InterventionsCoverage[];
-  @property() private loading: boolean = false;
+  @property() private loading = false;
   private readonly interventionsCoverageUnsubscribe: Unsubscribe;
 
   constructor() {

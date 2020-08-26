@@ -38,8 +38,8 @@ import {translate} from 'lit-translate';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
-const PAGE: string = 'activities';
-const SUB_ROUTE: string = 'data-collection';
+const PAGE = 'activities';
+const SUB_ROUTE = 'data-collection';
 
 @customElement('data-collection-checklist')
 export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
@@ -47,7 +47,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   @property() private checklistFormJson: ChecklistFormJson | null = null;
   @property() private formErrors: GenericObject = {};
   private activityDetails: IActivityDetails | null = null;
-  private tabIsReadonly: boolean = true;
+  private tabIsReadonly = true;
 
   private routeDetailsUnsubscribe!: Unsubscribe;
   private checklistUnsubscribe!: Unsubscribe;
@@ -55,7 +55,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   private blueprintUnsubscribe!: Unsubscribe;
   private activityId: string | null = null;
   private checklistId: string | null = null;
-  private isLoad: boolean = true;
+  private isLoad = true;
   private readonly previousRoute: string | null = store.getState().app.previousRoute;
 
   render(): TemplateResult {
