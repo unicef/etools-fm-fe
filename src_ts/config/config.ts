@@ -6,6 +6,12 @@ const DEMO_DOMAIN = 'etools-demo.unicef.org';
 export const SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY = 'etoolsAppSmallMenuIsActive';
 export const ROOT_PATH = '/fm/';
 
+declare global {
+  interface Window {
+    EtoolsEsmmFitIntoEl: any;
+  }
+}
+
 export function isProductionServer(): boolean {
   const location: string = window.location.href;
   return location.includes(PROD_DOMAIN);
