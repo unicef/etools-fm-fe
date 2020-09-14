@@ -99,6 +99,7 @@
     "ADD_CP_OUTPUT": "Add CP Output",
     "ADD_INTERVENTION": "Add PD/SSFA",
     "REJECTION_NOTE": "Rejection Note",
+    "REPORT_REJECTION_REASON": "Report Rejection Reason",
     "CANCELLATION_NOTE": "Cancellation Note",
     "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
   },
