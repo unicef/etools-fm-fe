@@ -99,6 +99,7 @@
     "ADD_CP_OUTPUT": "Localized Add CP Output",
     "ADD_INTERVENTION": "Localized Add PD/SSFA",
     "REJECTION_NOTE": "Localized Rejection Note",
+    "REPORT_REJECTION_REASON": "Localized Report Rejection Reason",
     "CANCELLATION_NOTE": "Localized Cancellation Note",
     "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
   },
