@@ -132,6 +132,7 @@ type ActivityPermissionsObject = {
   id: boolean;
   location_id: boolean;
   reject_reason: boolean;
+  report_reject_reason: boolean;
   start_date: boolean;
   cancel_reason: boolean;
   attachments: boolean;

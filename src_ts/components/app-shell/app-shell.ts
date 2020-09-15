@@ -148,6 +148,10 @@ export class AppShell extends connect(store)(LitElement) {
         this.globalLoadingMessage = globalLoadingMessage;
       })
     );
+
+    setTimeout(() => {
+      window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
+    }, 100);
   }
 
   disconnectedCallback(): void {
