@@ -18,10 +18,10 @@ store.addReducers({attachmentsList});
 
 @customElement('attachments-list')
 export class AttachmentsListComponent extends LitElement {
-  @property() loadingInProcess: boolean = false;
+  @property() loadingInProcess = false;
   @property({type: String, attribute: 'tab-title-key'})
-  tabTitleKey: string = 'ATTACHMENTS_LIST.TITLE';
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
+  tabTitleKey = 'ATTACHMENTS_LIST.TITLE';
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
   @property() attachmentsTypes: AttachmentType[] = [];
@@ -29,7 +29,7 @@ export class AttachmentsListComponent extends LitElement {
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;
   private attachmentsTypesUnsubscribe!: Unsubscribe;
-  private _endpointName: string = '';
+  private _endpointName = '';
 
   // on endpoint-name attribute changes
   @property({attribute: 'endpoint-name'}) set endpointName(endpointName: string) {
@@ -97,7 +97,7 @@ export class AttachmentsListComponent extends LitElement {
     this.attachmentsTypesUnsubscribe();
   }
 
-  formatDate(value: string, format: string = 'DD MMM YYYY'): string {
+  formatDate(value: string, format = 'DD MMM YYYY'): string {
     if (!value) {
       return '';
     }

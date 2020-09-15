@@ -1,4 +1,4 @@
-export function getLocationPart(location: string = '', partToSelect: string): string {
+export function getLocationPart(location = '', partToSelect: string): string {
   const splittedLocation: string[] = location.match(/(.*)\s\[(.*)]/i) || [];
   switch (partToSelect) {
     case 'name':

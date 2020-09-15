@@ -7,7 +7,7 @@ import './etools-toast'; // element loaded (if not, etools-toast will not render
 export class ToastNotificationHelper {
   private readonly _toast: EtoolsToast;
   private _toastQueue: GenericObject[] = [];
-  private TOAST_EL_ID: string = 'toastNotificationQueueEl';
+  private TOAST_EL_ID = 'toastNotificationQueueEl';
 
   constructor() {
     const toast: EtoolsToast = document.querySelector(this.TOAST_EL_ID) as EtoolsToast;

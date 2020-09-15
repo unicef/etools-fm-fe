@@ -30,9 +30,7 @@ export class ActivitiesPageComponent extends LitElement {
   }
 
   render(): TemplateResult | void {
-    return html`
-      ${this.getPage()}
-    `;
+    return html` ${this.getPage()} `;
   }
 
   connectedCallback(): void {
@@ -50,17 +48,11 @@ export class ActivitiesPageComponent extends LitElement {
   getPage(): TemplateResult {
     switch (this.subRoute) {
       case LIST_ROUTE:
-        return html`
-          <activities-list class="page" active></activities-list>
-        `;
+        return html` <activities-list class="page" active></activities-list> `;
       case ITEM_ROUTE:
-        return html`
-          <activity-item class="page" active></activity-item>
-        `;
+        return html` <activity-item class="page" active></activity-item> `;
       case COLLECT_ROUTE:
-        return html`
-          <data-collection-checklist class="page" active></data-collection-checklist>
-        `;
+        return html` <data-collection-checklist class="page" active></data-collection-checklist> `;
       default:
         return html``;
     }

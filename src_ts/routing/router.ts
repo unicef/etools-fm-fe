@@ -12,10 +12,7 @@ export class Router {
   }
 
   static clearSlashes(path: string): string {
-    return path
-      .toString()
-      .replace(/\/$/, '')
-      .replace(/^\//, '');
+    return path.toString().replace(/\/$/, '').replace(/^\//, '');
   }
 
   addRoute(regex: RegExp | null, handler: (params: IRouteCallbackParams) => IRouteDetails): Router {
@@ -38,7 +35,7 @@ export class Router {
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
 
     const qsStartIndex: number = locationPath.indexOf('?');
-    let qs: string = '';
+    let qs = '';
     if (qsStartIndex > -1) {
       const loc: string[] = locationPath.split('?');
       locationPath = loc[0];

@@ -21,9 +21,9 @@ import {translate} from 'lit-translate';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
-  isNew: boolean = false;
-  isRequest: boolean = false;
-  isReadOnly: boolean = false;
+  isNew = false;
+  isRequest = false;
+  isReadOnly = false;
   @property() attachments: StoredAttachment[] = [];
 
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
@@ -43,7 +43,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property({type: Array})
   locationSites: Site[] = [];
 
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
 
   @property({type: Array})
   currentFiles: IAttachment[] = [];
@@ -174,7 +174,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
       toRequest: true,
       nestedFields: ['options']
     });
-    const isChanged: boolean = !!Object.keys(data).length;
+    const isChanged = !!Object.keys(data).length;
     if (
       !this.editedData.id ||
       (!isChanged && JSON.stringify(this.originalFiles) === JSON.stringify(this.currentFiles))

@@ -5,16 +5,14 @@ import {fireEvent} from '../../utils/fire-custom-event';
 @customElement('lazy-list')
 export class LazyList extends LitElement {
   @property() items: [] = [];
-  @property() itemStyle: string = '';
+  @property() itemStyle = '';
   @property() itemTemplate?: () => TemplateResult;
   @query('#list') list!: HTMLElement;
 
   render(): TemplateResult {
     // language=HTML
     if (!this.itemTemplate) {
-      return html`
-        No item template
-      `;
+      return html` No item template `;
     }
     return html`
       <style>

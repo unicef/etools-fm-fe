@@ -57,6 +57,7 @@ type AttachmentsPopupData = {
   updateUrl?: string;
   attachments: (StoredAttachment | IEditedAttachment)[];
   title: string;
+  attachmentTypes?: AttachmentType[];
 };
 
 type FormBuilderAttachmentsPopupData = {

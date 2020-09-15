@@ -17,7 +17,7 @@ import {openDialog} from '../../../../../../utils/dialog';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 
-export const CARD_NAME: string = 'entities-monitor';
+export const CARD_NAME = 'entities-monitor';
 
 @customElement('entities-monitor-card')
 export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutputsMixin(BaseDetailsCard))) {

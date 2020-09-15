@@ -30,6 +30,15 @@ export class DetailsNoteCard extends LitElement {
         titleKey: 'ACTIVITY_DETAILS.REJECTION_NOTE',
         text: this.activityDetails.reject_reason
       };
+    } else if (
+      this.activityDetails &&
+      this.activityDetails.report_reject_reason &&
+      this.activityDetails.permissions.view.report_reject_reason
+    ) {
+      return {
+        titleKey: 'ACTIVITY_DETAILS.REPORT_REJECTION_REASON',
+        text: this.activityDetails.report_reject_reason
+      };
     } else {
       return null;
     }

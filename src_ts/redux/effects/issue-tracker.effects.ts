@@ -14,7 +14,7 @@ export function requestLogIssue(params: IRouteQueryParams): IAsyncAction {
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
-      const resultUrl: string = `${url}?${EtoolsRouter.encodeParams(params)}`;
+      const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}`;
       return request(resultUrl);
     }
   };

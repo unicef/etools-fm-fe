@@ -12,9 +12,9 @@ import {DataMixin} from '../../mixins/data-mixin';
 
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() attachmentTypes: AttachmentType[] = [];
-  protected savingInProcess: boolean = false;
+  protected savingInProcess = false;
   protected selectedFileId: number | null = null;
 
   private endpointName!: string;
@@ -53,6 +53,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         // check errors on update(create) complete
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
+          fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
           return;
         }
 
@@ -96,9 +97,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     if (this.selectedFileId) {
       data.id = this.selectedFileId;
     }
-    const typeChanged: boolean = Boolean(
-      this.originalData && this.editedData.file_type !== this.originalData.file_type
-    );
+    const typeChanged = Boolean(this.originalData && this.editedData.file_type !== this.originalData.file_type);
     if ((!this.originalData && this.editedData.file_type) || typeChanged) {
       data.file_type = this.editedData.file_type;
     }
@@ -110,9 +109,11 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
 
     if (this.editedData.id) {
-      store.dispatch<AsyncEffect>(
-        updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
-      );
+      if (this.onlyDocTypeHasChanged(data)) {
+        store.dispatch<AsyncEffect>(
+          updateListAttachment(this.endpointName, this.additionalEndpointData, this.editedData.id, data)
+        );
+      }
     } else {
       store.dispatch<AsyncEffect>(addAttachmentToList(this.endpointName, this.additionalEndpointData, data));
     }
@@ -134,5 +135,10 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   static get styles(): CSSResultArray {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
+  }
+
+  private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {
+    const modifiedFields = Object.keys(data);
+    return modifiedFields.length === 1 && modifiedFields[0] === 'file_type';
   }
 }

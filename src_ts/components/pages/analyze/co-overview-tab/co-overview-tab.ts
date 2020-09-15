@@ -36,9 +36,10 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   @property({type: Object})
   fullReports: GenericObject<FullReportData> = {};
 
-  @property() isLoad: boolean = false;
+  @property() isLoad = false;
 
   private cpOutputs: EtoolsCpOutput[] = [];
+
   private routeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
   private fullReportsUnsubscribe!: Unsubscribe;
@@ -56,19 +57,22 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     this.fullReportsUnsubscribe = store.subscribe(
       fullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
     );
-    this.cpOutputUnsubscribe = store.subscribe(
-      outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
-        this.isLoad = false;
-        if (!outputs) {
-          return;
-        }
-        this.cpOutputs = outputs;
-        this.refreshData();
-      }, false)
-    );
+
+    this.loadStaticData();
+    if (!this.cpOutputs.length) {
+      this.cpOutputUnsubscribe = store.subscribe(
+        outputsDataSelector((outputs: EtoolsCpOutput[] | undefined) => {
+          this.isLoad = false;
+          if (!outputs) {
+            return;
+          }
+          this.cpOutputs = outputs;
+          this.refreshData();
+        }, false)
+      );
+    }
     const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
-    this.loadStaticData();
   }
 
   disconnectedCallback(): void {
@@ -126,7 +130,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     }
 
     const fullReportId: number | null = (this.queryParams && +this.queryParams.cp_output) || null;
-    const exists: boolean = !!this.filteredCpOutputs.find(
+    const exists = !!this.filteredCpOutputs.find(
       (filteredCpOutoput: EtoolsCpOutput) => filteredCpOutoput.id === fullReportId
     );
 
@@ -142,6 +146,8 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     if (!data.outputs) {
       this.isLoad = true;
       store.dispatch<AsyncEffect>(loadStaticData(CP_OUTPUTS));
+    } else {
+      this.cpOutputs = data.outputs;
     }
   }
 

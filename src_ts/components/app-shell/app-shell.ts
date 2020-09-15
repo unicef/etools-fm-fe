@@ -64,22 +64,22 @@ store.addReducers({
 @customElement('app-shell')
 export class AppShell extends connect(store)(LitElement) {
   @property({type: Boolean})
-  narrow: boolean = true;
+  narrow = true;
 
   @property({type: Boolean})
-  drawerOpened: boolean = false;
+  drawerOpened = false;
 
   @property({type: Object})
   routeDetails!: IRouteDetails;
 
   @property({type: String})
-  mainPage: string = ''; // routeName
+  mainPage = ''; // routeName
 
   @property({type: String})
   subPage: string | null = null; // subRouteName
 
   @property({type: Boolean})
-  smallMenu: boolean = false;
+  smallMenu = false;
 
   @property()
   globalLoadingMessage: string | null = null;
@@ -89,7 +89,7 @@ export class AppShell extends connect(store)(LitElement) {
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
-  private hasLoadedStrings: boolean = false;
+  private hasLoadedStrings = false;
 
   constructor() {
     super();
@@ -148,6 +148,10 @@ export class AppShell extends connect(store)(LitElement) {
         this.globalLoadingMessage = globalLoadingMessage;
       })
     );
+
+    setTimeout(() => {
+      window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
+    }, 100);
   }
 
   disconnectedCallback(): void {
@@ -165,7 +169,7 @@ export class AppShell extends connect(store)(LitElement) {
 
   onDrawerToggle(): void {
     if (this.drawerOpened !== this.drawer.opened) {
-      const newState: boolean = Boolean(this.drawer.opened);
+      const newState = Boolean(this.drawer.opened);
       store.dispatch(new UpdateDrawerState(newState));
     }
   }

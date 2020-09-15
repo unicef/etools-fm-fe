@@ -55,7 +55,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
         <etools-data-table-column class="flex-1 col-data" field="category__name" sortable>
           ${translate('QUESTIONS.COLUMNS.CATEGORY')}
         </etools-data-table-column>
-        <etools-data-table-column class="w45px flex-none col-data" field="is_active" sortable>
+        <etools-data-table-column class="w60px flex-none col-data" field="is_active" sortable>
           ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -83,7 +83,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
               <div class="col-data flex-1">
                 <div class="truncate">
                   ${question.methods.map((method: number) => this.serializeName(method, this.methods)).join(', ') ||
-                    '-'}
+                  '-'}
                 </div>
               </div>
               <div class="col-data flex-1">
@@ -104,17 +104,13 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 <div class="rdc-title">${translate('QUESTIONS.COLUMNS.SECTIONS')}</div>
                 <div class="truncate">
                   ${question.sections.map((section: number) => this.serializeName(section, this.sections)).join(', ') ||
-                    '-'}
+                  '-'}
                 </div>
               </div>
               <div class="row-details-content w160px">
                 <div class="rdc-title">${translate('QUESTIONS.COLUMNS.IS_HACT')}</div>
                 <div class="image">
-                  ${question.is_hact
-                    ? html`
-                        <img src="${ROOT_PATH}assets/images/icon-check.svg" />
-                      `
-                    : '-'}
+                  ${question.is_hact ? html` <img src="${ROOT_PATH}assets/images/icon-check.svg" /> ` : '-'}
                 </div>
               </div>
               <div class="row-details-content" ?hidden="${question.answer_type !== 'likert_scale'}">

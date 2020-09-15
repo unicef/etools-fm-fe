@@ -8,7 +8,7 @@ function generateUrlFromTemplate(tmpl: string, data: object | undefined): string
   if (data && Object.keys(data).length > 0) {
     for (const k in data) {
       if (Object.prototype.hasOwnProperty.call(data, k)) {
-        const replacePattern: RegExp = new RegExp('<%=' + k + '%>', 'gi');
+        const replacePattern = new RegExp('<%=' + k + '%>', 'gi');
         tmpl = tmpl.replace(replacePattern, (data as any)[k]);
       }
     }

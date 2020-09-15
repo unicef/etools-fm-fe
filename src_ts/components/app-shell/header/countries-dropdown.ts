@@ -4,7 +4,6 @@ import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
-// import EndpointsMixin from '../../endpoints/endpoints-mixin.js';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
 import {countrySelector} from '../../../redux/selectors/country.selectors';
@@ -28,7 +27,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   countries: any[] = [];
 
   @property({type: Boolean})
-  countrySelectorVisible: boolean = false;
+  countrySelectorVisible = false;
 
   @property({type: Object})
   userData!: IEtoolsUserModel;
@@ -40,6 +39,9 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     store.subscribe(
       countrySelector((countryState: IRequestState) => {
         this.changeRequestStatus(countryState.isRequest.load);
+        if (countryState.isRequest.load) {
+          return;
+        }
         if (!countryState.error) {
           this.handleChangedCountry();
         }
@@ -117,7 +119,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     }
   }
 
-  protected showCountrySelector(countries: any): void {
+  protected showCountrySelector(countries: GenericObject[]): void {
     if (Array.isArray(countries) && countries.length > 1) {
       this.countrySelectorVisible = true;
     }
@@ -125,9 +127,9 @@ export class CountriesDropdown extends connect(store)(LitElement) {
 
   protected triggerCountryChangeRequest(selectedCountryId: number): void {
     localStorage.clear();
-    etoolsCustomDexieDb
-      .delete()
-      .finally(() => store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId)));
+    etoolsCustomDexieDb.delete().finally(() => {
+      store.dispatch<AsyncEffect>(changeCurrentUserCountry(selectedCountryId));
+    });
   }
 
   protected changeRequestStatus(isRequest: boolean): void {

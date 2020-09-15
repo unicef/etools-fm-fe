@@ -22,8 +22,8 @@ export function updateActionPoint(
   data: Partial<EditableActionPoint>
 ): (dispatch: Dispatch) => Promise<void | UpdateActionPointError> {
   return (dispatch: Dispatch) => {
-    let id: string = '';
-    let method: string = 'POST';
+    let id = '';
+    let method = 'POST';
     if (data.id) {
       id = `${data.id}/`;
       method = 'PATCH';

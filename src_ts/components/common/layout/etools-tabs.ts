@@ -14,7 +14,7 @@ import {PaperTabsElement} from '@polymer/paper-tabs/paper-tabs';
 @customElement('etools-tabs')
 export class EtoolsTabs extends LitElement {
   @property({type: String})
-  activeTab: string = '';
+  activeTab = '';
 
   @property({type: Array})
   tabs!: GenericObject[];
@@ -99,12 +99,7 @@ export class EtoolsTabs extends LitElement {
     return html`
       <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
         <span class="tab-content">
-          ${item.tabLabel}
-          ${item.showTabCounter
-            ? html`
-                ${item.counter}
-              `
-            : ''}
+          ${item.tabLabel} ${item.showTabCounter ? html` ${item.counter} ` : ''}
         </span>
       </paper-tab>
     `;

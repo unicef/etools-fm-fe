@@ -13,25 +13,34 @@ import {clone} from 'ramda';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
+import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
+import {store} from '../../../../../redux/store';
+import {Unsubscribe} from 'redux';
+import {attachmentsTypesSelector} from '../../../../../redux/selectors/attachments-list.selectors';
+import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-list.effects';
+import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
   @property() activityId: number | null = null;
-  @property({type: String}) tabName: string = '';
+  @property({type: String}) tabName = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
-  @property({type: Boolean, attribute: 'readonly'}) readonly: boolean = false;
-  @property() protected isEditMode: boolean = false;
-  @property() protected blockEdit: boolean = false;
-  @property() protected updateInProcess: boolean = false;
+  @property({type: Boolean, attribute: 'readonly'}) readonly = false;
+  @property() protected isEditMode = false;
+  @property() protected blockEdit = false;
+  @property() protected updateInProcess = false;
   @property() protected onTrackValue: boolean | null = null;
-  @property() protected trackStatusText: string = '';
-  @property() protected trackStatusColor: string = '';
+  @property() protected trackStatusText = '';
+  @property() protected trackStatusColor = '';
   @property() protected orginalTrackStatus: boolean | null = null;
+  @property() protected attachmentTypes: AttachmentType[] = [];
   attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
   private originalFindings: SummaryFinding[] = [];
+  private attachmentsTypesUnsubscribe!: Unsubscribe;
+  private _attachTypesEndpointName!: string;
 
   render(): TemplateResult | void {
     return template.call(this);
@@ -41,6 +50,29 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.originalFindings = clone(this.findings);
     this.originalOverallInfo = clone(this.overallInfo);
+    this._attachTypesEndpointName = ACTIVITY_REPORT_ATTACHMENTS;
+    this.attachmentTypes = store.getState().attachmentsList.attachmentsTypes[this._attachTypesEndpointName];
+    if (!this.attachmentTypes || !this.attachmentTypes.length) {
+      store.dispatch<AsyncEffect>(
+        loadAttachmentsTypes(this._attachTypesEndpointName, {id: this.originalOverallInfo!.id})
+      );
+    }
+
+    this.attachmentsTypesUnsubscribe = store.subscribe(
+      attachmentsTypesSelector(
+        (types: AttachmentType[] | undefined) => {
+          if (types) {
+            this.attachmentTypes = types;
+          }
+        },
+        [this._attachTypesEndpointName]
+      )
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.attachmentsTypesUnsubscribe();
   }
 
   openAttachmentsPopup(): void {
@@ -52,6 +84,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       dialogData: {
         attachments: this.overallInfo.attachments,
         updateUrl: this.attachmentsEndpoint,
+        attachmentTypes: this.attachmentTypes,
         title: `${get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_POPUP_TITLE')} ${this.tabName}`
       },
       readonly: this.readonly || !this.attachmentsEndpoint
@@ -140,9 +173,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   protected getAdditionalButtons(): TemplateResult {
     if (this.isEditMode) {
-      return html`
-        ${this.findingsStatusButton()} ${this.getAttachmentsButton()}
-      `;
+      return html` ${this.findingsStatusButton()} ${this.getAttachmentsButton()} `;
     } else {
       if (this.overallInfo?.on_track == null) {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NOT_MONITORED';
@@ -172,9 +203,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
    */
   protected getAttachmentsButton(): TemplateResult {
     const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;
-    const showAttachmentsButton: boolean = Boolean(
-      this.overallInfo && (!isReadonly || this.overallInfo.attachments.length)
-    );
+    const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
           <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">

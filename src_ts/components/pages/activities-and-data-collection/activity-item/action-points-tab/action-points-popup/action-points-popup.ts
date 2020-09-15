@@ -35,7 +35,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   PartnersMixin(CpOutputsMixin(SectionsMixin(DataMixin()<EditableActionPoint>(LitElement))))
 ) {
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
-  @property() dialogOpened: boolean = true;
+  @property() dialogOpened = true;
   @property() users: User[] = [];
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
   @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
@@ -173,7 +173,7 @@ export class ActionPointsPopup extends InterventionsMixin(
       this.originalData !== null
         ? getDifference<EditableActionPoint>(this.originalData, this.editedData, {toRequest: true})
         : this.editedData;
-    const isEmpty: boolean = !Object.keys(target).length;
+    const isEmpty = !Object.keys(target).length;
 
     if (isEmpty && this.editedData.id) {
       this.dialogOpened = false;
@@ -234,7 +234,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   }
 
   private checkRequiredFields(): void {
-    const errorMessage: string = 'This field is required';
+    const errorMessage = 'This field is required';
     if (!this.editedData.description) {
       this.errors.description = errorMessage;
     }

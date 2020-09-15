@@ -11,8 +11,8 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 
 @customElement('remove-attachment-popup')
 export class RemoveAttachmentPopupComponent extends LitElement {
-  @property() dialogOpened: boolean = true;
-  @property() removeInProcess: boolean = false;
+  @property() dialogOpened = true;
+  @property() removeInProcess = false;
   private attachmentToDelete!: number;
   private endpointName!: string;
   private additionalEndpointData: GenericObject = {};

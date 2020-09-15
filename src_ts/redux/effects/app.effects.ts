@@ -16,7 +16,7 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
     return;
   }
 
-  const importBase: string = '../../'; // relative to current file
+  const importBase = '../../'; // relative to current file
   // start importing components (lazy loading)
   const lazyImports: Promise<any>[] = getFilePathsToImport(routeDetails).map((filePath: string) =>
     import(importBase + filePath)
@@ -33,7 +33,7 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
   // Check if path matches a valid app route, use route details to load required page components
 
   // if app route is accessed, redirect to default route (if not already on it)
-  if (path === ROOT_PATH && ROOT_PATH !== DEFAULT_ROUTE) {
+  if (path === ROOT_PATH) {
     updateAppLocation(DEFAULT_ROUTE, true);
     return;
   }

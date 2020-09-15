@@ -21,11 +21,11 @@ import {CardStyles} from '../../../../styles/card-styles';
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
   @query('#details-input') textarea!: PaperTextareaElement;
-  @property() protected dialogOpened: boolean = true;
+  @property() protected dialogOpened = true;
   @property() protected popupTitle: string | Callback = '';
   @property() protected label: string | Callback = '';
-  @property() protected reason: string = '';
-  @property() protected error: string = '';
+  @property() protected reason = '';
+  @property() protected error = '';
 
   set dialogData({popupTitle, label}: ReasonPopupData) {
     this.popupTitle = popupTitle;
