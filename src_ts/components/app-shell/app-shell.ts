@@ -90,7 +90,6 @@ export class AppShell extends connect(store)(LitElement) {
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
   private hasLoadedStrings = false;
-  private etoolsLoadingContainer: HTMLElement | undefined;
 
   constructor() {
     super();
@@ -152,7 +151,6 @@ export class AppShell extends connect(store)(LitElement) {
 
     setTimeout(() => {
       window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
-      this.etoolsLoadingContainer = window.EtoolsEsmmFitIntoEl;
     }, 100);
   }
 
