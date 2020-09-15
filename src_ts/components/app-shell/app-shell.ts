@@ -151,7 +151,6 @@ export class AppShell extends connect(store)(LitElement) {
 
     setTimeout(() => {
       window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
-      this.etoolsLoadingContainer = window.EtoolsEsmmFitIntoEl;
     }, 100);
   }
 
