@@ -90,6 +90,7 @@ export class AppShell extends connect(store)(LitElement) {
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
   private hasLoadedStrings = false;
+  private etoolsLoadingContainer: HTMLElement | undefined;
 
   constructor() {
     super();
