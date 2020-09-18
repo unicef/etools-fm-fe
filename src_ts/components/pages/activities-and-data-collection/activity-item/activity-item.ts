@@ -1,4 +1,4 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
 import '../../../common/layout/etools-tabs';
@@ -37,7 +37,7 @@ import {
   TABS_PROPERTIES
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
-import {STAFF} from '../../../common/dropdown-options';
+import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
@@ -155,6 +155,18 @@ export class NewActivityComponent extends LitElement {
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
+
+          <paper-button
+            ?hidden="${this.activityDetails?.status !== DATA_COLLECTION || this.activityDetails.monitor_type !== TPM}"
+            class="visit-letter-button"
+            @tap="${() =>
+              window.open(
+                `/api/v1/field-monitoring/planning/activities/${this.activityDetails.id}/visit-letter/`,
+                '_blank'
+              )}"
+          >
+            ${translate('ACTIVITY_DETAILS.VISIT_LETTER')}
+          </paper-button>
         </div>
 
         <etools-tabs
@@ -325,6 +337,21 @@ export class NewActivityComponent extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
+    return [
+      SharedStyles,
+      pageContentHeaderSlottedStyles,
+      pageLayoutStyles,
+      RouterStyles,
+      buttonsStyles,
+      css`
+        .visit-letter-button {
+          height: 36px;
+          padding: 0 18px;
+          color: white;
+          background: var(--gray-mid);
+          font-weight: 500;
+        }
+      `
+    ];
   }
 }
