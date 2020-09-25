@@ -161,7 +161,7 @@ export class NewActivityComponent extends LitElement {
             class="visit-letter-button"
             @tap="${() =>
               window.open(
-                `/api/v1/field-monitoring/planning/activities/${this.activityDetails.id}/visit-letter/`,
+                `/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/visit-letter/`,
                 '_blank'
               )}"
           >
