@@ -73,6 +73,7 @@
   "ACTIVITY_DETAILS": {
     "ACTIVITY_DETAILS": "Activity Details",
     "OFFICE": "Field Office",
+    "VISIT_LETTER": "Visit Letter",
     "MONITOR_INFO": "Monitor Information",
     "ENTRIES_TO_MONITOR": "Entities to monitor",
     "START_DATE": "Start Date",
