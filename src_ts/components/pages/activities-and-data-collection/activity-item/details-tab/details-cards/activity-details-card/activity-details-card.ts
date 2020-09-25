@@ -16,16 +16,18 @@ import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-
 import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
 import clone from 'ramda/es/clone';
 import {fireEvent} from '../../../../../../utils/fire-custom-event';
+import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 
 export const CARD_NAME = 'activity-details';
 
 @customElement('activity-details-card')
-export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
+export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsCard)) {
   @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
+  @property() activityOffice: Office | null = null;
 
   @query('#locationWidget') private locationWidget!: LocationWidgetComponent;
 
@@ -39,12 +41,20 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
   set data(data: IActivityDetails) {
     super.data = data;
     this.activitySections = data ? clone(data.sections) : [];
+    this.activityOffice = data ? clone(data.field_office) : null;
   }
 
   selectSections(sections: Section[]): void {
     if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
       this.activitySections = [...sections];
       this.updateModelValue('sections', sections);
+    }
+  }
+
+  selectOffices(office: Office): void {
+    if (JSON.stringify(office) !== JSON.stringify(this.activityOffice)) {
+      this.activityOffice = office;
+      this.updateModelValue('field_office', office);
     }
   }
 
@@ -157,6 +167,9 @@ export class ActivityDetailsCard extends SectionsMixin(BaseDetailsCard) {
         }
         datepicker-lite {
           white-space: nowrap;
+        }
+        .field-office {
+          width: 30%;
         }
       `
     ];

@@ -25,7 +25,8 @@
       "CP_OUTPUTS": "Localized CP Outputs",
       "STATUS": "Localized Status",
       "START_DATE": "Localized Start Date",
-      "END_DATE": "Localized End Date"
+      "END_DATE": "Localized End Date",
+      "OFFICE": "Localized Field Office"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -71,6 +72,8 @@
   },
   "ACTIVITY_DETAILS": {
     "ACTIVITY_DETAILS": "Localized Activity Details",
+    "OFFICE": "Field Office",
+    "VISIT_LETTER": "Visit Letter",
     "MONITOR_INFO": "Localized Monitor Information",
     "ENTRIES_TO_MONITOR": "Localized Entities to monitor",
     "START_DATE": "Localized Start Date",
