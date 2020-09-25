@@ -20,6 +20,10 @@ export const sectionsDataSelector: Selector<EtoolsSection[] | undefined> = selec
   (store: IRootState) => store.staticData.sections
 );
 
+export const officesDataSelector: Selector<ActionPointsOffice[] | undefined> = select<ActionPointsOffice[] | undefined>(
+  (store: IRootState) => store.staticData.offices
+);
+
 export const currentWorkspaceSelector: Selector<Workspace | undefined> = select<Workspace | undefined>(
   (store: IRootState) => store.staticData.currentWorkspace
 );

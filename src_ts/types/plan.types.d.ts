@@ -14,6 +14,11 @@ type Section = {
   name: string;
 };
 
+type Office = {
+  id: number;
+  name: string;
+};
+
 type Partner = {
   id: number;
   name: string;

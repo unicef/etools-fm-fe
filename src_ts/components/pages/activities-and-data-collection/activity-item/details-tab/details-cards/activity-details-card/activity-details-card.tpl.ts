@@ -6,7 +6,14 @@ import {formatDate} from '../../../../../../utils/date-utility';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
 import {translate} from 'lit-translate';
 
-const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['sections', 'end_date', 'start_date', 'location_site', 'location'];
+const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
+  'sections',
+  'end_date',
+  'start_date',
+  'location_site',
+  'location',
+  'field_office'
+];
 
 export function template(this: ActivityDetailsCard): TemplateResult {
   return html`
@@ -152,6 +159,32 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown-multi>
+          </div>
+        </div>
+
+        <div class="layout horizontal">
+          <!--     Offices dropdown     -->
+          <div class="layout horizontal flex">
+            <etools-dropdown
+              class="without-border field-office"
+              .selected="${simplifyValue(this.activityOffice)}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) => this.selectOffices(detail.selectedItem)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.OFFICE')}"
+              .options="${this.offices.length
+                ? this.offices
+                : [this.activityOffice].filter((office: Office | null) => Boolean(office))}"
+              option-label="name"
+              option-value="id"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('field_office')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('field_office')}"
+              ?invalid="${this.errors && this.errors.field_office}"
+              .errorMessage="${this.errors && this.errors.field_office}"
+              @focus="${() => this.resetFieldError('field_office')}"
+              @tap="${() => this.resetFieldError('field_office')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown>
           </div>
         </div>
       </div>

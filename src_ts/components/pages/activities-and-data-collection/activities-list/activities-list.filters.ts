@@ -1,11 +1,12 @@
 import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
 import {
+  ACTION_POINTS_OFFICES,
   CP_OUTPUTS,
   INTERVENTIONS,
   LOCATIONS_ENDPOINT,
   PARTNERS,
   TPM_PARTNERS,
-  USERS
+  USERS,
 } from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
 
@@ -112,6 +113,21 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     disabled: false,
     defaultValue: [],
     selectionOptionsEndpoint: PARTNERS
+  },
+  {
+    filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE'),
+    filterKey: 'field_office__in',
+    type: EtoolsFilterTypes.DropdownMulti,
+    selectionOptions: [],
+    selectedValue: [],
+    optionValue: 'id',
+    optionLabel: 'name',
+    selected: false,
+    minWidth: '350px',
+    hideSearch: false,
+    disabled: false,
+    defaultValue: [],
+    selectionOptionsEndpoint: ACTION_POINTS_OFFICES
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
