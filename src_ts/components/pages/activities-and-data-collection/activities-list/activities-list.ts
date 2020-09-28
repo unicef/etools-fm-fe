@@ -227,11 +227,12 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
       interventions = 'interventions',
       outputs = 'outputs',
       users = 'users',
-      tpmPartners = 'tpmPartners'
+      tpmPartners = 'tpmPartners',
+      offices = 'offices'
     } = storeState.staticData;
 
     // if data isn't loaded it will be fallback to string and we need to run AsyncEffect
-    [partners, interventions, outputs, users, tpmPartners].forEach((data: any) => {
+    [partners, interventions, outputs, users, tpmPartners, offices].forEach((data: any) => {
       if (typeof data === 'string') {
         store.dispatch<AsyncEffect>(loadStaticData(data as keyof IStaticDataState));
       }

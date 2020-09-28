@@ -23,6 +23,7 @@ interface IActivityDetails extends IListActivity {
   reject_reason: string;
   cancel_reason: string;
   report_reject_reason: string;
+  field_office: Office;
 }
 
 type ActivityStatus =
