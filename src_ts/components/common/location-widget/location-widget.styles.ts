@@ -11,6 +11,7 @@ export const LocationWidgetStyles: CSSResult = css`
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: 0;
   }
 
   .widget-container .history {
