@@ -61,8 +61,10 @@ export function template(this: PartnershipTab): TemplateResult {
               .daysSinceLastVisit="${item.days_since_visit}"
               .minRequiredLabelValue="${translate(
                 'ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.MINIMUM_REQUIRED_VISITS'
-              )}${item.minimum_required_visits}"
-              .daysSinceLastVisitLabelValue="${'ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.DAYS_SINCE_LAST_VISIT'}${item.days_since_visit}"
+              )} ${item.minimum_required_visits || ''}"
+              .daysSinceLastVisitLabelValue="${translate(
+                'ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.DAYS_SINCE_LAST_VISIT'
+              )} ${item.days_since_visit || ''}"
             >
             </proportional-progress-bar>
           </div>
