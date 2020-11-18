@@ -74,7 +74,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                           ${activity.cp_outputs.map(
                             (item: IActivityCPOutput) =>
                               html`
-                                <label class="custom-row-details-content custom-row-details-nowrap">${item.name}</label>
+                                <label class="custom-row-details-content">${item.name}</label>
                               `
                           )}
                         </div>
@@ -82,7 +82,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                           ${activity.interventions.map(
                             (item: IActivityIntervention) =>
                               html`
-                                <label class="custom-row-details-content custom-row-details-nowrap"
+                                <label class="custom-row-details-content"
                                   >${item.title}</label
                                 >
                               `
