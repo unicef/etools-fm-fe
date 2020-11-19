@@ -35,6 +35,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           : ''}
         ${repeat(
           this.items,
+          (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
             <etools-data-table-row secondary-bg-on-hover>
               <div slot="row-data" class="layout horizontal editable-row flex">
@@ -65,6 +66,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
               ${hactVisit.visits.length
                 ? repeat(
                     hactVisit.visits,
+                    (activity: HactVisitsActivity) => activity.id,
                     (activity: HactVisitsActivity) => html`
                       <div slot="row-data-details" class="custom-row-data">
                         <div class="custom-row-details-content custom-row-details-nowrap custom-row-details-visit">
