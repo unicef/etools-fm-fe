@@ -49,6 +49,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
           }
           const target: LatLngTuple = viewCoordinates[0] || DEFAULT_COORDINATES;
           this.mapHelper.map!.setView(target, 6);
+          this.mapHelper.map!.invalidateSize();
         }
         this.loading = false;
       }, false)

@@ -9,7 +9,6 @@ export const geographicCoverageStyles: CSSResult = css`
   }
   #geomap {
     min-height: 400px;
-    min-width: 100%;
     z-index: 0;
   }
   .monitoring-activity__geographic-coverage {
