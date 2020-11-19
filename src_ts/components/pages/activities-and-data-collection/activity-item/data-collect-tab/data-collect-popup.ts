@@ -36,6 +36,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
           <paper-textarea
             class="without-border"
             required
+            maxlength="100"
             always-float-label
             placeholder="Enter ${translate('ACTIVITY_COLLECT.LABELS.INFO_SOURCE')}"
             label="${translate('ACTIVITY_COLLECT.LABELS.INFO_SOURCE')}"
