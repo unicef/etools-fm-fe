@@ -36,7 +36,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   get invalidMapSize() {
     return this._invalidMapSize;
   }
-  set invalidMapSize(resizeMap: boolean) {
+  set invalidMapSize(_resizeMap: boolean) {
     this.resizeMap();
   }
 
@@ -136,7 +136,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
         this.mapHelper.map!.invalidateSize();
         const zoom = 6;
         this.mapHelper.map!.setView(this.mapTarget, zoom);
-      }, 300, this);
+      }, 500, this);
 
     }
   }
