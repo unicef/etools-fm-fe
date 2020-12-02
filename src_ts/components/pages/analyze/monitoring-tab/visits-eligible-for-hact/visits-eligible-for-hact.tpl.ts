@@ -37,7 +37,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           this.items,
           (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
-            <etools-data-table-row secondary-bg-on-hover>
+            <etools-data-table-row id="hactVisits" secondary-bg-on-hover @tap="${() => this._resizeMap()}">
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-1">
                   <span class="truncate">${hactVisit.name}</span>
