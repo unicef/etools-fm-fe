@@ -108,7 +108,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.activityId && this.checklistId) {
       store
         .dispatch<AsyncEffect>(updateBlueprintValue(this.activityId, this.checklistId, event.detail.value))
-        .catch((error: GenericObject) => (this.formErrors = error.data));
+        .catch((error: GenericObject) => {
+          this.formErrors = Object.values(error.data);
+        });
     }
   }
 

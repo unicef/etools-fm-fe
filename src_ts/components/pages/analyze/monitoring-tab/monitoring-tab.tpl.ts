@@ -48,7 +48,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
 
       <div class="monitoring-activity__item">
         <!--  Geographic coverage (map)  -->
-        <geographic-coverage></geographic-coverage>
+        <geographic-coverage .invalidMapSize="${this.invalidMapSize}"></geographic-coverage>
         ${this.isHactVisitSectionActivated
           ? html`
               <!--  Open issues and Action points  -->

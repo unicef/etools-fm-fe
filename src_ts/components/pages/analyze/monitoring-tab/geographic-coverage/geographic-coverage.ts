@@ -29,6 +29,17 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   private mapHelper!: MapHelper;
   private geographicCoverageUnsubscribe!: Unsubscribe;
 
+  private _invalidMapSize: boolean = false;
+  private mapTarget: LatLngTuple = DEFAULT_COORDINATES;
+
+  @property({type: Array})
+  get invalidMapSize() {
+    return this._invalidMapSize;
+  }
+  set invalidMapSize(_resizeMap: boolean) {
+    this.resizeMap();
+  }
+
   render(): TemplateResult {
     return template.call(this);
   }
@@ -47,8 +58,9 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
           while (Array.isArray(viewCoordinates) && viewCoordinates[0] && Array.isArray(viewCoordinates[0][0])) {
             viewCoordinates = viewCoordinates[0];
           }
-          const target: LatLngTuple = viewCoordinates[0] || DEFAULT_COORDINATES;
-          this.mapHelper.map!.setView(target, 6);
+          this.mapTarget = viewCoordinates[0] || DEFAULT_COORDINATES;
+          this.mapHelper.map!.setView(this.mapTarget, 6);
+          this.mapHelper.map!.invalidateSize();
         }
         this.loading = false;
       }, false)
@@ -115,6 +127,18 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     this.mapHelper.initMap(this.mapElement);
     const zoom = 6;
     this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
+  }
+
+  resizeMap(): void {
+    if (this.mapHelper) {
+      // wait for layout to change
+      setTimeout(() => {
+        this.mapHelper.map!.invalidateSize();
+        const zoom = 6;
+        this.mapHelper.map!.setView(this.mapTarget, zoom);
+      }, 500, this);
+
+    }
   }
 
   disconnectedCallback(): void {
