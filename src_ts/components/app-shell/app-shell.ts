@@ -106,6 +106,7 @@ export class AppShell extends connect(store)(LitElement) {
     // init toasts notifications queue
     this.appToastsNotificationsHelper = new ToastNotificationHelper();
     this.appToastsNotificationsHelper.addToastNotificationListeners();
+    this.appToastsNotificationsHelper.appShellEl = this;
 
     const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
     if (!menuTypeStoredVal) {
@@ -173,6 +174,7 @@ export class AppShell extends connect(store)(LitElement) {
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
     this.drawerOpened = state.app.drawerOpened;
+    this.currentToastMessage = '';
   }
 
   onDrawerToggle(): void {
