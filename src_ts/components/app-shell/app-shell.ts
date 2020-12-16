@@ -16,6 +16,7 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@unicef-polymer/etools-form-builder';
 
+import 'etools-piwik-analytics/etools-piwik-analytics.js';
 import {AppShellStyles} from './app-shell-styles';
 import {RouterStyles} from './router-style';
 
@@ -75,11 +76,17 @@ export class AppShell extends connect(store)(LitElement) {
   @property({type: String})
   mainPage = ''; // routeName
 
+  @property({type: Object})
+  user!: GenericObject;
+
   @property({type: String})
   subPage: string | null = null; // subRouteName
 
   @property({type: Boolean})
   smallMenu = false;
+
+  @property({type: String})
+  currentToastMessage = '';
 
   @property()
   globalLoadingMessage: string | null = null;
@@ -123,6 +130,7 @@ export class AppShell extends connect(store)(LitElement) {
         if (!userData) {
           return;
         }
+        this.user = userData;
         setUser(userData);
       })
     );
@@ -184,6 +192,9 @@ export class AppShell extends connect(store)(LitElement) {
     // main template
     // language=HTML
     return html`
+      <etools-piwik-analytics .page="${this.mainPage}" .user="${this.user}" .toast="${this.currentToastMessage}">
+      </etools-piwik-analytics>
+
       <app-drawer-layout
         id="layout"
         responsive-width="850px"

@@ -84,8 +84,9 @@ export class ToastNotificationHelper {
   }
 
   protected _showToast(toastProperties: GenericObject): void {
-    // TODO: currentToastMessage is used by piwik elem; use it or remove it :)
-    // this.appShellEl.set('currentToastMessage', toastProperties.text);
+    const appShellEl = document.querySelector('app-shell') as GenericObject;
+    appShellEl.currentToastMessage = toastProperties.text;
+
     this._toast.show(toastProperties);
   }
 }
