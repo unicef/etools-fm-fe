@@ -25,6 +25,7 @@ export class MonitoringTabComponent extends LitElement {
   @property() isHactVisitSectionActivated: boolean = this.coverageActiveTab == PARTNER_TAB;
   @property() completed = 0;
   @property() planned = 0;
+  @property() invalidMapSize = false;
 
   private overallActivitiesUnsubscribe!: Unsubscribe;
   private lastActivatedTabUnsubscribe!: Unsubscribe;
@@ -50,6 +51,7 @@ export class MonitoringTabComponent extends LitElement {
         this.planned = overallActivities.visits_planned;
       })
     );
+    this.addEventListener('resize-map', this.resizeMap as any);
   }
 
   render(): TemplateResult {
@@ -60,6 +62,11 @@ export class MonitoringTabComponent extends LitElement {
     super.disconnectedCallback();
     this.overallActivitiesUnsubscribe();
     this.lastActivatedTabUnsubscribe();
+    this.removeEventListener('resize-map', this.resizeMap as any);
+  }
+
+  resizeMap() {
+    this.invalidMapSize = !this.invalidMapSize;
   }
 
   getCompletedPercentage(completed: number, planned: number): number | null {

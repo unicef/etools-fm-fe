@@ -11,6 +11,7 @@ import {loadHactVisits} from '../../../../../redux/effects/monitoring-activity.e
 import {store} from '../../../../../redux/store';
 import {template} from './visits-eligible-for-hact.tpl';
 import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
+import {fireEvent} from '../../../../utils/fire-custom-event';
 
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends LitElement {
@@ -58,6 +59,10 @@ export class VisitsEligibleForHact extends LitElement {
         break;
     }
     this.requestUpdate();
+  }
+
+  _resizeMap() {
+    fireEvent(this, 'resize-map');
   }
 
   static get styles(): CSSResult[] {
