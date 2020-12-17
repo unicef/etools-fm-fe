@@ -47,6 +47,7 @@ import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from '../utils/check-flags';
+import {ROOT_PATH} from '../../config/config';
 
 registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -174,6 +175,7 @@ export class AppShell extends connect(store)(LitElement) {
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
     this.drawerOpened = state.app.drawerOpened;
+    // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
   }
 
@@ -194,7 +196,11 @@ export class AppShell extends connect(store)(LitElement) {
     // main template
     // language=HTML
     return html`
-      <etools-piwik-analytics .page="${this.mainPage}" .user="${this.user}" .toast="${this.currentToastMessage}">
+      <etools-piwik-analytics
+        .page="${ROOT_PATH}${this.mainPage}"
+        .user="${this.user}"
+        .toast="${this.currentToastMessage}"
+      >
       </etools-piwik-analytics>
 
       <app-drawer-layout
