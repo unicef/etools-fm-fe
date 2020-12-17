@@ -5,6 +5,7 @@ import './etools-toast'; // element loaded (if not, etools-toast will not render
  * Toasts notification messages queue utility class
  */
 export class ToastNotificationHelper {
+  appShellEl: GenericObject = {};
   private readonly _toast: EtoolsToast;
   private _toastQueue: GenericObject[] = [];
   private TOAST_EL_ID = 'toastNotificationQueueEl';
@@ -84,8 +85,8 @@ export class ToastNotificationHelper {
   }
 
   protected _showToast(toastProperties: GenericObject): void {
-    // TODO: currentToastMessage is used by piwik elem; use it or remove it :)
-    // this.appShellEl.set('currentToastMessage', toastProperties.text);
+    this.appShellEl.currentToastMessage = toastProperties.text;
+
     this._toast.show(toastProperties);
   }
 }
