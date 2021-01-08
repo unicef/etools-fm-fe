@@ -10,11 +10,11 @@ export function prettyDate(dateString: string, format?: string, placeholder = '-
 }
 
 function _utcDate(date: any, format?: string): string {
-  return !date ? '' : moment.utc(date).format(format ? format : 'D MMM YYYY');
+  return !date ? '' : dayjs.utc(date).format(format ? format : 'D MMM YYYY');
 }
 
 export function formatDate(date: Date, format = 'YYYY-MM-DD'): string {
-  return moment(date).format(format);
+  return dayjs(date).format(format);
 }
 
 export function convertDate(dateString: string, noZTimezoneOffset?: boolean): null | Date {
