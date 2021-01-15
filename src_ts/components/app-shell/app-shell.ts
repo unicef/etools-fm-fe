@@ -48,6 +48,12 @@ import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
+declare const dayjs: any;
+declare const dayjs_plugin_utc: any;
+declare const dayjs_plugin_isSameOrBefore: any;
+
+dayjs.extend(dayjs_plugin_utc);
+dayjs.extend(dayjs_plugin_isSameOrBefore);
 
 registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
