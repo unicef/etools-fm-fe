@@ -93,14 +93,14 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
 
   protected deleteAttachment(index: number): void {
     this.attachments.splice(index, 1);
-    this.performUpdate();
+    this.attachments = [...this.attachments];
   }
 
   protected changeFileType(attachment: IEditedAttachment | StoredAttachment, type: DefaultDropdownOption | null): void {
     const newType: null | number = type && type.value;
     if (newType && attachment.file_type !== newType) {
       attachment.file_type = newType;
-      this.performUpdate();
+      this.requestUpdate();
     }
   }
 

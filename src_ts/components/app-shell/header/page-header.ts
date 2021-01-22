@@ -97,12 +97,13 @@ export class PageHeader extends connect(store)(LitElement) {
         }
       })
     );
+
     // TODO remove test code.
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     window.enableExampleLanguage = () => {
       this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
-      this.performUpdate();
+      this.requestUpdate();
     };
   }
 

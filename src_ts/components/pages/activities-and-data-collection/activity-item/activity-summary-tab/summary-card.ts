@@ -295,11 +295,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   /**
    * On finding item input changes
-   * we need to run performUpdate for cancelEdit() correct behaviour
+   * we need to run requestUpdate for cancelEdit() correct behaviour
    */
   protected updateFinding(finding: SummaryFinding, value: any): void {
     finding.value = value;
-    this.performUpdate();
+    this.requestUpdate();
   }
 
   /**
