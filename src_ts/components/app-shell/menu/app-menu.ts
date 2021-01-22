@@ -162,7 +162,7 @@ export class AppMenu extends LitElement {
       currentUser((user: IEtoolsUserModel | null) => {
         this.userLoaded = Boolean(user);
         if (this.userLoaded) {
-          this.performUpdate();
+          this.requestUpdate();
         }
       })
     );

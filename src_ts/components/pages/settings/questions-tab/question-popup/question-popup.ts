@@ -133,7 +133,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
     // create initial scale for SCALE_TYPE or BOOLEAN_TYPE, or remove old scale for other types
     this.changeOptionsOnTypeChange(newType);
-    this.performUpdate();
+    this.requestUpdate();
   }
 
   changeOptionsSize(newSize: number): void {
@@ -151,7 +151,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       return existedOption || {label: '', value: `${index + 1}`};
     });
 
-    this.performUpdate();
+    this.requestUpdate();
   }
 
   changeOptionLabel(optionIndex: number, value: string): void {
@@ -159,7 +159,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     option.label = value;
 
     if (this.errors && this.errors.scale) {
-      this.performUpdate();
+      this.requestUpdate();
     }
   }
 
