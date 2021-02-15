@@ -102,7 +102,7 @@ export class PageHeader extends connect(store)(LitElement) {
     // @ts-ignore
     window.enableExampleLanguage = () => {
       this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
-      this.performUpdate();
+      this.requestUpdate();
     };
   }
 

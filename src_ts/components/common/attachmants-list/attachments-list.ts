@@ -103,7 +103,7 @@ export class AttachmentsListComponent extends LitElement {
     }
 
     const date: Date = new Date(value);
-    return date.toString() !== 'Invalid Date' ? moment.utc(date).format(format) : '';
+    return date.toString() !== 'Invalid Date' ? dayjs.utc(date).format(format) : '';
   }
 
   openPopup(attachment?: IAttachment): void {

@@ -77,7 +77,7 @@ export class RationaleTabComponent extends LitElement {
   }
 
   getChangesDate(date?: string): string {
-    return date ? moment(date).format('DD MMM YYYY') : '';
+    return date ? dayjs(date).format('DD MMM YYYY') : '';
   }
 
   formatValue(value?: string | number): string {

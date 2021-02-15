@@ -6,7 +6,7 @@
  */
 type Constructor<T> = new (...args: any[]) => T;
 
-declare const moment: any;
+declare const dayjs: any;
 
 type GenericObject<T = any> = {
   [key: string]: T;

@@ -125,7 +125,7 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
   }
 
   formatDate(date: string | null): string {
-    return date ? moment(date).format('DD MMM YYYY') : '-';
+    return date ? dayjs(date).format('DD MMM YYYY') : '-';
   }
 
   serializeName(id: number | string, collection: GenericObject[], labelField = 'name', valueField = 'id'): string {
