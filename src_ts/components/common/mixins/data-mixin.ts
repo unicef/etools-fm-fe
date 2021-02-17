@@ -37,7 +37,7 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
         return;
       }
       delete this.errors[fieldName];
-      this.requestUpdate;
+      this.requestUpdate();
     }
 
     updateModelValue(fieldName: keyof T, value: any): void {
