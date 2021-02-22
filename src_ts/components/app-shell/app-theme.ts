@@ -42,15 +42,6 @@ documentContainer.innerHTML = `
         --reject-color: #88304E;
         --note-color: #FF9044;
 
-        --epc-header: {
-          background-color: var( --primary-background-color);
-          border-bottom: 1px groove var(--dark-divider-color);
-        }
-        --epc-header-color: var(--primary-text-color);
-        --ecp-header-title: {
-          padding: 0 0;
-          text-align: left;
-        }
         --paper-input-container-label: {
           font-weight: 600;
         }
