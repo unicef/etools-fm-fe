@@ -32,11 +32,15 @@ export const DataMixin = <B extends Constructor<LitElement>>() => <T>(superclass
       super.connectedCallback();
     }
 
-    resetFieldError(fieldName: string): void {
+    resetFieldError(fieldName: string, index?: number): void {
       if (!this.errors) {
         return;
       }
-      delete this.errors[fieldName];
+      if (typeof index !== 'number') {
+        delete this.errors[fieldName];
+      } else if (this.errors[fieldName]) {
+        this.errors[fieldName][index] = null;
+      }
       this.requestUpdate();
     }
 
