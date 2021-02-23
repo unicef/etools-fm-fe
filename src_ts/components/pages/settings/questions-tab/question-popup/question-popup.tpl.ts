@@ -196,8 +196,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                   class="validate-input disabled-as-readonly flex-7"
                   .value="${option.label}"
                   @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
-                  ?invalid="${!option.label && this.errors && this.errors.scale}"
-                  .errorMessage="${!option.label && this.errors && this.errors.scale}"
+                  ?invalid="${this.errors?.options && this.errors.options[index]?.label}"
+                  .errorMessage="${this.errors?.options && this.errors.options[index]?.label}"
+                  @focus="${() => this.resetFieldError('options', index)}"
+                  @tap="${() => this.resetFieldError('options', index)}"
                   maxlength="100"
                 ></paper-input>
               </div>
