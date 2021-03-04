@@ -71,7 +71,7 @@ export class ActionPointsTab extends LitElement {
   }
 
   formatDate(date: string | null): string {
-    return date ? moment(date).format('DD MMM YYYY') : '-';
+    return date ? dayjs(date).format('DD MMM YYYY') : '-';
   }
 
   static get styles(): CSSResult[] {

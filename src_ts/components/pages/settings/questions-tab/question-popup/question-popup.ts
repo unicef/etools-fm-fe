@@ -67,7 +67,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
         // check errors on update(create) complete
         this.errors = store.getState().questions.error;
         if (this.errors && Object.keys(this.errors).length) {
-          fireEvent(this, 'toast', {text: Object.values(this.errors).join('\n')});
+          fireEvent(this, 'toast', {text: 'Please check errors and try again'});
           return;
         }
 
@@ -133,7 +133,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
     // create initial scale for SCALE_TYPE or BOOLEAN_TYPE, or remove old scale for other types
     this.changeOptionsOnTypeChange(newType);
-    this.performUpdate();
+    this.requestUpdate();
   }
 
   changeOptionsSize(newSize: number): void {
@@ -151,7 +151,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       return existedOption || {label: '', value: `${index + 1}`};
     });
 
-    this.performUpdate();
+    this.requestUpdate();
   }
 
   changeOptionLabel(optionIndex: number, value: string): void {
@@ -159,14 +159,15 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     option.label = value;
 
     if (this.errors && this.errors.scale) {
-      this.performUpdate();
+      this.requestUpdate();
     }
   }
 
   processRequest(): void {
-    if (!this.validateScales()) {
+    const scaleErrors: GenericObject[] | null = this.validateScales();
+    if (scaleErrors) {
       const currentErrors: GenericObject = this.errors || {};
-      this.errors = {...currentErrors, scale: 'Option label is required'};
+      this.errors = {...currentErrors, options: scaleErrors};
       return;
     }
     this.errors = {};
@@ -217,8 +218,16 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     }
   }
 
-  private validateScales(): boolean {
+  private validateScales(): GenericObject[] | null {
     const currentOptions: EditedQuestionOption[] = this.editedData.options || [];
-    return !currentOptions.length || currentOptions.every((option: EditedQuestionOption) => Boolean(option.label));
+    let isValid = true;
+    const errors: GenericObject[] = new Array(currentOptions.length);
+    currentOptions.forEach((option: EditedQuestionOption, index: number) => {
+      if (!option.label) {
+        errors[index] = {label: 'Option label is required'};
+        isValid = false;
+      }
+    });
+    return isValid ? null : errors;
   }
 }

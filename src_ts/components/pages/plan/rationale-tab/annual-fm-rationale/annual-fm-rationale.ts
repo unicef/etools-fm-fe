@@ -100,7 +100,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   }
 
   getChangesDate(date?: string): string {
-    return date ? moment(date).format('DD MMM YYYY') : '';
+    return date ? dayjs(date).format('DD MMM YYYY') : '';
   }
 
   static get styles(): CSSResultArray {

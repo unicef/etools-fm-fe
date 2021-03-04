@@ -106,7 +106,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     const startDate: string = this.editedData.start_date || '';
     const endDate: string = this.editedData.end_date || '';
     if (startDate && endDate) {
-      return moment(startDate).isSameOrBefore(endDate);
+      return dayjs(startDate).isSameOrBefore(endDate);
     } else {
       return !endDate || !startDate;
     }

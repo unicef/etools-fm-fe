@@ -30,7 +30,8 @@ export class ActivitiesPageComponent extends LitElement {
   }
 
   render(): TemplateResult | void {
-    return html` ${this.getPage()} `;
+    return html`<style> :host > * { position: relative; }</style>
+      ${this.getPage()} `;
   }
 
   connectedCallback(): void {
