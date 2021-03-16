@@ -1,6 +1,6 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '../../../common/layout/filters/etools-filters';
 import {updateQueryParams} from '../../../../routing/routes';
 import {hasPermission, Permissions} from '../../../../config/permissions';

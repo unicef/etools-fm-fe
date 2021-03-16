@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit-element';
 import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import './action-points-popup/action-points-popup';
 import {translate} from 'lit-translate';
 

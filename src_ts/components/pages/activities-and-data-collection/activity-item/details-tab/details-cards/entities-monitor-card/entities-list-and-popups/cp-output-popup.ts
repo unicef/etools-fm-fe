@@ -11,7 +11,7 @@ import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
-import '@unicef-polymer/etools-dialog';
+import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import {EtoolsRouter} from '../../../../../../../../routing/routes';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';

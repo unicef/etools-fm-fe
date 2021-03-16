@@ -1,7 +1,7 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {fireEvent} from '../../../../../../../utils/fire-custom-event';
-import '@unicef-polymer/etools-dialog';
+import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
