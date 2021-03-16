@@ -85,14 +85,12 @@ export const SitesTabStyles: CSSResult = css`
     --paper-card_-_margin: 0 24px;
   }
 
-  etools-data-table-row {
-    --list-row-wrapper-padding: 0 0 0 24px;
+  etools-data-table-row::part(edt-list-row-wrapper) {
+    padding: 0 0 0 24px;
   }
 
-  etools-data-table-header {
-    --data-table-header: {
-      padding: 0 0 0 24px;
-    }
+  etools-data-table-header::part(edt-data-table-header) {
+    padding: 0 0 0 24px;
   }
 
   .editable-row .hover-block {

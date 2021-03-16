@@ -14,10 +14,8 @@ export class ReviewChecklistItemComponent extends LitElement {
   render(): TemplateResult | void {
     return html`
       <style>
-        etools-data-table-row {
-          --list-row-wrapper: {
-            background-color: var(--primary-background-color);
-          }
+        etools-data-table-row::part(edt-list-row-wrapper) {
+          background-color: var(--primary-background-color);
         }
       </style>
 
