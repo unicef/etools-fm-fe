@@ -11,7 +11,7 @@ import {EtoolsRouter} from '../../../../../routing/routes';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '../../../../utils/dialog';
 import '../../../../common/file-components/files-popup';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
 @customElement('issue-tracker-list')
