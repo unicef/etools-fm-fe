@@ -1,6 +1,7 @@
 import {css, CSSResult, customElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './activity-details-card.tpl';
 import {LocationWidgetComponent} from '../../../../../../common/location-widget/location-widget';
+import {LocationSitesWidgetComponent} from '../../../../../../common/location-sites-widget/location-sites-widget';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
 import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
@@ -23,6 +24,7 @@ export const CARD_NAME = 'activity-details';
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsCard)) {
   @property() widgetOpened = false;
+  @property() selectLocationByArea = false;
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
@@ -30,6 +32,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   @property() activityOffice: Office | null = null;
 
   @query('#locationWidget') private locationWidget!: LocationWidgetComponent;
+  @query('#locationSitesWidget') private locationSitesWidget!: LocationSitesWidgetComponent;
 
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
@@ -56,6 +59,11 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
       this.activityOffice = office;
       this.updateModelValue('field_office', office);
     }
+  }
+
+  onChangeMapView(mapView: boolean): void {
+    this.selectLocationByArea = mapView;
+    this.updateWidgetMap();
   }
 
   connectedCallback(): void {
@@ -99,7 +107,17 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     if (!this.widgetOpened) {
       return;
     }
-    this.locationWidget.updateMap();
+    this.updateWidgetMap();
+  }
+
+  updateWidgetMap(): void {
+    setTimeout(() => {
+      if (this.selectLocationByArea) {
+        this.locationWidget.updateMap();
+      } else {
+        this.locationSitesWidget.updateMap();
+      }
+    }, 50);
   }
 
   isStartDateAfterEndDate(): boolean {

@@ -62,19 +62,42 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               <!--    Widget     -->
               <div class="widget-container">
                 <iron-collapse ?opened="${this.widgetOpened}">
-                  <location-widget
-                    id="locationWidget"
-                    .selectedLocation="${simplifyValue(this.editedData.location)}"
-                    .selectedSites="${this.editedData.location_site
-                      ? [simplifyValue(this.editedData.location_site)]
-                      : []}"
-                    @sites-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location_site', detail.sites[0] || null);
-                    }}"
-                    @location-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location', detail.location);
-                    }}"
-                  ></location-widget>
+                  <div class="layout horizontal" style="margin-top:10px">
+                    <paper-toggle-button
+                      .checked="${this.selectLocationByArea}"
+                      @checked-changed="${({detail}: CustomEvent) => this.onChangeMapView(detail.value)}"
+                    ></paper-toggle-button>
+                    <span>Select location by area</span>
+                  </div>
+                  ${this.selectLocationByArea
+                    ? html`<location-widget
+                        id="locationWidget"
+                        .selectedLocation="${simplifyValue(this.editedData.location)}"
+                        .selectedSites="${this.editedData.location_site
+                          ? [simplifyValue(this.editedData.location_site)]
+                          : []}"
+                        @sites-changed="${({detail}: CustomEvent) => {
+                          this.updateModelValue('location_site', detail.sites[0] || null);
+                        }}"
+                        @location-changed="${({detail}: CustomEvent) => {
+                          this.updateModelValue('location', detail.location);
+                        }}"
+                      ></location-widget> `
+                    : html`
+                        <location-sites-widget
+                          id="locationSitesWidget"
+                          .selectedLocation="${simplifyValue(this.editedData.location)}"
+                          .selectedSites="${this.editedData.location_site
+                            ? [simplifyValue(this.editedData.location_site)]
+                            : []}"
+                          @sites-changed="${({detail}: CustomEvent) => {
+                            this.updateModelValue('location_site', detail.sites[0] || null);
+                          }}"
+                          @location-changed="${({detail}: CustomEvent) => {
+                            this.updateModelValue('location', detail.location);
+                          }}"
+                        ></location-sites-widget>
+                      `}
                 </iron-collapse>
               </div>
             `

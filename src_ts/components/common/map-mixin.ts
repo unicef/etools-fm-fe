@@ -34,11 +34,11 @@ export class MapHelper {
     this.staticMarkers = markers;
   }
 
-  addStaticMarker(markerData: MarkerDataObj): void {
+  addStaticMarker(markerData: MarkerDataObj, onclick?: (e: any) => void): void {
     if (!this.staticMarkers) {
       this.staticMarkers = [];
     }
-    const marker: IMarker = this.createMarker(markerData);
+    const marker: IMarker = this.createMarker(markerData, onclick);
     this.staticMarkers.push(marker);
   }
 
@@ -104,9 +104,17 @@ export class MapHelper {
     return this.map && this.map.invalidateSize();
   }
 
-  private createMarker(data: MarkerDataObj): IMarker {
+  private createMarker(data: MarkerDataObj, onclick?: (e: any) => void): IMarker {
     const marker: IMarker = L.marker(data.coords).addTo(this.map as Map);
     marker.staticData = data.staticData;
+    if (onclick) {
+      marker.on('click', function (e) {
+        onclick(e);
+      });
+      marker.on('mouseover', function () {
+        marker.openPopup();
+      });
+    }
     if (data.popup) {
       marker.bindPopup(`<b>${data.popup}</b>`);
     }
