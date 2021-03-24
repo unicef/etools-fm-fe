@@ -104,7 +104,8 @@
     "REJECTION_NOTE": "Localized Rejection Note",
     "REPORT_REJECTION_REASON": "Localized Report Rejection Reason",
     "CANCELLATION_NOTE": "Localized Cancellation Note",
-    "MAP_SELECT_LOCATION": "Select Location/Site with Widget"
+    "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
+    "MAP_SELECT_LOCATION_BY_AREA": "Select Location by Area"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Localized New Activity",

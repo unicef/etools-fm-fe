@@ -12,6 +12,7 @@ export class MapHelper {
   map: Map | null = null;
   staticMarkers: IMarker[] | null = null;
   dynamicMarker: IMarker | null = null;
+  markerClusters: any | null = null;
 
   initMap(element?: HTMLElement | null): Map | never {
     if (!element) {
@@ -34,11 +35,30 @@ export class MapHelper {
     this.staticMarkers = markers;
   }
 
-  addStaticMarker(markerData: MarkerDataObj, onclick?: (e: any) => void): void {
+  addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
+    this.markerClusters = L.markerClusterGroup();
+    const markers: Marker[] = [];
+    let marker: IMarker;
+    (markersData || []).forEach((mark: MarkerDataObj) => {
+      marker = L.marker(mark.coords).bindPopup(`<b>${mark.popup}</b>`)
+      marker.staticData = mark.staticData;
+      if (onclick) {
+        marker.on('click', function (e) {
+          onclick(e);
+        });
+      }
+      markers.push(marker);
+      this.markerClusters.addLayer(marker);
+    });
+    (this.map as Map).addLayer(this.markerClusters);
+    this.staticMarkers = markers;
+  }
+
+  addStaticMarker(markerData: MarkerDataObj): void {
     if (!this.staticMarkers) {
       this.staticMarkers = [];
     }
-    const marker: IMarker = this.createMarker(markerData, onclick);
+    const marker: IMarker = this.createMarker(markerData);
     this.staticMarkers.push(marker);
   }
 
@@ -104,17 +124,9 @@ export class MapHelper {
     return this.map && this.map.invalidateSize();
   }
 
-  private createMarker(data: MarkerDataObj, onclick?: (e: any) => void): IMarker {
+  private createMarker(data: MarkerDataObj): IMarker {
     const marker: IMarker = L.marker(data.coords).addTo(this.map as Map);
     marker.staticData = data.staticData;
-    if (onclick) {
-      marker.on('click', function (e) {
-        onclick(e);
-      });
-      marker.on('mouseover', function () {
-        marker.openPopup();
-      });
-    }
     if (data.popup) {
       marker.bindPopup(`<b>${data.popup}</b>`);
     }

@@ -23,7 +23,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
 
           <div class="locations-list">
             ${repeat(
-              this.sitesList,
+              this.sitesList || [],
               (site: Site) => html`
                 <div
                   class="site-line ${this.getSiteLineClass(site.id)}"

@@ -1,7 +1,5 @@
-import {css, CSSResult, customElement, property, query, TemplateResult} from 'lit-element';
+import {css, html, CSSResult, customElement, property, query, TemplateResult} from 'lit-element';
 import {template} from './activity-details-card.tpl';
-import {LocationWidgetComponent} from '../../../../../../common/location-widget/location-widget';
-import {LocationSitesWidgetComponent} from '../../../../../../common/location-sites-widget/location-sites-widget';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
 import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
@@ -18,21 +16,22 @@ import {loadSiteLocations} from '../../../../../../../redux/effects/site-specifi
 import clone from 'ramda/es/clone';
 import {fireEvent} from '../../../../../../utils/fire-custom-event';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
+import {simplifyValue} from '../../../../../../utils/objects-diff';
+import {translate} from 'lit-translate';
 
 export const CARD_NAME = 'activity-details';
+const SITE_TAB = 'SITE_TAB';
+const AREA_TAB = 'AREA_TAB';
 
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsCard)) {
   @property() widgetOpened = false;
-  @property() selectLocationByArea = false;
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
   @property() activityOffice: Office | null = null;
-
-  @query('#locationWidget') private locationWidget!: LocationWidgetComponent;
-  @query('#locationSitesWidget') private locationSitesWidget!: LocationSitesWidgetComponent;
+  @property({type: String}) activeTab = SITE_TAB;
 
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
@@ -61,9 +60,66 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     }
   }
 
-  onChangeMapView(mapView: boolean): void {
-    this.selectLocationByArea = mapView;
-    this.updateWidgetMap();
+  onChangeMapTab(selectedTab: HTMLElement): void {
+    const tabName: string = selectedTab.getAttribute('name') || '';
+    this.activeTab = tabName;
+    //this.updateWidgetMap();
+  }
+
+  getTabList(): PageTab[] {
+    return [
+      {
+        tab: SITE_TAB,
+        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_SITE'),
+        hidden: false
+      },
+      {
+        tab: AREA_TAB,
+        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_AREA'),
+        hidden: false
+      }
+    ];
+  }
+
+  getTabElement(): TemplateResult {
+    switch (this.activeTab) {
+      case SITE_TAB:
+        return this.getMapBySite();
+      case AREA_TAB:
+        return this.getMapByArea();
+      default:
+        return html``;
+    }
+  }
+
+  getMapBySite(): TemplateResult {
+    return html`
+      <location-sites-widget
+        .selectedLocation="${simplifyValue(this.editedData.location)}"
+        .selectedSites="${this.editedData.location_site ? [simplifyValue(this.editedData.location_site)] : []}"
+        @sites-changed="${({detail}: CustomEvent) => {
+          this.updateModelValue('location_site', detail.sites[0] || null);
+        }}"
+        @location-changed="${({detail}: CustomEvent) => {
+          this.updateModelValue('location', detail.location);
+        }}"
+      ></location-sites-widget>
+    `;
+  }
+
+  getMapByArea(): TemplateResult {
+    return html`
+      <location-widget
+        .selectedLocation="${simplifyValue(this.editedData.location)}"
+        .selectedSites="${this.editedData.location_site ? [simplifyValue(this.editedData.location_site)] : []}"
+        @sites-changed="${({detail}: CustomEvent) => {
+          this.updateModelValue('location_site', detail.sites[0] || null);
+        }}"
+        @location-changed="${({detail}: CustomEvent) => {
+          this.updateModelValue('location', detail.location);
+        }}"
+      ></location-widget>
+    `;
   }
 
   connectedCallback(): void {
@@ -100,24 +156,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     super.disconnectedCallback();
     this.sitesUnsubscribe();
     this.locationsUnsubscribe();
-  }
-
-  widgetToggle(): void {
-    this.widgetOpened = !this.widgetOpened;
-    if (!this.widgetOpened) {
-      return;
-    }
-    this.updateWidgetMap();
-  }
-
-  updateWidgetMap(): void {
-    setTimeout(() => {
-      if (this.selectLocationByArea) {
-        this.locationWidget.updateMap();
-      } else {
-        this.locationSitesWidget.updateMap();
-      }
-    }, 50);
   }
 
   isStartDateAfterEndDate(): boolean {

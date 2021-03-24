@@ -23,10 +23,9 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 export class LocationSitesWidgetComponent extends LitElement {
   @property() selectedLocation: string | null = null;
   @property() selectedSites: number[] = [];
-  @property({type: Boolean, attribute: 'multiple-sites'}) multipleSites = false;
 
   @property() sites: Site[] = [];
-  @property() sitesList: Site[] = [];
+  @property() sitesList!: Site[];
 
   @property() hasSites = true;
   @property({type: String, reflect: true}) locationSearch = '';
@@ -34,7 +33,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
 
-  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
+  protected defaultMapCenter!: LatLngTuple = DEFAULT_COORDINATES;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private sitesUnsubscribe!: Unsubscribe;
@@ -137,7 +136,6 @@ export class LocationSitesWidgetComponent extends LitElement {
         if (!workspace) {
           return;
         }
-
         this.defaultMapCenter = (workspace.point && workspace.point.coordinates) || DEFAULT_COORDINATES;
         this.mapInitialisation();
       })
@@ -148,6 +146,7 @@ export class LocationSitesWidgetComponent extends LitElement {
         if (!sites) {
           return;
         }
+
         this.sites = locationsInvert(sites)
           .map((location: IGroupedSites) => location.sites)
           .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
@@ -155,6 +154,10 @@ export class LocationSitesWidgetComponent extends LitElement {
         this.sitesList = [...this.sites];
         this.sitesLoading = false;
         this.hasSites = this.sitesList.length > 0;
+        if (!this.mapInitializationProcess) {
+          this.addSitesToMap();
+        }
+
         if (this.selectedSites.length) {
           this.checkSelectedSites(this.selectedSites, this.selectedLocation);
         }
@@ -169,18 +172,29 @@ export class LocationSitesWidgetComponent extends LitElement {
   }
 
   addSitesToMap(): void {
+    if (!this.MapHelper.map || !this.sitesList || this.MapHelper.markerClusters) {
+      return;
+    }
+
     const siteClick = this.onSiteClick.bind(this);
-    let coords: CoordinatesArray;
+    const reversedMarks: MarkerDataObj[] = [];
     (this.sitesList || []).forEach((location) => {
-      coords = [...location.point.coordinates].reverse() as CoordinatesArray;
-      this.MapHelper.addStaticMarker({coords, staticData: location, popup: location.name}, siteClick);
+      reversedMarks.push({
+        coords: [location.point.coordinates[1], location.point.coordinates[0]],
+        staticData: location,
+        popup: location.name
+      });
     });
+    this.MapHelper.addCluster(reversedMarks, siteClick);
+    this.requestUpdate();
   }
 
   onSiteHoverStart(location: Site): void {
     const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === location.id);
     if (site) {
-      site.togglePopup();
+      this.MapHelper.markerClusters.zoomToShowLayer(site, () => {
+        site.togglePopup();
+      });
     }
   }
 
@@ -219,11 +233,6 @@ export class LocationSitesWidgetComponent extends LitElement {
         this.sitesList = [...this.sites];
       }
     }
-  }
-
-  async updateMap(): Promise<void> {
-    await Promise.resolve();
-    this.MapHelper.invalidateSize();
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
@@ -267,11 +276,11 @@ export class LocationSitesWidgetComponent extends LitElement {
       return;
     }
     if (this.mapInitializationProcess) {
+      this.mapInitializationProcess = false;
       this.MapHelper.initMap(this.mapElement);
       this.addSitesToMap();
     }
     this.setInitialMapView();
-    this.mapInitializationProcess = false;
   }
 
   private setInitialMapView(): void {
