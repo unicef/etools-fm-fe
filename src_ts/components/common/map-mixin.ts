@@ -36,7 +36,7 @@ export class MapHelper {
   }
 
   addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
-    this.markerClusters = L.markerClusterGroup();
+    this.markerClusters = (L as any).markerClusterGroup();
     const markers: Marker[] = [];
     let marker: IMarker;
     (markersData || []).forEach((mark: MarkerDataObj) => {
