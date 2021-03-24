@@ -1,4 +1,4 @@
-import {css, html, CSSResult, customElement, property, query, TemplateResult} from 'lit-element';
+import {css, html, CSSResult, customElement, property, TemplateResult} from 'lit-element';
 import {template} from './activity-details-card.tpl';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';

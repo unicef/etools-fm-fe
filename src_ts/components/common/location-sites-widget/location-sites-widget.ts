@@ -33,7 +33,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
 
-  protected defaultMapCenter!: LatLngTuple = DEFAULT_COORDINATES;
+  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private sitesUnsubscribe!: Unsubscribe;
