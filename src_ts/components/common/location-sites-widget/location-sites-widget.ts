@@ -187,13 +187,26 @@ export class LocationSitesWidgetComponent extends LitElement {
     });
     this.MapHelper.addCluster(reversedMarks, siteClick);
     this.requestUpdate();
+    setTimeout(() => {
+      this.showSelectedSite();
+    }, 100);
+  }
+
+  showSelectedSite(): void {
+    if (this.selectedSites && this.selectedSites.length && this.selectedLocation) {
+      const site = {id: this.selectedSites[0], parent: {id: this.selectedLocation}} as Site;
+      this.onSiteHoverStart(site);
+      this.onSiteLineClick(site);
+    }
   }
 
   onSiteHoverStart(location: Site): void {
     const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === location.id);
     if (site) {
       this.MapHelper.markerClusters.zoomToShowLayer(site, () => {
-        site.togglePopup();
+        setTimeout(() => {
+          site.openPopup();
+        }, 10);
       });
     }
   }

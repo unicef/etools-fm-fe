@@ -373,16 +373,6 @@ export class LocationWidgetComponent extends LitElement {
     return (this.loadingInProcess || isEmptyList) && !!this.locationSearch;
   }
 
-  async updateMap(): Promise<void> {
-    await Promise.resolve();
-    this.MapHelper.invalidateSize();
-
-    const location: WidgetLocation | null = this.getLastLocation();
-    if (location) {
-      this.centerAndDrawBorders(location);
-    }
-  }
-
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.mapInitialisation();

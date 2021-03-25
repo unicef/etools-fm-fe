@@ -63,7 +63,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   onChangeMapTab(selectedTab: HTMLElement): void {
     const tabName: string = selectedTab.getAttribute('name') || '';
     this.activeTab = tabName;
-    //this.updateWidgetMap();
   }
 
   getTabList(): PageTab[] {
@@ -75,7 +74,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
       },
       {
         tab: AREA_TAB,
-        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_AREA'),
+        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_ADMIN_LEVEL'),
         hidden: false
       }
     ];
