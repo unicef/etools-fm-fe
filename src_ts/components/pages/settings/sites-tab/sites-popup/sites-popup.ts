@@ -7,7 +7,7 @@ import {fireEvent} from '../../../../utils/fire-custom-event';
 import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/site-specific-locations.effects';
 import {LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent} from 'leaflet';
 import {getDifference} from '../../../../utils/objects-diff';
-import {MapHelper} from '../../../../common/map-mixin';
+import {IMarker, MapHelper} from '../../../../common/map-mixin';
 import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -33,10 +33,10 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   @property() latitude: number | null = null;
   @property() longitude: number | null = null;
+  @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   savingInProcess = false;
-  @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
   @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
@@ -123,7 +123,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     if (lat && lng) {
       this.editedData.point = {
         type: 'Point',
-        coordinates: [lng, lat]
+        coordinates: [this.toPrecision(lng), this.toPrecision(lat)]
       };
     }
 
@@ -155,22 +155,19 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         this.MapHelper.changeDMLocation([lat, lng]);
         this.setCoordsString();
       });
-      this.renderMarkers();
     }
-    const coords: LatLngTuple =
-      (this.editedData && this.editedData.point && this.editedData.point.coordinates) || this.defaultMapCenter;
-    const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
-    const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
-    this.MapHelper.map!.setView(reversedCoords, zoom);
 
+    this.renderMarkers();
     const id: number | null = (this.editedData && this.editedData.id) || null;
-    if (id) {
-      this.MapHelper.dynamicMarker =
-        this.MapHelper.staticMarkers!.find((marker: any) => marker.staticData.id === id) || null;
-      this.MapHelper.dynamicMarker!.openPopup();
+    if (id && this.MapHelper.markerClusters) {
+      const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
+      this.MapHelper.dynamicMarker = site || null;
+      this.setCoordsString();
     }
 
-    this.setCoordsString();
+    setTimeout(() => {
+      this.setMapView();
+    }, 1000);
   }
 
   updateLatLng(value: number, param: 'latitude' | 'longitude'): void {
@@ -187,15 +184,34 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     }
   }
 
+  private toPrecision(num: number, precision = 5): number {
+    if (!num || typeof num !== 'number') {
+      return num;
+    }
+    return Number(num.toFixed(precision));
+  }
+
   private renderMarkers(): void {
     if (!this.MapHelper.map || !this.sitesObjects) {
       return;
     }
-    const sitesCoords: MarkerDataObj[] = this.sitesObjects.map((site: Site) => {
-      const coords: LatLngTuple = [...site.point.coordinates].reverse() as LatLngTuple;
-      return {coords, staticData: site, popup: site.name};
+    const reversedMarks: MarkerDataObj[] = [];
+    (this.sitesObjects || []).forEach((site) => {
+      reversedMarks.push({
+        coords: [site.point.coordinates[1], site.point.coordinates[0]],
+        staticData: site,
+        popup: site.name
+      });
     });
-    this.MapHelper.setStaticMarkers(sitesCoords);
+    this.MapHelper.addCluster(reversedMarks);
+  }
+
+  private setMapView(): void {
+    const coords: LatLngTuple =
+      (this.editedData && this.editedData.point && this.editedData.point.coordinates) || this.defaultMapCenter;
+    const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
+    const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
+    this.MapHelper.map!.setView(reversedCoords, zoom);
   }
 
   private setCoordsString(): void {
@@ -203,10 +219,9 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       this.currentCoords = null;
     } else {
       const {lat, lng} = this.MapHelper.dynamicMarker.getLatLng();
-      this.latitude = lat;
-      this.longitude = lng;
-      this.currentCoords =
-        `${translate('MAIN.LATITUDE')} ${lat.toFixed(6)}` + `     ${translate('MAIN.LONGITUDE')} ${lng.toFixed(6)}`;
+      this.latitude = this.toPrecision(lat);
+      this.longitude = this.toPrecision(lng);
+      this.currentCoords = `${translate('MAIN.LATITUDE')} ${lat}` + `     ${translate('MAIN.LONGITUDE')} ${lng}`;
     }
   }
 
