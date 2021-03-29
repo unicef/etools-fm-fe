@@ -23,7 +23,7 @@ import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
-const LAT_LNG_DEBOUNCE_TIME = 700;
+const LAT_LNG_DEBOUNCE_TIME = 300;
 
 @customElement('sites-popup')
 export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
@@ -167,7 +167,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
     setTimeout(() => {
       this.setMapView();
-    }, 1000);
+    }, 400);
   }
 
   updateLatLng(value: number, param: 'latitude' | 'longitude'): void {
@@ -180,7 +180,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   updateMapPoint(): void {
     if (this.MapHelper.dynamicMarker && this.latitude && this.longitude) {
       this.MapHelper.dynamicMarker.setLatLng([this.latitude, this.longitude]);
-      this.MapHelper.map!.setView([+this.latitude, +this.longitude] as LatLngTuple, 8);
+      this.MapHelper.dynamicMarker.openPopup();
     }
   }
 
@@ -212,6 +212,9 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
     const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
     this.MapHelper.map!.setView(reversedCoords, zoom);
+    if (this.MapHelper.dynamicMarker) {
+      this.MapHelper.dynamicMarker.openPopup();
+    }
   }
 
   private setCoordsString(): void {
