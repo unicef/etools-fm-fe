@@ -159,7 +159,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
     this.renderMarkers();
     const id: number | null = (this.editedData && this.editedData.id) || null;
-    if (id && this.MapHelper.markerClusters) {
+    if (id) {
       const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
       this.MapHelper.dynamicMarker = site || null;
       this.setCoordsString();
@@ -195,15 +195,11 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     if (!this.MapHelper.map || !this.sitesObjects) {
       return;
     }
-    const reversedMarks: MarkerDataObj[] = [];
-    (this.sitesObjects || []).forEach((site) => {
-      reversedMarks.push({
-        coords: [site.point.coordinates[1], site.point.coordinates[0]],
-        staticData: site,
-        popup: site.name
-      });
+    const sitesCoords: MarkerDataObj[] = this.sitesObjects.map((site: Site) => {
+      const coords: LatLngTuple = [...site.point.coordinates].reverse() as LatLngTuple;
+      return {coords, staticData: site, popup: site.name};
     });
-    this.MapHelper.addCluster(reversedMarks);
+    this.MapHelper.addCluster(sitesCoords);
   }
 
   private setMapView(): void {
