@@ -30,7 +30,8 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
-  @property() activityOffice: Office | null = null;
+
+  @property() activityOffices: Office[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
 
   private sitesUnsubscribe!: Unsubscribe;
@@ -43,7 +44,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   set data(data: IActivityDetails) {
     super.data = data;
     this.activitySections = data ? clone(data.sections) : [];
-    this.activityOffice = data ? clone(data.field_office) : null;
+    this.activityOffices = data ? clone(data.offices) : [];
   }
 
   selectSections(sections: Section[]): void {
@@ -53,10 +54,10 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     }
   }
 
-  selectOffices(office: Office): void {
-    if (JSON.stringify(office) !== JSON.stringify(this.activityOffice)) {
-      this.activityOffice = office;
-      this.updateModelValue('field_office', office);
+  selectOffices(offices: Office[]): void {
+    if (JSON.stringify(offices) !== JSON.stringify(this.activityOffices)) {
+      this.activityOffices = offices;
+      this.updateModelValue('offices', offices);
     }
   }
 

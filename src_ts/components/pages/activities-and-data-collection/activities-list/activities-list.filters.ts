@@ -116,7 +116,7 @@ export const activitiesListFilters: IEtoolsFilter[] = [
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE'),
-    filterKey: 'field_office__in',
+    filterKey: 'offices__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],

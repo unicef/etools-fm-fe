@@ -90,7 +90,7 @@ export class ProportionalProgressBar extends LitElement {
     if (!this.minRequired || !this.planned) {
       return '0%';
     } else {
-      return `${(this.minRequired / this.planned) * 100}%`;
+      return `${((this.planned < this.minRequired ? this.planned : this.minRequired) / this.planned) * 100}%`;
     }
   }
 

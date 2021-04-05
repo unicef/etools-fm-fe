@@ -11,7 +11,7 @@ import {ACTION_POINTS_OFFICES} from '../../../endpoints/endpoints-list';
 export const OfficesMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-    offices: ActionPointsOffice[] = [];
+    allOffices: ActionPointsOffice[] = [];
 
     private officesUnsubscribe!: Unsubscribe;
 
@@ -21,7 +21,7 @@ export const OfficesMixin = <T extends Constructor<LitElement>>(superclass: T) =
       const superProps: PropertyDeclarations = super.properties;
       return {
         ...superProps,
-        offices: {type: Array}
+        allOffices: {type: Array}
       };
     }
 
@@ -32,7 +32,7 @@ export const OfficesMixin = <T extends Constructor<LitElement>>(superclass: T) =
           if (!offices) {
             return;
           }
-          this.offices = offices;
+          this.allOffices = offices;
         })
       );
       const data: IStaticDataState = (store.getState() as IRootState).staticData;

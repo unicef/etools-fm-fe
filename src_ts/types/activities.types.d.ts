@@ -23,7 +23,7 @@ interface IActivityDetails extends IListActivity {
   reject_reason: string;
   cancel_reason: string;
   report_reject_reason: string;
-  field_office: Office;
+  offices: Office[];
 }
 
 type ActivityStatus =
@@ -128,7 +128,7 @@ type ActivityPermissionsObject = {
   created: boolean;
   actionpoint: boolean;
   field_office_id: boolean;
-  field_office: boolean;
+  offices: boolean;
   location_site: boolean;
   id: boolean;
   location_id: boolean;
