@@ -66,6 +66,7 @@ export const LocationWidgetStyles: CSSResult = css`
     flex-flow: column;
     height: calc(100% - 43px);
     position: relative;
+    overflow-y: auto;
   }
 
   .widget-container .map-and-list .list paper-input {

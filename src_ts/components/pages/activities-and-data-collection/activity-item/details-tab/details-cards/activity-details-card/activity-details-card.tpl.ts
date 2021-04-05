@@ -3,6 +3,9 @@ import {ActivityDetailsCard, CARD_NAME} from './activity-details-card';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {formatDate} from '../../../../../../utils/date-utility';
+import '@polymer/paper-tabs/paper-tabs';
+import '@polymer/paper-tabs/paper-tab';
+import '../../../../../../common/layout/etools-tabs';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi.js';
 import {translate} from 'lit-translate';
@@ -43,41 +46,14 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <!--    Collapsed location Widget    -->
         ${this.isEditMode && !this.isFieldReadonly('location')
           ? html`
-              <div class="widget-dropdown">
-                <!--      Title        -->
-                <div class="flex-auto">
-                  <span class=" layout horizontal center" @tap="${() => this.widgetToggle()}">
-                    <iron-icon icon="maps:map"></iron-icon>${translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION')}
-                  </span>
-                </div>
-
-                <!--      Icon        -->
-                <iron-icon
-                  icon="${this.widgetOpened ? 'expand-less' : 'expand-more'}"
-                  class="flex-none toggle-btn"
-                  ?hidden="${!this.widgetOpened}"
-                  @tap="${() => this.widgetToggle()}"
-                ></iron-icon>
-              </div>
-
-              <!--    Widget     -->
-              <div class="widget-container">
-                <iron-collapse ?opened="${this.widgetOpened}">
-                  <location-widget
-                    id="locationWidget"
-                    .selectedLocation="${simplifyValue(this.editedData.location)}"
-                    .selectedSites="${this.editedData.location_site
-                      ? [simplifyValue(this.editedData.location_site)]
-                      : []}"
-                    @sites-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location_site', detail.sites[0] || null);
-                    }}"
-                    @location-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location', detail.location);
-                    }}"
-                  ></location-widget>
-                </iron-collapse>
-              </div>
+              <etools-tabs
+                id="tabs"
+                slot="tabs"
+                .tabs="${this.getTabList()}"
+                @iron-select="${({detail}: any) => this.onChangeMapTab(detail.item)}"
+                .activeTab="${this.activeTab}"
+              ></etools-tabs>
+              ${this.getTabElement()}
             `
           : ''}
 
