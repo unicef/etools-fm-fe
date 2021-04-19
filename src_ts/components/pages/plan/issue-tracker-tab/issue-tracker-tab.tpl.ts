@@ -3,7 +3,7 @@ import {IssueTrackerTabComponent} from './issue-tracker-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {repeat} from 'lit-html/directives/repeat';
 import '@polymer/paper-toggle-button';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-dropdown';
 import {prettyDate} from '../../../utils/date-utility';
 import {simplifyValue} from '../../../utils/objects-diff';

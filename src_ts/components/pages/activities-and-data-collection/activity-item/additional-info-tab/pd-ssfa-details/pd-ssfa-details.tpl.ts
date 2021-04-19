@@ -1,6 +1,6 @@
 import {PdSsfaDetails} from './pd-ssfa-details';
 import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
 export function template(this: PdSsfaDetails): TemplateResult {
