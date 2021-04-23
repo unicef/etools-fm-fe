@@ -151,7 +151,7 @@ export class LocationSitesWidgetComponent extends LitElement {
           .map((location: IGroupedSites) => location.sites)
           .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
-        this.sitesList = [...this.sites];
+        this.sitesList = this.sites.filter((s: Site) => s.is_active);
         this.sitesLoading = false;
         this.hasSites = this.sitesList.length > 0;
         if (!this.mapInitializationProcess) {
