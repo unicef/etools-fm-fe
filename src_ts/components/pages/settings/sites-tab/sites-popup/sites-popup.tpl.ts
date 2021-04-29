@@ -79,9 +79,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
         <div class="map" id="map"></div>
 
         <div class="layout horizontal">
-          <label class="selected-sites-label">
-            ${translate('SITES.SELECTED_SITE')}:
-          </label>
+          <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
           <paper-input
             class="validate-input disabled-as-readonly flex-5"
             .value="${this.latitude}"

@@ -95,20 +95,10 @@ export const etoolsFiltersStyles: CSSResult = css`
   }
 
   #filters-selector {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    -ms-flex-direction: column;
-    -webkit-flex-direction: column;
     flex-direction: column;
-
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
     justify-content: center;
 
-    -ms-align-self: stretch;
-    -webkit-align-self: stretch;
     align-self: stretch;
 
     padding: 0 0 0 8px;
@@ -154,20 +144,9 @@ export const etoolsFiltersStyles: CSSResult = css`
   }
 
   paper-icon-item {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
     flex-direction: row;
-
-    -ms-flex-align: center;
-    -webkit-align-items: center;
     align-items: center;
-
-    -ms-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 
     min-height: 48px;
@@ -178,16 +157,9 @@ export const etoolsFiltersStyles: CSSResult = css`
 
   .clear-all-filters {
     min-height: 48px;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
     flex-direction: row;
 
-    -ms-flex-align: center;
-    -webkit-align-items: center;
     align-items: center;
     color: var(--primary-color, rgba(0, 0, 0, 0.87));
     padding-right: 16px;

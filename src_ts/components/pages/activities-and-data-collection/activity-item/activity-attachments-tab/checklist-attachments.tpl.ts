@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit-element';
 import '../../../../common/attachmants-list/attachments-list';
 import {repeat} from 'lit-html/directives/repeat';
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';

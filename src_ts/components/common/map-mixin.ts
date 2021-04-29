@@ -12,6 +12,7 @@ export class MapHelper {
   map: Map | null = null;
   staticMarkers: IMarker[] | null = null;
   dynamicMarker: IMarker | null = null;
+  markerClusters: any | null = null;
 
   initMap(element?: HTMLElement | null): Map | never {
     if (!element) {
@@ -31,6 +32,25 @@ export class MapHelper {
       const marker: IMarker = this.createMarker(data);
       markers.push(marker);
     });
+    this.staticMarkers = markers;
+  }
+
+  addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
+    this.markerClusters = (L as any).markerClusterGroup();
+    const markers: Marker[] = [];
+    let marker: IMarker;
+    (markersData || []).forEach((mark: MarkerDataObj) => {
+      marker = L.marker(mark.coords).bindPopup(`<b>${mark.popup}</b>`)
+      marker.staticData = mark.staticData;
+      if (onclick) {
+        marker.on('click', function (e) {
+          onclick(e);
+        });
+      }
+      markers.push(marker);
+      this.markerClusters.addLayer(marker);
+    });
+    (this.map as Map).addLayer(this.markerClusters);
     this.staticMarkers = markers;
   }
 

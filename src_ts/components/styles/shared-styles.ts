@@ -68,4 +68,14 @@ export const SharedStyles: CSSResult = css`
   .filters-section {
     padding: 0 30px;
   }
+
+  etools-content-panel::part(ecp-header) {
+    background-color: var( --primary-background-color);
+    border-bottom: 1px groove var(--dark-divider-color);
+    -color: var(--primary-text-color);
+  }
+  etools-content-panel::part(ecp-header-title) {
+    padding: 0 0;
+    text-align: left;
+  }
 `;

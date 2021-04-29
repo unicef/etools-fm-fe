@@ -289,11 +289,9 @@ export const InputStyles: TemplateResult = html`
       box-sizing: border-box;
     }
 
-    etools-content-panel:not([list]) {
-      --ecp-content: {
-        padding: 8px 12px;
-        padding-left: 12px;
-      }
+    etools-content-panel:not([list])::part(ecp-content) {
+      padding: 8px 12px;
+      padding-left: 12px;
     }
 
     etools-currency-amount-input {

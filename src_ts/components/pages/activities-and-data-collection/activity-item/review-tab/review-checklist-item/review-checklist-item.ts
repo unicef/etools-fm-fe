@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
@@ -14,10 +14,8 @@ export class ReviewChecklistItemComponent extends LitElement {
   render(): TemplateResult | void {
     return html`
       <style>
-        etools-data-table-row {
-          --list-row-wrapper: {
-            background-color: var(--primary-background-color);
-          }
+        etools-data-table-row::part(edt-list-row-wrapper) {
+          background-color: var(--primary-background-color);
         }
       </style>
 

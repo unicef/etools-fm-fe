@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-data-table';
+import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '../../../common/layout/filters/etools-filters';
 import './question-popup/question-popup';
 import {html, TemplateResult} from 'lit-element';

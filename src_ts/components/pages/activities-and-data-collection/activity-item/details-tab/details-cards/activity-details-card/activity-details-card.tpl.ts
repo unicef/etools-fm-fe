@@ -3,7 +3,11 @@ import {ActivityDetailsCard, CARD_NAME} from './activity-details-card';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {formatDate} from '../../../../../../utils/date-utility';
+import '@polymer/paper-tabs/paper-tabs';
+import '@polymer/paper-tabs/paper-tab';
+import '../../../../../../common/layout/etools-tabs';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
+import '@unicef-polymer/etools-dropdown/etools-dropdown-multi.js';
 import {translate} from 'lit-translate';
 
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
@@ -12,7 +16,7 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'start_date',
   'location_site',
   'location',
-  'field_office'
+  'offices'
 ];
 
 export function template(this: ActivityDetailsCard): TemplateResult {
@@ -42,41 +46,14 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <!--    Collapsed location Widget    -->
         ${this.isEditMode && !this.isFieldReadonly('location')
           ? html`
-              <div class="widget-dropdown">
-                <!--      Title        -->
-                <div class="flex-auto">
-                  <span class=" layout horizontal center" @tap="${() => this.widgetToggle()}">
-                    <iron-icon icon="maps:map"></iron-icon>${translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION')}
-                  </span>
-                </div>
-
-                <!--      Icon        -->
-                <iron-icon
-                  icon="${this.widgetOpened ? 'expand-less' : 'expand-more'}"
-                  class="flex-none toggle-btn"
-                  ?hidden="${!this.widgetOpened}"
-                  @tap="${() => this.widgetToggle()}"
-                ></iron-icon>
-              </div>
-
-              <!--    Widget     -->
-              <div class="widget-container">
-                <iron-collapse ?opened="${this.widgetOpened}">
-                  <location-widget
-                    id="locationWidget"
-                    .selectedLocation="${simplifyValue(this.editedData.location)}"
-                    .selectedSites="${this.editedData.location_site
-                      ? [simplifyValue(this.editedData.location_site)]
-                      : []}"
-                    @sites-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location_site', detail.sites[0] || null);
-                    }}"
-                    @location-changed="${({detail}: CustomEvent) => {
-                      this.updateModelValue('location', detail.location);
-                    }}"
-                  ></location-widget>
-                </iron-collapse>
-              </div>
+              <etools-tabs
+                id="tabs"
+                slot="tabs"
+                .tabs="${this.getTabList()}"
+                @iron-select="${({detail}: any) => this.onChangeMapTab(detail.item)}"
+                .activeTab="${this.activeTab}"
+              ></etools-tabs>
+              ${this.getTabElement()}
             `
           : ''}
 
@@ -165,26 +142,26 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <div class="layout horizontal">
           <!--     Offices dropdown     -->
           <div class="layout horizontal flex">
-            <etools-dropdown
+            <etools-dropdown-multi
               class="without-border field-office"
-              .selected="${simplifyValue(this.activityOffice)}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => this.selectOffices(detail.selectedItem)}"
+              .selectedValues="${simplifyValue(this.activityOffices)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectOffices(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.OFFICE')}"
-              .options="${this.offices.length
-                ? this.offices
-                : [this.activityOffice].filter((office: Office | null) => Boolean(office))}"
+              .options="${this.allOffices.length
+                ? this.allOffices
+                : this.activityOffices.filter((office: Office | null) => Boolean(office))}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('field_office')}"
-              ?readonly="${!this.isEditMode || this.isFieldReadonly('field_office')}"
-              ?invalid="${this.errors && this.errors.field_office}"
-              .errorMessage="${this.errors && this.errors.field_office}"
-              @focus="${() => this.resetFieldError('field_office')}"
-              @tap="${() => this.resetFieldError('field_office')}"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('offices')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('offices')}"
+              ?invalid="${this.errors && this.errors.offices}"
+              .errorMessage="${this.errors && this.errors.offices}"
+              @focus="${() => this.resetFieldError('offices')}"
+              @tap="${() => this.resetFieldError('offices')}"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>
+            ></etools-dropdown-multi>
           </div>
         </div>
       </div>
