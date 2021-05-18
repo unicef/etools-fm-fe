@@ -4,7 +4,7 @@
   "sources": ["assets/**"],
   "fragments": [
     "src/components/pages/page-not-found.js",
-    "src/components/pages/templates/templatess-page.js",
+    "src/components/pages/templates/templates-page.js",
     "src/components/pages/templates/questions-tab/questions-tab.js",
     "src/components/pages/templates/templates-tab/templates-tab.js",
     "src/components/pages/templates/issue-tracker-tab/issue-tracker-tab.js",
