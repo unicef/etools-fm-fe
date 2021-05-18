@@ -443,9 +443,9 @@
   },
   "NAVIGATION_MENU": {
     "TITLE": "Localized Field Monitoring",
-    "SETTINGS": "Localized Settings",
-    "PLAN": "Localized Plan",
-    "COLLECT": "Localized Collect",
+    "MANAGEMENT": "Localized Management",
+    "TEMPLATES": "Localized Templates",
+    "VISITS": "Localized Visits",
     "ANALYZE": "Localized Analyze",
     "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
     "KNOWLEDGE_BASE": "Localized Knowledge Base",
@@ -473,7 +473,7 @@
     "HOME": "Localized home",
     "TRY_AGAIN": "Localized and try again?"
   },
-  "SETTINGS": {
+  "MANAGEMENT": {
     "TITLE": "Localized Settings",
     "EXPORT": "Localized Export",
     "NAVIGATION_TABS": {
@@ -481,9 +481,10 @@
       "SITES": "Localized Sites"
     }
   },
-  "PLAN": {
+  "TEMPLATES_NAV": {
     "TITLE": "Localized Plan",
     "NAVIGATION_TABS": {
+      "QUESTIONS": "Localized Questions",
       "RATIONALE": "Localized Rationale",
       "ISSUE_TRACKER": "Localized Issue Tracker",
       "TEMPLATE": "Localized Templates"

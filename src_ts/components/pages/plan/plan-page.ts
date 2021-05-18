@@ -1,45 +1,39 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {store} from '../../../redux/store';
-import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
-import {updateAppLocation} from '../../../routing/routes';
-import {SharedStyles} from '../../styles/shared-styles';
-import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../styles/button-styles';
-import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
-import {questionTemplates} from '../../../redux/reducers/templates.reducer';
-import {rationale} from '../../../redux/reducers/rationale.reducer';
-import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
+import {pageLayoutStyles} from '../../styles/page-layout-styles';
+import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import {SharedStyles} from '../../styles/shared-styles';
+import {buttonsStyles} from '../../styles/button-styles';
+import {getEndpoint} from '../../../endpoints/endpoints';
+import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
+import {store} from '../../../redux/store';
+import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
+import {rationale} from '../../../redux/reducers/rationale.reducer';
+import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
 import {hasPermission, Permissions} from '../../../config/permissions';
+import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
+import {translate} from 'lit-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
-import {translate} from 'lit-translate';
 
-store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
+store.addReducers({specificLocations, rationale});
 
 const PAGE = 'plan';
-
+const SITES_TAB = 'sites';
 const RATIONALE_TAB = 'rationale';
-const ISSUE_TRACKER_TAB = 'issue-tracker';
-const TEMPLATES_TAB = 'templates';
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: RATIONALE_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.RATIONALE',
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.RATIONALE',
     hidden: false
   },
   {
-    tab: ISSUE_TRACKER_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.ISSUE_TRACKER',
-    hidden: false
-  },
-  {
-    tab: TEMPLATES_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.TEMPLATE',
+    tab: SITES_TAB,
+    tabLabel: 'MANAGEMENT.NAVIGATION_TABS.SITES',
     hidden: false
   }
 ];
@@ -48,15 +42,21 @@ const NAVIGATION_TABS: PageTab[] = [
 export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
-  @property() activeTab: string = ISSUE_TRACKER_TAB;
+  @property() activeTab: string = RATIONALE_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
-  render(): TemplateResult {
+  render(): TemplateResult | void {
     const canView: boolean = this.canView();
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${translate('PLAN.TITLE')}</h1>
+            <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
+
+            <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
+              <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
+                <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
+              </paper-button>
+            </div>
 
             <etools-tabs
               id="tabs"
@@ -92,19 +92,6 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
     this.activeLanguageUnsubscribe();
   }
 
-  getTabElement(): TemplateResult {
-    switch (this.activeTab) {
-      case RATIONALE_TAB:
-        return html` <rationale-tab></rationale-tab> `;
-      case ISSUE_TRACKER_TAB:
-        return html` <issue-tracker-tab></issue-tracker-tab> `;
-      case TEMPLATES_TAB:
-        return html` <templates-tab></templates-tab> `;
-      default:
-        return html` Tab Not Found `;
-    }
-  }
-
   onSelect(selectedTab: HTMLElement): void {
     const tabName: string = selectedTab.getAttribute('name') || '';
     if (this.activeTab === tabName) {
@@ -113,12 +100,30 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
     updateAppLocation(`${PAGE}/${tabName}`);
   }
 
+  getTabElement(): TemplateResult {
+    switch (this.activeTab) {
+      case SITES_TAB:
+        return html` <sites-tab></sites-tab> `;
+      case RATIONALE_TAB:
+        return html` <rationale-tab></rationale-tab> `;
+      default:
+        return html` Tab Not Found `;
+    }
+  }
+
+  exportData(): void {
+    const url: string = getEndpoint(SITES_EXPORT).url;
+    const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
+    const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
+    window.open(url + params, '_blank');
+  }
+
   canView(): boolean {
     if (!this.permissionsReady) {
       return false;
     }
     if (!hasPermission(Permissions.VIEW_PLANING)) {
-      updateAppLocation('page-not-found');
+      updateAppLocation(ACTIVITIES_PAGE);
     }
     return true;
   }

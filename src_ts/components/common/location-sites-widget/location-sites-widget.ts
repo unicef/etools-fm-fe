@@ -6,7 +6,7 @@ import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.sel
 import {LatLngTuple} from 'leaflet';
 import {IMarker, MapHelper} from '../map-mixin';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
-import {locationsInvert} from '../../pages/settings/sites-tab/locations-invert';
+import {locationsInvert} from '../../pages/plan/sites-tab/locations-invert';
 import {LocationWidgetStyles} from '../location-widget/location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';

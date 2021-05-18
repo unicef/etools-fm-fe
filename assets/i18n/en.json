@@ -443,10 +443,10 @@
   },
   "NAVIGATION_MENU": {
     "TITLE": "Field Monitoring",
-    "SETTINGS": "Settings",
-    "PLAN": "Plan",
-    "COLLECT": "Collect",
-    "ANALYZE": "Analyze",
+    "MANAGEMENT": "Management",
+    "TEMPLATES": "Templates",
+    "VISITS": "Visits",
+    "ANALYSIS": "Analysis",
     "COMMUNITY_CHANNELS": "eTools Community Channels",
     "KNOWLEDGE_BASE": "Knowledge Base",
     "DISCUSSION": "Discussion",
@@ -473,7 +473,7 @@
     "HOME": "home",
     "TRY_AGAIN": " and try again?"
   },
-  "SETTINGS": {
+  "MANAGEMENT": {
     "TITLE": "Settings",
     "EXPORT": "Export",
     "NAVIGATION_TABS": {
@@ -481,9 +481,10 @@
       "SITES": "Sites"
     }
   },
-  "PLAN": {
+  "TEMPLATES_NAV": {
     "TITLE": "Plan",
     "NAVIGATION_TABS": {
+      "QUESTIONS": "Questions",
       "RATIONALE": "Rationale",
       "ISSUE_TRACKER": "Points of Note",
       "TEMPLATE": "Templates"

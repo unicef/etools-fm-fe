@@ -1,39 +1,46 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import '../../common/layout/page-content-header/page-content-header';
-import '../../common/layout/etools-tabs';
-import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {SharedStyles} from '../../styles/shared-styles';
-import {buttonsStyles} from '../../styles/button-styles';
-import {getEndpoint} from '../../../endpoints/endpoints';
-import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
-import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
+import {updateAppLocation} from '../../../routing/routes';
+import {SharedStyles} from '../../styles/shared-styles';
+import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
+import {buttonsStyles} from '../../styles/button-styles';
+import {pageLayoutStyles} from '../../styles/page-layout-styles';
+import '../../common/layout/page-content-header/page-content-header';
+import '../../common/layout/etools-tabs';
+import {questionTemplates} from '../../../redux/reducers/templates.reducer';
 import {questions} from '../../../redux/reducers/questions.reducer';
-import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
+import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
+import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {hasPermission, Permissions} from '../../../config/permissions';
-import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
-import {translate} from 'lit-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
+import {translate} from 'lit-translate';
 
-store.addReducers({specificLocations, questions});
+store.addReducers({questions, questionTemplates, issueTracker, specificLocations});
 
 const PAGE = 'settings';
-const SITES_TAB = 'sites';
+
+const ISSUE_TRACKER_TAB = 'issue-tracker';
+const TEMPLATES_TAB = 'templates';
 const QUESTIONS_TAB = 'questions';
+
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: QUESTIONS_TAB,
-    tabLabel: 'SETTINGS.NAVIGATION_TABS.QUESTIONS',
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.QUESTIONS',
     hidden: false
   },
   {
-    tab: SITES_TAB,
-    tabLabel: 'SETTINGS.NAVIGATION_TABS.SITES',
+    tab: ISSUE_TRACKER_TAB,
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.ISSUE_TRACKER',
+    hidden: false
+  },
+  {
+    tab: TEMPLATES_TAB,
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.TEMPLATE',
     hidden: false
   }
 ];
@@ -45,18 +52,12 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
   @property() activeTab: string = QUESTIONS_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
-  render(): TemplateResult | void {
+  render(): TemplateResult {
     const canView: boolean = this.canView();
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${translate('SETTINGS.TITLE')}</h1>
-
-            <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
-                <iron-icon icon="file-download"></iron-icon>${translate('SETTINGS.EXPORT')}
-              </paper-button>
-            </div>
+            <h1 slot="page-title">${translate('TEMPLATES_NAV.TITLE')}</h1>
 
             <etools-tabs
               id="tabs"
@@ -92,6 +93,19 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
     this.activeLanguageUnsubscribe();
   }
 
+  getTabElement(): TemplateResult {
+    switch (this.activeTab) {
+      case QUESTIONS_TAB:
+        return html` <questions-tab></questions-tab> `;
+      case ISSUE_TRACKER_TAB:
+        return html` <issue-tracker-tab></issue-tracker-tab> `;
+      case TEMPLATES_TAB:
+        return html` <templates-tab></templates-tab> `;
+      default:
+        return html` Tab Not Found `;
+    }
+  }
+
   onSelect(selectedTab: HTMLElement): void {
     const tabName: string = selectedTab.getAttribute('name') || '';
     if (this.activeTab === tabName) {
@@ -100,30 +114,12 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
     updateAppLocation(`${PAGE}/${tabName}`);
   }
 
-  getTabElement(): TemplateResult {
-    switch (this.activeTab) {
-      case SITES_TAB:
-        return html` <sites-tab></sites-tab> `;
-      case QUESTIONS_TAB:
-        return html` <questions-tab></questions-tab> `;
-      default:
-        return html` Tab Not Found `;
-    }
-  }
-
-  exportData(): void {
-    const url: string = getEndpoint(SITES_EXPORT).url;
-    const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
-    const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
-    window.open(url + params, '_blank');
-  }
-
   canView(): boolean {
     if (!this.permissionsReady) {
       return false;
     }
     if (!hasPermission(Permissions.VIEW_SETTINGS)) {
-      updateAppLocation(ACTIVITIES_PAGE);
+      updateAppLocation('page-not-found');
     }
     return true;
   }

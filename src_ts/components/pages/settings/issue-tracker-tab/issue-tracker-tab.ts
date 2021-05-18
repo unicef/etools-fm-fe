@@ -103,7 +103,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
 
   onRouteChange(routeDetails: IRouteDetails): void {
     const {routeName, subRouteName, queryParams} = routeDetails;
-    if (routeName !== 'plan' || subRouteName !== 'issue-tracker') {
+    if (routeName !== 'settings' || subRouteName !== 'issue-tracker') {
       return;
     }
 
