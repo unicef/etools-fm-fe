@@ -246,7 +246,7 @@ export class AppShell extends connect(store)(LitElement) {
               ?active="${this.globalLoadingMessage}"
               loading-text="${this.globalLoadingMessage}"
             ></etools-loading>
-            <fm-settings
+            <templates-page
               class="page"
               ?active="${this.isActivePage(
                 this.mainPage,
@@ -254,7 +254,7 @@ export class AppShell extends connect(store)(LitElement) {
                 this.subPage,
                 'questions|issue-tracker|templates'
               )}"
-            ></fm-settings>
+            ></templates-page>
             <plan-page
               class="page"
               ?active="${this.isActivePage(this.mainPage, 'plan', this.subPage, 'rationale|sites')}"

@@ -45,8 +45,8 @@ const NAVIGATION_TABS: PageTab[] = [
   }
 ];
 
-@customElement('fm-settings')
-export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
+@customElement('templates-page')
+export class TemplatesPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
   @property() activeTab: string = QUESTIONS_TAB;
