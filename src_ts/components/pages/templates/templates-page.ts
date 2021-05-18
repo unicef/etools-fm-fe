@@ -21,7 +21,7 @@ import {translate} from 'lit-translate';
 
 store.addReducers({questions, questionTemplates, issueTracker, specificLocations});
 
-const PAGE = 'settings';
+const PAGE = 'templates';
 
 const ISSUE_TRACKER_TAB = 'issue-tracker';
 const TEMPLATES_TAB = 'templates';

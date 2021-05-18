@@ -48,7 +48,7 @@
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this section. Please add them in settings or planning or select another section in activity details",
+    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this section. Please add them in Templates or select another section in activity details",
     "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
     "ADD_DETAIL": "Localized Add Detail",
     "COLUMNS": {
@@ -474,20 +474,19 @@
     "TRY_AGAIN": "Localized and try again?"
   },
   "MANAGEMENT": {
-    "TITLE": "Localized Settings",
-    "EXPORT": "Localized Export",
+    "TITLE": "L Management",
+    "EXPORT": "L Export",
     "NAVIGATION_TABS": {
-      "QUESTIONS": "Localized Questions",
-      "SITES": "Localized Sites"
+      "SITES": "L Sites",
+      "RATIONALE": "L Rationale"
     }
   },
   "TEMPLATES_NAV": {
-    "TITLE": "Localized Plan",
+    "TITLE": "L Templates",
     "NAVIGATION_TABS": {
-      "QUESTIONS": "Localized Questions",
-      "RATIONALE": "Localized Rationale",
-      "ISSUE_TRACKER": "Localized Issue Tracker",
-      "TEMPLATE": "Localized Templates"
+      "QUESTIONS": "L Questions",
+      "ISSUE_TRACKER": "L Points of Note",
+      "TEMPLATE": "L Templates"
     }
   },
   "ANALYZE": {

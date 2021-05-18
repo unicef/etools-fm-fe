@@ -256,7 +256,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
-    if (routeName !== 'settings' || subRouteName !== 'templates') {
+    if (routeName !== 'templates' || subRouteName !== 'templates') {
       return;
     }
 

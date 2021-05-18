@@ -28,7 +28,7 @@ const RATIONALE_TAB = 'rationale';
 const NAVIGATION_TABS: PageTab[] = [
   {
     tab: RATIONALE_TAB,
-    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.RATIONALE',
+    tabLabel: 'MANAGEMENT.NAVIGATION_TABS.RATIONALE',
     hidden: false
   },
   {

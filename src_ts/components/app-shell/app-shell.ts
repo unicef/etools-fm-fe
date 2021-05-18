@@ -250,7 +250,7 @@ export class AppShell extends connect(store)(LitElement) {
               class="page"
               ?active="${this.isActivePage(
                 this.mainPage,
-                'settings',
+                'templates',
                 this.subPage,
                 'questions|issue-tracker|templates'
               )}"

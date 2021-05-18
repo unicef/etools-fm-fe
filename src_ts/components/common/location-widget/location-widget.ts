@@ -11,7 +11,7 @@ import {LocationWidgetStyles} from './location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {SharedStyles} from '../../styles/shared-styles';
-import {TemplatesStyles} from '../../pages/plan/templates-tab/templates-tab.styles';
+import {TemplatesStyles} from '../../pages/templates/templates-tab/templates-tab.styles';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
 import {

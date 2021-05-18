@@ -7,18 +7,18 @@ export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
   plan_rationale: ['components/pages/plan/plan-page.js', 'components/pages/plan/rationale-tab/rationale-tab.js'],
 
   // Planing pages
-  settings_questions: [
-    'components/pages/settings/settings-page.js',
-    'components/pages/settings/questions-tab/questions-tab.js'
+  templates_questions: [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/questions-tab/questions-tab.js'
   ],
 
-  'settings_issue-tracker': [
-    'components/pages/settings/settings-page.js',
-    'components/pages/settings/issue-tracker-tab/issue-tracker-tab.js'
+  'templates_issue-tracker': [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/issue-tracker-tab/issue-tracker-tab.js'
   ],
-  settings_templates: [
-    'components/pages/settings/settings-page.js',
-    'components/pages/settings/templates-tab/templates-tab.js'
+  templates_templates: [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/templates-tab/templates-tab.js'
   ],
 
   // Activities List

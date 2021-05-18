@@ -48,7 +48,7 @@
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "NO_QUESTIONS_FOUND": "No applicable questions found for this section. Please add them in settings or planning or select another section in activity details",
+    "NO_QUESTIONS_FOUND": "No applicable questions found for this section. Please add them in Templates or select another section in activity details",
     "DETAIL_INPUT_PLACEHOLDER": "Enter Specific Details to Probe",
     "ADD_DETAIL": "Add Detail",
     "COLUMNS": {
@@ -474,18 +474,17 @@
     "TRY_AGAIN": " and try again?"
   },
   "MANAGEMENT": {
-    "TITLE": "Settings",
+    "TITLE": "Management",
     "EXPORT": "Export",
     "NAVIGATION_TABS": {
-      "QUESTIONS": "Questions",
-      "SITES": "Sites"
+      "SITES": "Sites",
+      "RATIONALE": "Rationale"
     }
   },
   "TEMPLATES_NAV": {
-    "TITLE": "Plan",
+    "TITLE": "Templates",
     "NAVIGATION_TABS": {
       "QUESTIONS": "Questions",
-      "RATIONALE": "Rationale",
       "ISSUE_TRACKER": "Points of Note",
       "TEMPLATE": "Templates"
     }

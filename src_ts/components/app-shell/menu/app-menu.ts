@@ -86,11 +86,11 @@ export class AppMenu extends LitElement {
             <div class="name">${translate('NAVIGATION_MENU.ANALYSIS')}</div>
           </a>
 
-          <!-- Sidebar item - SETTINGS -->
+          <!-- Sidebar item - TEMPLATES -->
           <a
             class="nav-menu-item"
-            menu-name="settings"
-            href="${this.rootPath + 'settings'}"
+            menu-name="templates"
+            href="${this.rootPath + 'templates'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
           >
             <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
