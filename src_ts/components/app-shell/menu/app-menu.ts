@@ -101,8 +101,8 @@ export class AppMenu extends LitElement {
           <!-- Sidebar item - PLANING -->
           <a
             class="nav-menu-item"
-            menu-name="plan"
-            href="${this.rootPath + 'plan'}"
+            menu-name="management"
+            href="${this.rootPath + 'management'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
           >
             <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>

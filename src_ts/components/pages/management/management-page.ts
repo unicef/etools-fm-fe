@@ -22,7 +22,7 @@ import {activeLanguageSelector} from '../../../redux/selectors/active-language.s
 
 store.addReducers({specificLocations, rationale});
 
-const PAGE = 'plan';
+const PAGE = 'management';
 const SITES_TAB = 'sites';
 const RATIONALE_TAB = 'rationale';
 const NAVIGATION_TABS: PageTab[] = [
@@ -38,8 +38,8 @@ const NAVIGATION_TABS: PageTab[] = [
   }
 ];
 
-@customElement('plan-page')
-export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
+@customElement('management-page')
+export class ManagementPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
   @property() activeTab: string = RATIONALE_TAB;

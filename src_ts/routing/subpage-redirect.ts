@@ -4,7 +4,7 @@ import {Router} from './router';
 
 const redirectsList: GenericObject = {
   templates: 'templates/questions',
-  plan: 'plan/rationale',
+  management: 'management/rationale',
   analyze: 'analyze/monitoring-activity'
 };
 

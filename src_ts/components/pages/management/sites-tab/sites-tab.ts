@@ -72,7 +72,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   }
 
   onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
-    if (routeName !== 'plan' || subRouteName !== 'sites') {
+    if (routeName !== 'management' || subRouteName !== 'sites') {
       return;
     }
 

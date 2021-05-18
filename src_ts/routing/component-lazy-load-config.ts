@@ -2,11 +2,17 @@
 export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
   'page-not-found': ['components/pages/page-not-found.js'],
 
-  // Plan pages
-  plan_sites: ['components/pages/plan/plan-page.js', 'components/pages/plan/sites-tab/sites-tab.js'],
-  plan_rationale: ['components/pages/plan/plan-page.js', 'components/pages/plan/rationale-tab/rationale-tab.js'],
+  // Management pages
+  management_sites: [
+    'components/pages/management/management-page.js',
+    'components/pages/management/sites-tab/sites-tab.js'
+  ],
+  management_rationale: [
+    'components/pages/management/management-page.js',
+    'components/pages/management/rationale-tab/rationale-tab.js'
+  ],
 
-  // Planing pages
+  // Templates pages
   templates_questions: [
     'components/pages/templates/templates-page.js',
     'components/pages/templates/questions-tab/questions-tab.js'

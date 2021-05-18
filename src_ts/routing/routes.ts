@@ -47,10 +47,10 @@ EtoolsRouter
     }
   )
   .addRoute(
-    new RegExp(`^plan\\/${routeParamRegex}$`),
+    new RegExp(`^management\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {
-        routeName: 'plan',
+        routeName: 'management',
         subRouteName: params.matchDetails[1], // tab name
         path: params.matchDetails[0],
         queryParams: params.queryParams,
