@@ -39,9 +39,7 @@ export class AppMenu extends LitElement {
     // language=HTML
     return html`
       <div class="menu-header">
-        <span id="app-name" class="app-name">
-          ${translate('NAVIGATION_MENU.TITLE')}
-        </span>
+        <span id="app-name" class="app-name"> ${translate('NAVIGATION_MENU.TITLE')} </span>
 
         <span class="ripple-wrapper main">
           <iron-icon
@@ -69,41 +67,11 @@ export class AppMenu extends LitElement {
           selectable="a"
           role="navigation"
         >
-          <!-- Sidebar item - SETTINGS -->
-          <a
-            class="nav-menu-item"
-            menu-name="settings"
-            href="${this.rootPath + 'settings'}"
-            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
-          >
-            <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              ${translate('NAVIGATION_MENU.SETTINGS')}
-            </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.SETTINGS')}</div>
-          </a>
-
-          <!-- Sidebar item - PLANING -->
-          <a
-            class="nav-menu-item"
-            menu-name="plan"
-            href="${this.rootPath + 'plan'}"
-            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
-          >
-            <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              ${translate('NAVIGATION_MENU.PLAN')}
-            </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.PLAN')}</div>
-          </a>
-
-          <!-- Sidebar item - DATA COLLECTION -->
+          <!-- Sidebar item - DATA VISITS -->
           <a class="nav-menu-item" menu-name="activities" href="${this.rootPath + 'activities'}">
             <iron-icon id="page1-icon" icon="assignment"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              ${translate('NAVIGATION_MENU.COLLECT')}
-            </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.COLLECT')}</div>
+            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.VISITS')} </paper-tooltip>
+            <div class="name">${translate('NAVIGATION_MENU.VISITS')}</div>
           </a>
 
           <!-- Sidebar item - ANALYSIS -->
@@ -114,10 +82,34 @@ export class AppMenu extends LitElement {
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
           >
             <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
+            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.ANALYSIS')} </paper-tooltip>
+            <div class="name">${translate('NAVIGATION_MENU.ANALYSIS')}</div>
+          </a>
+
+          <!-- Sidebar item - TEMPLATES -->
+          <a
+            class="nav-menu-item"
+            menu-name="templates"
+            href="${this.rootPath + 'templates'}"
+            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
+          >
+            <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
+            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.TEMPLATES')} </paper-tooltip>
+            <div class="name">${translate('NAVIGATION_MENU.TEMPLATES')}</div>
+          </a>
+
+          <!-- Sidebar item - PLANING -->
+          <a
+            class="nav-menu-item"
+            menu-name="management"
+            href="${this.rootPath + 'management'}"
+            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
+          >
+            <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
-              ${translate('NAVIGATION_MENU.ANALYZE')}
+              ${translate('NAVIGATION_MENU.MANAGEMENT')}
             </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.ANALYZE')}</div>
+            <div class="name">${translate('NAVIGATION_MENU.MANAGEMENT')}</div>
           </a>
         </iron-selector>
 

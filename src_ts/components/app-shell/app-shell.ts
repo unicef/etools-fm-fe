@@ -246,14 +246,19 @@ export class AppShell extends connect(store)(LitElement) {
               ?active="${this.globalLoadingMessage}"
               loading-text="${this.globalLoadingMessage}"
             ></etools-loading>
-            <fm-settings
+            <templates-page
               class="page"
-              ?active="${this.isActivePage(this.mainPage, 'settings', this.subPage, 'sites|questions')}"
-            ></fm-settings>
-            <plan-page
+              ?active="${this.isActivePage(
+                this.mainPage,
+                'templates',
+                this.subPage,
+                'questions|issue-tracker|templates'
+              )}"
+            ></templates-page>
+            <management-page
               class="page"
-              ?active="${this.isActivePage(this.mainPage, 'plan', this.subPage, 'rationale|issue-tracker|templates')}"
-            ></plan-page>
+              ?active="${this.isActivePage(this.mainPage, 'management', this.subPage, 'rationale|sites')}"
+            ></management-page>
             <activities-page class="page" ?active="${this.isActivePage(this.mainPage, 'activities')}"></activities-page>
             <analyze-page
               class="page"

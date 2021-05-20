@@ -34,10 +34,10 @@ EtoolsRouter
   //         };
   //     })
   .addRoute(
-    new RegExp(`^settings\\/${routeParamRegex}$`),
+    new RegExp(`^templates\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {
-        routeName: 'settings',
+        routeName: 'templates',
         subRouteName: params.matchDetails[1], // tab name
         path: params.matchDetails[0],
         queryParams: params.queryParams,
@@ -47,10 +47,10 @@ EtoolsRouter
     }
   )
   .addRoute(
-    new RegExp(`^plan\\/${routeParamRegex}$`),
+    new RegExp(`^management\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {
-        routeName: 'plan',
+        routeName: 'management',
         subRouteName: params.matchDetails[1], // tab name
         path: params.matchDetails[0],
         queryParams: params.queryParams,
@@ -197,4 +197,4 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
 }
 
 export const ROUTE_404 = '/page-not-found';
-export const DEFAULT_ROUTE = '/settings/questions';
+export const DEFAULT_ROUTE = '/activities';

@@ -9,7 +9,7 @@ import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import {questionTemplates} from '../../../redux/reducers/templates.reducer';
-import {rationale} from '../../../redux/reducers/rationale.reducer';
+import {questions} from '../../../redux/reducers/questions.reducer';
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {hasPermission, Permissions} from '../../../config/permissions';
@@ -19,36 +19,37 @@ import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 import {translate} from 'lit-translate';
 
-store.addReducers({questionTemplates, rationale, issueTracker, specificLocations});
+store.addReducers({questions, questionTemplates, issueTracker, specificLocations});
 
-const PAGE = 'plan';
+const PAGE = 'templates';
 
-const RATIONALE_TAB = 'rationale';
 const ISSUE_TRACKER_TAB = 'issue-tracker';
 const TEMPLATES_TAB = 'templates';
+const QUESTIONS_TAB = 'questions';
+
 const NAVIGATION_TABS: PageTab[] = [
   {
-    tab: RATIONALE_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.RATIONALE',
+    tab: QUESTIONS_TAB,
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.QUESTIONS',
     hidden: false
   },
   {
     tab: ISSUE_TRACKER_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.ISSUE_TRACKER',
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.ISSUE_TRACKER',
     hidden: false
   },
   {
     tab: TEMPLATES_TAB,
-    tabLabel: 'PLAN.NAVIGATION_TABS.TEMPLATE',
+    tabLabel: 'TEMPLATES_NAV.NAVIGATION_TABS.TEMPLATE',
     hidden: false
   }
 ];
 
-@customElement('plan-page')
-export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
+@customElement('templates-page')
+export class TemplatesPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
-  @property() activeTab: string = ISSUE_TRACKER_TAB;
+  @property() activeTab: string = QUESTIONS_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
@@ -56,7 +57,7 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${translate('PLAN.TITLE')}</h1>
+            <h1 slot="page-title">${translate('TEMPLATES_NAV.TITLE')}</h1>
 
             <etools-tabs
               id="tabs"
@@ -94,8 +95,8 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
 
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
-      case RATIONALE_TAB:
-        return html` <rationale-tab></rationale-tab> `;
+      case QUESTIONS_TAB:
+        return html` <questions-tab></questions-tab> `;
       case ISSUE_TRACKER_TAB:
         return html` <issue-tracker-tab></issue-tracker-tab> `;
       case TEMPLATES_TAB:
@@ -117,7 +118,7 @@ export class PlanPage extends PagePermissionsMixin(LitElement) implements IEtool
     if (!this.permissionsReady) {
       return false;
     }
-    if (!hasPermission(Permissions.VIEW_PLANING)) {
+    if (!hasPermission(Permissions.VIEW_SETTINGS)) {
       updateAppLocation('page-not-found');
     }
     return true;

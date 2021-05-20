@@ -10,7 +10,7 @@ import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
-import {questions} from '../../../redux/reducers/questions.reducer';
+import {rationale} from '../../../redux/reducers/rationale.reducer';
 import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
@@ -20,29 +20,29 @@ import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 
-store.addReducers({specificLocations, questions});
+store.addReducers({specificLocations, rationale});
 
-const PAGE = 'settings';
+const PAGE = 'management';
 const SITES_TAB = 'sites';
-const QUESTIONS_TAB = 'questions';
+const RATIONALE_TAB = 'rationale';
 const NAVIGATION_TABS: PageTab[] = [
   {
-    tab: QUESTIONS_TAB,
-    tabLabel: 'SETTINGS.NAVIGATION_TABS.QUESTIONS',
+    tab: RATIONALE_TAB,
+    tabLabel: 'MANAGEMENT.NAVIGATION_TABS.RATIONALE',
     hidden: false
   },
   {
     tab: SITES_TAB,
-    tabLabel: 'SETTINGS.NAVIGATION_TABS.SITES',
+    tabLabel: 'MANAGEMENT.NAVIGATION_TABS.SITES',
     hidden: false
   }
 ];
 
-@customElement('fm-settings')
-export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
+@customElement('management-page')
+export class ManagementPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
-  @property() activeTab: string = QUESTIONS_TAB;
+  @property() activeTab: string = RATIONALE_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult | void {
@@ -50,11 +50,11 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
     return canView
       ? html`
           <page-content-header with-tabs-visible>
-            <h1 slot="page-title">${translate('SETTINGS.TITLE')}</h1>
+            <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
               <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
-                <iron-icon icon="file-download"></iron-icon>${translate('SETTINGS.EXPORT')}
+                <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
               </paper-button>
             </div>
 
@@ -104,8 +104,8 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
     switch (this.activeTab) {
       case SITES_TAB:
         return html` <sites-tab></sites-tab> `;
-      case QUESTIONS_TAB:
-        return html` <questions-tab></questions-tab> `;
+      case RATIONALE_TAB:
+        return html` <rationale-tab></rationale-tab> `;
       default:
         return html` Tab Not Found `;
     }
@@ -122,7 +122,7 @@ export class FmSettingsComponent extends PagePermissionsMixin(LitElement) implem
     if (!this.permissionsReady) {
       return false;
     }
-    if (!hasPermission(Permissions.VIEW_SETTINGS)) {
+    if (!hasPermission(Permissions.VIEW_PLANING)) {
       updateAppLocation(ACTIVITIES_PAGE);
     }
     return true;
