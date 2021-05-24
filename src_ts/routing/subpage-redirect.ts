@@ -3,9 +3,9 @@ import {ROOT_PATH} from '../config/config';
 import {Router} from './router';
 
 const redirectsList: GenericObject = {
-  templates: 'templates/questions',
-  management: 'management/rationale',
-  analyze: 'analyze/monitoring-activity'
+  // templates: 'templates/questions',
+  // management: 'management/rationale',
+  // analyze: 'analyze/monitoring-activity'
 };
 
 export function getRedirectToListPath(path: string): undefined | string {

@@ -18,8 +18,8 @@ const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDeta
 
   const importBase = '../../'; // relative to current file
   // start importing components (lazy loading)
-  const lazyImports: Promise<any>[] = getFilePathsToImport(routeDetails).map((filePath: string) =>
-    import(importBase + filePath)
+  const lazyImports: Promise<any>[] = getFilePathsToImport(routeDetails).map(
+    (filePath: string) => import(importBase + filePath)
   );
 
   dispatch(new GlobalLoadingUpdate('Loading...'));
@@ -34,14 +34,14 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
 
   // if app route is accessed, redirect to default route (if not already on it)
   if (path === ROOT_PATH) {
-    updateAppLocation(DEFAULT_ROUTE, true);
+    updateAppLocation(DEFAULT_ROUTE);
     return;
   }
 
   // some routes need redirect to subRoute list
   const redirectPath: string | undefined = getRedirectToListPath(path);
   if (redirectPath) {
-    updateAppLocation(redirectPath, true);
+    updateAppLocation(redirectPath);
     return;
   }
 

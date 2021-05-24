@@ -33,58 +33,46 @@ EtoolsRouter
   //             }
   //         };
   //     })
-  .addRoute(
-    new RegExp(`^templates\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'templates',
-        subRouteName: params.matchDetails[1], // tab name
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^management\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'management',
-        subRouteName: params.matchDetails[1], // tab name
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^activities$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'activities',
-        subRouteName: 'list',
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^activities\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'activities',
-        subRouteName: 'item',
-        path: params.matchDetails[0],
-        queryParams: null,
-        queryParamsString: null,
-        params: {id: params.matchDetails[1]}
-      };
-    }
-  )
+  .addRoute(new RegExp(`^templates\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'templates',
+      subRouteName: params.matchDetails[1], // tab name
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^management\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'management',
+      subRouteName: params.matchDetails[1], // tab name
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^activities$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'activities',
+      subRouteName: 'list',
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'activities',
+      subRouteName: 'item',
+      path: params.matchDetails[0],
+      queryParams: null,
+      queryParamsString: null,
+      params: {id: params.matchDetails[1]}
+    };
+  })
   .addRoute(
     new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
@@ -111,19 +99,16 @@ EtoolsRouter
       };
     }
   )
-  .addRoute(
-    new RegExp(`^analyze\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'analyze',
-        subRouteName: params.matchDetails[1],
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
+  .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'analyze',
+      subRouteName: params.matchDetails[1],
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
   .addRoute(
     new RegExp(`^analyze\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
@@ -138,33 +123,47 @@ EtoolsRouter
     }
   )
 
-  .addRoute(
-    new RegExp(`^page-not-found$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'page-not-found',
-        subRouteName: null,
-        path: params.matchDetails[0],
-        queryParams: null,
-        queryParamsString: null,
-        params: null
-      };
-    }
-  );
+  .addRoute(new RegExp(`^page-not-found$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'page-not-found',
+      subRouteName: null,
+      path: params.matchDetails[0],
+      queryParams: null,
+      queryParamsString: null,
+      params: null
+    };
+  });
 
 /**
  * Utility used to update location based on routes and dispatch navigate action (optional)
  */
-export function updateAppLocation(newLocation: string, dispatchNavigation = true): void {
+export function updateAppLocation(newLocation: string): void {
   const _newLocation: string = EtoolsRouter.prepareLocationPath(newLocation);
-  let navigationCallback: (() => void) | null = null;
-  if (dispatchNavigation) {
-    navigationCallback = () => {
-      store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
-    };
-  }
-  EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
+  // let navigationCallback: (() => void) | null = null;
+  // if (dispatchNavigation) {
+  //   navigationCallback = () => {
+  //     store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
+  //   };
+  //}
+  EtoolsRouter.pushState(_newLocation, {});
+
+  window.dispatchEvent(new CustomEvent('popstate'));
 }
+
+export const replaceAppLocation = (newLocation: string, queryParams: IRouteQueryParams): void => {
+  console.log('replaceAppLocation');
+  const _newLocation = EtoolsRouter.prepareLocationPath(newLocation, queryParams);
+
+  EtoolsRouter.replaceState(_newLocation, queryParams);
+
+  /**
+   * Note that just calling history.pushState() or history.replaceState()
+   * won't trigger a popstate event.
+   * The popstate event is only triggered by doing a browser action
+   * such as a click on the back button (or calling history.back() in JavaScript).
+   */
+  window.dispatchEvent(new CustomEvent('popstate'));
+};
 
 export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate = true): boolean {
   const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
@@ -186,13 +185,13 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
     return false;
   }
 
-  let navigationCallback: (() => void) | null = null;
-  if (dispatchUpdate) {
-    navigationCallback = () => {
-      store.dispatch(new UpdateQueryParams(resultParams));
-    };
-  }
-  EtoolsRouter.navigate(path, resultParams, navigationCallback);
+  // let navigationCallback: (() => void) | null = null;
+  // if (dispatchUpdate) {
+  //   navigationCallback = () => {
+  //     store.dispatch(new UpdateQueryParams(resultParams));
+  //   };
+  // }
+  replaceAppLocation(path, resultParams);
   return true;
 }
 
