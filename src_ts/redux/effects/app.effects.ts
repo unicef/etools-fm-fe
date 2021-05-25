@@ -34,14 +34,14 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
 
   // if app route is accessed, redirect to default route (if not already on it)
   if (path === ROOT_PATH) {
-    updateAppLocation(DEFAULT_ROUTE);
+    updateAppLocation(DEFAULT_ROUTE, true);
     return;
   }
 
   // some routes need redirect to subRoute list
   const redirectPath: string | undefined = getRedirectToListPath(path);
   if (redirectPath) {
-    updateAppLocation(redirectPath);
+    updateAppLocation(redirectPath, true);
     return;
   }
 
