@@ -78,7 +78,7 @@ export class AppMenu extends LitElement {
           <a
             class="nav-menu-item"
             menu-name="analyze"
-            href="${this.rootPath + 'analyze'}"
+            href="${this.rootPath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
           >
             <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
@@ -90,7 +90,7 @@ export class AppMenu extends LitElement {
           <a
             class="nav-menu-item"
             menu-name="templates"
-            href="${this.rootPath + 'templates'}"
+            href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
           >
             <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
@@ -102,7 +102,7 @@ export class AppMenu extends LitElement {
           <a
             class="nav-menu-item"
             menu-name="management"
-            href="${this.rootPath + 'management'}"
+            href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
           >
             <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
