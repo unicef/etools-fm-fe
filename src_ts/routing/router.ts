@@ -57,12 +57,18 @@ export class Router {
     return routeDetails;
   }
 
-  navigate(path?: string, queryParams?: IRouteQueryParams, navigateCallback?: (() => void) | null): this {
+  pushState(path?: string, queryParams?: IRouteQueryParams, navigateCallback?: (() => void) | null): this {
     path = path ? this.prepareLocationPath(path, queryParams) : '';
     history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {
       navigateCallback();
     }
+    return this;
+  }
+
+  replaceState(path?: string, queryParams?: IRouteQueryParams): this {
+    path = path ? this.prepareLocationPath(path, queryParams) : '';
+    history.replaceState(window.history.state, '', path);
     return this;
   }
 
