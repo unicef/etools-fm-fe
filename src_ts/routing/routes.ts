@@ -2,7 +2,6 @@ import {Router} from './router';
 import {store} from '../redux/store';
 import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
-import {UpdateQueryParams} from '../redux/actions/app.actions';
 import {equals} from 'ramda';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
@@ -163,10 +162,10 @@ export function updateAppLocation(newLocation: string, dispatchNavigation = true
       store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
     };
   }
-  EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
+  EtoolsRouter.pushState(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate = true): boolean {
+export function updateQueryParams(newQueryParams: IRouteQueryParams): boolean {
   const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
   const queryParams: IRouteQueryParams | null = details && details.queryParams;
@@ -186,13 +185,8 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
     return false;
   }
 
-  let navigationCallback: (() => void) | null = null;
-  if (dispatchUpdate) {
-    navigationCallback = () => {
-      store.dispatch(new UpdateQueryParams(resultParams));
-    };
-  }
-  EtoolsRouter.navigate(path, resultParams, navigationCallback);
+  EtoolsRouter.replaceState(path, resultParams);
+  window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
 
