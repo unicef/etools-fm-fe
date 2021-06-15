@@ -17,12 +17,7 @@ import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 
 export const CARD_NAME = 'monitor-information';
-const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
-  'tpm_partner',
-  'monitor_type',
-  'team_members',
-  'person_responsible'
-];
+const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
 
 const USER_STAFF: UserType = 'staff';
 const USER_TPM: UserType = 'tpm';
@@ -55,7 +50,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (this.editedData.monitor_type) {
       this.userType = this.editedData.monitor_type;
     }
-    this.personResponsible = this.editedData.person_responsible;
+    this.personResponsible = this.editedData.visit_lead;
     this.teamMembers = this.editedData.team_members;
     this.tpmPartner = this.editedData.tpm_partner;
   }
@@ -152,16 +147,16 @@ export class MonitorInformationCard extends BaseDetailsCard {
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
                 this.setPersonResponsible(detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
-              label="${translate('ACTIVITY_DETAILS.PERSON_RESPONSIBLE')}"
+              label="${translate('ACTIVITY_DETAILS.VISIT_LEAD')}"
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('person_responsible')}"
-              ?readonly="${!this.isEditMode || this.isFieldReadonly('person_responsible')}"
-              ?invalid="${this.errors && this.errors.person_responsible}"
-              .errorMessage="${this.errors && this.errors.person_responsible}"
-              @focus="${() => this.resetFieldError('person_responsible')}"
-              @tap="${() => this.resetFieldError('person_responsible')}"
+              ?disabled="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
+              ?invalid="${this.errors && this.errors.visit_lead}"
+              .errorMessage="${this.errors && this.errors.visit_lead}"
+              @focus="${() => this.resetFieldError('visit_lead')}"
+              @tap="${() => this.resetFieldError('visit_lead')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
@@ -242,7 +237,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   setPersonResponsible(responsible: User | null): void {
     if (responsible !== this.personResponsible) {
-      this.updateModelValue('person_responsible', responsible);
+      this.updateModelValue('visit_lead', responsible);
       this.personResponsible = responsible;
     }
   }

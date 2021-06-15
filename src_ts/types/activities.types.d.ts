@@ -3,7 +3,7 @@ interface IListActivity {
   reference_number: string;
   monitor_type: UserType;
   tpm_partner: null | IActivityTpmPartner;
-  person_responsible: null | ActivityTeamMember;
+  visit_lead: null | ActivityTeamMember;
   location: ISiteParrentLocation;
   location_site: null | Site;
   partners: IActivityPartner[];
@@ -119,7 +119,7 @@ type ActivityPermissionsObject = {
   location_site_id: boolean;
   status: boolean;
   monitor_type: boolean;
-  person_responsible: boolean;
+  visit_lead: boolean;
   tpm_partner_id: boolean;
   checklists: boolean;
   cp_outputs: boolean;
@@ -140,7 +140,7 @@ type ActivityPermissionsObject = {
   deleted_at: boolean;
   questions: boolean;
   overall_findings: boolean;
-  person_responsible_id: boolean;
+  visit_lead: boolean;
   modified: boolean;
   location: boolean;
   team_members: boolean;

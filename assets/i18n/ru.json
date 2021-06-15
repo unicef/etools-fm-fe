@@ -7,7 +7,7 @@
       "START_DATE": "Localized Start Date",
       "LOCATION_AND_SITE": "Localized Location & Site",
       "MONITOR_TYPE": "Localized Primary FM",
-      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "VISIT_LEAD": "Localized Visit Lead",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status"
@@ -16,7 +16,7 @@
     "FILTERS": {
       "MONITOR_TYPE": "Localized Primary FM",
       "TEAM_MEMBERS": "Localized Team Members",
-      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "VISIT_LEAD": "Localized Visit Lead",
       "LOCATION": "Localized Location",
       "SITE": "Localized Site",
       "PARTNERS": "Localized Partners",
@@ -80,7 +80,7 @@
     "END_DATE": "Localized End Date",
     "SECTIONS": "Localized Sections",
     "TEAM_MEMBERS": "Localized Team Members",
-    "PERSON_RESPONSIBLE": "Localized Person Responsible",
+    "VISIT_LEAD": "Localized Visit Lead",
     "TPM_PARTNER": "Localized Third Party Monitor Partner",
     "USER_TYPE": "Localized Primary Field Monitor is",
     "USER_TYPES": {

@@ -7,7 +7,7 @@
       "START_DATE": "Start Date",
       "LOCATION_AND_SITE": "Location & Site",
       "MONITOR_TYPE": "Primary FM",
-      "PERSON_RESPONSIBLE": "Person Responsible",
+      "VISIT_LEAD": "Visit Lead",
       "TEAM_MEMBERS": "Team Members",
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status"
@@ -16,7 +16,7 @@
     "FILTERS": {
       "MONITOR_TYPE": "Primary FM",
       "TEAM_MEMBERS": "Team Members",
-      "PERSON_RESPONSIBLE": "Person Responsible",
+      "VISIT_LEAD": "Visit Lead",
       "LOCATION": "Location",
       "SITE": "Site",
       "PARTNERS": "Partners",
@@ -80,7 +80,7 @@
     "END_DATE": "End Date",
     "SECTIONS": "Sections",
     "TEAM_MEMBERS": "Team Members",
-    "PERSON_RESPONSIBLE": "Person Responsible",
+    "VISIT_LEAD": "Visit Lead",
     "TPM_PARTNER": "Third Party Monitor Partner",
     "USER_TYPE": "Primary Field Monitor is",
     "USER_TYPES": {
