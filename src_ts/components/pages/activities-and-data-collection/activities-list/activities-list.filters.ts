@@ -56,8 +56,8 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     selectionOptionsEndpoint: USERS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.PERSON_RESPONSIBLE'),
-    filterKey: 'person_responsible__in',
+    filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
+    filterKey: 'visit_lead__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
