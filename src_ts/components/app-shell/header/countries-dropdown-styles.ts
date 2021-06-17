@@ -5,6 +5,8 @@ export const countriesDropdownStyles: TemplateResult = html`
   <style>
     *[hidden] {
       display: none !important;
+      --paper-input-container-shared-input-style_-_color: red;
+      --paper-input-container-input_-_color: red;
     }
 
     :host {
