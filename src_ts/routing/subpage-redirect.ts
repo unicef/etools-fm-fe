@@ -3,8 +3,8 @@ import {ROOT_PATH} from '../config/config';
 import {Router} from './router';
 
 const redirectsList: GenericObject = {
-  settings: 'settings/questions',
-  plan: 'plan/rationale',
+  templates: 'templates/questions',
+  management: 'management/rationale',
   analyze: 'analyze/monitoring-activity'
 };
 

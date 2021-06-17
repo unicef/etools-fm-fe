@@ -7,7 +7,7 @@
       "START_DATE": "Localized Start Date",
       "LOCATION_AND_SITE": "Localized Location & Site",
       "MONITOR_TYPE": "Localized Primary FM",
-      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "VISIT_LEAD": "Localized Visit Lead",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status"
@@ -16,7 +16,7 @@
     "FILTERS": {
       "MONITOR_TYPE": "Localized Primary FM",
       "TEAM_MEMBERS": "Localized Team Members",
-      "PERSON_RESPONSIBLE": "Localized Person Responsible",
+      "VISIT_LEAD": "Localized Visit Lead",
       "LOCATION": "Localized Location",
       "SITE": "Localized Site",
       "PARTNERS": "Localized Partners",
@@ -48,7 +48,7 @@
     }
   },
   "ACTIVITY_CHECKLIST": {
-    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this section. Please add them in settings or planning or select another section in activity details",
+    "NO_QUESTIONS_FOUND": "Localized No applicable questions found for this section. Please add them in Templates or select another section in activity details",
     "DETAIL_INPUT_PLACEHOLDER": "Localized Enter Specific Details to Probe",
     "ADD_DETAIL": "Localized Add Detail",
     "COLUMNS": {
@@ -80,7 +80,7 @@
     "END_DATE": "Localized End Date",
     "SECTIONS": "Localized Sections",
     "TEAM_MEMBERS": "Localized Team Members",
-    "PERSON_RESPONSIBLE": "Localized Person Responsible",
+    "VISIT_LEAD": "Localized Visit Lead",
     "TPM_PARTNER": "Localized Third Party Monitor Partner",
     "USER_TYPE": "Localized Primary Field Monitor is",
     "USER_TYPES": {
@@ -443,9 +443,9 @@
   },
   "NAVIGATION_MENU": {
     "TITLE": "Localized Field Monitoring",
-    "SETTINGS": "Localized Settings",
-    "PLAN": "Localized Plan",
-    "COLLECT": "Localized Collect",
+    "MANAGEMENT": "Localized Management",
+    "TEMPLATES": "Localized Templates",
+    "VISITS": "Localized Visits",
     "ANALYZE": "Localized Analyze",
     "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
     "KNOWLEDGE_BASE": "Localized Knowledge Base",
@@ -473,20 +473,20 @@
     "HOME": "Localized home",
     "TRY_AGAIN": "Localized and try again?"
   },
-  "SETTINGS": {
-    "TITLE": "Localized Settings",
-    "EXPORT": "Localized Export",
+  "MANAGEMENT": {
+    "TITLE": "L Management",
+    "EXPORT": "L Export",
     "NAVIGATION_TABS": {
-      "QUESTIONS": "Localized Questions",
-      "SITES": "Localized Sites"
+      "SITES": "L Sites",
+      "RATIONALE": "L Rationale"
     }
   },
-  "PLAN": {
-    "TITLE": "Localized Plan",
+  "TEMPLATES_NAV": {
+    "TITLE": "L Templates",
     "NAVIGATION_TABS": {
-      "RATIONALE": "Localized Rationale",
-      "ISSUE_TRACKER": "Localized Issue Tracker",
-      "TEMPLATE": "Localized Templates"
+      "QUESTIONS": "L Questions",
+      "ISSUE_TRACKER": "L Points of Note",
+      "TEMPLATE": "L Templates"
     }
   },
   "ANALYZE": {

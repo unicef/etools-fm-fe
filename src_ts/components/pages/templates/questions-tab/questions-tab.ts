@@ -131,7 +131,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
-    if (routeName !== 'settings' || subRouteName !== 'questions') {
+    if (routeName !== 'templates' || subRouteName !== 'questions') {
       return;
     }
 

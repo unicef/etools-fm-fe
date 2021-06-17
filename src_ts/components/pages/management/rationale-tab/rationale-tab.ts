@@ -86,7 +86,7 @@ export class RationaleTabComponent extends LitElement {
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
-    if (routeName !== 'plan' || subRouteName !== 'rationale') {
+    if (routeName !== 'management' || subRouteName !== 'rationale') {
       return;
     }
 

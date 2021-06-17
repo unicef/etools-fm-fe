@@ -2,20 +2,30 @@
 export const componentsLazyLoadConfig: IRoutesLazyLoadComponentsPath = {
   'page-not-found': ['components/pages/page-not-found.js'],
 
-  // Settings pages
-  settings_sites: ['components/pages/settings/settings-page.js', 'components/pages/settings/sites-tab/sites-tab.js'],
-  settings_questions: [
-    'components/pages/settings/settings-page.js',
-    'components/pages/settings/questions-tab/questions-tab.js'
+  // Management pages
+  management_sites: [
+    'components/pages/management/management-page.js',
+    'components/pages/management/sites-tab/sites-tab.js'
+  ],
+  management_rationale: [
+    'components/pages/management/management-page.js',
+    'components/pages/management/rationale-tab/rationale-tab.js'
   ],
 
-  // Planing pages
-  plan_rationale: ['components/pages/plan/plan-page.js', 'components/pages/plan/rationale-tab/rationale-tab.js'],
-  'plan_issue-tracker': [
-    'components/pages/plan/plan-page.js',
-    'components/pages/plan/issue-tracker-tab/issue-tracker-tab.js'
+  // Templates pages
+  templates_questions: [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/questions-tab/questions-tab.js'
   ],
-  plan_templates: ['components/pages/plan/plan-page.js', 'components/pages/plan/templates-tab/templates-tab.js'],
+
+  'templates_issue-tracker': [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/issue-tracker-tab/issue-tracker-tab.js'
+  ],
+  templates_templates: [
+    'components/pages/templates/templates-page.js',
+    'components/pages/templates/templates-tab/templates-tab.js'
+  ],
 
   // Activities List
   activities_list: [
