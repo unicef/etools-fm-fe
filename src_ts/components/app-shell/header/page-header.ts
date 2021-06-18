@@ -116,8 +116,7 @@ export class PageHeader extends connect(store)(LitElement) {
         }
         .dropdowns {
           display: flex;
-          margin-right: 5px;
-          max-width: 200px;
+          margin-right: 20px;
         }
         .header {
           flex-wrap: wrap;
@@ -189,7 +188,6 @@ export class PageHeader extends connect(store)(LitElement) {
               hide-search
               allow-outside-scroll
               no-label-float
-              .minWidth="160px"
               .autoWidth="${true}"
             ></etools-dropdown>
 
