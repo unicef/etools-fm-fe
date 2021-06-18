@@ -140,7 +140,6 @@ type ActivityPermissionsObject = {
   deleted_at: boolean;
   questions: boolean;
   overall_findings: boolean;
-  visit_lead: boolean;
   modified: boolean;
   location: boolean;
   team_members: boolean;
