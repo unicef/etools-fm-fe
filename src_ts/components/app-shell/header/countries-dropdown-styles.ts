@@ -18,8 +18,6 @@ export const countriesDropdownStyles: TemplateResult = html`
     }
 
     etools-dropdown {
-      /*width: 160px;*/
-
       --paper-listbox: {
         max-height: 600px;
       }
@@ -41,16 +39,22 @@ export const countriesDropdownStyles: TemplateResult = html`
         display: none;
       }
 
-      --paper-input-container-input: {
+      --paper-input-container-shared-input-style: {
         color: var(--header-color);
         cursor: pointer;
-        min-height: 24px;
+        font-size: 16px;
         text-align: right;
-        line-height: 21px; /* for IE */
+        width: 100px;
       }
 
       --paper-menu-button-dropdown: {
         max-height: 380px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      etools-dropdown {
+        width: 100px;
       }
     }
   </style>
