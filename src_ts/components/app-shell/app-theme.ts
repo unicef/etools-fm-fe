@@ -8,7 +8,7 @@ documentContainer.innerHTML = `
     <style include="paper-material-styles">
       html {
         --green-color: #009A54;
-        --module-color: #F5A65B;
+        --module-color: #008080;
         --primary-color: #0099ff;
         --primary-background-color: #FFFFFF;
         --secondary-background-color: #eeeeee;

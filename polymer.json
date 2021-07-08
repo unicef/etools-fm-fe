@@ -4,14 +4,14 @@
   "sources": ["assets/**"],
   "fragments": [
     "src/components/pages/page-not-found.js",
-    "src/components/pages/settings/settings-page.js",
-    "src/components/pages/settings/sites-tab/sites-tab.js",
-    "src/components/pages/settings/questions-tab/questions-tab.js",
+    "src/components/pages/templates/templates-page.js",
+    "src/components/pages/templates/questions-tab/questions-tab.js",
+    "src/components/pages/templates/templates-tab/templates-tab.js",
+    "src/components/pages/templates/issue-tracker-tab/issue-tracker-tab.js",
 
-    "src/components/pages/plan/plan-page.js",
-    "src/components/pages/plan/templates-tab/templates-tab.js",
-    "src/components/pages/plan/rationale-tab/rationale-tab.js",
-    "src/components/pages/plan/issue-tracker-tab/issue-tracker-tab.js",
+    "src/components/pages/management/management-page.js",
+    "src/components/pages/management/sites-tab/sites-tab.js",
+    "src/components/pages/management/rationale-tab/rationale-tab.js",
 
     "src/components/pages/activities-and-data-collection/activities-page.js",
     "src/components/pages/activities-and-data-collection/activities-list/activities-list.js",

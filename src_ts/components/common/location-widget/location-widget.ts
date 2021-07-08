@@ -6,12 +6,12 @@ import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.sel
 import {FitBoundsOptions, LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
 import {MapHelper} from '../map-mixin';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
-import {locationsInvert} from '../../pages/settings/sites-tab/locations-invert';
+import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
 import {LocationWidgetStyles} from './location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {SharedStyles} from '../../styles/shared-styles';
-import {TemplatesStyles} from '../../pages/plan/templates-tab/templates-tab.styles';
+import {TemplatesStyles} from '../../pages/templates/templates-tab/templates-tab.styles';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
 import {

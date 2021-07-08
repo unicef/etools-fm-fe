@@ -2,7 +2,6 @@ import {Router} from './router';
 import {store} from '../redux/store';
 import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
-import {UpdateQueryParams} from '../redux/actions/app.actions';
 import {equals} from 'ramda';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
@@ -34,10 +33,10 @@ EtoolsRouter
   //         };
   //     })
   .addRoute(
-    new RegExp(`^settings\\/${routeParamRegex}$`),
+    new RegExp(`^templates\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {
-        routeName: 'settings',
+        routeName: 'templates',
         subRouteName: params.matchDetails[1], // tab name
         path: params.matchDetails[0],
         queryParams: params.queryParams,
@@ -47,10 +46,10 @@ EtoolsRouter
     }
   )
   .addRoute(
-    new RegExp(`^plan\\/${routeParamRegex}$`),
+    new RegExp(`^management\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
       return {
-        routeName: 'plan',
+        routeName: 'management',
         subRouteName: params.matchDetails[1], // tab name
         path: params.matchDetails[0],
         queryParams: params.queryParams,
@@ -163,10 +162,10 @@ export function updateAppLocation(newLocation: string, dispatchNavigation = true
       store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
     };
   }
-  EtoolsRouter.navigate(_newLocation, {}, navigationCallback);
+  EtoolsRouter.pushState(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpdate = true): boolean {
+export function updateQueryParams(newQueryParams: IRouteQueryParams): boolean {
   const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
   const queryParams: IRouteQueryParams | null = details && details.queryParams;
@@ -186,15 +185,10 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, dispatchUpd
     return false;
   }
 
-  let navigationCallback: (() => void) | null = null;
-  if (dispatchUpdate) {
-    navigationCallback = () => {
-      store.dispatch(new UpdateQueryParams(resultParams));
-    };
-  }
-  EtoolsRouter.navigate(path, resultParams, navigationCallback);
+  EtoolsRouter.replaceState(path, resultParams);
+  window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
 
 export const ROUTE_404 = '/page-not-found';
-export const DEFAULT_ROUTE = '/settings/questions';
+export const DEFAULT_ROUTE = '/activities';

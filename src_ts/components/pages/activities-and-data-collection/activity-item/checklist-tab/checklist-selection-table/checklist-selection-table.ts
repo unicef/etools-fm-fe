@@ -8,7 +8,7 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../../styles/card-styles';
-import {TemplatesStyles} from '../../../../plan/templates-tab/templates-tab.styles';
+import {TemplatesStyles} from '../../../../templates/templates-tab/templates-tab.styles';
 import {ChecklistSelectionTableStyles} from './checklist-selection-table.styles';
 import {updateActivityChecklist} from '../../../../../../redux/effects/activity-checklist.effects';
 import {fireEvent} from '../../../../../utils/fire-custom-event';

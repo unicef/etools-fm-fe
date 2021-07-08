@@ -28,6 +28,7 @@ const LAT_LNG_DEBOUNCE_TIME = 300;
 @customElement('sites-popup')
 export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() dialogOpened = true;
+  @property() savingInProcess = false;
   @property() editedData: EditedSite = {is_active: true};
   @property() currentCoords: string | null = null;
 
@@ -36,7 +37,6 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
-  savingInProcess = false;
 
   @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
@@ -118,6 +118,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   }
 
   saveSite(): void {
+    this.savingInProcess = true;
     const {lat, lng}: LatLng =
       (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as LatLng);
     if (lat && lng) {
