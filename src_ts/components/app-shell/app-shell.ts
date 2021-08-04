@@ -15,6 +15,7 @@ import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@unicef-polymer/etools-form-builder';
+import {createDynamicDialog} from '@unicef-polymer/etools-dialog/dynamic-dialog';
 
 import 'etools-piwik-analytics/etools-piwik-analytics.js';
 import {AppShellStyles} from './app-shell-styles';
@@ -153,6 +154,7 @@ export class AppShell extends connect(store)(LitElement) {
     this.hasLoadedStrings = true;
     super.connectedCallback();
 
+    this.checkAppVersion();
     installRouter((location: Location) =>
       store.dispatch<AsyncEffect>(navigate(decodeURIComponent(location.pathname + location.search)))
     );
@@ -307,6 +309,43 @@ export class AppShell extends connect(store)(LitElement) {
 
   protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
     return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
+  }
+
+  protected checkAppVersion(): void {
+    fetch('version.json')
+      .then((res) => res.json())
+      .then((version) => {
+        if (version.revision != document.getElementById('buildRevNo')!.innerText) {
+          console.log('version.json', version.revision);
+          console.log('buildRevNo ', document.getElementById('buildRevNo')!.innerText);
+          this._showConfirmNewVersionDialog();
+        }
+      });
+  }
+
+  private _showConfirmNewVersionDialog(): void {
+    const msg = document.createElement('span');
+    msg.innerText = 'A new version of the app is available. Refresh page?';
+    const conf: any = {
+      size: 'md',
+      closeCallback: this._onConfirmNewVersion.bind(this),
+      content: msg
+    };
+    const confirmNewVersionDialog = createDynamicDialog(conf);
+    confirmNewVersionDialog.opened = true;
+  }
+
+  private _onConfirmNewVersion(e: CustomEvent): void {
+    if (e.detail.confirmed) {
+      if (navigator.serviceWorker) {
+        caches.keys().then((cacheNames) => {
+          cacheNames.forEach((cacheName) => {
+            caches.delete(cacheName);
+          });
+          location.reload();
+        });
+      }
+    }
   }
 
   private _updateDrawerStyles(): void {
