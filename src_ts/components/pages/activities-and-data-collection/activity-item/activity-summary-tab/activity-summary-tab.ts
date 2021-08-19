@@ -65,11 +65,13 @@ export class ActivitySummaryTab extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     store.dispatch(new SaveRoute(`${ACTIVITIES_PAGE}/${this.activityId}/${SUMMARY_TAB}`));
-    store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
+    store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number)); // TODO - why is this here also?? it's called again below
     this.routeDetailsUnsubscribe = store.subscribe(
       routeDetailsSelector(({params}: IRouteDetails) => {
         this.activityId = params && (params.id as number);
-        store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
+        if (this.activityId) {
+          store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId));
+        }
       })
     );
 
