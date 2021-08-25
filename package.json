@@ -46,7 +46,7 @@
     "@unicef-polymer/etools-behaviors": "^3.0.4",
     "@unicef-polymer/etools-content-panel": "^4.0.1",
     "@unicef-polymer/etools-data-table": "^5.1.1",
-    "@unicef-polymer/etools-date-time": "^2.1.0",
+    "@unicef-polymer/etools-date-time": "^2.2.1",
     "@unicef-polymer/etools-dialog": "^4.3.0",
     "@unicef-polymer/etools-dropdown": "^3.5.0",
     "@unicef-polymer/etools-form-builder": "0.1.22",
