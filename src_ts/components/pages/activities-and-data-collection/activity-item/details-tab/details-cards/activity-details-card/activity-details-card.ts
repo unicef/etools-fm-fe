@@ -34,6 +34,18 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   @property() activityOffices: Office[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
 
+  private _isNewActivity = false;
+  @property({type: Boolean})
+  get isNewActivity(): boolean {
+    return this._isNewActivity;
+  }
+  set isNewActivity(val: boolean) {
+    this._isNewActivity = val;
+    if (this._isNewActivity) {
+      this.startEdit();
+    }
+  }
+
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
 
