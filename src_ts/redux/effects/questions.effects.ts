@@ -40,7 +40,7 @@ function startRequest(
   const options: RequestInit = {method, body: JSON.stringify(data)};
   return request(url, options)
     .then(() => dispatch(new SetQuestionUpdateError({})))
-    .catch((error: any) => dispatch(new SetQuestionUpdateError(error.data)))
+    .catch((error: any) => dispatch(new SetQuestionUpdateError(error.data || error)))
     .then(() => {
       dispatch(new SetQuestionUpdateState(false));
     });
