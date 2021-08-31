@@ -31,7 +31,6 @@ export const InputStyles: TemplateResult = html`
     paper-input,
     datepicker-lite {
       padding: 0 12px;
-      color: var(--gray-mid);
       box-sizing: border-box;
 
       --paper-input-container-input: {
