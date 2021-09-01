@@ -26,6 +26,7 @@ import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
+import {getErrorsArray} from '@unicef-polymer/etools-ajax/ajax-error-parser';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -67,7 +68,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
         // check errors on update(create) complete
         this.errors = store.getState().questions.error;
         if (this.errors && Object.keys(this.errors).length) {
-          fireEvent(this, 'toast', {text: 'Please check errors and try again'});
+          fireEvent(this, 'toast', {text: getErrorsArray(this.errors).join('\n')});
           return;
         }
 
