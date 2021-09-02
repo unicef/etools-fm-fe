@@ -6,7 +6,7 @@ import {
   LOCATIONS_ENDPOINT,
   PARTNERS,
   TPM_PARTNERS,
-  USERS,
+  USERS
 } from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
 
@@ -167,7 +167,7 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     selectedValue: [],
     optionValue: 'value',
     optionLabel: 'display_name',
-    selected: false,
+    selected: true,
     minWidth: '350px',
     hideSearch: true,
     disabled: false,
