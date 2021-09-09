@@ -209,6 +209,9 @@ export class EtoolsFilters extends LitElement {
   }
 
   render(): TemplateResult {
+    if (this.filterLoadingInProcess) {
+      return html`<etools-loading loading-text="${translate('MAIN.LOADING_FILTERS_DATA')}" active></etools-loading>`;
+    }
     // language=HTML
     return html`
       <style>
@@ -232,19 +235,12 @@ export class EtoolsFilters extends LitElement {
             <iron-icon icon="filter-list"></iron-icon>
             ${translate('FILTERS_ELEMENT.TITLE')}
           </paper-button>
-          ${!this.filterLoadingInProcess
-            ? html`
-                <div slot="dropdown-content" class="clear-all-filters">
-                  <paper-button @tap="${this.clearAllFilterValues}" class="secondary-btn">
-                    ${translate('FILTERS_ELEMENT.CLEAR_ALL')}
-                  </paper-button>
-                </div>
-                <paper-listbox slot="dropdown-content" multi> ${this.filterMenuOptions} </paper-listbox>
-              `
-            : ''}
-          <div slot="dropdown-content" ?hidden="${!this.filterLoadingInProcess}" class="spinner-container">
-            <etools-loading no-overlay active loading-text="${translate('MAIN.LOADING_FILTERS_DATA')}"></etools-loading>
+          <div slot="dropdown-content" class="clear-all-filters">
+            <paper-button @tap="${this.clearAllFilterValues}" class="secondary-btn">
+              ${translate('FILTERS_ELEMENT.CLEAR_ALL')}
+            </paper-button>
           </div>
+          <paper-listbox slot="dropdown-content" multi> ${this.filterMenuOptions} </paper-listbox>
         </paper-menu-button>
       </div>
     `;
