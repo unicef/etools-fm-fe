@@ -21,6 +21,7 @@ import {openDialog} from '../../../../utils/dialog';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {translate} from 'lit-translate';
+import {SharedStyles} from '../../../../styles/shared-styles';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -161,6 +162,7 @@ export class StatusesActionsComponent extends LitElement {
     // language=CSS
     return [
       FlexLayoutClasses,
+      SharedStyles,
       css`
         :host {
           display: flex;
