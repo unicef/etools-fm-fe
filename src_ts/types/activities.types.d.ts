@@ -78,6 +78,7 @@ interface IChecklistItem {
   question: IChecklistQuestion;
   specific_details: string;
   is_enabled: boolean;
+  text: string;
 }
 
 interface IChecklistQuestion {

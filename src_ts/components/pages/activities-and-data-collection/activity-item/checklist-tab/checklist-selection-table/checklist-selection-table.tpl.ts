@@ -97,7 +97,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                 </div>
 
                 <!-- Question item Text -->
-                <div class="col-data flex-1 truncate">${question.question.text}</div>
+                <div class="col-data flex-1 truncate">${question.text}</div>
 
                 <!-- Editable Question Specific Details -->
                 <div
