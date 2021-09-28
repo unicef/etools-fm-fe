@@ -110,7 +110,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected getFindingQuestion(finding: SummaryFinding): TemplateResult {
     return html`
       <div class="layout vertical question-container">
-        <div class="question-text">${finding.activity_question.question.text}</div>
+        <div class="question-text">${finding.activity_question.text}</div>
         <div class="question-details">${finding.activity_question.specific_details}</div>
         <div class="flex-2 layout horizontal wrap">
           ${finding.activity_question.findings.map(
