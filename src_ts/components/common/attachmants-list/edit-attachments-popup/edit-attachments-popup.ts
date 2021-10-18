@@ -14,6 +14,7 @@ import {DataMixin} from '../../mixins/data-mixin';
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
   @property() attachmentTypes: AttachmentType[] = [];
+  @property() uploadInProgress = false;
   protected savingInProcess = false;
   protected selectedFileId: number | null = null;
 
@@ -124,6 +125,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   }
 
   protected fileSelected({success}: {success?: any; error?: string}): void {
+    this.uploadInProgress = false;
     if (success) {
       try {
         this.selectedFileId = success.id;
