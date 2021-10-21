@@ -1,4 +1,5 @@
 import {css, CSSResult} from 'lit-element';
+import {elevation2} from '../../../styles/elevation-styles';
 
 // language=CSS
 export const etoolsFiltersStyles: CSSResult = css`
@@ -164,5 +165,9 @@ export const etoolsFiltersStyles: CSSResult = css`
     color: var(--primary-color, rgba(0, 0, 0, 0.87));
     padding-right: 16px;
     border-bottom: 1px solid var(--light-divider-color, rgba(0, 0, 0, 0.12));
+  }
+
+  paper-button:focus {
+    ${elevation2}
   }
 `;
