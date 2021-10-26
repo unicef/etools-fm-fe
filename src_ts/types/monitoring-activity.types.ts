@@ -21,7 +21,7 @@ type InterventionsCoverage = {
 
 type CpOutputCoverage = {
   id: number;
-  number: string;
+  name: string;
   days_since_visit: number | null;
   avg_days_between_visits: number | null;
 };
