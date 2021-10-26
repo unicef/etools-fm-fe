@@ -12,7 +12,7 @@ enum WidthCalculationTargets {
 @customElement('shared-tab-template')
 export class SharedTabTemplate extends LitElement {
   @property() label!: string;
-  @property() data!: InterventionsCoverage[] | CpOutputCoverage[];
+  @property() data!: (InterventionsCoverage | CpOutputCoverage)[];
   @property() loading = false;
 
   render(): TemplateResult {
@@ -24,7 +24,7 @@ export class SharedTabTemplate extends LitElement {
         ></etools-loading>
         <!--   Tab content label   -->
         <label class="coverage-label">${this.label}</label>
-        ${repeat(
+        ${repeat<InterventionsCoverage | CpOutputCoverage>(
           this.data,
           (item: InterventionsCoverage | CpOutputCoverage) => item.id,
           (item: InterventionsCoverage | CpOutputCoverage) => html`
