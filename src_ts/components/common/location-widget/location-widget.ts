@@ -48,12 +48,12 @@ export class LocationWidgetComponent extends LitElement {
   @property() isSiteList = false;
 
   @property({type: String, reflect: true}) locationSearch = '';
-  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   @property() protected history: WidgetLocation[] = [];
   @property() private listLoading = false;
   @property() private pathLoading = false;
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
+  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
   private polygon: Polygon | null = null;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;

@@ -1,8 +1,8 @@
 interface IEtoolsRequest {
-  readonly lastAjaxRequest: object | null | undefined;
+  readonly lastAjaxRequest: GenericObject | null | undefined;
   readonly activeAjaxRequests: any[] | null | undefined;
-  readonly reqProgress: object | null | undefined;
-  checkReqProgress: object | null | undefined;
+  readonly reqProgress: GenericObject | null | undefined;
+  checkReqProgress: GenericObject | null | undefined;
 
   sendRequest(reqConfig: any, activeReqKey?: any): any;
 

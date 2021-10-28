@@ -39,8 +39,6 @@ export class PageHeader extends connect(store)(LitElement) {
   @property({type: Boolean})
   isStaging = false;
 
-  rootPath: string = ROOT_PATH;
-
   @property({type: String})
   headerColor = 'var(--header-bg-color)';
 
@@ -71,12 +69,14 @@ export class PageHeader extends connect(store)(LitElement) {
   @property({type: Array})
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
-  //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
-
   @property() selectedLanguage = 'en';
 
   @property() refreshInProgress = false;
+
+  rootPath: string = ROOT_PATH;
+
+  //TODO list loading
+  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
 
   constructor() {
     super();
@@ -98,7 +98,7 @@ export class PageHeader extends connect(store)(LitElement) {
       })
     );
     // TODO remove test code.
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line
     // @ts-ignore
     window.enableExampleLanguage = () => {
       this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];

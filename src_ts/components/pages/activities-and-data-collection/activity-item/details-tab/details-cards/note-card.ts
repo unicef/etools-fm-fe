@@ -8,8 +8,8 @@ import {translate} from 'lit-translate';
 
 @customElement('details-note-card')
 export class DetailsNoteCard extends LitElement {
-  private activityDetailsUnsubscribe!: Unsubscribe;
   @property() private activityDetails: IActivityDetails | null = null;
+  private activityDetailsUnsubscribe!: Unsubscribe;
 
   protected get noteInfo(): NoteInfo | null {
     if (

@@ -33,7 +33,7 @@ function startRequest(
   dispatch: Dispatch,
   url: string,
   method: RequestMethod,
-  data: IEditedQuestion | {}
+  data: Partial<IEditedQuestion>
 ): Promise<void> {
   dispatch(new SetQuestionUpdateState(true));
 

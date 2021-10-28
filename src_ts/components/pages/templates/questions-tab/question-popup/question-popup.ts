@@ -30,20 +30,10 @@ import {getErrorsArray} from '@unicef-polymer/etools-ajax/ajax-error-parser';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
-  savingInProcess = false;
   @property() dialogOpened = true;
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
-
-  readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
-  readonly methods: EtoolsMethod[] = store.getState().staticData.methods || [];
-  readonly categories: EtoolsCategory[] = store.getState().staticData.categories || [];
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @property() answerTypes: AnswerTypeOption[] = applyDropdownTranslation(ANSWER_TYPES);
-  readonly scaleSizes: DefaultDropdownOption[] = [
-    {value: 3, display_name: '3'},
-    {value: 5, display_name: '5'},
-    {value: 7, display_name: '7'}
-  ];
 
   @property() editedData: IEditedQuestion = {
     options: [],
@@ -51,6 +41,16 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     level: LEVELS[0].value,
     is_active: true
   };
+
+  savingInProcess = false;
+  readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
+  readonly methods: EtoolsMethod[] = store.getState().staticData.methods || [];
+  readonly categories: EtoolsCategory[] = store.getState().staticData.categories || [];
+  readonly scaleSizes: DefaultDropdownOption[] = [
+    {value: 3, display_name: '3'},
+    {value: 5, display_name: '5'},
+    {value: 7, display_name: '7'}
+  ];
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;

@@ -20,12 +20,12 @@ store.addReducers({monitoringActivities});
 
 @customElement('monitoring-tab')
 export class MonitoringTabComponent extends LitElement {
-  coverageActiveTab: string = PARTNER_TAB;
-  openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
-  @property() isHactVisitSectionActivated: boolean = this.coverageActiveTab == PARTNER_TAB;
+  @property() isHactVisitSectionActivated = true;
   @property() completed = 0;
   @property() planned = 0;
   @property() invalidMapSize = false;
+  coverageActiveTab: string = PARTNER_TAB;
+  openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
 
   private overallActivitiesUnsubscribe!: Unsubscribe;
   private lastActivatedTabUnsubscribe!: Unsubscribe;
@@ -65,7 +65,7 @@ export class MonitoringTabComponent extends LitElement {
     this.removeEventListener('resize-map', this.resizeMap as any);
   }
 
-  resizeMap() {
+  resizeMap(): void {
     this.invalidMapSize = !this.invalidMapSize;
   }
 

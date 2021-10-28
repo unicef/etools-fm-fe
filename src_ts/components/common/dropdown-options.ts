@@ -11,24 +11,24 @@ import {
 } from '../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
 
 // ANSWER_TYPES
-export const FILE_TYPE: 'file' = 'file';
-export const TEXT_TYPE: 'text' = 'text';
-export const NUMBER_TYPE: 'number' = 'number';
-export const BOOL_TYPE: 'bool' = 'bool';
-export const SCALE_TYPE: 'likert_scale' = 'likert_scale';
+export const FILE_TYPE = 'file';
+export const TEXT_TYPE = 'text';
+export const NUMBER_TYPE = 'number';
+export const BOOL_TYPE = 'bool';
+export const SCALE_TYPE = 'likert_scale';
 
 // Data collection Json specific types
-export const NUMBER_INTEGER_TYPE: 'number-integer' = 'number-integer';
-export const NUMBER_FLOAT_TYPE: 'number-float' = 'number-float';
+export const NUMBER_INTEGER_TYPE = 'number-integer';
+export const NUMBER_FLOAT_TYPE = 'number-float';
 
 // LEVELS
-export const PARTNER: 'partner' = 'partner';
-export const OUTPUT: 'output' = 'output';
-export const INTERVENTION: 'intervention' = 'intervention';
+export const PARTNER = 'partner';
+export const OUTPUT = 'output';
+export const INTERVENTION = 'intervention';
 
 // MONITOR_TYPES
-export const STAFF: 'staff' = 'staff';
-export const TPM: 'tpm' = 'tpm';
+export const STAFF = 'staff';
+export const TPM = 'tpm';
 
 export const ANSWER_TYPES: AnswerTypeOption[] = [
   {value: TEXT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.TEXT`},

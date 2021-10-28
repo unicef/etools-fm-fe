@@ -1,8 +1,9 @@
 // TODO: improve this user model
 interface IEtoolsUserModel {
-  countries_available: object[];
+  [key: string]: any;
+  countries_available: GenericObject[];
   groups: UserGroup[];
-  country: object;
+  country: GenericObject;
   country_override: number;
   email: string;
   first_name: string;
@@ -20,8 +21,6 @@ interface IEtoolsUserModel {
   user: number;
   username: string;
   vendor_number: string | null;
-
-  [key: string]: any;
 }
 
 type UserGroup = {

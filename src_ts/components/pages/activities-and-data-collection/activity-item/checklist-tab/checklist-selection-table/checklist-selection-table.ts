@@ -17,8 +17,8 @@ import {checklistEditedCard} from '../../../../../../redux/selectors/activity-ch
 import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-checklist.actions';
 import {Unsubscribe} from 'redux';
 
-const ENTER: 13 = 13;
-const ESCAPE: 27 = 27;
+const ENTER = 13;
+const ESCAPE = 27;
 
 @customElement('checklist-selection-table')
 export class ChecklistSelectionTable extends LitElement {
@@ -28,13 +28,15 @@ export class ChecklistSelectionTable extends LitElement {
   @property() loadingInProcess = false;
   @property() activityDetails: IActivityDetails | null = null;
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
-  tableTitle = '';
-  activityId!: number;
 
   @property() protected blockEdit = false;
 
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private methods!: EtoolsMethod[];
+
+  tableTitle = '';
+  activityId!: number;
+
   private editedCardUnsubscribe!: Unsubscribe;
   private originalQuestionsList: IChecklistItem[] = [];
 

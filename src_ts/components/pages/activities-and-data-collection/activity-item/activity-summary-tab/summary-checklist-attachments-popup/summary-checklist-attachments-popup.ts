@@ -15,10 +15,10 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
   @property() attachments: (StoredAttachment | IEditedAttachment)[] = [];
   @property() attachmentTypes: AttachmentType[] | undefined = [];
 
+  @query('#link') link!: HTMLLinkElement;
+
   readonly = false;
   popupTitle = '';
-
-  @query('#link') link!: HTMLLinkElement;
   private updateUrl?: string;
 
   set dialogData({attachments, title, updateUrl, attachmentTypes}: AttachmentsPopupData) {
@@ -27,7 +27,6 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
     this.attachmentTypes = attachmentTypes;
     this.attachments = clone(attachments);
   }
-
 
   render(): TemplateResult | void {
     return template.call(this);
