@@ -11,7 +11,7 @@ export function mapFilters(
       ...filter,
       selectionOptions: options[property] || filter.selectionOptions || [],
       selectedValue: values[property] || filter.defaultValue,
-      selected: Boolean(values[property])
+      selected: Boolean(values[property] || filter.selected)
     };
   });
 }

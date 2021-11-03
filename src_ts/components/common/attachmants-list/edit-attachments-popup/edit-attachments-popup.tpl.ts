@@ -29,6 +29,8 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       @close="${this.onClose}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       no-padding
+      ?disable-confirm-btn="${this.uploadInProgress}"
+      ?disable-dismiss-btn="${this.uploadInProgress}"
     >
       <etools-loading
         ?active="${this.savingInProcess}"
@@ -61,6 +63,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
             .fileUrl="${this.editedData && this.editedData.file}"
             .uploadEndpoint="${getEndpoint(ATTACHMENTS_STORE).url}"
             @upload-finished="${(event: CustomEvent) => this.fileSelected(event.detail)}"
+            @upload-started="${() => (this.uploadInProgress = true)}"
           ></etools-upload>
         </div>
       </div>

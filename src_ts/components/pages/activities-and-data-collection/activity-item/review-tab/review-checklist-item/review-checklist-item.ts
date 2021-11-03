@@ -31,7 +31,7 @@ export class ReviewChecklistItemComponent extends LitElement {
           ${this.checklist.map(
             (checklistItem: IChecklistItem) => html`
               <div class="layout horizontal checklist-line">
-                <div class="row-details-content flex-2">${checklistItem.question.text}</div>
+                <div class="row-details-content flex-2">${checklistItem.text}</div>
                 <div class="row-details-content flex-3">${checklistItem.specific_details}</div>
               </div>
             `

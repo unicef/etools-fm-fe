@@ -1,5 +1,5 @@
 import {css, CSSResult} from 'lit-element';
-
+import {elevation2} from './elevation-styles';
 // language=CSS
 export const SharedStyles: CSSResult = css`
   :host {
@@ -77,5 +77,8 @@ export const SharedStyles: CSSResult = css`
   etools-content-panel::part(ecp-header-title) {
     padding: 0 0;
     text-align: left;
+  }
+  paper-button:focus {
+    ${elevation2}
   }
 `;

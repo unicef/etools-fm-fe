@@ -1,34 +1,30 @@
 version: 2
 jobs:
-  test:
+  lint:
     working_directory: ~/code
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:11.9.0
+      - image: node:12.22.7
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
-          name: Install npm wee
-          command: npm install
+          name: Install node modules
+          command: npm ci
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       - run:
           name: Polymer3 Build
           command: npm run build
-      - run:
-          name: Run Tests
-          command: |
-            echo "skipping tests for now: xvfb-run polymer test --skip-selenium-install"
 
   build_and_deploy:
     working_directory: ~/code
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:11.9.0
+      - image: node:12.22.7
     steps:
       - checkout
       - setup_remote_docker
@@ -65,15 +61,16 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_lint:
     jobs:
-      - test
+      - lint
       - build_and_deploy:
           requires:
-            - test
+            - lint
           filters:
             branches:
               only:
                 - master
                 - staging
                 - develop
+                - node-v
