@@ -12,7 +12,7 @@ enum WidthCalculationTargets {
 @customElement('shared-tab-template')
 export class SharedTabTemplate extends LitElement {
   @property() label!: string;
-  @property() data!: InterventionsCoverage[] | CpOutputCoverage[];
+  @property() data!: (InterventionsCoverage | CpOutputCoverage)[];
   @property() loading = false;
 
   render(): TemplateResult {
@@ -24,13 +24,15 @@ export class SharedTabTemplate extends LitElement {
         ></etools-loading>
         <!--   Tab content label   -->
         <label class="coverage-label">${this.label}</label>
-        ${repeat(
+        ${repeat<InterventionsCoverage | CpOutputCoverage>(
           this.data,
-          (item: InterventionsCoverage) => item.id,
-          (item: InterventionsCoverage) => html`
+          (item: InterventionsCoverage | CpOutputCoverage) => item.id,
+          (item: InterventionsCoverage | CpOutputCoverage) => html`
             <div class="progressbar-container">
               <!--      Progress bar label      -->
-              <div class="progressbar__header">${item.number}</div>
+              <div class="progressbar__header">
+                ${(item as InterventionsCoverage).number || (item as CpOutputCoverage).name}
+              </div>
               <!--    Days since last visit indicator      -->
               <column-item-progress-bar
                 .progressValue="${item.days_since_visit}"
