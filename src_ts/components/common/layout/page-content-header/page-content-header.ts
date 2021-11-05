@@ -109,7 +109,7 @@ export class PageContentHeader extends LitElement {
         <slot name="title-row-actions"></slot>
       </div>
 
-      <div class="content-header-row tabs" hidden$="[[!withTabsVisible]]">
+      <div class="content-header-row tabs" ?hidden="${!this.withTabsVisible}">
         <slot name="tabs"></slot>
       </div>
     `;

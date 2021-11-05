@@ -1,3 +1,4 @@
+/* eslint-disable lit/attribute-value-entities */
 import {css, CSSResult, customElement, html, LitElement, TemplateResult} from 'lit-element';
 import '@polymer/iron-icons/communication-icons';
 import {translate} from 'lit-translate';
