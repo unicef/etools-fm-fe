@@ -36,24 +36,24 @@ import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
-const ENTER: 13 = 13;
-const ESCAPE: 27 = 27;
+const ENTER = 13;
+const ESCAPE = 27;
 
 @customElement('templates-tab')
 export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
   @property() listLoadingInProcess = false;
   @property() editedDetails: GenericObject = {opened: false};
   @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
+  @query('#details-input') private detailsInput!: HTMLInputElement;
+  @property() private additionalDataLoadingCount = 0;
   partners!: EtoolsPartner[];
   interventions!: EtoolsIntervention[];
   outputs!: EtoolsCpOutput[];
-  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
-  @query('#details-input') private detailsInput!: HTMLInputElement;
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly questionTemplatesDataUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private methods!: EtoolsMethod[];
-  @property() private additionalDataLoadingCount = 0;
   private activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {

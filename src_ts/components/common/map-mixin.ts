@@ -40,7 +40,7 @@ export class MapHelper {
     const markers: Marker[] = [];
     let marker: IMarker;
     (markersData || []).forEach((mark: MarkerDataObj) => {
-      marker = L.marker(mark.coords).bindPopup(`<b>${mark.popup}</b>`)
+      marker = L.marker(mark.coords).bindPopup(`<b>${mark.popup}</b>`);
       marker.staticData = mark.staticData;
       if (onclick) {
         marker.on('click', function (e) {

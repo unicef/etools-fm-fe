@@ -78,7 +78,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.routeUnsubscribe();
-    if (typeof (this.cpOutputUnsubscribe) === 'function') {
+    if (typeof this.cpOutputUnsubscribe === 'function') {
       this.cpOutputUnsubscribe();
     }
     this.fullReportsUnsubscribe();

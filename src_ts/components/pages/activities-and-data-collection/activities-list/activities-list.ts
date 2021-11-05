@@ -44,15 +44,15 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
+  @property() private filtersData: GenericObject = {
+    monitor_type: applyDropdownTranslation(MONITOR_TYPES),
+    status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
+  };
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly activitiesDataUnsubscribe: Unsubscribe;
   private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
-  @property() private filtersData: GenericObject = {
-    monitor_type: applyDropdownTranslation(MONITOR_TYPES),
-    status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
-  };
   private readonly activeLanguageUnsubscribe: Unsubscribe;
 
   constructor() {

@@ -35,7 +35,7 @@
     "comma-dangle": ["error", "never"],
     "max-len": "off",
     "camelcase": "off",
-    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
+    "arrow-parens": "off",
     "block-spacing": "error",
     "space-in-parens": ["error", "never"],
     "prefer-promise-reject-errors": "off",
@@ -61,6 +61,7 @@
       "variables": true
     }],
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/prefer-includes": "error",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",

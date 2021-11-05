@@ -80,14 +80,14 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
           outputIds = Array.from(new Set([...outputIds, ...response.cp_outputs]));
           partnerIds = Array.from(new Set([...partnerIds, response.partner]));
 
-          console.log('Selected Intervention IDs: '+interventionIds);
+          console.log('Selected Intervention IDs: ' + interventionIds);
           const interventions: IActivityIntervention[] = this.getActiveEntities<IActivityIntervention>(
             interventionIds,
             this.interventions
           );
           const outputs: IActivityPartner[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
           const partners: IActivityPartner[] = this.getActiveEntities<IActivityPartner>(partnerIds, this.partners);
-          console.log('Selected Intervention IDs Data: '+ JSON.stringify(interventions));
+          console.log('Selected Intervention IDs Data: ' + JSON.stringify(interventions));
           this.activityInterventions = [...interventions];
           this.activityCpOutputs = [...outputs];
           this.activityPartners = [...partners];

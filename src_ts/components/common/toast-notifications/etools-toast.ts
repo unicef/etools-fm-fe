@@ -11,11 +11,11 @@ import {translate} from 'lit-translate';
  */
 @customElement('etools-toast')
 export class EtoolsToast extends LitElement {
+  @query('#toast') toast!: PaperToastElement;
+
   toastLabelEl: HTMLSpanElement | null = null;
 
-  fitInto: object | null = null;
-
-  @query('#toast') toast!: PaperToastElement;
+  fitInto: GenericObject | null = null;
 
   private confirmBtn: PaperButtonElement | null = null;
 
@@ -87,7 +87,7 @@ export class EtoolsToast extends LitElement {
     }, 200);
   }
 
-  show(details: object): void {
+  show(details: GenericObject): void {
     if (!this.toast) {
       return;
     }

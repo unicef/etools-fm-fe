@@ -36,9 +36,10 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() longitude: number | null = null;
   @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
+  @query('#map') private mapElement!: HTMLElement;
+
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
 
-  @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;

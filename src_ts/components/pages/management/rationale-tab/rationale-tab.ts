@@ -17,9 +17,9 @@ import {RationaleStyles} from './rationale.styles';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
-  selectedYear: number | undefined;
   @property() loadingInProcess = false;
   @property() yearPlan: IRationale | undefined;
+  selectedYear: number | undefined;
   readonly yearOptions: {label: number; value: number}[];
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;

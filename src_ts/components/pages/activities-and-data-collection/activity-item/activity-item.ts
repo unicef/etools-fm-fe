@@ -80,6 +80,7 @@ export class NewActivityComponent extends LitElement {
   @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
+  @property() activeTab!: string;
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
@@ -122,7 +123,6 @@ export class NewActivityComponent extends LitElement {
       hidden: false
     }
   ];
-  @property() activeTab!: string;
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
