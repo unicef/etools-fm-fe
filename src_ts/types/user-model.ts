@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TODO: improve this user model
 interface IEtoolsUserModel {
   [key: string]: any;

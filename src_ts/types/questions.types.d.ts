@@ -1,3 +1,4 @@
+/* eslint-disable */
 interface IQuestion<O = QuestionOption> {
   id: number;
   answer_type: QuestionAnswerType;

@@ -1,6 +1,6 @@
 {
-  "name": "etools-apps-base-shell",
-  "description": "Etools Apps Base - starting point for etools apps - based on PWA starter kit",
+  "name": "etools-fm",
+  "description": "Etools Field Monitoring",
   "version": "2.0.0",
   "contributors": [
     "eTools Team"
@@ -11,6 +11,7 @@
     "tsToJs": "tsc --skipLibCheck",
     "esLint": "./node_modules/eslint/bin/eslint.js 'src_ts/**'",
     "lint": "npm run esLint",
+    "format:eslint": "eslint --ext .ts . --fix --ignore-path .gitignore",
     "start": "gulp serve",
     "build": "tsc  --skipLibCheck && export NODE_OPTIONS=--max_old_space_size=4096 && npm run build:static",
     "build:prpl-server": "polymer build --auto-base-path && gulp prpl-server",
@@ -69,19 +70,19 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
-    "@typescript-eslint/parser": "^3.10.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "del": "^3.0.0",
     "eslint": "^7.20.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.1.1",
-    "eslint-plugin-lit": "^1.3.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-lit": "^1.6.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "gulp": "^4.0.0",
     "gulp-rename": "^1.3.0",
     "gulp-replace": "^1.0.0",
     "polymer-cli": "^1.9.11",
-    "prettier": "^2.2.1",
+    "prettier": "~2.4.1",
     "typescript": "^3.9.9"
   }
 }
