@@ -17,7 +17,7 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@unicef-polymer/etools-form-builder';
 import {createDynamicDialog} from '@unicef-polymer/etools-dialog/dynamic-dialog';
 
-import 'etools-piwik-analytics/etools-piwik-analytics.js';
+import '@unicef-polymer/etools-piwik-analytics/etools-piwik-analytics.js';
 import {AppShellStyles} from './app-shell-styles';
 import {RouterStyles} from './router-style';
 
