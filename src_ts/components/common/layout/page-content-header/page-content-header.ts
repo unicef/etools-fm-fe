@@ -6,7 +6,7 @@ import {css, CSSResult, customElement, html, LitElement, property, TemplateResul
  */
 @customElement('page-content-header')
 export class PageContentHeader extends LitElement {
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean, reflect: true, attribute: 'with-tabs-visible'})
   withTabsVisible = false;
 
   static get is(): string {
