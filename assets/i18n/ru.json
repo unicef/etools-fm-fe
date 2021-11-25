@@ -310,7 +310,7 @@
       "QUESTION": "Localized Enter Question Text",
       "SECTIONS": "Localized Select Sections",
       "METHODS": "Localized Select Collection Methods",
-      "CATEGORY": "Localized Select Group",
+      "GROUP": "Localized Select Group",
       "LEVEL": "Localized Select Question Target Level",
       "ANSWER_TYPE": "Localized Select Answer Type",
       "SCALE_SIZE": "Localized Select Scale Size"
@@ -320,7 +320,7 @@
       "LEVEL": "Localized Question Target Level",
       "SECTIONS": "Localized Sections",
       "METHODS": "Localized Collection Methods",
-      "CATEGORY": "Localized Group",
+      "GROUP": "Localized Group",
       "ANSWER_TYPE": "Localized Answer Type",
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
