@@ -551,5 +551,6 @@
     "PLANNED": "Localized Planned",
     "COMPLETED_VISITS": "Localized Completed Visits",
     "PLANNED_VISITS": "Localized Planned Visits (Up to December)"
-  }
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
 }

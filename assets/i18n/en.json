@@ -310,7 +310,7 @@
       "QUESTION": "Enter Question Text",
       "SECTIONS": "Select Sections",
       "METHODS": "Select Collection Methods",
-      "CATEGORY": "Select Group",
+      "GROUP": "Select Group",
       "LEVEL": "Select Question Target Level",
       "ANSWER_TYPE": "Select Answer Type",
       "SCALE_SIZE": "Select Scale Size"
@@ -320,7 +320,7 @@
       "LEVEL": "Question Target Level",
       "SECTIONS": "Sections",
       "METHODS": "Collection Methods",
-      "CATEGORY": "Group",
+      "GROUP": "Group",
       "ANSWER_TYPE": "Answer Type",
       "IS_HACT": "Counts towards HACT",
       "IS_ACTIVE": "Is Active",
@@ -551,5 +551,6 @@
     "PLANNED": "Planned",
     "COMPLETED_VISITS": "Completed Visits",
     "PLANNED_VISITS": "Planned Visits (Up to December)"
-  }
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
 }

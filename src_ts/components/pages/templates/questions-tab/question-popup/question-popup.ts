@@ -27,6 +27,7 @@ import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 import {getErrorsArray} from '@unicef-polymer/etools-ajax/ajax-error-parser';
+import {validateRequiredFields} from '../../../../utils/validations.helper';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -41,6 +42,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     level: LEVELS[0].value,
     is_active: true
   };
+  @property({type: Boolean})
+  autovlidateCateg = false;
 
   savingInProcess = false;
   readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
@@ -165,6 +168,9 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   processRequest(): void {
+    if (!validateRequiredFields(this)) {
+      return;
+    }
     const scaleErrors: GenericObject[] | null = this.validateScales();
     if (scaleErrors) {
       const currentErrors: GenericObject = this.errors || {};
