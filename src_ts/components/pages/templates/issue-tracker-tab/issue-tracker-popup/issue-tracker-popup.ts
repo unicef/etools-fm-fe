@@ -18,6 +18,7 @@ import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {translate} from 'lit-translate';
+import {validateRequiredFields} from '../../../../utils/validations.helper';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
@@ -130,6 +131,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
         this.errors = {...this.errors, ...{location: translate('ISSUE_TRACKER.POPUP_ERROR_LOCATION')}};
         return false;
       }
+    }
+    if (!validateRequiredFields(this)) {
+      return false;
     }
     return true;
   }
