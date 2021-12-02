@@ -195,10 +195,11 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ?disabled="${this.isReadOnly}"
           ?readonly="${this.isReadOnly}"
           ?invalid="${this.errors && this.errors.issue}"
-          error-message="${this.errors && this.errors.issue}"
+          error-message="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('issue', detail.value)}"
           @focus="${() => this.resetFieldError('issue')}"
           @tap="${() => this.resetFieldError('issue')}"
+          auto-validate
         ></paper-textarea>
 
         <div>
