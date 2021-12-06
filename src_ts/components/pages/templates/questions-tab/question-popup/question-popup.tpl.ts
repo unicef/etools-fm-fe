@@ -39,9 +39,12 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           placeholder="${translate('QUESTIONS.PLACEHOLDERS.QUESTION')}"
           ?invalid="${this.errors && this.errors.text}"
           .errorMessage="${(this.errors && this.errors.text) || translate('THIS_FIELD_IS_REQUIRED')}"
-          @focus="${() => this.resetFieldError('text')}"
+          @focus="${() => {
+            this.autovlidateQuestion = true;
+            this.resetFieldError('text');
+          }}"
+          .autoValidate="${this.autovlidateQuestion}"
           @tap="${() => this.resetFieldError('text')}"
-          auto-validate
         ></paper-textarea>
 
         <etools-dropdown-multi
