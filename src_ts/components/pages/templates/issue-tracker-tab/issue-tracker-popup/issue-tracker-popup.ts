@@ -47,6 +47,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property({type: Array})
   originalFiles: IAttachment[] = [];
 
+  @property({type: Boolean})
+  autoValidateIssue = false;
+
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
   isNew = false;
   isRequest = false;
