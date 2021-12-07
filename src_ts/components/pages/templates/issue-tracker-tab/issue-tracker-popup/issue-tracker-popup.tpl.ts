@@ -197,9 +197,12 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.issue}"
           error-message="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('issue', detail.value)}"
-          @focus="${() => this.resetFieldError('issue')}"
+          @focus="${() => {
+            this.autoValidateIssue = true;
+            this.resetFieldError('issue');
+          }}"
           @tap="${() => this.resetFieldError('issue')}"
-          auto-validate
+          .autoValidate="${this.autoValidateIssue}"
         ></paper-textarea>
 
         <div>
