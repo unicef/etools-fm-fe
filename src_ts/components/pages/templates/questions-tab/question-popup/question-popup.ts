@@ -46,7 +46,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   autovlidateCateg = false;
 
   @property({type: Boolean})
-  autovlidateQuestion = false;
+  autoValidateQuestion = false;
 
   savingInProcess = false;
   readonly sections: EtoolsSection[] = store.getState().staticData.sections || [];
