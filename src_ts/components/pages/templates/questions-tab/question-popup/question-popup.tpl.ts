@@ -40,10 +40,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ?invalid="${this.errors && this.errors.text}"
           .errorMessage="${(this.errors && this.errors.text) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => {
-            this.autovlidateQuestion = true;
+            this.autoValidateQuestion = true;
             this.resetFieldError('text');
           }}"
-          .autoValidate="${this.autovlidateQuestion}"
+          .autoValidate="${this.autoValidateQuestion}"
           @tap="${() => this.resetFieldError('text')}"
         ></paper-textarea>
 
