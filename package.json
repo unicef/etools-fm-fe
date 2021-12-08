@@ -50,7 +50,7 @@
     "@unicef-polymer/etools-date-time": "^2.2.1",
     "@unicef-polymer/etools-dialog": "5.0.0-rc.2",
     "@unicef-polymer/etools-dropdown": "^3.7.6",
-    "@unicef-polymer/etools-form-builder": "1.0.0-rc.2",
+    "@unicef-polymer/etools-form-builder": "1.0.1",
     "@unicef-polymer/etools-loading": "5.0.0-rc.2",
     "@unicef-polymer/etools-profile-dropdown": "6.0.0-rc.1",
     "@unicef-polymer/etools-upload": "^3.5.2",
