@@ -234,7 +234,8 @@
       "STATUS": "Select Status",
       "ISSUE": "Enter Points of Note"
     },
-    "POPUP_TITLE": "Add Points of Note",
+    "ADD_POPUP_TITLE": "Add Points of Note",
+    "EDIT_POPUP_TITLE": "Edit Points of Note",
     "POPUP_ERROR_CP_OUTPUT": "CP Output is not provided",
     "POPUP_ERROR_PARTNER": "Partner is not provided",
     "POPUP_ERROR_LOCATION": "Location is not provided",
