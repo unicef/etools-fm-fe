@@ -450,7 +450,10 @@
     "COMMUNITY_CHANNELS": "eTools Community Channels",
     "KNOWLEDGE_BASE": "Knowledge Base",
     "DISCUSSION": "Discussion",
-    "INFORMATION": "Information"
+    "INFORMATION": "Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filters",
