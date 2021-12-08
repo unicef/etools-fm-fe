@@ -453,7 +453,8 @@
     "INFORMATION": "Information",
     "PROFILEANDSIGNOUT": "Profile and Sign out",
     "REFRESH": "Refresh",
-    "SUPPORT": "Support"
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filters",
