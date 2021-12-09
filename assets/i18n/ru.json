@@ -450,7 +450,11 @@
     "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
     "KNOWLEDGE_BASE": "Localized Knowledge Base",
     "DISCUSSION": "Localized Discussion",
-    "INFORMATION": "Localized Information"
+    "INFORMATION": "Localized Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",
