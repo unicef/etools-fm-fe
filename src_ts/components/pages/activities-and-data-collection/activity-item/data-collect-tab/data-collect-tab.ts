@@ -77,8 +77,8 @@ export class DataCollectTab extends LitElement {
     store.dispatch<AsyncEffect>(loadDataCollectionChecklist(this.activityId));
 
     // Load data collection methods or get them from store
-    const dataCollectionMethodsState: null | IDataCollectionMethods = store.getState().dataCollection
-      .dataCollectionMethods;
+    const dataCollectionMethodsState: null | IDataCollectionMethods =
+      store.getState().dataCollection.dataCollectionMethods;
     if (dataCollectionMethodsState && dataCollectionMethodsState.forActivity === this.activityId) {
       this.dataCollectionMethods = dataCollectionMethodsState.methods;
     } else {

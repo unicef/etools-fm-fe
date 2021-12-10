@@ -98,9 +98,7 @@ export class EtoolsTabs extends LitElement {
   getTabHtml(item: any): TemplateResult {
     return html`
       <paper-tab name="${item.tab}" link ?hidden="${item.hidden}">
-        <span class="tab-content">
-          ${item.tabLabel} ${item.showTabCounter ? html` ${item.counter} ` : ''}
-        </span>
+        <span class="tab-content"> ${item.tabLabel} ${item.showTabCounter ? html` ${item.counter} ` : ''} </span>
       </paper-tab>
     `;
   }

@@ -1,6 +1,6 @@
-const PME: 'PME' = 'PME';
-const FM_USER: 'FM User' = 'FM User';
-const UNICEF_USER: 'UNICEF User' = 'UNICEF User';
+const PME = 'PME';
+const FM_USER = 'FM User';
+const UNICEF_USER = 'UNICEF User';
 
 // Add groups that are used in PERMISSIONS_MAP
 const KNOWN_GROUPS: Set<string> = new Set([PME, FM_USER, UNICEF_USER]);

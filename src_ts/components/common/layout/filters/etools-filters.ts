@@ -45,15 +45,17 @@ export interface IEtoolsFilter {
 export class EtoolsFilters extends LitElement {
   @property()
   filterLoadingInProcess = false;
+
   @query('#filterMenu') paperButton!: PaperMenuButton;
+
+  @property({type: Object})
+  private _filters: IEtoolsFilter[] = [];
+
   private lastSelectedValues: any = null;
 
   static get styles(): CSSResultArray {
     return [etoolsFiltersStyles];
   }
-
-  @property({type: Object})
-  private _filters: IEtoolsFilter[] = [];
 
   get filters(): IEtoolsFilter[] {
     return this._filters;

@@ -61,7 +61,7 @@ export class VisitsEligibleForHact extends LitElement {
     this.requestUpdate();
   }
 
-  _resizeMap() {
+  _resizeMap(): void {
     fireEvent(this, 'resize-map');
   }
 

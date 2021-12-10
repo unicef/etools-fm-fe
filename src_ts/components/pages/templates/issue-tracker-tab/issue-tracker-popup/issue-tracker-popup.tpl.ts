@@ -30,7 +30,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
       ?opened="${this.dialogOpened}"
       .okBtnText="${translate(this.isNew ? 'MAIN.BUTTONS.ADD' : 'MAIN.BUTTONS.SAVE')}"
       .hideConfirmBtn="${this.isReadOnly}"
-      dialog-title="${translate('ISSUE_TRACKER.POPUP_TITLE')}"
+      dialog-title="${translate(this.isNew ? 'ISSUE_TRACKER.ADD_POPUP_TITLE' : 'ISSUE_TRACKER.EDIT_POPUP_TITLE')}"
       @iron-overlay-closed="${({target}: CustomEvent) => this.resetData(target)}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
@@ -195,10 +195,14 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ?disabled="${this.isReadOnly}"
           ?readonly="${this.isReadOnly}"
           ?invalid="${this.errors && this.errors.issue}"
-          error-message="${this.errors && this.errors.issue}"
+          error-message="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('issue', detail.value)}"
-          @focus="${() => this.resetFieldError('issue')}"
+          @focus="${() => {
+            this.autoValidateIssue = true;
+            this.resetFieldError('issue');
+          }}"
           @tap="${() => this.resetFieldError('issue')}"
+          .autoValidate="${this.autoValidateIssue}"
         ></paper-textarea>
 
         <div>

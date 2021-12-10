@@ -234,7 +234,8 @@
       "STATUS": "Select Status",
       "ISSUE": "Enter Points of Note"
     },
-    "POPUP_TITLE": "Add Points of Note",
+    "ADD_POPUP_TITLE": "Add Points of Note",
+    "EDIT_POPUP_TITLE": "Edit Points of Note",
     "POPUP_ERROR_CP_OUTPUT": "CP Output is not provided",
     "POPUP_ERROR_PARTNER": "Partner is not provided",
     "POPUP_ERROR_LOCATION": "Location is not provided",
@@ -310,7 +311,7 @@
       "QUESTION": "Enter Question Text",
       "SECTIONS": "Select Sections",
       "METHODS": "Select Collection Methods",
-      "CATEGORY": "Select Group",
+      "GROUP": "Select Group",
       "LEVEL": "Select Question Target Level",
       "ANSWER_TYPE": "Select Answer Type",
       "SCALE_SIZE": "Select Scale Size"
@@ -320,7 +321,7 @@
       "LEVEL": "Question Target Level",
       "SECTIONS": "Sections",
       "METHODS": "Collection Methods",
-      "CATEGORY": "Group",
+      "GROUP": "Group",
       "ANSWER_TYPE": "Answer Type",
       "IS_HACT": "Counts towards HACT",
       "IS_ACTIVE": "Is Active",
@@ -450,7 +451,11 @@
     "COMMUNITY_CHANNELS": "eTools Community Channels",
     "KNOWLEDGE_BASE": "Knowledge Base",
     "DISCUSSION": "Discussion",
-    "INFORMATION": "Information"
+    "INFORMATION": "Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filters",
@@ -551,5 +556,6 @@
     "PLANNED": "Planned",
     "COMPLETED_VISITS": "Completed Visits",
     "PLANNED_VISITS": "Planned Visits (Up to December)"
-  }
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
 }

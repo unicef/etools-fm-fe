@@ -103,12 +103,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                       <label>${translate('ACTIVITY_DETAILS.CP_OUTPUT')}</label>
                       ${repeat(
                         this.getOutputs(this.selectedIntervention.cp_outputs),
-                        (output: EtoolsCpOutputShort) =>
-                          html`
-                            <div class="value">
-                              ${output.name}
-                            </div>
-                          `
+                        (output: EtoolsCpOutputShort) => html` <div class="value">${output.name}</div> `
                       )}
                     </div>
                   </div>

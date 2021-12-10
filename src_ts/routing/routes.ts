@@ -32,58 +32,46 @@ EtoolsRouter
   //             }
   //         };
   //     })
-  .addRoute(
-    new RegExp(`^templates\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'templates',
-        subRouteName: params.matchDetails[1], // tab name
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^management\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'management',
-        subRouteName: params.matchDetails[1], // tab name
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^activities$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'activities',
-        subRouteName: 'list',
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
-  .addRoute(
-    new RegExp(`^activities\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'activities',
-        subRouteName: 'item',
-        path: params.matchDetails[0],
-        queryParams: null,
-        queryParamsString: null,
-        params: {id: params.matchDetails[1]}
-      };
-    }
-  )
+  .addRoute(new RegExp(`^templates\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'templates',
+      subRouteName: params.matchDetails[1], // tab name
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^management\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'management',
+      subRouteName: params.matchDetails[1], // tab name
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^activities$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'activities',
+      subRouteName: 'list',
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'activities',
+      subRouteName: 'item',
+      path: params.matchDetails[0],
+      queryParams: null,
+      queryParamsString: null,
+      params: {id: params.matchDetails[1]}
+    };
+  })
   .addRoute(
     new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
@@ -110,19 +98,16 @@ EtoolsRouter
       };
     }
   )
-  .addRoute(
-    new RegExp(`^analyze\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'analyze',
-        subRouteName: params.matchDetails[1],
-        path: params.matchDetails[0],
-        queryParams: params.queryParams,
-        queryParamsString: params.queryParamsString,
-        params: null
-      };
-    }
-  )
+  .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'analyze',
+      subRouteName: params.matchDetails[1],
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      queryParamsString: params.queryParamsString,
+      params: null
+    };
+  })
   .addRoute(
     new RegExp(`^analyze\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: IRouteCallbackParams): IRouteDetails => {
@@ -137,19 +122,16 @@ EtoolsRouter
     }
   )
 
-  .addRoute(
-    new RegExp(`^page-not-found$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
-      return {
-        routeName: 'page-not-found',
-        subRouteName: null,
-        path: params.matchDetails[0],
-        queryParams: null,
-        queryParamsString: null,
-        params: null
-      };
-    }
-  );
+  .addRoute(new RegExp(`^page-not-found$`), (params: IRouteCallbackParams): IRouteDetails => {
+    return {
+      routeName: 'page-not-found',
+      subRouteName: null,
+      path: params.matchDetails[0],
+      queryParams: null,
+      queryParamsString: null,
+      params: null
+    };
+  });
 
 /**
  * Utility used to update location based on routes and dispatch navigate action (optional)

@@ -96,9 +96,7 @@ export function template(this: ActionPointsTab): TemplateResult {
             <div slot="row-data-details" class="layout horizontal">
               <div class="row-details-content w160px">
                 <div class="rdc-title">${translate('ACTIVITY_ITEM.ACTION_POINTS.RELATED_TO')}</div>
-                <div class="truncate">
-                  ${this.getRelatedInfo(item).type}
-                </div>
+                <div class="truncate">${this.getRelatedInfo(item).type}</div>
               </div>
               <div class="row-details-content">
                 <div class="rdc-title">${translate('ACTIVITY_ITEM.ACTION_POINTS.CONTENT')}</div>

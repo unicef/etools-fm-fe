@@ -16,7 +16,7 @@ export const SectionsMixin = <T extends Constructor<LitElement>>(superclass: T) 
     private sectionsUnsubscribe!: Unsubscribe;
 
     static get properties(): PropertyDeclarations {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line
       // @ts-ignore
       const superProps: PropertyDeclarations = super.properties;
       return {

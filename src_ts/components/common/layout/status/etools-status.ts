@@ -90,9 +90,7 @@ export class EtoolsStatus extends LitElement {
     // language=HTML
     return html`
       <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
-        <span class="icon">
-          ${this.getIcon(index)}
-        </span>
+        <span class="icon"> ${this.getIcon(index)} </span>
         <span class="label">${item.label}</span>
       </div>
     `;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * The type Constructor<T> is an alias for the construct signature
  * that describes a type which can construct objects of the generic type T

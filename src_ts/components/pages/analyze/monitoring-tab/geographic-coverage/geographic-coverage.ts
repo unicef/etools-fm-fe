@@ -22,18 +22,18 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTupl
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedOptions: string[] = [];
-  lastDispatchedSelectedOptions: string[] = [];
   @property() loading = false;
   @query('#geomap') private mapElement!: HTMLElement;
+  lastDispatchedSelectedOptions: string[] = [];
   private polygons: Polygon[] = [];
   private mapHelper!: MapHelper;
   private geographicCoverageUnsubscribe!: Unsubscribe;
 
-  private _invalidMapSize: boolean = false;
+  private _invalidMapSize = false;
   private mapTarget: LatLngTuple = DEFAULT_COORDINATES;
 
   @property({type: Array})
-  get invalidMapSize() {
+  get invalidMapSize(): boolean {
     return this._invalidMapSize;
   }
   set invalidMapSize(_resizeMap: boolean) {
@@ -132,12 +132,15 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   resizeMap(): void {
     if (this.mapHelper) {
       // wait for layout to change
-      setTimeout(() => {
-        this.mapHelper.map!.invalidateSize();
-        const zoom = 6;
-        this.mapHelper.map!.setView(this.mapTarget, zoom);
-      }, 500, this);
-
+      setTimeout(
+        () => {
+          this.mapHelper.map!.invalidateSize();
+          const zoom = 6;
+          this.mapHelper.map!.setView(this.mapTarget, zoom);
+        },
+        500,
+        this
+      );
     }
   }
 

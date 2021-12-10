@@ -1,3 +1,4 @@
+/* eslint-disable */
 type Site = {
   id: number;
   is_active: boolean;
