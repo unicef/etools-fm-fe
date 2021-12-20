@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '../../../common/attachmants-list/attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {RationaleTabComponent} from './rationale-tab';

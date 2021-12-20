@@ -1,4 +1,5 @@
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
