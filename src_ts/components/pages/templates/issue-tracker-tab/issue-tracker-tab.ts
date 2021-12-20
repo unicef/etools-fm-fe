@@ -191,8 +191,9 @@ export class IssueTrackerTabComponent extends SiteMixin(
   }
 
   onLocationsChanged(items: IGroupedSites[]): void {
-    const currentValue: string[] = (this.queryParams && this.queryParams.location__in) || [];
-    const ids: string[] = items.length > 0 ? items.map((item: IGroupedSites) => item.id) : [];
+    const currentValue: string[] =
+      (this.queryParams && (this.queryParams.location__in || []).map((id: number) => String(id))) || [];
+    const ids: string[] = items.length > 0 ? items.map((item: IGroupedSites) => String(item.id)) : [];
     if (JSON.stringify(currentValue) === JSON.stringify(ids)) {
       return;
     }
