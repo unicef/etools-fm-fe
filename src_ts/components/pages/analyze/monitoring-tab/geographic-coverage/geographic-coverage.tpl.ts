@@ -1,6 +1,6 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
 import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
 
 export function template(this: GeographicCoverageComponent): TemplateResult {
