@@ -70,19 +70,19 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
     "del": "^3.0.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-lit": "^1.6.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "gulp": "^4.0.0",
+    "gulp": "^4.0.2",
     "gulp-rename": "^1.3.0",
-    "gulp-replace": "^1.0.0",
+    "gulp-replace": "^1.1.3",
     "polymer-cli": "^1.9.11",
-    "prettier": "~2.4.1",
-    "typescript": "^3.9.9"
+    "prettier": "~2.5.1",
+    "typescript": "^4.5.4"
   }
 }
