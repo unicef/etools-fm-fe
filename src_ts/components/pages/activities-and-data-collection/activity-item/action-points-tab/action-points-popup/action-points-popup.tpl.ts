@@ -18,7 +18,9 @@ export function template(this: ActionPointsPopup): TemplateResult {
       size="md"
       keep-dialog-open
       ?opened="${this.dialogOpened}"
-      dialog-title="Create action point"
+      dialog-title="${translate(
+        this.editedData.id ? 'ACTIVITY_ITEM.ACTION_POINTS.POPUP.EDIT_AP' : 'ACTIVITY_ITEM.ACTION_POINTS.POPUP.ADD_AP'
+      )}"
       @confirm-btn-clicked="${() => this.save()}"
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
