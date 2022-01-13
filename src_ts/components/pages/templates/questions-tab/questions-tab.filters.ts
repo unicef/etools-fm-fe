@@ -45,7 +45,7 @@ export const questionsFilters: IEtoolsFilter[] = [
     defaultValue: []
   },
   {
-    filterName: translate('QUESTIONS.LABELS.CATEGORY'),
+    filterName: translate('QUESTIONS.LABELS.GROUP'),
     filterKey: 'category__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],

@@ -57,3 +57,13 @@ function checkValidation(validation: FieldValidator, value: number | string | nu
       return null;
   }
 }
+
+export function validateRequiredFields(element: HTMLElement): boolean {
+  let isValid = true;
+  element.shadowRoot!.querySelectorAll('[required]:not([readonly]):not([hidden])').forEach((el: any) => {
+    if (el && el.validate && !el.validate()) {
+      isValid = false;
+    }
+  });
+  return isValid;
+}

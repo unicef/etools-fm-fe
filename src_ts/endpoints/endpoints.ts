@@ -1,6 +1,6 @@
 import {etoolsEndpoints} from './endpoints-list';
 
-function generateUrlFromTemplate(tmpl: string, data: object | undefined): string {
+function generateUrlFromTemplate(tmpl: string, data: GenericObject | undefined): string {
   if (!tmpl) {
     throw new Error('To generate URL from endpoint url template you need valid template string');
   }

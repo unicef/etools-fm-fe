@@ -29,8 +29,6 @@ type MemberOptions = {
 
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
-  userTypes: UserType[] = [USER_STAFF, USER_TPM];
-  users: User[] = [];
   @property() membersOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() userType!: UserType;
@@ -38,6 +36,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
   @property() personResponsible?: ActivityTeamMember | null;
+
+  userTypes: UserType[] = [USER_STAFF, USER_TPM];
+  users: User[] = [];
 
   private userUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;

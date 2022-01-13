@@ -30,9 +30,7 @@ export class SharedSectionWithTabsTemplate extends LitElement {
           @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
           .activeTab="${this.activeTab}"
         ></etools-tabs>
-        <div class="layout vertical card-content">
-          ${this.tabElement}
-        </div>
+        <div class="layout vertical card-content">${this.tabElement}</div>
       </section>
     `;
   }

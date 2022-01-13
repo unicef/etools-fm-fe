@@ -1,4 +1,5 @@
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit-element';
@@ -38,8 +39,12 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           label="${translate('QUESTIONS.LABELS.QUESTION')}"
           placeholder="${translate('QUESTIONS.PLACEHOLDERS.QUESTION')}"
           ?invalid="${this.errors && this.errors.text}"
-          .errorMessage="${this.errors && this.errors.text}"
-          @focus="${() => this.resetFieldError('text')}"
+          .errorMessage="${(this.errors && this.errors.text) || translate('THIS_FIELD_IS_REQUIRED')}"
+          @focus="${() => {
+            this.autoValidateQuestion = true;
+            this.resetFieldError('text');
+          }}"
+          .autoValidate="${this.autoValidateQuestion}"
           @tap="${() => this.resetFieldError('text')}"
         ></paper-textarea>
 
@@ -55,9 +60,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           option-label="name"
           option-value="id"
           ?invalid="${this.errors && this.errors.sections}"
-          .errorMessage="${this.errors && this.errors.sections}"
+          .errorMessage="${(this.errors && this.errors.sections) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('sections')}"
           @tap="${() => this.resetFieldError('sections')}"
+          auto-validate
           allow-outside-scroll
           dynamic-align
         ></etools-dropdown-multi>
@@ -76,9 +82,10 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           option-value="id"
           required
           ?invalid="${this.errors && this.errors.methods}"
-          .errorMessage="${this.errors && this.errors.methods}"
+          .errorMessage="${(this.errors && this.errors.methods) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('methods')}"
           @tap="${() => this.resetFieldError('methods')}"
+          auto-validate
           allow-outside-scroll
           dynamic-align
         ></etools-dropdown-multi>
@@ -90,16 +97,20 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id)}"
             trigger-value-change-event
-            label="${translate('QUESTIONS.LABELS.CATEGORY')}"
-            placeholder="${translate('QUESTIONS.PLACEHOLDERS.CATEGORY')}"
+            label="${translate('QUESTIONS.LABELS.GROUP')}"
+            placeholder="${translate('QUESTIONS.PLACEHOLDERS.GROUP')}"
             required
             .options="${this.categories}"
             option-label="name"
             option-value="id"
             ?invalid="${this.errors && this.errors.category}"
-            .errorMessage="${this.errors && this.errors.category}"
-            @focus="${() => this.resetFieldError('category')}"
+            .errorMessage="${(this.errors && this.errors.category) || translate('THIS_FIELD_IS_REQUIRED')}"
+            @focus="${() => {
+              this.resetFieldError('category');
+              this.autovlidateCateg = true;
+            }}"
             @tap="${() => this.resetFieldError('category')}"
+            .autoValidate="${this.autovlidateCateg}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>

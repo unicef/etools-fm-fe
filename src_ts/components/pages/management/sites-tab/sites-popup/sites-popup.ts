@@ -21,6 +21,7 @@ import {translate} from 'lit-translate';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
+import {validateRequiredFields} from '../../../../utils/validations.helper';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
 const LAT_LNG_DEBOUNCE_TIME = 300;
@@ -36,9 +37,10 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() longitude: number | null = null;
   @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
 
+  @query('#map') private mapElement!: HTMLElement;
+
   defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
 
-  @query('#map') private mapElement!: HTMLElement;
   private sitesObjects: Site[] | null = null;
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
   private readonly currentWorkspaceUnsubscribe: Unsubscribe;
@@ -118,6 +120,9 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   }
 
   saveSite(): void {
+    if (!validateRequiredFields(this)) {
+      return;
+    }
     this.savingInProcess = true;
     const {lat, lng}: LatLng =
       (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as LatLng);

@@ -17,7 +17,7 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@unicef-polymer/etools-form-builder';
 import {createDynamicDialog} from '@unicef-polymer/etools-dialog/dynamic-dialog';
 
-import 'etools-piwik-analytics/etools-piwik-analytics.js';
+import '@unicef-polymer/etools-piwik-analytics/etools-piwik-analytics.js';
 import {AppShellStyles} from './app-shell-styles';
 import {RouterStyles} from './router-style';
 
@@ -239,7 +239,7 @@ export class AppShell extends connect(store)(LitElement) {
         <!-- Main content -->
         <app-header-layout id="appHeadLayout" fullbleed has-scrolling-region>
           <app-header slot="header" fixed shadow>
-            <page-header id="pageheader" title="eTools"></page-header>
+            <page-header id="pageheader"></page-header>
           </app-header>
 
           <!-- Main content -->

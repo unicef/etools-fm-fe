@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
@@ -71,7 +71,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
           value="${this.editedData.due_date || ''}"
           fire-date-has-changed
           label="Due on"
-          @date-has-changed="${({detail}: CustomEvent) => this.updateModelValue('due_date', formatDate(detail.date))}"
+          @date-has-changed="${({detail}: CustomEvent) =>
+            this.updateModelValue('due_date', detail.date ? formatDate(detail.date) : null)}"
           dynamic-align
           selected-date-display-format="D MMM YYYY"
         ></datepicker-lite>

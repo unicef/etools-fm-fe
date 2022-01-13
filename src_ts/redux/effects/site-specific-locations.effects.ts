@@ -51,7 +51,7 @@ export function addSiteLocation(siteLocation: Site): (dispatch: Dispatch) => Pro
   };
 }
 
-function startRequest(dispatch: Dispatch, url: string, method: RequestMethod, data: Site | {}): Promise<void> {
+function startRequest(dispatch: Dispatch, url: string, method: RequestMethod, data: Partial<Site>): Promise<void> {
   dispatch(new StartSiteLocationsUpdating());
   // dispatch(new ResetNotification());
 

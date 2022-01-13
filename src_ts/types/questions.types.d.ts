@@ -1,3 +1,4 @@
+/* eslint-disable */
 interface IQuestion<O = QuestionOption> {
   id: number;
   answer_type: QuestionAnswerType;
@@ -32,7 +33,7 @@ type AnswerTypeOption = {
 };
 
 type Serialized = {
+  [key: string]: any;
   id: number | string;
   name: string;
-  [key: string]: any;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable lit/attribute-value-entities */
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-icons/av-icons.js';

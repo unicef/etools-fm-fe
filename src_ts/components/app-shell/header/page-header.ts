@@ -23,6 +23,7 @@ import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
+import {translate} from 'lit-translate';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -38,8 +39,6 @@ store.addReducers({
 export class PageHeader extends connect(store)(LitElement) {
   @property({type: Boolean})
   isStaging = false;
-
-  rootPath: string = ROOT_PATH;
 
   @property({type: String})
   headerColor = 'var(--header-bg-color)';
@@ -71,12 +70,14 @@ export class PageHeader extends connect(store)(LitElement) {
   @property({type: Array})
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
-  //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
-
   @property() selectedLanguage = 'en';
 
   @property() refreshInProgress = false;
+
+  rootPath: string = ROOT_PATH;
+
+  //TODO list loading
+  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
 
   constructor() {
     super();
@@ -98,7 +99,7 @@ export class PageHeader extends connect(store)(LitElement) {
       })
     );
     // TODO remove test code.
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line
     // @ts-ignore
     window.enableExampleLanguage = () => {
       this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
@@ -166,7 +167,11 @@ export class PageHeader extends connect(store)(LitElement) {
             icon="menu"
             @tap="${() => this.menuBtnClicked()}"
           ></paper-icon-button>
-          <etools-app-selector id="selector" .user="${this.profile}"></etools-app-selector>
+          <etools-app-selector
+            id="selector"
+            .iconTitle="${translate('NAVIGATION_MENU.APPSELECTOR')}"
+            .user="${this.profile}"
+          ></etools-app-selector>
           <img
             id="app-logo"
             class="logo"
@@ -194,9 +199,10 @@ export class PageHeader extends connect(store)(LitElement) {
             <countries-dropdown></countries-dropdown>
           </div>
 
-          <support-btn></support-btn>
+          <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
 
           <etools-profile-dropdown
+            title="${translate('NAVIGATION_MENU.PROFILEANDSIGNOUT')}"
             .sections="${this.profileDrSections}"
             .offices="${this.profileDrOffices}"
             .users="${this.profileDrUsers}"
@@ -205,7 +211,13 @@ export class PageHeader extends connect(store)(LitElement) {
             @sign-out="${this._signOut}"
           >
           </etools-profile-dropdown>
-          <paper-icon-button class="refresh-button" icon="refresh" @tap="${() => this.refresh()}"> </paper-icon-button>
+          <paper-icon-button
+            title="${translate('NAVIGATION_MENU.REFRESH')}"
+            class="refresh-button"
+            icon="refresh"
+            @tap="${() => this.refresh()}"
+          >
+          </paper-icon-button>
         </div>
       </app-toolbar>
     `;

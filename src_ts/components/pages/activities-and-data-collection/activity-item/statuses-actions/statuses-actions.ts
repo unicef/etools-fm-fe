@@ -44,10 +44,8 @@ export class StatusesActionsComponent extends LitElement {
   }
 
   protected getBackBtn(): TemplateResult {
-    const transition:
-      | ActivityTransition
-      | undefined = this.possibleTransitions.find(({transition}: ActivityTransition) =>
-      BACK_TRANSITIONS.has(transition)
+    const transition: ActivityTransition | undefined = this.possibleTransitions.find(
+      ({transition}: ActivityTransition) => BACK_TRANSITIONS.has(transition)
     );
     return transition
       ? html`

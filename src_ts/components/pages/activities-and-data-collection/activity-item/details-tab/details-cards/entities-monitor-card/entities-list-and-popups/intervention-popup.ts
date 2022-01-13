@@ -9,7 +9,8 @@ import {CardStyles} from '../../../../../../../styles/card-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import {debounce} from '../../../../../../../utils/debouncer';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {request} from '../../../../../../../../endpoints/request';
@@ -103,12 +104,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                       <label>${translate('ACTIVITY_DETAILS.CP_OUTPUT')}</label>
                       ${repeat(
                         this.getOutputs(this.selectedIntervention.cp_outputs),
-                        (output: EtoolsCpOutputShort) =>
-                          html`
-                            <div class="value">
-                              ${output.name}
-                            </div>
-                          `
+                        (output: EtoolsCpOutputShort) => html` <div class="value">${output.name}</div> `
                       )}
                     </div>
                   </div>

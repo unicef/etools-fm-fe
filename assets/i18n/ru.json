@@ -310,7 +310,7 @@
       "QUESTION": "Localized Enter Question Text",
       "SECTIONS": "Localized Select Sections",
       "METHODS": "Localized Select Collection Methods",
-      "CATEGORY": "Localized Select Group",
+      "GROUP": "Localized Select Group",
       "LEVEL": "Localized Select Question Target Level",
       "ANSWER_TYPE": "Localized Select Answer Type",
       "SCALE_SIZE": "Localized Select Scale Size"
@@ -320,7 +320,7 @@
       "LEVEL": "Localized Question Target Level",
       "SECTIONS": "Localized Sections",
       "METHODS": "Localized Collection Methods",
-      "CATEGORY": "Localized Group",
+      "GROUP": "Localized Group",
       "ANSWER_TYPE": "Localized Answer Type",
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
@@ -450,7 +450,11 @@
     "COMMUNITY_CHANNELS": "Localized eTools Community Channels",
     "KNOWLEDGE_BASE": "Localized Knowledge Base",
     "DISCUSSION": "Localized Discussion",
-    "INFORMATION": "Localized Information"
+    "INFORMATION": "Localized Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",
@@ -551,5 +555,6 @@
     "PLANNED": "Localized Planned",
     "COMPLETED_VISITS": "Localized Completed Visits",
     "PLANNED_VISITS": "Localized Planned Visits (Up to December)"
-  }
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
 }

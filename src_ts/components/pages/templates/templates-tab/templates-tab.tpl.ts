@@ -1,5 +1,5 @@
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import '@unicef-polymer/etools-dropdown';
+import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';

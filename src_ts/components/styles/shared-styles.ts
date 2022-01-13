@@ -70,7 +70,7 @@ export const SharedStyles: CSSResult = css`
   }
 
   etools-content-panel::part(ecp-header) {
-    background-color: var( --primary-background-color);
+    background-color: var(--primary-background-color);
     border-bottom: 1px groove var(--dark-divider-color);
     -color: var(--primary-text-color);
   }

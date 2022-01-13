@@ -18,15 +18,11 @@ import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {translate} from 'lit-translate';
+import {validateRequiredFields} from '../../../../utils/validations.helper';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
-  isNew = false;
-  isRequest = false;
-  isReadOnly = false;
   @property() attachments: StoredAttachment[] = [];
-
-  relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
 
   @property()
   relatedToType: RelatedType = 'cp_output';
@@ -50,6 +46,14 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   @property({type: Array})
   originalFiles: IAttachment[] = [];
+
+  @property({type: Boolean})
+  autoValidateIssue = false;
+
+  relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
+  isNew = false;
+  isRequest = false;
+  isReadOnly = false;
 
   private readonly updateUnsubscribe: Unsubscribe;
 
@@ -131,6 +135,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
         return false;
       }
     }
+    if (!validateRequiredFields(this)) {
+      return false;
+    }
     return true;
   }
 
@@ -205,7 +212,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   setLocation(value: any): void {
     this.updateModelValue('location', value);
-    const locationId: string | undefined = this.editedData && ((this.editedData.location as unknown) as string);
+    const locationId: string | undefined = this.editedData && (this.editedData.location as unknown as string);
     if (!locationId) {
       return;
     }

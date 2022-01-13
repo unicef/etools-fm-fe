@@ -22,9 +22,9 @@ export class AttachmentsListComponent extends LitElement {
   @property({type: String, attribute: 'tab-title-key'})
   tabTitleKey = 'ATTACHMENTS_LIST.TITLE';
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
+  @property() attachmentsTypes: AttachmentType[] = [];
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
-  @property() attachmentsTypes: AttachmentType[] = [];
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;

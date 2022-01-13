@@ -34,9 +34,10 @@ export function template(this: SitesPopupComponent): TemplateResult {
               ? translate('MAIN.EMPTY_FIELD')
               : translate('SITES.PLACEHOLDERS.NAME')}"
             ?invalid="${this.errors && this.errors.name}"
-            .errorMessage="${this.errors && this.errors.name}"
+            .errorMessage="${(this.errors && this.errors.name) || translate('THIS_FIELD_IS_REQUIRED')}"
             @focus="${() => this.resetFieldError('name')}"
             @tap="${() => this.resetFieldError('name')}"
+            required
           ></paper-input>
 
           <etools-dropdown

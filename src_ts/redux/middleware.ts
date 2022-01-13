@@ -10,29 +10,30 @@ export interface IAsyncAction {
   payload?: GenericObject;
 }
 
-export const asyncActionMiddleware: Middleware = ({dispatch}: MiddlewareAPI) => (next: (action: AnyAction) => any) => (
-  action: AnyAction
-) => {
-  if (!action.types && !action.api) {
-    return next(action);
-  }
+export const asyncActionMiddleware: Middleware =
+  ({dispatch}: MiddlewareAPI) =>
+  (next: (action: AnyAction) => any) =>
+  (action: AnyAction) => {
+    if (!action.types && !action.api) {
+      return next(action);
+    }
 
-  const [requestAction, successAction, errorAction]: string[] = action.types;
-  dispatch({
-    type: requestAction
-  });
-  return action
-    .api()
-    .then((res: any) =>
-      dispatch({
-        type: successAction,
-        payload: res
-      })
-    )
-    .catch((res: Error) =>
-      dispatch({
-        type: errorAction,
-        payload: res
-      })
-    );
-};
+    const [requestAction, successAction, errorAction]: string[] = action.types;
+    dispatch({
+      type: requestAction
+    });
+    return action
+      .api()
+      .then((res: any) =>
+        dispatch({
+          type: successAction,
+          payload: res
+        })
+      )
+      .catch((res: Error) =>
+        dispatch({
+          type: errorAction,
+          payload: res
+        })
+      );
+  };

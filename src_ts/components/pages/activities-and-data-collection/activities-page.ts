@@ -10,10 +10,10 @@ import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 
 store.addReducers({activities});
-export const ACTIVITIES_PAGE: 'activities' = 'activities';
-export const ACTIVITIES_LIST_PAGE: 'list' = 'list';
-export const ACTIVITY_ITEM_PAGE: 'item' = 'item';
-export const DATA_COLLECTION_PAGE: 'data-collection' = 'data-collection';
+export const ACTIVITIES_PAGE = 'activities';
+export const ACTIVITIES_LIST_PAGE = 'list';
+export const ACTIVITY_ITEM_PAGE = 'item';
+export const DATA_COLLECTION_PAGE = 'data-collection';
 
 const PAGE: string = ACTIVITIES_PAGE;
 
@@ -30,7 +30,11 @@ export class ActivitiesPageComponent extends LitElement {
   }
 
   render(): TemplateResult | void {
-    return html`<style> :host > * { position: relative; }</style>
+    return html`<style>
+        :host > * {
+          position: relative;
+        }
+      </style>
       ${this.getPage()} `;
   }
 
