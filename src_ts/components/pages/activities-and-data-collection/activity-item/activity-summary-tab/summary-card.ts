@@ -19,8 +19,8 @@ import {Unsubscribe} from 'redux';
 import {attachmentsTypesSelector} from '../../../../../redux/selectors/attachments-list.selectors';
 import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-list.effects';
 import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
-import '@unicef-polymer/etools-form-builder/dist/form-fields/text-field';
-import '@unicef-polymer/etools-form-builder/dist/form-fields/number-field';
+import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
+import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
