@@ -33,9 +33,14 @@ export const InputStyles: TemplateResult = html`
     datepicker-lite {
       outline: none !important;
       padding: 0 12px;
-      color: var(--gray-mid, rgba(0, 0, 0, 0.54));
+      color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       box-sizing: border-box;
+
+      --esmm-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+      --esmm-multi-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       --paper-input-container-focus-color: var(--primary-color, #0099ff);
+      --paper-input-container-invalid-color: var(--module-error, #ea4022);
+
       --paper-input-container-input: {
         display: block !important;
         font-size: 15px;
@@ -44,12 +49,11 @@ export const InputStyles: TemplateResult = html`
         overflow: hidden;
         text-overflow: ellipsis;
         padding-right: 3px;
+        color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       }
       --paper-input-container-label: {
         color: var(--gray-50, rgba(0, 0, 0, 0.5));
       }
-
-      --paper-input-container-invalid-color: var(--module-error, #ea4022);
 
       --paper-input-char-counter: {
         color: var(--gray-light, rgba(0, 0, 0, 0.38));
@@ -84,7 +88,7 @@ export const InputStyles: TemplateResult = html`
 
       --paper-input-prefix: {
         margin-right: 10px;
-        color: var(--gray-mid, rgba(0, 0, 0, 0.54));
+        color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       }
 
       --paper-input-error: {
@@ -143,14 +147,6 @@ export const InputStyles: TemplateResult = html`
         --paper-input-container-label_-_color,
         var(--paper-input-container-color, var(--secondary-text-color))
       );
-      --paper-input-container-label: {
-        color: var(--gray-50, rgba(0, 0, 0, 0.5)) !important;
-      }
-      --paper-input-container-input: {
-        color: var(--gray-mid-dark, rgba(0, 0, 0, 0.87));
-      }
-      --esmm-placeholder-color: var(--gray-mid-dark, rgba(0, 0, 0, 0.87));
-      --esmm-multi-placeholder-color: var(--gray-mid-dark, rgba(0, 0, 0, 0.87));
       --paper-input-container: {
         opacity: 1 !important;
       }
