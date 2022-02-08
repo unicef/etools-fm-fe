@@ -38,7 +38,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       ></etools-loading>
       <div class="container layout vertical">
         <etools-dropdown
-          class="validate-input disabled-as-readonly flex-1"
+          class="validate-input flex-1"
           .selected="${this.editedData.file_type}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"

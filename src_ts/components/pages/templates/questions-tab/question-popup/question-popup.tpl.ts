@@ -31,7 +31,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
       <div class="container layout vertical">
         <paper-textarea
-          class="validate-input disabled-as-readonly flex-7 question-textarea"
+          class="validate-input flex-7 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
           max-rows="3"
@@ -49,7 +49,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         ></paper-textarea>
 
         <etools-dropdown-multi
-          class="validate-input disabled-as-readonly flex-2"
+          class="validate-input flex-2"
           .selectedValues="${this.editedData.sections}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('sections', detail.selectedItems)}"
@@ -69,7 +69,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         ></etools-dropdown-multi>
 
         <etools-dropdown-multi
-          class="validate-input disabled-as-readonly flex-2"
+          class="validate-input flex-2"
           .selectedValues="${this.editedData.methods}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('methods', detail.selectedItems)}"
@@ -92,7 +92,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div class="layout horizontal">
           <etools-dropdown
-            class="validate-input disabled-as-readonly w50"
+            class="validate-input w50"
             .selected="${this.editedData.category}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id)}"
@@ -116,7 +116,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ></etools-dropdown>
 
           <etools-dropdown
-            class="validate-input disabled-as-readonly w50"
+            class="validate-input w50"
             .selected="${this.editedData.level}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('level', detail.selectedItem.value)}"
@@ -155,7 +155,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div class="layout horizontal">
           <etools-dropdown
-            class="validate-input disabled-as-readonly w50"
+            class="validate-input w50"
             .selected="${this.editedData.answer_type}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateAnswerType(detail.selectedItem.value)}"
@@ -175,7 +175,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ></etools-dropdown>
 
           <etools-dropdown
-            class="validate-input disabled-as-readonly w25"
+            class="validate-input w25"
             ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
             .selected="${this.currentOptionsLength}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -204,7 +204,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                 <div class="option-index">${option.value}:</div>
                 <paper-input
                   no-label-float
-                  class="validate-input disabled-as-readonly flex-7"
+                  class="validate-input flex-7"
                   .value="${option.label}"
                   @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
                   ?invalid="${this.errors?.options && this.errors.options[index]?.label}"

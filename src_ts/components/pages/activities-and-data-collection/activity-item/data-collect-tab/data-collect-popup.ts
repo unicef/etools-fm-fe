@@ -34,7 +34,6 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
       >
         <div class="container layout vertical">
           <paper-textarea
-            class="without-border"
             required
             maxlength="100"
             always-float-label
