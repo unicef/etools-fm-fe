@@ -88,7 +88,7 @@ export const InputStyles: TemplateResult = html`
 
       --paper-input-prefix: {
         margin-right: 10px;
-        color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+        color: var(--gray-mid, rgba(0, 0, 0, 0.54));
       }
 
       --paper-input-error: {
