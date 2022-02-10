@@ -125,7 +125,7 @@ export const InputStyles: TemplateResult = html`
         opacity: 1 !important;
       }
       --paper-input-container-underline: {
-        border-bottom: 1px dashed;
+        border-bottom: 1px dashed var(--gray-20, rgba(0, 0, 0, 0.2));
         display: block !important;
       }
       --paper-input-container-underline-focus: {
