@@ -25,12 +25,6 @@ interface IGroupedSites extends ISiteParrentLocation {
   sites: Site[];
 }
 
-// type LocationGateway = {
-//   admin_level: null | string | number;
-//   id: number;
-//   name: string;
-// };
-
 type GeojsonPoint = {
   coordinates: CoordinatesArray;
   type: 'Point';

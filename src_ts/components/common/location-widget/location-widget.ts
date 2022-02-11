@@ -350,8 +350,7 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   getHistoryInputLabel(adminLevel: number, adminLelevelName: string): string {
-    // const {admin_level: level, admin_level_name: name}: any = gateway || {};
-    const levelString: string = !adminLevel && adminLevel !== 0 ? '' : `Admin ${adminLevel} - `;
+    const levelString = !adminLevel && adminLevel !== 0 ? '' : `Admin ${adminLevel} - `;
     return !adminLevel && !adminLelevelName ? '' : `${levelString}${adminLelevelName}`;
   }
 
