@@ -52,7 +52,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
         <div class="layout vertical card-content">
           <div>
             <paper-textarea
-              class="validate-inputflex"
+              class="validate-input flex"
               .value="${this.editedData.prioritization_criteria}"
               @value-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('prioritization_criteria', detail.value)}"
