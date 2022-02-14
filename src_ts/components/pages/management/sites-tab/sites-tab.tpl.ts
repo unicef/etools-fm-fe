@@ -69,7 +69,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           <etools-data-table-row no-collapse>
             <div slot="row-data" class="layout horizontal editable-row parent-row">
               <div class="col-data w30 layout vertical start center-justified flex-none">
-                <span class="admin-level-text">${this.getAdminLevel(parentLocation.gateway.admin_level)}</span>
+                <span class="admin-level-text">${this.getAdminLevel(parentLocation.admin_level)}</span>
                 <span>${parentLocation.name}</span>
               </div>
 
