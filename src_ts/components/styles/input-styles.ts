@@ -45,7 +45,6 @@ export const InputStyles: TemplateResult = html`
         display: block !important;
         font-size: 15px;
         box-sizing: border-box;
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         padding-right: 3px;
