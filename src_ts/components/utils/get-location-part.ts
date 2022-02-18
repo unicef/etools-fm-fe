@@ -1,5 +1,5 @@
 export function getLocationPart(location = '', partToSelect: string): string {
-  const splittedLocation: string[] = location.match(/(.*)\s\[(.*)]/i) || [];
+  const splittedLocation: string[] = location.match(/(.*)\s\((.*)\)/i) || [];
   switch (partToSelect) {
     case 'name':
       return splittedLocation[1];

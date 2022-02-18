@@ -172,7 +172,9 @@
       "RELATED_TO": "Related to",
       "CONTENT": "Content",
       "POPUP": {
-        "HIGH_PRIORITY": "High Priority"
+        "HIGH_PRIORITY": "High Priority",
+        "ADD_AP": "Create Action Point",
+        "EDIT_AP": "Edit Action Point"
       }
     },
     "DATA_COLLECTION": {

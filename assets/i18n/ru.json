@@ -172,7 +172,9 @@
       "RELATED_TO": "Localized Related to",
       "CONTENT": "Localized Content",
       "POPUP": {
-        "HIGH_PRIORITY": "Localized High Priority"
+        "HIGH_PRIORITY": "Localized High Priority",
+        "ADD_AP": "Create Action Point",
+        "EDIT_AP": "Edit Action Point"
       }
     },
     "DATA_COLLECTION": {

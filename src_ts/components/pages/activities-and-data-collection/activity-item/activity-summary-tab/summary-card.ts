@@ -124,6 +124,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                 )}"
                 .completedFindingMethod="${this.getMethodName(completedFinding.method, true)}"
                 .activityId="${this.activityId}"
+                ?show-copy-arrow="${!finding.value &&
+                this.isEditMode &&
+                [TEXT_TYPE, NUMBER_TYPE].includes(finding.activity_question.question.answer_type)}"
+                @copy-answer="${() => this.updateFinding(finding, completedFinding.value)}"
               ></completed-finding>
             `
           )}
@@ -145,6 +149,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                     .completedFindingTitle="${finding.narrative_finding}"
                     .completedFindingMethod="${this.getMethodName(finding.method, true)}"
                     .activityId="${this.activityId}"
+                    ?show-copy-arrow="${(!this.overallInfo || !this.overallInfo.narrative_finding) && this.isEditMode}"
+                    @copy-answer="${() => this.updateOverallFinding({narrative_finding: finding.narrative_finding})}"
                   ></completed-finding>
                 `
               )}

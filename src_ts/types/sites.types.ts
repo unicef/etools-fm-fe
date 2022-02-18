@@ -12,7 +12,8 @@ type Site = {
 type EditedSite = Partial<Site>;
 
 interface ISiteParrentLocation {
-  gateway: LocationGateway;
+  admin_level_name: string;
+  admin_level: string;
   geo_point: string;
   id: string;
   name: string;
@@ -23,12 +24,6 @@ interface ISiteParrentLocation {
 interface IGroupedSites extends ISiteParrentLocation {
   sites: Site[];
 }
-
-type LocationGateway = {
-  admin_level: null | string | number;
-  id: number;
-  name: string;
-};
 
 type GeojsonPoint = {
   coordinates: CoordinatesArray;
@@ -50,7 +45,8 @@ type SiteStatusOption = {
 
 type Workspace = {
   id: string;
-  gateway: LocationGateway;
+  admin_level_name: string;
+  admin_level: string;
   geom: null;
   point: GeojsonPoint;
   p_code: string;
@@ -58,7 +54,8 @@ type Workspace = {
 };
 
 type WidgetLocation = {
-  gateway: LocationGateway;
+  admin_level_name: string;
+  admin_level: number;
   geom: LocationGeometry;
   id: string;
   is_leaf: boolean;
