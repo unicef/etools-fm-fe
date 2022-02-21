@@ -12,7 +12,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
         ${this.history.map(
           (location: WidgetLocation, index: number) => html`
             <paper-input
-              label="${this.getHistoryInputLabel(location.gateway)}"
+              label="${this.getHistoryInputLabel(location.admin_level, location.admin_level_name)}"
               value="${this.getLocationPart(location.name, 'name')}"
               readonly
               inline
@@ -51,7 +51,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                           <b>${this.getLocationPart(location.name, 'name')}</b>
                           <span class="location-code">${this.getLocationPart(location.name, 'code')}</span>
                         </div>
-                        <div class="gateway-name">${location.gateway.name}</div>
+                        <div class="gateway-name">${location.admin_level_name}</div>
                         <div class="deselect-btn"><span>&#10008;</span></div>
                       </div>
                     `}"
