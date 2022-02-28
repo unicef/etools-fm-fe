@@ -35,8 +35,12 @@ export function template(this: SitesPopupComponent): TemplateResult {
               : translate('SITES.PLACEHOLDERS.NAME')}"
             ?invalid="${this.errors && this.errors.name}"
             .errorMessage="${(this.errors && this.errors.name) || translate('THIS_FIELD_IS_REQUIRED')}"
-            @focus="${() => this.resetFieldError('name')}"
+            @focus="${() => {
+              this.autoValidateName = true;
+              this.resetFieldError('name');
+            }}"
             @tap="${() => this.resetFieldError('name')}"
+            .autoValidate="${this.autoValidateName}"
             required
           ></paper-input>
 
