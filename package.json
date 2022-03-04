@@ -83,6 +83,14 @@
     "gulp-replace": "^1.1.3",
     "polymer-cli": "^1.9.11",
     "prettier": "~2.5.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "ua-parser-js": ">=0.7.28",
+    "ajv": ">=6.12.6",
+    "follow-redirects": ">=1.14.9",
+    "shelljs": ">=0.8.5",
+    "node-fetch": ">=2.6.7",
+    "path-parse": ">=1.0.7",
+    "mout": ">=1.2.3",
+    "urijs": ">=1.19.9"
   }
 }
