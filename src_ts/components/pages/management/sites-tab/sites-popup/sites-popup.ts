@@ -36,6 +36,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   @property() latitude: number | null = null;
   @property() longitude: number | null = null;
   @property() statusOptions: SiteStatusOption[] = applyDropdownTranslation(STATUS_OPTIONS);
+  @property() autoValidateName = false;
 
   @query('#map') private mapElement!: HTMLElement;
 

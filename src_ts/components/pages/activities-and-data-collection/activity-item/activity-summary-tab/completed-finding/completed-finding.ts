@@ -3,6 +3,7 @@ import '@polymer/paper-tooltip';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
+import {fireEvent} from '../../../../../utils/fire-custom-event';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
@@ -10,6 +11,7 @@ export class CompletedFindingComponent extends LitElement {
   @property() completedFindingTitle = '';
   @property() completedFindingMethod = '';
   @property() activityId: number | null = null;
+  @property({type: Boolean, attribute: 'show-copy-arrow'}) showCopyArrow = false;
 
   render(): TemplateResult {
     return html`
@@ -45,6 +47,12 @@ export class CompletedFindingComponent extends LitElement {
                 </paper-tooltip>
               </label>
             `}
+        ${this.showCopyArrow
+          ? html`<iron-icon icon="arrow-forward" @click="${this.copyAnswer}" id="icon"></iron-icon>
+              <paper-tooltip position="right" offset="5" for="icon">
+                <div>Click to copy answer</div>
+              </paper-tooltip>`
+          : ''}
       </div>
     `;
   }
@@ -55,10 +63,21 @@ export class CompletedFindingComponent extends LitElement {
     );
   }
 
+  copyAnswer(event: MouseEvent): void {
+    event.stopPropagation();
+    fireEvent(this, 'copy-answer');
+  }
+
   static get styles(): CSSResultArray {
     // language=CSS
     return [
       css`
+        :host([show-copy-arrow]) .completed-finding__content {
+          width: 146px;
+        }
+        iron-icon {
+          margin-right: 3px;
+        }
         .completed-finding__content {
           position: relative;
           width: 120px;

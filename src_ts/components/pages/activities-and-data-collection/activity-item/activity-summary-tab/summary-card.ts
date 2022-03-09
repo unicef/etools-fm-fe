@@ -6,7 +6,7 @@ import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '../../../../utils/dialog';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
@@ -19,8 +19,8 @@ import {Unsubscribe} from 'redux';
 import {attachmentsTypesSelector} from '../../../../../redux/selectors/attachments-list.selectors';
 import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-list.effects';
 import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
-import '@unicef-polymer/etools-form-builder/dist/form-fields/text-field';
-import '@unicef-polymer/etools-form-builder/dist/form-fields/number-field';
+import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
+import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -124,6 +124,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                 )}"
                 .completedFindingMethod="${this.getMethodName(completedFinding.method, true)}"
                 .activityId="${this.activityId}"
+                ?show-copy-arrow="${!finding.value &&
+                this.isEditMode &&
+                [TEXT_TYPE, NUMBER_TYPE].includes(finding.activity_question.question.answer_type)}"
+                @copy-answer="${() => this.updateFinding(finding, completedFinding.value)}"
               ></completed-finding>
             `
           )}
@@ -145,6 +149,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                     .completedFindingTitle="${finding.narrative_finding}"
                     .completedFindingMethod="${this.getMethodName(finding.method, true)}"
                     .activityId="${this.activityId}"
+                    ?show-copy-arrow="${(!this.overallInfo || !this.overallInfo.narrative_finding) && this.isEditMode}"
+                    @copy-answer="${() => this.updateOverallFinding({narrative_finding: finding.narrative_finding})}"
                   ></completed-finding>
                 `
               )}
