@@ -25,7 +25,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
       <div class="container">
         <div class="layout horizontal">
           <paper-input
-            class="validate-input disabled-as-readonly flex-7"
+            class="validate-input flex-7"
             .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
             maxlength="100"
@@ -46,7 +46,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
           <etools-dropdown
             id="statusDropdown"
-            class="validate-input disabled-as-readonly flex-2"
+            class="validate-input flex-2"
             .selected="${this.setStatusValue((this.editedData && this.editedData.is_active) || false)}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('is_active', detail.selectedItem.value)}"
@@ -70,12 +70,10 @@ export function template(this: SitesPopupComponent): TemplateResult {
         ${this.editedData.id
           ? html`
               <paper-input
-                class="disabled-as-readonly"
                 .value="${this.editedData && this.editedData.parent!.name}"
                 label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
                 placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
                 disabled
-                readonly
               ></paper-input>
             `
           : ''}
@@ -85,14 +83,14 @@ export function template(this: SitesPopupComponent): TemplateResult {
         <div class="layout horizontal">
           <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
           <paper-input
-            class="validate-input disabled-as-readonly flex-5"
+            class="validate-input flex-5"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
             label="Latitude"
             placeholder="-"
           ></paper-input>
           <paper-input
-            class="validate-input disabled-as-readonly flex-5"
+            class="validate-input flex-5"
             .value="${this.longitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
             label="Longitude"

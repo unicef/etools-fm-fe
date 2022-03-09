@@ -60,28 +60,26 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <!--    Inputs for displaying Location and Site fields    -->
         <div class="layout horizontal location-inputs">
           <etools-dropdown
-            class="without-border readonly-required"
+            class="readonly-required"
             .selected="${simplifyValue(this.editedData.location)}"
             label="Location To Be Visited"
             .options="${this.locations}"
             option-label="name"
             option-value="id"
             readonly
-            disabled
             required
             min-width="470px"
           >
           </etools-dropdown>
 
           <etools-dropdown
-            class="without-border readonly-required"
+            class="readonly-required"
             .selected="${simplifyValue(this.editedData.location_site)}"
             label="Site To Be Visited"
             .options="${this.sitesList}"
             option-label="name"
             option-value="id"
             readonly
-            disabled
             min-width="470px"
           >
           </etools-dropdown>
@@ -91,26 +89,24 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <div class="layout horizontal">
           <div class="layout horizontal flex">
             <datepicker-lite
-              class="without-border datepicker-width"
+              class="datepicker-width"
               value="${this.editedData.start_date || ''}"
               label="${translate('ACTIVITY_DETAILS.START_DATE')}"
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('start_date', detail.date ? formatDate(detail.date) : '')}"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
             <datepicker-lite
-              class="without-border datepicker-width"
+              class="datepicker-width"
               value="${this.editedData.end_date || ''}"
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('end_date', detail.date ? formatDate(detail.date) : '')}}"
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
@@ -119,7 +115,6 @@ export function template(this: ActivityDetailsCard): TemplateResult {
           <!--     Sections dropdown     -->
           <div class="layout horizontal flex">
             <etools-dropdown-multi
-              class="without-border"
               .selectedValues="${simplifyValue(this.activitySections)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectSections(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
@@ -127,7 +122,6 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .options="${this.sections.length ? this.sections : this.activitySections}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('sections')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('sections')}"
               ?invalid="${this.errors && this.errors.sections}"
               .errorMessage="${this.errors && this.errors.sections}"
@@ -143,7 +137,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
           <!--     Offices dropdown     -->
           <div class="layout horizontal flex">
             <etools-dropdown-multi
-              class="without-border field-office"
+              class="field-office"
               .selectedValues="${simplifyValue(this.activityOffices)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectOffices(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
@@ -153,7 +147,6 @@ export function template(this: ActivityDetailsCard): TemplateResult {
                 : this.activityOffices.filter((office: Office | null) => Boolean(office))}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('offices')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('offices')}"
               ?invalid="${this.errors && this.errors.offices}"
               .errorMessage="${this.errors && this.errors.offices}"

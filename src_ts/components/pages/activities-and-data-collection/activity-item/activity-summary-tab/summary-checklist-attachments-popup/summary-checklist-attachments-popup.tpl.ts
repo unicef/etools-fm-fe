@@ -43,7 +43,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
               <div class="file-selector-container with-type-dropdown">
                 <!--        Type select Dropdown        -->
                 <etools-dropdown
-                  class="type-dropdown disabled-as-readonly"
+                  class="type-dropdown"
                   .selected="${attachment.file_type}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.changeFileType(attachment, detail.selectedItem)}"
@@ -52,7 +52,6 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                   placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
                   required
                   ?readonly="${this.readonly}"
-                  ?disabled="${this.readonly}"
                   hide-search
                   .options="${this.attachmentTypes}"
                   option-label="label"

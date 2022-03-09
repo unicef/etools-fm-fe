@@ -121,10 +121,6 @@ documentContainer.innerHTML = `
         --module-submitted: rgba(206,188,6,.6);
         --module-sent: rgba(30,134,191,.45);
         --module-completed: rgba(141,198,63,1);
-
-        --paper-input-container-underline: {
-          border-color: rgba(0, 0, 0, 0.2) !important;
-        }
       }
 
     </style>

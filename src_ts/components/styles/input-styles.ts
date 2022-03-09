@@ -26,73 +26,36 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown,
     etools-dropdown-multi,
-    paper-dropdown-menu,
-    paper-textarea,
-    paper-input,
-    datepicker-lite {
-      padding: 0 12px;
-      box-sizing: border-box;
-
-      --paper-input-container-input: {
-        display: block !important;
-        font-size: 15px;
-        box-sizing: border-box;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-right: 3px;
-      }
-
-      --paper-input-prefix: {
-        margin-right: 10px;
-        color: var(--gray-mid);
-      }
-
-      --paper-input-error: {
-        overflow: hidden;
-      }
-    }
-
-    paper-textarea {
-      --paper-input-container-input: {
-        white-space: normal;
-      }
-      --paper-input-container-focus-color: var(--module-primary);
-      --iron-autogrow-textarea-placeholder: {
-        color: var(--gray-20) !important;
-      }
-      --iron-autogrow-textarea: {
-        padding: 0;
-      }
-    }
-
-    etools-dropdown,
-    etools-dropdown-multi,
     paper-input,
     paper-textarea,
     paper-dropdown-menu,
     etools-currency-amount-input,
     datepicker-lite {
       outline: none !important;
-      --esmm-placeholder-color: var(--gray-20);
-      --esmm-multi-placeholder-color: var(--gray-20);
-      --paper-input-container-color: var(--gray-20);
-      --paper-input-container-focus-color: var(--module-primary);
+      padding: 0 12px;
+      color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+      box-sizing: border-box;
+
+      --esmm-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+      --esmm-multi-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+      --paper-input-container-focus-color: var(--primary-color, #0099ff);
+      --paper-input-container-invalid-color: var(--module-error, #ea4022);
+
       --paper-input-container-input: {
-        color: var(--gray-dark);
+        display: block !important;
+        font-size: 15px;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 3px;
+        color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       }
       --paper-input-container-label: {
-        color: var(--gray-50);
+        color: var(--gray-50, rgba(0, 0, 0, 0.5));
       }
 
-      --paper-input-container-invalid-color: var(--module-error);
-
-      --paper-input-container-disabled: {
-        color: var(--gray-light);
-        opacity: 1;
-      }
       --paper-input-char-counter: {
-        color: var(--gray-light);
+        color: var(--gray-light, rgba(0, 0, 0, 0.38));
       }
 
       --paper-input-container-label-floating: {
@@ -116,8 +79,23 @@ export const InputStyles: TemplateResult = html`
         width: 100%;
         font-size: 12px;
       }
-      --paper-input-container-underline: {
-        border-color: rgba(0, 0, 0, 0.2) !important;
+
+      --paper-input-container-shared-input-style: {
+        font-size: 16px;
+        width: 100%;
+      }
+
+      --paper-input-prefix: {
+        margin-right: 10px;
+        color: var(--gray-mid, rgba(0, 0, 0, 0.54));
+      }
+
+      --paper-input-error: {
+        overflow: hidden;
+      }
+
+      --iron-autogrow-textarea: {
+        padding: 0;
       }
     }
 
@@ -136,39 +114,38 @@ export const InputStyles: TemplateResult = html`
       --paper-input-container-focus-color: var(--module-primary);
     }
 
-    etools-dropdown-multi[readonly]:not(.datepicker),
-    etools-dropdown-multi[disabled].disabled-as-readonly,
-    etools-dropdown[readonly]:not(.datepicker),
-    etools-dropdown[disabled].disabled-as-readonly,
-    paper-textarea[readonly]:not(.datepicker),
-    paper-textarea[disabled].disabled-as-readonly,
-    paper-dropdown-menu[readonly]:not(.datepicker),
-    paper-dropdown-menu[disabled].disabled-as-readonly,
-    paper-input[readonly]:not(.datepicker),
-    paper-input[disabled].disabled-as-readonly. datepicker-lite[readonly],
-    datepicker-lite[disabled].disabled-as-readonly {
+    etools-dropdown-multi[disabled],
+    etools-dropdown[disabled],
+    paper-textarea[disabled],
+    paper-dropdown-menu[disabled],
+    paper-input[disabled],
+    datepicker-lite[disabled] {
       --paper-input-container: {
         opacity: 1 !important;
       }
       --paper-input-container-underline: {
-        border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
+        border-bottom: 1px dashed var(--gray-20, rgba(0, 0, 0, 0.2));
         display: block !important;
       }
       --paper-input-container-underline-focus: {
         display: none;
       }
+      --paper-input-container-focus-color: var(
+        --paper-input-container-label_-_color,
+        var(--paper-input-container-color, var(--secondary-text-color))
+      );
     }
 
-    etools-dropdown-multi[disabled].without-border,
-    etools-dropdown[disabled].without-border,
-    paper-textarea[disabled].without-border,
-    paper-input[disabled].without-border,
-    datepicker-lite[disabled].without-border {
-      --paper-input-container-label: {
-        color: var(--gray-50) !important;
-      }
-      --esmm-placeholder-color: rgba(0, 0, 0, 0.16) !important;
-      --esmm-multi-placeholder-color: rgba(0, 0, 0, 0.16) !important;
+    etools-dropdown-multi[readonly]:not(.datepicker),
+    etools-dropdown[readonly]:not(.datepicker),
+    paper-textarea[readonly]:not(.datepicker),
+    paper-dropdown-menu[readonly]:not(.datepicker),
+    paper-input[readonly]:not(.datepicker),
+    datepicker-lite[readonly]:not(.datepicker) {
+      --paper-input-container-focus-color: var(
+        --paper-input-container-label_-_color,
+        var(--paper-input-container-color, var(--secondary-text-color))
+      );
       --paper-input-container: {
         opacity: 1 !important;
       }
@@ -182,10 +159,6 @@ export const InputStyles: TemplateResult = html`
       --paper-input-container-underline-disabled: {
         display: none;
       }
-      --iron-autogrow-textarea-placeholder: {
-        color: var(--gray-mid-dark) !important;
-      }
-      --paper-input-container-color: var(--gray-mid-dark);
     }
 
     etools-dropdown-multi.required:not([disabled]),
@@ -252,7 +225,7 @@ export const InputStyles: TemplateResult = html`
       }
     }
 
-    etools-currency-amount-input[disabled].disabled-as-readonly {
+    etools-currency-amount-input[disabled] {
       --etools-currency-container-underline-disabled: {
         border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
       }
