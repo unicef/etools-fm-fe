@@ -37,7 +37,7 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
-export class ActivitiesListComponent extends ListMixin()<IListActivity>(MatomoMixin(LitElement)) {
+export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
   @property() filtersLoading = false;
