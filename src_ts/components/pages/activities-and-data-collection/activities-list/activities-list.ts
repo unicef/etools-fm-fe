@@ -32,11 +32,12 @@ import {activityDetailsError} from '../../../../redux/selectors/activity-details
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
-export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitElement) {
+export class ActivitiesListComponent extends ListMixin()<IListActivity>(MatomoMixin(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
   @property() filtersLoading = false;
@@ -112,7 +113,8 @@ export class ActivitiesListComponent extends ListMixin()<IListActivity>(LitEleme
     return template.call(this);
   }
 
-  goNew(): void {
+  goNew(e: CustomEvent): void {
+    this.trackAnalytics(e);
     updateAppLocation(`activities/new`);
   }
 
