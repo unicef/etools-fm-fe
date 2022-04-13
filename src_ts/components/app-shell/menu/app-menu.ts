@@ -163,10 +163,9 @@ export class AppMenu extends MatomoMixin(LitElement) {
           </paper-tooltip>
           <div class="name">${translate('NAVIGATION_MENU.DISCUSSION')}</div>
         </a>
-
         <a
           class="nav-menu-item lighter-item last-one"
-          href="http://etoolsinfo.unicef.org"
+          href="https://etools.unicef.org/landing"
           target="_blank"
           @tap="${this.trackAnalytics}"
           tracker="Information"
