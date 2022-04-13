@@ -19,6 +19,7 @@ import {translate} from 'lit-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 
 store.addReducers({specificLocations, rationale});
 
@@ -39,11 +40,15 @@ const NAVIGATION_TABS: PageTab[] = [
 ];
 
 @customElement('management-page')
-export class ManagementPage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
+export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)) implements IEtoolsPage {
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
 
   @property() activeTab: string = RATIONALE_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+  }
 
   render(): TemplateResult | void {
     const canView: boolean = this.canView();
@@ -53,7 +58,7 @@ export class ManagementPage extends PagePermissionsMixin(LitElement) implements 
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <paper-button class="default left-icon" raised @tap="${() => this.exportData()}">
+              <paper-button class="default left-icon" raised tracker="Export" @tap="${this.exportData}">
                 <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
               </paper-button>
             </div>
@@ -111,7 +116,8 @@ export class ManagementPage extends PagePermissionsMixin(LitElement) implements 
     }
   }
 
-  exportData(): void {
+  exportData(e: CustomEvent): void {
+    this.trackAnalytics(e);
     const url: string = getEndpoint(SITES_EXPORT).url;
     const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
     const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
@@ -128,7 +134,4 @@ export class ManagementPage extends PagePermissionsMixin(LitElement) implements 
     return true;
   }
 
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
-  }
 }

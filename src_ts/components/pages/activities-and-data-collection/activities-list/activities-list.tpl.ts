@@ -20,8 +20,8 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <paper-button class="create-new" @tap="${() => this.goNew()}"
-          >${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</paper-button
+        <paper-button class="create-new" @tap="${this.goNew}" tracker="Create New Visit">
+          ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</paper-button
         >
       </div>
     </page-content-header>
