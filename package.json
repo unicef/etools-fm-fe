@@ -52,7 +52,7 @@
     "@unicef-polymer/etools-dropdown": "^3.7.10",
     "@unicef-polymer/etools-form-builder": "^2.0.0",
     "@unicef-polymer/etools-loading": "5.0.1",
-    "@unicef-polymer/etools-profile-dropdown": "7.0.1",
+    "@unicef-polymer/etools-profile-dropdown": "8.0.1",
     "@unicef-polymer/etools-upload": "^4.2.1",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "dayjs": "^1.10.7",
