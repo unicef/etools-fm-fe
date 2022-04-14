@@ -15,6 +15,7 @@ import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 
 /**
  * main menu
@@ -22,7 +23,7 @@ import {translate} from 'lit-translate';
  * @customElement
  */
 @customElement('app-menu')
-export class AppMenu extends LitElement {
+export class AppMenu extends MatomoMixin(LitElement) {
   @property({type: String, attribute: 'selected-option'})
   selectedOption = '';
 
@@ -74,7 +75,13 @@ export class AppMenu extends LitElement {
           role="navigation"
         >
           <!-- Sidebar item - DATA VISITS -->
-          <a class="nav-menu-item" menu-name="activities" href="${this.rootPath + 'activities'}">
+          <a
+            class="nav-menu-item"
+            menu-name="activities"
+            href="${this.rootPath + 'activities'}"
+            @tap="${this.trackAnalytics}"
+            tracker="Visits"
+          >
             <iron-icon id="page1-icon" icon="assignment"></iron-icon>
             <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.VISITS')} </paper-tooltip>
             <div class="name">${translate('NAVIGATION_MENU.VISITS')}</div>
@@ -86,6 +93,8 @@ export class AppMenu extends LitElement {
             menu-name="analyze"
             href="${this.rootPath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
+            @tap="${this.trackAnalytics}"
+            tracker="Analysis"
           >
             <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
             <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.ANALYSIS')} </paper-tooltip>
@@ -98,6 +107,8 @@ export class AppMenu extends LitElement {
             menu-name="templates"
             href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
+            @tap="${this.trackAnalytics}"
+            tracker="Templates"
           >
             <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
             <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.TEMPLATES')} </paper-tooltip>
@@ -110,6 +121,8 @@ export class AppMenu extends LitElement {
             menu-name="management"
             href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
+            @tap="${this.trackAnalytics}"
+            tracker="Management"
           >
             <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
             <paper-tooltip for="page1-icon" position="right">
@@ -123,7 +136,13 @@ export class AppMenu extends LitElement {
           <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
         </div>
 
-        <a class="nav-menu-item lighter-item" href="http://etools.zendesk.com" target="_blank">
+        <a
+          class="nav-menu-item lighter-item"
+          href="http://etools.zendesk.com"
+          target="_blank"
+          @tap="${this.trackAnalytics}"
+          tracker="Knowledge base"
+        >
           <iron-icon id="knoledge-icon" icon="maps:local-library"></iron-icon>
           <paper-tooltip for="knoledge-icon" position="right">
             ${translate('NAVIGATION_MENU.KNOWLEDGE_BASE')}
@@ -135,6 +154,8 @@ export class AppMenu extends LitElement {
           class="nav-menu-item lighter-item"
           href="https://www.yammer.com/unicef.org/#/threads/inGroup?type=in_group&feedId=5782560"
           target="_blank"
+          @tap="${this.trackAnalytics}"
+          tracker="Discussion"
         >
           <iron-icon id="discussion-icon" icon="icons:question-answer"></iron-icon>
           <paper-tooltip for="discussion-icon" position="right">
@@ -142,8 +163,13 @@ export class AppMenu extends LitElement {
           </paper-tooltip>
           <div class="name">${translate('NAVIGATION_MENU.DISCUSSION')}</div>
         </a>
-
-        <a class="nav-menu-item lighter-item last-one" href="http://etoolsinfo.unicef.org" target="_blank">
+        <a
+          class="nav-menu-item lighter-item last-one"
+          href="https://etools.unicef.org/landing"
+          target="_blank"
+          @tap="${this.trackAnalytics}"
+          tracker="Information"
+        >
           <iron-icon id="information-icon" icon="icons:info"></iron-icon>
           <paper-tooltip for="information-icon" position="right">
             ${translate('NAVIGATION_MENU.INFORMATION')}

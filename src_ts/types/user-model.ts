@@ -9,9 +9,9 @@ interface IEtoolsUserModel {
   email: string;
   first_name: string;
   guid: string;
-  is_active: string;
-  is_staff: string;
-  is_superuser: string;
+  is_active: boolean;
+  is_staff: boolean;
+  is_superuser: boolean;
   job_title: string;
   last_login: string;
   last_name: string;

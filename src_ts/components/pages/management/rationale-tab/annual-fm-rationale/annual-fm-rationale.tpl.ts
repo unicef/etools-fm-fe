@@ -52,7 +52,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
         <div class="layout vertical card-content">
           <div>
             <paper-textarea
-              class="validate-input disabled-as-readonly flex without-border"
+              class="validate-input flex"
               .value="${this.editedData.prioritization_criteria}"
               @value-changed="${({detail}: CustomEvent) =>
                 this.updateModelValue('prioritization_criteria', detail.value)}"
@@ -62,14 +62,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.prioritization_criteria}"
               @focus="${() => this.resetFieldError('prioritization_criteria')}"
               @tap="${() => this.resetFieldError('prioritization_criteria')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-textarea>
           </div>
           <div>
             <paper-textarea
-              class="validate-input disabled-as-readonly flex without-border"
+              class="validate-input flex"
               .value="${this.editedData.methodology_notes}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('methodology_notes', detail.value)}"
               label="${translate('RATIONALE.LABELS.METHODOLOGY')}"
@@ -78,14 +77,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.methodology_notes}"
               @focus="${() => this.resetFieldError('methodology_notes')}"
               @tap="${() => this.resetFieldError('methodology_notes')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-textarea>
           </div>
           <div>
             <paper-textarea
-              class="validate-input disabled-as-readonly flex without-border"
+              class="validate-input flex"
               .value="${this.editedData.modalities}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('modalities', detail.value)}"
               label="${translate('RATIONALE.LABELS.MODALITIES')}"
@@ -94,14 +92,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.modalities}"
               @focus="${() => this.resetFieldError('modalities')}"
               @tap="${() => this.resetFieldError('modalities')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-textarea>
           </div>
           <div>
             <paper-input
-              class="validate-input disabled-as-readonly flex numeric-input without-border"
+              class="validate-input flex numeric-input"
               .value="${this.editedData.target_visits}"
               @input="${({target}: CustomEvent) => this.onTargetVisitsChange((target as HTMLInputElement).value)}"
               type="${this.isReadonly ? 'text' : 'number'}"
@@ -111,14 +108,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.target_visits}"
               @focus="${() => this.resetFieldError('target_visits')}"
               @tap="${() => this.resetFieldError('target_visits')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-input>
           </div>
           <div>
             <paper-textarea
-              class="validate-input disabled-as-readonly flex without-border"
+              class="validate-input flex"
               value="${this.editedData.partner_engagement}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('partner_engagement', detail.value)}"
               label="${translate('RATIONALE.LABELS.PARTNER_ENGAGEMENT')}"
@@ -127,14 +123,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.partner_engagement}"
               @focus="${() => this.resetFieldError('partner_engagement')}"
               @tap="${() => this.resetFieldError('partner_engagement')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-textarea>
           </div>
           <div>
             <paper-textarea
-              class="validate-input disabled-as-readonly flex without-border"
+              class="validate-input flex"
               value="${this.editedData.other_aspects}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('other_aspects', detail.value)}"
               label="${translate('RATIONALE.LABELS.OTHER')}"
@@ -143,7 +138,6 @@ export function template(this: AnnualFmRationale): TemplateResult {
               error-message="${this.errors.other_aspects}"
               @focus="${() => this.resetFieldError('other_aspects')}"
               @tap="${() => this.resetFieldError('other_aspects')}"
-              ?disabled="${this.isReadonly}"
               ?readonly="${this.isReadonly}"
             >
             </paper-textarea>

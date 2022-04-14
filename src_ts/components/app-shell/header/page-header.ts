@@ -24,6 +24,7 @@ import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.act
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -36,7 +37,7 @@ store.addReducers({
  * @customElement
  */
 @customElement('page-header')
-export class PageHeader extends connect(store)(LitElement) {
+export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: Boolean})
   isStaging = false;
 
@@ -215,7 +216,8 @@ export class PageHeader extends connect(store)(LitElement) {
             title="${translate('NAVIGATION_MENU.REFRESH')}"
             class="refresh-button"
             icon="refresh"
-            @tap="${() => this.refresh()}"
+            tracker="Refresh"
+            @tap="${this.refresh}"
           >
           </paper-icon-button>
         </div>
@@ -255,7 +257,8 @@ export class PageHeader extends connect(store)(LitElement) {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
   }
 
-  refresh(): void {
+  refresh(e: CustomEvent): void {
+    this.trackAnalytics(e);
     if (!this.refreshInProgress) {
       this.refreshInProgress = true;
       localStorage.clear();

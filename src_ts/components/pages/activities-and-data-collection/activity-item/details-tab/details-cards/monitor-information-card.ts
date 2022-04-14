@@ -102,7 +102,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ${this.editedData.monitor_type === USER_TPM
               ? html`
                   <etools-dropdown
-                    class="without-border flex"
+                    class="flex"
                     .selected="${simplifyValue(this.tpmPartner)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) =>
                       this.setTpmPartner(detail.selectedItem)}"
@@ -111,7 +111,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
                     .options="${this.tpmPartnersOptions}"
                     option-label="name"
                     option-value="id"
-                    ?disabled="${!this.isEditMode || this.isFieldReadonly('tpm_partner')}"
                     ?readonly="${!this.isEditMode || this.isFieldReadonly('tpm_partner')}"
                     ?invalid="${this.errors && this.errors.tpm_partner}"
                     .errorMessage="${this.errors && this.errors.tpm_partner}"
@@ -124,7 +123,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               : ''}
 
             <etools-dropdown-multi
-              class="without-border flex"
+              class="flex"
               .selectedValues="${simplifyValue(this.teamMembers)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
@@ -132,7 +131,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('team_members')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('team_members')}"
               ?invalid="${this.errors && this.errors.team_members}"
               .errorMessage="${this.errors && this.errors.team_members}"
@@ -143,7 +141,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ></etools-dropdown-multi>
 
             <etools-dropdown
-              class="without-border flex"
+              class="flex"
               .selected="${simplifyValue(this.personResponsible)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
                 this.setPersonResponsible(detail.selectedItem)}"
@@ -152,7 +150,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
-              ?disabled="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
               ?invalid="${this.errors && this.errors.visit_lead}"
               .errorMessage="${this.errors && this.errors.visit_lead}"
