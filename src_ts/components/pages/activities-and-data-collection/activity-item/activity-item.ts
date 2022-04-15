@@ -321,7 +321,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     );
   }
 
-  export(e: Event) {
+  export(e: any) {
+    e.currentTarget.blur();
     this.trackAnalytics(e);
     window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');
   }
