@@ -105,7 +105,8 @@
     "REPORT_REJECTION_REASON": "Report Rejection Reason",
     "CANCELLATION_NOTE": "Cancellation Note",
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
-    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level"
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
+    "EXPORT": "EXPORT"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",
