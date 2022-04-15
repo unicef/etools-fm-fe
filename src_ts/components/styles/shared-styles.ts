@@ -78,7 +78,4 @@ export const SharedStyles: CSSResult = css`
     padding: 0 0;
     text-align: left;
   }
-  paper-button:focus {
-    ${elevation2}
-  }
 `;
