@@ -458,7 +458,8 @@
     "PROFILEANDSIGNOUT": "Profile and Sign out",
     "REFRESH": "Refresh",
     "SUPPORT": "Support",
-    "APPSELECTOR": "App Selector"
+    "APPSELECTOR": "App Selector",
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filters",
