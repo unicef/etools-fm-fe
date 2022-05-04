@@ -16,6 +16,7 @@ import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {apIcons} from '../../styles/app-icons';
 
 /**
  * main menu
@@ -40,6 +41,8 @@ export class AppMenu extends MatomoMixin(LitElement) {
     // main template
     // language=HTML
     return html`
+      ${apIcons}
+
       <div class="menu-header">
         <span id="app-name" class="app-name"> ${translate('NAVIGATION_MENU.TITLE')} </span>
 
@@ -135,6 +138,20 @@ export class AppMenu extends MatomoMixin(LitElement) {
         <div class="nav-menu-item section-title">
           <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
         </div>
+
+        <a
+          class="nav-menu-item lighter-item"
+          href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/9726e9e7-c72f-4153-9fd2-7b418a1e426c/ReportSection?ctid=77410195-14e1-4fb8-904b-ab1892023667"
+          target="_blank"
+          @tap="${this.trackAnalytics}"
+          tracker="Implementation Intelligence"
+        >
+          <iron-icon id="power-bi-icon" icon="ap-icons:power-bi"></iron-icon>
+          <paper-tooltip for="knoledge-icon" position="right">
+            ${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}
+          </paper-tooltip>
+          <div class="name">${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}</div>
+        </a>
 
         <a
           class="nav-menu-item lighter-item"
