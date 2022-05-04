@@ -41,6 +41,7 @@ import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 
 store.addReducers({activityDetails});
 
@@ -76,7 +77,7 @@ const CANCELLED_STATUS: IEtoolsStatusModel[] = [
 ];
 
 @customElement('activity-item')
-export class NewActivityComponent extends LitElement {
+export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
@@ -150,6 +151,11 @@ export class NewActivityComponent extends LitElement {
         <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || 'New'}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
+          <paper-button id="export" @tap="${this.export}" tracker="Export PDF" ?hidden="${this.hideExportButton()}">
+            <iron-icon icon="file-download" class="export-icon"></iron-icon>
+            ${translate('ACTIVITY_DETAILS.EXPORT')}
+          </paper-button>
+
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
@@ -309,6 +315,18 @@ export class NewActivityComponent extends LitElement {
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
   }
 
+  hideExportButton() {
+    return (
+      !this.activityDetails?.id || ![REPORT_FINALIZATION, SUBMITTED, COMPLETED].includes(this.activityDetails.status)
+    );
+  }
+
+  export(e: any) {
+    e.currentTarget.blur();
+    this.trackAnalytics(e);
+    window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');
+  }
+
   private checkEditPermission(target: string): boolean {
     return !!this.activityDetails?.permissions.edit[(TABS_PROPERTIES[target] || '') as keyof ActivityPermissionsObject];
   }
@@ -350,6 +368,21 @@ export class NewActivityComponent extends LitElement {
           color: white;
           background: var(--gray-mid);
           font-weight: 500;
+        }
+
+        .export-icon {
+          padding-inline-end: 4px;
+        }
+
+        #export {
+          padding: 6px 10px;
+          font-size: 16px;
+          font-weight: bold;
+          color: var(--secondary-text-color);
+        }
+
+        statuses-actions {
+          margin-left: 10px;
         }
       `
     ];

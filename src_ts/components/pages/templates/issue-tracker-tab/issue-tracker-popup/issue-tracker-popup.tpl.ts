@@ -61,7 +61,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           </div>
 
           <etools-dropdown
-            class="validate-input disabled-as-readonly flex-1"
+            class="validate-input flex-1"
             .selected="${this.editedData.status}"
             label="${translate('ISSUE_TRACKER.STATUS')}"
             placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.STATUS')}"
@@ -69,7 +69,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             option-label="display_name"
             option-value="value"
             required
-            ?disabled="${this.isReadOnly}"
             ?readonly="${this.isReadOnly}"
             ?invalid="${this.errors && this.errors.status}"
             .errorMessage="${this.errors && this.errors.status}"
@@ -87,7 +86,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ? html`
               <div class="layout horizontal preparation-input-container">
                 <etools-dropdown
-                  class="validate-input disabled-as-readonly flex"
+                  class="validate-input flex"
                   .selected="${simplifyValue(this.editedData.partner)}"
                   label="${translate('ISSUE_TRACKER.PARTNER')}"
                   placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.PARTNER')}"
@@ -95,7 +94,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   option-label="name"
                   option-value="id"
                   required
-                  ?disabled="${this.isReadOnly}"
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.partner}"
                   .errorMessage="${this.errors && this.errors.partner}"
@@ -114,7 +112,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ? html`
               <div class="layout horizontal preparation-input-container">
                 <etools-dropdown
-                  class="validate-input disabled-as-readonly flex"
+                  class="validate-input flex"
                   .selected="${simplifyValue(this.editedData.cp_output)}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('cp_output', detail.selectedItem && detail.selectedItem.id)}"
@@ -124,7 +122,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   option-label="name"
                   option-value="id"
                   required
-                  ?disabled="${this.isReadOnly}"
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.cp_output}"
                   .errorMessage="${this.errors && this.errors.cp_output}"
@@ -141,7 +138,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           ? html`
               <div class="layout horizontal preparation-input-container">
                 <etools-dropdown
-                  class="validate-input disabled-as-readonly flex"
+                  class="validate-input flex"
                   .selected="${simplifyValue(this.editedData.location)}"
                   label="${translate('ISSUE_TRACKER.LOCATION')}"
                   placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.LOCATION')}"
@@ -149,7 +146,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   option-label="name"
                   option-value="id"
                   required
-                  ?disabled="${this.isReadOnly}"
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location}"
                   .errorMessage="${this.errors && this.errors.location}"
@@ -162,14 +158,13 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                 >
                 </etools-dropdown>
                 <etools-dropdown
-                  class="validate-input disabled-as-readonly flex"
+                  class="validate-input flex"
                   .selected="${simplifyValue(this.editedData.location_site)}"
                   label="${translate('ISSUE_TRACKER.SITE')}"
                   placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.SITE')}"
                   .options=${this.locationSites}
                   option-label="name"
                   option-value="id"
-                  ?disabled="${this.isReadOnly}"
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location_site}"
                   .errorMessage="${this.errors && this.errors.location_site}"
@@ -186,13 +181,12 @@ export function template(this: IssueTrackerPopup): TemplateResult {
           : ''}
 
         <paper-textarea
-          class="validate-input disabled-as-readonly preparation-input-container issue-tracker-input"
+          class="validate-input preparation-input-container issue-tracker-input"
           .value=${this.editedData.issue}
           max-rows="3"
           label="${translate('ISSUE_TRACKER.ISSUE')}"
           placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.ISSUE')}"
           required
-          ?disabled="${this.isReadOnly}"
           ?readonly="${this.isReadOnly}"
           ?invalid="${this.errors && this.errors.issue}"
           error-message="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"

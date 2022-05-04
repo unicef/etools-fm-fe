@@ -1,6 +1,8 @@
-import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {fireEvent} from '../../../../utils/fire-custom-event';
 import {InputStyles} from '../../../../styles/input-styles';
+import {DialogStyles} from '../../../../styles/dialog-styles';
+import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import '@polymer/paper-input/paper-textarea';
@@ -11,6 +13,10 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
   @property() dialogOpened = true;
   @property({type: Boolean}) isNew = true;
 
+  static get styles(): CSSResultArray {
+    return [FlexLayoutClasses];
+  }
+
   set dialogData(data: DataCollectionChecklist) {
     this.isNew = !data;
     this.data = data;
@@ -18,7 +24,12 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
 
   render(): TemplateResult {
     return html`
-      ${InputStyles}
+      ${InputStyles} ${DialogStyles}
+      <style>
+        .container {
+          margin-bottom: 14px;
+        }
+      </style>
       <etools-dialog
         id="dialog"
         size="md"
@@ -34,7 +45,6 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
       >
         <div class="container layout vertical">
           <paper-textarea
-            class="without-border"
             required
             maxlength="100"
             always-float-label
