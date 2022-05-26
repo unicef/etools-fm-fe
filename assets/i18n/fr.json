@@ -105,7 +105,8 @@
     "REPORT_REJECTION_REASON": "Raison du rejet du rapport",
     "CANCELLATION_NOTE": "Note d'annulation",
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
-    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif"
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
+    "EXPORT": "EXPORT"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",
@@ -124,9 +125,18 @@
       "reject_report": "Rejeter le rapport"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Commentaire d'annulation", "TITLE": "Motif d'annulation"},
-      "reject": {"LABEL": "Commentaire de rejet", "TITLE": "Motif du rejet"},
-      "reject_report": {"LABEL": "Commentaire de rejet du rapport", "TITLE": "Motif de rejet du rapport"}
+      "cancel": {
+        "LABEL": "Commentaire d'annulation",
+        "TITLE": "Motif d'annulation"
+      },
+      "reject": {
+        "LABEL": "Commentaire de rejet",
+        "TITLE": "Motif du rejet"
+      },
+      "reject_report": {
+        "LABEL": "Commentaire de rejet du rapport",
+        "TITLE": "Motif de rejet du rapport"
+      }
     },
     "STATUSES": {
       "draft": "Draft",
@@ -172,7 +182,9 @@
       "RELATED_TO": "Relatif à",
       "CONTENT": "Contenu",
       "POPUP": {
-        "HIGH_PRIORITY": "Haute Priorité"
+        "HIGH_PRIORITY": "Haute Priorité",
+        "ADD_AP": "Create Action Point",
+        "EDIT_AP": "Edit Action Point"
       }
     },
     "DATA_COLLECTION": {
@@ -251,7 +263,9 @@
     "ATTACHMENTS_FILES": {
       "SINGLE": "FICHIER",
       "MULTIPLE": "FICHIERS"
-    }
+    },
+    "ADD_POPUP_TITLE": "Add Points of Note",
+    "EDIT_POPUP_TITLE": "Edit Points of Note"
   },
   "RATIONALE": {
     "TITLE": "Justification du suivi annuel sur le terrain",
@@ -313,7 +327,8 @@
       "CATEGORY": "Sélectionnez le groupe",
       "LEVEL": "Sélectionnez le niveau cible de la question",
       "ANSWER_TYPE": "Sélectionnez le type de réponse",
-      "SCALE_SIZE": "Sélectionnez la taille de l'échelle"
+      "SCALE_SIZE": "Sélectionnez la taille de l'échelle",
+      "GROUP": "Select Group"
     },
     "LABELS": {
       "QUESTION": "Question",
@@ -324,7 +339,8 @@
       "ANSWER_TYPE": "Type de réponse",
       "IS_HACT": "Compte pour HACT",
       "IS_ACTIVE": "C'est actif",
-      "SCALE_SIZE": "Taille de l'échelle"
+      "SCALE_SIZE": "Taille de l'échelle",
+      "GROUP": "Group"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
     "COLUMNS": {
@@ -450,7 +466,12 @@
     "COMMUNITY_CHANNELS": "eTools Community Channels",
     "KNOWLEDGE_BASE": "Base de connaissances",
     "DISCUSSION": "Discussion",
-    "INFORMATION": "Information"
+    "INFORMATION": "Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector",
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filtres",
@@ -551,5 +572,6 @@
     "PLANNED": "Planifié",
     "COMPLETED_VISITS": "Visites terminées",
     "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
-  }
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
 }
