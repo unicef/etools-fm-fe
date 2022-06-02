@@ -3,6 +3,7 @@
 interface IEtoolsUserModel {
   [key: string]: any;
   countries_available: GenericObject[];
+  preferences: {language: string};
   groups: UserGroup[];
   country: GenericObject;
   country_override: number;
