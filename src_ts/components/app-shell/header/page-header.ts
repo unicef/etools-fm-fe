@@ -78,7 +78,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   rootPath: string = ROOT_PATH;
 
   //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}, {value: 'fr', display_name: 'French'}];
+  languages: DefaultDropdownOption<string>[] = [
+    {value: 'en', display_name: 'English'},
+    {value: 'fr', display_name: 'French'}
+  ];
 
   constructor() {
     super();
@@ -234,6 +237,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   stateChanged(state: IRootState): void {
     if (state) {
       this.profile = state.user.data as IEtoolsUserModel;
+      if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
+        this.selectedLanguage = this.profile.preferences?.language;
+      }
     }
   }
 
@@ -255,6 +261,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
+
+    if (this.profile.preferences?.language != language) {
+      store.dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}));
+    }
   }
 
   refresh(e: CustomEvent): void {
