@@ -13,7 +13,7 @@ import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/co
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
-import {isEmpty} from 'ramda';
+import {isEmpty, prop} from 'ramda';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
@@ -74,6 +74,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   @property() selectedLanguage = 'en';
 
   @property() refreshInProgress = false;
+
+  @property({type: Boolean})
+  langUpdateInProgress = false;
 
   rootPath: string = ROOT_PATH;
 
@@ -197,6 +200,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               hide-search
               allow-outside-scroll
               no-label-float
+              .readonly="${this.langUpdateInProgress}"
               .autoWidth="${true}"
             ></etools-dropdown>
 
@@ -235,8 +239,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   }
 
   stateChanged(state: IRootState): void {
-    if (state) {
-      this.profile = state.user.data as IEtoolsUserModel;
+    if (state && state.user && state.user.data) {
+      this.profile = state.user.data;
       if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
         this.selectedLanguage = this.profile.preferences?.language;
       }
@@ -262,8 +266,11 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
 
-    if (this.profile.preferences?.language != language) {
-      store.dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}));
+    if (this.profile && this.profile.preferences?.language != language) {
+      this.langUpdateInProgress = true;
+      store
+        .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
+        .then(() => (this.langUpdateInProgress = false));
     }
   }
 
