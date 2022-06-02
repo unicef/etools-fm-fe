@@ -13,7 +13,7 @@ import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/co
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
-import {isEmpty, prop} from 'ramda';
+import {isEmpty} from 'ramda';
 import {fireEvent} from '../../utils/fire-custom-event';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
