@@ -25,6 +25,7 @@ import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -270,7 +271,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       this.langUpdateInProgress = true;
       store
         .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
-        .then(() => (this.langUpdateInProgress = false));
+        .then(() => (this.langUpdateInProgress = false))
+        .catch((err: any) => parseRequestErrorsAndShowAsToastMsgs(err, this));
     }
   }
 
