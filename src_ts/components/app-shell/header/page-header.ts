@@ -78,7 +78,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   rootPath: string = ROOT_PATH;
 
   //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}];
+  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}, {value: 'fr', display_name: 'French'}];
 
   constructor() {
     super();

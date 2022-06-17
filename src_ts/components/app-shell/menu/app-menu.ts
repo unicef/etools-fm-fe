@@ -99,8 +99,8 @@ export class AppMenu extends MatomoMixin(LitElement) {
             @tap="${this.trackAnalytics}"
             tracker="Analysis"
           >
-            <iron-icon id="page1-icon" icon="av:equalizer"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.ANALYSIS')} </paper-tooltip>
+            <iron-icon id="page2-icon" icon="av:equalizer"></iron-icon>
+            <paper-tooltip for="page2-icon" position="right"> ${translate('NAVIGATION_MENU.ANALYSIS')} </paper-tooltip>
             <div class="name">${translate('NAVIGATION_MENU.ANALYSIS')}</div>
           </a>
 
@@ -113,8 +113,8 @@ export class AppMenu extends MatomoMixin(LitElement) {
             @tap="${this.trackAnalytics}"
             tracker="Templates"
           >
-            <iron-icon id="page1-icon" icon="icons:settings-applications"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.TEMPLATES')} </paper-tooltip>
+            <iron-icon id="page3-icon" icon="icons:settings-applications"></iron-icon>
+            <paper-tooltip for="page3-icon" position="right"> ${translate('NAVIGATION_MENU.TEMPLATES')} </paper-tooltip>
             <div class="name">${translate('NAVIGATION_MENU.TEMPLATES')}</div>
           </a>
 
@@ -127,8 +127,8 @@ export class AppMenu extends MatomoMixin(LitElement) {
             @tap="${this.trackAnalytics}"
             tracker="Management"
           >
-            <iron-icon id="page1-icon" icon="av:playlist-add-check"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
+            <iron-icon id="page4-icon" icon="av:playlist-add-check"></iron-icon>
+            <paper-tooltip for="page4-icon" position="right">
               ${translate('NAVIGATION_MENU.MANAGEMENT')}
             </paper-tooltip>
             <div class="name">${translate('NAVIGATION_MENU.MANAGEMENT')}</div>
@@ -147,7 +147,7 @@ export class AppMenu extends MatomoMixin(LitElement) {
           tracker="Implementation Intelligence"
         >
           <iron-icon id="power-bi-icon" icon="ap-icons:power-bi"></iron-icon>
-          <paper-tooltip for="knoledge-icon" position="right">
+          <paper-tooltip for="power-bi-icon" position="right">
             ${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}
           </paper-tooltip>
           <div class="name">${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}</div>
