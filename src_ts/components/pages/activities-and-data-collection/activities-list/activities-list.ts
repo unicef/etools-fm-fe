@@ -65,7 +65,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         .dispatch<AsyncEffect>(loadActivitiesList(params))
         .catch(() => fireEvent(this, 'toast', {text: 'Can not load Activities List'}))
         .then(() => (this.loadingInProcess = false));
-    }, 100);
+    }, 400);
 
     // route params listener
     this.routeDetailsUnsubscribe = store.subscribe(
