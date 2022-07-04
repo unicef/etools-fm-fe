@@ -25,6 +25,7 @@ import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -75,10 +76,16 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property() refreshInProgress = false;
 
+  @property({type: Boolean})
+  langUpdateInProgress = false;
+
   rootPath: string = ROOT_PATH;
 
   //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}, {value: 'fr', display_name: 'French'}];
+  languages: DefaultDropdownOption<string>[] = [
+    {value: 'en', display_name: 'English'},
+    {value: 'fr', display_name: 'French'}
+  ];
 
   constructor() {
     super();
@@ -194,6 +201,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               hide-search
               allow-outside-scroll
               no-label-float
+              .readonly="${this.langUpdateInProgress}"
               .autoWidth="${true}"
             ></etools-dropdown>
 
@@ -232,8 +240,11 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   }
 
   stateChanged(state: IRootState): void {
-    if (state) {
-      this.profile = state.user.data as IEtoolsUserModel;
+    if (state && state.user && state.user.data) {
+      this.profile = state.user.data;
+      if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
+        this.selectedLanguage = this.profile.preferences?.language;
+      }
     }
   }
 
@@ -255,6 +266,14 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
+
+    if (this.profile && this.profile.preferences?.language != language) {
+      this.langUpdateInProgress = true;
+      store
+        .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
+        .catch((err: any) => parseRequestErrorsAndShowAsToastMsgs(err, this))
+        .finally(() => (this.langUpdateInProgress = false));
+    }
   }
 
   refresh(e: CustomEvent): void {
