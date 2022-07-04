@@ -271,8 +271,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       this.langUpdateInProgress = true;
       store
         .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
-        .then(() => (this.langUpdateInProgress = false))
-        .catch((err: any) => parseRequestErrorsAndShowAsToastMsgs(err, this));
+        .catch((err: any) => {
+          parseRequestErrorsAndShowAsToastMsgs(err, this);
+        })
+        .finally(() => (this.langUpdateInProgress = false));
     }
   }
 
