@@ -9,7 +9,7 @@ import './countries-dropdown';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
-import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/config';
+import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
@@ -39,9 +39,6 @@ store.addReducers({
  */
 @customElement('page-header')
 export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
-  @property({type: Boolean})
-  isStaging = false;
-
   @property({type: String})
   headerColor = 'var(--header-bg-color)';
 
@@ -78,6 +75,12 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property({type: Boolean})
   langUpdateInProgress = false;
+
+  @property({type: Boolean})
+  isProduction = false;
+
+  @property({type: String})
+  environment = 'LOCAL';
 
   rootPath: string = ROOT_PATH;
 
@@ -145,7 +148,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           justify-content: space-evenly;
         }
         .logo {
-          margin-left: 20px;
+          margin: 0 10px 0 20px;
         }
         @media (max-width: 380px) {
           .header__item {
@@ -186,7 +189,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             src="${this.rootPath}assets/images/etools-logo-color-white.svg"
             alt="eTools"
           />
-          ${this.isStaging ? html` <div class="envWarning">- STAGING TESTING ENVIRONMENT</div> ` : ''}
+          ${this.isProduction
+            ? ``
+            : html`<div class="envWarning">
+            <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
@@ -236,7 +242,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   connectedCallback(): void {
     super.connectedCallback();
     this.setBgColor();
-    this.isStaging = isStagingServer();
+    this.checkEnvironment();
   }
 
   stateChanged(state: IRootState): void {
@@ -283,6 +289,17 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       localStorage.clear();
       etoolsCustomDexieDb.delete().finally(() => window.location.reload());
     }
+  }
+
+  protected checkEnvironment(): void {
+    this.isProduction = isProductionServer();
+    this.environment = isDevServer()
+      ? 'DEVELOPMENT'
+      : isDemoServer()
+      ? 'DEMO'
+      : isStagingServer()
+      ? 'STAGING'
+      : 'LOCAL';
   }
 
   protected profileSaveLoadingMsgDisplay(show = true): void {
