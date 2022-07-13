@@ -189,10 +189,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             src="${this.rootPath}assets/images/etools-logo-color-white.svg"
             alt="eTools"
           />
-          ${!this.isProduction
-            ? html`<div class="envWarning">
-          <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`
-            : ''}
+          ${this.isProduction
+            ? ``
+            : html`<div class="envWarning">
+            <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
