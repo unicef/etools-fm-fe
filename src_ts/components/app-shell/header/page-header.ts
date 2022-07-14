@@ -9,7 +9,7 @@ import './countries-dropdown';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
-import {isProductionServer, isStagingServer, ROOT_PATH} from '../../../config/config';
+import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
@@ -25,6 +25,7 @@ import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -38,9 +39,6 @@ store.addReducers({
  */
 @customElement('page-header')
 export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
-  @property({type: Boolean})
-  isStaging = false;
-
   @property({type: String})
   headerColor = 'var(--header-bg-color)';
 
@@ -75,10 +73,22 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property() refreshInProgress = false;
 
+  @property({type: Boolean})
+  langUpdateInProgress = false;
+
+  @property({type: Boolean})
+  isProduction = false;
+
+  @property({type: String})
+  environment = 'LOCAL';
+
   rootPath: string = ROOT_PATH;
 
   //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [{value: 'en', display_name: 'English'}, {value: 'fr', display_name: 'French'}];
+  languages: DefaultDropdownOption<string>[] = [
+    {value: 'en', display_name: 'English'},
+    {value: 'fr', display_name: 'French'}
+  ];
 
   constructor() {
     super();
@@ -138,7 +148,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           justify-content: space-evenly;
         }
         .logo {
-          margin-left: 20px;
+          margin: 0 10px 0 20px;
         }
         @media (max-width: 380px) {
           .header__item {
@@ -179,7 +189,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             src="${this.rootPath}assets/images/etools-logo-color-white.svg"
             alt="eTools"
           />
-          ${this.isStaging ? html` <div class="envWarning">- STAGING TESTING ENVIRONMENT</div> ` : ''}
+          ${this.isProduction
+            ? ``
+            : html`<div class="envWarning">
+            <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
@@ -194,6 +207,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               hide-search
               allow-outside-scroll
               no-label-float
+              .readonly="${this.langUpdateInProgress}"
               .autoWidth="${true}"
             ></etools-dropdown>
 
@@ -228,12 +242,15 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   connectedCallback(): void {
     super.connectedCallback();
     this.setBgColor();
-    this.isStaging = isStagingServer();
+    this.checkEnvironment();
   }
 
   stateChanged(state: IRootState): void {
-    if (state) {
-      this.profile = state.user.data as IEtoolsUserModel;
+    if (state && state.user && state.user.data) {
+      this.profile = state.user.data;
+      if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
+        this.selectedLanguage = this.profile.preferences?.language;
+      }
     }
   }
 
@@ -255,6 +272,14 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
+
+    if (this.profile && this.profile.preferences?.language != language) {
+      this.langUpdateInProgress = true;
+      store
+        .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
+        .catch((err: any) => parseRequestErrorsAndShowAsToastMsgs(err, this))
+        .finally(() => (this.langUpdateInProgress = false));
+    }
   }
 
   refresh(e: CustomEvent): void {
@@ -264,6 +289,17 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       localStorage.clear();
       etoolsCustomDexieDb.delete().finally(() => window.location.reload());
     }
+  }
+
+  protected checkEnvironment(): void {
+    this.isProduction = isProductionServer();
+    this.environment = isDevServer()
+      ? 'DEVELOPMENT'
+      : isDemoServer()
+      ? 'DEMO'
+      : isStagingServer()
+      ? 'STAGING'
+      : 'LOCAL';
   }
 
   protected profileSaveLoadingMsgDisplay(show = true): void {
