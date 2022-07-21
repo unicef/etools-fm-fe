@@ -252,7 +252,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     if (state && state.user && state.user.data) {
       this.profile = state.user.data;
       if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
-        this.selectedLanguage = this.profile.preferences?.language;
+        // consider language to be 'en' for users having 'en-us' or other english variants
+        this.selectedLanguage = this.profile.preferences?.language.startsWith('en-')
+          ? 'en'
+          : this.profile.preferences?.language;
       }
     }
   }
