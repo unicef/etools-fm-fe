@@ -201,8 +201,11 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               .options="${this.languages}"
               option-label="display_name"
               option-value="value"
-              @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.languageChanged(detail.selectedItem.value)}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                if (detail.selectedItem) {
+                  this.languageChanged(detail.selectedItem.value);
+                }
+              }}"
               trigger-value-change-event
               hide-search
               allow-outside-scroll
