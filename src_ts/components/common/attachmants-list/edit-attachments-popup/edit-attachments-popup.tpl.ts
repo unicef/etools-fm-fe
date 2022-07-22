@@ -64,6 +64,9 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
             .uploadEndpoint="${getEndpoint(ATTACHMENTS_STORE).url}"
             @upload-finished="${(event: CustomEvent) => this.fileSelected(event.detail)}"
             @upload-started="${() => (this.uploadInProgress = true)}"
+            @delete-file="${() => {
+              this.selectedFileId = null;
+            }}"
           ></etools-upload>
         </div>
       </div>
