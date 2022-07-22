@@ -22,6 +22,10 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private additionalEndpointData: GenericObject = {};
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
+  static get styles(): CSSResultArray {
+    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
+  }
+
   set dialogData(data: IAttachmentPopupData) {
     if (!data) {
       return;
@@ -133,10 +137,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         console.log(e);
       }
     }
-  }
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
   }
 
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {
