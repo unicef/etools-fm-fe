@@ -1,0 +1,577 @@
+{
+  "ACTIVITIES_LIST": {
+    "TITLE": "Activités",
+    "CREATE_NEW_BUTTON": "Créer",
+    "COLUMNS": {
+      "REFERENCE_NUMBER": "Numéro de référence",
+      "START_DATE": "Date de début",
+      "LOCATION_AND_SITE": "Lieu & Site",
+      "MONITOR_TYPE": "FM Principal",
+      "VISIT_LEAD": "Leader de la Visite",
+      "TEAM_MEMBERS": "Membres de l'Equipe",
+      "CHECKLISTS_COUNT": "Listes de contrôle",
+      "STATUS": "Statut"
+    },
+    "REFERENCE_NO": "Numéro de référence",
+    "FILTERS": {
+      "MONITOR_TYPE": "FM Principal",
+      "TEAM_MEMBERS": "Membres de l'équipe",
+      "VISIT_LEAD": "Leader de la Visite",
+      "LOCATION": "Lieu",
+      "SITE": "Site",
+      "PARTNERS": "Partenaires",
+      "TPM_PARTNERS": "Partenaires TPM",
+      "INTERVENTIONS": "PD/SSFA",
+      "CP_OUTPUTS": "Extrants PP",
+      "STATUS": "Statut",
+      "START_DATE": "Date de début",
+      "END_DATE": "Date de fin",
+      "OFFICE": "Bureau de terrain"
+    }
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "Points à noter",
+    "PD_SSFA_DETAILS": {
+      "TITLE": "Détails PD/SSFA",
+      "REFERENCE_NUMBER": "Numéro de référence",
+      "DOCUMENT_TYTLE": "Titre du Document",
+      "TYPE": "Type",
+      "PROGRESS_REPORTS": "Rapports d'avancement"
+    },
+    "SUMMARY": {
+      "OVERALL_FINDING_PLACEHOLDER": "Entrez le résultat",
+      "ADDITIONAL_BUTTONS": {
+        "OFF_TRACK": "En Retard",
+        "ON_TRACK": "En Bonne Voie",
+        "NOT_MONITORED": "Pas Monitoré"
+      }
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "NO_QUESTIONS_FOUND": "Aucune question applicable n'a été trouvée pour cette section. Veuillez les ajouter dans les templates ou sélectionner une autre section dans les détails de l'activité",
+    "DETAIL_INPUT_PLACEHOLDER": "Entrez les détails spécifiques à sonder",
+    "ADD_DETAIL": "Ajouter les détails",
+    "COLUMNS": {
+      "TEXT": "Élément de la liste de contrôle",
+      "DETAILS": "Détails spécifiques à sonder",
+      "METHODS": "Méthodes"
+    }
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "Ajouter la liste de contrôle",
+    "EDIT_CHECKLIST": "Editer la liste de contrôle",
+    "COLUMNS": {
+      "TEAM_MEMBER": "Membre de l'équipe",
+      "METHOD_TYPE": "Méthode",
+      "INFO_SOURCE": "Source de l'information"
+    },
+    "LABELS": {
+      "METHOD": "Méthode",
+      "INFO_SOURCE": "Source de l'information"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "Détails de l'activité",
+    "OFFICE": "Bureaux de terrain",
+    "VISIT_LETTER": "Lettre de la visite",
+    "MONITOR_INFO": "Informations sur le moniteur",
+    "ENTRIES_TO_MONITOR": "Entités à monitorer",
+    "START_DATE": "Date de début",
+    "END_DATE": "Date de fin",
+    "SECTIONS": "Sections",
+    "TEAM_MEMBERS": "Membres de l'équipe",
+    "VISIT_LEAD": "Leader de la Visite",
+    "TPM_PARTNER": "Partenaire de monitorage tiers",
+    "USER_TYPE": "Le principal moniteur terrain est ",
+    "USER_TYPES": {
+      "STAFF": "Staff",
+      "TPM": "Moniteur Tiers"
+    },
+    "PARTNER": "Partenaire",
+    "CP_OUTPUT": "Extrant PP",
+    "INTERVENTION": "Intervention",
+    "PARTNERS": "Partenaires",
+    "PARTNER_ORGANIZATION": "Organisation Partenaire",
+    "CP_OUTPUTS": "Extrant PP",
+    "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
+    "INTERVENTIONS_FOUND": "{{ count }} PD/SSFA ont été trouvées:",
+    "INTERVENTIONS": "PD/SSFAs",
+    "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SSFA sélectionné:",
+    "ADD_ENTRY": "Ajouter un nouvel élément",
+    "ADD_PARTNER": "Ajouter un partenaire",
+    "ADD_CP_OUTPUT": "Ajouter un Extrant PP",
+    "ADD_INTERVENTION": "Ajouter un PD/SSFA",
+    "REJECTION_NOTE": "Note de rejet",
+    "REPORT_REJECTION_REASON": "Raison du rejet du rapport",
+    "CANCELLATION_NOTE": "Note d'annulation",
+    "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
+    "EXPORT": "EXPORT"
+  },
+  "ACTIVITY_ITEM": {
+    "NEW_ACTIVITY": "Nouvelle activité",
+    "STATUS_CHANGE": "Changer de statut",
+    "TRANSITIONS": {
+      "mark_details_configured": "Suivant",
+      "mark_checklist_configured": "Revue",
+      "ASSIGN_AND_ACCEPT": "Assigner & Accepter",
+      "assign": "Assigner",
+      "accept": "Accepter",
+      "mark_data_collected": "Finaliser",
+      "submit_report": "Soumettre",
+      "complete": "Terminer",
+      "reject": "Rejeter",
+      "cancel": "Annuler",
+      "reject_report": "Rejeter le rapport"
+    },
+    "REASON_FOR_TRANSITION": {
+      "cancel": {
+        "LABEL": "Commentaire d'annulation",
+        "TITLE": "Motif d'annulation"
+      },
+      "reject": {
+        "LABEL": "Commentaire de rejet",
+        "TITLE": "Motif du rejet"
+      },
+      "reject_report": {
+        "LABEL": "Commentaire de rejet du rapport",
+        "TITLE": "Motif de rejet du rapport"
+      }
+    },
+    "STATUSES": {
+      "draft": "Draft",
+      "checklist": "Liste de contrôle",
+      "review": "Revue",
+      "assigned": "Assigné",
+      "data_collection": "Collecte de données",
+      "report_finalization": "Finalisation du rapport",
+      "submitted": "Examen du rapport",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "TABS": {
+      "details": "Détails",
+      "attachments": "Pièces Jointes",
+      "checklist": "Liste de contrôle",
+      "review": "Revue",
+      "collect": "Collecte de données",
+      "summary": "Résumé",
+      "additional-info": "Information additionnelle",
+      "action-points": "Points d'action"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "TITLE": "Pièces jointes de la liste de contrôle",
+      "METHOD": "Méthode",
+      "DATA_COLLECTOR": "Collecteur de données",
+      "METHOD_TYPE": "Type de méthode",
+      "RELATED_TO": "Relatif à",
+      "RELATED_NAME": "Nom associé",
+      "DATE_UPLOADED": "Date de téléchargement",
+      "DOCUMENT_TYPE": "Type de Document",
+      "FILE_ATTACHMENT": "Pièce jointe"
+    },
+    "ACTION_POINTS": {
+      "TITLE": "Points d'action",
+      "REFERENCE": "Numéro de référence",
+      "DESCRIPTION": "Description",
+      "ASSIGNEE": "Cessionnaire",
+      "SECTION_OFFICE": "Section / Office",
+      "STATUS": "Statut",
+      "DUE_ON": "Dû le",
+      "PRIORITY": "Priorité",
+      "RELATED_TO": "Relatif à",
+      "CONTENT": "Contenu",
+      "POPUP": {
+        "HIGH_PRIORITY": "Haute Priorité",
+        "ADD_AP": "Create Action Point",
+        "EDIT_AP": "Edit Action Point"
+      }
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_POPUP_TITLE": "Pièces jointes pour",
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "SINGLE": "{{ count }} fichier",
+        "MULTIPLE": "{{ count }} fichiers",
+        "DEFAULT": "Télécharger des fichiers"
+      },
+      "DELETE_ITEM": "Effacer l'élément?"
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "TEXT": "Élément de la liste de contrôle",
+      "DETAILS": "Détails spécifiques à sonder"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "Source d'information"
+  },
+  "CO_OVERVIEW": {
+    "CP_OUTCOME": "Résultat PP",
+    "CP_INDICATORS": "Indicateurs PP",
+    "TARGET": "Cible",
+    "PARTNERS": "Les partenaires",
+    "PROG_VISITS": "M.R. Visites Prog.",
+    "PARTNERSHIPS": "Partenariats",
+    "SINCE_LAST_VISIT": "Jours depuis la dernière visite du site",
+    "PD_OUTPUT": "Extrant DP",
+    "SSFA_EXPECTED_RESULT": "Résultat attendu SSFA",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "Sélectionnez le résultat du PP"
+    }
+  },
+  "ISSUE_TRACKER": {
+    "CP_OUTPUT": "Extrant PP",
+    "PARTNER": "Partenaire",
+    "LOCATION": "Emplacement",
+    "SITE": "Site",
+    "LOCATION_SITE": "Emplacement & Site",
+    "IS_NEW": "Afficher uniquement les nouveaux",
+    "RELATED_TO_TYPE": "Points à noter liés à",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "Extrant PP",
+      "PARTNER": "Partenaire",
+      "LOCATION": "Emplacement/Site"
+    },
+    "STATUS": "Statut",
+    "STATUSES": {
+      "NEW": "Nouveau",
+      "PAST": "Ancien"
+    },
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "Sélectionnez un Extrant du PP",
+      "PARTNER": "Sélectionnez un partenaire",
+      "LOCATION": "Sélectionnez l'emplacement",
+      "SITE": "Sélectionnez le site",
+      "STATUS": "Sélectionnez le statut",
+      "ISSUE": "Saisir les points à noter"
+    },
+    "POPUP_TITLE": "Ajouter des points à noter",
+    "POPUP_ERROR_CP_OUTPUT": "Le Extrant du PP n'est pas fournie",
+    "POPUP_ERROR_PARTNER": "Le partenaire n'est pas fourni",
+    "POPUP_ERROR_LOCATION": "L'emplacement n'est pas fourni",
+    "RELATED_TO": "Relatif à",
+    "NAME": "Nom",
+    "ISSUE": "Points à noter",
+    "ATTACHMENTS": "Pièce(s) jointe(s)",
+    "ATTACHMENT": "Pièce jointe",
+    "UPLOAD_LABEL": "Pièce jointe",
+    "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Remarques à afficher",
+    "LAST_MODIFIED_BY": "Dernière modification par",
+    "AUTHOR": "Points à noter soulevés par",
+    "CLOSED_BY": "Remarques Fermé par",
+    "ATTACHMENTS_FILES": {
+      "SINGLE": "FICHIER",
+      "MULTIPLE": "FICHIERS"
+    },
+    "ADD_POPUP_TITLE": "Add Points of Note",
+    "EDIT_POPUP_TITLE": "Edit Points of Note"
+  },
+  "RATIONALE": {
+    "TITLE": "Justification du suivi annuel sur le terrain",
+    "POPUP_TITLE": "Justification",
+    "YEAR_DRD_LABEL": "Année",
+    "YEAR_DRD_PLACEHOLDER": "Sélectionnez l'année",
+    "LABELS": {
+      "PRIORITIZATION": "Critères de priorisation",
+      "METHODOLOGY": "Notes et normes méthodologiques",
+      "MODALITIES": "Modalités",
+      "VISITS": "Visites cibles pour l'année",
+      "PARTNER_ENGAGEMENT": "Engagement des partenaires",
+      "OTHER": "Autres commentaires"
+    },
+    "PLACEHOLDERS": {
+      "PRIORITIZATION": "Saisir les critères de priorisation",
+      "METHODOLOGY": "Saisir les noteset normes méthodologiques",
+      "MODALITIES": "Entrez les modalités",
+      "VISITS": "Entrez les visites cibles pour l'année",
+      "PARTNER_ENGAGEMENT": "Saisir l'engagement des partenaires",
+      "OTHER": "Saisir d'autres commentaires"
+    },
+    "HELPER_TEXTS": {
+      "PRIORITIZATION": "Par exemple : les Zones géographiques où les résultats sont les plus contestés, extrants associés à une réponse humanitaire",
+      "METHODOLOGY": "Par exemple : Variations sur la méthodologie standard et la justification, spécifications sur le nombre minimum et le type de groupes de discussion",
+      "MODALITIES": "Par exemple : Personnel, VNU, Contractuels, TPM pour entreprendre le suivi sur le terrain",
+      "PARTNER_ENGAGEMENT": "Par exemple : tout arrangement établi pour des visites conjointes"
+    },
+    "ANNUAL_FM_RATIONALE": {
+      "LAST_EDITED": "Dernière modification par {{ user }} on {{ date }}"
+    }
+  },
+  "TEMPLATES": {
+    "FILTERS": {
+      "LEVEL_LABEL": "Sélectionnez le niveau",
+      "LEVEL_PLACEHOLDER": "Sélectionnez le niveau",
+      "OUTPUT_LABEL": "Sélectionnez l'extrant du PP",
+      "OUTPUT_PLACEHOLDER": "Sélectionnez l'extrant du PP",
+      "PARTNER_LABEL": "Sélectionnez un partenaire",
+      "PARTNER_PLACEHOLDER": "Sélectionnez un partenaire",
+      "INTERVENTION_LABEL": "Sélectionnez le PD/SSFA",
+      "INTERVENTION_PLACEHOLDER": "Sélectionnez le PD/SSFA"
+    },
+    "COLUMNS": {
+      "DETAILS": "Détails spécifiques à sonder",
+      "TEXT": "Élément de la liste de contrôle",
+      "METHODS": "Méthodes"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "Entrer des détails spécifiques à sonder",
+    "ADD_DETAIL": "Ajouter des détails"
+  },
+  "QUESTIONS": {
+    "EDIT_POPUP_TITLE": "Modifier la question",
+    "ADD_POPUP_TITLE": "Ajouter une question",
+    "PLACEHOLDERS": {
+      "QUESTION": "Saisir le texte de la question",
+      "SECTIONS": "Sélectionnez les rubriques",
+      "METHODS": "Sélectionnez les méthodes de collecte",
+      "CATEGORY": "Sélectionnez le groupe",
+      "LEVEL": "Sélectionnez le niveau cible de la question",
+      "ANSWER_TYPE": "Sélectionnez le type de réponse",
+      "SCALE_SIZE": "Sélectionnez la taille de l'échelle",
+      "GROUP": "Select Group"
+    },
+    "LABELS": {
+      "QUESTION": "Question",
+      "LEVEL": "Niveau cible des questions",
+      "SECTIONS": "Rubriques",
+      "METHODS": "Méthodes de collecte",
+      "CATEGORY": "Groupe",
+      "ANSWER_TYPE": "Type de réponse",
+      "IS_HACT": "Compte pour HACT",
+      "IS_ACTIVE": "C'est actif",
+      "SCALE_SIZE": "Taille de l'échelle",
+      "GROUP": "Group"
+    },
+    "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
+    "COLUMNS": {
+      "TEXT": "Question",
+      "LEVEL": "Niveau cible des questions",
+      "METHODS": "Méthodes de collecte",
+      "ANSWER_TYPE": "Type de réponse",
+      "CATEGORY": "Groupe",
+      "IS_ACTIVE": "C'est actif",
+      "SECTIONS": "Rubriques",
+      "IS_HACT": "Compte pour HACT",
+      "ANSWER_OPTIONS": "Détails du rapport"
+    },
+    "DETAILS": {
+      "1": "Rubriques",
+      "2": "Compte pour HACT",
+      "3": "Détails du rapport"
+    },
+    "LEVEL": {
+      "PARTNER": "Partenaire",
+      "OUTPUT": "Extrant du PP",
+      "INTERVENTION": "PD/SSFA"
+    }
+  },
+  "SITES": {
+    "PLACEHOLDERS": {
+      "SEARCH": "Rechercher un lieu ou un site",
+      "NAME": "Entrez le nom du site",
+      "STATUS": "Sélectionnez le statut du site",
+      "ADMIN_LOCATION": "Champ vide"
+    },
+    "LABELS": {
+      "NAME": "Nom du site",
+      "STATUS": "Statut est actif",
+      "ADMIN_LOCATION": "Emplacement administratif parent"
+    },
+    "SHOW_INACTIVE": "Afficher les sites inactifs",
+    "TABLE_CAPTION": "Emplacements des sites",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "Emplacement administratif parent",
+      "STATUS": "Statut est actif",
+      "NAME": "Nom du site"
+    },
+    "REMOVE_CONFIRMATION": "Voulez-vous vraiment supprimer cet emplacement spécifique au site?",
+    "SELECTED_SITE": "Site sélectionné",
+    "ADD_SL": "Ajouter un emplacement spécifique au site",
+    "EDIT_SL": "Modifier l'emplacement spécifique du site",
+    "STATUS": {
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif"
+    }
+  },
+  "MAIN": {
+    "SAVING_DATA_IN_PROCESS": "La sauvegarde des données",
+    "LOADING_DATA_IN_PROCESS": "Chargement des données",
+    "LOADING_FILTERS_DATA": "Chargement des filtres",
+    "REMOVING_DATA_IN_PROCESS": "Suppression de données",
+    "EMPTY_FIELD": "Champ vide",
+    "LATITUDE": "Latitude",
+    "LONGITUDE": "Longitude",
+    "BUTTONS": {
+      "ADD": "Ajouter",
+      "SAVE": "Sauvegarder",
+      "DELETE": "Supprimer",
+      "CONFIRM": "Confirmer",
+      "CANCEL": "Annuler",
+      "OK": "Ok"
+    },
+    "ENTER": "Entrer",
+    "UPLOAD": "télécharger un fichier",
+    "DOWNLOAD": "Télécharger",
+    "SUPPORT": "Support"
+  },
+  "LEVELS_OPTIONS": {
+    "PARTNER": "Partenaire",
+    "OUTPUT": "Extrant du PP",
+    "INTERVENTION": "PD/SSFA"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "TEXT": "Text",
+    "NUMBER": "Number",
+    "NUMBER_INTEGER_TYPE": "Integer number",
+    "NUMBER_FLOAT_TYPE": "Float number",
+    "BOOL": "Boolean",
+    "LIKERT_SCALE": "Likert Scale"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "Staff",
+    "TPM": "TPM"
+  },
+  "ACTIVITY_STATUSES": {
+    "DRAFT": "Ébauche",
+    "CHECKLIST": "Liste de contrôle",
+    "REVIEW": "Revue",
+    "ASSIGNED": "Attribué",
+    "DATA_COLLECTION": "Collecte de données",
+    "REPORT_FINALIZATION": "Finalisation du rapport",
+    "SUBMITTED": "Examen du rapport",
+    "COMPLETED": "Terminé",
+    "CANCELLED": "Annulé"
+  },
+  "ATTACHMENTS_LIST": {
+    "TITLE": "Pièces jointes",
+    "RELATED_DOCUMENTS": "Documents connexes",
+    "REPORT_ATTACHMENTS": "Pièces jointes du rapport",
+    "EDIT_POPUP_TITLE": "Modifier la pièce jointe",
+    "ADD_POPUP_TITLE": "Ajouter une pièce jointe",
+    "DELETE_POPUP_TITLE": "Supprimer la pièce jointe?",
+    "FILE_TYPE_LABEL": "Type de document",
+    "FILE_TYPE_PLACEHOLDER": "Sélectionnez le type de document",
+    "COLUMNS": {
+      "CREATED": "Date de téléchargement",
+      "FILE_TYPE": "Type de document",
+      "FILE": "Pièce jointe"
+    }
+  },
+  "NAVIGATION_MENU": {
+    "TITLE": "Surveillance sur le terrain",
+    "MANAGEMENT": "Management",
+    "TEMPLATES": "Modèles",
+    "VISITS": "Visites",
+    "ANALYSIS": "Analyse",
+    "COMMUNITY_CHANNELS": "eTools Community Channels",
+    "KNOWLEDGE_BASE": "Base de connaissances",
+    "DISCUSSION": "Discussion",
+    "INFORMATION": "Information",
+    "PROFILEANDSIGNOUT": "Profile and Sign out",
+    "REFRESH": "Refresh",
+    "SUPPORT": "Support",
+    "APPSELECTOR": "App Selector",
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence"
+  },
+  "FILTERS_ELEMENT": {
+    "TITLE": "Filtres",
+    "CLEAR_ALL": "TOUT EFFACER"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "Site",
+    "MISSING_SITES": {
+      "NO_SITES": "Il n'y a pas de sites pour cet emplacement.",
+      "ADD_MISSING": "Vous pouvez ajouter des sites manquants dans "
+    },
+    "NO_SEARCH_RESULTS": {
+      "NO_LOCATIONS": "Aucun emplacement ou site trouvé. ",
+      "CHANGE_REQUEST": "Veuillez modifier votre requête de recherche"
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "HEADER": "Oops! Vous rencontrez une erreur 404",
+    "CONTENT_DOESNT_EXIST": "La page que vous recherchez ne semble pas exister. Revenir en arrière ",
+    "HOME": "Accueil",
+    "TRY_AGAIN": " et essayez à nouveau?"
+  },
+  "MANAGEMENT": {
+    "TITLE": "Management",
+    "EXPORT": "Export",
+    "NAVIGATION_TABS": {
+      "SITES": "Sites",
+      "RATIONALE": "Justification"
+    }
+  },
+  "TEMPLATES_NAV": {
+    "TITLE": "Modèles",
+    "NAVIGATION_TABS": {
+      "QUESTIONS": "Questions",
+      "ISSUE_TRACKER": "Points à noter",
+      "TEMPLATE": "Modèles"
+    }
+  },
+  "ANALYZE": {
+    "TITLE": "Analyser",
+    "NAVIGATION_TABS": {
+      "MONITORING_ACTIVITY": "Activité de surveillance",
+      "COUNTRY_OVERVIEW": "Aperçu du pays"
+    },
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": " des visites sont terminées",
+      "NAVIGATION_TABS": {
+        "BY_PARTNER": "Par Partenaire",
+        "BY_PD_SSFA": "Par PD/SSFA",
+        "BY_CP_OUTPUT": "Par Extrant du PP",
+        "BY_LOCATION": "Par Emplacement"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "TITLE": "Visites éligibles pour la visite programmatique HACT",
+        "PARTNER": "Partenaire",
+        "HACT_ELIGIBLE_VISITS": "Visites éligibles HACT",
+        "VISIT": "Visite",
+        "CP_OUTPUT": "Extrant du PP",
+        "PD_SSFA": "PD/SSFA",
+        "VISIT_END_DATE": "Date de fin de visite"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "TITLE": "Couverture géographique",
+        "COMPLETED_VISITS": "Visites terminées",
+        "NO_VISITS": "Aucune visite"
+      },
+      "COVERAGE": {
+        "TITLE": "Couverture des partenariats actifs",
+        "CP_OUTPUT": {
+          "LABEL": "Affichage des Extrants du PP qui peuvent être monitorés au niveau de la communauté."
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "% d'achèvement ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "% d'achèvement ↓",
+          "COMPLETED_TASKS": "Tâches terminées",
+          "MINIMUM_REQUIRED": "Visites programmatiques minimales requises",
+          "SORT_BY": "Trier par",
+          "MINIMUM_REQUIRED_VISITS": "Minimum requis ",
+          "DAYS_SINCE_LAST_VISIT": "Jours depuis la dernière visite "
+        },
+        "PD_SSFA": {
+          "LABEL": "Affichage des PD/SSFA actifs délivrant des extrants de PP qui peuvent être monitorés au niveau communautaire. (S'il n'y a eu aucune visite pour un PD/SSFA, le « Jours depuis la dernière visite » est le nombre de jours depuis le début du PD/SSFA)"
+        },
+        "OPEN_ISSUES": {
+          "TITLE": "Notes ouvertes et points d'action",
+          "ISSUES": "Points à noter",
+          "ACTION_POINTS": "Points d'action"
+        },
+        "SHARED_TAB": {
+          "DAYS_SINCE_LAST_VISIT": "Jours depuis la dernière visite",
+          "AVERAGE_DAYS_SINCE": "Nombre moyen de jours entre les visites"
+        }
+      }
+    }
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "Terminé",
+    "PLANNED": "Planifié",
+    "COMPLETED_VISITS": "Visites terminées",
+    "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
+  },
+  "THIS_FIELD_IS_REQUIRED": "This field is required"
+}

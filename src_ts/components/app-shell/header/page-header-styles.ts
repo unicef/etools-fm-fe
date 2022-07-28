@@ -49,6 +49,7 @@ export const pageHeaderStyles: CSSResult = css`
     color: var(--nonprod-text-warn-color);
     font-weight: 700;
     font-size: 18px;
+    line-height: 20px;
   }
 
   @media (min-width: 850px) {
