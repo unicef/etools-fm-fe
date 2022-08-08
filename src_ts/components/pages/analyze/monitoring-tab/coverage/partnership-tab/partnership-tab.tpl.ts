@@ -49,7 +49,7 @@ export function template(this: PartnershipTab): TemplateResult {
 
       <!--  Progress bars list  -->
       ${repeat(
-        this.partnersCoverage.sort((a: PartnersCoverage, b: PartnersCoverage) => this.sortProgressBars(a, b)),
+        this.paginatedPartnersCoverage.sort((a: PartnersCoverage, b: PartnersCoverage) => this.sortProgressBars(a, b)),
         (item: PartnersCoverage) => item.id,
         (item: PartnersCoverage) => html`
           <div class="progressbar-container">
@@ -70,6 +70,16 @@ export function template(this: PartnershipTab): TemplateResult {
           </div>
         `
       )}
+      <etools-data-table-footer
+        .pageSize="${this.paginator.page_size}"
+        .pageNumber="${this.paginator.page}"
+        .totalResults="${this.paginator.count}"
+        .visibleRange="${this.paginator.visible_range}"
+        @visible-range-changed="${this.visibleRangeChanged}"
+        @page-size-changed="${this.pageSizeChanged}"
+        @page-number-changed="${this.pageNumberChanged}"
+      >
+      </etools-data-table-footer>
     </div>
   `;
 }
