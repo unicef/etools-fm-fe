@@ -561,5 +561,7 @@
     "COMPLETED_VISITS": "Completed Visits",
     "PLANNED_VISITS": "Planned Visits (Up to December)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required"
+  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "LOCATION_TO_BE_VISITED": "Location to be visited",
+  "SITE_TO_BE_VISITED": "Site To Be Visited"
 }
