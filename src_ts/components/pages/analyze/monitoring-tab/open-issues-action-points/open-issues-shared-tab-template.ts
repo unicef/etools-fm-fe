@@ -2,11 +2,28 @@ import {CSSResult, customElement, html, LitElement, property, TemplateResult} fr
 import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
 import {translate} from 'lit-translate';
+import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
+import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 
 @customElement('open-issues-shared-tab-template')
-export class OpenIssuesSharedTabTemplate extends LitElement {
-  @property() data!: OpenIssuesActionPoints[];
+export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {
+  @property() paginatedData!: OpenIssuesActionPoints[];
   @property() loading = false;
+  private _data!: OpenIssuesActionPoints[];
+
+  @property()
+  get data(): OpenIssuesActionPoints[] {
+    return this._data;
+  }
+
+  set data(val: OpenIssuesActionPoints[]) {
+    this._data = val;
+    this.paginator = {...this.paginator, page: 1, page_size: 10, count: this._data.length};
+  }
+
+  static get styles(): CSSResult {
+    return openIssuesSharedTabTemplateStyles;
+  }
 
   render(): TemplateResult {
     return html`
@@ -30,7 +47,7 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
             >
           </div>
         </div>
-        ${this.data.map(
+        ${this.paginatedData.map(
           (item: OpenIssuesActionPoints) => html`
             <div class="progressbar-host">
               <!--  Top Label  -->
@@ -57,6 +74,16 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
             </div>
           `
         )}
+        <etools-data-table-footer
+          .pageSize="${this.paginator.page_size}"
+          .pageNumber="${this.paginator.page}"
+          .totalResults="${this.paginator.count}"
+          .visibleRange="${this.paginator.visible_range}"
+          @visible-range-changed="${this.visibleRangeChanged}"
+          @page-size-changed="${this.pageSizeChanged}"
+          @page-number-changed="${this.pageNumberChanged}"
+        >
+        </etools-data-table-footer>
       </div>
     `;
   }
@@ -74,7 +101,14 @@ export class OpenIssuesSharedTabTemplate extends LitElement {
     }
   }
 
-  static get styles(): CSSResult {
-    return openIssuesSharedTabTemplateStyles;
+  _paginate(pageNumber: number, pageSize: number) {
+    if (!this.data) {
+      return;
+    }
+    this.paginatedData = (this.data || []).slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+  }
+
+  paginatorChanged() {
+    this._paginate(this.paginator.page, this.paginator.page_size);
   }
 }
