@@ -43,8 +43,8 @@ export class PartnershipTab extends PaginationMixin(LitElement) {
     this.partnersCoverageUnsubscribe = store.subscribe(
       partnersCoverageSelector((partnersCoverage: PartnersCoverage[]) => {
         this.partnersCoverage = partnersCoverage;
-        this.paginator = {...this.paginator, page: 1, page_size: 10, count: this.partnersCoverage.length};
         this.onSelectionChange(this.selectedSortingOption);
+        this.paginator = {...this.paginator, page: 1, page_size: 10, count: this.partnersCoverage.length};
         this.loading = false;
       })
     );

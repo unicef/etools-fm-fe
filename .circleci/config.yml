@@ -73,4 +73,4 @@ workflows:
                 - master
                 - staging
                 - develop
-                - form-builder-new-features
+                - analyze-tab-pagination
