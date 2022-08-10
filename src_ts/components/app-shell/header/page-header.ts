@@ -224,6 +224,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             .sections="${this.profileDrSections}"
             .offices="${this.profileDrOffices}"
             .users="${this.profileDrUsers}"
+            .language="${this.selectedLanguage}"
             .profile="${this.profile ? {...this.profile} : {}}"
             @save-profile="${this.handleSaveProfile}"
             @sign-out="${this._signOut}"
@@ -279,6 +280,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   languageChanged(language: string): void {
     use(language).finally(() => store.dispatch(new ActiveLanguageSwitched(language)));
 
+    if (language !== this.selectedLanguage) {
+      this.selectedLanguage = language;
+    }
     if (this.profile && this.profile.preferences?.language != language) {
       this.langUpdateInProgress = true;
       store
