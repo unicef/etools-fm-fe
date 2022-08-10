@@ -88,6 +88,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
 
         <!--     Upload button     -->
         <etools-upload-multi
+          .uploadBtnLabel="${translate('UPLOAD_FILE')}"
           class="with-padding"
           ?hidden="${this.readonly}"
           @upload-finished="${({detail}: CustomEvent) => this.attachmentsUploaded(detail)}"

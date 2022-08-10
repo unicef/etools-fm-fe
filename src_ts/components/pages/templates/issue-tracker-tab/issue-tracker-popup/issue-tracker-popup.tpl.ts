@@ -217,6 +217,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             ? ''
             : html`
                 <etools-upload-multi
+                  .uploadBtnLabel="${translate('UPLOAD_FILE')}"
                   class="with-padding"
                   ?hidden="${this.readonly}"
                   @upload-finished="${({detail}: CustomEvent) => this.attachmentsUploaded(detail)}"
