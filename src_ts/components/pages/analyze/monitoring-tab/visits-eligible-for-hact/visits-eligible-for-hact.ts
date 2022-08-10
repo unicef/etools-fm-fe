@@ -12,10 +12,12 @@ import {store} from '../../../../../redux/store';
 import {template} from './visits-eligible-for-hact.tpl';
 import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {fireEvent} from '../../../../utils/fire-custom-event';
+import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 @customElement('visits-eligible-for-hact')
-export class VisitsEligibleForHact extends LitElement {
+export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
   @property() items!: HactVisits[];
+  @property() paginatedItems!: HactVisits[];
   @property() loading = false;
   private hactVisitsUnsubscribe!: Unsubscribe;
 
@@ -58,9 +60,21 @@ export class VisitsEligibleForHact extends LitElement {
         });
         break;
     }
+    this.paginator.page = 1;
+    this._paginate(1, this.paginator.page_size);
     this.requestUpdate();
   }
 
+  _paginate(pageNumber: number, pageSize: number) {
+    if (!this.items) {
+      return;
+    }
+    this.paginatedItems = (this.items || []).slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+  }
+
+  paginatorChanged() {
+    this._paginate(this.paginator.page, this.paginator.page_size);
+  }
   _resizeMap(): void {
     fireEvent(this, 'resize-map');
   }
