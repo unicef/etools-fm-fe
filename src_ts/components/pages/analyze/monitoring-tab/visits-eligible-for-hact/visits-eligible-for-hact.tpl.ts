@@ -3,6 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`
@@ -107,6 +108,16 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
             </etools-data-table-row>
           `
         )}
+        <etools-data-table-footer
+          .pageSize="${this.paginator.page_size}"
+          .pageNumber="${this.paginator.page}"
+          .totalResults="${this.paginator.count}"
+          .visibleRange="${this.paginator.visible_range}"
+          @visible-range-changed="${this.visibleRangeChanged}"
+          @page-size-changed="${this.pageSizeChanged}"
+          @page-number-changed="${this.pageNumberChanged}"
+        >
+        </etools-data-table-footer>
       </div>
     </section>
   `;

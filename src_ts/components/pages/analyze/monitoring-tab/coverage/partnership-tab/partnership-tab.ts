@@ -7,6 +7,8 @@ import {partnersCoverageSelector} from '../../../../../../redux/selectors/monito
 import {partnershipTabStyles} from './partnership-tab.styles';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
+import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 enum SortingTypes {
   COMPLETED_ASCEND_SORTING_TYPE = 'COMPLETED_ASCEND_SORTING_TYPE',
@@ -25,11 +27,13 @@ const RAW_SORTING_OPTIONS: DefaultDropdownOption<SortingTypes>[] = [
 ];
 
 @customElement('partnership-tab')
-export class PartnershipTab extends LitElement {
+export class PartnershipTab extends PaginationMixin(LitElement) {
   @property() partnersCoverage!: PartnersCoverage[];
+  @property() paginatedPartnersCoverage!: PartnersCoverage[];
   @property() sortingOptions: DefaultDropdownOption<SortingTypes>[] = applyDropdownTranslation(RAW_SORTING_OPTIONS);
   @property() selectedSortingOption: SortingTypes = SortingTypes.COMPLETED_ASCEND_SORTING_TYPE;
   @property() loading = false;
+
   private readonly partnersCoverageUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
   constructor() {
@@ -40,12 +44,16 @@ export class PartnershipTab extends LitElement {
       partnersCoverageSelector((partnersCoverage: PartnersCoverage[]) => {
         this.partnersCoverage = partnersCoverage;
         this.onSelectionChange(this.selectedSortingOption);
+        this.paginator = {...this.paginator, page: 1, page_size: 10, count: this.partnersCoverage.length};
         this.loading = false;
       })
     );
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector(() => (this.sortingOptions = applyDropdownTranslation(RAW_SORTING_OPTIONS)))
     );
+  }
+  static get styles(): CSSResult {
+    return partnershipTabStyles;
   }
 
   render(): TemplateResult {
@@ -71,7 +79,17 @@ export class PartnershipTab extends LitElement {
     this.selectedSortingOption = detail;
   }
 
-  static get styles(): CSSResult {
-    return partnershipTabStyles;
+  _paginate(pageNumber: number, pageSize: number) {
+    if (!this.partnersCoverage) {
+      return;
+    }
+    this.paginatedPartnersCoverage = (this.partnersCoverage || []).slice(
+      (pageNumber - 1) * pageSize,
+      pageNumber * pageSize
+    );
+  }
+
+  paginatorChanged() {
+    this._paginate(this.paginator.page, this.paginator.page_size);
   }
 }
