@@ -66,6 +66,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
 
       <etools-data-table-footer
         id="footer"
+        .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${this.pageSize || undefined}"
         .pageNumber="${this.pageNumber || undefined}"
         .totalResults="${this.interventions ? this.interventions.length : 0}"
