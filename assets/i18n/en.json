@@ -565,5 +565,6 @@
   "LOCATION_TO_BE_VISITED": "Location to be visited",
   "SITE_TO_BE_VISITED": "Site To Be Visited",
   "ROWS_PER_PAGE": "Rows per page:",
-  "UPLOAD_FILE": "Upload File"
+  "UPLOAD_FILE": "Upload File",
+  "SELECT": "Select"
 }

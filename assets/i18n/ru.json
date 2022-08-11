@@ -562,5 +562,6 @@
   "LOCATION_TO_BE_VISITED": "Место для посещения",
   "SITE_TO_BE_VISITED": "Сайт для посещения",
   "ROWS_PER_PAGE": "Rows per page:",
-  "UPLOAD_FILE": "Upload File"
+  "UPLOAD_FILE": "Upload File",
+  "SELECT": "Select"
 }

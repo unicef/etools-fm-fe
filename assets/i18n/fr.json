@@ -577,5 +577,6 @@
   "LOCATION_TO_BE_VISITED": "Lieu à visiter",
   "SITE_TO_BE_VISITED": "Site à visiter",
   "ROWS_PER_PAGE": "Lignes per page:",
-  "UPLOAD_FILE": "Télécharger un fichier"
+  "UPLOAD_FILE": "Télécharger un fichier",
+  "SELECT": "Sélectionner"
 }
