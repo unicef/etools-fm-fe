@@ -563,5 +563,6 @@
   "SITE_TO_BE_VISITED": "Сайт для посещения",
   "ROWS_PER_PAGE": "Rows per page:",
   "UPLOAD_FILE": "Upload File",
-  "SELECT": "Select"
+  "SELECT": "Select",
+  "CANCEL": "Cancel"
 }

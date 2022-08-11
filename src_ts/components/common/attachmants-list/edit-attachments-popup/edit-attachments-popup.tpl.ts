@@ -28,6 +28,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .cancelBtnText="${translate('CANCEL')}"
       no-padding
       ?disable-confirm-btn="${this.uploadInProgress}"
       ?disable-dismiss-btn="${this.uploadInProgress}"

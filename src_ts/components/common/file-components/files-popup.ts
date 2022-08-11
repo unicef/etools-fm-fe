@@ -32,6 +32,7 @@ export class FilesPopup extends LitElement {
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         hide-confirm-btn
+        .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate('ATTACHMENTS_LIST.TITLE')}"
         @close="${this.onClose}"
       >

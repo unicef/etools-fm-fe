@@ -54,6 +54,7 @@ export class RemoveDataCollectPopup extends LitElement {
         theme="confirmation"
         ?opened="${this.dialogOpened}"
         ok-btn-text="${translate('MAIN.BUTTONS.DELETE')}"
+        .cancelBtnText="${translate('CANCEL')}"
         @confirm-btn-clicked="${() => this.processRequest()}"
         @close="${this.onClose}"
       >
