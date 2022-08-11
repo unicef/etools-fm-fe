@@ -420,12 +420,12 @@
     "INTERVENTION": "PD/SSFA"
   },
   "ANSWER_TYPE_OPTIONS": {
-    "TEXT": "Text",
-    "NUMBER": "Number",
-    "NUMBER_INTEGER_TYPE": "Integer number",
-    "NUMBER_FLOAT_TYPE": "Float number",
-    "BOOL": "Boolean",
-    "LIKERT_SCALE": "Likert Scale"
+    "TEXT": "Texte",
+    "NUMBER": "Nombre",
+    "NUMBER_INTEGER_TYPE": "Nombre entier",
+    "NUMBER_FLOAT_TYPE": "Nombre flottant",
+    "BOOL": "Booléen",
+    "LIKERT_SCALE": "Échelle de Likert"
   },
   "MONITOR_TYPES": {
     "STAFF": "Staff",
