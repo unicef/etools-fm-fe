@@ -42,6 +42,7 @@ export class ChecklistAttachments extends LitElement {
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         .okBtnText="${translate('MAIN.BUTTONS.CONFIRM')}"
+        .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate(this.popupTitle as string)}"
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
