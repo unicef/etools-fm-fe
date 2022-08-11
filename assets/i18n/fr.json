@@ -410,7 +410,7 @@
       "OK": "Ok"
     },
     "ENTER": "Entrer",
-    "UPLOAD": "télécharger un fichier",
+    "UPLOAD": "Télécharger un fichier",
     "DOWNLOAD": "Télécharger",
     "SUPPORT": "Support"
   },
@@ -573,5 +573,11 @@
     "COMPLETED_VISITS": "Visites terminées",
     "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required"
+  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "LOCATION_TO_BE_VISITED": "Lieu à visiter",
+  "SITE_TO_BE_VISITED": "Site à visiter",
+  "ROWS_PER_PAGE": "Lignes per page:",
+  "UPLOAD_FILE": "Télécharger un fichier",
+  "SELECT": "Sélectionner",
+  "CANCEL": "Annuler"
 }

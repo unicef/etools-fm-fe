@@ -21,6 +21,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       dialog-title="${translate(this.editedData.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
+      .cancelBtnText="${translate('CANCEL')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       no-padding
     >

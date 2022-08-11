@@ -62,7 +62,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
           <etools-dropdown
             class="readonly-required"
             .selected="${simplifyValue(this.editedData.location)}"
-            label="Location To Be Visited"
+            label="${translate('LOCATION_TO_BE_VISITED')}"
             .options="${this.locations}"
             option-label="name"
             option-value="id"
@@ -75,7 +75,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
           <etools-dropdown
             class="readonly-required"
             .selected="${simplifyValue(this.editedData.location_site)}"
-            label="Site To Be Visited"
+            label="${translate('SITE_TO_BE_VISITED')}"
             .options="${this.sitesList}"
             option-label="name"
             option-value="id"

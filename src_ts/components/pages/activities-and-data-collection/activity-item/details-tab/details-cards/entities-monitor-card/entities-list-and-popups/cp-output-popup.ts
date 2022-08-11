@@ -68,6 +68,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
         no-padding
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
+        .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate('ACTIVITY_DETAILS.ADD_CP_OUTPUT')}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.addCpOutput()}"

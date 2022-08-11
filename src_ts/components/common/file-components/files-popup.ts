@@ -32,13 +32,21 @@ export class FilesPopup extends LitElement {
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         hide-confirm-btn
+        .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate('ATTACHMENTS_LIST.TITLE')}"
         @close="${this.onClose}"
       >
         <div class="layout vertical files">
           ${repeat(
             this.attachments,
-            (attachment: IAttachment) => html` <etools-upload readonly .fileUrl="${attachment.file}"></etools-upload> `
+            (attachment: IAttachment) =>
+              html`
+                <etools-upload
+                  .uploadBtnLabel="${translate('UPLOAD_FILE')}"
+                  readonly
+                  .fileUrl="${attachment.file}"
+                ></etools-upload>
+              `
           )}
         </div>
       </etools-dialog>

@@ -43,6 +43,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="search-filters"
         .filterLoadingInProcess="${this.filtersLoading}"
         .filters="${this.filters || []}"
+        .language="${this.activeLanguage}"
         @filter-change="${(event: CustomEvent) => updateQueryParams({...event.detail, page: 1})}"
       ></etools-filters>
     </section>
@@ -167,6 +168,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <!-- Table Paginator -->
       <etools-data-table-footer
         id="footer"
+        .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
         .pageNumber="${(this.queryParams && this.queryParams.page) || undefined}"
         .totalResults="${this.count}"

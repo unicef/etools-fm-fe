@@ -24,6 +24,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       @confirm-btn-clicked="${() => this.save()}"
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
+      .cancelBtnText="${translate('CANCEL')}"
       no-padding
     >
       <etools-loading

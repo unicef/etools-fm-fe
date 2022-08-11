@@ -558,5 +558,11 @@
     "COMPLETED_VISITS": "Localized Completed Visits",
     "PLANNED_VISITS": "Localized Planned Visits (Up to December)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required"
+  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "LOCATION_TO_BE_VISITED": "Место для посещения",
+  "SITE_TO_BE_VISITED": "Сайт для посещения",
+  "ROWS_PER_PAGE": "Rows per page:",
+  "UPLOAD_FILE": "Upload File",
+  "SELECT": "Select",
+  "CANCEL": "Cancel"
 }

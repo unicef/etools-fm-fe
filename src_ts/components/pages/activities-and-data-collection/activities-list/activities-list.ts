@@ -42,6 +42,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   @property() rootPath: string = ROOT_PATH;
   @property() filtersLoading = false;
   @property() filters: IEtoolsFilter[] | null = null;
+  @property() activeLanguage = 'en';
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
@@ -94,7 +95,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     );
 
     this.activeLanguageUnsubscribe = store.subscribe(
-      activeLanguageSelector(() => {
+      activeLanguageSelector((lang: string) => {
+        this.activeLanguage = lang;
         this.activityTypes = applyDropdownTranslation(MONITOR_TYPES);
         this.activityStatuses = applyDropdownTranslation(ACTIVITY_STATUSES);
         this.filtersData = {

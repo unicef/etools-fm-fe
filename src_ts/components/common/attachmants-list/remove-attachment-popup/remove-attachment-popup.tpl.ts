@@ -15,6 +15,7 @@ export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
       theme="confirmation"
       ?opened="${this.dialogOpened}"
       ok-btn-text="${translate('MAIN.BUTTONS.DELETE')}"
+      .cancelBtnText="${translate('CANCEL')}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
     >
