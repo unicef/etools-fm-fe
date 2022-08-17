@@ -24,7 +24,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       @confirm-btn-clicked="${() => this.save()}"
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
-      .cancelBtnText="${translate('CANCEL')}"
+      .cancelBtnText="${translate('MAIN.BUTTONS.CANCEL')}"
       no-padding
     >
       <etools-loading
@@ -37,9 +37,9 @@ export function template(this: ActionPointsPopup): TemplateResult {
         .value="${this.editedData.description}"
         @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
         required
-        label="Description"
+        label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DESCRIPTION')}"
         max-rows="3"
-        placeholder="Enter description"
+        placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ENTER_DESCRIPTION')}"
         ?invalid="${this.errors && this.errors.description}"
         .errorMessage="${this.errors && this.errors.description}"
         @focus="${() => this.resetFieldError('description')}"
@@ -55,8 +55,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.updateModelValue('assigned_to', detail.selectedItem && detail.selectedItem.id)}"
           ?trigger-value-change-event="${this.users.length}"
           required
-          label="Assignee"
-          placeholder="Assign to"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ASSIGNEE')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ASSIGN_TO')}"
           .options="${this.users}"
           option-label="name"
           option-value="id"
@@ -73,7 +73,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           class="without-border"
           value="${this.editedData.due_date || ''}"
           fire-date-has-changed
-          label="Due on"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DUE_ON')}"
           @date-has-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('due_date', detail.date ? formatDate(detail.date) : null)}"
           dynamic-align
@@ -88,8 +88,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.updateModelValue('section', detail.selectedItem && detail.selectedItem.id)}"
           ?trigger-value-change-event="${this.sections.length}"
           required
-          label="Section"
-          placeholder="Select Section"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SECTION')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_SECTION')}"
           .options="${this.sections}"
           option-label="name"
           option-value="id"
@@ -109,8 +109,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.updateModelValue('office', detail.selectedItem && detail.selectedItem.id)}"
           ?trigger-value-change-event="${this.offices && this.offices.length}"
           required
-          label="Offices"
-          placeholder="Select Office"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.OFFICES')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_OFFICE')}"
           .options="${this.offices}"
           option-label="name"
           option-value="id"
@@ -130,8 +130,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.setSelectedRelatedTo(detail.selectedItem && detail.selectedItem.value)}"
           trigger-value-change-event
           required
-          label="Related To"
-          placeholder="Select Related To"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.RELATED_TO')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_RELATED_TO')}"
           .options="${this.levels}"
           option-label="display_name"
           option-value="value"
@@ -151,8 +151,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.updateEditableDataRelationContent(detail.selectedItem)}"
           ?trigger-value-change-event="${this.getRelatedNames().length}"
           required
-          label="Related Name"
-          placeholder="Select Related Name"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.RELATED_NAME')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_RELATED_NAME')}"
           .options="${this.getRelatedNames()}"
           option-label="name"
           option-value="id"
@@ -173,8 +173,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
           }}"
           ?trigger-value-change-event="${this.categories && this.categories.length}"
           required
-          label="Categories"
-          placeholder="Select Category"
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.CATEGORIES')}"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_CATEGORY')}"
           .options="${this.categories}"
           option-label="description"
           option-value="id"

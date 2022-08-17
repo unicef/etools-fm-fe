@@ -182,9 +182,24 @@
       "RELATED_TO": "Relatif à",
       "CONTENT": "Contenu",
       "POPUP": {
+        "DESCRIPTION": "Description",
+        "ENTER_DESCRIPTION": "Entrez la description",
+        "ASSIGNEE": "Cessionnaire",
+        "ASSIGN_TO": "Affecter à",
+        "DUE_ON": "Dû le",
+        "SECTION": "Section",
+        "SELECT_SECTION": "Sélectionner la section",
+        "OFFICES": "Bureaux",
+        "SELECT_OFFICE": "Sélectionnez Bureau",
+        "RELATED_TO": "Relative à",
+        "SELECT_RELATED_TO": "Sélectionner Relative à",
+        "RELATED_NAME": "Nom Relative",
+        "SELECT_RELATED_NAME": "Sélectionner Nom Relative",
+        "CATEGORIES": "Catégories",
+        "SELECT_CATEGORY": "Sélectionnez la catégorie",
         "HIGH_PRIORITY": "Haute Priorité",
-        "ADD_AP": "Create Action Point",
-        "EDIT_AP": "Edit Action Point"
+        "ADD_AP": "Créer un point d'action",
+        "EDIT_AP": "Modifier le point d'action"
       }
     },
     "DATA_COLLECTION": {

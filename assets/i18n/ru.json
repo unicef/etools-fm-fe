@@ -172,9 +172,24 @@
       "RELATED_TO": "Localized Related to",
       "CONTENT": "Localized Content",
       "POPUP": {
+        "DESCRIPTION": "Localized Description",
+        "ENTER_DESCRIPTION": "Localized Enter description",
+        "ASSIGNEE": "Localized Assignee",
+        "ASSIGN_TO": "Localized Assign to",
+        "DUE_ON": "Localized Due on",
+        "SECTION": "Localized Section",
+        "SELECT_SECTION": "Localized Select Section",
+        "OFFICES": "Localized Offices",
+        "SELECT_OFFICE": "Localized Select Office",
+        "RELATED_TO": "Localized Related To",
+        "SELECT_RELATED_TO": "Localized Select Related To",
+        "RELATED_NAME": "Localized Related Name",
+        "SELECT_RELATED_NAME": "Localized Select Related Name",
+        "CATEGORIES": "Localized Categories",
+        "SELECT_CATEGORY": "Localized Select Category",
         "HIGH_PRIORITY": "Localized High Priority",
-        "ADD_AP": "Create Action Point",
-        "EDIT_AP": "Edit Action Point"
+        "ADD_AP": "Localized Create Action Point",
+        "EDIT_AP": "Localized Edit Action Point"
       }
     },
     "DATA_COLLECTION": {
