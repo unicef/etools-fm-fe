@@ -202,7 +202,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
               <div class="layout horizontal center">
-                <div class="option-index">${option.value}:</div>
+                <div class="option-index">${option.translation ? option.translation : option.value}:</div>
                 <paper-input
                   no-label-float
                   class="validate-input flex-7"

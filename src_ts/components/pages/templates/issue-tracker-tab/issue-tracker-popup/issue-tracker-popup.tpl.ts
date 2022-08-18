@@ -80,6 +80,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             trigger-value-change-event
             hide-search
             allow-outside-scroll
+            .language="${this.activeLanguage}"
           ></etools-dropdown>
         </div>
 
@@ -104,6 +105,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('partner', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>
@@ -130,6 +132,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @focus="${() => this.resetFieldError('cp_output')}"
                   @tap="${() => this.resetFieldError('cp_output')}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>
@@ -156,6 +159,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
                 <etools-dropdown
@@ -175,6 +179,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>

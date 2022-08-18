@@ -594,5 +594,7 @@
   "ROWS_PER_PAGE": "Lignes per page:",
   "UPLOAD_FILE": "Télécharger un fichier",
   "SELECT": "Sélectionner",
-  "CANCEL": "Annuler"
+  "CANCEL": "Annuler",
+  "TRUE": "Vrai",
+  "FALSE": "Faux"
 }

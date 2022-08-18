@@ -582,5 +582,7 @@
   "ROWS_PER_PAGE": "Rows per page:",
   "UPLOAD_FILE": "Upload File",
   "SELECT": "Select",
-  "CANCEL": "Cancel"
+  "CANCEL": "Cancel",
+  "TRUE": "True",
+  "FALSE": "False"
 }

@@ -28,6 +28,8 @@ import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 import {getErrorsArray} from '@unicef-polymer/etools-ajax/ajax-error-parser';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
+import {get as getTranslation} from lit-translate;
+import { translate } from 'lit-translate';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -216,8 +218,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
     if (type === BOOL_TYPE) {
       this.editedData.options = [
-        {label: '', value: true},
-        {label: '', value: false}
+        {label: '', value: true, translation: getTranslation('TRUE')},
+        {label: '', value: false, translation: getTranslation('FALSE')}
       ];
     } else if (type === SCALE_TYPE) {
       this.editedData.options = new Array(3)
