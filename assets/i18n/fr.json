@@ -596,5 +596,7 @@
   "SELECT": "Sélectionner",
   "CANCEL": "Annuler",
   "TRUE": "Vrai",
-  "FALSE": "Faux"
+  "FALSE": "Faux",
+  "VIEW": "Voir",
+  "FILTER_BY_SECTION": "Filtrer Par Section"
 }

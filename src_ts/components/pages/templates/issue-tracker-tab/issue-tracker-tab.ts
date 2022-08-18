@@ -50,7 +50,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   private routeUnsubscribe!: Unsubscribe;
   private dataUnsubscribe!: Unsubscribe;
   private isLoadUnsubscribe!: Unsubscribe;
-  private readonly activeLanguageUnsubscribe: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
