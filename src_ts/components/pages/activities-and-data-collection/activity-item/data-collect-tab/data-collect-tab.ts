@@ -43,6 +43,7 @@ export class DataCollectTab extends LitElement {
   @property() protected dataCollectionMethods: EtoolsMethod[] = [];
   @property() protected methodsLoading = false;
   @property() protected dataLoading = true;
+  @property() protected processCreationInProgress = false;
 
   private checklistUnsubscribe!: Unsubscribe;
   private activityUnsubscribe!: Unsubscribe;
@@ -128,6 +129,7 @@ export class DataCollectTab extends LitElement {
               <div slot="actions">
                 <paper-icon-button
                   @tap="${() => this.onCreateChecklist(method)}"
+                  ?disabled="${this.processCreationInProgress}"
                   ?hidden="${this.isReadonly}"
                   icon="icons:add-box"
                   class="panel-button"
@@ -230,7 +232,12 @@ export class DataCollectTab extends LitElement {
   }
 
   onCreateChecklist(method: EtoolsMethod): void {
+    if (this.processCreationInProgress) {
+      return;
+    }
+    this.processCreationInProgress = true;
     this.processCreate(method).then(({payload}: IAsyncAction) => {
+      this.processCreationInProgress = false;
       if (payload && payload.id) {
         updateAppLocation(`${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${payload.id}`);
       }
