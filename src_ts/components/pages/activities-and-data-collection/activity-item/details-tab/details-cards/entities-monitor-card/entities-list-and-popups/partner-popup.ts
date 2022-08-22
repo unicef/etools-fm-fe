@@ -40,6 +40,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         no-padding
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
+        .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate('ACTIVITY_DETAILS.ADD_PARTNER')}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.addPartner()}"

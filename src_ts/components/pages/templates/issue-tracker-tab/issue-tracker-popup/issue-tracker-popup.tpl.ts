@@ -29,6 +29,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       .okBtnText="${translate(this.isNew ? 'MAIN.BUTTONS.ADD' : 'MAIN.BUTTONS.SAVE')}"
+      .cancelBtnText="${translate('CANCEL')}"
       .hideConfirmBtn="${this.isReadOnly}"
       dialog-title="${translate(this.isNew ? 'ISSUE_TRACKER.ADD_POPUP_TITLE' : 'ISSUE_TRACKER.EDIT_POPUP_TITLE')}"
       @iron-overlay-closed="${({target}: CustomEvent) => this.resetData(target)}"
@@ -79,6 +80,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             trigger-value-change-event
             hide-search
             allow-outside-scroll
+            .language="${this.activeLanguage}"
           ></etools-dropdown>
         </div>
 
@@ -103,6 +105,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('partner', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>
@@ -129,6 +132,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @focus="${() => this.resetFieldError('cp_output')}"
                   @tap="${() => this.resetFieldError('cp_output')}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>
@@ -155,6 +159,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
                 <etools-dropdown
@@ -174,6 +179,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
+                  .language="${this.activeLanguage}"
                 >
                 </etools-dropdown>
               </div>
@@ -217,6 +223,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             ? ''
             : html`
                 <etools-upload-multi
+                  .uploadBtnLabel="${translate('UPLOAD_FILE')}"
                   class="with-padding"
                   ?hidden="${this.readonly}"
                   @upload-finished="${({detail}: CustomEvent) => this.attachmentsUploaded(detail)}"

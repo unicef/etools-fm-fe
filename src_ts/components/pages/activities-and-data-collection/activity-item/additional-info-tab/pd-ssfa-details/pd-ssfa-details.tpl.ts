@@ -56,7 +56,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
               <div class="col-data flex-1">
                 <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/progress" target="_blank">
                   <paper-icon-button icon="icons:launch"></paper-icon-button>
-                  <label class="link-text">VIEW</label>
+                  <label class="link-text" style="text-transform: uppercase">${translate('VIEW')}</label>
                 </a>
               </div>
             </div>
@@ -66,6 +66,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
 
       <etools-data-table-footer
         id="footer"
+        .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${this.pageSize || undefined}"
         .pageNumber="${this.pageNumber || undefined}"
         .totalResults="${this.interventions ? this.interventions.length : 0}"

@@ -21,6 +21,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
       ?show-spinner="${this.savingInProcess}"
       .spinnerText="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .cancelBtnText="${translate('CANCEL')}"
     >
       <div class="container">
         <div class="layout horizontal">

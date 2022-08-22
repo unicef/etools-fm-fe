@@ -53,7 +53,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
 
         <!-- Table Header -->
         <etools-data-table-header no-title no-collapse>
-          <div class="checkbox-container">
+          <div class="checkbox-container layout horizontal center-center">
             <paper-checkbox
               ?checked="${this.allQuestionsEnabled}"
               class="nolabel"
