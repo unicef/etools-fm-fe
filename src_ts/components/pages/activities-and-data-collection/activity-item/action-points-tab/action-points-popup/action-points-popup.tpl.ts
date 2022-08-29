@@ -202,7 +202,9 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ? html`
               <div class="without-border flex">
                 <a class="link-cell action-point-link" href="${this.url}" target="_blank"
-                  >Go To action points to complete<paper-icon-button icon="icons:launch"></paper-icon-button
+                  >${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.GO_TO_ACTION_POINTS_TO_COMPLETE')}<paper-icon-button
+                    icon="icons:launch"
+                  ></paper-icon-button
                 ></a>
               </div>
             `

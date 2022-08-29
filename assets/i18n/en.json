@@ -190,7 +190,8 @@
         "SELECT_CATEGORY": "Select Category",
         "HIGH_PRIORITY": "High Priority",
         "ADD_AP": "Create Action Point",
-        "EDIT_AP": "Edit Action Point"
+        "EDIT_AP": "Edit Action Point",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Go To action points to complete"
       }
     },
     "DATA_COLLECTION": {
