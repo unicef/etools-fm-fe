@@ -199,7 +199,8 @@
         "SELECT_CATEGORY": "Sélectionnez la catégorie",
         "HIGH_PRIORITY": "Haute Priorité",
         "ADD_AP": "Créer un point d'action",
-        "EDIT_AP": "Modifier le point d'action"
+        "EDIT_AP": "Modifier le point d'action",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Aller aux points d'action pour terminer"
       }
     },
     "DATA_COLLECTION": {
