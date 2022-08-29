@@ -189,7 +189,8 @@
         "SELECT_CATEGORY": "Localized Select Category",
         "HIGH_PRIORITY": "Localized High Priority",
         "ADD_AP": "Localized Create Action Point",
-        "EDIT_AP": "Localized Edit Action Point"
+        "EDIT_AP": "Localized Edit Action Point",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Localized Go To action points to complete"
       }
     },
     "DATA_COLLECTION": {
