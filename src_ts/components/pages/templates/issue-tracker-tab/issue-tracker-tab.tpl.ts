@@ -27,7 +27,8 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                 .minWidth="160px"
                 .autoWidth="${true}"
                 horizontal-align="left"
-                no-dynamic-align></div>
+                no-dynamic-align
+                .language="${this.activeLanguage}"></div>
         <div class="filter">
             <etools-dropdown-multi
                 label="${translate('ISSUE_TRACKER.PARTNER')}"
@@ -42,7 +43,8 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                 min-width="160px"
                 .autoWidth="${true}"
                 horizontal-align="left"
-                no-dynamic-align></etools-dropdown-multi></div>
+                no-dynamic-align
+                .language="${this.activeLanguage}"></etools-dropdown-multi></div>
         <div>
             <etools-dropdown-multi
                 label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
@@ -57,7 +59,8 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                 .minWidth="160px"
                 .autoWidth="${true}"
                 horizontal-align="left"
-                no-dynamic-align></etools-dropdown-multi></div>
+                no-dynamic-align
+                .language="${this.activeLanguage}"></etools-dropdown-multi></div>
         <div class="toggle-button-control filter">
             <paper-toggle-button
                 .checked="${this.queryParams && this.queryParams.status}"
@@ -184,6 +187,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
 
         <etools-data-table-footer
                 id="footer"
+                .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
                 .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
                 .pageNumber="${(this.queryParams && this.queryParams.page) || undefined}"
                 .totalResults="${this.count}"

@@ -21,6 +21,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       dialog-title="${translate(this.editedData.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
+      .cancelBtnText="${translate('CANCEL')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       no-padding
     >
@@ -201,7 +202,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
               <div class="layout horizontal center">
-                <div class="option-index">${option.value}:</div>
+                <div class="option-index">${option.translation ? option.translation : option.value}:</div>
                 <paper-input
                   no-label-float
                   class="validate-input flex-7"

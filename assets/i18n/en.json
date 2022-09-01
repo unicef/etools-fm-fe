@@ -173,9 +173,25 @@
       "RELATED_TO": "Related to",
       "CONTENT": "Content",
       "POPUP": {
+        "DESCRIPTION": "Description",
+        "ENTER_DESCRIPTION": "Enter description",
+        "ASSIGNEE": "Assignee",
+        "ASSIGN_TO": "Assign to",
+        "DUE_ON": "Due on",
+        "SECTION": "Section",
+        "SELECT_SECTION": "Select Section",
+        "OFFICES": "Offices",
+        "SELECT_OFFICE": "Select Office",
+        "RELATED_TO": "Related To",
+        "SELECT_RELATED_TO": "Select Related To",
+        "RELATED_NAME": "Related Name",
+        "SELECT_RELATED_NAME": "Select Related Name",
+        "CATEGORIES": "Categories",
+        "SELECT_CATEGORY": "Select Category",
         "HIGH_PRIORITY": "High Priority",
         "ADD_AP": "Create Action Point",
-        "EDIT_AP": "Edit Action Point"
+        "EDIT_AP": "Edit Action Point",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Go To action points to complete"
       }
     },
     "DATA_COLLECTION": {
@@ -561,5 +577,15 @@
     "COMPLETED_VISITS": "Completed Visits",
     "PLANNED_VISITS": "Planned Visits (Up to December)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required"
+  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "LOCATION_TO_BE_VISITED": "Location to be visited",
+  "SITE_TO_BE_VISITED": "Site To Be Visited",
+  "ROWS_PER_PAGE": "Rows per page:",
+  "UPLOAD_FILE": "Upload File",
+  "SELECT": "Select",
+  "CANCEL": "Cancel",
+  "TRUE": "True",
+  "FALSE": "False",
+  "VIEW": "View",
+  "FILTER_BY_SECTION": "Filter By Section"
 }

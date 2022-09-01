@@ -45,7 +45,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
               ></etools-loading>
               <etools-dropdown-multi
                 .selectedValues="${this.selectedOptions}"
-                label="Filter By Section"
+                label="${translate('FILTER_BY_SECTION')}"
                 .options="${this.sections}"
                 option-label="name"
                 option-value="id"
@@ -56,6 +56,7 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
                 @remove-selected-item="${(event: Event) => this.onRemoveSelectedItem(event)}"
                 hide-search
                 allow-outside-scroll
+                .language="${this.activeLanguage}"
               >
               </etools-dropdown-multi>
             </div>

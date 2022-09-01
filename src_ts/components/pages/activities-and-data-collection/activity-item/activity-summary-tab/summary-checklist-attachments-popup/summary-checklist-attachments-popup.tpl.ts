@@ -22,6 +22,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
+      .cancelBtnText="${translate('CANCEL')}"
       .hideConfirmBtn="${this.readonly}"
       dialog-title="${this.popupTitle}"
       @close="${this.onClose}"
@@ -88,6 +89,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
 
         <!--     Upload button     -->
         <etools-upload-multi
+          .uploadBtnLabel="${translate('UPLOAD_FILE')}"
           class="with-padding"
           ?hidden="${this.readonly}"
           @upload-finished="${({detail}: CustomEvent) => this.attachmentsUploaded(detail)}"

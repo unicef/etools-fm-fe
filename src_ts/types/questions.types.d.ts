@@ -21,6 +21,7 @@ type QuestionOption = {
   value: string | boolean;
   label: string;
   _delete?: true;
+  translation: string;
 };
 
 type EditedQuestionOption = Partial<QuestionOption>;

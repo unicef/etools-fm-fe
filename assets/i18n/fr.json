@@ -182,9 +182,25 @@
       "RELATED_TO": "Relatif à",
       "CONTENT": "Contenu",
       "POPUP": {
+        "DESCRIPTION": "Description",
+        "ENTER_DESCRIPTION": "Entrez la description",
+        "ASSIGNEE": "Cessionnaire",
+        "ASSIGN_TO": "Affecter à",
+        "DUE_ON": "Dû le",
+        "SECTION": "Section",
+        "SELECT_SECTION": "Sélectionner la section",
+        "OFFICES": "Bureaux",
+        "SELECT_OFFICE": "Sélectionnez Bureau",
+        "RELATED_TO": "Relative à",
+        "SELECT_RELATED_TO": "Sélectionner Relative à",
+        "RELATED_NAME": "Nom Relative",
+        "SELECT_RELATED_NAME": "Sélectionner Nom Relative",
+        "CATEGORIES": "Catégories",
+        "SELECT_CATEGORY": "Sélectionnez la catégorie",
         "HIGH_PRIORITY": "Haute Priorité",
-        "ADD_AP": "Create Action Point",
-        "EDIT_AP": "Edit Action Point"
+        "ADD_AP": "Créer un point d'action",
+        "EDIT_AP": "Modifier le point d'action",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Aller aux points d'action pour terminer"
       }
     },
     "DATA_COLLECTION": {
@@ -410,7 +426,7 @@
       "OK": "Ok"
     },
     "ENTER": "Entrer",
-    "UPLOAD": "télécharger un fichier",
+    "UPLOAD": "Télécharger un fichier",
     "DOWNLOAD": "Télécharger",
     "SUPPORT": "Support"
   },
@@ -420,12 +436,12 @@
     "INTERVENTION": "PD/SSFA"
   },
   "ANSWER_TYPE_OPTIONS": {
-    "TEXT": "Text",
-    "NUMBER": "Number",
-    "NUMBER_INTEGER_TYPE": "Integer number",
-    "NUMBER_FLOAT_TYPE": "Float number",
-    "BOOL": "Boolean",
-    "LIKERT_SCALE": "Likert Scale"
+    "TEXT": "Texte",
+    "NUMBER": "Nombre",
+    "NUMBER_INTEGER_TYPE": "Nombre entier",
+    "NUMBER_FLOAT_TYPE": "Nombre flottant",
+    "BOOL": "Booléen",
+    "LIKERT_SCALE": "Échelle de Likert"
   },
   "MONITOR_TYPES": {
     "STAFF": "Staff",
@@ -573,5 +589,15 @@
     "COMPLETED_VISITS": "Visites terminées",
     "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required"
+  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "LOCATION_TO_BE_VISITED": "Lieu à visiter",
+  "SITE_TO_BE_VISITED": "Site à visiter",
+  "ROWS_PER_PAGE": "Lignes per page:",
+  "UPLOAD_FILE": "Télécharger un fichier",
+  "SELECT": "Sélectionner",
+  "CANCEL": "Annuler",
+  "TRUE": "Vrai",
+  "FALSE": "Faux",
+  "VIEW": "Voir",
+  "FILTER_BY_SECTION": "Filtrer Par Section"
 }

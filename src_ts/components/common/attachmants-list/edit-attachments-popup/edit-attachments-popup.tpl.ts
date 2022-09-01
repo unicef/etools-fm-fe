@@ -28,6 +28,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
+      .cancelBtnText="${translate('CANCEL')}"
       no-padding
       ?disable-confirm-btn="${this.uploadInProgress}"
       ?disable-dismiss-btn="${this.uploadInProgress}"
@@ -59,11 +60,15 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
         ></etools-dropdown>
         <div class="file-upload-container">
           <etools-upload
+            .uploadBtnLabel="${translate('UPLOAD_FILE')}"
             .readonly="${this.editedData && this.editedData.file}"
             .fileUrl="${this.editedData && this.editedData.file}"
             .uploadEndpoint="${getEndpoint(ATTACHMENTS_STORE).url}"
             @upload-finished="${(event: CustomEvent) => this.fileSelected(event.detail)}"
             @upload-started="${() => (this.uploadInProgress = true)}"
+            @delete-file="${() => {
+              this.selectedFileId = null;
+            }}"
           ></etools-upload>
         </div>
       </div>
