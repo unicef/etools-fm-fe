@@ -10,7 +10,7 @@ import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
 import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
 import {isEmpty} from 'ramda';
@@ -26,6 +26,7 @@ import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
+import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -81,6 +82,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property({type: String})
   environment = 'LOCAL';
+
+  @query('#languageSelector') private languageDropdown!: EtoolsDropdownEl;
 
   rootPath: string = ROOT_PATH;
 
@@ -197,6 +200,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         <div class="header__item header__right-group">
           <div class="dropdowns">
             <etools-dropdown
+              id="languageSelector"
               .selected="${this.selectedLanguage}"
               .options="${this.languages}"
               option-label="display_name"
@@ -247,6 +251,11 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     super.connectedCallback();
     this.setBgColor();
     this.checkEnvironment();
+
+    setTimeout(() => {
+      const fitInto = document.querySelector('app-shell')!.shadowRoot!.querySelector('#appHeadLayout');
+      this.languageDropdown.set('fitInto', fitInto);
+    }, 0);
   }
 
   stateChanged(state: IRootState): void {
