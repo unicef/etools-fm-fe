@@ -291,6 +291,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
     if (language !== this.selectedLanguage) {
       this.selectedLanguage = language;
+      // Event caught by self translating npm packages
+      fireEvent(this, 'language-changed', {language});
     }
     if (this.profile && this.profile.preferences?.language != language) {
       this.langUpdateInProgress = true;
