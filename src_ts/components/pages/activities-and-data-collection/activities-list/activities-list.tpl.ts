@@ -43,7 +43,6 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="search-filters"
         .filterLoadingInProcess="${this.filtersLoading}"
         .filters="${this.filters || []}"
-        .language="${this.activeLanguage}"
         @filter-change="${(event: CustomEvent) => updateQueryParams({...event.detail, page: 1})}"
       ></etools-filters>
     </section>

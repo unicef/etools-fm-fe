@@ -46,9 +46,6 @@ export class EtoolsFilters extends LitElement {
   @property()
   filterLoadingInProcess = false;
 
-  @property({type: String})
-  language = 'en';
-
   @query('#filterMenu') paperButton!: PaperMenuButton;
 
   @property({type: Object})
@@ -153,7 +150,6 @@ export class EtoolsFilters extends LitElement {
         horizontal-align="left"
         no-dynamic-align
         enable-none-option
-        .language="${this.language}"
       >
       </etools-dropdown>
     `;
@@ -178,7 +174,6 @@ export class EtoolsFilters extends LitElement {
         .minWidth="${f.minWidth}"
         horizontal-align="left"
         no-dynamic-align
-        .language="${this.language}"
       >
       </etools-dropdown-multi>
     `;
