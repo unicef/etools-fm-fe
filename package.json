@@ -89,7 +89,7 @@
     "ajv": ">6.12.6",
     "follow-redirects": ">=1.14.9",
     "shelljs": ">=0.8.5",
-    "node-fetch": ">=2.6.7",
+    "node-fetch": ">=3.2.10",
     "path-parse": ">=1.0.7",
     "mout": ">=1.2.3",
     "urijs": ">=1.19.11",
