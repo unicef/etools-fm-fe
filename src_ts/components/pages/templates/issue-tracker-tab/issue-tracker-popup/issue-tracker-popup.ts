@@ -50,9 +50,6 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property({type: Boolean})
   autoValidateIssue = false;
 
-  @property({type: String})
-  activeLanguage = 'en';
-
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
   isNew = false;
   isRequest = false;
@@ -101,7 +98,6 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     this.relatedToType = this.editedData.related_to_type || 'cp_output';
     this.originalFiles = clone(data.attachments);
     this.currentFiles = clone(data.attachments);
-    this.activeLanguage = store.getState().activeLanguage.activeLanguage;
   }
 
   render(): TemplateResult {
