@@ -16,7 +16,6 @@ import {geographicCoverageSelector} from '../../../../../redux/selectors/monitor
 import {geographicCoverageStyles} from './geographic-coverage.styles';
 import {reverseNestedArray} from '../../../../utils/map-helper';
 import {equals, clone} from 'ramda';
-import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
 
@@ -24,8 +23,6 @@ const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTupl
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() selectedOptions: string[] = [];
   @property() loading = false;
-  @property({type: String})
-  activeLanguage = 'en';
   @query('#geomap') private mapElement!: HTMLElement;
   lastDispatchedSelectedOptions: string[] = [];
   private polygons: Polygon[] = [];
@@ -34,7 +31,6 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
 
   private _invalidMapSize = false;
   private mapTarget: LatLngTuple = DEFAULT_COORDINATES;
-  private activeLanguageUnsubscribe!: Unsubscribe;
 
   @property({type: Array})
   get invalidMapSize(): boolean {
@@ -68,11 +64,6 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
         }
         this.loading = false;
       }, false)
-    );
-    this.activeLanguageUnsubscribe = store.subscribe(
-      activeLanguageSelector((lang: string) => {
-        this.activeLanguage = lang;
-      })
     );
   }
 
@@ -156,7 +147,6 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.geographicCoverageUnsubscribe();
-    this.activeLanguageUnsubscribe();
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
