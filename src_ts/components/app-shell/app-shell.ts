@@ -59,7 +59,6 @@ dayjs.extend(dayjs_plugin_utc);
 dayjs.extend(dayjs_plugin_isSameOrBefore);
 
 registerTranslateConfig({
-  empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
 
