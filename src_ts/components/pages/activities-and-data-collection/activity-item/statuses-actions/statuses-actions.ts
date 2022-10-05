@@ -28,6 +28,7 @@ export class StatusesActionsComponent extends LitElement {
   @property({type: Number}) activityId: number | null = null;
   @property({type: String}) possibleTransitions: ActivityTransition[] = [];
   @property({type: Boolean, attribute: 'is-staff'}) isStaff = false;
+  @property({type: Boolean}) disableMainBtn = false;
 
   render(): TemplateResult {
     // language=HTML
@@ -79,7 +80,11 @@ export class StatusesActionsComponent extends LitElement {
     const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
-          <paper-button class="${className}" @tap="${() => this.changeStatus(mainTransition)}">
+          <paper-button
+            class="${className}"
+            @tap="${() => this.changeStatus(mainTransition)}"
+            ?disabled="${this.disableMainBtn}"
+          >
             ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
           </paper-button>
         `
