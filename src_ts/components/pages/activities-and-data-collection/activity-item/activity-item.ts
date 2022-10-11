@@ -82,6 +82,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
   @property() activeTab!: string;
+  @property() childInEditMode = false;
+
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
@@ -158,6 +160,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
+            ?disableMainBtn="${this.childInEditMode}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
@@ -190,6 +193,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.addEventListener(
+      'child-in-edit-mode-changed',
+      ((e: CustomEvent) => (this.childInEditMode = e.detail.inEditMode)) as any
+    );
     store.dispatch(new SaveRoute(null));
     this.isLoad = true;
     // On Activity data changes
