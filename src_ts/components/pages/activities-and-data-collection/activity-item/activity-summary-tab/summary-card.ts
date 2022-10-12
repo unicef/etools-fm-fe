@@ -289,7 +289,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       fireEvent(this, 'update-data', {findings, overall});
       this.isEditMode = false;
     }
-    fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
   }
 
   /**
@@ -299,7 +298,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     this.findings = clone(this.originalFindings);
     this.overallInfo = clone(this.originalOverallInfo);
     this.isEditMode = false;
-    fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
   }
 
   /**

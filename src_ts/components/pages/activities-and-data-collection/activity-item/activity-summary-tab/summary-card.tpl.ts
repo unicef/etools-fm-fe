@@ -5,7 +5,6 @@ import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-loading';
 import {translate} from 'lit-translate';
 import {SummaryCard} from './summary-card';
-import {fireEvent} from '../../../../utils/fire-custom-event';
 
 export function template(this: SummaryCard): TemplateResult {
   return html`
@@ -16,10 +15,7 @@ export function template(this: SummaryCard): TemplateResult {
       ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode && !this.updateInProcess}"
       ?hide-edit-button="${this.blockEdit}"
-      @start-edit="${() => {
-        fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: true});
-        this.isEditMode = true;
-      }}"
+      @start-edit="${() => (this.isEditMode = true)}"
       @save="${() => this.saveChanges()}"
       @cancel="${() => this.cancelEdit()}"
     >
