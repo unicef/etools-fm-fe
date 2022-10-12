@@ -2,7 +2,7 @@ import {Reducer} from 'redux';
 import {ActiveLanguageActionTypes, ActiveLanguageTypes} from '../actions/active-language.actions';
 
 const INITIAL_STATE: IActiveLanguageState = {
-  activeLanguage: ''
+  activeLanguage: 'en'
 };
 
 export const activeLanguage: Reducer<IActiveLanguageState, any> = (
