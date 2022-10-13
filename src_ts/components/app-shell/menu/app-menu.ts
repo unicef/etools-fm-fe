@@ -5,7 +5,6 @@ import '@polymer/iron-icons/av-icons.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/paper-ripple/paper-ripple.js';
-import {connect} from 'pwa-helpers/connect-mixin.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '../../utils/fire-custom-event';
@@ -15,9 +14,11 @@ import {hasPermission, Permissions} from '../../../config/permissions';
 import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
-import {get as getTranslation} from 'lit-translate';
+import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {apIcons} from '../../styles/app-icons';
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {get as getTranslation} from 'lit-translate';
 
 /**
  * main menu
@@ -151,13 +152,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         </iron-selector>
 
         <div class="nav-menu-item section-title">
-          <span
-            >${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.COMMUNITY_CHANNELS',
-              'eTools Community Channels'
-            )}</span
-          >
+          <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
         </div>
 
         <a
@@ -251,15 +246,15 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     this.userUnsubscribe();
   }
 
-  // necessary in order to show menu text before language is set and loaded (default text is in 'en')
-  translateKey(lng: string, key: string, defaultText: string): string {
-    return lng ? getTranslation(key) : defaultText;
-  }
-
   stateChanged(state: IRootState): void {
     if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
       this.selectedLanguage = state.activeLanguage.activeLanguage;
     }
+  }
+
+  // necessary in order to show menu text before language is set and loaded (default text is in 'en')
+  translateKey(lng: string, key: string, defaultText: string): string {
+    return lng ? getTranslation(key) : defaultText;
   }
 
   _toggleSmallMenu(): void {

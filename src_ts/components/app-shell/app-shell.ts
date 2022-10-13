@@ -49,8 +49,8 @@ import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
-import {languageIsAvailableInApp} from '../utils/utils';
 import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
+import {languageIsAvailableInApp} from '../utils/utils';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -100,11 +100,11 @@ export class AppShell extends connect(store)(LitElement) {
   @property({type: String})
   currentToastMessage = '';
 
-  @property({type: String})
-  selectedLanguage!: string;
-
   @property()
   globalLoadingMessage: string | null = null;
+
+  @property({type: String})
+  selectedLanguage!: string;
 
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
@@ -154,60 +154,6 @@ export class AppShell extends connect(store)(LitElement) {
     );
   }
 
-  static get styles(): CSSResultArray {
-    return [appDrawerStyles, AppShellStyles, RouterStyles];
-  }
-
-  async connectedCallback(): Promise<void> {
-    super.connectedCallback();
-
-    this.checkAppVersion();
-    installRouter((location: Location) =>
-      store.dispatch<AsyncEffect>(navigate(decodeURIComponent(location.pathname + location.search)))
-    );
-    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
-
-    checkEnvFlags().then(() => store.dispatch<AsyncEffect>(getCurrentUserData()));
-    store.subscribe(
-      globalLoadingSelector((globalLoadingMessage: string | null) => {
-        this.globalLoadingMessage = globalLoadingMessage;
-      })
-    );
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-    // remove toasts notifications listeners
-    this.appToastsNotificationsHelper.removeToastNotificationListeners();
-  }
-
-  firstUpdated(_changedProperties: any): void {
-    super.firstUpdated(_changedProperties);
-
-    setTimeout(() => {
-      window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
-    }, 100);
-  }
-
-  stateChanged(state: IRootState): void {
-    this.routeDetails = state.app.routeDetails;
-    this.mainPage = state.app.routeDetails.routeName;
-    this.subPage = state.app.routeDetails.subRouteName;
-    this.drawerOpened = state.app.drawerOpened;
-    // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
-    this.currentToastMessage = '';
-
-    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
-      this.selectedLanguage = state.activeLanguage.activeLanguage;
-      this.loadLocalization();
-    }
-  }
-
-  async loadLocalization(): Promise<void> {
-    await use(this.selectedLanguage);
-    this.hasLoadedStrings = true;
-  }
-
   setCurrentLanguage(lngCode: string): void {
     let currentLanguage = '';
     if (lngCode) {
@@ -229,6 +175,62 @@ export class AppShell extends connect(store)(LitElement) {
     }
 
     store.dispatch(new ActiveLanguageSwitched(currentLanguage));
+  }
+
+  static get styles(): CSSResultArray {
+    return [appDrawerStyles, AppShellStyles, RouterStyles];
+  }
+
+  async connectedCallback(): Promise<void> {
+    await use('en');
+    this.hasLoadedStrings = true;
+    super.connectedCallback();
+
+    this.checkAppVersion();
+    installRouter((location: Location) =>
+      store.dispatch<AsyncEffect>(navigate(decodeURIComponent(location.pathname + location.search)))
+    );
+    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
+
+    checkEnvFlags().then(() => store.dispatch<AsyncEffect>(getCurrentUserData()));
+    store.subscribe(
+      globalLoadingSelector((globalLoadingMessage: string | null) => {
+        this.globalLoadingMessage = globalLoadingMessage;
+      })
+    );
+  }
+
+  firstUpdated(_changedProperties: any): void {
+    super.firstUpdated(_changedProperties);
+
+    setTimeout(() => {
+      window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
+    }, 100);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    // remove toasts notifications listeners
+    this.appToastsNotificationsHelper.removeToastNotificationListeners();
+  }
+
+  stateChanged(state: IRootState): void {
+    this.routeDetails = state.app.routeDetails;
+    this.mainPage = state.app.routeDetails.routeName;
+    this.subPage = state.app.routeDetails.subRouteName;
+    this.drawerOpened = state.app.drawerOpened;
+    // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
+    this.currentToastMessage = '';
+
+    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+      this.selectedLanguage = state.activeLanguage.activeLanguage;
+      this.loadLocalization();
+    }
+  }
+
+  async loadLocalization(): Promise<void> {
+    await use(this.selectedLanguage);
+    this.hasLoadedStrings = true;
   }
 
   onDrawerToggle(): void {
