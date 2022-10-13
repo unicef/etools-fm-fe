@@ -49,6 +49,8 @@ import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
+import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
+import {languageIsAvailableInApp} from '../utils/utils';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -56,7 +58,9 @@ declare const dayjs_plugin_isSameOrBefore: any;
 dayjs.extend(dayjs_plugin_utc);
 dayjs.extend(dayjs_plugin_isSameOrBefore);
 
-registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
+registerTranslateConfig({
+  loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
+});
 
 // These are the actions needed by this element.
 
@@ -98,6 +102,9 @@ export class AppShell extends connect(store)(LitElement) {
 
   @property()
   globalLoadingMessage: string | null = null;
+
+  @property({type: String})
+  selectedLanguage!: string;
 
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
@@ -141,8 +148,33 @@ export class AppShell extends connect(store)(LitElement) {
         }
         this.user = userData;
         setUser(userData);
+
+        this.setCurrentLanguage(userData.preferences?.language);
       })
     );
+  }
+
+  setCurrentLanguage(lngCode: string): void {
+    let currentLanguage = '';
+    if (lngCode) {
+      lngCode = lngCode.substring(0, 2);
+      if (languageIsAvailableInApp(lngCode)) {
+        currentLanguage = lngCode;
+      } else {
+        console.log(`User profile language ${lngCode} missing`);
+      }
+    }
+    if (!currentLanguage) {
+      const storageLang = localStorage.getItem('defaultLanguage');
+      if (storageLang && languageIsAvailableInApp(storageLang)) {
+        currentLanguage = storageLang;
+      }
+    }
+    if (!currentLanguage) {
+      currentLanguage = 'en';
+    }
+
+    store.dispatch(new ActiveLanguageSwitched(currentLanguage));
   }
 
   static get styles(): CSSResultArray {
@@ -166,6 +198,10 @@ export class AppShell extends connect(store)(LitElement) {
         this.globalLoadingMessage = globalLoadingMessage;
       })
     );
+  }
+
+  firstUpdated(_changedProperties: any): void {
+    super.firstUpdated(_changedProperties);
 
     setTimeout(() => {
       window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
@@ -185,6 +221,16 @@ export class AppShell extends connect(store)(LitElement) {
     this.drawerOpened = state.app.drawerOpened;
     // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
+
+    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+      this.selectedLanguage = state.activeLanguage.activeLanguage;
+      this.loadLocalization();
+    }
+  }
+
+  async loadLocalization(): Promise<void> {
+    await use(this.selectedLanguage);
+    this.hasLoadedStrings = true;
   }
 
   onDrawerToggle(): void {

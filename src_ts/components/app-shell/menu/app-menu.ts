@@ -17,6 +17,8 @@ import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {apIcons} from '../../styles/app-icons';
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {get as getTranslation} from 'lit-translate';
 
 /**
  * main menu
@@ -24,7 +26,7 @@ import {apIcons} from '../../styles/app-icons';
  * @customElement
  */
 @customElement('app-menu')
-export class AppMenu extends MatomoMixin(LitElement) {
+export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: String, attribute: 'selected-option'})
   selectedOption = '';
 
@@ -33,6 +35,8 @@ export class AppMenu extends MatomoMixin(LitElement) {
 
   @property({type: Boolean, attribute: 'small-menu'})
   smallMenu = false;
+
+  @property() selectedLanguage!: string;
 
   private userUnsubscribe!: Unsubscribe;
   private userLoaded = false;
@@ -44,7 +48,9 @@ export class AppMenu extends MatomoMixin(LitElement) {
       ${apIcons}
 
       <div class="menu-header">
-        <span id="app-name" class="app-name"> ${translate('NAVIGATION_MENU.TITLE')} </span>
+        <span id="app-name" class="app-name">
+          ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
+        </span>
 
         <span class="ripple-wrapper main">
           <iron-icon
@@ -56,7 +62,7 @@ export class AppMenu extends MatomoMixin(LitElement) {
         </span>
 
         <paper-tooltip for="menu-header-top-icon" position="right">
-          ${translate('NAVIGATION_MENU.TITLE')}
+          ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
         </paper-tooltip>
 
         <span class="chev-right">
@@ -86,8 +92,10 @@ export class AppMenu extends MatomoMixin(LitElement) {
             tracker="Visits"
           >
             <iron-icon id="page1-icon" icon="assignment"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right"> ${translate('NAVIGATION_MENU.VISITS')} </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.VISITS')}</div>
+            <paper-tooltip for="page1-icon" position="right">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}
+            </paper-tooltip>
+            <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
           </a>
 
           <!-- Sidebar item - ANALYSIS -->
@@ -100,8 +108,10 @@ export class AppMenu extends MatomoMixin(LitElement) {
             tracker="Analysis"
           >
             <iron-icon id="page2-icon" icon="av:equalizer"></iron-icon>
-            <paper-tooltip for="page2-icon" position="right"> ${translate('NAVIGATION_MENU.ANALYSIS')} </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.ANALYSIS')}</div>
+            <paper-tooltip for="page2-icon" position="right">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}
+            </paper-tooltip>
+            <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}</div>
           </a>
 
           <!-- Sidebar item - TEMPLATES -->
@@ -114,8 +124,12 @@ export class AppMenu extends MatomoMixin(LitElement) {
             tracker="Templates"
           >
             <iron-icon id="page3-icon" icon="icons:settings-applications"></iron-icon>
-            <paper-tooltip for="page3-icon" position="right"> ${translate('NAVIGATION_MENU.TEMPLATES')} </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.TEMPLATES')}</div>
+            <paper-tooltip for="page3-icon" position="right">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
+            </paper-tooltip>
+            <div class="name">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
+            </div>
           </a>
 
           <!-- Sidebar item - PLANING -->
@@ -129,9 +143,11 @@ export class AppMenu extends MatomoMixin(LitElement) {
           >
             <iron-icon id="page4-icon" icon="av:playlist-add-check"></iron-icon>
             <paper-tooltip for="page4-icon" position="right">
-              ${translate('NAVIGATION_MENU.MANAGEMENT')}
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
             </paper-tooltip>
-            <div class="name">${translate('NAVIGATION_MENU.MANAGEMENT')}</div>
+            <div class="name">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
+            </div>
           </a>
         </iron-selector>
 
@@ -148,9 +164,19 @@ export class AppMenu extends MatomoMixin(LitElement) {
         >
           <iron-icon id="power-bi-icon" icon="ap-icons:power-bi"></iron-icon>
           <paper-tooltip for="power-bi-icon" position="right">
-            ${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}
+            ${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
+              'Implementation Intelligence'
+            )}
           </paper-tooltip>
-          <div class="name">${translate('NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE')}</div>
+          <div class="name">
+            ${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
+              'Implementation Intelligence'
+            )}
+          </div>
         </a>
 
         <a
@@ -162,9 +188,11 @@ export class AppMenu extends MatomoMixin(LitElement) {
         >
           <iron-icon id="knoledge-icon" icon="maps:local-library"></iron-icon>
           <paper-tooltip for="knoledge-icon" position="right">
-            ${translate('NAVIGATION_MENU.KNOWLEDGE_BASE')}
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
           </paper-tooltip>
-          <div class="name">${translate('NAVIGATION_MENU.KNOWLEDGE_BASE')}</div>
+          <div class="name">
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
+          </div>
         </a>
 
         <a
@@ -176,9 +204,11 @@ export class AppMenu extends MatomoMixin(LitElement) {
         >
           <iron-icon id="discussion-icon" icon="icons:question-answer"></iron-icon>
           <paper-tooltip for="discussion-icon" position="right">
-            ${translate('NAVIGATION_MENU.DISCUSSION')}
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
           </paper-tooltip>
-          <div class="name">${translate('NAVIGATION_MENU.DISCUSSION')}</div>
+          <div class="name">
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
+          </div>
         </a>
         <a
           class="nav-menu-item lighter-item last-one"
@@ -189,9 +219,11 @@ export class AppMenu extends MatomoMixin(LitElement) {
         >
           <iron-icon id="information-icon" icon="icons:info"></iron-icon>
           <paper-tooltip for="information-icon" position="right">
-            ${translate('NAVIGATION_MENU.INFORMATION')}
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
           </paper-tooltip>
-          <div class="name">${translate('NAVIGATION_MENU.INFORMATION')}</div>
+          <div class="name">
+            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
+          </div>
         </a>
       </div>
     `;
@@ -212,6 +244,17 @@ export class AppMenu extends MatomoMixin(LitElement) {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.userUnsubscribe();
+  }
+
+  stateChanged(state: IRootState): void {
+    if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+      this.selectedLanguage = state.activeLanguage.activeLanguage;
+    }
+  }
+
+  // necessary in order to show menu text before language is set and loaded (default text is in 'en')
+  translateKey(lng: string, key: string, defaultText: string): string {
+    return lng ? getTranslation(key) : defaultText;
   }
 
   _toggleSmallMenu(): void {
