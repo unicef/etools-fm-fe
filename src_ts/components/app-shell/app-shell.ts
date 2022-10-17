@@ -368,7 +368,13 @@ export class AppShell extends connect(store)(LitElement) {
         }
       });
   }
-
+  /**
+   * Deplay UI initialization until translation files are loaded
+   * Otherwise propeties that are initialised with translated strings will display the key.
+   * Ex: @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
+   * @param changedProperties
+   * @returns
+   */
   protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
     return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
   }
