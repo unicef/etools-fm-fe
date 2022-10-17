@@ -246,12 +246,6 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     this.userUnsubscribe();
   }
 
-  stateChanged(state: IRootState): void {
-    if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
-      this.selectedLanguage = state.activeLanguage.activeLanguage;
-    }
-  }
-
   // necessary in order to show menu text before language is set and loaded (default text is in 'en')
   translateKey(lng: string, key: string, defaultText: string): string {
     return lng ? getTranslation(key) : defaultText;

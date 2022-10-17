@@ -59,6 +59,7 @@ dayjs.extend(dayjs_plugin_utc);
 dayjs.extend(dayjs_plugin_isSameOrBefore);
 
 registerTranslateConfig({
+  empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
 
@@ -111,7 +112,6 @@ export class AppShell extends connect(store)(LitElement) {
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
-  private hasLoadedStrings = false;
 
   constructor() {
     super();
@@ -181,9 +181,7 @@ export class AppShell extends connect(store)(LitElement) {
     return [appDrawerStyles, AppShellStyles, RouterStyles];
   }
 
-  async connectedCallback(): Promise<void> {
-    await use('en');
-    this.hasLoadedStrings = true;
+  connectedCallback(): void {
     super.connectedCallback();
 
     this.checkAppVersion();
@@ -214,7 +212,7 @@ export class AppShell extends connect(store)(LitElement) {
     this.appToastsNotificationsHelper.removeToastNotificationListeners();
   }
 
-  stateChanged(state: IRootState): void {
+  async stateChanged(state: IRootState): Promise<void> {
     this.routeDetails = state.app.routeDetails;
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
@@ -223,14 +221,13 @@ export class AppShell extends connect(store)(LitElement) {
     this.currentToastMessage = '';
 
     if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+      await this.loadLocalization(state.activeLanguage.activeLanguage);
       this.selectedLanguage = state.activeLanguage.activeLanguage;
-      this.loadLocalization();
     }
   }
 
-  async loadLocalization(): Promise<void> {
-    await use(this.selectedLanguage);
-    this.hasLoadedStrings = true;
+  async loadLocalization(lang: string): Promise<void> {
+    await use(lang || 'en');
   }
 
   onDrawerToggle(): void {
@@ -279,6 +276,7 @@ export class AppShell extends connect(store)(LitElement) {
             selected-option="${this.mainPage}"
             @toggle-small-menu="${(e: CustomEvent) => this.toggleMenu(e)}"
             ?small-menu="${this.smallMenu}"
+            .selectedLanguage="${this.selectedLanguage}"
           ></app-menu>
         </app-drawer>
 
@@ -351,10 +349,6 @@ export class AppShell extends connect(store)(LitElement) {
       return this.isActiveSubPage(currentSubPageName, expectedSubPageNames);
     }
     return true;
-  }
-
-  protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
-    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
   }
 
   protected checkAppVersion(): void {

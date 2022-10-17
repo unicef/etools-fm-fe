@@ -427,8 +427,7 @@
     },
     "ENTER": "Entrer",
     "UPLOAD": "Télécharger un fichier",
-    "DOWNLOAD": "Télécharger",
-    "SUPPORT": "Support"
+    "DOWNLOAD": "Télécharger"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",
@@ -599,5 +598,6 @@
   "TRUE": "Vrai",
   "FALSE": "Faux",
   "VIEW": "Voir",
-  "FILTER_BY_SECTION": "Filtrer Par Section"
+  "FILTER_BY_SECTION": "Filtrer Par Section",
+  "SUPPORT": "Support"
 }

@@ -46,7 +46,7 @@ export class SupportBtn extends MatomoMixin(LitElement) {
         @tap="${this.trackAnalytics}"
       >
         <iron-icon icon="communication:textsms"></iron-icon>
-        <span class="support-text">${translate('MAIN.SUPPORT')}</span>
+        <span class="support-text">${translate('SUPPORT')}</span>
       </a>
     `;
   }
