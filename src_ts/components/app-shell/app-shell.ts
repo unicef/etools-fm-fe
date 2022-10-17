@@ -226,7 +226,7 @@ export class AppShell extends connect(store)(LitElement) {
       // selectedLanguageAux is used to avoid multiple [lang].json fetch until this.locadLocalization finishes
       this.selectedLanguageAux = state.activeLanguage.activeLanguage;
       await this.loadLocalization(state.activeLanguage.activeLanguage);
-      // seletedLanguage has to be set after loadLocalization finishes to trigger UI updates only after the [lang].json are loaded
+      // seletedLanguage has to be set after loadLocalization finishes to trigger UI updates only after the [lang].json is loaded
       this.selectedLanguage = state.activeLanguage.activeLanguage;
     }
   }
