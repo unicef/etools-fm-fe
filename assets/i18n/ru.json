@@ -413,8 +413,7 @@
     },
     "ENTER": "Localized Enter",
     "UPLOAD": "Localized Upload File",
-    "DOWNLOAD": "Localized Download",
-    "SUPPORT": "Localized Support"
+    "DOWNLOAD": "Localized Download"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
@@ -584,5 +583,6 @@
   "TRUE": "истинный",
   "FALSE": "ЛОЖЬ",
   "VIEW": "View",
-  "FILTER_BY_SECTION": "Filter By Section"
+  "FILTER_BY_SECTION": "Filter By Section",
+  "SUPPORT": "Localized Support"
 }
