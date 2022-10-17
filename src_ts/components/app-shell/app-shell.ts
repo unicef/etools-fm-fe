@@ -112,6 +112,8 @@ export class AppShell extends connect(store)(LitElement) {
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
+  private hasLoadedStrings = false;
+  private selectedLanguageAux = '';
 
   constructor() {
     super();
@@ -220,14 +222,18 @@ export class AppShell extends connect(store)(LitElement) {
     // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
 
-    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguageAux) {
+      // selectedLanguageAux is used to avoid multiple [lang].json fetch until this.locadLocalization finishes
+      this.selectedLanguageAux = state.activeLanguage.activeLanguage;
       await this.loadLocalization(state.activeLanguage.activeLanguage);
+      // seletedLanguage has to be set after loadLocalization finishes to trigger UI updates only after the [lang].json are loaded
       this.selectedLanguage = state.activeLanguage.activeLanguage;
     }
   }
 
   async loadLocalization(lang: string): Promise<void> {
     await use(lang || 'en');
+    this.hasLoadedStrings = true;
   }
 
   onDrawerToggle(): void {
@@ -361,6 +367,10 @@ export class AppShell extends connect(store)(LitElement) {
           this._showConfirmNewVersionDialog();
         }
       });
+  }
+
+  protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
+    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
   }
 
   private _showConfirmNewVersionDialog(): void {
