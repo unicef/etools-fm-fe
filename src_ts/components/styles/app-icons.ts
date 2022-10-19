@@ -51,7 +51,7 @@ export const arrowLeftIcon: TemplateResult = html`
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M7.33333 1.4L5.94595 0L0 6L5.94595 12L7.33333 10.6L2.77477 6L7.33333 1.4Z"
-      fill="white"
+      fill="currentColor"
     />
   </svg>
 `;
