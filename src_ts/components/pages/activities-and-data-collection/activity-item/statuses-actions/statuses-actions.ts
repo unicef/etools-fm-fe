@@ -28,7 +28,7 @@ export class StatusesActionsComponent extends LitElement {
   @property({type: Number}) activityId: number | null = null;
   @property({type: String}) possibleTransitions: ActivityTransition[] = [];
   @property({type: Boolean, attribute: 'is-staff'}) isStaff = false;
-  @property({type: Boolean}) disableMainBtn = false;
+  @property({type: Boolean}) disableBtns = false;
 
   render(): TemplateResult {
     // language=HTML
@@ -50,7 +50,11 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button class="back-button" @tap="${() => this.changeStatus(transition)}">
+          <paper-button
+            class="back-button"
+            @tap="${() => this.changeStatus(transition)}"
+            ?disabled="${this.disableBtns}"
+          >
             ${arrowLeftIcon}
           </paper-button>
         `
@@ -63,7 +67,11 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button class="main-button reject-button" @tap="${() => this.changeStatus(transition)}">
+          <paper-button
+            class="main-button reject-button"
+            @tap="${() => this.changeStatus(transition)}"
+            ?disabled="${this.disableBtns}"
+          >
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
           </paper-button>
         `
@@ -83,7 +91,7 @@ export class StatusesActionsComponent extends LitElement {
           <paper-button
             class="${className}"
             @tap="${() => this.changeStatus(mainTransition)}"
-            ?disabled="${this.disableMainBtn}"
+            ?disabled="${this.disableBtns}"
           >
             ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
           </paper-button>
@@ -180,6 +188,14 @@ export class StatusesActionsComponent extends LitElement {
           font-weight: 500;
         }
 
+        .back-button svg {
+          color: white;
+        }
+
+        .back-button[disabled] svg {
+          color: lightgray;
+        }
+
         .main-button {
           height: 36px;
           padding: 0 18px;
@@ -200,7 +216,7 @@ export class StatusesActionsComponent extends LitElement {
           margin-right: 7px;
         }
 
-        .main-button[disabled] {
+        paper-button[disabled] {
           color: lightgray;
         }
 
