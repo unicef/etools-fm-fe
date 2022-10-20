@@ -42,6 +42,7 @@ import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {fireEvent} from '../../../utils/fire-custom-event';
 
 store.addReducers({activityDetails});
 
@@ -160,7 +161,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
-            ?disableMainBtn="${this.childInEditMode}"
+            ?disableBtns="${this.childInEditMode}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
@@ -319,6 +320,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     if (this.activeTab === tabName) {
       return;
     }
+
+    fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
   }
 
