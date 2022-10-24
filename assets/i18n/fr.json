@@ -262,7 +262,8 @@
       "STATUS": "Sélectionnez le statut",
       "ISSUE": "Saisir les points à noter"
     },
-    "POPUP_TITLE": "Ajouter des points à noter",
+    "ADD_POPUP_TITLE": "Ajouter des points à noter",
+    "EDIT_POPUP_TITLE": "Modifier les points de note",
     "POPUP_ERROR_CP_OUTPUT": "Le Extrant du PP n'est pas fournie",
     "POPUP_ERROR_PARTNER": "Le partenaire n'est pas fourni",
     "POPUP_ERROR_LOCATION": "L'emplacement n'est pas fourni",
@@ -279,9 +280,7 @@
     "ATTACHMENTS_FILES": {
       "SINGLE": "FICHIER",
       "MULTIPLE": "FICHIERS"
-    },
-    "ADD_POPUP_TITLE": "Add Points of Note",
-    "EDIT_POPUP_TITLE": "Edit Points of Note"
+    }
   },
   "RATIONALE": {
     "TITLE": "Justification du suivi annuel sur le terrain",
@@ -427,7 +426,9 @@
     },
     "ENTER": "Entrer",
     "UPLOAD": "Télécharger un fichier",
-    "DOWNLOAD": "Télécharger"
+    "DOWNLOAD": "Télécharger",
+    "SEARCH": "Chercher",
+    "FILTER": "Filtre"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",

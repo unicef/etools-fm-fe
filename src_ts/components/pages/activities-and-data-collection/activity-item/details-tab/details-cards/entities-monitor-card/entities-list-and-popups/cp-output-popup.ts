@@ -76,7 +76,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       >
         <div class="container layout vertical">
           <div class="elevation card-container layout horizontal center filters" elevation="2">
-            <div class="filter-name">FILTER</div>
+            <div class="filter-name">${translate('MAIN.FILTER')}</div>
             <etools-dropdown-multi
               label="${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}"
               .options="${this.partners}"

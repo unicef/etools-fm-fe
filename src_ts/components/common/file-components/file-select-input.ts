@@ -77,7 +77,11 @@ export class FileSelectInput extends LitElement {
             `
           : ''}
         ${!this.isReadonly && this.hasDelete
-          ? html` <paper-button class="delete-button" @tap="${() => this.deleteFile()}">Delete</paper-button> `
+          ? html`
+              <paper-button class="delete-button" @tap="${() => this.deleteFile()}"
+                >${translate('MAIN.BUTTONS.DELETE')}</paper-button
+              >
+            `
           : ''}
       </div>
     `;
