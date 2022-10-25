@@ -415,7 +415,9 @@
     },
     "ENTER": "Enter",
     "UPLOAD": "Upload File",
-    "DOWNLOAD": "Download"
+    "DOWNLOAD": "Download",
+    "SEARCH": "Search",
+    "FILTER": "Filter"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",
