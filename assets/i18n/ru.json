@@ -413,7 +413,9 @@
     },
     "ENTER": "Localized Enter",
     "UPLOAD": "Localized Upload File",
-    "DOWNLOAD": "Localized Download"
+    "DOWNLOAD": "Localized Download",
+    "SEARCH": "Search",
+    "FILTER": "Filter"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",

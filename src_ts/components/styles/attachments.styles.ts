@@ -29,6 +29,7 @@ export const AttachmentsStyles: CSSResult = css`
   }
   .delete-button {
     color: #ea4022;
+    margin-left: 5px;
   }
   .upload-button,
   .download-button {
