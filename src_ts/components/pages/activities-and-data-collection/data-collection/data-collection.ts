@@ -83,7 +83,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
               href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
               class="layout horizontal"
             >
-              ${arrowLeftIcon} <span>BACK</span>
+              ${arrowLeftIcon} <span>${translate('MAIN.BACK')}</span>
             </a>
           </paper-button>
         </div>

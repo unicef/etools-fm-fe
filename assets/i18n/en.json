@@ -417,7 +417,8 @@
     "UPLOAD": "Upload File",
     "DOWNLOAD": "Download",
     "SEARCH": "Search",
-    "FILTER": "Filter"
+    "FILTER": "Filter",
+    "BACK": "Back"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",

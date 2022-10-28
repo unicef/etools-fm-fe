@@ -428,7 +428,8 @@
     "UPLOAD": "Télécharger un fichier",
     "DOWNLOAD": "Télécharger",
     "SEARCH": "Chercher",
-    "FILTER": "Filtre"
+    "FILTER": "Filtre",
+    "BACK": "Retour"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",
