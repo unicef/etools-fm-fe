@@ -151,7 +151,9 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       ></etools-status>
 
       <page-content-header with-tabs-visible>
-        <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || 'New'}</h1>
+        <h1 slot="page-title">
+          ${(this.activityDetails && this.activityDetails.reference_number) || translate('ACTIVITY_ITEM.NEW_ACTIVITY')}
+        </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
           <paper-button id="export" @tap="${this.export}" tracker="Export PDF" ?hidden="${this.hideExportButton()}">
@@ -325,13 +327,13 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
   }
 
-  hideExportButton() {
+  hideExportButton(): boolean {
     return (
       !this.activityDetails?.id || ![REPORT_FINALIZATION, SUBMITTED, COMPLETED].includes(this.activityDetails.status)
     );
   }
 
-  export(e: any) {
+  export(e: any): void {
     e.currentTarget.blur();
     this.trackAnalytics(e);
     window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');

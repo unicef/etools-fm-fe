@@ -415,7 +415,8 @@
     "UPLOAD": "Localized Upload File",
     "DOWNLOAD": "Localized Download",
     "SEARCH": "Search",
-    "FILTER": "Filter"
+    "FILTER": "Filter",
+    "BACK": "Back"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
