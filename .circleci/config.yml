@@ -75,3 +75,4 @@ workflows:
                 - develop
                 - analyze-tab-pagination
                 - fix-translations
+                - arcgis-map

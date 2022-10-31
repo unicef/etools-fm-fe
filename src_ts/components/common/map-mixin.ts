@@ -1,8 +1,4 @@
-// import 'leaflet';
 import {Map, Marker} from 'leaflet';
-
-const TILE_LAYER: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
-const TILE_LAYER_LABELS: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
 
 export interface IMarker extends Marker {
   staticData?: any;
@@ -10,19 +6,16 @@ export interface IMarker extends Marker {
 
 export class MapHelper {
   map: Map | null = null;
+  webmap!: GenericObject;
   staticMarkers: IMarker[] | null = null;
   dynamicMarker: IMarker | null = null;
   markerClusters: any | null = null;
 
-  initMap(element?: HTMLElement | null): Map | never {
-    if (!element) {
-      throw new Error('Please provide HTMLElement for map initialization!');
-    }
-    L.Icon.Default.imagePath = '/fm/assets/images/';
-    this.map = L.map(element);
-    L.tileLayer(TILE_LAYER, {pane: 'tilePane'}).addTo(this.map);
-    L.tileLayer(TILE_LAYER_LABELS, {pane: 'overlayPane'}).addTo(this.map);
-    return this.map;
+  initMap(mapElement: HTMLElement): void {
+    const webmapId = '71608a6be8984b4694f7c613d7048114'; // Default WebMap ID
+    this.webmap = (L as any).esri.webMap(webmapId, {map: L.map(mapElement), maxZoom: 20, minZoom: 2});
+
+    this.map = this.webmap._map;
   }
 
   setStaticMarkers(markersData: MarkerDataObj[]): void {
@@ -33,6 +26,18 @@ export class MapHelper {
       markers.push(marker);
     });
     this.staticMarkers = markers;
+  }
+
+  waitForMapToLoad(): Promise<boolean> {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        if (!(this.webmap && this.webmap._loaded)) {
+          return;
+        }
+        clearInterval(interval);
+        resolve(true);
+      }, 100);
+    });
   }
 
   addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
@@ -50,6 +55,7 @@ export class MapHelper {
       markers.push(marker);
       this.markerClusters.addLayer(marker);
     });
+    (this.map as Map).setMaxZoom(19);
     (this.map as Map).addLayer(this.markerClusters);
     this.staticMarkers = markers;
   }
