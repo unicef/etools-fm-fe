@@ -117,7 +117,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     return {
       color: color,
       stroke: false,
-      fillOpacity: 0.8,
+      fillOpacity: 0.4,
       pane: 'tilePane'
     };
   }
