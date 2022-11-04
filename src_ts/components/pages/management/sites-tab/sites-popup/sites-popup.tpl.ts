@@ -8,6 +8,11 @@ import {translate} from 'lit-translate';
 export function template(this: SitesPopupComponent): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
+    <style>
+      #statusDropdown {
+        margin-top: -4px;
+      }
+    </style>
     <etools-dialog
       size="md"
       id="dialog"

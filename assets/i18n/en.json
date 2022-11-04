@@ -40,6 +40,7 @@
     },
     "SUMMARY": {
       "OVERALL_FINDING_PLACEHOLDER": "Enter Overall finding",
+      "OVERALL_FINDING": "Overall finding",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",

@@ -40,6 +40,7 @@
     },
     "SUMMARY": {
       "OVERALL_FINDING_PLACEHOLDER": "Entrez le résultat",
+       "OVERALL_FINDING": "Constat général",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
         "ON_TRACK": "En Bonne Voie",
