@@ -33,7 +33,7 @@ import {debounce} from '../../utils/debouncer';
 store.addReducers({widgetLocations, specificLocations});
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
-const POLYGON_OPTIONS: PolylineOptions = {color: '#eddaa3', stroke: false, fillOpacity: 0.8, pane: 'tilePane'};
+const POLYGON_OPTIONS: PolylineOptions = {color: '#eddaa3', stroke: false, fillOpacity: 0.4, pane: 'tilePane'};
 
 @customElement('location-widget')
 export class LocationWidgetComponent extends LitElement {
