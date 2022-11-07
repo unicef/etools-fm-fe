@@ -491,8 +491,10 @@ export class LocationWidgetComponent extends LitElement {
     if (this.mapInitializationProcess) {
       this.MapHelper.initMap(this.mapElement);
     }
-    this.setInitialMapView();
-    this.mapInitializationProcess = false;
+    this.MapHelper.waitForMapToLoad().then(() => {
+      this.setInitialMapView();
+      this.mapInitializationProcess = false;
+    });
   }
 
   private setInitialMapView(): void {
