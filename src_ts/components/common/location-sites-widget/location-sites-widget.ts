@@ -289,11 +289,13 @@ export class LocationSitesWidgetComponent extends LitElement {
       return;
     }
     if (this.mapInitializationProcess) {
-      this.mapInitializationProcess = false;
       this.MapHelper.initMap(this.mapElement);
-      this.addSitesToMap();
     }
-    this.setInitialMapView();
+    this.MapHelper.waitForMapToLoad().then(() => {
+      this.addSitesToMap();
+      this.setInitialMapView();
+      this.mapInitializationProcess = false;
+    });
   }
 
   private setInitialMapView(): void {
