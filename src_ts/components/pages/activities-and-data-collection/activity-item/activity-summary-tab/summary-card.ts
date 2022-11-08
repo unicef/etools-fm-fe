@@ -159,7 +159,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               <paper-textarea
                 id="details-input"
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
-                label="Overall finding"
+                label="${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}"
                 ?readonly="${!this.isEditMode}"
                 placeholder="${this.isEditMode
                   ? translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING_PLACEHOLDER')

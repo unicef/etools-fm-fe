@@ -65,9 +65,9 @@ export const SitesTabStyles: CSSResult = css`
 
   #map {
     position: relative;
-    width: calc(100% - 24px);
+    width: calc(100% - 18px);
     height: 400px;
-    margin: 12px;
+    margin: 8px;
     z-index: 0;
   }
 
