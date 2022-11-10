@@ -33,7 +33,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
             type="search"
             .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
-            placeholder="Search"
+            placeholder="${translate('MAIN.SEARCH')}"
             inline
           >
             <iron-icon icon="search" slot="prefix"></iron-icon>

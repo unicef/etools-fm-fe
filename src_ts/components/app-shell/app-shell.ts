@@ -49,6 +49,8 @@ import {globalLoading} from '../../redux/reducers/global-loading.reducer';
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
+import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
+import {languageIsAvailableInApp} from '../utils/utils';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -56,7 +58,10 @@ declare const dayjs_plugin_isSameOrBefore: any;
 dayjs.extend(dayjs_plugin_utc);
 dayjs.extend(dayjs_plugin_isSameOrBefore);
 
-registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
+registerTranslateConfig({
+  empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
+  loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
+});
 
 // These are the actions needed by this element.
 
@@ -99,12 +104,16 @@ export class AppShell extends connect(store)(LitElement) {
   @property()
   globalLoadingMessage: string | null = null;
 
+  @property({type: String})
+  selectedLanguage!: string;
+
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
   private hasLoadedStrings = false;
+  private selectedLanguageAux = '';
 
   constructor() {
     super();
@@ -141,17 +150,40 @@ export class AppShell extends connect(store)(LitElement) {
         }
         this.user = userData;
         setUser(userData);
+
+        this.setCurrentLanguage(userData.preferences?.language);
       })
     );
+  }
+
+  setCurrentLanguage(lngCode: string): void {
+    let currentLanguage = '';
+    if (lngCode) {
+      lngCode = lngCode.substring(0, 2);
+      if (languageIsAvailableInApp(lngCode)) {
+        currentLanguage = lngCode;
+      } else {
+        console.log(`User profile language ${lngCode} missing`);
+      }
+    }
+    if (!currentLanguage) {
+      const storageLang = localStorage.getItem('defaultLanguage');
+      if (storageLang && languageIsAvailableInApp(storageLang)) {
+        currentLanguage = storageLang;
+      }
+    }
+    if (!currentLanguage) {
+      currentLanguage = 'en';
+    }
+
+    store.dispatch(new ActiveLanguageSwitched(currentLanguage));
   }
 
   static get styles(): CSSResultArray {
     return [appDrawerStyles, AppShellStyles, RouterStyles];
   }
 
-  async connectedCallback(): Promise<void> {
-    await use('en');
-    this.hasLoadedStrings = true;
+  connectedCallback(): void {
     super.connectedCallback();
 
     this.checkAppVersion();
@@ -166,6 +198,10 @@ export class AppShell extends connect(store)(LitElement) {
         this.globalLoadingMessage = globalLoadingMessage;
       })
     );
+  }
+
+  firstUpdated(_changedProperties: any): void {
+    super.firstUpdated(_changedProperties);
 
     setTimeout(() => {
       window.EtoolsEsmmFitIntoEl = this.appHeaderLayout.shadowRoot!.querySelector('#contentContainer');
@@ -178,13 +214,26 @@ export class AppShell extends connect(store)(LitElement) {
     this.appToastsNotificationsHelper.removeToastNotificationListeners();
   }
 
-  stateChanged(state: IRootState): void {
+  async stateChanged(state: IRootState): Promise<void> {
     this.routeDetails = state.app.routeDetails;
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
     this.drawerOpened = state.app.drawerOpened;
     // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
+
+    if (state.activeLanguage?.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguageAux) {
+      // selectedLanguageAux is used to avoid multiple [lang].json fetch until this.locadLocalization finishes
+      this.selectedLanguageAux = state.activeLanguage.activeLanguage;
+      await this.loadLocalization(state.activeLanguage.activeLanguage);
+      // seletedLanguage has to be set after loadLocalization finishes to trigger UI updates only after the [lang].json is loaded
+      this.selectedLanguage = state.activeLanguage.activeLanguage;
+    }
+  }
+
+  async loadLocalization(lang: string): Promise<void> {
+    await use(lang || 'en');
+    this.hasLoadedStrings = true;
   }
 
   onDrawerToggle(): void {
@@ -233,6 +282,7 @@ export class AppShell extends connect(store)(LitElement) {
             selected-option="${this.mainPage}"
             @toggle-small-menu="${(e: CustomEvent) => this.toggleMenu(e)}"
             ?small-menu="${this.smallMenu}"
+            .selectedLanguage="${this.selectedLanguage}"
           ></app-menu>
         </app-drawer>
 
@@ -307,10 +357,6 @@ export class AppShell extends connect(store)(LitElement) {
     return true;
   }
 
-  protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
-    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
-  }
-
   protected checkAppVersion(): void {
     fetch('version.json')
       .then((res) => res.json())
@@ -321,6 +367,16 @@ export class AppShell extends connect(store)(LitElement) {
           this._showConfirmNewVersionDialog();
         }
       });
+  }
+  /**
+   * Deplay UI initialization until translation files are loaded
+   * Otherwise propeties that are initialised with translated strings will display the key.
+   * Ex: @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
+   * @param changedProperties
+   * @returns
+   */
+  protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
+    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
   }
 
   private _showConfirmNewVersionDialog(): void {

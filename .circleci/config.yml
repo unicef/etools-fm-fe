@@ -74,3 +74,4 @@ workflows:
                 - staging
                 - develop
                 - analyze-tab-pagination
+                - fix-translations

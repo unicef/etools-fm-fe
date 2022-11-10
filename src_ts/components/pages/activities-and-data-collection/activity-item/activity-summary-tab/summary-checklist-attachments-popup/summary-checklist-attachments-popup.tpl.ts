@@ -58,7 +58,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                   option-label="label"
                   option-value="id"
                   ?invalid="${!attachment.file_type && this.saveBtnClicked}"
-                  .errorMessage="File Type is required"
+                  .errorMessage="${translate('THIS_FIELD_IS_REQUIRED')}"
                   allow-outside-scroll
                   dynamic-align
                 ></etools-dropdown>
@@ -72,7 +72,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                 <!--         Download Button         -->
                 <paper-button class="download-button" @tap="${() => this.downloadFile(attachment)}">
                   <iron-icon icon="cloud-download" class="dw-icon"></iron-icon>
-                  Download
+                  ${translate('MAIN.DOWNLOAD')}
                 </paper-button>
 
                 <!--        Delete Button          -->
@@ -81,7 +81,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                   ?hidden="${this.readonly}"
                   @tap="${() => this.deleteAttachment(index)}"
                 >
-                  Delete
+                  ${translate('MAIN.BUTTONS.DELETE')}
                 </paper-button>
               </div>
             `

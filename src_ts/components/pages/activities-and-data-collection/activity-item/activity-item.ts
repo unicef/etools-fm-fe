@@ -42,6 +42,7 @@ import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {fireEvent} from '../../../utils/fire-custom-event';
 
 store.addReducers({activityDetails});
 
@@ -82,6 +83,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
   @property() activeTab!: string;
+  @property() childInEditMode = false;
+
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
@@ -148,7 +151,9 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       ></etools-status>
 
       <page-content-header with-tabs-visible>
-        <h1 slot="page-title">${(this.activityDetails && this.activityDetails.reference_number) || 'New'}</h1>
+        <h1 slot="page-title">
+          ${(this.activityDetails && this.activityDetails.reference_number) || translate('ACTIVITY_ITEM.NEW_ACTIVITY')}
+        </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
           <paper-button id="export" @tap="${this.export}" tracker="Export PDF" ?hidden="${this.hideExportButton()}">
@@ -158,6 +163,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
+            ?disableBtns="${this.childInEditMode}"
             .possibleTransitions="${(this.activityDetails && this.activityDetails.transitions) || []}"
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
@@ -190,6 +196,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.addEventListener(
+      'child-in-edit-mode-changed',
+      ((e: CustomEvent) => (this.childInEditMode = e.detail.inEditMode)) as any
+    );
     store.dispatch(new SaveRoute(null));
     this.isLoad = true;
     // On Activity data changes
@@ -312,16 +322,18 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     if (this.activeTab === tabName) {
       return;
     }
+
+    fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
     updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
   }
 
-  hideExportButton() {
+  hideExportButton(): boolean {
     return (
       !this.activityDetails?.id || ![REPORT_FINALIZATION, SUBMITTED, COMPLETED].includes(this.activityDetails.status)
     );
   }
 
-  export(e: any) {
+  export(e: any): void {
     e.currentTarget.blur();
     this.trackAnalytics(e);
     window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');

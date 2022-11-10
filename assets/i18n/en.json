@@ -40,6 +40,7 @@
     },
     "SUMMARY": {
       "OVERALL_FINDING_PLACEHOLDER": "Enter Overall finding",
+      "OVERALL_FINDING": "Overall finding",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
@@ -416,7 +417,9 @@
     "ENTER": "Enter",
     "UPLOAD": "Upload File",
     "DOWNLOAD": "Download",
-    "SUPPORT": "Support"
+    "SEARCH": "Search",
+    "FILTER": "Filter",
+    "BACK": "Back"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",
@@ -587,5 +590,6 @@
   "TRUE": "True",
   "FALSE": "False",
   "VIEW": "View",
-  "FILTER_BY_SECTION": "Filter By Section"
+  "FILTER_BY_SECTION": "Filter By Section",
+  "SUPPORT": "Support"
 }

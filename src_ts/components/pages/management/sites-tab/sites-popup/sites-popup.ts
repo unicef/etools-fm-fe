@@ -172,9 +172,9 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       this.setCoordsString();
     }
 
-    setTimeout(() => {
+    this.MapHelper.waitForMapToLoad().then(() => {
       this.setMapView();
-    }, 400);
+    });
   }
 
   updateLatLng(value: number, param: 'latitude' | 'longitude'): void {

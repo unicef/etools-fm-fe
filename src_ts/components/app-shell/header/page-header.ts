@@ -10,7 +10,7 @@ import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
 import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
 import {isEmpty} from 'ramda';
@@ -26,6 +26,8 @@ import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
+import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
+import {appLanguages} from '../../../config/app-constants';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -69,7 +71,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: Array})
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
-  @property() selectedLanguage = 'en';
+  @property() selectedLanguage!: string;
 
   @property() refreshInProgress = false;
 
@@ -82,13 +84,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: String})
   environment = 'LOCAL';
 
-  rootPath: string = ROOT_PATH;
+  @query('#languageSelector') private languageDropdown!: EtoolsDropdownEl;
 
-  //TODO list loading
-  languages: DefaultDropdownOption<string>[] = [
-    {value: 'en', display_name: 'English'},
-    {value: 'fr', display_name: 'French'}
-  ];
+  rootPath: string = ROOT_PATH;
 
   constructor() {
     super();
@@ -113,7 +111,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     // eslint-disable-next-line
     // @ts-ignore
     window.enableExampleLanguage = () => {
-      this.languages = [...this.languages, {value: 'ru', display_name: 'Example Language'}];
+      appLanguages.splice(1, 0, {value: 'ru', display_name: 'Example Language'});
       this.requestUpdate();
     };
   }
@@ -197,8 +195,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         <div class="header__item header__right-group">
           <div class="dropdowns">
             <etools-dropdown
+              id="languageSelector"
               .selected="${this.selectedLanguage}"
-              .options="${this.languages}"
+              .options="${appLanguages}"
               option-label="display_name"
               option-value="value"
               @etools-selected-item-changed="${({detail}: CustomEvent) => {
@@ -247,17 +246,20 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     super.connectedCallback();
     this.setBgColor();
     this.checkEnvironment();
+
+    setTimeout(() => {
+      const fitInto = document.querySelector('app-shell')!.shadowRoot!.querySelector('#appHeadLayout');
+      this.languageDropdown.set('fitInto', fitInto);
+    }, 0);
   }
 
   stateChanged(state: IRootState): void {
     if (state && state.user && state.user.data) {
       this.profile = state.user.data;
-      if (this.profile.preferences?.language && this.selectedLanguage != this.profile.preferences?.language) {
-        // consider language to be 'en' for users having 'en-us' or other english variants
-        this.selectedLanguage = this.profile.preferences?.language.startsWith('en-')
-          ? 'en'
-          : this.profile.preferences?.language;
-      }
+    }
+    if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
+      this.selectedLanguage = state.activeLanguage.activeLanguage;
+      localStorage.setItem('defaultLanguage', this.selectedLanguage);
     }
   }
 
@@ -282,6 +284,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
     if (language !== this.selectedLanguage) {
       this.selectedLanguage = language;
+      localStorage.setItem('defaultLanguage', language);
+      // Event caught by self translating npm packages
+      fireEvent(this, 'language-changed', {language});
     }
     if (this.profile && this.profile.preferences?.language != language) {
       this.langUpdateInProgress = true;

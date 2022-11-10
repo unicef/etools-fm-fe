@@ -25,7 +25,6 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
 import {get as getTranslation} from 'lit-translate';
-import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
   {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},
@@ -42,15 +41,11 @@ export class IssueTrackerTabComponent extends SiteMixin(
   @property()
   filters: IEtoolsFilter[] | null = [];
 
-  @property({type: String})
-  activeLanguage = 'en';
-
   private readonly debouncedLoading: Callback;
 
   private routeUnsubscribe!: Unsubscribe;
   private dataUnsubscribe!: Unsubscribe;
   private isLoadUnsubscribe!: Unsubscribe;
-  private activeLanguageUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
@@ -64,11 +59,6 @@ export class IssueTrackerTabComponent extends SiteMixin(
       store.dispatch<AsyncEffect>(loadSiteLocations());
     }
     this.loadStaticData();
-    this.activeLanguageUnsubscribe = store.subscribe(
-      activeLanguageSelector((lang: string) => {
-        this.activeLanguage = lang;
-      })
-    );
   }
 
   static get styles(): CSSResultArray {
@@ -110,7 +100,6 @@ export class IssueTrackerTabComponent extends SiteMixin(
     this.routeUnsubscribe();
     this.dataUnsubscribe();
     this.isLoadUnsubscribe();
-    this.activeLanguageUnsubscribe();
   }
 
   onRouteChange(routeDetails: IRouteDetails): void {

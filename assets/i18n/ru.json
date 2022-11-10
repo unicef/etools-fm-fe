@@ -40,6 +40,7 @@
     },
     "SUMMARY": {
       "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
+      "OVERALL_FINDING": "Overall finding",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
@@ -414,7 +415,9 @@
     "ENTER": "Localized Enter",
     "UPLOAD": "Localized Upload File",
     "DOWNLOAD": "Localized Download",
-    "SUPPORT": "Localized Support"
+    "SEARCH": "Search",
+    "FILTER": "Filter",
+    "BACK": "Back"
   },
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
@@ -584,5 +587,6 @@
   "TRUE": "истинный",
   "FALSE": "ЛОЖЬ",
   "VIEW": "View",
-  "FILTER_BY_SECTION": "Filter By Section"
+  "FILTER_BY_SECTION": "Filter By Section",
+  "SUPPORT": "Localized Support"
 }

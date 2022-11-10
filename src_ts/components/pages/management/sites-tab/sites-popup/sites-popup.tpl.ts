@@ -8,6 +8,11 @@ import {translate} from 'lit-translate';
 export function template(this: SitesPopupComponent): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
+    <style>
+      #statusDropdown {
+        margin-top: -4px;
+      }
+    </style>
     <etools-dialog
       size="md"
       id="dialog"
@@ -87,14 +92,14 @@ export function template(this: SitesPopupComponent): TemplateResult {
             class="validate-input flex-5"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
-            label="Latitude"
+            label="${translate('MAIN.LATITUDE')}"
             placeholder="-"
           ></paper-input>
           <paper-input
             class="validate-input flex-5"
             .value="${this.longitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
-            label="Longitude"
+            label="${translate('MAIN.LONGITUDE')}"
             placeholder="-"
           ></paper-input>
         </div>
