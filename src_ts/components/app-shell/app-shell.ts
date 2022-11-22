@@ -51,6 +51,7 @@ import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
 import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from '../utils/utils';
+import {MapHelper} from '../common/map-mixin';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -107,12 +108,15 @@ export class AppShell extends connect(store)(LitElement) {
   @property({type: String})
   selectedLanguage!: string;
 
+  @property({type: Boolean})
+  hasLoadedTranslationFile = false;
+
   @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
   @query('#drawer') private drawer!: AppDrawerElement;
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
   private appToastsNotificationsHelper!: ToastNotificationHelper;
-  private hasLoadedStrings = false;
+
   private selectedLanguageAux = '';
 
   constructor() {
@@ -131,6 +135,10 @@ export class AppShell extends connect(store)(LitElement) {
     } else {
       this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
     }
+
+    new MapHelper().arcgisMapIsAvailable().then((res: boolean) => {
+      localStorage.setItem('arcgisMapIsAvailable', JSON.stringify(res));
+    });
 
     store.subscribe(
       userSelector((userState: IUserState) => {
@@ -233,7 +241,7 @@ export class AppShell extends connect(store)(LitElement) {
 
   async loadLocalization(lang: string): Promise<void> {
     await use(lang || 'en');
-    this.hasLoadedStrings = true;
+    this.hasLoadedTranslationFile = true;
   }
 
   onDrawerToggle(): void {
@@ -376,7 +384,7 @@ export class AppShell extends connect(store)(LitElement) {
    * @returns
    */
   protected shouldUpdate(changedProperties: Map<PropertyKey, unknown>): boolean {
-    return this.hasLoadedStrings && super.shouldUpdate(changedProperties);
+    return this.hasLoadedTranslationFile && super.shouldUpdate(changedProperties);
   }
 
   private _showConfirmNewVersionDialog(): void {
