@@ -1,4 +1,7 @@
 import {Map, Marker} from 'leaflet';
+const TILE_LAYER: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+const TILE_LAYER_LABELS: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
+const arcgisWebmapId = '71608a6be8984b4694f7c613d7048114'; // Default WebMap ID
 
 export interface IMarker extends Marker {
   staticData?: any;
@@ -11,10 +14,39 @@ export class MapHelper {
   dynamicMarker: IMarker | null = null;
   markerClusters: any | null = null;
 
-  initMap(mapElement: HTMLElement): void {
-    const webmapId = '71608a6be8984b4694f7c613d7048114'; // Default WebMap ID
-    this.webmap = (L as any).esri.webMap(webmapId, {map: L.map(mapElement), maxZoom: 20, minZoom: 2});
+  arcgisMapIsAvailable(): Promise<boolean> {
+    return fetch(`https://www.arcgis.com/sharing/rest/content/items/${arcgisWebmapId}?f=json`)
+      .then((res) => res.json())
+      .then((data) => {
+        return !data.error;
+      })
+      .catch((e: any) => {
+        console.log('arcgisMapIsAvailable error: ', e);
+        return false;
+      });
+  }
 
+  initMap(element: HTMLElement): void {
+    if (!element) {
+      throw new Error('Please provide HTMLElement for map initialization!');
+    }
+    const arcgisMapIsAvailable = JSON.parse(localStorage.getItem('arcgisMapIsAvailable') || '');
+    return arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
+  }
+
+  initOpenStreetMap(element: HTMLElement): void {
+    L.Icon.Default.imagePath = '/fm/assets/images/';
+    this.map = L.map(element);
+    L.tileLayer(TILE_LAYER, {pane: 'tilePane'}).addTo(this.map);
+    L.tileLayer(TILE_LAYER_LABELS, {pane: 'overlayPane'}).addTo(this.map);
+    // compliance for waitForMapToLoad
+    setTimeout(() => {
+      this.webmap = {_loaded: true};
+    }, 10);
+  }
+
+  initArcgisMap(mapElement: HTMLElement): void {
+    this.webmap = (L as any).esri.webMap(arcgisWebmapId, {map: L.map(mapElement), maxZoom: 20, minZoom: 2});
     this.map = this.webmap._map;
   }
 
