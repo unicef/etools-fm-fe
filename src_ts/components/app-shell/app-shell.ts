@@ -51,6 +51,7 @@ import {checkEnvFlags} from '../utils/check-flags';
 import {ROOT_PATH} from '../../config/config';
 import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from '../utils/utils';
+import {MapHelper} from '../common/map-mixin';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -134,6 +135,10 @@ export class AppShell extends connect(store)(LitElement) {
     } else {
       this.smallMenu = !!parseInt(menuTypeStoredVal, 10);
     }
+
+    new MapHelper().arcgisMapIsAvailable().then((res: boolean) => {
+      localStorage.setItem('arcgisMapIsAvailable', JSON.stringify(res));
+    });
 
     store.subscribe(
       userSelector((userState: IUserState) => {
