@@ -5,7 +5,7 @@ import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {requestLogIssue} from '../../../../redux/effects/issue-tracker.effects';
 
-import {IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
+import {EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {template} from './issue-tracker-tab.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
@@ -39,7 +39,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   isLoad = false;
 
   @property()
-  filters: IEtoolsFilter[] | null = [];
+  filters: EtoolsFilter[] | null = [];
 
   private readonly debouncedLoading: Callback;
 

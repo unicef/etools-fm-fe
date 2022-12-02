@@ -1,9 +1,8 @@
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import '../../../common/layout/filters/etools-filters';
+import '@unicef-polymer/etools-filters/src/etools-filters';
 import './question-popup/question-popup';
 import {html, TemplateResult} from 'lit-element';
 import {QuestionsTabComponent} from './questions-tab';
-import {updateQueryParams} from '../../../../routing/routes';
 import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
@@ -14,8 +13,13 @@ export function template(this: QuestionsTabComponent): TemplateResult {
     ${InputStyles}
     <section class="elevation page-content card-container question-filters-section" elevation="1">
       <etools-filters
-        .filters="${this.filters || []}"
-        @filter-change="${(event: CustomEvent) => updateQueryParams(event.detail)}"
+        .filters="${this.filters}"
+        .textFilters="${translate('FILTERS_ELEMENT.TITLE')}"
+        .textClearAll="${translate('FILTERS_ELEMENT.CLEAR_ALL')}"
+        @filter-change="${this.filtersChange}"
+        @click="${() => {
+          this.filtersInitialized = !!this.filters?.length;
+        }}"
       ></etools-filters>
     </section>
 

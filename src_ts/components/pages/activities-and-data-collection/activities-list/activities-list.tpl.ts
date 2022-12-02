@@ -1,18 +1,12 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit-element';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import '../../../common/layout/filters/etools-filters';
-import {updateQueryParams} from '../../../../routing/routes';
+import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
-    <style>
-      etools-filters {
-        --etools-filters-margin-bottom: 10px;
-      }
-    </style>
     <page-content-header with-tabs-visible>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
@@ -41,9 +35,10 @@ export function template(this: ActivitiesListComponent): TemplateResult {
 
       <etools-filters
         class="search-filters"
-        .filterLoadingInProcess="${this.filtersLoading}"
-        .filters="${this.filters || []}"
-        @filter-change="${(event: CustomEvent) => updateQueryParams({...event.detail, page: 1})}"
+        .filters="${this.filters}"
+        .textFilters="${translate('FILTERS_ELEMENT.TITLE')}"
+        .textClearAll="${translate('FILTERS_ELEMENT.CLEAR_ALL')}"
+        @filter-change="${this.filtersChange}"
       ></etools-filters>
     </section>
 
