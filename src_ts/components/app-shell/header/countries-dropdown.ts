@@ -84,7 +84,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
       const fitInto: HTMLElement | null = document
         .querySelector('app-shell')!
         .shadowRoot!.querySelector('#appHeadLayout');
-      this.countryDropdown.set('fitInto', fitInto);
+      this.countryDropdown.fitInto = fitInto;
     }, 0);
   }
 
