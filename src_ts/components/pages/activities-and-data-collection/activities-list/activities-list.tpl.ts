@@ -7,6 +7,16 @@ import {translate} from 'lit-translate';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
+    <style>
+      etools-filters {
+        --paper-input-prefix: {
+          color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
+        }
+        --paper-input-container-label-floating: {
+          font-size: 14px;
+        }
+      }
+    </style>
     <page-content-header with-tabs-visible>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
