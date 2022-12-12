@@ -14,6 +14,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         }
         --paper-input-container-label-floating: {
           font-size: 14px;
+          top: 0px;
         }
       }
     </style>
