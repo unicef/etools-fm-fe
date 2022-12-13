@@ -1,7 +1,30 @@
-import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
+import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
 import {translate} from 'lit-translate';
 
-export const questionsFilters: IEtoolsFilter[] = [
+export enum QuestionFilterKeys {
+  level__in = 'level__in',
+  sections__in = 'sections__in',
+  methods__in = 'methods__in',
+  category__in = 'category__in',
+  answer_type__in = 'answer_type__in',
+  is_hact = 'is_hact',
+  is_active = 'is_active'
+}
+
+export const selectedValueTypeByFilterKey: GenericObject = {
+  [QuestionFilterKeys.level__in]: 'Array',
+  [QuestionFilterKeys.sections__in]: 'Array',
+  [QuestionFilterKeys.methods__in]: 'Array',
+  [QuestionFilterKeys.category__in]: 'Array',
+  [QuestionFilterKeys.answer_type__in]: 'Array',
+  [QuestionFilterKeys.is_hact]: 'boolean',
+  [QuestionFilterKeys.is_active]: 'boolean'
+};
+
+setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
+
+export const questionsFilters: EtoolsFilter[] = [
   {
     filterName: translate('QUESTIONS.LABELS.LEVEL'),
     filterKey: 'level__in',
@@ -13,8 +36,7 @@ export const questionsFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('QUESTIONS.LABELS.SECTIONS'),
@@ -27,8 +49,7 @@ export const questionsFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('QUESTIONS.LABELS.METHODS'),
@@ -41,8 +62,7 @@ export const questionsFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('QUESTIONS.LABELS.GROUP'),
@@ -55,8 +75,7 @@ export const questionsFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('QUESTIONS.LABELS.ANSWER_TYPE'),
@@ -69,15 +88,13 @@ export const questionsFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('QUESTIONS.LABELS.IS_HACT'),
     filterKey: 'is_hact',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,
-    defaultValue: false,
     selected: false
   },
   {
@@ -85,7 +102,6 @@ export const questionsFilters: IEtoolsFilter[] = [
     filterKey: 'is_active',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,
-    defaultValue: false,
     selected: false
   }
 ];
