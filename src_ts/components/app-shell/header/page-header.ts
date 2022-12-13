@@ -249,7 +249,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
     setTimeout(() => {
       const fitInto = document.querySelector('app-shell')!.shadowRoot!.querySelector('#appHeadLayout');
-      this.languageDropdown.set('fitInto', fitInto);
+      this.languageDropdown.fitInto = fitInto;
     }, 0);
   }
 
