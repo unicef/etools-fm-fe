@@ -1,4 +1,4 @@
-import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {
   ACTION_POINTS_OFFICES,
   CP_OUTPUTS,
@@ -9,11 +9,50 @@ import {
   USERS
 } from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
+import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
 
-export const activitiesListFilters: IEtoolsFilter[] = [
+export interface ActivityFilter extends EtoolsFilter {
+  selectionOptionsEndpoint?: string;
+}
+
+export enum ActivityFilterKeys {
+  monitor_type = 'monitor_type',
+  tpm_partner__in = 'tpm_partner__in',
+  team_members__in = 'team_members__in',
+  visit_lead__in = 'visit_lead__in',
+  location__in = 'location__in',
+  location_site__in = 'location_site__in',
+  partners__in = 'partners__in',
+  offices__in = 'offices__in',
+  interventions__in = 'interventions__in',
+  cp_outputs__in = 'cp_outputs__in',
+  status__in = 'status__in',
+  start_date__gte = 'start_date__gte',
+  end_date__lte = 'end_date__lte'
+}
+
+export const selectedValueTypeByFilterKey: GenericObject = {
+  [ActivityFilterKeys.monitor_type]: 'string',
+  [ActivityFilterKeys.tpm_partner__in]: 'Array',
+  [ActivityFilterKeys.team_members__in]: 'Array',
+  [ActivityFilterKeys.visit_lead__in]: 'Array',
+  [ActivityFilterKeys.location__in]: 'Array',
+  [ActivityFilterKeys.location_site__in]: 'Array',
+  [ActivityFilterKeys.partners__in]: 'Array',
+  [ActivityFilterKeys.offices__in]: 'Array',
+  [ActivityFilterKeys.interventions__in]: 'Array',
+  [ActivityFilterKeys.cp_outputs__in]: 'Array',
+  [ActivityFilterKeys.status__in]: 'Array',
+  [ActivityFilterKeys.start_date__gte]: 'string',
+  [ActivityFilterKeys.end_date__lte]: 'string'
+};
+
+setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
+
+export const activitiesListFilters: ActivityFilter[] = [
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
-    filterKey: 'monitor_type',
+    filterKey: ActivityFilterKeys.monitor_type,
     type: EtoolsFilterTypes.Dropdown,
     selectionOptions: [],
     selectedValue: null,
@@ -22,12 +61,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: null
+    disabled: false
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
-    filterKey: 'tpm_partner__in',
+    filterKey: ActivityFilterKeys.tpm_partner__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -37,12 +75,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: TPM_PARTNERS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
-    filterKey: 'team_members__in',
+    filterKey: ActivityFilterKeys.team_members__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -52,12 +89,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: USERS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
-    filterKey: 'visit_lead__in',
+    filterKey: ActivityFilterKeys.visit_lead__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -67,12 +103,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: USERS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION'),
-    filterKey: 'location__in',
+    filterKey: ActivityFilterKeys.location__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -82,12 +117,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: LOCATIONS_ENDPOINT
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.SITE'),
-    filterKey: 'location_site__in',
+    filterKey: ActivityFilterKeys.location_site__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -96,12 +130,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     selected: false,
     minWidth: '350px',
     hideSearch: false,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS'),
-    filterKey: 'partners__in',
+    filterKey: ActivityFilterKeys.partners__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -111,12 +144,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: PARTNERS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE'),
-    filterKey: 'offices__in',
+    filterKey: ActivityFilterKeys.offices__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -126,12 +158,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: ACTION_POINTS_OFFICES
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
-    filterKey: 'interventions__in',
+    filterKey: ActivityFilterKeys.interventions__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -141,12 +172,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: INTERVENTIONS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
-    filterKey: 'cp_outputs__in',
+    filterKey: ActivityFilterKeys.cp_outputs__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -156,12 +186,11 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    defaultValue: [],
     selectionOptionsEndpoint: CP_OUTPUTS
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.STATUS'),
-    filterKey: 'status__in',
+    filterKey: ActivityFilterKeys.status__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
     selectedValue: [],
@@ -170,23 +199,20 @@ export const activitiesListFilters: IEtoolsFilter[] = [
     selected: true,
     minWidth: '350px',
     hideSearch: true,
-    disabled: false,
-    defaultValue: []
+    disabled: false
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
-    filterKey: 'start_date__gte',
+    filterKey: ActivityFilterKeys.start_date__gte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,
-    defaultValue: false,
     selected: false
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE'),
-    filterKey: 'end_date__lte',
+    filterKey: ActivityFilterKeys.end_date__lte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,
-    defaultValue: false,
     selected: false
   }
 ];

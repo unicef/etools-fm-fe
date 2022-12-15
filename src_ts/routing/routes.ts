@@ -2,7 +2,7 @@ import {Router} from './router';
 import {store} from '../redux/store';
 import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
-import {equals} from 'ramda';
+import {equals, pick} from 'ramda';
 
 export const EtoolsRouter: Router = new Router(ROOT_PATH);
 const routeParamRegex = '([^\\/?#=+]+)';
@@ -147,11 +147,14 @@ export function updateAppLocation(newLocation: string, dispatchNavigation = true
   EtoolsRouter.pushState(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams): boolean {
+export function updateQueryParams(newQueryParams: IRouteQueryParams, reset = false): boolean {
   const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
-  const queryParams: IRouteQueryParams | null = details && details.queryParams;
-  const computed: IRouteQueryParams = Object.assign({}, queryParams, newQueryParams);
+  let currentParams: IRouteQueryParams | null = details && details.queryParams;
+  if (reset) {
+    currentParams = pick(['ordering', 'page_size'], currentParams);
+  }
+  const computed: IRouteQueryParams = Object.assign({}, currentParams, newQueryParams);
   const resultParams: IRouteQueryParams = {};
 
   for (const key in computed) {
@@ -162,8 +165,8 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams): boolean {
     }
   }
 
-  const newParamsEqualsCurrent: boolean = equals(queryParams, resultParams);
-  if (newParamsEqualsCurrent) {
+  const newParamsEqualsCurrent: boolean = equals(currentParams, resultParams);
+  if (newParamsEqualsCurrent && !reset) {
     return false;
   }
 

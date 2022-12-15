@@ -12,10 +12,10 @@ import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
-import {EtoolsFilterTypes, IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
+import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {mapFilters} from '../../../utils/filters-mapping';
-import {activitiesListFilters} from './activities-list.filters';
+import {activitiesListFilters, ActivityFilter} from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
 import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
@@ -34,6 +34,7 @@ import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import {decodeQueryStrToObj} from '../../../utils/utils';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -41,8 +42,7 @@ store.addReducers({activities, specificLocations, activityDetails});
 export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
-  @property() filtersLoading = false;
-  @property() filters: IEtoolsFilter[] | null = null;
+  @property() filters: EtoolsFilter[] | null = null;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
@@ -106,8 +106,32 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         this.initFilters();
       })
     );
+  }
 
-    this.initFilters();
+  static get styles(): CSSResult[] {
+    return [
+      elevationStyles,
+      pageContentHeaderSlottedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      SharedStyles,
+      buttonsStyles,
+      ActivitiesListStyles,
+      css`
+        .search-container {
+          display: flex;
+          min-height: 73px;
+        }
+        .search-input {
+          margin-right: 16px;
+        }
+        .search-filters {
+          flex-grow: 1;
+          margin-bottom: 11px;
+        }
+      `
+    ];
   }
 
   render(): TemplateResult {
@@ -157,6 +181,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     }
   }
 
+  filtersChange(e: CustomEvent): void {
+    updateQueryParams({...e.detail, page: 1}, true);
+  }
+
   private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
     if (!(routeName === 'activities' && subRouteName === 'list')) {
       return;
@@ -179,8 +207,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private initFilters(): void {
-    this.filtersLoading = true;
-
     // subscribe on sites data
     const subscriber: Unsubscribe = store.subscribe(
       sitesSelector((sites: Site[] | null) => {
@@ -193,7 +219,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     );
 
     // subscribe on static data
-    activitiesListFilters.forEach((filter: IEtoolsFilter) => {
+    activitiesListFilters.forEach((filter: ActivityFilter) => {
       if (!filter.selectionOptionsEndpoint) {
         return;
       }
@@ -249,46 +275,25 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     }
     // check that data for all dropdowns is loaded
     const allDataLoaded: boolean = activitiesListFilters.every(
-      (filter: IEtoolsFilter) =>
+      (filter: EtoolsFilter) =>
         (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
         Boolean(this.filtersData[filter.filterKey])
     );
-
     if (!allDataLoaded) {
       return;
     }
 
-    const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = mapFilters(activitiesListFilters, this.filtersData, initialValues).filter(
-      (filter: IEtoolsFilter) => filter.selectionOptions!.length
-    );
+    this.populateDropdownFilterOptions(this.filtersData, activitiesListFilters);
 
-    this.filtersLoading = false;
+    const currentParams: GenericObject = decodeQueryStrToObj(store.getState().app.routeDetails.queryParamsString || '');
+    this.filters = updateFiltersSelectedValues(currentParams, activitiesListFilters);
   }
 
-  static get styles(): CSSResult[] {
-    return [
-      elevationStyles,
-      pageContentHeaderSlottedStyles,
-      pageLayoutStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      SharedStyles,
-      buttonsStyles,
-      ActivitiesListStyles,
-      css`
-        .search-container {
-          display: flex;
-          min-height: 73px;
-        }
-        .search-input {
-          margin-right: 16px;
-          margin-bottom: 5px;
-        }
-        .search-filters {
-          flex-grow: 1;
-        }
-      `
-    ];
+  private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
+    activitiesListFilters.forEach((filter: EtoolsFilter) => {
+      if (filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti) {
+        updateFilterSelectionOptions(activitiesListFilters, filter.filterKey, filtersData[filter.filterKey]);
+      }
+    });
   }
 }

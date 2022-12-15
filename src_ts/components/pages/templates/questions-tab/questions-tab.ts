@@ -11,8 +11,7 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {debounce} from '../../../utils/debouncer';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {CATEGORIES, METHODS, SECTIONS} from '../../../../endpoints/endpoints-list';
-import {IEtoolsFilter} from '../../../common/layout/filters/etools-filters';
-import {mapFilters} from '../../../utils/filters-mapping';
+import {EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {openDialog} from '../../../utils/dialog';
 import {ANSWER_TYPES, LEVELS} from '../../../common/dropdown-options';
 import {questionsFilters} from './questions-tab.filters';
@@ -25,11 +24,14 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import {clone} from 'ramda';
+import {decodeQueryStrToObj} from '../../../utils/utils';
+import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
-  @property() filters: IEtoolsFilter[] | null = null;
+  @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
+  @property() filtersInitialized = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -67,8 +69,6 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
 
     this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
 
-    this.initFilters();
-
     this.activeLanguageUnsubscribe = store.subscribe(activeLanguageSelector(() => this.initFilters()));
   }
 
@@ -81,6 +81,12 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     this.questionsDataUnsubscribe();
     this.routeDetailsUnsubscribe();
     this.activeLanguageUnsubscribe();
+  }
+
+  filtersChange(e: CustomEvent): void {
+    if (this.filtersInitialized) {
+      updateQueryParams({...e.detail, page: 1}, true);
+    }
   }
 
   checkParams(params?: IRouteQueryParams | null): boolean {
@@ -177,9 +183,22 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           level__in: applyDropdownTranslation(LEVELS),
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
-        const initialValues: GenericObject = store.getState().app.routeDetails.queryParams || {};
-        this.filters = mapFilters(questionsFilters, optionsCollection, initialValues);
+
+        this.populateDropdownFilterOptions(optionsCollection, questionsFilters);
+
+        const currentParams: GenericObject = decodeQueryStrToObj(
+          store.getState().app.routeDetails.queryParamsString || ''
+        );
+        this.filters = updateFiltersSelectedValues(currentParams, questionsFilters);
       }
     );
+  }
+
+  private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: EtoolsFilter[]): void {
+    activitiesListFilters.forEach((filter: EtoolsFilter) => {
+      if (filtersData[filter.filterKey]) {
+        updateFilterSelectionOptions(activitiesListFilters, filter.filterKey, filtersData[filter.filterKey]);
+      }
+    });
   }
 }
