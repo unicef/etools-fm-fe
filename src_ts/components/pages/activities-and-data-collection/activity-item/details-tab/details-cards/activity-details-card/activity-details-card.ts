@@ -172,7 +172,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     if (this.isStartDateAfterEndDate()) {
       super.save();
     } else {
-      fireEvent(this, 'toast', {text: 'Start Date must be before End Date'});
+      fireEvent(this, 'toast', {text: translate('START_DATE_BEFORE_END_DATE')});
     }
   }
 

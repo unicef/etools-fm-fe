@@ -168,7 +168,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
       this.currentFiles = [...this.currentFiles, ...parsedAttachments];
     } catch (e) {
       console.error(e);
-      fireEvent(this, 'toast', {text: 'Can not upload attachments. Please try again later'});
+      fireEvent(this, 'toast', {text: translate('ERROR_UPLOAD')});
     }
   }
 

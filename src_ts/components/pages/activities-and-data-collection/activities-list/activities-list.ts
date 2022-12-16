@@ -35,6 +35,7 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 import {decodeQueryStrToObj} from '../../../utils/utils';
+import {translate} from 'lit-translate';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -64,7 +65,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       this.loadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadActivitiesList(params))
-        .catch(() => fireEvent(this, 'toast', {text: 'Can not load Activities List'}))
+        .catch(() => fireEvent(this, 'toast', {text: translate('ERROR_LOAD_ACTIVITIES_LIST')}))
         .then(() => (this.loadingInProcess = false));
     }, 400);
 
@@ -89,7 +90,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     this.activityErrorUnsubscribe = store.subscribe(
       activityDetailsError((error: null | GenericObject) => {
         if (error) {
-          fireEvent(this, 'toast', {text: 'Can not create Activity'});
+          fireEvent(this, 'toast', {text: translate('ERROR_CREATE_ACTIVITY')});
         }
       }, false)
     );

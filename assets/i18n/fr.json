@@ -40,7 +40,7 @@
     },
     "SUMMARY": {
       "OVERALL_FINDING_PLACEHOLDER": "Entrez le résultat",
-       "OVERALL_FINDING": "Constat général",
+      "OVERALL_FINDING": "Constat général",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
         "ON_TRACK": "En Bonne Voie",
@@ -126,18 +126,9 @@
       "reject_report": "Rejeter le rapport"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {
-        "LABEL": "Commentaire d'annulation",
-        "TITLE": "Motif d'annulation"
-      },
-      "reject": {
-        "LABEL": "Commentaire de rejet",
-        "TITLE": "Motif du rejet"
-      },
-      "reject_report": {
-        "LABEL": "Commentaire de rejet du rapport",
-        "TITLE": "Motif de rejet du rapport"
-      }
+      "cancel": {"LABEL": "Commentaire d'annulation", "TITLE": "Motif d'annulation"},
+      "reject": {"LABEL": "Commentaire de rejet", "TITLE": "Motif du rejet"},
+      "reject_report": {"LABEL": "Commentaire de rejet du rapport", "TITLE": "Motif de rejet du rapport"}
     },
     "STATUSES": {
       "draft": "Draft",
@@ -341,22 +332,21 @@
       "SECTIONS": "Sélectionnez les rubriques",
       "METHODS": "Sélectionnez les méthodes de collecte",
       "CATEGORY": "Sélectionnez le groupe",
+      "GROUP": "Select Group",
       "LEVEL": "Sélectionnez le niveau cible de la question",
       "ANSWER_TYPE": "Sélectionnez le type de réponse",
-      "SCALE_SIZE": "Sélectionnez la taille de l'échelle",
-      "GROUP": "Select Group"
+      "SCALE_SIZE": "Sélectionnez la taille de l'échelle"
     },
     "LABELS": {
       "QUESTION": "Question",
       "LEVEL": "Niveau cible des questions",
       "SECTIONS": "Rubriques",
       "METHODS": "Méthodes de collecte",
-      "CATEGORY": "Groupe",
+      "GROUP": "Group",
       "ANSWER_TYPE": "Type de réponse",
       "IS_HACT": "Compte pour HACT",
       "IS_ACTIVE": "C'est actif",
-      "SCALE_SIZE": "Taille de l'échelle",
-      "GROUP": "Group"
+      "SCALE_SIZE": "Taille de l'échelle"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
     "COLUMNS": {
@@ -602,5 +592,24 @@
   "FALSE": "Faux",
   "VIEW": "Voir",
   "FILTER_BY_SECTION": "Filtrer Par Section",
-  "SUPPORT": "Support"
+  "SUPPORT": "Support",
+  "ERROR_CHANGING_WORKSPACE": "Une erreur s'est produite lors de la modification de votre espace de travail",
+  "CHANGES_SAVED": "Toutes les modifications sont enregistrées",
+  "ERROR_ATTACHEMENT_LOAD": "Impossible de charger les pièces jointes",
+  "ERROR_CHANGES_SAVE": "Impossible d'enregistrer les modifications. Veuillez réessayer plus tard",
+  "SELECT_CORRECT_FILE": "Veuillez sélectionner le bon fichier",
+  "ERROR_LOAD_LOCATIONS": "Impossible de charger les emplacements pour le widget",
+  "ERROR_LOAD_ACTIVITIES_LIST": "Impossible de charger la liste des activités",
+  "ERROR_CREATE_ACTIVITY": "Impossible de créer une activité",
+  "ERROR_UPLOAD": "Impossible de télécharger les pièces jointes. Veuillez réessayer plus tard",
+  "ERROR_UPDATE_CHECKLIST": "Impossible de mettre à jour la liste de contrôle, veuillez réessayer",
+  "START_DATE_BEFORE_END_DATE": "La date de début doit être antérieure à la date de fin",
+  "ERROR_LOAD_REPORT": "Impossible de charger les données FullReport",
+  "ERROR_PLAN_YEAR": "Impossible de planifier pour l'année sélectionnée",
+  "SELECT_CORRECT_LOCATION": "Veuillez sélectionner l'emplacement correct sur la carte",
+  "ERROR_LOAD_QUESTIONS": "Impossible de charger la liste des questions",
+  "ERROR_LOAD_TEMPLATES": "Impossible de charger la liste des modèles de questions",
+  "ERROR_UPDATE_QUESTION_TEMPLATE": "Impossible de mettre à jour les modèles de question avec l'identifiant",
+  "ERROR_CHANGE_ACTIVITY_STATUS": "Impossible de modifier le statut de l'activité",
+  "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard"
 }

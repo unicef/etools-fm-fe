@@ -6,6 +6,7 @@ import {updateChecklistAttachments} from '../../../../../../redux/effects/data-c
 import {store} from '../../../../../../redux/store';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {template} from './summary-checklist-attachments-popup.tpl';
+import {translate} from 'lit-translate';
 
 @customElement('summary-checklist-attachments-popup')
 export class SummaryChecklistAttachmentsPopup extends LitElement {
@@ -61,7 +62,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       })
       .catch(() => {
         this.savingInProcess = false;
-        fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
+        fireEvent(this, 'toast', {text: translate('ERROR_CHANGES_SAVE')});
       });
   }
 
@@ -79,7 +80,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       this.attachments = [...this.attachments, ...parsedAttachments];
     } catch (e) {
       console.error(e);
-      fireEvent(this, 'toast', {text: 'Can not upload attachments. Please try again later'});
+      fireEvent(this, 'toast', {text: translate('ERROR_UPLOAD')});
     }
   }
 
