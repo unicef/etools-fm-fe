@@ -607,5 +607,6 @@
   "ERROR_LOAD_TEMPLATES": "Can not load Question Templates List",
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Can not update Question Templates with id",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Can not change activity status",
-  "PLEASE_TRY_AGAIN": "please try again later"
+  "PLEASE_TRY_AGAIN": "please try again later",
+  "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!"
 }

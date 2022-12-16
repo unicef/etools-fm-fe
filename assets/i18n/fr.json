@@ -611,5 +611,6 @@
   "ERROR_LOAD_TEMPLATES": "Impossible de charger la liste des modèles de questions",
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Impossible de mettre à jour les modèles de question avec l'identifiant",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Impossible de modifier le statut de l'activité",
-  "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard"
+  "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard",
+  "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !"
 }
