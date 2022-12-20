@@ -345,7 +345,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   protected _signOut(): void {
     // this._clearDexieDbs();
     this.clearLocalStorage();
-    window.location.href = window.location.origin + '/logout';
+    window.location.href = window.location.origin + '/social/unicef-logout/';
   }
 
   // TODO
