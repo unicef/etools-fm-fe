@@ -9,6 +9,7 @@ import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {DataMixin} from '../../mixins/data-mixin';
+import {translate} from 'lit-translate';
 
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
@@ -58,7 +59,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
         // check errors on update(create) complete
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
-          fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
+          fireEvent(this, 'toast', {text: translate('ERROR_CHANGES_SAVE')});
           return;
         }
 
@@ -84,7 +85,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     // validate if file is selected for new attachments
     if (!this.editedData.id && !this.selectedFileId) {
       fireEvent(this, 'toast', {
-        text: 'Please, select correct file'
+        text: translate('SELECT_CORRECT_FILE')
       });
       return;
     }

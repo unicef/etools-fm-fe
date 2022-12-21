@@ -20,7 +20,7 @@ import {fireEvent} from '../../../../utils/fire-custom-event';
 import {openDialog} from '../../../../utils/dialog';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {ACTIVITIES_PAGE} from '../../activities-page';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 
 @customElement('statuses-actions')
@@ -141,8 +141,8 @@ export class StatusesActionsComponent extends LitElement {
       const errors: any = store.getState().activityDetails.error;
       if (errors) {
         const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
-        const errorText: string = backendMessage || 'please try again later';
-        fireEvent(this, 'toast', {text: `Can not change activity status: ${errorText}`});
+        const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
+        fireEvent(this, 'toast', {text: `${translate('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
       } else if (transition.transition === REJECT) {
         updateAppLocation(`${ACTIVITIES_PAGE}`);
       }

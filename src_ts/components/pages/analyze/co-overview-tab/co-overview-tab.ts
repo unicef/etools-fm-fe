@@ -22,6 +22,7 @@ import {elevationStyles} from '../../../styles/elevation-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
+import {translate} from 'lit-translate';
 
 store.addReducers({fullReports});
 
@@ -156,7 +157,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   private loadFullReport(fullReportId: number): void {
     store
       .dispatch<AsyncEffect>(loadFullReport(fullReportId))
-      .catch(() => fireEvent(this, 'toast', {text: 'Can not load FullReport data'}));
+      .catch(() => fireEvent(this, 'toast', {text: translate('ERROR_LOAD_REPORT')}));
   }
 
   static get styles(): CSSResult[] {
