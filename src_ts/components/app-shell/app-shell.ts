@@ -15,6 +15,7 @@ import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@unicef-polymer/etools-form-builder';
+import '@unicef-polymer/etools-toasts/src/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-dialog/dynamic-dialog';
 
 import '@unicef-polymer/etools-piwik-analytics/etools-piwik-analytics.js';
@@ -26,7 +27,6 @@ import './header/page-header.js';
 import './footer/page-footer.js';
 
 import './app-theme.js';
-import {ToastNotificationHelper} from '../common/toast-notifications/toast-notification-helper';
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../config/config';
 import {getCurrentUserData} from '../../redux/effects/user.effects';
 import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
@@ -115,8 +115,6 @@ export class AppShell extends connect(store)(LitElement) {
   @query('#drawer') private drawer!: AppDrawerElement;
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
 
-  private appToastsNotificationsHelper!: ToastNotificationHelper;
-
   private selectedLanguageAux = '';
 
   constructor() {
@@ -124,10 +122,6 @@ export class AppShell extends connect(store)(LitElement) {
     // Gesture events like tap and track generated from touch will not be
     // preventable, allowing for better scrolling performance.
     setPassiveTouchGestures(true);
-    // init toasts notifications queue
-    this.appToastsNotificationsHelper = new ToastNotificationHelper();
-    this.appToastsNotificationsHelper.addToastNotificationListeners();
-    this.appToastsNotificationsHelper.appShellEl = this;
 
     const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
     if (!menuTypeStoredVal) {
@@ -218,8 +212,6 @@ export class AppShell extends connect(store)(LitElement) {
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    // remove toasts notifications listeners
-    this.appToastsNotificationsHelper.removeToastNotificationListeners();
   }
 
   async stateChanged(state: IRootState): Promise<void> {
@@ -267,6 +259,8 @@ export class AppShell extends connect(store)(LitElement) {
         .toast="${this.currentToastMessage}"
       >
       </etools-piwik-analytics>
+
+      <etools-toasts></etools-toasts>
 
       <app-drawer-layout
         id="layout"

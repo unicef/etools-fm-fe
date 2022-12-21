@@ -326,8 +326,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   protected showSaveNotification(msg?: string): void {
     fireEvent(this, 'toast', {
-      text: msg ? msg : translate('CHANGES_SAVED'),
-      showCloseBtn: false
+      text: msg ? msg : translate('CHANGES_SAVED')
     });
   }
 

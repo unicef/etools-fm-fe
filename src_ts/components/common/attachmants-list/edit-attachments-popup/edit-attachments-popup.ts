@@ -85,8 +85,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     // validate if file is selected for new attachments
     if (!this.editedData.id && !this.selectedFileId) {
       fireEvent(this, 'toast', {
-        text: translate('SELECT_CORRECT_FILE'),
-        showCloseBtn: false
+        text: translate('SELECT_CORRECT_FILE')
       });
       return;
     }

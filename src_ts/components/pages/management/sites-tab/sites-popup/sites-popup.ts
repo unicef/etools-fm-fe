@@ -63,8 +63,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         this.errors = store.getState().specificLocations.errors;
         if (this.errors && this.errors.point) {
           fireEvent(this, 'toast', {
-            text: translate('SELECT_CORRECT_LOCATION'),
-            showCloseBtn: false
+            text: translate('SELECT_CORRECT_LOCATION')
           });
         }
         if (this.errors && Object.keys(this.errors).length) {
