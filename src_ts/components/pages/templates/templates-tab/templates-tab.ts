@@ -34,7 +34,7 @@ import {TemplatesStyles} from './templates-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
-import {translate} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER = 13;
@@ -67,7 +67,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
       this.listLoadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadQuestionTemplates(refactoredParams, level, target))
-        .catch(() => fireEvent(this, 'toast', {text: translate('ERROR_LOAD_TEMPLATES')}))
+        .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_TEMPLATES')}))
         .then(() => (this.listLoadingInProcess = false));
     }, 100);
 
@@ -203,7 +203,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
     // update info
     this.requestTemplateUpdate(selectedTemplate.id, selectedTemplate.template).catch(() => {
-      fireEvent(this, 'toast', {text: `${translate('ERROR_UPDATE_QUESTION_TEMPLATE')} ${id}`});
+      fireEvent(this, 'toast', {text: `${getTranslation('ERROR_UPDATE_QUESTION_TEMPLATE')} ${id}`});
       selectedTemplate.template = templateData;
       this.requestUpdate();
     });

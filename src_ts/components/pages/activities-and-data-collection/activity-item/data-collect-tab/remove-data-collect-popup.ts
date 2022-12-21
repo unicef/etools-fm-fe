@@ -14,12 +14,6 @@ export class RemoveDataCollectPopup extends LitElement {
   @property() checklistId!: number;
   @property() dialogOpened = false;
 
-  set dialogData({activityId, checklistId, dialogOpened}: DataCollectionItemRemoval) {
-    this.activityId = activityId;
-    this.checklistId = checklistId;
-    this.dialogOpened = dialogOpened;
-  }
-
   private readonly updateInProgressUnsubscribe: Unsubscribe;
 
   constructor() {
@@ -42,6 +36,12 @@ export class RemoveDataCollectPopup extends LitElement {
         fireEvent(this, 'response', {confirmed: true});
       }, false)
     );
+  }
+
+  set dialogData({activityId, checklistId, dialogOpened}: DataCollectionItemRemoval) {
+    this.activityId = activityId;
+    this.checklistId = checklistId;
+    this.dialogOpened = dialogOpened;
   }
 
   render(): TemplateResult {

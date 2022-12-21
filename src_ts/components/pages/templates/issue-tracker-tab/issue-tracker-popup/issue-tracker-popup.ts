@@ -17,7 +17,7 @@ import {SiteMixin} from '../../../../common/mixins/site-mixin';
 import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 
 @customElement('issue-tracker-popup')
@@ -168,7 +168,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
       this.currentFiles = [...this.currentFiles, ...parsedAttachments];
     } catch (e) {
       console.error(e);
-      fireEvent(this, 'toast', {text: translate('ERROR_UPLOAD')});
+      fireEvent(this, 'toast', {text: getTranslation('ERROR_UPLOAD')});
     }
   }
 

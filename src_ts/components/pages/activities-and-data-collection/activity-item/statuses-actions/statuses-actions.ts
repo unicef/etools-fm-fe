@@ -142,7 +142,7 @@ export class StatusesActionsComponent extends LitElement {
       if (errors) {
         const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
-        fireEvent(this, 'toast', {text: `${translate('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
+        fireEvent(this, 'toast', {text: `${getTranslation('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
       } else if (transition.transition === REJECT) {
         updateAppLocation(`${ACTIVITIES_PAGE}`);
       }

@@ -26,7 +26,7 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import {clone} from 'ramda';
 import {decodeQueryStrToObj} from '../../../utils/utils';
 import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
-import {translate} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -48,7 +48,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       this.listLoadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadQuestions(params))
-        .catch(() => fireEvent(this, 'toast', {text: translate('ERROR_LOAD_QUESTIONS')}))
+        .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_QUESTIONS')}))
         .then(() => (this.listLoadingInProcess = false));
     }, 100);
 

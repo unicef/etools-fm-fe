@@ -14,7 +14,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
-import {translate} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -34,7 +34,7 @@ export class RationaleTabComponent extends LitElement {
       this.loadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadRationale(year))
-        .catch(() => fireEvent(this, 'toast', {text: translate('ERROR_PLAN_YEAR')}))
+        .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_PLAN_YEAR')}))
         .then(() => (this.loadingInProcess = false));
     }, 100);
 

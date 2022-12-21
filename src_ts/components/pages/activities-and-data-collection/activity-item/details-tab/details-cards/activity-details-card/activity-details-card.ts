@@ -17,7 +17,7 @@ import clone from 'ramda/es/clone';
 import {fireEvent} from '../../../../../../utils/fire-custom-event';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 
 export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
@@ -37,14 +37,64 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
 
-  render(): TemplateResult {
-    return template.call(this);
+  static get styles(): CSSResult[] {
+    // language=CSS
+    return [
+      elevationStyles,
+      SharedStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      css`
+        .datepicker-width {
+          flex-basis: 30%;
+        }
+        .card-content {
+          padding-bottom: 10px;
+        }
+        .widget-container {
+          position: relative;
+          border: solid 1px var(--gray-06);
+          margin: 0 12px;
+        }
+
+        .widget-dropdown {
+          display: flex;
+          align-items: center;
+          padding: 14px 19px;
+          margin: 18px 12px 0;
+          color: var(--module-primary);
+          background-color: var(--gray-06);
+          text-transform: uppercase;
+          font-weight: 500;
+          font-size: 16px;
+        }
+
+        .widget-dropdown span,
+        .widget-dropdown iron-icon.toggle-btn {
+          cursor: pointer;
+        }
+
+        etools-loading {
+          z-index: 9999;
+        }
+        datepicker-lite {
+          white-space: nowrap;
+        }
+        .field-office {
+          width: 30%;
+        }
+      `
+    ];
   }
 
   set data(data: IActivityDetails) {
     super.data = data;
     this.activitySections = data ? clone(data.sections) : [];
     this.activityOffices = data ? clone(data.offices) : [];
+  }
+
+  render(): TemplateResult {
+    return template.call(this);
   }
 
   selectSections(sections: Section[]): void {
@@ -172,62 +222,12 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     if (this.isStartDateAfterEndDate()) {
       super.save();
     } else {
-      fireEvent(this, 'toast', {text: translate('START_DATE_BEFORE_END_DATE')});
+      fireEvent(this, 'toast', {text: getTranslation('START_DATE_BEFORE_END_DATE')});
     }
   }
 
   protected startEdit(): void {
     super.startEdit();
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
-  }
-
-  static get styles(): CSSResult[] {
-    // language=CSS
-    return [
-      elevationStyles,
-      SharedStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      css`
-        .datepicker-width {
-          flex-basis: 30%;
-        }
-        .card-content {
-          padding-bottom: 10px;
-        }
-        .widget-container {
-          position: relative;
-          border: solid 1px var(--gray-06);
-          margin: 0 12px;
-        }
-
-        .widget-dropdown {
-          display: flex;
-          align-items: center;
-          padding: 14px 19px;
-          margin: 18px 12px 0;
-          color: var(--module-primary);
-          background-color: var(--gray-06);
-          text-transform: uppercase;
-          font-weight: 500;
-          font-size: 16px;
-        }
-
-        .widget-dropdown span,
-        .widget-dropdown iron-icon.toggle-btn {
-          cursor: pointer;
-        }
-
-        etools-loading {
-          z-index: 9999;
-        }
-        datepicker-lite {
-          white-space: nowrap;
-        }
-        .field-office {
-          width: 30%;
-        }
-      `
-    ];
   }
 }
