@@ -52,7 +52,7 @@
     "@unicef-polymer/etools-dialog": "^6.0.6",
     "@unicef-polymer/etools-dropdown": "^4.0.3",
     "@unicef-polymer/etools-filters": "^1.0.0",
-    "@unicef-polymer/etools-form-builder": "^2.1.3",
+    "@unicef-polymer/etools-form-builder": "^2.1.4",
     "@unicef-polymer/etools-loading": "^6.0.1",
     "@unicef-polymer/etools-modules-common": "^1.3.14",
     "@unicef-polymer/etools-piwik-analytics": "^3.1.0",
