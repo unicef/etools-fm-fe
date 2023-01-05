@@ -178,8 +178,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           ></paper-icon-button>
           <etools-app-selector
             id="selector"
-            .iconTitle="${translate('NAVIGATION_MENU.APPSELECTOR')}"
             .user="${this.profile}"
+            .language="${this.selectedLanguage}"
           ></etools-app-selector>
           <img
             id="app-logo"
