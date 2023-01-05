@@ -1,7 +1,7 @@
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
-import '@unicef-polymer/etools-app-selector/etools-app-selector';
+import '@unicef-polymer/etools-app-selector/dist/etools-app-selector';
 import '@unicef-polymer/etools-profile-dropdown/etools-profile-dropdown';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
