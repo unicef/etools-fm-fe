@@ -15,6 +15,7 @@ import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
+import {clone} from 'ramda';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
@@ -31,6 +32,7 @@ type MemberOptions = {
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
+  @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
@@ -39,6 +41,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   userTypes: UserType[] = [USER_STAFF, USER_TPM];
   users: User[] = [];
+  preserveSelectedLeadVisit = false;
 
   private userUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;
@@ -54,6 +57,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
     this.personResponsible = this.editedData.visit_lead;
     this.teamMembers = this.editedData.team_members;
     this.tpmPartner = this.editedData.tpm_partner;
+    if (this.personResponsible) {
+      this.visitLeadOptions.push(this.personResponsible as User);
+      this.preserveSelectedLeadVisit = !(this.teamMembers || []).some((x) => x.id === this.personResponsible!.id);
+    }
   }
 
   render(): TemplateResult {
@@ -103,6 +110,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ? html`
                   <etools-dropdown
                     class="flex"
+                    id="tpmPartner"
                     .selected="${simplifyValue(this.tpmPartner)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) =>
                       this.setTpmPartner(detail.selectedItem)}"
@@ -124,6 +132,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
             <etools-dropdown-multi
               class="flex"
+              id="teamMembers"
               .selectedValues="${simplifyValue(this.teamMembers)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
@@ -142,12 +151,13 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
             <etools-dropdown
               class="flex"
+              id="visitLead"
               .selected="${simplifyValue(this.personResponsible)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
                 this.setPersonResponsible(detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.VISIT_LEAD')}"
-              .options="${this.membersOptions}"
+              .options="${this.visitLeadOptions}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
@@ -230,6 +240,14 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (JSON.stringify(members) !== JSON.stringify(this.teamMembers)) {
       this.updateModelValue('team_members', members);
       this.teamMembers = members;
+
+      // visitLeadOptions will contain only selected team members
+      // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
+      const visitLeads = clone(members);
+      if (this.preserveSelectedLeadVisit && !visitLeads.some((x: User) => x.id === this.personResponsible?.id)) {
+        visitLeads.push(this.personResponsible as User);
+      }
+      this.visitLeadOptions = visitLeads;
     }
   }
 
