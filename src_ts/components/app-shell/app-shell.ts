@@ -38,6 +38,7 @@ import {UpdateDrawerState} from '../../redux/actions/app.actions';
 import {loadStaticData} from '../../redux/effects/load-static-data.effect';
 import {user} from '../../redux/reducers/user.reducer';
 import {country} from '../../redux/reducers/country.reducer';
+import {organization} from '../../redux/reducers/organization.reducer';
 import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from '../../endpoints/endpoints-list';
 import {currentUser, userSelector} from '../../redux/selectors/user.selectors';
 import {setUser} from '../../config/permissions';
@@ -69,6 +70,7 @@ registerTranslateConfig({
 store.addReducers({
   user,
   country,
+  organization,
   globalLoading
 });
 

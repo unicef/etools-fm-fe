@@ -50,6 +50,19 @@ export const countriesDropdownStyles: TemplateResult = html`
       }
     }
 
+    organizations-dropdown {
+      width: 180px;
+      margin-left: 5px;
+    }
+
+    etools-dropdown.warning {
+      --paper-input-container: {
+        padding-left: 3px;
+        box-sizing: border-box;
+        box-shadow: inset 0px 0px 0px 1.5px red;
+      }
+    }
+
     @media (max-width: 900px) {
       etools-dropdown {
         width: 100px;

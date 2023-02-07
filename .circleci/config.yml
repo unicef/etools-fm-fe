@@ -75,4 +75,4 @@ workflows:
                 - develop
                 - analyze-tab-pagination
                 - fix-translations
-                - replace-filters
+                - amp

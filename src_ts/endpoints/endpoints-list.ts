@@ -2,6 +2,7 @@ export const PROFILE_ENDPOINT = 'userProfile';
 export const CP_OUTCOMES = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT = 'locations';
 export const CHANGE_COUNTRY = 'changeCountry';
+export const CHANGE_ORGANIZATION = 'changeOrganization';
 export const UNICEF_USER = 'unicefUsers';
 export const SITES_EXPORT = 'unicefUsers';
 export const SITES_LIST = 'siteLocations';
@@ -95,6 +96,11 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [CHANGE_COUNTRY]: {
     url: '/api/v3/users/changecountry/'
   },
+
+  [CHANGE_ORGANIZATION]: {
+    url: '/api/v3/users/changeorganization/'
+  },
+
   //fixme unused endpoint?
   [UNICEF_USER]: {
     url: '/api/v3/users/?verbosity=minimal',

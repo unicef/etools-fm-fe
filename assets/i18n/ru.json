@@ -590,6 +590,8 @@
   "FILTER_BY_SECTION": "Filter By Section",
   "SUPPORT": "Localized Support",
   "ERROR_CHANGING_WORKSPACE": "Something went wrong changing your workspace",
+  "ERROR_CHANGING_ORGANIZATION": "Something went wrong changing your organization",
+  "SELECT_ORGANIZATION": "Выберите организацию",
   "CHANGES_SAVED": "All changes are saved",
   "ERROR_ATTACHEMENT_LOAD": "Can not load attachments",
   "ERROR_CHANGES_SAVE": "Can not save changes. Please try again later",

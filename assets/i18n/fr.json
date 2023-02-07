@@ -594,6 +594,8 @@
   "FILTER_BY_SECTION": "Filtrer Par Section",
   "SUPPORT": "Support",
   "ERROR_CHANGING_WORKSPACE": "Une erreur s'est produite lors de la modification de votre espace de travail",
+  "ERROR_CHANGING_ORGANIZATION": "Une erreur s'est produite lors de la modification de votre organisation",
+  "SELECT_ORGANIZATION": "Sélectionnez l'organisation",
   "CHANGES_SAVED": "Toutes les modifications sont enregistrées",
   "ERROR_ATTACHEMENT_LOAD": "Impossible de charger les pièces jointes",
   "ERROR_CHANGES_SAVE": "Impossible d'enregistrer les modifications. Veuillez réessayer plus tard",

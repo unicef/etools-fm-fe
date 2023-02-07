@@ -2,6 +2,7 @@ interface IRootState {
   app: IAppState;
   user: IUserState;
   country: IRequestState;
+  organization: IRequestState;
   staticData: IStaticDataState;
   specificLocations: ISpecificLocationsState;
   questions: IQuestionsState;

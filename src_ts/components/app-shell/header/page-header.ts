@@ -5,6 +5,7 @@ import '@unicef-polymer/etools-app-selector/dist/etools-app-selector';
 import '@unicef-polymer/etools-profile-dropdown/etools-profile-dropdown';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
+import './organizations-dropdown';
 
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
@@ -214,6 +215,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             ></etools-dropdown>
 
             <countries-dropdown></countries-dropdown>
+            <organizations-dropdown></organizations-dropdown>
           </div>
 
           <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
