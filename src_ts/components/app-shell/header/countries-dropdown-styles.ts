@@ -42,7 +42,7 @@ export const countriesDropdownStyles: TemplateResult = html`
         cursor: pointer;
         font-size: 16px;
         text-align: right;
-        width: 100px;
+        width: 100%;
       }
 
       --paper-menu-button-dropdown: {
@@ -50,8 +50,10 @@ export const countriesDropdownStyles: TemplateResult = html`
       }
     }
 
-    organizations-dropdown {
+    organizations-dropdown,
+    countries-dropdown {
       width: 180px;
+      min-width: 180px;
       margin-left: 5px;
     }
 
