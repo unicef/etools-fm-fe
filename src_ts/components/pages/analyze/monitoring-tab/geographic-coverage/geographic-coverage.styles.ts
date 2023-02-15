@@ -3,9 +3,9 @@ import {css, CSSResult} from 'lit-element';
 export const geographicCoverageStyles: CSSResult = css`
   :host {
     --mark-no-visits-color: #ddf1bf;
-    --mark-one-five-color: #9ed6b9;
-    --mark-six-ten: #3f9bbc;
-    --mark-eleven: #273891;
+    --mark-one-five-color: #ff0000;
+    --mark-six-ten: #ffed00;
+    --mark-eleven: #00e021;
   }
   #geomap {
     min-height: 400px;
