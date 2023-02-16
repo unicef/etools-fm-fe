@@ -70,7 +70,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         option-value="id"
         trigger-value-change-event
         @etools-selected-item-changed="${this.countrySelected}"
-        shown-options-limit="250"
+        .shownOptionsLimit="${250}"
         ?hidden="${!this.countrySelectorVisible}"
         hide-search
         .autoWidth="${true}"
