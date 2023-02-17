@@ -2,7 +2,7 @@ import {css, CSSResult} from 'lit-element';
 // language=CSS
 export const geographicCoverageStyles: CSSResult = css`
   :host {
-    --mark-no-visits-color: #ddf1bf;
+    --mark-no-visits-color: #dcdcdc;
     --mark-one-five-color: #ff0000;
     --mark-six-ten: #ffed00;
     --mark-eleven: #00e021;
