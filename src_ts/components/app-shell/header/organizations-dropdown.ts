@@ -57,7 +57,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
       <etools-dropdown
         id="organizationSelector"
         placeholder="${translate('SELECT_ORGANIZATION')}"
-        class="${this.checkMustSelectOrganization(this.user)}"
+        class="w100 ${this.checkMustSelectOrganization(this.user)}"
         .selected="${this.currentOrganizationId}"
         allow-outside-scroll
         no-label-float

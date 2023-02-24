@@ -50,11 +50,20 @@ export const countriesDropdownStyles: TemplateResult = html`
       }
     }
 
-    organizations-dropdown,
+    organizations-dropdown {
+      width: 165px;
+    }
+
     countries-dropdown {
-      width: 180px;
-      min-width: 180px;
-      margin-left: 5px;
+      width: 160px;
+    }
+
+    #languageSelector {
+      width: 120px;
+    }
+
+    .w100 {
+      width: 100%;
     }
 
     etools-dropdown.warning {

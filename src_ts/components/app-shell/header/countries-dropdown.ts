@@ -61,6 +61,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown
         id="countrySelector"
+        class="w100"
         .selected="${this.currentCountry.id}"
         placeholder="Country"
         allow-outside-scroll
