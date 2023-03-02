@@ -17,7 +17,7 @@ import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {debounce} from '../../../../utils/debouncer';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
@@ -63,8 +63,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         this.errors = store.getState().specificLocations.errors;
         if (this.errors && this.errors.point) {
           fireEvent(this, 'toast', {
-            text: 'Please, select correct location on map',
-            showCloseBtn: false
+            text: getTranslation('SELECT_CORRECT_LOCATION')
           });
         }
         if (this.errors && Object.keys(this.errors).length) {

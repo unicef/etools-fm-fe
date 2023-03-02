@@ -29,6 +29,7 @@ import {leafletStyles} from '../../styles/leaflet-styles';
 import {equals} from 'ramda';
 import clone from 'ramda/es/clone';
 import {debounce} from '../../utils/debouncer';
+import {get as getTranslation} from 'lit-translate';
 
 store.addReducers({widgetLocations, specificLocations});
 
@@ -168,7 +169,7 @@ export class LocationWidgetComponent extends LitElement {
 
     store
       .dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', page: 1, reload: true}))
-      .catch(() => fireEvent(this, 'toast', {text: 'Can not Load Locations for Widget'}));
+      .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_LOCATIONS')}));
 
     this.currentWorkspaceUnsubscribe = store.subscribe(
       currentWorkspaceSelector((workspace: Workspace | undefined) => {

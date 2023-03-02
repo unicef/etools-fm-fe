@@ -22,6 +22,7 @@ import {elevationStyles} from '../../../styles/elevation-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
+import {get as getTranslation} from 'lit-translate';
 
 store.addReducers({fullReports});
 
@@ -43,6 +44,18 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   private routeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
   private fullReportsUnsubscribe!: Unsubscribe;
+
+  static get styles(): CSSResult[] {
+    return [
+      CoOverviewTabStyles,
+      elevationStyles,
+      SharedStyles,
+      pageLayoutStyles,
+      FlexLayoutClasses,
+      CardStyles,
+      leafletStyles
+    ];
+  }
 
   render(): TemplateResult {
     return template.call(this);
@@ -156,18 +169,6 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   private loadFullReport(fullReportId: number): void {
     store
       .dispatch<AsyncEffect>(loadFullReport(fullReportId))
-      .catch(() => fireEvent(this, 'toast', {text: 'Can not load FullReport data'}));
-  }
-
-  static get styles(): CSSResult[] {
-    return [
-      CoOverviewTabStyles,
-      elevationStyles,
-      SharedStyles,
-      pageLayoutStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      leafletStyles
-    ];
+      .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_REPORT')}));
   }
 }

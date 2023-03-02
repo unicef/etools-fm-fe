@@ -13,6 +13,7 @@ import {isEmpty} from 'ramda';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
+import {get as getTranslation} from 'lit-translate';
 
 /**
  * @LitElement
@@ -69,7 +70,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         option-value="id"
         trigger-value-change-event
         @etools-selected-item-changed="${this.countrySelected}"
-        shown-options-limit="250"
+        .shownOptionsLimit="${250}"
         ?hidden="${!this.countrySelectorVisible}"
         hide-search
         .autoWidth="${true}"
@@ -154,6 +155,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   protected handleCountryChangeError(error: any): void {
     logError('Country change failed!', 'countries-dropdown', error);
     this.countryDropdown.selected = this.currentCountry.id;
-    fireEvent(this, 'toast', {text: 'Something went wrong changing your workspace. Please try again'});
+    fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGING_WORKSPACE')});
   }
 }

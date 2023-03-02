@@ -16,6 +16,7 @@ import {getDifference} from '../../../../../utils/objects-diff';
 import {checklistEditedCard} from '../../../../../../redux/selectors/activity-checklist.selectors';
 import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-checklist.actions';
 import {Unsubscribe} from 'redux';
+import {get as getTranslation} from 'lit-translate';
 
 const ENTER = 13;
 const ESCAPE = 27;
@@ -117,7 +118,7 @@ export class ChecklistSelectionTable extends LitElement {
       })
       .catch(() => {
         this.isEditMode = true;
-        fireEvent(this, 'toast', {text: 'Can not update checklist, please try again'});
+        fireEvent(this, 'toast', {text: getTranslation('ERROR_UPDATE_CHECKLIST')});
       })
       .finally(() => (this.loadingInProcess = false));
   }
