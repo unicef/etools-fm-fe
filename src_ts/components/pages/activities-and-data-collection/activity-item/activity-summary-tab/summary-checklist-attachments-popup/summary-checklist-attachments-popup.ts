@@ -6,6 +6,7 @@ import {updateChecklistAttachments} from '../../../../../../redux/effects/data-c
 import {store} from '../../../../../../redux/store';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {template} from './summary-checklist-attachments-popup.tpl';
+import {get as getTranslation} from 'lit-translate';
 
 @customElement('summary-checklist-attachments-popup')
 export class SummaryChecklistAttachmentsPopup extends LitElement {
@@ -20,6 +21,10 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
   readonly = false;
   popupTitle = '';
   private updateUrl?: string;
+
+  static get styles(): CSSResultArray {
+    return [SharedStyles, AttachmentsStyles];
+  }
 
   set dialogData({attachments, title, updateUrl, attachmentTypes}: AttachmentsPopupData) {
     this.updateUrl = updateUrl;
@@ -61,7 +66,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       })
       .catch(() => {
         this.savingInProcess = false;
-        fireEvent(this, 'toast', {text: 'Can not save changes. Please try again later'});
+        fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGES_SAVE')});
       });
   }
 
@@ -79,7 +84,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       this.attachments = [...this.attachments, ...parsedAttachments];
     } catch (e) {
       console.error(e);
-      fireEvent(this, 'toast', {text: 'Can not upload attachments. Please try again later'});
+      fireEvent(this, 'toast', {text: getTranslation('ERROR_UPLOAD')});
     }
   }
 
@@ -113,9 +118,5 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       const file_type: number | string = attachment.file_type;
       return {id, file_type};
     });
-  }
-
-  static get styles(): CSSResultArray {
-    return [SharedStyles, AttachmentsStyles];
   }
 }

@@ -1,7 +1,7 @@
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/paper-icon-button/paper-icon-button';
-import '@unicef-polymer/etools-app-selector/etools-app-selector';
+import '@unicef-polymer/etools-app-selector/dist/etools-app-selector';
 import '@unicef-polymer/etools-profile-dropdown/etools-profile-dropdown';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
@@ -23,7 +23,7 @@ import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
@@ -100,7 +100,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     store.subscribe(
       userSelector((userState: IUserState) => {
         if (userState.error && !isEmpty(userState.error)) {
-          this.showSaveNotification('Profile data not saved. Save profile error!');
+          this.showSaveNotification(getTranslation('ERROR_SAVE_PROFILE'));
         }
         if (!userState.isRequest && !userState.error) {
           this.profileSaveLoadingMsgDisplay(false);
@@ -178,8 +178,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           ></paper-icon-button>
           <etools-app-selector
             id="selector"
-            .iconTitle="${translate('NAVIGATION_MENU.APPSELECTOR')}"
             .user="${this.profile}"
+            .language="${this.selectedLanguage}"
           ></etools-app-selector>
           <img
             id="app-logo"
@@ -326,8 +326,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   protected showSaveNotification(msg?: string): void {
     fireEvent(this, 'toast', {
-      text: msg ? msg : 'All changes are saved.',
-      showCloseBtn: false
+      text: msg ? msg : getTranslation('CHANGES_SAVED')
     });
   }
 
@@ -345,7 +344,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   protected _signOut(): void {
     // this._clearDexieDbs();
     this.clearLocalStorage();
-    window.location.href = window.location.origin + '/logout';
+    window.location.href = window.location.origin + '/social/unicef-logout/';
   }
 
   // TODO

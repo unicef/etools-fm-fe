@@ -13,6 +13,7 @@ import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {CardStyles} from '../../styles/card-styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '../../utils/fire-custom-event';
+import {get as getTranslation} from 'lit-translate';
 
 store.addReducers({attachmentsList});
 
@@ -62,7 +63,7 @@ export class AttachmentsListComponent extends LitElement {
       this.loadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadAttachmentsList(this._endpointName, this.additionalEndpointData))
-        .catch(() => fireEvent(this, 'toast', {text: 'Can not load attachments'}))
+        .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_ATTACHEMENT_LOAD')}))
         .finally(() => (this.loadingInProcess = false));
     }, 100);
     // load attachments
