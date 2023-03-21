@@ -479,7 +479,8 @@
     "REFRESH": "Refresh",
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
-    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence"
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
+    "TPM": "Moniteurs tiers"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filtres",
@@ -614,5 +615,44 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Impossible de mettre à jour les modèles de question avec l'identifiant",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Impossible de modifier le statut de l'activité",
   "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard",
-  "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !"
+  "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !",
+  "TPM": {
+    "TITLE": "Moniteurs tiers",
+    "ADD_NEW_VENDOR": "Ajouter un nouveau fournisseur",
+    "VENDOR_NUMBER_NOT_FOUND": "NumÃ©ro de fournisseur non trouvÃ©",
+    "FILTERS": {
+      "SEARCH": "Rechercher le numÃ©ro du fournisseur ou le MPT"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "NumÃ©ro du fournisseur",
+      "TPM_NAME": "Nom du MPT",
+      "PHONE_NUMBER": "TÃ©lÃ©phone",
+      "EMAIL": "Email"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "Contacts TPM",
+    "ACCESS_MANAGEMENT_PORTAL": "Portail de gestion de l'accÃ¨s",
+    "TABS": {
+      "details": "DÃ©tails du partenaire",
+      "attachments": "PiÃ¨ces jointes"
+    },
+    "TPM_PARTNER_DETAILS": "DÃ©tails du partenaire TPM",
+    "VENDOR_NUMBER": "NumÃ©ro du fournisseur",
+    "TPM_NAME": "Nom du MPT",
+    "PHONE_NUMBER": "TÃ©lÃ©phone",
+    "EMAIL": "Email",
+    "ADDRESS": "Adresse",
+    "VALID_EMAIL_REQUIRED":  "Courriel valide requis"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "Position",
+      "FIRST_NAME": "PrÃ©nom",
+      "LAST_NAME": "Nom de famille",
+      "PHONE_NUMBER": "TÃ©lÃ©phone",
+      "EMAIL": "Email",
+      "ACTIVE": "Actif"
+    }
+  }
 }

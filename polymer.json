@@ -34,7 +34,12 @@
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js",
     "src/components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-location-tab/open-issues-location-tab.js",
     "src/components/pages/analyze/co-overview-tab/co-overview-tab.js",
-    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js"
+    "src/components/pages/analyze/co-overview-tab/cp-details-item/cp-details-item.js",
+    "src/components/pages/partners/list/partners-list.js",
+    "src/components/pages/partners/partners-page.js",
+    "src/components/pages/partners/details/partner-details.js",
+    "src/components/pages/partners/details/details-tab/partner-details-tab.js",
+    "src/components/pages/partners/details/attachements-tab/partner-attachments-tab.js"
   ],
   "extraDependencies": [
     "manifest.json",
