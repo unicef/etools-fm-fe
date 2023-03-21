@@ -619,28 +619,28 @@
   "TPM": {
     "TITLE": "Moniteurs tiers",
     "ADD_NEW_VENDOR": "Ajouter un nouveau fournisseur",
-    "VENDOR_NUMBER_NOT_FOUND": "NumÃ©ro de fournisseur non trouvÃ©",
+    "VENDOR_NUMBER_NOT_FOUND": "Numéro de fournisseur non trouvé",
     "FILTERS": {
-      "SEARCH": "Rechercher le numÃ©ro du fournisseur ou le MPT"
+      "SEARCH": "Rechercher le numéro de fournisseur ou le MPT"
     },
     "COLUMNS": {
-      "VENDOR_NUMBER": "NumÃ©ro du fournisseur",
+      "VENDOR_NUMBER": "Numéro de fournisseur",
       "TPM_NAME": "Nom du MPT",
-      "PHONE_NUMBER": "TÃ©lÃ©phone",
+      "PHONE_NUMBER": "Téléphone",
       "EMAIL": "Email"
     }
   },
   "TPM_DETAILS": {
     "TPM_CONTACTS": "Contacts TPM",
-    "ACCESS_MANAGEMENT_PORTAL": "Portail de gestion de l'accÃ¨s",
+    "ACCESS_MANAGEMENT_PORTAL": "Portail de gestion de l'accès",
     "TABS": {
-      "details": "DÃ©tails du partenaire",
-      "attachments": "PiÃ¨ces jointes"
+      "details": "Détails du partenaire",
+      "attachments": "Pièces Jointes"
     },
-    "TPM_PARTNER_DETAILS": "DÃ©tails du partenaire TPM",
-    "VENDOR_NUMBER": "NumÃ©ro du fournisseur",
-    "TPM_NAME": "Nom du MPT",
-    "PHONE_NUMBER": "TÃ©lÃ©phone",
+    "TPM_PARTNER_DETAILS": "Détails du partenaire TPM",
+    "VENDOR_NUMBER": "Numéro de fournisseur",
+    "TPM_NAME": "Nom du TPM",
+    "PHONE_NUMBER": "Téléphone",
     "EMAIL": "Email",
     "ADDRESS": "Adresse",
     "VALID_EMAIL_REQUIRED":  "Courriel valide requis"
@@ -648,9 +648,9 @@
   "TPM_CONTACTS": {
     "COLUMNS": {
       "POSITION": "Position",
-      "FIRST_NAME": "PrÃ©nom",
+      "FIRST_NAME": "Prénom",
       "LAST_NAME": "Nom de famille",
-      "PHONE_NUMBER": "TÃ©lÃ©phone",
+      "PHONE_NUMBER": "Téléphone",
       "EMAIL": "Email",
       "ACTIVE": "Actif"
     }
