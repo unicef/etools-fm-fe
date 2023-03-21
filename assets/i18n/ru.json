@@ -617,6 +617,10 @@
     "TITLE": "Third Party Monitors",
     "ADD_NEW_VENDOR": "Add New Vendor",
     "VENDOR_NUMBER_NOT_FOUND": "Vendor Number not found",
+    "NOT_SYNCED": "Not Synced",
+    "MARKED_FOR_DELETION_IN_VISION": "Marked For Deletion in VISION",
+    "BLOCKED_IN_VISION": "Blocked in VISION",
+    "SYNCED_FROM_VISION": "Synced from VISION",
     "FILTERS": {
       "SEARCH": "Search Vendor # or TPM"
     },

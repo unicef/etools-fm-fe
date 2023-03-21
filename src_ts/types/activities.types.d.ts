@@ -66,6 +66,8 @@ interface IActivityTpmPartnerExtended {
   city: string;
   country: string;
   vision_synced: boolean;
+  blocked: boolean;
+  deleted_flag: boolean;
 }
 
 interface ITpmPartnerStaffMember {

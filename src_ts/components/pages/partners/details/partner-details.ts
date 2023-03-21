@@ -15,7 +15,7 @@ import {tpmPartnerDetails} from '../../../../redux/reducers/tpm-partner-details.
 import {requestTPMPartnerDetails} from '../../../../redux/effects/tpm-partner-details.effects';
 import {Unsubscribe} from 'redux';
 import {PARTNERS_PAGE} from '../partners-page';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {getEndpoint} from '../../../../endpoints/endpoints';
@@ -31,10 +31,9 @@ const ATTACHMENTS_TAB = 'attachments';
 @customElement('partner-details')
 export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
   @property() partnerId: string | null = null;
-  @property() partnerDetails: IActivityTpmPartner | null = null;
+  @property() partnerDetails: IActivityTpmPartnerExtended | null = null;
   @property() isStatusUpdating = false;
   @property() activeTab!: string;
-  @property() childInEditMode = false;
 
   pageTabs: PageTab[] = [
     {
@@ -70,6 +69,47 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           font-weight: bold;
           color: var(--secondary-text-color);
         }
+        .status-container {
+          display: flex;
+          padding: 6px 10px;
+        }
+        .status-header {
+          margin-left: 8px;
+          font-weight: bold;
+          font-size: 16px;
+          color: var(--secondary-text-color);
+        }
+        .icon-wrapper iron-icon {
+          display: none;
+          border-radius: 50%;
+          text-align: center;
+          padding: 2px;
+          --iron-icon-height: 18px;
+          --iron-icon-width: 18px;
+        }
+
+        .icon-wrapper.autorenew iron-icon[icon='autorenew'] {
+          background: var(--module-success);
+          color: #ffffff;
+          display: inline-block;
+        }
+
+        .icon-wrapper.info iron-icon[icon='info'] {
+          background: #3a94ff;
+          color: #ffffff;
+          display: inline-block;
+        }
+
+        .icon-wrapper.block iron-icon[icon='block'] {
+          background: var(--module-warning);
+          color: #ffffff;
+          display: inline-block;
+        }
+
+        .icon-wrapper.delete-forever iron-icon[icon='delete-forever'] {
+          color: var(--module-error);
+          display: inline-block;
+        }
       `
     ];
   }
@@ -95,6 +135,20 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
             <iron-icon icon="file-download" class="export-icon"></iron-icon>
             ${translate('ACTIVITY_DETAILS.EXPORT')}
           </paper-button>
+          <div class="status-container">
+            <div class="status-icon">
+              <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">
+                <iron-icon icon="info"></iron-icon>
+                <iron-icon icon="autorenew"></iron-icon>
+                <iron-icon icon="block"></iron-icon>
+                <iron-icon icon="delete-forever"></iron-icon>
+              </span>
+            </div>
+
+            <div class="status">
+              <span class="status-header">${this.getVisionStatusClassOrText(this.partnerDetails, true)}</span>
+            </div>
+          </div>
         </div>
 
         <etools-tabs
@@ -117,7 +171,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
     this.isLoad = true;
     // On Partner data changes
     this.partnerDetailsUnsubscribe = store.subscribe(
-      tpmPartnerDetailsData((data: IActivityTpmPartner | null) => {
+      tpmPartnerDetailsData((data: IActivityTpmPartnerExtended | null) => {
         if (!data) {
           return;
         }
@@ -150,7 +204,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
             }
           });
         } else {
-          this.partnerDetails = partnerDetailsState.data as IActivityTpmPartner;
+          this.partnerDetails = partnerDetailsState.data;
           this.checkTab();
         }
       })
@@ -193,7 +247,24 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
     window.open(url, '_blank');
   }
 
-  private checkTab(): void {
+  getVisionStatusClassOrText(partnerDetails: IActivityTpmPartnerExtended | null, getText: boolean): string {
+    if (!partnerDetails) {
+      return '';
+    }
+    const {vision_synced: synced, blocked, deleted_flag: deleted} = partnerDetails;
+
+    if (!synced) {
+      return getText ? getTranslation('TPM.NOT_SYNCED') : 'info';
+    } else if (deleted) {
+      return getText ? getTranslation('TPM.MARKED_FOR_DELETION_IN_VISION') : 'delete-forever';
+    } else if (blocked) {
+      return getText ? getTranslation('TPM.BLOCKED_IN_VISION') : 'block';
+    } else {
+      return getText ? getTranslation('TPM.SYNCED_FROM_VISION') : 'autorenew';
+    }
+  }
+
+  checkTab(): void {
     const {params}: IRouteDetails = store.getState().app.routeDetails;
     const activeTab: string | null = params && (params.tab as string);
     this.activeTab = `${activeTab}`;

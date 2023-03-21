@@ -620,6 +620,10 @@
     "TITLE": "Moniteurs tiers",
     "ADD_NEW_VENDOR": "Ajouter un nouveau fournisseur",
     "VENDOR_NUMBER_NOT_FOUND": "Numéro de fournisseur non trouvé",
+    "NOT_SYNCED": "Non synchronisé",
+    "MARKED_FOR_DELETION_IN_VISION": "Marqué pour suppression dans VISION",
+    "BLOCKED_IN_VISION": "Bloqué dans VISION",
+    "SYNCED_FROM_VISION": "Synchronisé à partir de VISION",
     "FILTERS": {
       "SEARCH": "Rechercher le numéro de fournisseur ou le MPT"
     },
