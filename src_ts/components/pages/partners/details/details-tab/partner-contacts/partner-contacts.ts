@@ -17,7 +17,7 @@ export class PartnerContacts extends connect(store)(LitElement) {
   @property() pageNumber = 1;
   @property() organizationId!: string;
   @property() userData!: IEtoolsUserModel;
-  @property() staffMembersList: ITpmPartnerStaffMember[] = [];
+  @property() staffMembersList!: ITpmPartnerStaffMember[];
 
   static get styles(): CSSResult[] {
     return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
