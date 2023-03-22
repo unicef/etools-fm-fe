@@ -76,3 +76,4 @@ workflows:
                 - analyze-tab-pagination
                 - fix-translations
                 - amp
+                - migrate-tpm
