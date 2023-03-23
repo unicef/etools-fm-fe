@@ -81,7 +81,10 @@ export function addAttachmentToList(
     dispatch(new SetAttachmentsUpdateState(true));
     return request(`${url}`, {method: 'POST', body: (stringify ? JSON.stringify(data) : data) as any})
       .then(() => dispatch(new SetAttachmentsUpdateError({})))
-      .catch((error: any) => dispatch(new SetAttachmentsUpdateError(error.data)))
+      .catch((error: any) => {
+        console.log('addAttachmentToList', error);
+        dispatch(new SetAttachmentsUpdateError(error.data));
+      })
       .then(() => {
         dispatch(new SetAttachmentsUpdateState(false));
       });
