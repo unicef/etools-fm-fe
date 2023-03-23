@@ -62,9 +62,10 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
           if (this.errors.initialResponse && this.errors.initialResponse.status === 413) {
+            // use Upload built-in message for file too large
             const uploadErrMessage = (this.uploadFile as any).prepareErrorMessage(
-              (this.uploadFile as any).language,
-              '413'
+              store.getState().activeLanguage.activeLanguage,
+              {message: '413'}
             );
             this.uploadFile.setInvalid(true, uploadErrMessage);
           } else {
