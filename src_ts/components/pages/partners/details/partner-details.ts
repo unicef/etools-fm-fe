@@ -63,12 +63,6 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         .export-icon {
           padding-inline-end: 4px;
         }
-        #export {
-          padding: 6px 10px;
-          font-size: 16px;
-          font-weight: bold;
-          color: var(--secondary-text-color);
-        }
         .status-container {
           display: flex;
           padding: 6px 10px;

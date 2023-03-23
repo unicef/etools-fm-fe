@@ -48,7 +48,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     this.debouncedLoading = debounce((params: IRouteQueryParam) => {
       this.loadingInProcess = true;
       store
-        .dispatch<AsyncEffect>(loadPartnersList(params))
+        .dispatch<AsyncEffect>(loadPartnersList(params, !this.count))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')}))
         .then(() => (this.loadingInProcess = false));
     }, 400);
@@ -57,6 +57,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     this.routeDetailsUnsubscribe = store.subscribe(
       routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
     );
+    this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
     const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 

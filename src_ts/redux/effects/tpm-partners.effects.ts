@@ -5,16 +5,22 @@ import {request} from '../../endpoints/request';
 import {SetTPMPartnersList, SetTPMPartnersPermissions} from '../actions/tpm-partners.actions';
 import {ACTIVATE_VENDOR, TPM_PARTNERS, SYNC_VENDOR_DATA} from '../../endpoints/endpoints-list';
 
-export function loadPartnersList(params: IRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
+export function loadPartnersList(
+  params: IRouteQueryParams,
+  getOptions: boolean
+): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(TPM_PARTNERS);
     const resultUrl = `${url}&${EtoolsRouter.encodeParams(params)}`;
-    return Promise.all([
-      request<IListData<IActivityTpmPartner>>(resultUrl, {method: 'GET'}),
-      request<GenericObject>(url, {method: 'OPTIONS'})
-    ]).then((response: [IListData<IActivityTpmPartner>, GenericObject]) => {
+    const requestsUrl: any[] = [request<IListData<IActivityTpmPartner>>(resultUrl, {method: 'GET'})];
+    if (getOptions) {
+      requestsUrl.push(request<GenericObject>(url, {method: 'OPTIONS'}));
+    }
+    return Promise.all(requestsUrl).then((response: any[]) => {
       dispatch(new SetTPMPartnersList(response[0]));
-      dispatch(new SetTPMPartnersPermissions(response[1]));
+      if (getOptions) {
+        dispatch(new SetTPMPartnersPermissions(response[1]));
+      }
     });
   };
 }
