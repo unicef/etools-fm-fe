@@ -83,7 +83,7 @@ export function addAttachmentToList(
       .then(() => dispatch(new SetAttachmentsUpdateError({})))
       .catch((error: any) => {
         console.log('addAttachmentToList', error);
-        dispatch(new SetAttachmentsUpdateError(error.data));
+        dispatch(new SetAttachmentsUpdateError(error.initialResponse ? error : error.data));
       })
       .then(() => {
         dispatch(new SetAttachmentsUpdateState(false));

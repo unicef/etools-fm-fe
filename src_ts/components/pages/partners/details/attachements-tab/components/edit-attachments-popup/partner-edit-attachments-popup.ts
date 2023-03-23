@@ -61,7 +61,15 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
         // check errors on update(create) complete
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
-          fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGES_SAVE')});
+          if (this.errors.initialResponse && this.errors.initialResponse.status === 413) {
+            const uploadErrMessage = (this.uploadFile as any).prepareErrorMessage(
+              (this.uploadFile as any).language,
+              '413'
+            );
+            this.uploadFile.setInvalid(true, uploadErrMessage);
+          } else {
+            fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGES_SAVE')});
+          }
           return;
         }
 
