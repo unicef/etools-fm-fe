@@ -45,16 +45,18 @@ export function template(this: PartnersListComponent): TemplateResult {
 
       <!-- Table Header -->
       <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="col-data flex-2">
+        <etools-data-table-column class="col-data flex-2" field="vendor_number" sortable>
           ${translate('TPM.COLUMNS.VENDOR_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-3">
+        <etools-data-table-column class="col-data flex-3" field="name" sortable>
           ${translate('TPM.COLUMNS.TPM_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2">
+        <etools-data-table-column class="col-data flex-2" field="phone_number" sortable>
           ${translate('TPM.COLUMNS.PHONE_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2"> ${translate('TPM.COLUMNS.EMAIL')} </etools-data-table-column>
+        <etools-data-table-column class="col-data flex-2" field="email" sortable>
+          ${translate('TPM.COLUMNS.EMAIL')}
+        </etools-data-table-column>
       </etools-data-table-header>
 
       <!-- Table Empty Row -->

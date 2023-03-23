@@ -21,7 +21,7 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       dialog-title="${translate(
-        this.editedData.id ? 'ATTACHMENTS_LIST.EDIT_POPUP_TITLE' : 'ATTACHMENTS_LIST.ADD_POPUP_TITLE'
+        this.editedData.id ? 'ATTACHMENTS_LIST.EDIT_POPUP_TITLE' : 'TPM_DETAILS.ATTACH_FILE_FOR_VISIT'
       )}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"

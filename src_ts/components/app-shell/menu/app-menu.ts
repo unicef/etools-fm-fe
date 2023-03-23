@@ -159,7 +159,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             tracker="TPM"
           >
             <iron-icon id="page5-icon" icon="social:people"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
+            <paper-tooltip for="page5-icon" position="right">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
             </paper-tooltip>
             <div class="name">

@@ -54,6 +54,12 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
     this.canEditPhone = canEditField(permissions, 'phone_number');
   }
 
+  onVendorNumberKeyUp(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || this.editedData?.vendor_number?.length === 10) {
+      this.validateVendorNumber();
+    }
+  }
+
   validateVendorNumber(): void {
     if (this.editedData.vendor_number) {
       const vendor_number = this.editedData.vendor_number;

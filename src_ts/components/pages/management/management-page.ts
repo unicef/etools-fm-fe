@@ -58,7 +58,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <paper-button class="default left-icon" raised tracker="Export" @tap="${this.exportData}">
+              <paper-button id="export" tracker="Export" @tap="${this.exportData}">
                 <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
               </paper-button>
             </div>
@@ -133,5 +133,4 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     }
     return true;
   }
-
 }

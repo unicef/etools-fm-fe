@@ -52,6 +52,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               ?required="${isRequired(this.permissions, 'vendor_number')}"
               ?readonly="${this.vendorRequestInProcess}"
               @blur="${this.validateVendorNumber}"
+              @keyup="${this.onVendorNumberKeyUp}"
               error-message=${this.vendorNumberMessage}
               @click="${() => this.resetError('vendor_number', this)}"
             ></paper-input>

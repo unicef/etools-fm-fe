@@ -633,6 +633,7 @@
   },
   "TPM_DETAILS": {
     "TPM_CONTACTS": "TPM Contacts",
+    "ATTACH_FILE_FOR_VISIT": "Attach File For Overall Visit",
     "ACCESS_MANAGEMENT_PORTAL": "Access Management Portal",
     "TABS": {
       "details": "Partner Details",

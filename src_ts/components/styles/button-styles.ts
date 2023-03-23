@@ -63,4 +63,14 @@ export const buttonsStyles: CSSResult = css`
     color: white;
     background-color: var(--green-color);
   }
+
+  #export {
+    padding: 6px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--secondary-text-color);
+  }
+  .export-icon {
+    padding-inline-end: 4px;
+  }
 `;
