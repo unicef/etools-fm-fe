@@ -68,6 +68,7 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
               {message: '413'}
             );
             this.uploadFile.setInvalid(true, uploadErrMessage);
+            this.uploadFile.fail = true;
           } else {
             fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGES_SAVE')});
           }
