@@ -62,12 +62,7 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
         this.errors = store.getState().attachmentsList.error;
         if (this.errors && Object.keys(this.errors).length) {
           if (this.errors.initialResponse && this.errors.initialResponse.status === 413) {
-            // use Upload built-in message for file too large
-            const uploadErrMessage = (this.uploadFile as any).prepareErrorMessage(
-              store.getState().activeLanguage.activeLanguage,
-              {message: '413'}
-            );
-            this.uploadFile.setInvalid(true, uploadErrMessage);
+            this.uploadFile.setInvalid(true, getTranslation('ERROR_UPLOAD_FILE_TOO_LARGE'));
             this.uploadFile.fail = true;
           } else {
             fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGES_SAVE')});
@@ -94,6 +89,9 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
   }
 
   protected processRequest(): void {
+    if (!this.uploadFile._filename) {
+      this.uploadFile.rawFile = null;
+    }
     if (!validateRequiredFields(this)) {
       return;
     }

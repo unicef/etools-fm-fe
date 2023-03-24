@@ -602,6 +602,7 @@
   "ERROR_LOAD_ACTIVITIES_LIST": "Can not load Activities List",
   "ERROR_CREATE_ACTIVITY": "Can not create Activity",
   "ERROR_UPLOAD": "Can not upload attachments. Please try again later",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Error uploading file: File too large",
   "ERROR_UPDATE_CHECKLIST": "Can not update checklist, please try again",
   "START_DATE_BEFORE_END_DATE": "Start Date must be before End Date",
   "ERROR_LOAD_REPORT": "Can not load FullReport data",

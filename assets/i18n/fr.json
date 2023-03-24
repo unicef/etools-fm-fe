@@ -605,6 +605,7 @@
   "ERROR_LOAD_ACTIVITIES_LIST": "Impossible de charger la liste des activités",
   "ERROR_CREATE_ACTIVITY": "Impossible de créer une activité",
   "ERROR_UPLOAD": "Impossible de télécharger les pièces jointes. Veuillez réessayer plus tard",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Erreur lors du téléchargement du fichier: Fichier trop large",
   "ERROR_UPDATE_CHECKLIST": "Impossible de mettre à jour la liste de contrôle, veuillez réessayer",
   "START_DATE_BEFORE_END_DATE": "La date de début doit être antérieure à la date de fin",
   "ERROR_LOAD_REPORT": "Impossible de charger les données FullReport",
