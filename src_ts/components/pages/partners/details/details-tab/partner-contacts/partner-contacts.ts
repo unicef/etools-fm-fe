@@ -78,10 +78,6 @@ export class PartnerContacts extends connect(store)(LitElement) {
     }
   }
 
-  _isVisible(active: boolean, showInactive: boolean): boolean {
-    return active || showInactive;
-  }
-
   getTitle(staffMembers: ITpmPartnerStaffMember[]): string {
     return (
       getTranslation('TPM_DETAILS.TPM_CONTACTS') +
