@@ -639,6 +639,7 @@
     "TPM_CONTACTS": "Contacts TPM",
     "ATTACH_FILE_FOR_VISIT": "Joindre le dossier de la visite globale",
     "ACCESS_MANAGEMENT_PORTAL": "Portail de gestion de l'accès",
+    "SHOW_INACTIVE": "Montrer inactif",
     "TABS": {
       "details": "Détails du partenaire",
       "attachments": "Pièces Jointes"

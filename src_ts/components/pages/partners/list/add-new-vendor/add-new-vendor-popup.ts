@@ -74,7 +74,6 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
         .then((data: IActivityTpmPartnerExtended) => {
           this.data = data;
           this.vendorLoaded = true;
-          console.log(data);
         })
         .catch((err: any) => {
           console.log(err);

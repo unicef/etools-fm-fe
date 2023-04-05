@@ -154,7 +154,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         ></etools-tabs>
       </page-content-header>
 
-      ${this.getTabElement()}
+      ${this.isLoad ? html`` : this.getTabElement()}
     `;
   }
 
