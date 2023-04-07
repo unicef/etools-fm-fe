@@ -53,6 +53,42 @@ interface IActivityTpmPartner {
   vendor_number: string;
 }
 
+interface IActivityTpmPartnerExtended {
+  email: string;
+  id: number;
+  name: string;
+  phone_number: string;
+  vendor_number: string;
+  staff_members: ITpmPartnerStaffMember[];
+  organization_id: string;
+  street_address: string;
+  postal_code: string;
+  city: string;
+  country: string;
+  vision_synced: boolean;
+  blocked: boolean;
+  deleted_flag: boolean;
+}
+
+interface ITpmPartnerStaffMember {
+  id: string;
+  user: ITpmPartnerStaffMemberUser;
+}
+
+interface ITpmPartnerStaffMemberUser {
+  email: string;
+  last_name: string;
+  first_name: string;
+  full_name: string;
+  is_active: boolean;
+  profile: ITpmPartnerStaffMemberProfile;
+}
+
+interface ITpmPartnerStaffMemberProfile {
+  job_title: string;
+  phone_number: string;
+}
+
 interface IActivityPartner {
   id: number;
   name: string;

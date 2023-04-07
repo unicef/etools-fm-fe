@@ -35,7 +35,12 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
           const {status, statusText} = response;
           return Promise.reject({data, status, statusText});
         } catch (e) {
-          return Promise.reject({data: 'UnknownError', status: 500, statusText: 'UnknownError'});
+          return Promise.reject({
+            data: 'UnknownError',
+            status: 500,
+            statusText: 'UnknownError',
+            initialResponse: response
+          });
         }
       });
     }

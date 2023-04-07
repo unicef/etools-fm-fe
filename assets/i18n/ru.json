@@ -475,7 +475,9 @@
     "PROFILEANDSIGNOUT": "Profile and Sign out",
     "REFRESH": "Refresh",
     "SUPPORT": "Support",
-    "APPSELECTOR": "App Selector"
+    "APPSELECTOR": "App Selector",
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
+    "TPM": "Third Party Monitors"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",
@@ -600,6 +602,7 @@
   "ERROR_LOAD_ACTIVITIES_LIST": "Can not load Activities List",
   "ERROR_CREATE_ACTIVITY": "Can not create Activity",
   "ERROR_UPLOAD": "Can not upload attachments. Please try again later",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Error uploading file: File too large",
   "ERROR_UPDATE_CHECKLIST": "Can not update checklist, please try again",
   "START_DATE_BEFORE_END_DATE": "Start Date must be before End Date",
   "ERROR_LOAD_REPORT": "Can not load FullReport data",
@@ -610,5 +613,50 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Can not update Question Templates with id",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Can not change activity status",
   "PLEASE_TRY_AGAIN": "please try again later",
-  "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!"
+  "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!",
+  "TPM": {
+    "TITLE": "Third Party Monitors",
+    "ADD_NEW_VENDOR": "Add New Vendor",
+    "VENDOR_NUMBER_NOT_FOUND": "Vendor Number not found",
+    "NOT_SYNCED": "Not Synced",
+    "MARKED_FOR_DELETION_IN_VISION": "Marked For Deletion in VISION",
+    "BLOCKED_IN_VISION": "Blocked in VISION",
+    "SYNCED_FROM_VISION": "Synced from VISION",
+    "FILTERS": {
+      "SEARCH": "Search Vendor # or TPM"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "Vendor number",
+      "TPM_NAME": "TPM Name",
+      "PHONE_NUMBER": "Phone Number",
+      "EMAIL": "Email"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "TPM Contacts",
+    "ATTACH_FILE_FOR_VISIT": "Attach File For Overall Visit",
+    "ACCESS_MANAGEMENT_PORTAL": "Access Management Portal",
+    "SHOW_INACTIVE": "Show inactive",
+    "TABS": {
+      "details": "Partner Details",
+      "attachments": "Attachments"
+    },
+    "TPM_PARTNER_DETAILS": "TPM Partner Details",
+    "VENDOR_NUMBER": "Vendor number",
+    "TPM_NAME": "TPM Name",
+    "PHONE_NUMBER": "Phone Number",
+    "EMAIL": "Email",
+    "ADDRESS": "Address",
+    "VALID_EMAIL_REQUIRED":  "Valid email required"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "Position",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "PHONE_NUMBER": "Phone Number",
+      "EMAIL": "Email",
+      "ACTIVE": "Active"
+    }
+  }
 }

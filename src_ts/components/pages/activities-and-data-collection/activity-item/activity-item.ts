@@ -382,17 +382,6 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           font-weight: 500;
         }
 
-        .export-icon {
-          padding-inline-end: 4px;
-        }
-
-        #export {
-          padding: 6px 10px;
-          font-size: 16px;
-          font-weight: bold;
-          color: var(--secondary-text-color);
-        }
-
         statuses-actions {
           margin-left: 10px;
         }

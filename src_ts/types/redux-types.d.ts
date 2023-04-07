@@ -22,6 +22,8 @@ interface IRootState {
   findingsComponents: IFindingsComponentsState;
   activeLanguage: IActiveLanguageState;
   globalLoading: IGlobalLoadingState;
+  tpmPartners: ITPMPartnersState;
+  tpmPartnerDetails: ITPMPartnerDetailsState;
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;
@@ -82,6 +84,7 @@ interface IAttachmentsListState {
   updateInProcess: null | boolean;
   error: GenericObject;
   attachmentsTypes: AttachmentsTypesState;
+  permissions: GenericObject;
 }
 
 type AttachmentsTypesState = {
@@ -102,6 +105,11 @@ interface IQuestionTemplatesState {
 
 interface IActivitiesState {
   listData: null | IListData<IListActivity>;
+}
+
+interface ITPMPartnersState {
+  listData: null | IListData<IActivityTpmPartner>;
+  permissions: null | GenericObject;
 }
 
 type IFullReportsState = {
@@ -133,6 +141,20 @@ interface IActivityDetailsState extends IRequestState {
   };
   checklistAttachments: IChecklistAttachment[];
   checklistAttachmentsTypes: AttachmentType[];
+}
+
+interface ITPMPartnerDetailsState extends IRequestState {
+  data: null | IActivityTpmPartnerExtended;
+  permissions: null | GenericObject;
+  editedCard: null | string;
+  error: null | GenericObject;
+  isRequest: {
+    create: boolean;
+    load: boolean;
+    update: boolean;
+    statusChange: boolean;
+  };
+  attachments: IChecklistAttachment[];
 }
 
 interface IWidgetLocationsState {
