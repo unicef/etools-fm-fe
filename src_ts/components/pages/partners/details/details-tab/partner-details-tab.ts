@@ -1,4 +1,4 @@
-import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, customElement, html, LitElement, property, PropertyValues, TemplateResult} from 'lit-element';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import './partner-information/partner-information';
 import './partner-contacts/partner-contacts';
@@ -13,13 +13,14 @@ export class PartnerDetailsTab extends LitElement {
     return [pageLayoutStyles];
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    if (!this.partnerId) {
-      store.dispatch({
-        type: TPMPartnerDetailsActions.TPM_PARTNER_DETAILS_GET_SUCCESS,
-        payload: [null, null]
-      });
+  updated(changedProperties: PropertyValues): void {
+    if (changedProperties.has('partnerId')) {
+      if (!this.partnerId) {
+        store.dispatch({
+          type: TPMPartnerDetailsActions.TPM_PARTNER_DETAILS_GET_SUCCESS,
+          payload: [null, null]
+        });
+      }
     }
   }
 

@@ -12,12 +12,14 @@ import {get as getTranslation} from 'lit-translate';
 
 @customElement('partner-contacts')
 export class PartnerContacts extends connect(store)(LitElement) {
-  @property() loadingInProcess = true;
-  @property() pageSize = 5;
+  @property() pageSize = 10;
   @property() pageNumber = 1;
+  @property() loadingInProcess = false;
   @property() organizationId!: string;
   @property() userData!: IEtoolsUserModel;
+  @property() staffMembersListAll!: ITpmPartnerStaffMember[];
   @property() staffMembersList!: ITpmPartnerStaffMember[];
+  @property({type: Boolean}) showInactive = false;
 
   static get styles(): CSSResult[] {
     return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
@@ -34,12 +36,20 @@ export class PartnerContacts extends connect(store)(LitElement) {
     if (
       state.tpmPartnerDetails &&
       state.tpmPartnerDetails.data &&
-      JSON.stringify(this.staffMembersList) !== JSON.stringify(state.tpmPartnerDetails.data.staff_members)
+      JSON.stringify(this.staffMembersListAll) !== JSON.stringify(state.tpmPartnerDetails.data.staff_members)
     ) {
-      this.loadingInProcess = false;
-      this.staffMembersList = state.tpmPartnerDetails.data.staff_members;
+      this.staffMembersListAll = state.tpmPartnerDetails.data.staff_members;
+      this.filterStaffMembersByActive();
       this.organizationId = state.tpmPartnerDetails.data.organization_id;
     }
+  }
+
+  onShowInactiveChange(e: CustomEvent): void {
+    if (!e.detail) {
+      return;
+    }
+    this.showInactive = e.detail.value;
+    this.filterStaffMembersByActive();
   }
 
   onPageSizeChange(pageSize: number): void {
@@ -54,10 +64,15 @@ export class PartnerContacts extends connect(store)(LitElement) {
     }
   }
 
-  getStaffMembers(): ITpmPartnerStaffMember[] {
-    if (this.staffMembersList) {
+  filterStaffMembersByActive(): void {
+    this.staffMembersList = this.staffMembersListAll.filter((x) => x.user.is_active || this.showInactive);
+    this.onPageNumberChange(1);
+  }
+
+  getStaffMembers(staffMembersList: ITpmPartnerStaffMember[]): ITpmPartnerStaffMember[] {
+    if (staffMembersList) {
       const startIndex: number = (this.pageNumber - 1) * this.pageSize;
-      return this.staffMembersList.slice(startIndex, startIndex + this.pageSize);
+      return staffMembersList.slice(startIndex, startIndex + this.pageSize);
     } else {
       return [];
     }

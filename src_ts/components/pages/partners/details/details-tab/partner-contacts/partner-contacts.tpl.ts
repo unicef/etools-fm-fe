@@ -11,6 +11,7 @@ export function template(this: PartnerContacts): TemplateResult {
       .edit-button {
         color: var(--gray-mid);
         margin-right: 5px;
+        margin-left: 20px;
       }
     </style>
 
@@ -24,6 +25,10 @@ export function template(this: PartnerContacts): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${this.getTitle(this.staffMembersList)}</div>
         <div class="buttons-container">
+          <paper-toggle-button ?checked="${this.showInactive}" @checked-changed="${this.onShowInactiveChange}">
+            ${translate('TPM_DETAILS.SHOW_INACTIVE')}
+          </paper-toggle-button>
+
           <a class="edit-button" href="${this.getAMPLink(this.organizationId, this.userData)}" target="_blank">
             <iron-icon icon="icons:open-in-new"></iron-icon>
           </a>
@@ -71,7 +76,7 @@ export function template(this: PartnerContacts): TemplateResult {
 
       <!-- Table Row item -->
       ${!this.loadingInProcess
-        ? this.getStaffMembers().map(
+        ? this.getStaffMembers(this.staffMembersList).map(
             (staffMember: ITpmPartnerStaffMember) => html`
               <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row flex">
