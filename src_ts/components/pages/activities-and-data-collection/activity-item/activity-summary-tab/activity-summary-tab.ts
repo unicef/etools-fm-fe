@@ -17,6 +17,7 @@ import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {SUMMARY_TAB} from '../activities-tabs';
 import {repeat} from 'lit-html/directives/repeat';
+import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activitySummary, findingsComponents});
 
@@ -67,7 +68,7 @@ export class ActivitySummaryTab extends LitElement {
     store.dispatch(new SaveRoute(`${ACTIVITIES_PAGE}/${this.activityId}/${SUMMARY_TAB}`));
     store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId as number));
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector(({params}: IRouteDetails) => {
+      routeDetailsSelector(({params}: EtoolsRouteDetails) => {
         this.activityId = params && (params.id as number);
         if (this.activityId) {
           store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(this.activityId));

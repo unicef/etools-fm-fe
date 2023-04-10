@@ -1,8 +1,9 @@
 import {Reducer} from 'redux';
 import {AppAction, AppActionTypes} from '../actions/app.actions';
+import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const INITIAL_STATE: IAppState = {
-  routeDetails: {} as IRouteDetails,
+  routeDetails: {} as EtoolsRouteDetails,
   previousRoute: null,
   drawerOpened: false
 };
@@ -15,7 +16,7 @@ const app: Reducer<IAppState, any> = (state: IAppState = INITIAL_STATE, action: 
         routeDetails: action.routeDetails
       };
     case AppActionTypes.UPDATE_QUERY_PARAMS:
-      const routeDetails: IRouteDetails = {...state.routeDetails, queryParams: action.queryParams};
+      const routeDetails: EtoolsRouteDetails = {...state.routeDetails, queryParams: action.queryParams};
       return {
         ...state,
         routeDetails

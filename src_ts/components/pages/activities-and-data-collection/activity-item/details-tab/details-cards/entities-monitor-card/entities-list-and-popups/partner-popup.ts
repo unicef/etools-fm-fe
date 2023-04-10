@@ -1,6 +1,6 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
-import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
 import {InputStyles} from '../../../../../../../styles/input-styles';
@@ -23,11 +23,11 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
   }
 
   addPartner(): void {
-    fireEvent(this, 'response', {confirmed: true, response: this.partner});
+    fireEvent(this, 'dialog-closed', {confirmed: true, response: this.partner});
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   // language=HTML

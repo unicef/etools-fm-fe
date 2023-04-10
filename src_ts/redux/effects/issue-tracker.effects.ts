@@ -3,9 +3,10 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {LOG_ISSUES, LOG_ISSUES_ATTACHMENTS, LOG_ISSUES_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {IssueTrackerActions} from '../actions/issue-tracker.actions';
-import {EtoolsRouter} from '../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import { EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
-export function requestLogIssue(params: IRouteQueryParams): IAsyncAction {
+export function requestLogIssue(params: EtoolsRouteQueryParams): IAsyncAction {
   return {
     types: [
       IssueTrackerActions.ISSUE_TRACKER_DATA_REQUEST,
@@ -14,7 +15,7 @@ export function requestLogIssue(params: IRouteQueryParams): IAsyncAction {
     ],
     api: () => {
       const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
-      const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}`;
+      const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
       return request(resultUrl);
     }
   };

@@ -14,8 +14,8 @@ import {updateQueryParams} from '../../../../routing/routes';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {debounce} from '../../../utils/debouncer';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadQuestionTemplates} from '../../../../redux/effects/templates.effects';
 import {questionTemplatesListData} from '../../../../redux/selectors/templates.selectors';
 import {QUESTION_TEMPLATES, QUESTION_TEMPLATES_WITH_TARGET} from '../../../../endpoints/endpoints-list';
@@ -35,6 +35,7 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import {get as getTranslation} from 'lit-translate';
+import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER = 13;
@@ -61,7 +62,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     super();
 
     // List loading request
-    this.debouncedLoading = debounce((params: IRouteQueryParam) => {
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       const {level, target, ...refactoredParams} = params;
 
       this.listLoadingInProcess = true;
@@ -83,9 +84,9 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
     // route params listener
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     this.loadAdditionalData('methods');
@@ -142,7 +143,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   }
 
   getSelectedTarget(forLevel: string, collection: any): string | number | undefined {
-    const {level, target}: IRouteQueryParams = this.queryParams || {};
+    const {level, target}: EtoolsRouteQueryParams = this.queryParams || {};
     // we need to check that options collection is loaded already. Otherwise value-change-event will be triggered with selectedItem as null
     return Boolean(collection) && target && level === forLevel ? target : undefined;
   }
@@ -243,7 +244,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     id: number,
     questionTemplate: Partial<QuestionTemplateItem>
   ): Promise<IQuestionTemplate> {
-    const {level, target}: IRouteQueryParam = this.queryParams || {};
+    const {level, target}: EtoolsRouteQueryParam = this.queryParams || {};
     if (!level) {
       throw new Error(`Can not update question template. Level param is ${level}`);
     }
@@ -256,7 +257,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     });
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (routeName !== 'templates' || subRouteName !== 'templates') {
       return;
     }
@@ -268,7 +269,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     }
   }
 
-  private checkParams(params?: IRouteQueryParams | null): boolean {
+  private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     const levelInvalid: boolean = !params || !params.level || !AllowedLevels.has(params.level);
     if (invalid || levelInvalid) {

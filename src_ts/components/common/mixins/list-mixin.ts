@@ -1,6 +1,7 @@
 import {updateQueryParams} from '../../../routing/routes';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {LitElement} from 'lit-element';
+import { EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @polymerMixin */
@@ -42,7 +43,7 @@ export const ListMixin =
         if (+newValue === +currentValue) {
           return;
         }
-        const newParams: IRouteQueryParams = {[paramName]: newValue};
+        const newParams: EtoolsRouteQueryParams = {[paramName]: newValue};
         if (paramName === 'page_size') {
           newParams.page = 1;
         }

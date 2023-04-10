@@ -2,7 +2,7 @@ import {LitElement, TemplateResult, html, property, customElement, CSSResult, cs
 import {InputStyles} from '../../styles/input-styles';
 import {DialogStyles} from '../../styles/dialog-styles';
 import {translate} from 'lit-translate';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {repeat} from 'lit-html/directives/repeat';
 import '@unicef-polymer/etools-upload/etools-upload';
 
@@ -54,7 +54,7 @@ export class FilesPopup extends LitElement {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   static get styles(): CSSResult {

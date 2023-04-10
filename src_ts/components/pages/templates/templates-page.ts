@@ -18,6 +18,7 @@ import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 import {translate} from 'lit-translate';
+import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({questions, questionTemplates, issueTracker, specificLocations});
 
@@ -76,7 +77,7 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
   connectedCallback(): void {
     super.connectedCallback();
     store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {
           return;
         }

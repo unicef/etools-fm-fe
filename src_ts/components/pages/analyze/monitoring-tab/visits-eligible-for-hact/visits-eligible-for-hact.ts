@@ -11,7 +11,7 @@ import {loadHactVisits} from '../../../../../redux/effects/monitoring-activity.e
 import {store} from '../../../../../redux/store';
 import {template} from './visits-eligible-for-hact.tpl';
 import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 @customElement('visits-eligible-for-hact')

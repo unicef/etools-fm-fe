@@ -1,18 +1,21 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppAction, UpdateStoreRouteDetails} from '../actions/app.actions';
 import {getFilePathsToImport} from '../../routing/component-lazy-load-config';
-import {DEFAULT_ROUTE, EtoolsRouter, ROUTE_404, updateAppLocation} from '../../routing/routes';
+import {updateAppLocation} from '../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ROOT_PATH} from '../../config/config';
 import {ActionCreator, Dispatch} from 'redux';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
 import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
+import { EtoolsRedirectPath } from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 
-const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: IRouteDetails) => (dispatch: Dispatch) => {
+const loadPageComponents: ActionCreator<ThunkResult> = (routeDetails: EtoolsRouteDetails) => (dispatch: Dispatch) => {
   if (!routeDetails) {
     // invalid route => redirect to 404 page
-    updateAppLocation(ROUTE_404, true);
+    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.NOT_FOUND), true);
     return;
   }
 
@@ -34,7 +37,7 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
 
   // if app route is accessed, redirect to default route (if not already on it)
   if (path === ROOT_PATH) {
-    updateAppLocation(DEFAULT_ROUTE, true);
+    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT), true);
     return;
   }
 
@@ -45,7 +48,7 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
     return;
   }
 
-  const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails(path);
+  const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails(path);
   /**
    * TODO:
    *  - create template page with detail about routing (including tabs subpages navigation), creating a new page

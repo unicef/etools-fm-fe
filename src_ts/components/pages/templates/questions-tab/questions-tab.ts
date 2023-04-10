@@ -3,16 +3,16 @@ import {elevationStyles} from '../../../styles/elevation-styles';
 import {template} from './questions-tab.tpl';
 import {store} from '../../../../redux/store';
 import {loadQuestions} from '../../../../redux/effects/questions.effects';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {questionsListData} from '../../../../redux/selectors/questions.selectors';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {debounce} from '../../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {CATEGORIES, METHODS, SECTIONS} from '../../../../endpoints/endpoints-list';
 import {EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
-import {openDialog} from '../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {ANSWER_TYPES, LEVELS} from '../../../common/dropdown-options';
 import {questionsFilters} from './questions-tab.filters';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -24,9 +24,9 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import {clone} from 'ramda';
-import {decodeQueryStrToObj} from '../../../utils/utils';
 import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 import {get as getTranslation} from 'lit-translate';
+import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -44,7 +44,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
 
   constructor() {
     super();
-    this.debouncedLoading = debounce((params: IRouteQueryParam) => {
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadQuestions(params))
@@ -63,9 +63,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     );
 
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
@@ -90,7 +90,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     }
   }
 
-  checkParams(params?: IRouteQueryParams | null): boolean {
+  checkParams(params?: EtoolsRouteQueryParams | null): boolean {
     let invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
       updateQueryParams({page: 1, page_size: 10});
@@ -132,12 +132,12 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       if (!needToRefresh) {
         return;
       }
-      const currentParams: IRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
+      const currentParams: EtoolsRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
       store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
     });
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (routeName !== 'templates' || subRouteName !== 'questions') {
       return;
     }
@@ -149,7 +149,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     }
   }
 
-  private isFilterChange(queryParams?: IRouteQueryParams | null): boolean {
+  private isFilterChange(queryParams?: EtoolsRouteQueryParams | null): boolean {
     if (!queryParams || !this.queryParams) {
       return false;
     }
@@ -187,9 +187,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
 
         this.populateDropdownFilterOptions(optionsCollection, questionsFilters);
 
-        const currentParams: GenericObject = decodeQueryStrToObj(
-          store.getState().app.routeDetails.queryParamsString || ''
-        );
+        const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
         this.filters = updateFiltersSelectedValues(currentParams, questionsFilters);
       }
     );

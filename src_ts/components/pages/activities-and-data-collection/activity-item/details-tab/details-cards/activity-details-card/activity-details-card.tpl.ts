@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit-element';
 import {ActivityDetailsCard, CARD_NAME} from './activity-details-card';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {formatDate} from '../../../../../../utils/date-utility';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
 import '../../../../../../common/layout/etools-tabs';

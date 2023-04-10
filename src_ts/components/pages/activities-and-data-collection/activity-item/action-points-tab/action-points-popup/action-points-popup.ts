@@ -9,7 +9,7 @@ import {
   TemplateResult
 } from 'lit-element';
 import {template} from './action-points-popup.tpl';
-import {fireEvent} from '../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../../redux/store';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
 import {ACTION_POINTS_CATEGORIES, ACTION_POINTS_OFFICES, USERS} from '../../../../../../endpoints/endpoints-list';
@@ -164,7 +164,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   save(): void {

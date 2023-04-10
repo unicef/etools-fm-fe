@@ -5,8 +5,8 @@ import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation, updateQueryParams} from '../../../../routing/routes';
-import {debounce} from '../../../utils/debouncer';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
@@ -34,8 +34,8 @@ import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
-import {decodeQueryStrToObj} from '../../../utils/utils';
 import {get as getTranslation} from 'lit-translate';
+import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -61,7 +61,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   constructor() {
     super();
     // List loading request
-    this.debouncedLoading = debounce((params: IRouteQueryParam) => {
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadActivitiesList(params))
@@ -71,9 +71,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
 
     // route params listener
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     // set activitiesList on store data changes
@@ -186,7 +186,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     updateQueryParams({...e.detail, page: 1}, true);
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (!(routeName === 'activities' && subRouteName === 'list')) {
       return;
     }
@@ -198,7 +198,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     }
   }
 
-  private checkParams(params?: IRouteQueryParams | null): boolean {
+  private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
       const {page = 1, page_size = 10} = params || {};
@@ -286,7 +286,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
 
     this.populateDropdownFilterOptions(this.filtersData, activitiesListFilters);
 
-    const currentParams: GenericObject = decodeQueryStrToObj(store.getState().app.routeDetails.queryParamsString || '');
+    const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
     this.filters = updateFiltersSelectedValues(currentParams, activitiesListFilters);
   }
 

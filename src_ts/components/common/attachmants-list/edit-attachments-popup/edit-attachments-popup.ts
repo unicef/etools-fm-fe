@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './edit-attachments-popup.tpl';
 import {store} from '../../../../redux/store';
 import {addAttachmentToList, updateListAttachment} from '../../../../redux/effects/attachments-list.effects';
@@ -65,7 +65,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
         // close popup if update(create) was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }
@@ -125,7 +125,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   }
 
   protected onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   protected fileSelected({success}: {success?: any; error?: string}): void {

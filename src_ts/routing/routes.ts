@@ -1,134 +1,133 @@
-import {Router} from './router';
+
 import {store} from '../redux/store';
 import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
 import {equals, pick} from 'ramda';
-
-export const EtoolsRouter: Router = new Router(ROOT_PATH);
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouteCallbackParams, EtoolsRouteDetails, EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 const routeParamRegex = '([^\\/?#=+]+)';
+
+EtoolsRouter.init({
+  baseUrl: ROOT_PATH,
+  redirectPaths: {
+    notFound: '/page-not-found',
+    default: '/activities'
+  },
+  redirectedPathsToSubpageLists: []
+});
+
 
 EtoolsRouter
   // .addRoute(new RegExp('^engagements/list$'),
-  //     (params: IRouteCallbackParams): IRouteDetails => {
+  //     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
   //         return {
   //             routeName: 'engagements',
   //             subRouteName: 'list',
   //             path: params.matchDetails[0],
   //             queryParams: params.queryParams,
-  //             queryParamsString: params.queryParamsString,
   //             params: null
   //         };
   //     })
   // .addRoute(new RegExp(`^engagements\\/${routeParamRegex}\\/${routeParamRegex}$`),
-  //     (params: IRouteCallbackParams): IRouteDetails => {
+  //     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
   //         return {
   //             routeName: 'engagements',
   //             subRouteName: params.matchDetails[2], // tab name
   //             path: params.matchDetails[0],
   //             queryParams: params.queryParams,
-  //             queryParamsString: params.queryParamsString,
   //             params: {
   //                 engagementId: params.matchDetails[1]
   //             }
   //         };
   //     })
-  .addRoute(new RegExp(`^templates\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^templates\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'templates',
       subRouteName: params.matchDetails[1], // tab name
       path: params.matchDetails[0],
       queryParams: params.queryParams,
-      queryParamsString: params.queryParamsString,
       params: null
     };
   })
-  .addRoute(new RegExp(`^management\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^management\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'management',
       subRouteName: params.matchDetails[1], // tab name
       path: params.matchDetails[0],
       queryParams: params.queryParams,
-      queryParamsString: params.queryParamsString,
       params: null
     };
   })
-  .addRoute(new RegExp(`^activities$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^activities$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'activities',
       subRouteName: 'list',
       path: params.matchDetails[0],
       queryParams: params.queryParams,
-      queryParamsString: params.queryParamsString,
       params: null
     };
   })
-  .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'activities',
       subRouteName: 'item',
       path: params.matchDetails[0],
       queryParams: null,
-      queryParamsString: null,
       params: {id: params.matchDetails[1]}
     };
   })
   .addRoute(
     new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
         routeName: 'activities',
         subRouteName: 'item',
         path: params.matchDetails[0],
         queryParams: null,
-        queryParamsString: null,
         params: {id: params.matchDetails[1], tab: params.matchDetails[2]}
       };
     }
   )
   .addRoute(
     new RegExp(`^activities\\/${routeParamRegex}\\/data-collection\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
         routeName: 'activities',
         subRouteName: 'data-collection',
         path: params.matchDetails[0],
         queryParams: null,
-        queryParamsString: null,
         params: {id: params.matchDetails[1], checklist: params.matchDetails[2]}
       };
     }
   )
-  .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'analyze',
       subRouteName: params.matchDetails[1],
       path: params.matchDetails[0],
       queryParams: params.queryParams,
-      queryParamsString: params.queryParamsString,
       params: null
     };
   })
   .addRoute(
     new RegExp(`^analyze\\/${routeParamRegex}\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
         routeName: 'analyze',
         subRouteName: params.matchDetails[1],
         path: params.matchDetails[0],
         queryParams: null,
-        queryParamsString: null,
         params: {tab: params.matchDetails[2]}
       };
     }
   )
 
-  .addRoute(new RegExp(`^page-not-found$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^page-not-found$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'page-not-found',
       subRouteName: null,
       path: params.matchDetails[0],
       queryParams: null,
-      queryParamsString: null,
       params: null
     };
   });
@@ -138,24 +137,21 @@ EtoolsRouter
  */
 export function updateAppLocation(newLocation: string, dispatchNavigation = true): void {
   const _newLocation: string = EtoolsRouter.prepareLocationPath(newLocation);
-  let navigationCallback: (() => void) | null = null;
+  EtoolsRouter.pushState(_newLocation);
   if (dispatchNavigation) {
-    navigationCallback = () => {
-      store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
-    };
+    store.dispatch<AsyncEffect>(navigate(decodeURIComponent(_newLocation)));
   }
-  EtoolsRouter.pushState(_newLocation, {}, navigationCallback);
 }
 
-export function updateQueryParams(newQueryParams: IRouteQueryParams, reset = false): boolean {
-  const details: IRouteDetails | null = EtoolsRouter.getRouteDetails();
+export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset = false): boolean {
+  const details: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
-  let currentParams: IRouteQueryParams | null = details && details.queryParams;
+  let currentParams: EtoolsRouteQueryParams | null = details && details.queryParams;
   if (reset) {
     currentParams = pick(['ordering', 'page_size'], currentParams);
   }
-  const computed: IRouteQueryParams = Object.assign({}, currentParams, newQueryParams);
-  const resultParams: IRouteQueryParams = {};
+  const computed: EtoolsRouteQueryParams = Object.assign({}, currentParams, newQueryParams);
+  const resultParams: EtoolsRouteQueryParams = {};
 
   for (const key in computed) {
     const value: any = computed[key];
@@ -170,10 +166,7 @@ export function updateQueryParams(newQueryParams: IRouteQueryParams, reset = fal
     return false;
   }
 
-  EtoolsRouter.replaceState(path, resultParams);
+  EtoolsRouter.replaceState(path, EtoolsRouter.encodeQueryParams(resultParams));
   window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
-
-export const ROUTE_404 = '/page-not-found';
-export const DEFAULT_ROUTE = '/activities';

@@ -1,13 +1,13 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import '@polymer/paper-toggle-button';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
-import {openDialog} from '../../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
 import '@polymer/paper-radio-group/paper-radio-group';

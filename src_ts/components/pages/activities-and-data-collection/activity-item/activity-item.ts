@@ -42,7 +42,8 @@ import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activityDetails});
 
@@ -215,7 +216,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
     // On Route changes
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName, params}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName, params}: EtoolsRouteDetails) => {
         if (routeName !== PAGE || subRouteName !== SUB_ROUTE) {
           return;
         }
@@ -344,7 +345,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   }
 
   private checkTab(): void {
-    const {params}: IRouteDetails = store.getState().app.routeDetails;
+    const {params}: EtoolsRouteDetails = store.getState().app.routeDetails;
     const activeTab: string | null = params && (params.tab as string);
 
     const isValidTab: boolean = VALID_TABS.has(`${activeTab}`);
