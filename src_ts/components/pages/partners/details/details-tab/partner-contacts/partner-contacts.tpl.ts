@@ -23,7 +23,7 @@ export function template(this: PartnerContacts): TemplateResult {
 
       <!-- TITLE with ADD ATTACHMENT button -->
       <div class="card-title-box with-bottom-line">
-        <div class="card-title">${this.getTitle(this.staffMembersList)}</div>
+        <div class="card-title">${this.getTitle(this.staffMembersListAll)}</div>
         <div class="buttons-container">
           <paper-toggle-button ?checked="${this.showInactive}" @checked-changed="${this.onShowInactiveChange}">
             ${translate('TPM_DETAILS.SHOW_INACTIVE')}
@@ -77,17 +77,17 @@ export function template(this: PartnerContacts): TemplateResult {
       <!-- Table Row item -->
       ${!this.loadingInProcess
         ? this.getStaffMembers(this.staffMembersList).map(
-            (staffMember: ITpmPartnerStaffMember) => html`
+            (staffMember: ITpmPartnerStaffMemberUser) => html`
               <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row flex">
-                  <div class="col-data flex-2">${staffMember.user.profile.job_title}</div>
-                  <div class="col-data flex-2">${staffMember.user.first_name}</div>
-                  <div class="col-data flex-2">${staffMember.user.last_name}</div>
-                  <div class="col-data flex-2">${staffMember.user.profile.phone_number}</div>
-                  <div class="col-data flex-3">${staffMember.user.email}</div>
+                  <div class="col-data flex-2">${staffMember.profile.job_title}</div>
+                  <div class="col-data flex-2">${staffMember.first_name}</div>
+                  <div class="col-data flex-2">${staffMember.last_name}</div>
+                  <div class="col-data flex-2">${staffMember.profile.phone_number}</div>
+                  <div class="col-data flex-3">${staffMember.email}</div>
                   <div class="col-data flex-1">
-                    <span ?hidden="${staffMember.user.is_active}" class="placeholder-style">&#8212;</span>
-                    <iron-icon icon="check" ?hidden="${!staffMember.user.is_active}"></iron-icon>
+                    <span ?hidden="${staffMember.is_active}" class="placeholder-style">&#8212;</span>
+                    <iron-icon icon="check" ?hidden="${!staffMember.is_active}"></iron-icon>
                   </div>
                 </div>
               </etools-data-table-row>

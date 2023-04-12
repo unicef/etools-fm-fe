@@ -18,6 +18,7 @@ export const TPM_PARTNERS_EXPORT = 'tpmPartnersExport';
 export const TPM_DETAILS = 'tpmDetails';
 export const TPM_PARTNER_EXPORT = 'tpmPartnerExport';
 export const TPM_PARTNER_ATTACHMENTS = 'tpmPartnerAttachments';
+export const TPM_PARTNER_STAFF = 'tpmPartnerStaff';
 export const INTERVENTIONS = 'interventions';
 export const CP_OUTPUTS = 'outputs';
 export const LOG_ISSUES = 'logIssues';
@@ -131,6 +132,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [TPM_PARTNER_ATTACHMENTS]: {
     template: '/api/tpm/partners/<%=id%>/attachments/'
+  },
+
+  [TPM_PARTNER_STAFF]: {
+    template: '/api/tpm/partners/<%=id%>/staff-members/?page_size=all&ordering=-id'
   },
 
   [CP_OUTPUTS]: {

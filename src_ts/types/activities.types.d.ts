@@ -59,7 +59,7 @@ interface IActivityTpmPartnerExtended {
   name: string;
   phone_number: string;
   vendor_number: string;
-  staff_members: ITpmPartnerStaffMember[];
+  staff_members: ITpmPartnerStaffMemberUser[];
   organization_id: string;
   street_address: string;
   postal_code: string;
@@ -68,11 +68,6 @@ interface IActivityTpmPartnerExtended {
   vision_synced: boolean;
   blocked: boolean;
   deleted_flag: boolean;
-}
-
-interface ITpmPartnerStaffMember {
-  id: string;
-  user: ITpmPartnerStaffMemberUser;
 }
 
 interface ITpmPartnerStaffMemberUser {

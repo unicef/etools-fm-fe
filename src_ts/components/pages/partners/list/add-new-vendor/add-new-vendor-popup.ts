@@ -22,6 +22,7 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   @property() vendorLoaded = false;
   @property() vendorNumberMessage!: string;
   @property() emailValidationMessage!: string;
+  @property() previousVendorNumberChecked = '';
   @property() savingInProcess = false;
   @property() permissions!: GenericObject;
   @property() canEditEmail!: boolean;
@@ -63,6 +64,11 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   validateVendorNumber(): void {
     if (this.editedData.vendor_number) {
       const vendor_number = this.editedData.vendor_number;
+      if (vendor_number === this.previousVendorNumberChecked) {
+        // vendor number didn't changed from last validation
+        return;
+      }
+      this.previousVendorNumberChecked = vendor_number;
       // reset validation, message, set loading
       this.vendorRequestInProcess = true;
       this.vendorLoaded = false;
