@@ -96,6 +96,12 @@ export class PageContentHeader extends LitElement {
           width: 100%;
         }
       }
+
+      @media print {
+        slot[name="title-row-actions"] {
+          display: none;
+        }
+      }
     `;
   }
 

@@ -96,7 +96,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
               .groupStructure="${this.checklistFormJson.blueprint.structure}"
               .value="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
-              .readonly="${this.tabIsReadonly}"
+              .readonly="${window.matchMedia('print') || this.tabIsReadonly}"
               .errors="${this.formErrors}"
               @value-changed="${(event: CustomEvent) => this.save(event)}"
             ></form-abstract-group>
@@ -267,6 +267,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         .title-description a {
           text-decoration: none;
+        }
+
+        @media print {
+          .title-description {
+            display: none;
+          }
         }
 
         .back-button {
