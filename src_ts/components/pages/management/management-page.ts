@@ -11,7 +11,6 @@ import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {rationale} from '../../../redux/reducers/rationale.reducer';
-import {EtoolsRouter, updateAppLocation} from '../../../routing/routes';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
@@ -20,6 +19,9 @@ import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {updateAppLocation} from '../../../routing/routes';
 
 store.addReducers({specificLocations, rationale});
 
@@ -80,7 +82,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
   connectedCallback(): void {
     super.connectedCallback();
     store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {
           return;
         }
@@ -119,8 +121,9 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
   exportData(e: CustomEvent): void {
     this.trackAnalytics(e);
     const url: string = getEndpoint(SITES_EXPORT).url;
-    const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
-    const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
+    const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
+    const params: string =
+      routeDetails && routeDetails.queryParams ? `?${EtoolsRouter.encodeQueryParams(routeDetails.queryParams)}` : '';
     window.open(url + params, '_blank');
   }
 
@@ -133,5 +136,4 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     }
     return true;
   }
-
 }

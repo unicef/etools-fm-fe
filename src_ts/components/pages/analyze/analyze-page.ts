@@ -14,6 +14,7 @@ import {translate} from 'lit-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const PAGE = 'analyze';
 
@@ -62,7 +63,7 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   connectedCallback(): void {
     super.connectedCallback();
     store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {
           return;
         }

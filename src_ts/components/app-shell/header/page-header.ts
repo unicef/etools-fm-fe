@@ -14,7 +14,7 @@ import {css, CSSResultArray, customElement, html, LitElement, property, query, T
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
 import {isEmpty} from 'ramda';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 

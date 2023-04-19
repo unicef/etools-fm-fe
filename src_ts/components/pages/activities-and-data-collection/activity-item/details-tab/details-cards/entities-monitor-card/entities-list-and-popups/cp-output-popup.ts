@@ -1,18 +1,18 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
-import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {request} from '../../../../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
-import {debounce} from '../../../../../../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import {EtoolsRouter} from '../../../../../../../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
 
@@ -29,7 +29,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
     super.connectedCallback();
     this.loadingCpOutputs = debounce((ids: number[] = []) => {
       const {url} = getEndpoint(CP_OUTPUTS);
-      const queryString: string = EtoolsRouter.encodeParams({partners__in: ids});
+      const queryString: string = EtoolsRouter.encodeQueryParams({partners__in: ids});
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => (this.cpOutputs = response));
     }, 100);
@@ -37,7 +37,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
   }
 
   addCpOutput(): void {
-    fireEvent(this, 'response', {confirmed: true, response: this.selectedCpOutput});
+    fireEvent(this, 'dialog-closed', {confirmed: true, response: this.selectedCpOutput});
   }
 
   selectPartners(partners: EtoolsPartner[]): void {
@@ -55,7 +55,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   // language=HTML

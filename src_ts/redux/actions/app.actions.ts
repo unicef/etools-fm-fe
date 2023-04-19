@@ -1,3 +1,5 @@
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+
 export enum AppActionTypes {
   UPDATE_ROUTE_DETAILS = '[App Actions]: UPDATE_ROUTE_DETAILS',
   UPDATE_QUERY_PARAMS = '[App Actions]: UPDATE_QUERY_PARAMS',
@@ -14,7 +16,7 @@ export class UpdateStoreRouteDetails {
 export class UpdateQueryParams {
   readonly type: AppActionTypes.UPDATE_QUERY_PARAMS = AppActionTypes.UPDATE_QUERY_PARAMS;
 
-  constructor(public queryParams: IRouteQueryParams | null = null) {}
+  constructor(public queryParams: EtoolsRouteQueryParams | null = null) {}
 }
 
 export class UpdateDrawerState {

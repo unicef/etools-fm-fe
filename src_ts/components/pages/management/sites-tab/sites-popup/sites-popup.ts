@@ -3,7 +3,7 @@ import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
 import {sitesUpdateSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/site-specific-locations.effects';
 import {LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent} from 'leaflet';
 import {getDifference} from '../../../../utils/objects-diff';
@@ -16,7 +16,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {debounce} from '../../../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {translate, get as getTranslation} from 'lit-translate';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
@@ -71,7 +71,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         }
 
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
 
@@ -116,7 +116,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   saveSite(): void {
