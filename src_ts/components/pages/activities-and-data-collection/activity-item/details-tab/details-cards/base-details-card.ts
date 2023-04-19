@@ -12,7 +12,7 @@ import {
   detailsEditedCard
 } from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
-import {fireEvent} from '../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {updateAppLocation} from '../../../../../../routing/routes';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {

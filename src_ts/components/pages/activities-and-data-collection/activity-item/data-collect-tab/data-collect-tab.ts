@@ -3,7 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import './data-collect-popup';
-import {openDialog} from '../../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {store} from '../../../../../redux/store';
 import {
   createCollectionChecklist,

@@ -14,7 +14,7 @@ import {loadGeographicCoverageBySection} from '../../../../../redux/effects/moni
 import {SectionsMixin} from '../../../../common/mixins/sections-mixin';
 import {geographicCoverageSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {geographicCoverageStyles} from './geographic-coverage.styles';
-import {reverseNestedArray} from '../../../../utils/map-helper';
+import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {equals, clone} from 'ramda';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;

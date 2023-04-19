@@ -1,7 +1,7 @@
 import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
 import {updateQueryParams} from '../../../../routing/routes';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {CpOutcomesMixin} from '../../../common/mixins/cp-outcomes.mixin';
 
 import {fullReportData} from '../../../../redux/selectors/co-overview.selectors';
@@ -23,6 +23,7 @@ import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {get as getTranslation} from 'lit-translate';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({fullReports});
 
@@ -65,7 +66,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     super.connectedCallback();
 
     this.routeUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
     this.fullReportsUnsubscribe = store.subscribe(
       fullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
@@ -84,7 +85,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
         }, false)
       );
     }
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
   }
 
@@ -116,7 +117,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     updateQueryParams({cp_output: newCpOutputId});
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (routeName !== 'analyze' || subRouteName !== 'country-overview') {
       return;
     }

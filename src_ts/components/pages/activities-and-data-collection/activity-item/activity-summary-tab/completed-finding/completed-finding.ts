@@ -3,7 +3,7 @@ import '@polymer/paper-tooltip';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
-import {fireEvent} from '../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
