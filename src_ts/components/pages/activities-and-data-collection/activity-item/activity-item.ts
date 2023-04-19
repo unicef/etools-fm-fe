@@ -43,7 +43,7 @@ import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activityDetails});
 

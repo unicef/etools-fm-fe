@@ -1,10 +1,13 @@
-
 import {store} from '../redux/store';
 import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
 import {equals, pick} from 'ramda';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {EtoolsRouteCallbackParams, EtoolsRouteDetails, EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteCallbackParams,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter.init({
@@ -15,7 +18,6 @@ EtoolsRouter.init({
   },
   redirectedPathsToSubpageLists: []
 });
-
 
 EtoolsRouter
   // .addRoute(new RegExp('^engagements/list$'),
@@ -49,15 +51,18 @@ EtoolsRouter
       params: null
     };
   })
-  .addRoute(new RegExp(`^management\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
-    return {
-      routeName: 'management',
-      subRouteName: params.matchDetails[1], // tab name
-      path: params.matchDetails[0],
-      queryParams: params.queryParams,
-      params: null
-    };
-  })
+  .addRoute(
+    new RegExp(`^management\\/${routeParamRegex}$`),
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
+      return {
+        routeName: 'management',
+        subRouteName: params.matchDetails[1], // tab name
+        path: params.matchDetails[0],
+        queryParams: params.queryParams,
+        params: null
+      };
+    }
+  )
   .addRoute(new RegExp(`^activities$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'activities',
@@ -67,15 +72,18 @@ EtoolsRouter
       params: null
     };
   })
-  .addRoute(new RegExp(`^activities\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
-    return {
-      routeName: 'activities',
-      subRouteName: 'item',
-      path: params.matchDetails[0],
-      queryParams: null,
-      params: {id: params.matchDetails[1]}
-    };
-  })
+  .addRoute(
+    new RegExp(`^activities\\/${routeParamRegex}$`),
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
+      return {
+        routeName: 'activities',
+        subRouteName: 'item',
+        path: params.matchDetails[0],
+        queryParams: null,
+        params: {id: params.matchDetails[1]}
+      };
+    }
+  )
   .addRoute(
     new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {

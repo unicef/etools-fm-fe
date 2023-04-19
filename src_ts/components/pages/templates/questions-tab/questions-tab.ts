@@ -26,7 +26,11 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import {clone} from 'ramda';
 import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteQueryParam,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {

@@ -18,7 +18,10 @@ import {CardStyles} from '../../../styles/card-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SitesTabStyles} from './sites-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
-import { EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {

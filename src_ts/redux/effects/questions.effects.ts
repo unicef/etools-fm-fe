@@ -4,7 +4,7 @@ import {QUESTIONS_DETAILS, QUESTIONS_LIST} from '../../endpoints/endpoints-list'
 import {request} from '../../endpoints/request';
 import {SetQuestionsList, SetQuestionUpdateError, SetQuestionUpdateState} from '../actions/questions.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import { EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export function loadQuestions(params: EtoolsRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {

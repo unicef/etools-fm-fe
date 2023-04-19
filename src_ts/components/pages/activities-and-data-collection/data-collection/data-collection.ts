@@ -35,7 +35,7 @@ import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-a
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 

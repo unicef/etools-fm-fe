@@ -35,7 +35,11 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteQueryParam,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER = 13;

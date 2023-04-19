@@ -15,7 +15,10 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {

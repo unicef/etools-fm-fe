@@ -17,7 +17,7 @@ import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {SUMMARY_TAB} from '../activities-tabs';
 import {repeat} from 'lit-html/directives/repeat';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activitySummary, findingsComponents});
 

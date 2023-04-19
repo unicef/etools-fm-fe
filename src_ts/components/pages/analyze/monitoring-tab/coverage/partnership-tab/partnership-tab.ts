@@ -79,7 +79,7 @@ export class PartnershipTab extends PaginationMixin(LitElement) {
     this.selectedSortingOption = detail;
   }
 
-  _paginate(pageNumber: number, pageSize: number) {
+  _paginate(pageNumber: number, pageSize: number): void {
     if (!this.partnersCoverage) {
       return;
     }
@@ -89,7 +89,7 @@ export class PartnershipTab extends PaginationMixin(LitElement) {
     );
   }
 
-  paginatorChanged() {
+  paginatorChanged(): void {
     this._paginate(this.paginator.page, this.paginator.page_size);
   }
 }
