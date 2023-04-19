@@ -15,7 +15,7 @@ import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRedirectPath } from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
 
 /**
  * @LitElement

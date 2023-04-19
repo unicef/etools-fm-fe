@@ -23,7 +23,7 @@ import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({fullReports});
 

@@ -122,7 +122,8 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     this.trackAnalytics(e);
     const url: string = getEndpoint(SITES_EXPORT).url;
     const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
-    const params: string = routeDetails && routeDetails.queryParams ? `?${EtoolsRouter.encodeQueryParams(routeDetails.queryParams)}` : '';
+    const params: string =
+      routeDetails && routeDetails.queryParams ? `?${EtoolsRouter.encodeQueryParams(routeDetails.queryParams)}` : '';
     window.open(url + params, '_blank');
   }
 
@@ -135,5 +136,4 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     }
     return true;
   }
-
 }

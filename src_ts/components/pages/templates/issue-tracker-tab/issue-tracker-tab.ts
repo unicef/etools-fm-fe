@@ -25,7 +25,11 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteQueryParam,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
   {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},

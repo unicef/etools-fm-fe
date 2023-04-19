@@ -7,8 +7,8 @@ import {ROOT_PATH} from '../../config/config';
 import {ActionCreator, Dispatch} from 'redux';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
 import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
-import { EtoolsRedirectPath } from '@unicef-polymer/etools-utils/dist/enums/router.enum';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 

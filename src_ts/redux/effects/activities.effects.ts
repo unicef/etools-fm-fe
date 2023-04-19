@@ -4,7 +4,7 @@ import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {request} from '../../endpoints/request';
 import {SetActivitiesList} from '../actions/activities.actions';
 import {ACTIVITIES_LIST} from '../../endpoints/endpoints-list';
-import { EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export function loadActivitiesList(params: EtoolsRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {

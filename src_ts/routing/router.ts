@@ -1,5 +1,9 @@
-import { EtoolsRouteCallbackParams, EtoolsRouteDetails, EtoolsRouteQueryParams } from "@unicef-polymer/etools-utils/dist/interfaces/router.interfaces";
-import { EtoolsRoute } from "@unicef-polymer/etools-utils/dist/types/router.types";
+import {
+  EtoolsRouteCallbackParams,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRoute} from '@unicef-polymer/etools-utils/dist/types/router.types';
 
 /**
  * Simple router that will help with:

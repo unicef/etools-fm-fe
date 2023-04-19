@@ -35,7 +35,11 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
-import { EtoolsRouteQueryParam, EtoolsRouteDetails, EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {
+  EtoolsRouteQueryParam,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activities, specificLocations, activityDetails});
 

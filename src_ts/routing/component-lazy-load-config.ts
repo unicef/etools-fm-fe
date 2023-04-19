@@ -1,4 +1,7 @@
-import { EtoolsRouteDetails, EtoolsRoutesLazyLoadComponentsPath } from "@unicef-polymer/etools-utils/dist/interfaces/router.interfaces";
+import {
+  EtoolsRouteDetails,
+  EtoolsRoutesLazyLoadComponentsPath
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 // each key from this object is computed from routeName_routeSubPage (if subRoute exists)
 export const componentsLazyLoadConfig: EtoolsRoutesLazyLoadComponentsPath = {

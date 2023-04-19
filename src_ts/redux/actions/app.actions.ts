@@ -1,4 +1,4 @@
-import { EtoolsRouteQueryParams } from "@unicef-polymer/etools-utils/dist/interfaces/router.interfaces";
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export enum AppActionTypes {
   UPDATE_ROUTE_DETAILS = '[App Actions]: UPDATE_ROUTE_DETAILS',

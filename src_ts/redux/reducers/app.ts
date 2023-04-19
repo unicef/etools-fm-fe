@@ -1,6 +1,6 @@
 import {Reducer} from 'redux';
 import {AppAction, AppActionTypes} from '../actions/app.actions';
-import { EtoolsRouteDetails } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const INITIAL_STATE: IAppState = {
   routeDetails: {} as EtoolsRouteDetails,

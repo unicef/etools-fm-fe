@@ -4,7 +4,7 @@ import {LOG_ISSUES, LOG_ISSUES_ATTACHMENTS, LOG_ISSUES_DETAILS} from '../../endp
 import {request} from '../../endpoints/request';
 import {IssueTrackerActions} from '../actions/issue-tracker.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import { EtoolsRouteQueryParams } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export function requestLogIssue(params: EtoolsRouteQueryParams): IAsyncAction {
   return {
