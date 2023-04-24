@@ -101,9 +101,11 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
           color: white;
         }
         .with-prefix {
-          padding-inline-end: 0;
-          padding-inline-start: 18px;
+          padding-inline-start: 12px;
           padding-inline-end: 18px;
+          margin-right: -25px;
+          --iron-icon-width: 20px;
+          --iron-icon-height: 20px;
         }
       `
     ];
