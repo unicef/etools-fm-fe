@@ -11,7 +11,7 @@ import {CardStyles} from '../../../../../styles/card-styles';
 import {TemplatesStyles} from '../../../../templates/templates-tab/templates-tab.styles';
 import {ChecklistSelectionTableStyles} from './checklist-selection-table.styles';
 import {updateActivityChecklist} from '../../../../../../redux/effects/activity-checklist.effects';
-import {fireEvent} from '../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {checklistEditedCard} from '../../../../../../redux/selectors/activity-checklist.selectors';
 import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-checklist.actions';

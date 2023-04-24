@@ -1,6 +1,6 @@
 import {FEATURES_FLAGS} from '../../endpoints/endpoints-list';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
+import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
 import '../common/error-warn-box';
 import {request} from '../../endpoints/request';
 import {EtoolsErrorWarnBox} from '../common/error-warn-box';
@@ -12,7 +12,7 @@ export function checkEnvFlags(): Promise<any> {
       return response;
     })
     .catch((err: any) => {
-      logError('checkEnvFlags error', 'environment-flags', err);
+      EtoolsLogger.error('checkEnvFlags error', 'environment-flags', err);
       if (err.status === 403) {
         window.location.href = window.location.origin + '/login/';
       }

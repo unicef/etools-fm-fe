@@ -5,7 +5,7 @@ import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-loading';
 import {translate} from 'lit-translate';
 import {SummaryCard} from './summary-card';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 
 export function template(this: SummaryCard): TemplateResult {
   return html`

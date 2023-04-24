@@ -4,8 +4,8 @@ import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
-import {debounce} from '../../../utils/debouncer';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadRationale} from '../../../../redux/effects/rationale.effects';
 import {rationaleData} from '../../../../redux/selectors/rationale.selectors';
 import {elevationStyles} from '../../../styles/elevation-styles';
@@ -15,6 +15,10 @@ import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
 import {get as getTranslation} from 'lit-translate';
+import {
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {
@@ -42,9 +46,9 @@ export class RationaleTabComponent extends LitElement {
     this.yearOptions = [currentYear, currentYear + 1].map((year: number) => ({label: year, value: year}));
 
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     this.rationaleDataUnsubscribe = store.subscribe(
@@ -86,14 +90,14 @@ export class RationaleTabComponent extends LitElement {
     return isEmptyValue ? '...' : (value as string);
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (routeName !== 'management' || subRouteName !== 'rationale') {
       return;
     }
 
     const paramsAreValid: boolean = (queryParams && queryParams.year && !isNaN(+queryParams.year)) || false;
     if (paramsAreValid) {
-      this.selectedYear = +(queryParams as IRouteQueryParams).year;
+      this.selectedYear = +(queryParams as EtoolsRouteQueryParams).year;
       this.debouncedLoading(this.selectedYear);
     } else {
       updateQueryParams({year: this.yearOptions[0].value});

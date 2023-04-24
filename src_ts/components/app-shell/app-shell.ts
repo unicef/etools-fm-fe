@@ -53,6 +53,7 @@ import {ROOT_PATH} from '../../config/config';
 import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from '../utils/utils';
 import {MapHelper} from '../common/map-mixin';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -87,7 +88,7 @@ export class AppShell extends connect(store)(LitElement) {
   drawerOpened = false;
 
   @property({type: Object})
-  routeDetails!: IRouteDetails;
+  routeDetails!: EtoolsRouteDetails;
 
   @property({type: String})
   mainPage = ''; // routeName

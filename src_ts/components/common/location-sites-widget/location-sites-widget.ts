@@ -14,7 +14,7 @@ import {SharedStyles} from '../../styles/shared-styles';
 import {TemplatesStyles} from '../../pages/templates/templates-tab/templates-tab.styles';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {leafletStyles} from '../../styles/leaflet-styles';
 
 const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];

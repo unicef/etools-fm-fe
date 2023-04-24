@@ -8,7 +8,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
-import {formatDate} from '../../../../../utils/date-utility';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {translate} from 'lit-translate';
 
 export function template(this: ActionPointsPopup): TemplateResult {

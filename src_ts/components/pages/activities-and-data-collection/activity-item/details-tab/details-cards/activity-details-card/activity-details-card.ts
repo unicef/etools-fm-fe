@@ -14,7 +14,7 @@ import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
 import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
 import clone from 'ramda/es/clone';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {translate, get as getTranslation} from 'lit-translate';

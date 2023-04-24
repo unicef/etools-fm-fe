@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
@@ -81,13 +81,13 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
     const diff: Partial<DataCollectionChecklist> = getDifference<DataCollectionChecklist>(origin, this.editedData, {
       toRequest: true
     });
-    fireEvent(this, 'response', {
+    fireEvent(this, 'dialog-closed', {
       confirmed: true,
       response: diff
     });
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 }

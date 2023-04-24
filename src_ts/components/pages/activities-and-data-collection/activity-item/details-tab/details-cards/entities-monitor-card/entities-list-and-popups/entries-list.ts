@@ -1,6 +1,6 @@
 import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {translate} from 'lit-translate';
 
 @customElement('entries-list')

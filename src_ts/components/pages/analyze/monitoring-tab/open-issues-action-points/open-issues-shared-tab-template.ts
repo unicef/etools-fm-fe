@@ -102,14 +102,14 @@ export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {
     }
   }
 
-  _paginate(pageNumber: number, pageSize: number) {
+  _paginate(pageNumber: number, pageSize: number): void {
     if (!this.data) {
       return;
     }
     this.paginatedData = (this.data || []).slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
   }
 
-  paginatorChanged() {
+  paginatorChanged(): void {
     this._paginate(this.paginator.page, this.paginator.page_size);
   }
 }

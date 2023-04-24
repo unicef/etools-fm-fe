@@ -2,7 +2,7 @@ import {CSSResultArray, customElement, LitElement, property, TemplateResult} fro
 import {Unsubscribe} from 'redux';
 import {clone} from 'ramda';
 import {store} from '../../../../../redux/store';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {issueTrackerIsUpdate} from '../../../../../redux/selectors/issue-tracker.selectors';
 import {getDifference} from '../../../../utils/objects-diff';
 import {createLogIssue, updateLogIssue} from '../../../../../redux/effects/issue-tracker.effects';
@@ -75,7 +75,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
         // close popup if update(create) was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }
@@ -105,7 +105,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   processRequest(): void {

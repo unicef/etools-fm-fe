@@ -20,15 +20,15 @@ import {
   widgetLocationsItems
 } from '../../../redux/selectors/widget-locations.selectors';
 import {loadLocationPath, loadLocationsChunk} from '../../../redux/effects/widget-locations.effects';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {getLocationPart} from '../../utils/get-location-part';
-import {reverseNestedArray} from '../../utils/map-helper';
 import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
 import {equals} from 'ramda';
 import clone from 'ramda/es/clone';
-import {debounce} from '../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {get as getTranslation} from 'lit-translate';
 
 store.addReducers({widgetLocations, specificLocations});

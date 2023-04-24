@@ -1,4 +1,3 @@
-import {RouteQueryParams} from '@unicef-polymer/etools-types';
 import {appLanguages} from '../../config/app-constants';
 import path from 'ramda/es/path';
 
