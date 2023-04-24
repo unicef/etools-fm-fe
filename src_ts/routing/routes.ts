@@ -129,7 +129,7 @@ EtoolsRouter
       };
     }
   )
-  .addRoute(new RegExp(`^partners$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^partners$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'partners',
       subRouteName: 'list',
@@ -139,7 +139,7 @@ EtoolsRouter
       params: null
     };
   })
-  .addRoute(new RegExp(`^partners\\/${routeParamRegex}$`), (params: IRouteCallbackParams): IRouteDetails => {
+  .addRoute(new RegExp(`^partners\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'partners',
       subRouteName: 'item',
@@ -151,7 +151,7 @@ EtoolsRouter
   })
   .addRoute(
     new RegExp(`^partners\\/${routeParamRegex}\\/${routeParamRegex}$`),
-    (params: IRouteCallbackParams): IRouteDetails => {
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
         routeName: 'partners',
         subRouteName: 'item',
