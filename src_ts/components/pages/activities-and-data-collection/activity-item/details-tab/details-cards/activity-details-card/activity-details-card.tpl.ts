@@ -95,7 +95,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('start_date', detail.date ? formatDate(detail.date) : '')}"
+                this.updateModelValue('start_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : '')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
               selected-date-display-format="D MMM YYYY"
             ></datepicker-lite>
@@ -105,7 +105,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               .autoValidate="${true}"
               ?fire-date-has-changed="${this.isEditMode}"
               @date-has-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('end_date', detail.date ? formatDate(detail.date) : '')}}"
+                this.updateModelValue('end_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : '')}}"
               label="${translate('ACTIVITY_DETAILS.END_DATE')}"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
               selected-date-display-format="D MMM YYYY"
