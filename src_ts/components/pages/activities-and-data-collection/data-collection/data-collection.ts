@@ -96,7 +96,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
               .groupStructure="${this.checklistFormJson.blueprint.structure}"
               .value="${this.checklistFormJson.value}"
               .metadata="${this.checklistFormJson.blueprint.metadata}"
-              .readonly="${window.matchMedia('print') || this.tabIsReadonly}"
+              .readonly="${this.tabIsReadonly}"
               .errors="${this.formErrors}"
               @value-changed="${(event: CustomEvent) => this.save(event)}"
             ></form-abstract-group>
@@ -121,6 +121,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     super.connectedCallback();
     const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
     AttachmentsHelper.initialize(attachmentsEndpoint);
+    window.addEventListener("beforeprint", () => {
+      this.tabIsReadonly = true;
+      this.requestUpdate();
+    });
+
+    window.addEventListener("afterprint", () => {
+      this.tabIsReadonly = false;
+      this.requestUpdate();
+    });
     /**
      * On Activity data changes.
      * Load checklist data if activity loaded successfully
