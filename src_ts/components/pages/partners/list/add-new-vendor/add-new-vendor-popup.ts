@@ -139,7 +139,7 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   afterSave(): void {
     this.savingInProcess = false;
     this.dialogOpened = false;
-    fireEvent(this, 'response', {confirmed: true});
+    fireEvent(this, 'dialog-closed', {confirmed: true});
   }
 
   validate(): boolean {

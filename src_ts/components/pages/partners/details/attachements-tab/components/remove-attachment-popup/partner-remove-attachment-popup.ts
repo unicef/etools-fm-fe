@@ -34,7 +34,7 @@ export class PartnerRemoveAttachmentPopupComponent extends LitElement {
 
         // close popup if delete was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }

@@ -72,7 +72,7 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
 
         // close popup if update(create) was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }
