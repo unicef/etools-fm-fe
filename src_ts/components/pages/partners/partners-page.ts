@@ -8,6 +8,7 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({tpmPartners});
 export const PARTNERS_PAGE = 'partners';
@@ -34,7 +35,7 @@ export class PartnersPageComponent extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PARTNERS_PAGE) {
           return;
         }

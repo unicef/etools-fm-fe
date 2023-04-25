@@ -8,13 +8,15 @@ import {customElement, LitElement, html, property, query, TemplateResult} from '
 import {fireEvent} from '@unicef-polymer/etools-modules-common/dist/utils/fire-custom-event';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {get as getTranslation, translate} from 'lit-translate';
-import {DEFAULT_ROUTE, updateAppLocation} from '../../../routing/routes';
+import {updateAppLocation} from '../../../routing/routes';
 import {ROOT_PATH} from '../../../config/config';
 import {changeCurrentUserOrganization} from '../../../redux/effects/organization.effects';
 import {organizationSelector} from '../../../redux/selectors/organization.selectors';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {isEmpty} from 'ramda';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
 
 /**
  * @LitElement
@@ -118,7 +120,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
   }
 
   protected handleChangedOrganization(): void {
-    updateAppLocation(DEFAULT_ROUTE);
+    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
     document.location.assign(window.location.origin + ROOT_PATH);
   }
 

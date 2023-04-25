@@ -4,9 +4,10 @@ import {elevationStyles} from '../../../styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {EtoolsRouter, updateQueryParams} from '../../../../routing/routes';
-import {debounce} from '../../../utils/debouncer';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {updateQueryParams} from '../../../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadPartnersList} from '../../../../redux/effects/tpm-partners.effects';
 import {tpmPartners} from '../../../../redux/reducers/tpm-partners.reducer';
 import {tpmPartnersListData} from '../../../../redux/selectors/tpm-partners.selectors';
@@ -25,8 +26,13 @@ import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNERS_EXPORT} from '../../../../endpoints/endpoints-list';
-import {openDialog} from '../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import '../list/add-new-vendor/add-new-vendor-popup';
+import {
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParam,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({tpmPartners});
 
@@ -45,7 +51,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
   constructor() {
     super();
     // List loading request
-    this.debouncedLoading = debounce((params: IRouteQueryParam) => {
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
       store
         .dispatch<AsyncEffect>(loadPartnersList(params, !this.count))
@@ -55,10 +61,10 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
 
     // route params listener
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
     this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     // set partnersList on store data changes
@@ -142,8 +148,9 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     e.currentTarget.blur();
     this.trackAnalytics(e);
     const url: string = getEndpoint(TPM_PARTNERS_EXPORT).url;
-    const routeDetails: IRouteDetails | null = EtoolsRouter.getRouteDetails();
-    const params: string = routeDetails && routeDetails.queryParamsString ? `?${routeDetails.queryParamsString}` : '';
+    const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
+    const params: string =
+      routeDetails && routeDetails.queryParams ? `?${EtoolsRouter.encodeQueryParams(routeDetails.queryParams)}` : '';
     window.open(url + params, '_blank');
   }
 
@@ -159,7 +166,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     }
   }
 
-  private onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (!(routeName === 'partners' && subRouteName === 'list')) {
       return;
     }
@@ -171,7 +178,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     }
   }
 
-  private checkParams(params?: IRouteQueryParams | null): boolean {
+  private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
       const {page = 1, page_size = 10} = params || {};

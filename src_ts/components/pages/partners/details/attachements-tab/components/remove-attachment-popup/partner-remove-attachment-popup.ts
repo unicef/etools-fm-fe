@@ -1,6 +1,6 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './partner-remove-attachment-popup.tpl';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../../../redux/store';
 import {listAttachmentUpdate} from '../../../../../../../redux/selectors/attachments-list.selectors';
 import {Unsubscribe} from 'redux';

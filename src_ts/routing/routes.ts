@@ -135,7 +135,6 @@ EtoolsRouter
       subRouteName: 'list',
       path: params.matchDetails[0],
       queryParams: params.queryParams,
-      queryParamsString: params.queryParamsString,
       params: null
     };
   })
@@ -145,7 +144,6 @@ EtoolsRouter
       subRouteName: 'item',
       path: params.matchDetails[0],
       queryParams: null,
-      queryParamsString: null,
       params: {id: params.matchDetails[1]}
     };
   })
@@ -157,7 +155,6 @@ EtoolsRouter
         subRouteName: 'item',
         path: params.matchDetails[0],
         queryParams: null,
-        queryParamsString: null,
         params: {id: params.matchDetails[1], tab: params.matchDetails[2]}
       };
     }

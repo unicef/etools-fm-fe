@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
-import {fireEvent} from '../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './partner-edit-attachments-popup.tpl';
 import {store} from '../../../../../../../redux/store';
 import {addAttachmentToList, updateListAttachment} from '../../../../../../../redux/effects/attachments-list.effects';

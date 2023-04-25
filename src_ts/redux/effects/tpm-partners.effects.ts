@@ -1,17 +1,18 @@
 import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {EtoolsRouter} from '../../routing/routes';
 import {request} from '../../endpoints/request';
 import {SetTPMPartnersList, SetTPMPartnersPermissions} from '../actions/tpm-partners.actions';
 import {ACTIVATE_VENDOR, TPM_PARTNERS, SYNC_VENDOR_DATA} from '../../endpoints/endpoints-list';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 
 export function loadPartnersList(
-  params: IRouteQueryParams,
+  params: EtoolsRouteQueryParams,
   getOptions: boolean
 ): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(TPM_PARTNERS);
-    const resultUrl = `${url}&${EtoolsRouter.encodeParams(params)}`;
+    const resultUrl = `${url}&${EtoolsRouter.encodeQueryParams(params)}`;
     const requestsUrl: any[] = [request<IListData<IActivityTpmPartner>>(resultUrl, {method: 'GET'})];
     if (getOptions) {
       requestsUrl.push(request<GenericObject>(url, {method: 'OPTIONS'}));
