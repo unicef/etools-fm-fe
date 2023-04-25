@@ -47,7 +47,7 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   setPermissions(permissions: GenericObject): void {

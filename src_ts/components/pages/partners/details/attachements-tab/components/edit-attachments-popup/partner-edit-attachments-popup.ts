@@ -125,6 +125,6 @@ export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachmen
   }
 
   protected onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 }
