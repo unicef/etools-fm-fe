@@ -4,6 +4,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
+import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
@@ -117,7 +118,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                   >${activity.reference_number}</a
                 >
               </div>
-              <div class="col-data flex-none w110px">${this.formatDate(activity.start_date)}</div>
+              <div class="col-data flex-none w110px">${formatDate(activity.start_date!) || '-'}</div>
               <div class="col-data flex-2">
                 ${activity.location && activity.location.name}
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}

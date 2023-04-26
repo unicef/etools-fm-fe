@@ -4,6 +4,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import './action-points-popup/action-points-popup';
 import {translate} from 'lit-translate';
+import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`
@@ -85,7 +86,7 @@ export function template(this: ActionPointsTab): TemplateResult {
                 <label>(${item.section.name} / ${item.office.name})</label>
               </div>
               <div class="col-data flex-1">${this.statusMap.get(item.status)}</div>
-              <div class="col-data flex-1">${this.formatDate(item.due_date)}</div>
+              <div class="col-data flex-1">${formatDate(item.due_date) || '-'}</div>
               <div class="col-data flex-1 editable-row">${item.high_priority ? 'High' : ''}</div>
               <div class="hover-block" ?hidden="${!this.activityDetails.permissions.edit.action_points}">
                 <iron-icon icon="icons:create" @tap="${() => this.openPopup(item)}"></iron-icon>

@@ -6,6 +6,7 @@ import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {translate} from 'lit-translate';
 import {getTypeDisplayName} from '../../utils/attachments-helper';
+import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
   // language=HTML
@@ -68,7 +69,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
             (attachment: IAttachment) => html`
               <etools-data-table-row no-collapse secondary-bg-on-hover>
                 <div slot="row-data" class="layout horizontal editable-row flex">
-                  <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
+                  <div class="col-data flex-1">${formatDate(attachment.created) || ''}</div>
                   <div class="col-data flex-1">${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}</div>
                   <div class="col-data flex-4 file-link">
                     <iron-icon icon="icons:attachment"></iron-icon>
