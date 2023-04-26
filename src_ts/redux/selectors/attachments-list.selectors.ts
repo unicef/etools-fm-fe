@@ -13,3 +13,7 @@ export const attachmentsTypesSelector: DynamicSelector<AttachmentType[] | undefi
   AttachmentsTypesState,
   AttachmentType[]
 >((store: IRootState) => store.attachmentsList.attachmentsTypes);
+
+export const attachmentsPermissionsSelector: Selector<GenericObject | null> = select<GenericObject | null>(
+  (store: IRootState) => store.attachmentsList.permissions
+);
