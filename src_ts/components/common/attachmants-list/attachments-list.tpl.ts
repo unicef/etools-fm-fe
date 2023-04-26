@@ -6,7 +6,7 @@ import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit-element';
 import {translate} from 'lit-translate';
 import {getTypeDisplayName} from '../../utils/attachments-helper';
-import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
   // language=HTML

@@ -4,7 +4,7 @@ import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
-import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`

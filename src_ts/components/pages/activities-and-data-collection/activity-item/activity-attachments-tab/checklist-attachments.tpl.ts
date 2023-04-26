@@ -6,7 +6,7 @@ import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';
 import {translate} from 'lit-translate';
-import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`

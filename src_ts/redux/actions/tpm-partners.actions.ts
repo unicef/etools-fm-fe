@@ -10,7 +10,8 @@ export class SetTPMPartnersList {
 }
 
 export class SetTPMPartnersPermissions {
-  readonly type: TPMPartnersActionTypes.SET_TPM_PARTNERS_PERMISSIONS = TPMPartnersActionTypes.SET_TPM_PARTNERS_PERMISSIONS;
+  readonly type: TPMPartnersActionTypes.SET_TPM_PARTNERS_PERMISSIONS =
+    TPMPartnersActionTypes.SET_TPM_PARTNERS_PERMISSIONS;
 
   constructor(public payload: GenericObject) {}
 }

@@ -4,7 +4,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
-import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`

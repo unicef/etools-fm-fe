@@ -4,7 +4,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import './action-points-popup/action-points-popup';
 import {translate} from 'lit-translate';
-import { formatDate } from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActionPointsTab): TemplateResult {
   return html`

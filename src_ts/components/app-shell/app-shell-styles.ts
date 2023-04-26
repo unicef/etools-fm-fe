@@ -15,12 +15,12 @@ export const AppShellStyles: CSSResult = css`
   }
 
   @media print {
-    #pageheader, 
+    #pageheader,
     #drawer {
       display: none;
     }
 
-    app-drawer-layout:not([small-menu]){
+    app-drawer-layout:not([small-menu]) {
       --app-drawer-width: 0;
     }
 
