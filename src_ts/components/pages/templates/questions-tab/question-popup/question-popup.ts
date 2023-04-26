@@ -110,6 +110,11 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
   set dialogData(data: IQuestion) {
     if (!data) {
+      this.data = {
+        methods: [],
+        options: [],
+        sections: []
+      } as any;
       return;
     }
     this.data = data;
