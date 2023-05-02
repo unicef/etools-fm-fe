@@ -65,7 +65,7 @@ export class PartnerContacts extends connect(store)(LitElement) {
   }
 
   filterStaffMembersByActive(): void {
-    this.staffMembersList = (this.staffMembersListAll || []).filter((x) => x.is_active || this.showInactive);
+    this.staffMembersList = (this.staffMembersListAll || []).filter((x) => x.has_active_realm || this.showInactive);
     this.onPageNumberChange(1);
   }
 
