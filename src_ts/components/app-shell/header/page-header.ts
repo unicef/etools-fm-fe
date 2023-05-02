@@ -28,6 +28,7 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {appLanguages} from '../../../config/app-constants';
+import {languageIsAvailableInApp} from '../../utils/utils';
 
 // registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
@@ -72,6 +73,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   editableFields: string[] = ['office', 'section', 'job_title', 'phone_number', 'oic', 'supervisor'];
 
   @property() selectedLanguage!: string;
+  @property() initialLanguage!: string;
 
   @property() refreshInProgress = false;
 
@@ -259,7 +261,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     }
     if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
       this.selectedLanguage = state.activeLanguage.activeLanguage;
-      localStorage.setItem('defaultLanguage', this.selectedLanguage);
+      window.EtoolsLanguage = this.selectedLanguage;
+      this.initialLanguage = this.selectedLanguage;
     }
   }
 
@@ -284,11 +287,16 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
     if (language !== this.selectedLanguage) {
       this.selectedLanguage = language;
-      localStorage.setItem('defaultLanguage', language);
+      window.EtoolsLanguage = language;
       // Event caught by self translating npm packages
       fireEvent(this, 'language-changed', {language});
     }
-    if (this.profile && this.profile.preferences?.language != language) {
+    if (
+      this.profile &&
+      this.profile.preferences?.language != language &&
+      this.initialLanguage != language &&
+      languageIsAvailableInApp(language)
+    ) {
       this.langUpdateInProgress = true;
       store
         .dispatch<AsyncEffect>(updateCurrentUserData({preferences: {language: language}}))
