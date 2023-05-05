@@ -43,7 +43,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
               ><iron-icon icon="flag" class="flag-icon"></iron-icon
             ></a>
           </div>
-          <iron-collapse ?opened="${this.queryParams && this.queryParams.cp_output === cpOutput.id}">
+          <iron-collapse ?opened="${this.queryParams && String(this.queryParams.cp_output) === String(cpOutput.id)}">
             ${this.fullReports[cpOutput.id]
               ? html`
                   <cp-details-item
