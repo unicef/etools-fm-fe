@@ -1,19 +1,21 @@
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
+import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
 import {countrySelector} from '../../../redux/selectors/country.selectors';
-import {DEFAULT_ROUTE, updateAppLocation} from '../../../routing/routes';
+import {updateAppLocation} from '../../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {get as getTranslation} from 'lit-translate';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
 
 /**
  * @LitElement
@@ -148,12 +150,12 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   }
 
   protected handleChangedCountry(): void {
-    updateAppLocation(DEFAULT_ROUTE);
+    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
     document.location.assign(window.location.origin + ROOT_PATH);
   }
 
   protected handleCountryChangeError(error: any): void {
-    logError('Country change failed!', 'countries-dropdown', error);
+    EtoolsLogger.error('Country change failed!', 'countries-dropdown', error);
     this.countryDropdown.selected = this.currentCountry.id;
     fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGING_WORKSPACE')});
   }

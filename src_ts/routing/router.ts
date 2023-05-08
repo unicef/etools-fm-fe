@@ -1,10 +1,17 @@
+import {
+  EtoolsRouteCallbackParams,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRoute} from '@unicef-polymer/etools-utils/dist/types/router.types';
+
 /**
  * Simple router that will help with:
  *  - registering app routes
  *  - check for app valid routes and get route details, like name, params or queryParams,
  */
 export class Router {
-  private routes: IRoute[] = [];
+  private routes: EtoolsRoute[] = [];
   private readonly root: string = '/';
 
   constructor(rootPath?: string) {
@@ -15,7 +22,7 @@ export class Router {
     return path.toString().replace(/\/$/, '').replace(/^\//, '');
   }
 
-  addRoute(regex: RegExp | null, handler: (params: IRouteCallbackParams) => IRouteDetails): Router {
+  addRoute(regex: RegExp | null, handler: (params: EtoolsRouteCallbackParams) => EtoolsRouteDetails): Router {
     if (!this.isRouteAdded(regex)) {
       // prevent adding the same route multiple times
       this.routes.push({regex: regex === null ? '' : regex, handler});
@@ -30,8 +37,8 @@ export class Router {
    * details about this route: name, sub-route name (if any), route params, query params, route path.
    * @param path
    */
-  getRouteDetails(path?: string): IRouteDetails | null {
-    let routeDetails: IRouteDetails | null = null;
+  getRouteDetails(path?: string): EtoolsRouteDetails | null {
+    let routeDetails: EtoolsRouteDetails | null = null;
     let locationPath: string = path ? this.getLocationPath(path) : this.getLocationPath();
 
     const qsStartIndex: number = locationPath.indexOf('?');
@@ -45,10 +52,9 @@ export class Router {
     for (const router of this.routes) {
       const match: RegExpMatchArray | null = locationPath.match(router.regex);
       if (match) {
-        const routeParams: IRouteCallbackParams = {
+        const routeParams: EtoolsRouteCallbackParams = {
           matchDetails: match.slice(0).map((matchVal: string) => decodeURIComponent(matchVal)),
-          queryParams: this.buildQueryParams(qs),
-          queryParamsString: qs
+          queryParams: this.buildQueryParams(qs)
         };
         routeDetails = router.handler.bind({}, routeParams)();
         break;
@@ -57,7 +63,7 @@ export class Router {
     return routeDetails;
   }
 
-  pushState(path?: string, queryParams?: IRouteQueryParams, navigateCallback?: (() => void) | null): this {
+  pushState(path?: string, queryParams?: EtoolsRouteQueryParams, navigateCallback?: (() => void) | null): this {
     path = path ? this.prepareLocationPath(path, queryParams) : '';
     history.pushState(null, '', path);
     if (typeof navigateCallback === 'function') {
@@ -66,13 +72,13 @@ export class Router {
     return this;
   }
 
-  replaceState(path?: string, queryParams?: IRouteQueryParams): this {
+  replaceState(path?: string, queryParams?: EtoolsRouteQueryParams): this {
     path = path ? this.prepareLocationPath(path, queryParams) : '';
     history.replaceState(window.history.state, '', path);
     return this;
   }
 
-  prepareLocationPath(path: string, queryParams: IRouteQueryParams = {}): string {
+  prepareLocationPath(path: string, queryParams: EtoolsRouteQueryParams = {}): string {
     const preparedPath: string = !path.includes(this.root) ? this.root + Router.clearSlashes(path) : path;
     const queryString: string = this.encodeParams(queryParams);
     return `${preparedPath}${queryString ? '?' + queryString : ''}`;
@@ -118,12 +124,12 @@ export class Router {
 
   private isRouteAdded(regex: RegExp | null): boolean {
     const filterKey: string = regex instanceof RegExp ? regex.toString() : '';
-    const route: IRoute | undefined = this.routes.find((r: IRoute) => r.regex.toString() === filterKey);
+    const route: EtoolsRoute | undefined = this.routes.find((r: EtoolsRoute) => r.regex.toString() === filterKey);
     return Boolean(route);
   }
 
-  private buildQueryParams(qs: string): IRouteQueryParams {
-    const params: IRouteQueryParams = {};
+  private buildQueryParams(qs: string): EtoolsRouteQueryParams {
+    const params: EtoolsRouteQueryParams = {};
     qs = (qs || '').replace(/^\?/, '').replace(/\+/g, '%20');
     const paramList: string[] = qs.split('&');
     for (const paramListItem of paramList) {

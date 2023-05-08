@@ -2,7 +2,7 @@ import {customElement, html, LitElement, property, TemplateResult} from 'lit-ele
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
 import {deleteDataCollectionChecklistItem} from '../../../../../redux/effects/data-collection.effects';
 import {Unsubscribe} from 'redux';
@@ -33,7 +33,7 @@ export class RemoveDataCollectPopup extends LitElement {
 
         // close popup if delete was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }
@@ -75,6 +75,6 @@ export class RemoveDataCollectPopup extends LitElement {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 }

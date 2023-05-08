@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
-import {debounce} from '../../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
@@ -11,7 +11,7 @@ import {template} from './issue-tracker-tab.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {openDialog} from '../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
@@ -25,6 +25,11 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
 import {get as getTranslation} from 'lit-translate';
+import {
+  EtoolsRouteQueryParam,
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
   {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},
@@ -49,7 +54,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
 
   constructor() {
     super();
-    this.debouncedLoading = debounce((params: IRouteQueryParam) => {
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       // this.dispatchOnStore(new RunGlobalLoading({type: 'specificLocations', message: 'Loading Data...'}));
       store.dispatch<AsyncEffect>(requestLogIssue(params));
       // .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
@@ -72,7 +77,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   connectedCallback(): void {
     super.connectedCallback();
     this.routeUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => {
+      routeDetailsSelector((details: EtoolsRouteDetails) => {
         return this.onRouteChange(details);
       }, false)
     );
@@ -90,7 +95,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
         this.items = data.results;
       })
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
     this.addEventListener('sort-changed', ((event: CustomEvent<SortDetails>) => this.changeSort(event.detail)) as any);
   }
@@ -102,7 +107,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
     this.isLoadUnsubscribe();
   }
 
-  onRouteChange(routeDetails: IRouteDetails): void {
+  onRouteChange(routeDetails: EtoolsRouteDetails): void {
     const {routeName, subRouteName, queryParams} = routeDetails;
     if (routeName !== 'templates' || subRouteName !== 'issue-tracker') {
       return;
@@ -115,7 +120,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
     }
   }
 
-  checkParams(params?: IRouteQueryParams | null): boolean {
+  checkParams(params?: EtoolsRouteQueryParams | null): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
       updateQueryParams({page: 1, page_size: 10});
@@ -158,7 +163,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
       if (!issue) {
         updateQueryParams({page: 1});
       }
-      const currentParams: IRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
+      const currentParams: EtoolsRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
       store.dispatch<AsyncEffect>(requestLogIssue(currentParams || {}));
     });
   }

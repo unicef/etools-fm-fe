@@ -10,7 +10,7 @@ import {actionPointsList} from '../../../../../redux/reducers/action-points.redu
 import {loadActionPoints} from '../../../../../redux/effects/action-points.effects';
 import {Unsubscribe} from 'redux';
 import {actionPointsListSelector} from '../../../../../redux/selectors/action-points.selectors';
-import {openDialog} from '../../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 
 store.addReducers({actionPointsList});
 

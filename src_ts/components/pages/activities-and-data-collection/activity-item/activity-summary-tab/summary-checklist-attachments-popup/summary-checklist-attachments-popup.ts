@@ -1,5 +1,5 @@
 import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
-import {fireEvent} from '../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {AttachmentsStyles} from '../../../../../styles/attachments.styles';
 import {clone} from 'ramda';
 import {updateChecklistAttachments} from '../../../../../../redux/effects/data-collection.effects';
@@ -38,7 +38,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   saveChanges(): void {
@@ -62,7 +62,7 @@ export class SummaryChecklistAttachmentsPopup extends LitElement {
       .then(() => {
         this.savingInProcess = false;
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       })
       .catch(() => {
         this.savingInProcess = false;

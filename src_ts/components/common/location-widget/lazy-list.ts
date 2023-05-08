@@ -1,6 +1,6 @@
 import {LitElement, TemplateResult, html, property, query, customElement, css, CSSResultArray} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {fireEvent} from '../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 
 @customElement('lazy-list')
 export class LazyList extends LitElement {

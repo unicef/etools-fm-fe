@@ -8,7 +8,7 @@ import {
   query,
   TemplateResult
 } from 'lit-element';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
@@ -66,7 +66,7 @@ export class ChecklistAttachments extends LitElement {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   confirmReason(): void {
@@ -74,7 +74,7 @@ export class ChecklistAttachments extends LitElement {
       this.error = 'Field is required';
       return;
     }
-    fireEvent(this, 'response', {confirmed: true, response: {comment: this.reason}});
+    fireEvent(this, 'dialog-closed', {confirmed: true, response: {comment: this.reason}});
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {

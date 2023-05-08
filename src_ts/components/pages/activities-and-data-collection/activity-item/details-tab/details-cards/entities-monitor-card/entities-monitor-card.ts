@@ -13,7 +13,7 @@ import './entities-list-and-popups/partner-popup';
 import './entities-list-and-popups/cp-output-popup';
 import './entities-list-and-popups/intervention-popup';
 import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
-import {openDialog} from '../../../../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 
@@ -27,9 +27,9 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
 
   set data(data: IActivityDetails) {
     super.data = data;
-    this.activityPartners = clone(data.partners);
-    this.activityCpOutputs = clone(data.cp_outputs);
-    this.activityInterventions = clone(data.interventions);
+    this.activityPartners = clone(data?.partners);
+    this.activityCpOutputs = clone(data?.cp_outputs);
+    this.activityInterventions = clone(data?.interventions);
   }
 
   render(): TemplateResult {

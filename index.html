@@ -136,6 +136,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .hidden {
         display: none;
       }
+
+      @media print {
+        body {
+          background-color: #fff;
+        }
+      }
+
+      @page {
+        size: A4 portrait;
+        margin-top: 0.2cm;
+        margin-bottom: 1.2cm;
+        margin-left: 0.2cm;
+        margin-right: 0.2cm;
+        background-color: #fff;
+      }
     </style>
   </head>
   <body>

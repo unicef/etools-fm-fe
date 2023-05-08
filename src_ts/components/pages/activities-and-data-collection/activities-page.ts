@@ -8,6 +8,7 @@ import {buttonsStyles} from '../../styles/button-styles';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activities});
 export const ACTIVITIES_PAGE = 'activities';
@@ -41,7 +42,7 @@ export class ActivitiesPageComponent extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {
           return;
         }

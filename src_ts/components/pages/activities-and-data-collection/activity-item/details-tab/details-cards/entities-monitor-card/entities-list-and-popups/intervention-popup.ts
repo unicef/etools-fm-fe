@@ -1,7 +1,7 @@
 import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
-import {fireEvent} from '../../../../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
@@ -11,10 +11,10 @@ import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
-import {debounce} from '../../../../../../../utils/debouncer';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {request} from '../../../../../../../../endpoints/request';
-import {EtoolsRouter} from '../../../../../../../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {repeat} from 'lit-html/directives/repeat';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpoints-list';
@@ -122,7 +122,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     this.loadingInterventions = debounce((params: QueryParams) => {
       const {url}: IResultEndpoint = getEndpoint(INTERVENTIONS);
       this.queryParams = {...this.queryParams, ...params};
-      const queryString: string = EtoolsRouter.encodeParams(this.queryParams);
+      const queryString: string = EtoolsRouter.encodeQueryParams(this.queryParams);
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
       request<EtoolsInterventionShort[]>(endpoint).then(
         (response: EtoolsInterventionShort[]) => (this.interventions = response)
@@ -130,7 +130,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     }, 100);
     this.loadingOutputs = debounce((ids: number[] = []) => {
       const {url} = getEndpoint(CP_OUTPUTS);
-      const queryString: string = EtoolsRouter.encodeParams({partners__in: ids});
+      const queryString: string = EtoolsRouter.encodeQueryParams({partners__in: ids});
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
       request<EtoolsCpOutputShort[]>(endpoint).then((response: EtoolsCpOutputShort[]) => (this.outputs = response));
     }, 100);
@@ -178,11 +178,11 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   addIntervention(): void {
-    fireEvent(this, 'response', {confirmed: true, response: this.selectedIntervention});
+    fireEvent(this, 'dialog-closed', {confirmed: true, response: this.selectedIntervention});
   }
 
   static get styles(): CSSResultArray {

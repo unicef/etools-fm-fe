@@ -8,8 +8,8 @@ import {loadSiteLocations} from '../../../../redux/effects/site-specific-locatio
 import {updateQueryParams} from '../../../../routing/routes';
 import {locationsInvert} from './locations-invert';
 import {elevationStyles} from '../../../styles/elevation-styles';
-import {debounce} from '../../../utils/debouncer';
-import {openDialog} from '../../../utils/dialog';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import './sites-popup/sites-popup';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
@@ -18,6 +18,10 @@ import {CardStyles} from '../../../styles/card-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SitesTabStyles} from './sites-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
+import {
+  EtoolsRouteDetails,
+  EtoolsRouteQueryParams
+} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
@@ -46,9 +50,9 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     super.connectedCallback();
 
     this.routeUnsubscribe = store.subscribe(
-      routeDetailsSelector((details: IRouteDetails) => this.onRouteChange(details), false)
+      routeDetailsSelector((details: EtoolsRouteDetails) => this.onRouteChange(details), false)
     );
-    const currentRoute: IRouteDetails = (store.getState() as IRootState).app.routeDetails;
+    const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
 
     this.sitesUnsubscribe = store.subscribe(
@@ -71,7 +75,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     this.routeUnsubscribe();
   }
 
-  onRouteChange({routeName, subRouteName, queryParams}: IRouteDetails): void {
+  onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
     if (routeName !== 'management' || subRouteName !== 'sites') {
       return;
     }
@@ -90,7 +94,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     }
   }
 
-  checkParams(params?: IRouteQueryParams | null, update?: boolean): boolean {
+  checkParams(params?: EtoolsRouteQueryParams | null, update?: boolean): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid && update) {
       updateQueryParams({page: 1, page_size: 10});

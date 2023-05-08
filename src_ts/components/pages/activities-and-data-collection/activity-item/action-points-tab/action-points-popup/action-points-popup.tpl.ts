@@ -8,7 +8,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
-import {formatDate} from '../../../../../utils/date-utility';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {translate} from 'lit-translate';
 
 export function template(this: ActionPointsPopup): TemplateResult {
@@ -75,7 +75,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           fire-date-has-changed
           label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DUE_ON')}"
           @date-has-changed="${({detail}: CustomEvent) =>
-            this.updateModelValue('due_date', detail.date ? formatDate(detail.date) : null)}"
+            this.updateModelValue('due_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : null)}"
           dynamic-align
           selected-date-display-format="D MMM YYYY"
         ></datepicker-lite>

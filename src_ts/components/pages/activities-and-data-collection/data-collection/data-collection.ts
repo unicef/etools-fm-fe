@@ -35,6 +35,7 @@ import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-a
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -120,6 +121,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     super.connectedCallback();
     const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
     AttachmentsHelper.initialize(attachmentsEndpoint);
+    window.addEventListener("beforeprint", () => {
+      this.tabIsReadonly = true;
+      this.requestUpdate();
+    });
+
+    window.addEventListener("afterprint", () => {
+      this.tabIsReadonly = false;
+      this.requestUpdate();
+    });
     /**
      * On Activity data changes.
      * Load checklist data if activity loaded successfully
@@ -158,7 +168,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
      * Load Activity Details if all params are correct
      */
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName, params}: IRouteDetails) => {
+      routeDetailsSelector(({routeName, subRouteName, params}: EtoolsRouteDetails) => {
         if (routeName !== PAGE || subRouteName !== SUB_ROUTE) {
           return;
         }
@@ -266,6 +276,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         .title-description a {
           text-decoration: none;
+        }
+
+        @media print {
+          .title-description {
+            display: none;
+          }
         }
 
         .back-button {

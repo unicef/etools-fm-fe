@@ -7,12 +7,13 @@ import {elevationStyles} from '../../../../styles/elevation-styles';
 import {request} from '../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {LOG_ISSUES} from '../../../../../endpoints/endpoints-list';
-import {EtoolsRouter} from '../../../../../routing/routes';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {SharedStyles} from '../../../../styles/shared-styles';
-import {openDialog} from '../../../../utils/dialog';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import '../../../../common/file-components/files-popup';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('issue-tracker-list')
 export class IssueTrackerList extends LitElement {
@@ -35,7 +36,7 @@ export class IssueTrackerList extends LitElement {
   loadIssues(params: GenericObject): void {
     this.loading = true;
     const {url}: IResultEndpoint = getEndpoint(LOG_ISSUES);
-    const resultUrl = `${url}?${EtoolsRouter.encodeParams(params)}&status=new`;
+    const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}&status=new`;
     request<IListData<LogIssue>>(resultUrl).then((list: IListData<LogIssue>) => {
       this.items = list.results;
       this.count = list.count;
@@ -67,7 +68,7 @@ export class IssueTrackerList extends LitElement {
     if (+newValue === +currentValue) {
       return;
     }
-    const newParams: IRouteQueryParams = {[paramName]: newValue};
+    const newParams: EtoolsRouteQueryParams = {[paramName]: newValue};
     if (paramName === 'page_size') {
       newParams.page = 1;
     }

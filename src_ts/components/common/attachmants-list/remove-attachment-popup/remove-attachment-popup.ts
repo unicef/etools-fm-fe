@@ -1,6 +1,6 @@
 import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
 import {template} from './remove-attachment-popup.tpl';
-import {fireEvent} from '../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../redux/store';
 import {listAttachmentUpdate} from '../../../../redux/selectors/attachments-list.selectors';
 import {Unsubscribe} from 'redux';
@@ -34,7 +34,7 @@ export class RemoveAttachmentPopupComponent extends LitElement {
 
         // close popup if delete was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
   }
@@ -69,6 +69,6 @@ export class RemoveAttachmentPopupComponent extends LitElement {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 }

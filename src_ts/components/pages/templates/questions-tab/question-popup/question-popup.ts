@@ -9,7 +9,7 @@ import {
   TemplateResult
 } from 'lit-element';
 import {template} from './question-popup.tpl';
-import {fireEvent} from '../../../../utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
 import {getDifference} from '../../../../utils/objects-diff';
 import {addQuestion, updateQuestion} from '../../../../../redux/effects/questions.effects';
@@ -81,7 +81,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
         // close popup if update(create) was successful
         this.dialogOpened = false;
-        fireEvent(this, 'response', {confirmed: true});
+        fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
 
@@ -110,6 +110,11 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
   set dialogData(data: IQuestion) {
     if (!data) {
+      this.data = {
+        methods: [],
+        options: [],
+        sections: []
+      } as any;
       return;
     }
     this.data = data;
@@ -202,7 +207,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   onClose(): void {
-    fireEvent(this, 'response', {confirmed: false});
+    fireEvent(this, 'dialog-closed', {confirmed: false});
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
