@@ -184,7 +184,7 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   const details: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
   let currentParams: EtoolsRouteQueryParams | null = details && details.queryParams;
-  if (reset) {
+  if (reset && currentParams) {
     currentParams = pick(['ordering', 'page_size'], currentParams);
   }
   const computed: EtoolsRouteQueryParams = Object.assign({}, currentParams, newQueryParams);
