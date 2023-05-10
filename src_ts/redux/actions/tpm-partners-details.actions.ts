@@ -17,7 +17,7 @@ export enum TPMPartnerDetailsActions {
   TPM_PARTNER_STATUS_CHANGE_SUCCESS = '[TPM Partner Details Action]: TPM_PARTNER_STATUS_CHANGE_SUCCESS',
   TPM_PARTNER_STATUS_CHANGE_FAILURE = '[TPM Partner Details Action]: TPM_PARTNER_STATUS_CHANGE_FAILURE',
 
-  ATTACHMENTS_REQUEST = '[TPM Partner Details Action]: ATTACHMENTS_REQUEST',
+  ATTACHMENTS_REQUEST = '[TPM Partner Details Action]: ATTACHMENTS_REQUEST'
 }
 
 export class SetEditedDetailsCard {
