@@ -98,7 +98,7 @@ export class PageContentHeader extends LitElement {
       }
 
       @media print {
-        slot[name="title-row-actions"] {
+        slot[name='title-row-actions'] {
           display: none;
         }
       }
