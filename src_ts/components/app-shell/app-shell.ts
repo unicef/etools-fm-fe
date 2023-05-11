@@ -171,16 +171,11 @@ export class AppShell extends connect(store)(LitElement) {
         console.log(`User profile language ${lngCode} missing`);
       }
     }
-    if (!currentLanguage) {
-      const storageLang = localStorage.getItem('defaultLanguage');
-      if (storageLang && languageIsAvailableInApp(storageLang)) {
-        currentLanguage = storageLang;
-      }
-    }
+
     if (!currentLanguage) {
       currentLanguage = 'en';
     }
-
+    window.EtoolsLanguage = currentLanguage;
     store.dispatch(new ActiveLanguageSwitched(currentLanguage));
   }
 

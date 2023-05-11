@@ -55,6 +55,9 @@ function getHeaders(init: RequestInit = {}): GenericObject {
   if (!isFormData && !headers['Content-Type']) {
     headers['Content-Type'] = 'application/json';
   }
+  if (window.EtoolsLanguage) {
+    headers['language'] = window.EtoolsLanguage;
+  }
   return headers;
 }
 
