@@ -29,9 +29,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   @property({type: Array})
   countries: any[] = [];
 
-  @property({type: Boolean})
-  countrySelectorVisible = false;
-
   @property({type: Object})
   userData!: IEtoolsUserModel;
 
@@ -74,7 +71,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         trigger-value-change-event
         @etools-selected-item-changed="${this.countrySelected}"
         .shownOptionsLimit="${250}"
-        ?hidden="${!this.countrySelectorVisible}"
+        ?readonly="${!this.enableCountrySelector(this.countries)}"
         hide-search
         .autoWidth="${true}"
       ></etools-dropdown>
@@ -104,8 +101,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     if (userData) {
       this.countries = userData.countries_available;
       this.currentCountry = userData.country;
-
-      this.showCountrySelector(this.countries);
     }
   }
 
@@ -122,10 +117,8 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     }
   }
 
-  protected showCountrySelector(countries: GenericObject[]): void {
-    if (Array.isArray(countries) && countries.length > 1) {
-      this.countrySelectorVisible = true;
-    }
+  protected enableCountrySelector(countries: GenericObject[]): boolean {
+    return Array.isArray(countries) && countries.length > 1;
   }
 
   protected triggerCountryChangeRequest(selectedCountryId: number): void {
