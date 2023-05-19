@@ -479,7 +479,8 @@
     "REFRESH": "Refresh",
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
-    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence"
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
+    "TPM": "Moniteurs tiers"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filtres",
@@ -594,6 +595,8 @@
   "FILTER_BY_SECTION": "Filtrer Par Section",
   "SUPPORT": "Support",
   "ERROR_CHANGING_WORKSPACE": "Une erreur s'est produite lors de la modification de votre espace de travail",
+  "ERROR_CHANGING_ORGANIZATION": "Une erreur s'est produite lors de la modification de votre organisation",
+  "SELECT_ORGANIZATION": "Sélectionnez l'organisation",
   "CHANGES_SAVED": "Toutes les modifications sont enregistrées",
   "ERROR_ATTACHEMENT_LOAD": "Impossible de charger les pièces jointes",
   "ERROR_CHANGES_SAVE": "Impossible d'enregistrer les modifications. Veuillez réessayer plus tard",
@@ -602,6 +605,7 @@
   "ERROR_LOAD_ACTIVITIES_LIST": "Impossible de charger la liste des activités",
   "ERROR_CREATE_ACTIVITY": "Impossible de créer une activité",
   "ERROR_UPLOAD": "Impossible de télécharger les pièces jointes. Veuillez réessayer plus tard",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Erreur lors du téléchargement du fichier: Fichier trop large",
   "ERROR_UPDATE_CHECKLIST": "Impossible de mettre à jour la liste de contrôle, veuillez réessayer",
   "START_DATE_BEFORE_END_DATE": "La date de début doit être antérieure à la date de fin",
   "ERROR_LOAD_REPORT": "Impossible de charger les données FullReport",
@@ -612,5 +616,50 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Impossible de mettre à jour les modèles de question avec l'identifiant",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Impossible de modifier le statut de l'activité",
   "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard",
-  "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !"
+  "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !",
+  "TPM": {
+    "TITLE": "Moniteurs tiers",
+    "ADD_NEW_VENDOR": "Ajouter un nouveau fournisseur",
+    "VENDOR_NUMBER_NOT_FOUND": "Numéro de fournisseur non trouvé",
+    "NOT_SYNCED": "Non synchronisé",
+    "MARKED_FOR_DELETION_IN_VISION": "Marqué pour suppression dans VISION",
+    "BLOCKED_IN_VISION": "Bloqué dans VISION",
+    "SYNCED_FROM_VISION": "Synchronisé à partir de VISION",
+    "FILTERS": {
+      "SEARCH": "Rechercher le numéro de fournisseur ou le MPT"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "Numéro de fournisseur",
+      "TPM_NAME": "Nom du MPT",
+      "PHONE_NUMBER": "Téléphone",
+      "EMAIL": "Email"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "Contacts TPM",
+    "ATTACH_FILE_FOR_VISIT": "Joindre le dossier de la visite globale",
+    "ACCESS_MANAGEMENT_PORTAL": "Portail de gestion de l'accès",
+    "SHOW_INACTIVE": "Montrer inactif",
+    "TABS": {
+      "details": "Détails du partenaire",
+      "attachments": "Pièces Jointes"
+    },
+    "TPM_PARTNER_DETAILS": "Détails du partenaire TPM",
+    "VENDOR_NUMBER": "Numéro de fournisseur",
+    "TPM_NAME": "Nom du TPM",
+    "PHONE_NUMBER": "Téléphone",
+    "EMAIL": "Email",
+    "ADDRESS": "Adresse",
+    "VALID_EMAIL_REQUIRED":  "Courriel valide requis"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "Position",
+      "FIRST_NAME": "Prénom",
+      "LAST_NAME": "Nom de famille",
+      "PHONE_NUMBER": "Téléphone",
+      "EMAIL": "Email",
+      "ACTIVE": "Actif"
+    }
+  }
 }

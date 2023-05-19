@@ -29,9 +29,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   @property({type: Array})
   countries: any[] = [];
 
-  @property({type: Boolean})
-  countrySelectorVisible = false;
-
   @property({type: Object})
   userData!: IEtoolsUserModel;
 
@@ -63,6 +60,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown
         id="countrySelector"
+        class="w100"
         .selected="${this.currentCountry.id}"
         placeholder="Country"
         allow-outside-scroll
@@ -73,7 +71,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         trigger-value-change-event
         @etools-selected-item-changed="${this.countrySelected}"
         .shownOptionsLimit="${250}"
-        ?hidden="${!this.countrySelectorVisible}"
         hide-search
         .autoWidth="${true}"
       ></etools-dropdown>
@@ -103,8 +100,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     if (userData) {
       this.countries = userData.countries_available;
       this.currentCountry = userData.country;
-
-      this.showCountrySelector(this.countries);
     }
   }
 
@@ -118,12 +113,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     if (selectedCountryId !== this.currentCountry.id) {
       // send post request to change_country endpoint
       this.triggerCountryChangeRequest(selectedCountryId);
-    }
-  }
-
-  protected showCountrySelector(countries: GenericObject[]): void {
-    if (Array.isArray(countries) && countries.length > 1) {
-      this.countrySelectorVisible = true;
     }
   }
 

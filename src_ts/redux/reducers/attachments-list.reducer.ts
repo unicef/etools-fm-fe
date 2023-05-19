@@ -10,6 +10,7 @@ const INITIAL_STATE: IAttachmentsListState = {
   [RATIONALE_ATTACHMENTS]: null,
   updateInProcess: null,
   error: {},
+  permissions: {},
   attachmentsTypes: {
     [RATIONALE_ATTACHMENTS]: [],
     [ACTIVITY_RELATED_DOCUMENTS]: [],
@@ -25,6 +26,8 @@ export const attachmentsList: Reducer<IAttachmentsListState, any> = (
     case AttachmentsActionTypes.SET_ATTACHMENTS_LIST:
       const {name, data} = action.payload;
       return {...state, [name]: data};
+    case AttachmentsActionTypes.SET_ATTACHMENTS_OPTIONS:
+      return {...state, permissions: action.payload};
     case AttachmentsActionTypes.SET_ATTACHMENTS_UPDATE_STATE:
       return {...state, updateInProcess: action.payload};
     case AttachmentsActionTypes.SET_ATTACHMENTS_UPDATE_ERROR:

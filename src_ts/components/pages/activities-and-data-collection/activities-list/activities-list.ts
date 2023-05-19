@@ -156,10 +156,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     this.activeLanguageUnsubscribe();
   }
 
-  formatDate(date: string | null): string {
-    return date ? dayjs(date).format('DD MMM YYYY') : '-';
-  }
-
   serializeName(id: number | string, collection: GenericObject[], labelField = 'name', valueField = 'id'): string {
     if (!id || !collection) {
       return '';

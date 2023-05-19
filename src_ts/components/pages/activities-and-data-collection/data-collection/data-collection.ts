@@ -121,12 +121,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     super.connectedCallback();
     const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
     AttachmentsHelper.initialize(attachmentsEndpoint);
-    window.addEventListener("beforeprint", () => {
+    window.addEventListener('beforeprint', () => {
       this.tabIsReadonly = true;
       this.requestUpdate();
     });
 
-    window.addEventListener("afterprint", () => {
+    window.addEventListener('afterprint', () => {
       this.tabIsReadonly = false;
       this.requestUpdate();
     });

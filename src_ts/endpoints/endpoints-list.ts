@@ -2,7 +2,7 @@ export const PROFILE_ENDPOINT = 'userProfile';
 export const CP_OUTCOMES = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT = 'locations';
 export const CHANGE_COUNTRY = 'changeCountry';
-export const UNICEF_USER = 'unicefUsers';
+export const CHANGE_ORGANIZATION = 'changeOrganization';
 export const SITES_EXPORT = 'unicefUsers';
 export const SITES_LIST = 'siteLocations';
 export const SITE_DETAILS = 'siteLocationsDetails';
@@ -14,6 +14,11 @@ export const SECTIONS = 'sections';
 export const METHODS = 'methods';
 export const PARTNERS = 'partners';
 export const TPM_PARTNERS = 'tpmPartners';
+export const TPM_PARTNERS_EXPORT = 'tpmPartnersExport';
+export const TPM_DETAILS = 'tpmDetails';
+export const TPM_PARTNER_EXPORT = 'tpmPartnerExport';
+export const TPM_PARTNER_ATTACHMENTS = 'tpmPartnerAttachments';
+export const TPM_PARTNER_STAFF = 'tpmPartnerStaff';
 export const INTERVENTIONS = 'interventions';
 export const CP_OUTPUTS = 'outputs';
 export const LOG_ISSUES = 'logIssues';
@@ -57,6 +62,8 @@ export const ACTION_POINTS_DETAILS = 'actionPointsDetails';
 export const ACTION_POINTS_CATEGORIES = 'actionPointsCategories';
 export const ACTION_POINTS_OFFICES = 'offices';
 export const FEATURES_FLAGS = 'flags';
+export const SYNC_VENDOR_DATA = 'syncVendorData';
+export const ACTIVATE_VENDOR = 'activateVendor';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -95,11 +102,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   [CHANGE_COUNTRY]: {
     url: '/api/v3/users/changecountry/'
   },
-  //fixme unused endpoint?
-  [UNICEF_USER]: {
-    url: '/api/v3/users/?verbosity=minimal',
-    exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'unicefUsers'
+
+  [CHANGE_ORGANIZATION]: {
+    url: '/api/v3/users/changeorganization/'
   },
 
   [PARTNERS]: {
@@ -110,10 +115,27 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [TPM_PARTNERS]: {
-    url: '/api/tpm/partners/?page_size=all',
-    exp: 60 * 60 * 1000, // 1h
-    cachingKey: 'id',
-    cacheTableName: TPM_PARTNERS
+    url: '/api/tpm/partners/?page_size=all'
+  },
+
+  [TPM_PARTNERS_EXPORT]: {
+    url: '/api/tpm/partners/export/'
+  },
+
+  [TPM_DETAILS]: {
+    template: '/api/tpm/partners/<%=id%>/'
+  },
+
+  [TPM_PARTNER_EXPORT]: {
+    template: '/api/tpm/partners/<%=id%>/staff-members/export/'
+  },
+
+  [TPM_PARTNER_ATTACHMENTS]: {
+    template: '/api/tpm/partners/<%=id%>/attachments/'
+  },
+
+  [TPM_PARTNER_STAFF]: {
+    template: '/api/tpm/partners/<%=id%>/staff-members/?page_size=all&ordering=-id'
   },
 
   [CP_OUTPUTS]: {
@@ -327,5 +349,13 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [FEATURES_FLAGS]: {
     url: '/api/v2/environment/flags/'
+  },
+
+  [SYNC_VENDOR_DATA]: {
+    template: '/api/tpm/partners/sync/<%=id%>/'
+  },
+
+  [ACTIVATE_VENDOR]: {
+    template: '/api/tpm/partners/<%=id%>/activate/'
   }
 };
