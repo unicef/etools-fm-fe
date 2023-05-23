@@ -15,7 +15,7 @@ import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {activitiesListFilters, ActivityFilter} from './activities-list.filters';
+import {activitiesListFilters, ActivityFilter, ActivityFilterKeys} from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
 import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
@@ -40,6 +40,7 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import uniqBy from 'lodash-es/uniqBy';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -237,12 +238,37 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           if (!data) {
             return;
           }
-          this.filtersData[filterKey] = data;
+          this.setFiltersSata(data, filterKey);
           this.setFilters(() => subscriber());
         },
         [dataPath]
       )
     );
+  }
+
+  setFiltersSata(data: any[], filterKey: string): void {
+    if (this.handledDuplicatesForTeamMembersAndVisitLead(data, filterKey)) {
+      return;
+    } else {
+      this.filtersData[filterKey] = data;
+    }
+  }
+
+  handledDuplicatesForTeamMembersAndVisitLead(data: any[], filterKey: string): boolean {
+    // @ts-ignore
+    if ([ActivityFilterKeys.team_members__in, ActivityFilterKeys.visit_lead__in].includes(filterKey)) {
+      if (
+        // Avoid filtering twice as there can be > 1000 users
+        !this.filtersData[ActivityFilterKeys.team_members__in] ||
+        !this.filtersData[ActivityFilterKeys.team_members__in]?.length
+      ) {
+        const uniqueUsers = uniqBy(data, 'id');
+        this.filtersData[ActivityFilterKeys.team_members__in] = uniqueUsers;
+        this.filtersData[ActivityFilterKeys.visit_lead__in] = uniqueUsers;
+      }
+      return true;
+    }
+    return false;
   }
 
   private loadDataForFilters(): void {
