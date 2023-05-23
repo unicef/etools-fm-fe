@@ -14,7 +14,7 @@ export function template(this: PartnersListComponent): TemplateResult {
           ${translate('ACTIVITY_DETAILS.EXPORT')}
         </paper-button>
 
-        <paper-button class="primary-btn with-prefix" @click="${this.openAddDialog}">
+        <paper-button class="primary-btn with-prefix" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
           <iron-icon icon="add"></iron-icon>
           ${translate('TPM.ADD_NEW_VENDOR')}
         </paper-button>
