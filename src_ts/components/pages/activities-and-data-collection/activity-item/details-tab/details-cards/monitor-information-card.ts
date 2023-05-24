@@ -196,7 +196,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             );
           }
           this.teamMembersDd.triggerValueChangeEvent = true;
-          this.teamMembersDd.selectedValues = simplifyValue(this.editedData.team_members);
+          this.teamMembers = clone(this.editedData.team_members);
         },
         [USERS]
       )
