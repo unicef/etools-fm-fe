@@ -116,7 +116,7 @@
     "mout": ">=1.2.4",
     "urijs": ">=1.19.11",
     "thenify": ">=3.3.1",
-    "socket.io-parser": ">=3.3.3"
+    "socket.io-parser": ">=4.2.3"
   },
   "relativeDependencies": {}
 }
