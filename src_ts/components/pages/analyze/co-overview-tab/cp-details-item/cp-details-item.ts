@@ -21,6 +21,8 @@ export class CpDetailsItem extends LitElement {
   @property({type: Object})
   detailsOpened: GenericObject<boolean> = {};
 
+  @property() isUnicefUser = false;
+
   render(): TemplateResult {
     return template.call(this);
   }

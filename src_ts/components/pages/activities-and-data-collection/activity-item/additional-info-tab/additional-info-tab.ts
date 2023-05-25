@@ -5,16 +5,19 @@ import './pd-ssfa-details/pd-ssfa-details';
 @customElement('additional-info-tab')
 export class AdditionalInfoTab extends LitElement {
   @property() activityDetails: IActivityDetails | null = null;
+  @property() isUnicefUser = false;
 
   render(): TemplateResult {
     return html`
       <issue-tracker-list .activityId="${this.activityDetails ? this.activityDetails.id : null}"></issue-tracker-list>
-      <div class="pd-ssfa-details-container">
-        <pd-ssfa-details
-          class="pd-ssfa-details"
-          .interventionsData="${this.activityDetails ? this.activityDetails.interventions : null}"
-        ></pd-ssfa-details>
-      </div>
+      ${this.isUnicefUser
+        ? html` <div class="pd-ssfa-details-container">
+            <pd-ssfa-details
+              class="pd-ssfa-details"
+              .interventionsData="${this.activityDetails ? this.activityDetails.interventions : null}"
+            ></pd-ssfa-details>
+          </div>`
+        : ''}
     `;
   }
 

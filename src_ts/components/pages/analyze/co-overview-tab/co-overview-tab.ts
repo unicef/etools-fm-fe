@@ -24,6 +24,7 @@ import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {get as getTranslation} from 'lit-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {currentUser} from '../../../../redux/selectors/user.selectors';
 
 store.addReducers({fullReports});
 
@@ -39,12 +40,14 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
   fullReports: GenericObject<FullReportData> = {};
 
   @property() isLoad = false;
+  @property() isUnicefUser = false;
 
   private cpOutputs: EtoolsCpOutput[] = [];
 
   private routeUnsubscribe!: Unsubscribe;
   private cpOutputUnsubscribe!: Unsubscribe;
   private fullReportsUnsubscribe!: Unsubscribe;
+  private userUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResult[] {
     return [
@@ -71,6 +74,11 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
     this.fullReportsUnsubscribe = store.subscribe(
       fullReportData((fullReports: GenericObject<FullReportData>) => (this.fullReports = fullReports))
     );
+    this.userUnsubscribe = store.subscribe(
+      currentUser((user: IEtoolsUserModel | null) => {
+        this.isUnicefUser = user && user.is_unicef_user;
+      })
+    );
 
     this.loadStaticData();
     if (!this.cpOutputs.length) {
@@ -96,6 +104,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
       this.cpOutputUnsubscribe();
     }
     this.fullReportsUnsubscribe();
+    this.userUnsubscribe();
   }
 
   filterValueChanged(selectedItem: CpOutcome | null): void {
