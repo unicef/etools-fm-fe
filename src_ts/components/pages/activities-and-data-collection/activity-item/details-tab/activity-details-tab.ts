@@ -9,7 +9,7 @@ import './details-cards/monitor-information-card';
 import './details-cards/entities-monitor-card/entities-monitor-card';
 import './details-cards/note-card';
 import {store} from '../../../../../redux/store';
-import {ActivityDetailsActions, SetEditedDetailsCard} from '../../../../../redux/actions/activity-details.actions';
+import {SetEditedDetailsCard} from '../../../../../redux/actions/activity-details.actions';
 import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
@@ -31,12 +31,6 @@ export class ActivityDetailsTab extends LitElement {
         store.dispatch(new SetEditedDetailsCard(null));
       })
     );
-    if (!this.activityId || this.activityId === 'new') {
-      store.dispatch({
-        type: ActivityDetailsActions.ACTIVITY_DETAILS_GET_SUCCESS,
-        payload: null
-      });
-    }
   }
 
   disconnectedCallback(): void {
