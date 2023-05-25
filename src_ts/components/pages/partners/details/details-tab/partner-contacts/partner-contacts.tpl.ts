@@ -86,7 +86,13 @@ export function template(this: PartnerContacts): TemplateResult {
                   <div class="col-data flex-2">${staffMember.profile.phone_number}</div>
                   <div class="col-data flex-3">${staffMember.email}</div>
                   <div class="col-data flex-1">
-                    <span ?hidden="${staffMember.has_active_realm}" class="placeholder-style">&#8212;</span>
+                    <span ?hidden="${staffMember.has_active_realm}" class="placeholder-style"
+                      >${!staffMember.is_active
+                        ? translate('INACTIVE')
+                        : !staffMember.has_active_realm
+                        ? translate('NO_ACCESS')
+                        : ''}</span
+                    >
                     <iron-icon icon="check" ?hidden="${!staffMember.has_active_realm}"></iron-icon>
                   </div>
                 </div>

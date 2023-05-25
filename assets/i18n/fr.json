@@ -650,7 +650,7 @@
     "PHONE_NUMBER": "Téléphone",
     "EMAIL": "Email",
     "ADDRESS": "Adresse",
-    "VALID_EMAIL_REQUIRED":  "Courriel valide requis"
+    "VALID_EMAIL_REQUIRED": "Courriel valide requis"
   },
   "TPM_CONTACTS": {
     "COLUMNS": {
@@ -661,5 +661,7 @@
       "EMAIL": "Email",
       "ACTIVE": "Actif"
     }
-  }
+  },
+  "INACTIVE": "Inactif",
+  "NO_ACCESS": "Pas d'accès"
 }
