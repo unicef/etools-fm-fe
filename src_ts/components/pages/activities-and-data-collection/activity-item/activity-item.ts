@@ -44,6 +44,7 @@ import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {ActivityDetailsActions} from '../../../../redux/actions/activity-details.actions';
 
 store.addReducers({activityDetails});
 
@@ -229,6 +230,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
         if (this.activityId === 'new') {
           this.activityDetails = null;
+          store.dispatch({
+            type: ActivityDetailsActions.ACTIVITY_DETAILS_GET_SUCCESS,
+            payload: null
+          });
           this.checkTab();
         } else {
           const activityDetailsState: IActivityDetailsState = store.getState().activityDetails;
