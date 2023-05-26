@@ -217,7 +217,9 @@ export const activitiesFilters: ActivityFilter[] = [
   }
 ];
 
-const filtersOnlyForUnicef: string[] = [
+const filtersOnlyForUnicefUser: string[] = [
+  ActivityFilterKeys.monitor_type,
+  ActivityFilterKeys.tpm_partner__in,
   ActivityFilterKeys.partners__in,
   ActivityFilterKeys.interventions__in,
   ActivityFilterKeys.cp_outputs__in
@@ -227,5 +229,5 @@ export const getActivitiesFilters = (isUnicefUser: boolean): ActivityFilter[] =>
   if (isUnicefUser) {
     return activitiesFilters;
   }
-  return activitiesFilters.filter((x) => !filtersOnlyForUnicef.includes(x.filterKey));
+  return activitiesFilters.filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
 };
