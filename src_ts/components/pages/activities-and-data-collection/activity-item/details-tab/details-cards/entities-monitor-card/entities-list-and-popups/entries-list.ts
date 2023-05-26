@@ -95,7 +95,7 @@ export class EntriesList extends LitElement {
         <div class="entries-header">${this.nameList}</div>
         <div>
           ${repeat(
-            this.items,
+            this.items || [],
             (item: any) => html`
               <div class="entries-item">
                 ${this.formatItem(item)}

@@ -71,7 +71,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
       this.listLoadingInProcess = true;
       store
-        .dispatch<AsyncEffect>(loadQuestionTemplates(refactoredParams, level, target))
+        .dispatch<AsyncEffect>(loadQuestionTemplates(refactoredParams, String(level), String(target)))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_TEMPLATES')}))
         .then(() => (this.listLoadingInProcess = false));
     }, 100);

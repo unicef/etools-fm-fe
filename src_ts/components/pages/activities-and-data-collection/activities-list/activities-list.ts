@@ -15,7 +15,7 @@ import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {activitiesListFilters, ActivityFilter, ActivityFilterKeys} from './activities-list.filters';
+import {getActivitiesFilters, ActivityFilter, ActivityFilterKeys} from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
 import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
@@ -35,12 +35,15 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
+import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import uniqBy from 'lodash-es/uniqBy';
+import {currentUser} from '../../../../redux/selectors/user.selectors';
+
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -49,6 +52,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
   @property() filters: EtoolsFilter[] | null = null;
+  @property() activitiesListFilters: ActivityFilter[] = [];
+  @property({type: Object}) user!: IEtoolsUserModel;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
@@ -62,6 +67,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly activityErrorUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
+  private readonly userUnsubscribe: Unsubscribe;
 
   constructor() {
     super();
@@ -99,6 +105,13 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         }
       }, false)
     );
+    this.userUnsubscribe = store.subscribe(
+      currentUser((user: IEtoolsUserModel | null) => {
+        if (user) {
+          this.user = user;
+        }
+      })
+    );
 
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector((_lang: string) => {
@@ -109,7 +122,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           monitor_type: applyDropdownTranslation(MONITOR_TYPES),
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
         };
-        this.initFilters();
+        waitForCondition(!!this.user).then(() => {
+          this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user);
+          this.initFilters();
+        });
       })
     );
   }
@@ -155,6 +171,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     this.activitiesDataUnsubscribe();
     this.activityErrorUnsubscribe();
     this.activeLanguageUnsubscribe();
+    this.userUnsubscribe();
   }
 
   serializeName(id: number | string, collection: GenericObject[], labelField = 'name', valueField = 'id'): string {
@@ -221,7 +238,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     );
 
     // subscribe on static data
-    activitiesListFilters.forEach((filter: ActivityFilter) => {
+    this.activitiesListFilters.forEach((filter: ActivityFilter) => {
       if (!filter.selectionOptionsEndpoint) {
         return;
       }
@@ -286,9 +303,13 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       tpmPartners = 'tpmPartners',
       offices = 'offices'
     } = storeState.staticData;
+    const dataToLoad = [users, tpmPartners, offices];
+    if (this.user?.is_unicef_user) {
+      dataToLoad.push(...[partners, outputs, interventions]);
+    }
 
     // if data isn't loaded it will be fallback to string and we need to run AsyncEffect
-    [partners, interventions, outputs, users, tpmPartners, offices].forEach((data: any) => {
+    dataToLoad.forEach((data: any) => {
       if (typeof data === 'string') {
         store.dispatch<AsyncEffect>(loadStaticData(data as keyof IStaticDataState));
       }
@@ -301,7 +322,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       setTimeout(unsubscribe, 0);
     }
     // check that data for all dropdowns is loaded
-    const allDataLoaded: boolean = activitiesListFilters.every(
+    const allDataLoaded: boolean = this.activitiesListFilters.every(
       (filter: EtoolsFilter) =>
         (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
         Boolean(this.filtersData[filter.filterKey])
@@ -310,10 +331,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       return;
     }
 
-    this.populateDropdownFilterOptions(this.filtersData, activitiesListFilters);
+    this.populateDropdownFilterOptions(this.filtersData, this.activitiesListFilters);
 
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = updateFiltersSelectedValues(currentParams, activitiesListFilters);
+    this.filters = updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
