@@ -302,9 +302,13 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       tpmPartners = 'tpmPartners',
       offices = 'offices'
     } = storeState.staticData;
+    const dataToLoad = [users, tpmPartners, offices];
+    if (this.user?.is_unicef_user) {
+      dataToLoad.push(...[partners, outputs, interventions]);
+    }
 
     // if data isn't loaded it will be fallback to string and we need to run AsyncEffect
-    [partners, interventions, outputs, users, tpmPartners, offices].forEach((data: any) => {
+    dataToLoad.forEach((data: any) => {
       if (typeof data === 'string') {
         store.dispatch<AsyncEffect>(loadStaticData(data as keyof IStaticDataState));
       }
