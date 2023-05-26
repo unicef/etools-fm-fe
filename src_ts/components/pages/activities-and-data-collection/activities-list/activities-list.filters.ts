@@ -49,7 +49,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
-export const activitiesListFilters: ActivityFilter[] = [
+export const activitiesFilters: ActivityFilter[] = [
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
     filterKey: ActivityFilterKeys.monitor_type,
@@ -216,3 +216,18 @@ export const activitiesListFilters: ActivityFilter[] = [
     selected: false
   }
 ];
+
+const filtersOnlyForUnicefUser: string[] = [
+  ActivityFilterKeys.monitor_type,
+  ActivityFilterKeys.tpm_partner__in,
+  ActivityFilterKeys.partners__in,
+  ActivityFilterKeys.interventions__in,
+  ActivityFilterKeys.cp_outputs__in
+];
+
+export const getActivitiesFilters = (isUnicefUser: boolean): ActivityFilter[] => {
+  if (isUnicefUser) {
+    return activitiesFilters;
+  }
+  return activitiesFilters.filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
+};
