@@ -17,7 +17,6 @@ import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 import {clone} from 'ramda';
 import {EtoolsDropdownMulti} from '@unicef-polymer/etools-dropdown/src/EtoolsDropdownMulti';
-import {GlobalLoadingUpdate} from '../../../../../../redux/actions/global-loading.actions';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 
 export const CARD_NAME = 'monitor-information';
@@ -186,7 +185,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
           if (!users) {
             return;
           }
-          // store.dispatch(new GlobalLoadingUpdate('Loading...'));
           this.users = users;
           this.getMembersOptions({
             userType: this.userType,
@@ -202,7 +200,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
             this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
-            // store.dispatch(new GlobalLoadingUpdate(null));
           });
         },
         [USERS]
