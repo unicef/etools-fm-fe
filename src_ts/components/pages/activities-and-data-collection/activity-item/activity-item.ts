@@ -44,6 +44,8 @@ import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {ActivityDetailsActions} from '../../../../redux/actions/activity-details.actions';
+import {currentUser} from '../../../../redux/selectors/user.selectors';
 
 store.addReducers({activityDetails});
 
@@ -85,6 +87,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() isStatusUpdating = false;
   @property() activeTab!: string;
   @property() childInEditMode = false;
+  @property() isUnicefUser = false;
 
   pageTabs: PageTab[] = [
     {
@@ -131,6 +134,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   private isLoadUnsubscribe!: Unsubscribe;
   private activityDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
+  private userUnsubscribe!: Unsubscribe;
   private isLoad = false;
 
   render(): TemplateResult {
@@ -229,6 +233,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
         if (this.activityId === 'new') {
           this.activityDetails = null;
+          store.dispatch({
+            type: ActivityDetailsActions.ACTIVITY_DETAILS_GET_SUCCESS,
+            payload: null
+          });
           this.checkTab();
         } else {
           const activityDetailsState: IActivityDetailsState = store.getState().activityDetails;
@@ -255,6 +263,11 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         this.isStatusUpdating = Boolean(isLoad);
       })
     );
+    this.userUnsubscribe = store.subscribe(
+      currentUser((user: IEtoolsUserModel | null) => {
+        this.isUnicefUser = user && user.is_unicef_user;
+      })
+    );
   }
 
   disconnectedCallback(): void {
@@ -262,6 +275,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     this.isLoadUnsubscribe();
     this.activityDetailsUnsubscribe();
     this.routeDetailsUnsubscribe();
+    this.userUnsubscribe();
   }
 
   getTabElement(): TemplateResult {
@@ -289,7 +303,12 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           ></activity-summary-tab>
         `;
       case ADDITIONAL_INFO:
-        return html` <additional-info-tab .activityDetails="${this.activityDetails}"></additional-info-tab> `;
+        return html`
+          <additional-info-tab
+            .isUnicefUser="${this.isUnicefUser}"
+            .activityDetails="${this.activityDetails}"
+          ></additional-info-tab>
+        `;
       case ACTION_POINTS:
         return html` <action-points-tab .activityDetails="${this.activityDetails}"></action-points-tab> `;
       default:

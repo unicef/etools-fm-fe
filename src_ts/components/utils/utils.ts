@@ -23,6 +23,10 @@ export const canEditField = (permissions: GenericObject, field: string): boolean
   );
 };
 
+export const canAdd = (permissions: GenericObject | null): boolean => {
+  return Boolean(getFromPath(permissions, ['actions', 'POST']));
+};
+
 export const isRequired = (permissions: GenericObject, field: string): boolean => {
   return Boolean(
     getFromPath(permissions, ['actions', 'POST', field, 'required']) ||

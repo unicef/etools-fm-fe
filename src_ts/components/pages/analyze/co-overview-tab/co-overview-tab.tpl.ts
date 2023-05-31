@@ -49,6 +49,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
                   <cp-details-item
                     .cpItem="${cpOutput}"
                     .fullReport="${this.fullReports[cpOutput.id]}"
+                    .isUnicefUser="${this.isUnicefUser}"
                   ></cp-details-item>
                 `
               : html`

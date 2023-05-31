@@ -10,7 +10,7 @@ import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadPartnersList} from '../../../../redux/effects/tpm-partners.effects';
 import {tpmPartners} from '../../../../redux/reducers/tpm-partners.reducer';
-import {tpmPartnersListData} from '../../../../redux/selectors/tpm-partners.selectors';
+import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/selectors/tpm-partners.selectors';
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -33,6 +33,7 @@ import {
   EtoolsRouteQueryParam,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {canAdd} from '../../../utils/utils';
 
 store.addReducers({tpmPartners});
 
@@ -40,12 +41,14 @@ store.addReducers({tpmPartners});
 export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmPartner>(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
+  @property() showAddButton = false;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly partnersDataUnsubscribe: Unsubscribe;
+  private readonly partnersPermissionsUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
 
   constructor() {
@@ -75,6 +78,13 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
         }
         this.count = data.count;
         this.items = data.results;
+      }, false)
+    );
+
+    // set partnersList on store data changes
+    this.partnersPermissionsUnsubscribe = store.subscribe(
+      tpmPartnersPermissions((permissions: GenericObject | null) => {
+        this.showAddButton = canAdd(permissions);
       }, false)
     );
   }
@@ -125,6 +135,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
     super.disconnectedCallback();
     this.routeDetailsUnsubscribe();
     this.partnersDataUnsubscribe();
+    this.partnersPermissionsUnsubscribe();
   }
 
   searchKeyDown({detail}: CustomEvent): void {

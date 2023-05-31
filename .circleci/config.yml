@@ -73,7 +73,3 @@ workflows:
                 - master
                 - staging
                 - develop
-                - analyze-tab-pagination
-                - fix-translations
-                - amp
-                - migrate-tpm

@@ -135,7 +135,13 @@ export class CountriesDropdown extends connect(store)(LitElement) {
           loadingSource: 'country-change'
         };
     fireEvent(this, 'global-loading', detail);
-    store.dispatch(new GlobalLoadingUpdate(detail.message));
+    if (
+      detail.message ||
+      (!detail.message &&
+        store.getState().globalLoading.message?.includes('Please wait while country data is changing...'))
+    ) {
+      store.dispatch(new GlobalLoadingUpdate(detail.message));
+    }
   }
 
   protected handleChangedCountry(): void {
