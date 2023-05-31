@@ -647,7 +647,7 @@
     "PHONE_NUMBER": "Phone Number",
     "EMAIL": "Email",
     "ADDRESS": "Address",
-    "VALID_EMAIL_REQUIRED":  "Valid email required"
+    "VALID_EMAIL_REQUIRED": "Valid email required"
   },
   "TPM_CONTACTS": {
     "COLUMNS": {
@@ -658,5 +658,7 @@
       "EMAIL": "Email",
       "ACTIVE": "Active"
     }
-  }
+  },
+  "INACTIVE": "Ru Inactive",
+  "NO_ACCESS": "Ru No Access"
 }
