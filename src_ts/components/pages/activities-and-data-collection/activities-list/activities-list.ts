@@ -121,7 +121,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           monitor_type: applyDropdownTranslation(MONITOR_TYPES),
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
         };
-        waitForCondition(!!this.user).then(() => {
+        waitForCondition(() => !!this.user).then(() => {
           this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user);
           this.initFilters();
         });

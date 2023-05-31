@@ -1,4 +1,4 @@
-import {css, CSSResultArray, customElement, html, property, TemplateResult} from 'lit-element';
+import {css, CSSResultArray, customElement, html, property, query, TemplateResult} from 'lit-element';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
@@ -16,6 +16,8 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 import {clone} from 'ramda';
+import {EtoolsDropdownMulti} from '@unicef-polymer/etools-dropdown/src/EtoolsDropdownMulti';
+import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
@@ -38,6 +40,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
   @property() personResponsible?: ActivityTeamMember | null;
+  @query('#teamMembers')
+  teamMembersDd!: EtoolsDropdownMulti;
 
   userTypes: UserType[] = [USER_STAFF, USER_TPM];
   users: User[] = [];
@@ -54,13 +58,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (this.editedData.monitor_type) {
       this.userType = this.editedData.monitor_type;
     }
-    this.personResponsible = this.editedData.visit_lead;
-    this.teamMembers = this.editedData.team_members;
-    this.tpmPartner = this.editedData.tpm_partner;
-    if (this.personResponsible) {
-      this.visitLeadOptions.push(this.personResponsible as User);
-      this.preserveSelectedLeadVisit = !(this.teamMembers || []).some((x) => x.id === this.personResponsible!.id);
+
+    if (!data) {
+      return;
     }
+    this.tpmPartner = this.editedData.tpm_partner;
   }
 
   render(): TemplateResult {
@@ -176,6 +178,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   connectedCallback(): void {
     super.connectedCallback();
+
     this.userUnsubscribe = store.subscribe(
       staticDataDynamic(
         (users: User[] | undefined) => {
@@ -186,6 +189,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
           this.getMembersOptions({
             userType: this.userType,
             tpmPartner: this.tpmPartner
+          });
+          // Waited for dropdown options
+          this.personResponsible = this.editedData.visit_lead;
+          if (this.personResponsible) {
+            this.preserveSelectedLeadVisit = !(this.editedData.team_members || []).filter(
+              (x) => x.id === this.personResponsible!.id
+            );
+          }
+          waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
+            this.teamMembersDd.triggerValueChangeEvent = true;
+            this.teamMembers = clone(this.editedData.team_members);
           });
         },
         [USERS]
