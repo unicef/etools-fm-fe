@@ -116,7 +116,13 @@ export class organizationsDropdown extends connect(store)(LitElement) {
           loadingSource: 'organization-change'
         };
     fireEvent(this, 'global-loading', detail);
-    store.dispatch(new GlobalLoadingUpdate(detail.message));
+    if (
+      detail.message ||
+      (!detail.message &&
+        store.getState().globalLoading.message?.includes('Please wait while organization data is changing...'))
+    ) {
+      store.dispatch(new GlobalLoadingUpdate(detail.message));
+    }
   }
 
   protected handleChangedOrganization(): void {

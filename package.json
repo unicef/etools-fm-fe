@@ -67,7 +67,7 @@
     "@unicef-polymer/etools-toasts": "^1.0.7",
     "@unicef-polymer/etools-types": "^1.11.14",
     "@unicef-polymer/etools-upload": "^4.5.1",
-    "@unicef-polymer/etools-utils": "^0.0.5",
+    "@unicef-polymer/etools-utils": "^0.0.6",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "dayjs": "^1.11.7",
     "dexie": "^3.2.2",
