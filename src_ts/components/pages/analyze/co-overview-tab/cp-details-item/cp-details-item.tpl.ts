@@ -81,7 +81,10 @@ export function template(this: CpDetailsItem): TemplateResult {
                               <div class="flex-none layout horizontal center-center days-since-last-visit line">
                                 ${intervention.days_from_last_pv}
                               </div>
-                              <div class="flex-none interact-icons layout horizontal links">
+                              <div
+                                class="flex-none interact-icons layout horizontal links"
+                                ?hidden="${!this.isUnicefUser}"
+                              >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
                                   <iron-icon icon="folder" class="grey"></iron-icon>
                                 </a>
