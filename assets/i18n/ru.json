@@ -613,6 +613,8 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Can not update Question Templates with id",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Can not change activity status",
   "PLEASE_TRY_AGAIN": "please try again later",
+  "PLEASE_WAIT_COUNTRY_CHANGE": "Пожалуйста, подождите, пока данные о стране изменятся...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "Пожалуйста, подождите, пока данные организации изменятся...",
   "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!",
   "TPM": {
     "TITLE": "Third Party Monitors",
