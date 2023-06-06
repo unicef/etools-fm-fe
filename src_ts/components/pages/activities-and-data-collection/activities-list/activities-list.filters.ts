@@ -89,7 +89,8 @@ export const activitiesFilters: ActivityFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    selectionOptionsEndpoint: USERS
+    selectionOptionsEndpoint: USERS,
+    unprefixName: true
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
@@ -103,7 +104,8 @@ export const activitiesFilters: ActivityFilter[] = [
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
-    selectionOptionsEndpoint: USERS
+    selectionOptionsEndpoint: USERS,
+    unprefixName: true
   },
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION'),
