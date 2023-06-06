@@ -616,6 +616,8 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Impossible de mettre à jour les modèles de question avec l'identifiant",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Impossible de modifier le statut de l'activité",
   "PLEASE_TRY_AGAIN": "Veuillez réessayer plus tard",
+  "PLEASE_WAIT_COUNTRY_CHANGE": "Veuillez patienter pendant que les données du pays sont modifiées...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "Veuillez patienter pendant que les données de l'organisation sont modifiées...",
   "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !",
   "TPM": {
     "TITLE": "Moniteurs tiers",
