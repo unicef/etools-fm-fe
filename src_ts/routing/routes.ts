@@ -180,6 +180,18 @@ export function updateAppLocation(newLocation: string, dispatchNavigation = true
   }
 }
 
+function formatQueryParamsBeforeEncode(params: EtoolsRouteQueryParams): EtoolsRouteQueryParams {
+  // transform string values in arrays if contains (',')
+  const keys = Object.keys(params);
+  for (const key of keys) {
+    const value = params[key];
+    if (typeof value === 'string' && value.includes(',')) {
+      params[key] = value.split(',');
+    }
+  }
+  return params;
+}
+
 export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset = false): boolean {
   const details: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
@@ -202,8 +214,7 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   if (newParamsEqualsCurrent && !reset) {
     return false;
   }
-
-  EtoolsRouter.replaceState(path, EtoolsRouter.encodeQueryParams(resultParams));
+  EtoolsRouter.replaceState(path, EtoolsRouter.encodeQueryParams(formatQueryParamsBeforeEncode(resultParams)));
   window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
