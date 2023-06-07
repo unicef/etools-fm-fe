@@ -24,7 +24,11 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import {clone} from 'ramda';
-import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
+import {
+  updateFilterSelectionOptions,
+  updateFiltersSelectedValues,
+  clearSelectedValuesInFilters
+} from '@unicef-polymer/etools-filters/src/filters';
 import {get as getTranslation} from 'lit-translate';
 import {
   EtoolsRouteQueryParam,
@@ -189,6 +193,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
 
+        clearSelectedValuesInFilters(questionsFilters);
         this.populateDropdownFilterOptions(optionsCollection, questionsFilters);
 
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
