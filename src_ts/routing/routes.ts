@@ -8,6 +8,7 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {buildUrlQueryString} from '@unicef-polymer/etools-utils/dist/general.util';
 const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter.init({
@@ -180,18 +181,6 @@ export function updateAppLocation(newLocation: string, dispatchNavigation = true
   }
 }
 
-function formatQueryParamsBeforeEncode(params: EtoolsRouteQueryParams): EtoolsRouteQueryParams {
-  // transform string values in arrays if contains (',')
-  const keys = Object.keys(params);
-  for (const key of keys) {
-    const value = params[key];
-    if (typeof value === 'string' && value.includes(',')) {
-      params[key] = value.split(',');
-    }
-  }
-  return params;
-}
-
 export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset = false): boolean {
   const details: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
@@ -214,7 +203,13 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   if (newParamsEqualsCurrent && !reset) {
     return false;
   }
-  EtoolsRouter.replaceState(path, EtoolsRouter.encodeQueryParams(formatQueryParamsBeforeEncode(resultParams)));
+  let qs = buildUrlQueryString(resultParams);
+  // must include first page as param because buildUrlQueryString will exclude it
+  if (resultParams['page'] && resultParams['page'] === 1) {
+    qs += qs.length ? '&page=1' : 'page=1';
+  }
+
+  EtoolsRouter.replaceState(path, qs);
   window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
