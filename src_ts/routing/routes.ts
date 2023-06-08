@@ -203,13 +203,8 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   if (newParamsEqualsCurrent && !reset) {
     return false;
   }
-  let qs = buildUrlQueryString(resultParams);
-  // must include first page as param because buildUrlQueryString will exclude it
-  if (resultParams['page'] && resultParams['page'] === 1) {
-    qs += qs.length ? '&page=1' : 'page=1';
-  }
 
-  EtoolsRouter.replaceState(path, qs);
+  EtoolsRouter.replaceState(path, buildUrlQueryString(resultParams, true));
   window.dispatchEvent(new CustomEvent('popstate'));
   return true;
 }
