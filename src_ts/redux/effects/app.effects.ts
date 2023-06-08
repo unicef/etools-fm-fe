@@ -58,12 +58,8 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
     return;
   }
 
-  const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails(path);
+  const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails(path, true);
 
-  if (routeDetails?.queryParams?.page) {
-    // page is string, convert to number before store in Redux
-    routeDetails.queryParams.page = Number(routeDetails.queryParams.page);
-  }
   /**
    * TODO:
    *  - create template page with detail about routing (including tabs subpages navigation), creating a new page
