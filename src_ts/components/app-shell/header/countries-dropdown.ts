@@ -124,9 +124,10 @@ export class CountriesDropdown extends connect(store)(LitElement) {
   }
 
   protected changeRequestStatus(isRequest: boolean): void {
+    const waitMessage = getTranslation('PLEASE_WAIT_COUNTRY_CHANGE');
     const detail: any = isRequest
       ? {
-          message: 'Please wait while country data is changing...',
+          message: waitMessage,
           active: true,
           loadingSource: 'country-change'
         }
@@ -135,11 +136,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
           loadingSource: 'country-change'
         };
     fireEvent(this, 'global-loading', detail);
-    if (
-      detail.message ||
-      (!detail.message &&
-        store.getState().globalLoading.message?.includes('Please wait while country data is changing...'))
-    ) {
+    if (detail.message || (!detail.message && store.getState().globalLoading.message?.includes(waitMessage))) {
       store.dispatch(new GlobalLoadingUpdate(detail.message));
     }
   }
