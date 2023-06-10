@@ -105,9 +105,10 @@ export class organizationsDropdown extends connect(store)(LitElement) {
   }
 
   protected changeRequestStatus(isRequest: boolean): void {
+    const waitMessage = getTranslation('PLEASE_WAIT_ORGANIZATION_CHANGE');
     const detail: any = isRequest
       ? {
-          message: 'Please wait while organization data is changing...',
+          message: waitMessage,
           active: true,
           loadingSource: 'organization-change'
         }
@@ -116,11 +117,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
           loadingSource: 'organization-change'
         };
     fireEvent(this, 'global-loading', detail);
-    if (
-      detail.message ||
-      (!detail.message &&
-        store.getState().globalLoading.message?.includes('Please wait while organization data is changing...'))
-    ) {
+    if (detail.message || (!detail.message && store.getState().globalLoading.message?.includes(waitMessage))) {
       store.dispatch(new GlobalLoadingUpdate(detail.message));
     }
   }

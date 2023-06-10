@@ -14,6 +14,10 @@ export const AppShellStyles: CSSResult = css`
     flex: 1;
   }
 
+  etools-loading {
+    position: fixed;
+  }
+
   @media print {
     #pageheader,
     #drawer {
