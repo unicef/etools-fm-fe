@@ -17,6 +17,10 @@ export const resetError = (event: any): void => {
   event.target.invalid = false;
 };
 
+export const pageIsActive = (pageName: string): boolean => {
+  return window.location.pathname.includes(`/${pageName}`);
+};
+
 export const canEditField = (permissions: GenericObject, field: string): boolean => {
   return Boolean(
     getFromPath(permissions, ['actions', 'POST', field]) || getFromPath(permissions, ['actions', 'PUT', field])
