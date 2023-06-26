@@ -22,7 +22,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
         <etools-dropdown
           .options="${this.levels}"
           .selected="${(this.queryParams && this.queryParams.level) || undefined}"
-          @etools-selected-item-changed="${({detail}: CustomEvent) => this.onLevelChanged(detail.selectedItem.value)}"
+          @etools-selected-item-changed="${({detail}: CustomEvent) => this.onLevelChanged(detail.selectedItem?.value)}"
           trigger-value-change-event
           hide-search
           label="${translate('TEMPLATES.FILTERS.LEVEL_LABEL')}"
