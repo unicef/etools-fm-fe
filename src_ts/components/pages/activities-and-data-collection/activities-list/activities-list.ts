@@ -43,7 +43,7 @@ import {
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
-import {cloneDeep} from 'lodash-es';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
