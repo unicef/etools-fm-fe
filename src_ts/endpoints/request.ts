@@ -51,9 +51,8 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
         data: 'UnknownError',
         status: err.status,
         statusText: 'UnknownError',
-        error: err
+        initialResponse: err
       });
-      console.log(err);
     });
 }
 
