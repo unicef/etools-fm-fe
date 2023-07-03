@@ -2,6 +2,7 @@ import {updateQueryParams} from '../../../routing/routes';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {LitElement} from 'lit-element';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {pageIsActive} from '../../utils/utils';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @polymerMixin */
@@ -48,5 +49,12 @@ export const ListMixin =
           newParams.page = 1;
         }
         updateQueryParams({[paramName]: newValue});
+      }
+
+      updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string): void {
+        if (pageName && !pageIsActive(pageName)) {
+          return;
+        }
+        updateQueryParams(queryParams);
       }
     };

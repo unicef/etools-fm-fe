@@ -25,26 +25,35 @@ export const EtoolsRequest: IEtoolsRequest = new (EtoolsAjaxRequestMixin(Request
 export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<T> {
   init.headers = getHeaders(init);
 
-  return fetch(input, init).then((response: Response) => {
-    if (response.status >= 200 && response.status < 300) {
-      return response.json().catch(() => response);
-    } else {
-      return response.text().then((error: string) => {
-        try {
-          const data: GenericObject = JSON.parse(error);
-          const {status, statusText} = response;
-          return Promise.reject({data, status, statusText});
-        } catch (e) {
-          return Promise.reject({
-            data: 'UnknownError',
-            status: 500,
-            statusText: 'UnknownError',
-            initialResponse: response
-          });
-        }
+  return fetch(input, init)
+    .then((response: Response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json().catch(() => response);
+      } else {
+        return response.text().then((error: string) => {
+          try {
+            const data: GenericObject = JSON.parse(error);
+            const {status, statusText} = response;
+            return Promise.reject({data, status, statusText});
+          } catch (e) {
+            return Promise.reject({
+              data: 'UnknownError',
+              status: 500,
+              statusText: 'UnknownError',
+              initialResponse: response
+            });
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      return Promise.reject({
+        data: 'UnknownError',
+        status: err.status,
+        statusText: 'UnknownError',
+        initialResponse: err
       });
-    }
-  });
+    });
 }
 
 function getHeaders(init: RequestInit = {}): GenericObject {

@@ -43,6 +43,7 @@ import {
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -254,7 +255,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           if (!data) {
             return;
           }
-          this.setFiltersSata(data, filterKey);
+          this.setFiltersData(data, filterKey);
           this.setFilters(() => subscriber());
         },
         [dataPath]
@@ -262,7 +263,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     );
   }
 
-  setFiltersSata(data: any[], filterKey: string): void {
+  setFiltersData(data: any[], filterKey: string): void {
     if (this.handledDuplicatesForTeamMembersAndVisitLead(data, filterKey)) {
       return;
     } else {
@@ -278,9 +279,14 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         !this.filtersData[ActivityFilterKeys.team_members__in] ||
         !this.filtersData[ActivityFilterKeys.team_members__in]?.length
       ) {
-        const uniqueUsers = uniqBy(data, 'id');
-        this.filtersData[ActivityFilterKeys.team_members__in] = uniqueUsers;
-        this.filtersData[ActivityFilterKeys.visit_lead__in] = uniqueUsers;
+        const unpefixedUniqueUsers = cloneDeep(uniqBy(data, 'id')).map((u) => {
+          if (u.name.indexOf(']')) {
+            u.name = u.name.substring(u.name.indexOf(']') + 1)?.trim();
+            return u;
+          }
+        });
+        this.filtersData[ActivityFilterKeys.team_members__in] = unpefixedUniqueUsers;
+        this.filtersData[ActivityFilterKeys.visit_lead__in] = unpefixedUniqueUsers;
       }
       return true;
     }
