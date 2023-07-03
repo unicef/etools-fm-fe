@@ -193,7 +193,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
           // Waited for dropdown options
           this.personResponsible = this.editedData.visit_lead;
           if (this.personResponsible) {
-            this.preserveSelectedLeadVisit = !(this.editedData.team_members || []).filter(
+            this.preserveSelectedLeadVisit = !(this.editedData.team_members || []).some(
               (x) => x.id === this.personResponsible!.id
             );
           }
