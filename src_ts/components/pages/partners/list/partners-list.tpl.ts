@@ -9,7 +9,12 @@ export function template(this: PartnersListComponent): TemplateResult {
       <h1 slot="page-title">${translate('TPM.TITLE')}</h1>
 
       <div slot="title-row-actions" class="content-header-actions">
-        <paper-button id="export" @tap="${this.export}" tracker="Export TPM Partners">
+        <paper-button
+          id="export"
+          @tap="${this.export}"
+          ?hidden=${!this.items || !this.items.length}
+          tracker="Export TPM Partners"
+        >
           <iron-icon icon="file-download" class="export-icon"></iron-icon>
           ${translate('ACTIVITY_DETAILS.EXPORT')}
         </paper-button>
