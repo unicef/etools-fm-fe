@@ -48,7 +48,7 @@ export const OPEN_ISSUES_PAGE_TABS: PageTab[] = [
 
 export const COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP: Map<string, TemplateResult> = new Map([
   [PARTNER_TAB, html` <partnership-tab></partnership-tab> `],
-  [PD_SPD_TAB, html` <pd-ssfa-tab></pd-ssfa-tab> `],
+  [PD_SPD_TAB, html` <pd-spd-tab></pd-spd-tab> `],
   [CP_OUTPUT_TAB, html` <cp-output-tab></cp-output-tab> `]
 ]);
 

@@ -7,7 +7,7 @@ import '../shared-tab-template';
 import {interventionsCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 import {translate} from 'lit-translate';
 
-@customElement('pd-ssfa-tab')
+@customElement('pd-spd-tab')
 export class PdSsfaTab extends LitElement {
   @property() private interventionsCoverage!: InterventionsCoverage[];
   @property() private loading = false;
