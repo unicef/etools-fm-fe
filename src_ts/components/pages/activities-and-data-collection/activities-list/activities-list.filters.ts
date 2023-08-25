@@ -238,7 +238,8 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.tpm_partner__in,
   ActivityFilterKeys.partners__in,
   ActivityFilterKeys.interventions__in,
-  ActivityFilterKeys.cp_outputs__in
+  ActivityFilterKeys.cp_outputs__in,
+  ActivityFilterKeys.sections__in
 ];
 
 export const getActivitiesFilters = (isUnicefUser: boolean): ActivityFilter[] => {
