@@ -10,7 +10,8 @@
       "VISIT_LEAD": "Leader de la Visite",
       "TEAM_MEMBERS": "Membres de l'Equipe",
       "CHECKLISTS_COUNT": "Listes de contrôle",
-      "STATUS": "Statut"
+      "STATUS": "Statut",
+      "SECTIONS": "Sections"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -26,7 +27,8 @@
       "STATUS": "Statut",
       "START_DATE": "Date de début",
       "END_DATE": "Date de fin",
-      "OFFICE": "Bureau de terrain"
+      "OFFICE": "Bureau de terrain",
+      "SECTIONS": "Sections"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

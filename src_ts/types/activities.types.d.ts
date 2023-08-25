@@ -14,6 +14,7 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
+  sections: {id: number; name: string}[];
 }
 
 interface IActivityDetails extends IListActivity {
