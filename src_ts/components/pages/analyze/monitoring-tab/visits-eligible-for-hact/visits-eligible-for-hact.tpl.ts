@@ -57,7 +57,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                   <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.CP_OUTPUT')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-ps-ssfa">
-                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SSFA')}</div>
+                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SPD')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-date">
                   <div class="rdc-title">

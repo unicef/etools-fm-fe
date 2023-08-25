@@ -1,5 +1,5 @@
 /**
- * combines findings and overall finding in one object by Partner/Cp Output/PD SSFA
+ * combines findings and overall finding in one object by Partner/Cp Output/PD SPD
  */
 import {get} from 'lit-translate';
 

@@ -28,7 +28,7 @@ export class PdSsfaTab extends LitElement {
   render(): TemplateResult {
     return html`
       <shared-tab-template
-        .label="${translate('ANALYZE.MONITORING_TAB.COVERAGE.PD_SSFA.LABEL')}"
+        .label="${translate('ANALYZE.MONITORING_TAB.COVERAGE.PD_SPD.LABEL')}"
         .data="${this.interventionsCoverage}"
         .loading="${this.loading}"
       ></shared-tab-template>

@@ -21,7 +21,7 @@
       "SITE": "Site",
       "PARTNERS": "Partners",
       "TPM_PARTNERS": "TPM Partners",
-      "INTERVENTIONS": "PD/SSFA",
+      "INTERVENTIONS": "PD/SPD",
       "CP_OUTPUTS": "CP Outputs",
       "STATUS": "Status",
       "START_DATE": "Start Date",
@@ -31,8 +31,8 @@
   },
   "ACTIVITY_ADDITIONAL_INFO": {
     "ISSUE_TRACKER": "Points of note",
-    "PD_SSFA_DETAILS": {
-      "TITLE": "PD/SSFA Details",
+    "PD_SPD_DETAILS": {
+      "TITLE": "PD/SPD Details",
       "REFERENCE_NUMBER": "Reference Number",
       "DOCUMENT_TYTLE": "Document Title",
       "TYPE": "Type",
@@ -95,13 +95,13 @@
     "PARTNER_ORGANIZATION": "Partner Organization",
     "CP_OUTPUTS": "CP Outputs",
     "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
-    "INTERVENTIONS_FOUND": "{{ count }} PD/SSFA were found:",
-    "INTERVENTIONS": "PD/SSFAs",
-    "CONNECTED_ENTRIES": "Connected entries to be added together with the selected PD/SSFA:",
+    "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
+    "INTERVENTIONS": "PD/SPDs",
+    "CONNECTED_ENTRIES": "Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Add New Item",
     "ADD_PARTNER": "Add Partner",
     "ADD_CP_OUTPUT": "Add CP Output",
-    "ADD_INTERVENTION": "Add PD/SSFA",
+    "ADD_INTERVENTION": "Add PD/SPD",
     "REJECTION_NOTE": "Rejection Note",
     "REPORT_REJECTION_REASON": "Report Rejection Reason",
     "CANCELLATION_NOTE": "Cancellation Note",
@@ -223,7 +223,7 @@
     "PARTNERSHIPS": "Partnerships",
     "SINCE_LAST_VISIT": "Days Since Last Site Visit",
     "PD_OUTPUT": "PD Output",
-    "SSFA_EXPECTED_RESULT": "SSFA Expected Result",
+    "SPD_EXPECTED_RESULT": "SPD Expected Result",
     "PLACEHOLDER": {
       "CP_OUTCOME": "Select CP Outcome"
     }
@@ -313,8 +313,8 @@
       "OUTPUT_PLACEHOLDER": "Select CP Output",
       "PARTNER_LABEL": "Select Partner",
       "PARTNER_PLACEHOLDER": "Select Partner",
-      "INTERVENTION_LABEL": "Select PD/SSFA",
-      "INTERVENTION_PLACEHOLDER": "Select PD/SSFA"
+      "INTERVENTION_LABEL": "Select PD/SPD",
+      "INTERVENTION_PLACEHOLDER": "Select PD/SPD"
     },
     "COLUMNS": {
       "DETAILS": "Specific Details to Probe",
@@ -368,7 +368,7 @@
     "LEVEL": {
       "PARTNER": "Partner",
       "OUTPUT": "CP Output",
-      "INTERVENTION": "PD/SSFA"
+      "INTERVENTION": "PD/SPD"
     }
   },
   "SITES": {
@@ -425,7 +425,7 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",
     "OUTPUT": "CP Output",
-    "INTERVENTION": "PD/SSFA"
+    "INTERVENTION": "PD/SPD"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Text",
@@ -529,7 +529,7 @@
       "COMPLETED_VISITS": " of visits are completed",
       "NAVIGATION_TABS": {
         "BY_PARTNER": "By Partner",
-        "BY_PD_SSFA": "By PD/SSFA",
+        "BY_PD_SPD": "By PD/SPD",
         "BY_CP_OUTPUT": "By CP Output",
         "BY_LOCATION": "By Location"
       },
@@ -539,7 +539,7 @@
         "HACT_ELIGIBLE_VISITS": "HACT Eligible Visits",
         "VISIT": "Visit",
         "CP_OUTPUT": "CP output",
-        "PD_SSFA": "PD/SSFA",
+        "PD_SPD": "PD/SPD",
         "VISIT_END_DATE": "Visit End Date"
       },
       "GEOGRAPHIC_COVERAGE": {
@@ -561,8 +561,8 @@
           "MINIMUM_REQUIRED_VISITS": "Minimum Required ",
           "DAYS_SINCE_LAST_VISIT": "Days Since Last Visit "
         },
-        "PD_SSFA": {
-          "LABEL": "Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
+        "PD_SPD": {
+          "LABEL": "Showing active PD/SPDs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SPD, the “Days Since Last Visit” is the number of days since the start of PD/SPD)"
         },
         "OPEN_ISSUES": {
           "TITLE": "Open Notes and Action Points",
