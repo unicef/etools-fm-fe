@@ -11,7 +11,7 @@ export class AdditionalInfoTab extends LitElement {
     return html`
       <issue-tracker-list .activityId="${this.activityDetails ? this.activityDetails.id : null}"></issue-tracker-list>
       ${this.isUnicefUser
-        ? html` <div class="pd-ssfa-details-container">
+        ? html` <div class="pd-spd-details-container">
             <pd-ssfa-details
               class="pd-ssfa-details"
               .interventionsData="${this.activityDetails ? this.activityDetails.interventions : null}"
@@ -23,7 +23,7 @@ export class AdditionalInfoTab extends LitElement {
 
   static get styles(): CSSResult {
     return css`
-      .pd-ssfa-details-container {
+      .pd-spd-details-container {
         display: flex;
       }
       .pd-ssfa-details {

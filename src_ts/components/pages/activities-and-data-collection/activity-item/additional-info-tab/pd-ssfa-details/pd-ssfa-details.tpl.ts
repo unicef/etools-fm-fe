@@ -11,21 +11,21 @@ export function template(this: PdSsfaDetails): TemplateResult {
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
       <div class="card-title-box">
-        <div class="card-title counter">${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.TITLE')}</div>
+        <div class="card-title counter">${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.TITLE')}</div>
       </div>
 
       <etools-data-table-header no-title no-collapse>
         <etools-data-table-column class="flex-1 col-data"
-          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.REFERENCE_NUMBER')}</etools-data-table-column
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.REFERENCE_NUMBER')}</etools-data-table-column
         >
         <etools-data-table-column class="flex-1 col-data"
-          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.DOCUMENT_TYTLE')}</etools-data-table-column
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.DOCUMENT_TYTLE')}</etools-data-table-column
         >
         <etools-data-table-column class="flex-1 col-data"
-          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.TYPE')}</etools-data-table-column
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.TYPE')}</etools-data-table-column
         >
         <etools-data-table-column class="flex-1 col-data"
-          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SSFA_DETAILS.PROGRESS_REPORTS')}</etools-data-table-column
+          >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.PROGRESS_REPORTS')}</etools-data-table-column
         >
       </etools-data-table-header>
 

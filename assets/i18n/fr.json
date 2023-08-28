@@ -21,7 +21,7 @@
       "SITE": "Site",
       "PARTNERS": "Partenaires",
       "TPM_PARTNERS": "Partenaires TPM",
-      "INTERVENTIONS": "PD/SSFA",
+      "INTERVENTIONS": "PD/SPD",
       "CP_OUTPUTS": "Extrants PP",
       "STATUS": "Statut",
       "START_DATE": "Date de début",
@@ -31,8 +31,8 @@
   },
   "ACTIVITY_ADDITIONAL_INFO": {
     "ISSUE_TRACKER": "Points à noter",
-    "PD_SSFA_DETAILS": {
-      "TITLE": "Détails PD/SSFA",
+    "PD_SPD_DETAILS": {
+      "TITLE": "Détails PD/SPD",
       "REFERENCE_NUMBER": "Numéro de référence",
       "DOCUMENT_TYTLE": "Titre du Document",
       "TYPE": "Type",
@@ -95,13 +95,13 @@
     "PARTNER_ORGANIZATION": "Organisation Partenaire",
     "CP_OUTPUTS": "Extrant PP",
     "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
-    "INTERVENTIONS_FOUND": "{{ count }} PD/SSFA ont été trouvées:",
-    "INTERVENTIONS": "PD/SSFAs",
-    "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SSFA sélectionné:",
+    "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
+    "INTERVENTIONS": "PD/SPDs",
+    "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SPD sélectionné:",
     "ADD_ENTRY": "Ajouter un nouvel élément",
     "ADD_PARTNER": "Ajouter un partenaire",
     "ADD_CP_OUTPUT": "Ajouter un Extrant PP",
-    "ADD_INTERVENTION": "Ajouter un PD/SSFA",
+    "ADD_INTERVENTION": "Ajouter un PD/SPD",
     "REJECTION_NOTE": "Note de rejet",
     "REPORT_REJECTION_REASON": "Raison du rejet du rapport",
     "CANCELLATION_NOTE": "Note d'annulation",
@@ -223,7 +223,7 @@
     "PARTNERSHIPS": "Partenariats",
     "SINCE_LAST_VISIT": "Jours depuis la dernière visite du site",
     "PD_OUTPUT": "Extrant DP",
-    "SSFA_EXPECTED_RESULT": "Résultat attendu SSFA",
+    "SPD_EXPECTED_RESULT": "Résultat attendu SPD",
     "PLACEHOLDER": {
       "CP_OUTCOME": "Sélectionnez le résultat du PP"
     }
@@ -313,8 +313,8 @@
       "OUTPUT_PLACEHOLDER": "Sélectionnez l'extrant du PP",
       "PARTNER_LABEL": "Sélectionnez un partenaire",
       "PARTNER_PLACEHOLDER": "Sélectionnez un partenaire",
-      "INTERVENTION_LABEL": "Sélectionnez le PD/SSFA",
-      "INTERVENTION_PLACEHOLDER": "Sélectionnez le PD/SSFA"
+      "INTERVENTION_LABEL": "Sélectionnez le PD/SPD",
+      "INTERVENTION_PLACEHOLDER": "Sélectionnez le PD/SPD"
     },
     "COLUMNS": {
       "DETAILS": "Détails spécifiques à sonder",
@@ -368,7 +368,7 @@
     "LEVEL": {
       "PARTNER": "Partenaire",
       "OUTPUT": "Extrant du PP",
-      "INTERVENTION": "PD/SSFA"
+      "INTERVENTION": "PD/SPD"
     }
   },
   "SITES": {
@@ -425,7 +425,7 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",
     "OUTPUT": "Extrant du PP",
-    "INTERVENTION": "PD/SSFA"
+    "INTERVENTION": "PD/SPD"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Texte",
@@ -529,7 +529,7 @@
       "COMPLETED_VISITS": " des visites sont terminées",
       "NAVIGATION_TABS": {
         "BY_PARTNER": "Par Partenaire",
-        "BY_PD_SSFA": "Par PD/SSFA",
+        "BY_PD_SPD": "Par PD/SPD",
         "BY_CP_OUTPUT": "Par Extrant du PP",
         "BY_LOCATION": "Par Emplacement"
       },
@@ -539,7 +539,7 @@
         "HACT_ELIGIBLE_VISITS": "Visites éligibles HACT",
         "VISIT": "Visite",
         "CP_OUTPUT": "Extrant du PP",
-        "PD_SSFA": "PD/SSFA",
+        "PD_SPD": "PD/SPD",
         "VISIT_END_DATE": "Date de fin de visite"
       },
       "GEOGRAPHIC_COVERAGE": {
@@ -561,8 +561,8 @@
           "MINIMUM_REQUIRED_VISITS": "Minimum requis ",
           "DAYS_SINCE_LAST_VISIT": "Jours depuis la dernière visite "
         },
-        "PD_SSFA": {
-          "LABEL": "Affichage des PD/SSFA actifs délivrant des extrants de PP qui peuvent être monitorés au niveau communautaire. (S'il n'y a eu aucune visite pour un PD/SSFA, le « Jours depuis la dernière visite » est le nombre de jours depuis le début du PD/SSFA)"
+        "PD_SPD": {
+          "LABEL": "Affichage des PD/SPD actifs délivrant des extrants de PP qui peuvent être monitorés au niveau communautaire. (S'il n'y a eu aucune visite pour un PD/SPD, le « Jours depuis la dernière visite » est le nombre de jours depuis le début du PD/SPD)"
         },
         "OPEN_ISSUES": {
           "TITLE": "Notes ouvertes et points d'action",

@@ -157,7 +157,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div class="row-details-content">
                 <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS')}</div>
                 <div class="truncate">
-                  ${activity.interventions.map((pdssfa: IActivityIntervention) => pdssfa.title).join(' | ') || '-'}
+                  ${activity.interventions.map((pdspd: IActivityIntervention) => pdspd.title).join(' | ') || '-'}
                 </div>
               </div>
               <div class="row-details-content">
