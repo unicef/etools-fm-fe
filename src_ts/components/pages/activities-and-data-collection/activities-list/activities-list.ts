@@ -306,9 +306,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       outputs = 'outputs',
       users = 'users',
       tpmPartners = 'tpmPartners',
-      offices = 'offices'
+      offices = 'offices',
+      sections = 'sections'
     } = storeState.staticData;
-    const dataToLoad = [users, tpmPartners, offices];
+    const dataToLoad = [users, tpmPartners, offices, sections];
     if (this.user?.is_unicef_user) {
       dataToLoad.push(...[partners, outputs, interventions]);
     }

@@ -10,7 +10,8 @@
       "VISIT_LEAD": "Visit Lead",
       "TEAM_MEMBERS": "Team Members",
       "CHECKLISTS_COUNT": "Checklists",
-      "STATUS": "Status"
+      "STATUS": "Status",
+      "SECTIONS": "Sections"
     },
     "REFERENCE_NO": "Reference #",
     "FILTERS": {
@@ -26,7 +27,8 @@
       "STATUS": "Status",
       "START_DATE": "Start Date",
       "END_DATE": "End Date",
-      "OFFICE": "Field Office"
+      "OFFICE": "Field Office",
+      "SECTIONS": "Sections"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

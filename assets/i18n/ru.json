@@ -10,7 +10,8 @@
       "VISIT_LEAD": "Localized Visit Lead",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
-      "STATUS": "Localized Status"
+      "STATUS": "Localized Status",
+      "SECTIONS": "Localized Sections"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -26,7 +27,8 @@
       "STATUS": "Localized Status",
       "START_DATE": "Localized Start Date",
       "END_DATE": "Localized End Date",
-      "OFFICE": "Localized Field Office"
+      "OFFICE": "Localized Field Office",
+      "SECTIONS": "Localized Sections"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
