@@ -106,7 +106,7 @@ export class ActionPointsPopup extends InterventionsMixin(
           if (!users) {
             return;
           }
-          this.users = users;
+          this.users = users.filter((u) => u.user_type === 'staff');
         },
         [USERS]
       )

@@ -63,7 +63,7 @@ export const componentsLazyLoadConfig: EtoolsRoutesLazyLoadComponentsPath = {
     'components/pages/analyze/analyze-page.js',
     'components/pages/analyze/monitoring-tab/monitoring-tab.js',
     'components/pages/analyze/monitoring-tab/coverage/partnership-tab/partnership-tab.js',
-    'components/pages/analyze/monitoring-tab/coverage/pd-ssfa-tab/pd-ssfa-tab.js',
+    'components/pages/analyze/monitoring-tab/coverage/pd-spd-tab/pd-spd-tab.js',
     'components/pages/analyze/monitoring-tab/coverage/cp-output-tab/cp-output-tab.js',
     'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-partnership-tab/open-issues-partnership-tab.js',
     'components/pages/analyze/monitoring-tab/open-issues-action-points/open-issues-cp-output-tab/open-issues-cp-output-tab.js',
