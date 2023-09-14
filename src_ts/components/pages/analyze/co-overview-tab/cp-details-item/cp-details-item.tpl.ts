@@ -94,7 +94,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                                 >
                                   <iron-icon icon="flag" class="grey"></iron-icon>
                                 </a>
-                                <a href="${`/pmp/interventions/${intervention.pk}/progress/reports`}" target="_blank">
+                                <a href="${`/pmp/interventions/${intervention.pk}/reports`}" target="_blank">
                                   <iron-icon icon="trending-up" class="grey"></iron-icon>
                                 </a>
                               </div>
