@@ -299,17 +299,16 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       store.dispatch<AsyncEffect>(loadSiteLocations());
     }
 
-    // we don't need to load locations. they are loaded in appShell
+    // we don't need to load locations(loaded in appShell) and users (loaded in activities-page)
     const {
       partners = 'partners',
       interventions = 'interventions',
       outputs = 'outputs',
-      users = 'users',
       tpmPartners = 'tpmPartners',
       offices = 'offices',
       sections = 'sections'
     } = storeState.staticData;
-    const dataToLoad = [users, tpmPartners, offices, sections];
+    const dataToLoad = [tpmPartners, offices, sections];
     if (this.user?.is_unicef_user) {
       dataToLoad.push(...[partners, outputs, interventions]);
     }
