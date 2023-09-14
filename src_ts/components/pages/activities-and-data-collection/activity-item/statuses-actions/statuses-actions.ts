@@ -22,6 +22,7 @@ import {updateAppLocation} from '../../../../../routing/routes';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {translate, get as getTranslation} from 'lit-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
+import {getErrorText} from '../../../../utils/utils';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -140,7 +141,7 @@ export class StatusesActionsComponent extends LitElement {
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
       const errors: any = store.getState().activityDetails.error;
       if (errors) {
-        const backendMessage: string = Array.isArray(errors.data) ? errors.data[0] : errors.data;
+        const backendMessage = getErrorText(errors);
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
         fireEvent(this, 'toast', {text: `${getTranslation('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
       } else if (transition.transition === REJECT) {

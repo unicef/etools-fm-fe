@@ -1,3 +1,4 @@
+import {GenericObject} from '@unicef-polymer/etools-types';
 import {appLanguages} from '../../config/app-constants';
 import path from 'ramda/es/path';
 
@@ -40,4 +41,14 @@ export const isRequired = (permissions: GenericObject, field: string): boolean =
 
 export const getMaxLength = (permissions: GenericObject, field: string): number => {
   return getFromPath(permissions, ['actions', 'GET', field, 'max_length']);
+};
+
+export const getErrorText = (errors: GenericObject): string => {
+  let errSource = '';
+  if (errors.data && errors.data !== 'UnknownError') {
+    errSource = errors.data;
+  } else if (errors.initialResponse?.data) {
+    errSource = errors.initialResponse.data;
+  }
+  return Array.isArray(errSource) ? errSource.join('\n') : errSource;
 };
