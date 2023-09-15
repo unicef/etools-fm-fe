@@ -61,11 +61,13 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <div class="layout horizontal location-inputs">
           <etools-dropdown
             class="readonly-required"
+            id="location"
             .selected="${simplifyValue(this.editedData.location)}"
             label="${translate('LOCATION_TO_BE_VISITED')}"
             .options="${this.locations}"
             option-label="name"
             option-value="id"
+            .errorMessage="${translate('THIS_FIELD_IS_REQUIRED')}"
             readonly
             required
             min-width="470px"
