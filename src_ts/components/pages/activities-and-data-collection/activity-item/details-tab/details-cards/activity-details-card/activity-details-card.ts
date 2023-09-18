@@ -18,7 +18,6 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {translate, get as getTranslation} from 'lit-translate';
-import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 
 export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
@@ -34,8 +33,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
 
   @property() activityOffices: Office[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
-
-  @query('#location') private locationSelectorDropdown!: EtoolsDropdownEl;
 
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
@@ -154,7 +151,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
           this.updateModelValue('location_site', detail.sites[0] || null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
-          this.locationSelectorDropdown.invalid = false;
           this.updateModelValue('location', detail.location);
         }}"
       ></location-sites-widget>
@@ -170,7 +166,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
           this.updateModelValue('location_site', detail.sites[0] || null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
-          this.locationSelectorDropdown.invalid = false;
           this.updateModelValue('location', detail.location);
         }}"
       ></location-widget>
@@ -225,7 +220,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
 
   protected save(): void {
     if (!this.editedData.location) {
-      this.locationSelectorDropdown.invalid = true;
+      fireEvent(this, 'toast', {
+        text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
+      });
       return;
     }
     if (this.isStartDateAfterEndDate()) {
