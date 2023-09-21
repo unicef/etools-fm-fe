@@ -129,7 +129,36 @@ EtoolsRouter
       };
     }
   )
-
+  .addRoute(new RegExp(`^partners$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
+    return {
+      routeName: 'partners',
+      subRouteName: 'list',
+      path: params.matchDetails[0],
+      queryParams: params.queryParams,
+      params: null
+    };
+  })
+  .addRoute(new RegExp(`^partners\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
+    return {
+      routeName: 'partners',
+      subRouteName: 'item',
+      path: params.matchDetails[0],
+      queryParams: null,
+      params: {id: params.matchDetails[1]}
+    };
+  })
+  .addRoute(
+    new RegExp(`^partners\\/${routeParamRegex}\\/${routeParamRegex}$`),
+    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
+      return {
+        routeName: 'partners',
+        subRouteName: 'item',
+        path: params.matchDetails[0],
+        queryParams: null,
+        params: {id: params.matchDetails[1], tab: params.matchDetails[2]}
+      };
+    }
+  )
   .addRoute(new RegExp(`^page-not-found$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'page-not-found',
@@ -155,7 +184,7 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   const details: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
   const path: string = (details && details.path) || '';
   let currentParams: EtoolsRouteQueryParams | null = details && details.queryParams;
-  if (reset) {
+  if (reset && currentParams) {
     currentParams = pick(['ordering', 'page_size'], currentParams);
   }
   const computed: EtoolsRouteQueryParams = Object.assign({}, currentParams, newQueryParams);

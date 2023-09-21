@@ -98,15 +98,6 @@ export class AttachmentsListComponent extends LitElement {
     this.attachmentsTypesUnsubscribe();
   }
 
-  formatDate(value: string, format = 'DD MMM YYYY'): string {
-    if (!value) {
-      return '';
-    }
-
-    const date: Date = new Date(value);
-    return date.toString() !== 'Invalid Date' ? dayjs.utc(date).format(format) : '';
-  }
-
   openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',

@@ -43,10 +43,6 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
     this.hactVisitsUnsubscribe();
   }
 
-  formatDate(date: string | null): string {
-    return date ? dayjs(date).format('DD MMM YYYY') : '-';
-  }
-
   sortItems(detail: SortDetails): void {
     switch (detail.field) {
       case 'name':

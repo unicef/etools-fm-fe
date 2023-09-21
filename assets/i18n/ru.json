@@ -10,7 +10,8 @@
       "VISIT_LEAD": "Localized Visit Lead",
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
-      "STATUS": "Localized Status"
+      "STATUS": "Localized Status",
+      "SECTIONS": "Localized Sections"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -21,18 +22,19 @@
       "SITE": "Localized Site",
       "PARTNERS": "Localized Partners",
       "TPM_PARTNERS": "Localized TPM Partners",
-      "INTERVENTIONS": "Localized PD/SSFA",
+      "INTERVENTIONS": "Localized PD/SPD",
       "CP_OUTPUTS": "Localized CP Outputs",
       "STATUS": "Localized Status",
       "START_DATE": "Localized Start Date",
       "END_DATE": "Localized End Date",
-      "OFFICE": "Localized Field Office"
+      "OFFICE": "Localized Field Office",
+      "SECTIONS": "Localized Sections"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
     "ISSUE_TRACKER": "Localized Specific issues for Probing/Attention",
-    "PD_SSFA_DETAILS": {
-      "TITLE": "Localized PD/SSFA Details",
+    "PD_SPD_DETAILS": {
+      "TITLE": "Localized PD/SPD Details",
       "REFERENCE_NUMBER": "Localized Reference Number",
       "DOCUMENT_TYTLE": "Localized Document Title",
       "TYPE": "Localized Type",
@@ -95,13 +97,13 @@
     "PARTNER_ORGANIZATION": "Localized Partner Organization",
     "CP_OUTPUTS": "Localized CP Outputs",
     "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
-    "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SSFA were found:",
-    "INTERVENTIONS": "Localized PD/SSFAs",
-    "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SSFA:",
+    "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
+    "INTERVENTIONS": "Localized PD/SPDs",
+    "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Localized Add New Item",
     "ADD_PARTNER": "Localized Add Partner",
     "ADD_CP_OUTPUT": "Localized Add CP Output",
-    "ADD_INTERVENTION": "Localized Add PD/SSFA",
+    "ADD_INTERVENTION": "Localized Add PD/SPD",
     "REJECTION_NOTE": "Localized Rejection Note",
     "REPORT_REJECTION_REASON": "Localized Report Rejection Reason",
     "CANCELLATION_NOTE": "Localized Cancellation Note",
@@ -222,7 +224,7 @@
     "PARTNERSHIPS": "Localized Partnerships",
     "SINCE_LAST_VISIT": "Localized Days Since Last Site Visit",
     "PD_OUTPUT": "Localized PD Output",
-    "SSFA_EXPECTED_RESULT": "Localized SSFA Expected Result",
+    "SPD_EXPECTED_RESULT": "Localized SPD Expected Result",
     "PLACEHOLDER": {
       "CP_OUTCOME": "Localized Select CP Outcome"
     }
@@ -311,8 +313,8 @@
       "OUTPUT_PLACEHOLDER": "Localized Select CP Output",
       "PARTNER_LABEL": "Localized Select Partner",
       "PARTNER_PLACEHOLDER": "Localized Select Partner",
-      "INTERVENTION_LABEL": "Localized Select PD/SSFA",
-      "INTERVENTION_PLACEHOLDER": "Localized Select PD/SSFA"
+      "INTERVENTION_LABEL": "Localized Select PD/SPD",
+      "INTERVENTION_PLACEHOLDER": "Localized Select PD/SPD"
     },
     "COLUMNS": {
       "DETAILS": "Localized Specific Details to Probe",
@@ -365,7 +367,7 @@
     "LEVEL": {
       "PARTNER": "Localized Partner",
       "OUTPUT": "Localized CP Output",
-      "INTERVENTION": "Localized PD/SSFA"
+      "INTERVENTION": "Localized PD/SPD"
     }
   },
   "SITES": {
@@ -422,7 +424,7 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
     "OUTPUT": "Localized CP Output",
-    "INTERVENTION": "Localized PD/SSFA"
+    "INTERVENTION": "Localized PD/SPD"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Localized Text",
@@ -475,7 +477,9 @@
     "PROFILEANDSIGNOUT": "Profile and Sign out",
     "REFRESH": "Refresh",
     "SUPPORT": "Support",
-    "APPSELECTOR": "App Selector"
+    "APPSELECTOR": "App Selector",
+    "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
+    "TPM": "Third Party Monitors"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",
@@ -524,7 +528,7 @@
       "COMPLETED_VISITS": " Localized of visits are completed",
       "NAVIGATION_TABS": {
         "BY_PARTNER": "Localized By Partner",
-        "BY_PD_SSFA": "Localized By PD/SSFA",
+        "BY_PD_SPD": "Localized By PD/SPD",
         "BY_CP_OUTPUT": "Localized By CP Output",
         "BY_LOCATION": "Localized By Location"
       },
@@ -534,7 +538,7 @@
         "HACT_ELIGIBLE_VISITS": "Localized HACT Eligible Visits",
         "VISIT": "Localized Visit",
         "CP_OUTPUT": "Localized CP output",
-        "PD_SSFA": "Localized PD/SSFA",
+        "PD_SPD": "Localized PD/SPD",
         "VISIT_END_DATE": "Localized Visit End Date"
       },
       "GEOGRAPHIC_COVERAGE": {
@@ -556,8 +560,8 @@
           "MINIMUM_REQUIRED_VISITS": "Localized Minimum Required ",
           "DAYS_SINCE_LAST_VISIT": "Localized Days Since Last Visit "
         },
-        "PD_SSFA": {
-          "LABEL": "Localized Showing active PD/SSFAs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SSFA, the “Days Since Last Visit” is the number of days since the start of PD/SSFA)"
+        "PD_SPD": {
+          "LABEL": "Localized Showing active PD/SPDs delivering CP Outputs that can be monitored at the community level. (If there has not been any visits for a PD/SPD, the “Days Since Last Visit” is the number of days since the start of PD/SPD)"
         },
         "OPEN_ISSUES": {
           "TITLE": "Localized Open Issues and Action Points",
@@ -590,6 +594,8 @@
   "FILTER_BY_SECTION": "Filter By Section",
   "SUPPORT": "Localized Support",
   "ERROR_CHANGING_WORKSPACE": "Something went wrong changing your workspace",
+  "ERROR_CHANGING_ORGANIZATION": "Something went wrong changing your organization",
+  "SELECT_ORGANIZATION": "Выберите организацию",
   "CHANGES_SAVED": "All changes are saved",
   "ERROR_ATTACHEMENT_LOAD": "Can not load attachments",
   "ERROR_CHANGES_SAVE": "Can not save changes. Please try again later",
@@ -598,6 +604,7 @@
   "ERROR_LOAD_ACTIVITIES_LIST": "Can not load Activities List",
   "ERROR_CREATE_ACTIVITY": "Can not create Activity",
   "ERROR_UPLOAD": "Can not upload attachments. Please try again later",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Error uploading file: File too large",
   "ERROR_UPDATE_CHECKLIST": "Can not update checklist, please try again",
   "START_DATE_BEFORE_END_DATE": "Start Date must be before End Date",
   "ERROR_LOAD_REPORT": "Can not load FullReport data",
@@ -608,5 +615,54 @@
   "ERROR_UPDATE_QUESTION_TEMPLATE": "Can not update Question Templates with id",
   "ERROR_CHANGE_ACTIVITY_STATUS": "Can not change activity status",
   "PLEASE_TRY_AGAIN": "please try again later",
-  "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!"
+  "PLEASE_WAIT_COUNTRY_CHANGE": "Пожалуйста, подождите, пока данные о стране изменятся...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "Пожалуйста, подождите, пока данные организации изменятся...",
+  "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!",
+  "TPM": {
+    "TITLE": "Third Party Monitors",
+    "ADD_NEW_VENDOR": "Add New Vendor",
+    "VENDOR_NUMBER_NOT_FOUND": "Vendor Number not found",
+    "NOT_SYNCED": "Not Synced",
+    "MARKED_FOR_DELETION_IN_VISION": "Marked For Deletion in VISION",
+    "BLOCKED_IN_VISION": "Blocked in VISION",
+    "SYNCED_FROM_VISION": "Synced from VISION",
+    "FILTERS": {
+      "SEARCH": "Search Vendor # or TPM"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "Vendor number",
+      "TPM_NAME": "TPM Name",
+      "PHONE_NUMBER": "Phone Number",
+      "EMAIL": "Email"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "TPM Contacts",
+    "ATTACH_FILE_FOR_VISIT": "Attach File For Overall Visit",
+    "ACCESS_MANAGEMENT_PORTAL": "Access Management Portal",
+    "SHOW_INACTIVE": "Show inactive",
+    "TABS": {
+      "details": "Partner Details",
+      "attachments": "Attachments"
+    },
+    "TPM_PARTNER_DETAILS": "TPM Partner Details",
+    "VENDOR_NUMBER": "Vendor number",
+    "TPM_NAME": "TPM Name",
+    "PHONE_NUMBER": "Phone Number",
+    "EMAIL": "Email",
+    "ADDRESS": "Address",
+    "VALID_EMAIL_REQUIRED": "Valid email required"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "Position",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "PHONE_NUMBER": "Phone Number",
+      "EMAIL": "Email",
+      "ACTIVE": "Active"
+    }
+  },
+  "INACTIVE": "Ru Inactive",
+  "NO_ACCESS": "Ru No Access"
 }

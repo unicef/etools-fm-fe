@@ -71,7 +71,9 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
       this.listLoadingInProcess = true;
       store
-        .dispatch<AsyncEffect>(loadQuestionTemplates(refactoredParams, level, target))
+        .dispatch<AsyncEffect>(
+          loadQuestionTemplates(refactoredParams, String(level), target ? String(target) : undefined)
+        )
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_TEMPLATES')}))
         .then(() => (this.listLoadingInProcess = false));
     }, 100);
@@ -134,7 +136,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     if (this.queryParams && this.queryParams.level === level) {
       return;
     }
-    updateQueryParams({level, target: null});
+    this.updateQueryParamsIfPageIsActive({level, target: null}, 'templates/templates');
   }
 
   onTargetChanged(selectedItem: GenericObject | null): void {
@@ -143,7 +145,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     if (currentTarget === id) {
       return;
     }
-    updateQueryParams({target: id});
+    this.updateQueryParamsIfPageIsActive({target: id}, 'templates/templates');
   }
 
   getSelectedTarget(forLevel: string, collection: any): string | number | undefined {

@@ -5,6 +5,7 @@ import {
   INTERVENTIONS,
   LOCATIONS_ENDPOINT,
   PARTNERS,
+  SECTIONS,
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
@@ -28,7 +29,8 @@ export enum ActivityFilterKeys {
   cp_outputs__in = 'cp_outputs__in',
   status__in = 'status__in',
   start_date__gte = 'start_date__gte',
-  end_date__lte = 'end_date__lte'
+  end_date__lte = 'end_date__lte',
+  sections__in = 'sections__in'
 }
 
 export const selectedValueTypeByFilterKey: GenericObject = {
@@ -49,7 +51,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
-export const activitiesListFilters: ActivityFilter[] = [
+export const activitiesFilters: ActivityFilter[] = [
   {
     filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
     filterKey: ActivityFilterKeys.monitor_type,
@@ -85,7 +87,7 @@ export const activitiesListFilters: ActivityFilter[] = [
     selectedValue: [],
     optionValue: 'id',
     optionLabel: 'name',
-    selected: false,
+    selected: true,
     minWidth: '350px',
     hideSearch: false,
     disabled: false,
@@ -127,7 +129,7 @@ export const activitiesListFilters: ActivityFilter[] = [
     selectedValue: [],
     optionValue: 'id',
     optionLabel: 'name',
-    selected: false,
+    selected: true,
     minWidth: '350px',
     hideSearch: false,
     disabled: false
@@ -202,6 +204,20 @@ export const activitiesListFilters: ActivityFilter[] = [
     disabled: false
   },
   {
+    filterName: translate('ACTIVITIES_LIST.FILTERS.SECTIONS'),
+    filterKey: ActivityFilterKeys.sections__in,
+    type: EtoolsFilterTypes.DropdownMulti,
+    selectionOptions: [],
+    selectedValue: [],
+    optionValue: 'id',
+    optionLabel: 'name',
+    selected: true,
+    minWidth: '350px',
+    hideSearch: true,
+    disabled: false,
+    selectionOptionsEndpoint: SECTIONS
+  },
+  {
     filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
     filterKey: ActivityFilterKeys.start_date__gte,
     type: EtoolsFilterTypes.Date,
@@ -216,3 +232,19 @@ export const activitiesListFilters: ActivityFilter[] = [
     selected: false
   }
 ];
+
+const filtersOnlyForUnicefUser: string[] = [
+  ActivityFilterKeys.monitor_type,
+  ActivityFilterKeys.tpm_partner__in,
+  ActivityFilterKeys.partners__in,
+  ActivityFilterKeys.interventions__in,
+  ActivityFilterKeys.cp_outputs__in,
+  ActivityFilterKeys.sections__in
+];
+
+export const getActivitiesFilters = (isUnicefUser: boolean): ActivityFilter[] => {
+  if (isUnicefUser) {
+    return activitiesFilters;
+  }
+  return activitiesFilters.filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
+};

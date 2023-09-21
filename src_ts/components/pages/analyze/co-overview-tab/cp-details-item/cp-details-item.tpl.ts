@@ -81,7 +81,10 @@ export function template(this: CpDetailsItem): TemplateResult {
                               <div class="flex-none layout horizontal center-center days-since-last-visit line">
                                 ${intervention.days_from_last_pv}
                               </div>
-                              <div class="flex-none interact-icons layout horizontal links">
+                              <div
+                                class="flex-none interact-icons layout horizontal links"
+                                ?hidden="${!this.isUnicefUser}"
+                              >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
                                   <iron-icon icon="folder" class="grey"></iron-icon>
                                 </a>
@@ -100,7 +103,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                             <iron-collapse ?opened="${this.detailsOpened[intervention.pk]}">
                               <div class="intervention-details">
                                 <div class="line title">
-                                  ${translate('CO_OVERVIEW.PD_OUTPUT')}/${translate('CO_OVERVIEW.SSFA_EXPECTED_RESULT')}
+                                  ${translate('CO_OVERVIEW.PD_OUTPUT')}/${translate('CO_OVERVIEW.SPD_EXPECTED_RESULT')}
                                 </div>
                                 ${intervention.pd_output_names && intervention.pd_output_names.length
                                   ? repeat(

@@ -65,6 +65,7 @@ type EtoolsIntervention = {
   partner: number;
   title: string;
   cp_outputs: number[];
+  name: string;
 };
 
 type User = {

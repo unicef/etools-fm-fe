@@ -9,6 +9,7 @@ export const ROOT_PATH = '/fm/';
 declare global {
   interface Window {
     EtoolsEsmmFitIntoEl: any;
+    EtoolsLanguage: string;
   }
 }
 

@@ -4,6 +4,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
@@ -72,11 +73,11 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
         </etools-data-table-column>
+        <etools-data-table-column class="col-data flex-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}
+        </etools-data-table-column>
         <etools-data-table-column class="col-data flex-none w90px">
           ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1">
-          ${translate('ACTIVITIES_LIST.COLUMNS.VISIT_LEAD')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data flex-2">
           ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
@@ -97,8 +98,8 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                 <div class="col-data flex-none w130px">-</div>
                 <div class="col-data flex-none w110px">-</div>
                 <div class="col-data flex-2">-</div>
-                <div class="col-data flex-none w90px">-</div>
                 <div class="col-data flex-1">-</div>
+                <div class="col-data flex-none w90px">-</div>
                 <div class="col-data flex-2">-</div>
                 <div class="col-data flex-none w80px">-</div>
                 <div class="col-data flex-none w100px">-</div>
@@ -117,18 +118,19 @@ export function template(this: ActivitiesListComponent): TemplateResult {
                   >${activity.reference_number}</a
                 >
               </div>
-              <div class="col-data flex-none w110px">${this.formatDate(activity.start_date)}</div>
+              <div class="col-data flex-none w110px">${formatDate(activity.start_date!) || '-'}</div>
               <div class="col-data flex-2">
                 ${activity.location && activity.location.name}
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}
               </div>
+              <div class="col-data flex-1">${activity.sections?.map((s: any) => s.name).join(' | ')}</div>
               <div class="col-data flex-none w90px">
                 ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
-              <div class="col-data flex-1">${activity.visit_lead?.name}</div>
               <div class="col-data flex-2">
+                <span style="font-weight: 500">${activity.visit_lead?.name}</span>&nbsp;
                 ${(activity.team_members &&
-                  activity.team_members.map((member: ActivityTeamMember) => member.name).join(' | ')) ||
+                  activity.team_members.map((member: ActivityTeamMember) => ' | ' + member.name)) ||
                 '-'}
               </div>
               <div class="col-data flex-none w80px">${activity.checklists_count}</div>
@@ -156,7 +158,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
               <div class="row-details-content">
                 <div class="rdc-title">${translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS')}</div>
                 <div class="truncate">
-                  ${activity.interventions.map((pdssfa: IActivityIntervention) => pdssfa.title).join(' | ') || '-'}
+                  ${activity.interventions.map((pdspd: IActivityIntervention) => pdspd.title).join(' | ') || '-'}
                 </div>
               </div>
               <div class="row-details-content">

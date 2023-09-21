@@ -14,13 +14,17 @@ export const AppShellStyles: CSSResult = css`
     flex: 1;
   }
 
+  etools-loading {
+    position: fixed;
+  }
+
   @media print {
-    #pageheader, 
+    #pageheader,
     #drawer {
       display: none;
     }
 
-    app-drawer-layout:not([small-menu]){
+    app-drawer-layout:not([small-menu]) {
       --app-drawer-width: 0;
     }
 

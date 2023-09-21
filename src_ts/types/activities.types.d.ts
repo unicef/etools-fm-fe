@@ -14,6 +14,7 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
+  sections: {id: number; name: string}[];
 }
 
 interface IActivityDetails extends IListActivity {
@@ -51,6 +52,38 @@ interface IActivityTpmPartner {
   name: string;
   phone_number: string;
   vendor_number: string;
+}
+
+interface IActivityTpmPartnerExtended {
+  email: string;
+  id: number;
+  name: string;
+  phone_number: string;
+  vendor_number: string;
+  staff_members: ITpmPartnerStaffMemberUser[];
+  organization_id: string;
+  street_address: string;
+  postal_code: string;
+  city: string;
+  country: string;
+  vision_synced: boolean;
+  blocked: boolean;
+  deleted_flag: boolean;
+}
+
+interface ITpmPartnerStaffMemberUser {
+  email: string;
+  last_name: string;
+  first_name: string;
+  full_name: string;
+  is_active: boolean;
+  has_active_realm: boolean;
+  profile: ITpmPartnerStaffMemberProfile;
+}
+
+interface ITpmPartnerStaffMemberProfile {
+  job_title: string;
+  phone_number: string;
 }
 
 interface IActivityPartner {

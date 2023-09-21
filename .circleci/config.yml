@@ -73,6 +73,3 @@ workflows:
                 - master
                 - staging
                 - develop
-                - analyze-tab-pagination
-                - fix-translations
-                - replace-filters

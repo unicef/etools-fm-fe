@@ -4,6 +4,7 @@ import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`
@@ -56,7 +57,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                   <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.CP_OUTPUT')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-ps-ssfa">
-                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SSFA')}</div>
+                  <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SPD')}</div>
                 </div>
                 <div class="custom-row-details-content custom-row-details-date">
                   <div class="rdc-title">
@@ -92,7 +93,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                           )}
                         </div>
                         <div class="custom-row-details-content custom-row-details-nowrap custom-row-details-date">
-                          ${this.formatDate(activity.end_date)}
+                          ${formatDate(activity.end_date) || '-'}
                         </div>
                       </div>
                     `
