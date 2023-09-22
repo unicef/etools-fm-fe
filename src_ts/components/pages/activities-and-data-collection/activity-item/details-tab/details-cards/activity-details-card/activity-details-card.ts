@@ -219,6 +219,12 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   }
 
   protected save(): void {
+    if (!this.editedData.location) {
+      fireEvent(this, 'toast', {
+        text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
+      });
+      return;
+    }
     if (this.isStartDateAfterEndDate()) {
       super.save();
     } else {
