@@ -9,6 +9,8 @@ import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
+import {USERS} from '../../../endpoints/endpoints-list';
 
 store.addReducers({activities});
 export const ACTIVITIES_PAGE = 'activities';
@@ -41,6 +43,10 @@ export class ActivitiesPageComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    const data: IStaticDataState = (store.getState() as IRootState).staticData;
+    if (!data.users) {
+      store.dispatch<AsyncEffect>(loadStaticData(USERS));
+    }
     store.subscribe(
       routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {
