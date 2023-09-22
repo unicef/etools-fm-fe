@@ -14,6 +14,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {updateAppLocation} from '../../../../../../routing/routes';
+import {getErrorText} from '../../../../../utils/utils';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   @property() isEditMode = false;
@@ -81,17 +82,13 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   }
 
   protected finish(): void {
-    let errors: string[] = [];
-    if (this.errors.data) {
-      errors = Array.isArray(this.errors.data) ? this.errors.data : [this.errors.data];
-    }
+    const errorText = getErrorText(this.errors);
     this.isUpdate = false;
-    if (!errors.length) {
+    if (!errorText.length) {
       this.isEditMode = false;
       store.dispatch(new SetEditedDetailsCard(null));
-    }
-    for (const error of errors) {
-      fireEvent(this, 'toast', {text: error});
+    } else {
+      fireEvent(this, 'toast', {text: errorText});
     }
   }
 
