@@ -1,4 +1,5 @@
-import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
 import '../../../../common/layout/etools-card';

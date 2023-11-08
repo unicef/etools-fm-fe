@@ -1,8 +1,8 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {PartnershipTab} from './partnership-tab';
 import '../../../../../common/progressbar/proportional-progress-bar';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-data-table/etools-data-table-footer';
 

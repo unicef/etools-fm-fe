@@ -1,4 +1,5 @@
-import {CSSResult, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+import {CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
 import {translate} from 'lit-translate';
 

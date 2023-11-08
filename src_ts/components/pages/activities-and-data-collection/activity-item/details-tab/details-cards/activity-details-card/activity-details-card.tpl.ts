@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {ActivityDetailsCard, CARD_NAME} from './activity-details-card';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../../utils/objects-diff';

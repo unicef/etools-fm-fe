@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 // language=HTML
 export const InputStyles: TemplateResult = html`
   <style>

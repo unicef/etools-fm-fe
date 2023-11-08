@@ -1,5 +1,7 @@
-import {css, CSSResult, customElement, html, LitElement, query, TemplateResult} from 'lit-element';
+import {css, html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, query} from 'lit/decorators.js';
 import {translate} from 'lit-translate';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 
 @customElement('file-select-button')
 export class FileSelectButton extends LitElement {
@@ -9,21 +11,24 @@ export class FileSelectButton extends LitElement {
   @query('#link')
   link!: HTMLLinkElement;
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultArray {
     // language=CSS
-    return css`
-      .upload-button {
-        color: var(--primary-color);
-        min-width: 130px;
-        font-weight: 700;
-        padding: 8px 0;
-        margin: 0;
-      }
+    return [
+      buttonsStyles,
+      css`
+        .upload-button {
+          color: var(--primary-color);
+          min-width: 130px;
+          font-weight: 700;
+          padding: 8px 0;
+          margin: 0;
+        }
 
-      iron-icon {
-        margin-right: 8px;
-      }
-    `;
+        iron-icon {
+          margin-right: 8px;
+        }
+      `
+    ];
   }
 
   render(): TemplateResult {

@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../routing/routes';

@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult, query} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../../../../redux/store';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';

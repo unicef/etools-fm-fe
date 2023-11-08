@@ -3,7 +3,7 @@ import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-date-time/datepicker-lite';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';

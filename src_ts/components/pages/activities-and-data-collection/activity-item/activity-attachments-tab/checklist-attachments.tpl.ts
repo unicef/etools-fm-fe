@@ -1,6 +1,6 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '../../../../common/attachmants-list/attachments-list';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/iron-icons';
 import {ChecklistAttachments} from './checklist-attachments';

@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {EntitiesMonitorCard} from './entities-monitor-card';
 import {CARD_NAME} from './entities-monitor-card';
 import {translate} from 'lit-translate';

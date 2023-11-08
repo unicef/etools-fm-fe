@@ -1,5 +1,5 @@
 import {PartnersListComponent} from './partners-list';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 

@@ -1,5 +1,6 @@
-import {CSSResultArray, customElement, css, html, LitElement, property, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import './data-collect-popup';
@@ -25,7 +26,7 @@ import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit/directives/class-map';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';

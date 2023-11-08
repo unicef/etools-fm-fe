@@ -1,4 +1,4 @@
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {staticDataDynamic} from '../../../redux/selectors/static-data.selectors';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';

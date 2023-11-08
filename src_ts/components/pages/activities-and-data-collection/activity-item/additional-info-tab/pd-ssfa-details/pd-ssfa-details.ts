@@ -1,4 +1,5 @@
-import {LitElement, TemplateResult, customElement, CSSResult, property, css} from 'lit-element';
+import {css, CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './pd-ssfa-details.tpl';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';

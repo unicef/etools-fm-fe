@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';

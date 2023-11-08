@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../styles/input-styles';
 import '../../../../common/layout/etools-card';
 import '@polymer/paper-input/paper-textarea';

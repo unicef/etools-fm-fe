@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
 import {SitesPopupComponent} from './sites-popup';
 import {InputStyles} from '../../../../styles/input-styles';

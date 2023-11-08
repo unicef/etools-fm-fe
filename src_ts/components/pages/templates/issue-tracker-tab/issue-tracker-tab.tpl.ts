@@ -1,7 +1,7 @@
-import {html, TemplateResult} from 'lit-html';
+import {html, TemplateResult} from 'lit';
 import {IssueTrackerTabComponent} from './issue-tracker-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';

@@ -1,4 +1,4 @@
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import clone from 'ramda/es/clone';
 import equals from 'ramda/es/equals';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';

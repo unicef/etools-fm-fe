@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '@polymer/paper-toggle-button';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import './completed-finding/completed-finding';

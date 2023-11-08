@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
 import '../../../common/layout/etools-tabs';

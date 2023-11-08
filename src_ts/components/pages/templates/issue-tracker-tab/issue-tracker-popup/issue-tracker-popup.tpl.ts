@@ -1,6 +1,6 @@
-import {html, TemplateResult} from 'lit-html';
+import {html, TemplateResult} from 'lit';
 import {IssueTrackerPopup} from './issue-tracker-popup';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';

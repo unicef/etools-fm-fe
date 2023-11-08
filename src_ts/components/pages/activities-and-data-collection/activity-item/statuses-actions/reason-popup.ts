@@ -1,13 +1,5 @@
-import {
-  CSSResultArray,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  query,
-  TemplateResult
-} from 'lit-element';
+import {CSSResultArray, LitElement, PropertyValues, TemplateResult, html} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';

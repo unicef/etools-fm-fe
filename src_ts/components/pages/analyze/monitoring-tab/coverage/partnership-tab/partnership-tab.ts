@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../../redux/store';
 import {loadPartnersCoverage} from '../../../../../../redux/effects/monitoring-activity.effects';

@@ -1,4 +1,4 @@
-import {TemplateResult, html} from 'lit-html';
+import {TemplateResult, html} from 'lit';
 import {translate} from 'lit-translate';
 
 export const PARTNER_TAB = 'partner';
