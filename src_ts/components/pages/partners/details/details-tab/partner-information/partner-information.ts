@@ -11,7 +11,7 @@ import {getDifference} from '../../../../../utils/objects-diff';
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {get as getTranslation} from 'lit-translate';
 import {PaperInputElement} from '@polymer/paper-input/paper-input';
 import {

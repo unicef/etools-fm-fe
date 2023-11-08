@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit-element';
 import {InputStyles} from '../../../../styles/input-styles';
 import '../../../../common/layout/etools-card';
 import '@polymer/paper-input/paper-textarea';
-import '@unicef-polymer/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import {translate} from 'lit-translate';
 import {SummaryCard} from './summary-card';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
