@@ -4,7 +4,7 @@ import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import {TemplatesTabComponent} from './templates-tab';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';

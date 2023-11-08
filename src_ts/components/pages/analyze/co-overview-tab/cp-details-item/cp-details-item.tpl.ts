@@ -1,7 +1,7 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
 import {translate} from 'lit-translate';

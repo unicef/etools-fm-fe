@@ -1,9 +1,10 @@
-import {css, CSSResultArray, customElement, html, property, query, TemplateResult} from 'lit-element';
+import {css, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import {store} from '../../../../../../redux/store';

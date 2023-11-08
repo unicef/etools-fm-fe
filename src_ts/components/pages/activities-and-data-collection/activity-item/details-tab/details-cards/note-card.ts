@@ -1,4 +1,5 @@
-import {CSSResult, customElement, css, html, LitElement, TemplateResult, property} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';

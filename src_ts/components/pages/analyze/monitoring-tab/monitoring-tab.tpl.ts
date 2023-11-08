@@ -1,5 +1,5 @@
 import {MonitoringTabComponent} from './monitoring-tab';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
 import './shared-section-with-tabs-template/shared-section-with-tabs-template';

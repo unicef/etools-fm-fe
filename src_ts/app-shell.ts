@@ -32,7 +32,10 @@ import {getCurrentUserData} from './redux/effects/user.effects';
 import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
 import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
-import {CSSResultArray, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+
+import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+
 import {navigate} from './redux/effects/app.effects';
 import {UpdateDrawerState} from './redux/actions/app.actions';
 import {loadStaticData} from './redux/effects/load-static-data.effect';

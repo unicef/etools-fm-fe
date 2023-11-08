@@ -1,4 +1,4 @@
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';

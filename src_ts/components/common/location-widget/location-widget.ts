@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './location-widget.tpl';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';

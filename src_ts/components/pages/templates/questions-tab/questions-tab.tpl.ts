@@ -1,7 +1,7 @@
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import './question-popup/question-popup';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {QuestionsTabComponent} from './questions-tab';
 import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';

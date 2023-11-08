@@ -1,4 +1,5 @@
-import {LitElement, property} from 'lit-element';
+import {LitElement} from 'lit';
+import {property} from 'lit/decorators';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {store} from '../../../../../../redux/store';
 import {createActivityDetails, updateActivityDetails} from '../../../../../../redux/effects/activity-details.effects';

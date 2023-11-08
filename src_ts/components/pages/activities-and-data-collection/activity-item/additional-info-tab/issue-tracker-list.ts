@@ -1,5 +1,6 @@
-import {LitElement, html, TemplateResult, customElement, property, CSSResultArray, css} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';

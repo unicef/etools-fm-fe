@@ -1,6 +1,6 @@
 import '@polymer/iron-icons';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {PartnerContacts} from './partner-contacts';
 

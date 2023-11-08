@@ -1,5 +1,6 @@
-import {LitElement, TemplateResult, html, property, query, customElement, css, CSSResultArray} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 
 @customElement('lazy-list')

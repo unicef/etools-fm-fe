@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '@polymer/iron-icons/iron-icons';
 
 /* eslint-disable max-len */

@@ -3,7 +3,7 @@ import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-loading';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@polymer/paper-input/paper-textarea';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';

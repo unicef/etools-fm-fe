@@ -3,7 +3,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import './edit-attachments-popup/edit-attachments-popup';
 import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {getTypeDisplayName} from '../../utils/attachments-helper';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';

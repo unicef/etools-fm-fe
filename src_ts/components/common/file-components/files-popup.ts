@@ -1,9 +1,10 @@
-import {LitElement, TemplateResult, html, property, customElement, CSSResult, css} from 'lit-element';
+import {css, CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../styles/input-styles';
 import {DialogStyles} from '../../styles/dialog-styles';
 import {translate} from 'lit-translate';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import '@unicef-polymer/etools-upload/etools-upload';
 
 @customElement('files-popup')

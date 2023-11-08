@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, property, TemplateResult} from 'lit-element';
+import {css, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './entities-monitor-card.tpl';
 import {elevationStyles} from '../../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
