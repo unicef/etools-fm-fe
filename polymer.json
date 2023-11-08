@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/components/app-shell/app-shell.js",
+  "shell": "src/app-shell.js",
   "sources": ["assets/**"],
   "fragments": [
     "src/components/pages/page-not-found.js",
