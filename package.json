@@ -124,7 +124,6 @@
     "rollup-plugin-filesize": "^9.1.2",
     "rollup-plugin-license": "^3.2.0",
     "rollup-plugin-livereload": "^2.0.5",
-    "rollup-plugin-multi-input": "^1.4.1",
     "rollup-plugin-serve": "^2.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-workbox": "^8.0.1",

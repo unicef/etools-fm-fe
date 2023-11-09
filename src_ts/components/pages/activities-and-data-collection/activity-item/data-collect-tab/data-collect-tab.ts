@@ -26,7 +26,7 @@ import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import {classMap} from 'lit/directives/class-map';
+import {classMap} from 'lit/directives/class-map.js';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
@@ -34,7 +34,6 @@ import './remove-data-collect-popup';
 store.addReducers({dataCollection});
 
 type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
-
 @customElement('data-collect-tab')
 export class DataCollectTab extends LitElement {
   @property({type: Number, attribute: 'activity-id', reflect: true}) activityId!: number;

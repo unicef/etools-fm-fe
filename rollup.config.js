@@ -1,12 +1,11 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import path from 'path';
-import multiInput from 'rollup-plugin-multi-input';
 
 const importMetaUrlCurrentModulePlugin = () => {
   return {
     name: 'import-meta-url-current-module',
-    resolveImportMeta(property, { moduleId }) {
+    resolveImportMeta(property, {moduleId}) {
       if (property === 'url') {
         return `new URL('${path.relative(process.cwd(), moduleId)}', document.baseURI).href`;
       }
@@ -16,22 +15,17 @@ const importMetaUrlCurrentModulePlugin = () => {
 };
 
 const config = {
-  input: ['src_ts/**/*.ts'],
+  input: 'src_ts/app-shell.ts',
   output: {
     dir: 'src/src',
     format: 'es',
-    sourcemap: true,
+    sourcemap: true
   },
   onwarn(warning, warn) {
     if (warning.code === 'THIS_IS_UNDEFINED') return;
     warn(warning);
   },
-  plugins: [
-    multiInput({ relative: 'src_ts/' }),
-    importMetaUrlCurrentModulePlugin(),
-    resolve(),
-    esbuild(),
-  ],
+  plugins: [importMetaUrlCurrentModulePlugin(), resolve(), esbuild()],
   preserveEntrySignatures: false
 };
 
