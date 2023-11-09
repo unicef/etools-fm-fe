@@ -11,7 +11,11 @@
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "outDir": "src"
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "outDir": "src",
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src_ts/**/*.ts"
