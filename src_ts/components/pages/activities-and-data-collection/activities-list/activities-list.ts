@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {Unsubscribe} from 'redux';

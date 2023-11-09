@@ -1,5 +1,5 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
 

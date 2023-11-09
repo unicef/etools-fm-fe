@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './add-new-vendor-popup.tpl';
 import {SharedStyles} from '../../../../styles/shared-styles';

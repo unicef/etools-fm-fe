@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';

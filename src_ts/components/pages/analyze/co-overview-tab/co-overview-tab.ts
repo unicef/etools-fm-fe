@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {CP_OUTPUTS} from '../../../../endpoints/endpoints-list';
 import {updateQueryParams} from '../../../../routing/routes';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';

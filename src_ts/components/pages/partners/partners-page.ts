@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
 import {store} from '../../../redux/store';
 import {tpmPartners} from '../../../redux/reducers/tpm-partners.reducer';

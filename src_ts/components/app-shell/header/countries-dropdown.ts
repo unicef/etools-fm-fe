@@ -3,7 +3,10 @@ import {store} from '../../../redux/store';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
 import {countrySelector} from '../../../redux/selectors/country.selectors';

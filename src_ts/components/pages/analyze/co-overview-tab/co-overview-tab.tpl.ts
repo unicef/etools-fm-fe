@@ -1,9 +1,9 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {CoOverviewTabComponent} from './co-overview-tab';
 import {InputStyles} from '../../../styles/input-styles';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {translate} from 'lit-translate';
 
 export function template(this: CoOverviewTabComponent): TemplateResult {

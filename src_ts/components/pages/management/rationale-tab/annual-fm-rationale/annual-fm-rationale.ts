@@ -1,4 +1,5 @@
-import {CSSResultArray, css, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {store} from '../../../../../redux/store';
 import {updateRationale} from '../../../../../redux/effects/rationale.effects';
 import {SharedStyles} from '../../../../styles/shared-styles';

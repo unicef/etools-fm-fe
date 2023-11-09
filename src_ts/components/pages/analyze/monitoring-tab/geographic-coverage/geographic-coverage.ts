@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './geographic-coverage.tpl';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';

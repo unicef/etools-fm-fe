@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 import {elevation2} from './elevation-styles';
 // language=CSS
 export const SharedStyles: CSSResult = css`

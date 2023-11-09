@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit-html';
+import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {getEndpoint} from '../../../../../../endpoints/endpoints';

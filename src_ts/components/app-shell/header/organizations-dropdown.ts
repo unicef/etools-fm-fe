@@ -3,7 +3,9 @@ import {store} from '../../../redux/store';
 import '@unicef-polymer/etools-dropdown/etools-dropdown.js';
 import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown.js';
-import {customElement, LitElement, html, property, query, TemplateResult} from 'lit-element';
+
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 
 import {fireEvent} from '@unicef-polymer/etools-modules-common/dist/utils/fire-custom-event';
 import {countriesDropdownStyles} from './countries-dropdown-styles';

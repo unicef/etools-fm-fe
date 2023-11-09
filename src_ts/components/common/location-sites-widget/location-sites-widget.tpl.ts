@@ -1,6 +1,6 @@
 import {LocationSitesWidgetComponent} from './location-sites-widget';
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import {updateAppLocation} from '../../../routing/routes';
 import {translate} from 'lit-translate';
 

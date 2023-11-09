@@ -2,7 +2,8 @@ import '@polymer/paper-button';
 import '@polymer/paper-menu-button';
 import '@polymer/paper-icon-button';
 import './reason-popup';
-import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {
   ASSIGN,
   BACK_TRANSITIONS,

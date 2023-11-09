@@ -1,4 +1,5 @@
-import {LitElement, TemplateResult, html, customElement, property, CSSResult, css} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import './issue-tracker-list';
 import './pd-ssfa-details/pd-ssfa-details';
 

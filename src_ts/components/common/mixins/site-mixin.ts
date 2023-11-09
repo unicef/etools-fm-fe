@@ -2,7 +2,7 @@ import {store} from '../../../redux/store';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
 import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
 import {Unsubscribe} from 'redux';
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

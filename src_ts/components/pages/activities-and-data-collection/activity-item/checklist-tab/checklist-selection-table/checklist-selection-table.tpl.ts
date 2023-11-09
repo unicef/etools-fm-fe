@@ -4,7 +4,7 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '../../../../../common/layout/etools-card';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {ChecklistSelectionTable} from './checklist-selection-table';
 import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {ROOT_PATH} from '../../../../../../config/config';

@@ -1,5 +1,5 @@
 import {ActivitiesListComponent} from './activities-list';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';

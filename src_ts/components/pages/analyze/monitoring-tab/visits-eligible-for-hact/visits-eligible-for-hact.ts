@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
 import '../coverage/shared-tab-template';
 import {elevationStyles} from '../../../../styles/elevation-styles';

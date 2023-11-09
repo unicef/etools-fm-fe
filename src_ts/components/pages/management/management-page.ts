@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';

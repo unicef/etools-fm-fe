@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
 import {PaperTabsElement} from '@polymer/paper-tabs/paper-tabs';

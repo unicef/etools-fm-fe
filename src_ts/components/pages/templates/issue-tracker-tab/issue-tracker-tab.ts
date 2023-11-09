@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';

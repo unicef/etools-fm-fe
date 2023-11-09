@@ -1,13 +1,5 @@
-import {
-  CSSResultArray,
-  customElement,
-  LitElement,
-  property,
-  PropertyValues,
-  query,
-  queryAll,
-  TemplateResult
-} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
+import {customElement, property, query, queryAll} from 'lit/decorators.js';
 import {template} from './templates-tab.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {updateQueryParams} from '../../../../routing/routes';

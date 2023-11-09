@@ -1,5 +1,6 @@
-import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {translate} from 'lit-translate';
 

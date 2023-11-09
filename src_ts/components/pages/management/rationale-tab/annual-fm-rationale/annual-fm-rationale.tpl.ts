@@ -1,5 +1,5 @@
 import '@polymer/paper-input/paper-textarea';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {AnnualFmRationale} from './annual-fm-rationale';

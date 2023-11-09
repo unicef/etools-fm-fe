@@ -1,13 +1,5 @@
-import {
-  css,
-  CSSResultArray,
-  customElement,
-  LitElement,
-  property,
-  PropertyValues,
-  queryAll,
-  TemplateResult
-} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
+import {customElement, property, queryAll} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
