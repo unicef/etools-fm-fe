@@ -1,5 +1,5 @@
 import {TemplateResult, html} from 'lit';
-import {translate} from 'lit-translate';
+import {get} from 'lit-translate';
 
 export const PARTNER_TAB = 'partner';
 const PD_SPD_TAB = 'pd-spd';
@@ -13,17 +13,17 @@ const OPEN_ISSUES_LOCATION_TAB = 'open-issues-location';
 export const COVERAGE_PAGE_TABS: PageTab[] = [
   {
     tab: PARTNER_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER'),
     hidden: false
   },
   {
     tab: PD_SPD_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PD_SPD'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PD_SPD'),
     hidden: false
   },
   {
     tab: CP_OUTPUT_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT'),
     hidden: false
   }
 ];
@@ -31,17 +31,17 @@ export const COVERAGE_PAGE_TABS: PageTab[] = [
 export const OPEN_ISSUES_PAGE_TABS: PageTab[] = [
   {
     tab: OPEN_ISSUES_PARTNER_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER'),
     hidden: false
   },
   {
     tab: OPEN_ISSUES_CP_OUTPUT_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT'),
     hidden: false
   },
   {
     tab: OPEN_ISSUES_LOCATION_TAB,
-    tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_LOCATION'),
+    tabLabel: get('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_LOCATION'),
     hidden: false
   }
 ];

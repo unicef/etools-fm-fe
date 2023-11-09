@@ -10,7 +10,7 @@ import {get as getTranslation} from 'lit-translate';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
 import {activateVendor, getVendorByNumber} from '../../../../../redux/effects/tpm-partners.effects';
 import {PaperInputElement} from '@polymer/paper-input/paper-input';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {getDifference} from '../../../../utils/objects-diff';
 import {store} from '../../../../../redux/store';
 import {updateTPMPartnerDetails} from '../../../../../redux/effects/tpm-partner-details.effects';

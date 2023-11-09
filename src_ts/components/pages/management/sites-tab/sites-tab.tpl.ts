@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/paper-toggle-button';
-import '@unicef-polymer/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@polymer/paper-input/paper-textarea';
 import {html, TemplateResult} from 'lit';

@@ -2,7 +2,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/paper-checkbox';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';
-import '@unicef-polymer/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '../../../../../common/layout/etools-card';
 import {html, TemplateResult} from 'lit';
 import {ChecklistSelectionTable} from './checklist-selection-table';

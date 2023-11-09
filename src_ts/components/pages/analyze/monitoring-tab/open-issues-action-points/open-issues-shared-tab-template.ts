@@ -1,6 +1,6 @@
 import {CSSResult, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {StyleInfo, styleMap} from 'lit/directives/style-map';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
 import {translate} from 'lit-translate';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';

@@ -9,9 +9,8 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {translate, get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
-import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
 
 export interface ActivityFilter extends EtoolsFilter {
   selectionOptionsEndpoint?: string;

@@ -7,7 +7,7 @@ import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+// import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
@@ -222,13 +222,13 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       : html``;
   }
 
-  protected getAttachmentsBtnText(attachmentsCount: number): Callback {
+  protected getAttachmentsBtnText(attachmentsCount: number): string {
     if (attachmentsCount === 1) {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
     } else if (attachmentsCount > 1) {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
     } else {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
     }
   }
 
@@ -379,7 +379,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   static get styles(): CSSResultArray {
     // language=CSS
     return [
-      FormBuilderCardStyles,
+      // FormBuilderCardStyles,
       FlexLayoutClasses,
       RadioButtonStyles,
       css`

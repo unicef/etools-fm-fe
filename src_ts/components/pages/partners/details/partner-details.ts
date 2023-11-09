@@ -40,12 +40,12 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
-      tabLabel: translate(`TPM_DETAILS.TABS.${DETAILS_TAB}`),
+      tabLabel: getTranslation(`TPM_DETAILS.TABS.${DETAILS_TAB}`),
       hidden: false
     },
     {
       tab: ATTACHMENTS_TAB,
-      tabLabel: translate(`TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`),
+      tabLabel: getTranslation(`TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
     }
   ];

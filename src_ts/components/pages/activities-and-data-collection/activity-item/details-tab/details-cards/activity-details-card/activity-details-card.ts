@@ -18,7 +18,7 @@ import clone from 'ramda/es/clone';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
-import {translate, get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 
 export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
@@ -121,12 +121,12 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     return [
       {
         tab: SITE_TAB,
-        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_SITE'),
+        tabLabel: getTranslation('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_SITE'),
         hidden: false
       },
       {
         tab: AREA_TAB,
-        tabLabel: translate('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_ADMIN_LEVEL'),
+        tabLabel: getTranslation('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_ADMIN_LEVEL'),
         hidden: false
       }
     ];
