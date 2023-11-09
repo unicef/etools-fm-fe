@@ -9,7 +9,7 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {translate} from 'lit-translate';
+import {get as getTranslate} from 'lit-translate';
 import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
 
 export interface ActivityFilter extends EtoolsFilter {
@@ -53,7 +53,7 @@ setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
 export const activitiesFilters: ActivityFilter[] = [
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
     filterKey: ActivityFilterKeys.monitor_type,
     type: EtoolsFilterTypes.Dropdown,
     selectionOptions: [],
@@ -66,7 +66,7 @@ export const activitiesFilters: ActivityFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
     filterKey: ActivityFilterKeys.tpm_partner__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -80,7 +80,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: TPM_PARTNERS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
     filterKey: ActivityFilterKeys.team_members__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -94,7 +94,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: USERS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
     filterKey: ActivityFilterKeys.visit_lead__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -108,7 +108,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: USERS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.LOCATION'),
     filterKey: ActivityFilterKeys.location__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -122,7 +122,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: LOCATIONS_ENDPOINT
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.SITE'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.SITE'),
     filterKey: ActivityFilterKeys.location_site__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -135,7 +135,7 @@ export const activitiesFilters: ActivityFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.PARTNERS'),
     filterKey: ActivityFilterKeys.partners__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -149,7 +149,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: PARTNERS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.OFFICE'),
     filterKey: ActivityFilterKeys.offices__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -163,7 +163,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: ACTION_POINTS_OFFICES
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
     filterKey: ActivityFilterKeys.interventions__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -177,7 +177,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: INTERVENTIONS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
     filterKey: ActivityFilterKeys.cp_outputs__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -191,7 +191,7 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: CP_OUTPUTS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.STATUS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.STATUS'),
     filterKey: ActivityFilterKeys.status__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -204,7 +204,7 @@ export const activitiesFilters: ActivityFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.SECTIONS'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.SECTIONS'),
     filterKey: ActivityFilterKeys.sections__in,
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -218,14 +218,14 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: SECTIONS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.START_DATE'),
     filterKey: ActivityFilterKeys.start_date__gte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,
     selected: false
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE'),
+    filterName: getTranslate('ACTIVITIES_LIST.FILTERS.END_DATE'),
     filterKey: ActivityFilterKeys.end_date__lte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,

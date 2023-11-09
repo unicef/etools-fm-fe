@@ -1,6 +1,6 @@
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
 import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
-import {translate} from 'lit-translate';
+import {get} from 'lit-translate';
 
 export enum QuestionFilterKeys {
   level__in = 'level__in',
@@ -26,7 +26,7 @@ setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
 export const questionsFilters: EtoolsFilter[] = [
   {
-    filterName: translate('QUESTIONS.LABELS.LEVEL'),
+    filterName: get('QUESTIONS.LABELS.LEVEL'),
     filterKey: 'level__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -39,7 +39,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.SECTIONS'),
+    filterName: get('QUESTIONS.LABELS.SECTIONS'),
     filterKey: 'sections__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -52,7 +52,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.METHODS'),
+    filterName: get('QUESTIONS.LABELS.METHODS'),
     filterKey: 'methods__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -65,7 +65,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.GROUP'),
+    filterName: get('QUESTIONS.LABELS.GROUP'),
     filterKey: 'category__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -78,7 +78,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.ANSWER_TYPE'),
+    filterName: get('QUESTIONS.LABELS.ANSWER_TYPE'),
     filterKey: 'answer_type__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -91,14 +91,14 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.IS_HACT'),
+    filterName: get('QUESTIONS.LABELS.IS_HACT'),
     filterKey: 'is_hact',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,
     selected: false
   },
   {
-    filterName: translate('QUESTIONS.LABELS.IS_ACTIVE'),
+    filterName: get('QUESTIONS.LABELS.IS_ACTIVE'),
     filterKey: 'is_active',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,

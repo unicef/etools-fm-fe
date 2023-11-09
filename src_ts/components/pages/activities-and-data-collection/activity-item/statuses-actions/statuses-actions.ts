@@ -101,7 +101,7 @@ export class StatusesActionsComponent extends LitElement {
       : html``;
   }
 
-  private getMainBtnText(transitionName: string): string | Callback {
+  private getMainBtnText(transitionName: string) {
     const key: string = transitionName === ASSIGN && this.isStaff ? 'ASSIGN_AND_ACCEPT' : transitionName;
     return translate(`ACTIVITY_ITEM.TRANSITIONS.${key}`);
   }

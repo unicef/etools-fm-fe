@@ -40,7 +40,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslate} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -65,19 +65,19 @@ const VALID_TABS: Set<string> = new Set([
 ]);
 
 export const STATUSES: IEtoolsStatusModel[] = [
-  {status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
-  {status: CHECKLIST, label: translate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`)},
-  {status: REVIEW, label: translate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`)},
-  {status: ASSIGNED, label: translate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`)},
-  {status: DATA_COLLECTION, label: translate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`)},
-  {status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
-  {status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
-  {status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
+  {status: DRAFT, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
+  {status: CHECKLIST, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`)},
+  {status: REVIEW, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`)},
+  {status: ASSIGNED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`)},
+  {status: DATA_COLLECTION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`)},
+  {status: REPORT_FINALIZATION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
+  {status: SUBMITTED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
+  {status: COMPLETED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
 ];
 const CANCELLED_STATUS: IEtoolsStatusModel[] = [
   {
     status: CANCELLED,
-    label: translate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
+    label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
   }
 ];
 
@@ -93,42 +93,42 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
       hidden: false
     },
     {
       tab: CHECKLIST_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${CHECKLIST_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${CHECKLIST_TAB}`),
       hidden: false
     },
     {
       tab: REVIEW_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${REVIEW_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${REVIEW_TAB}`),
       hidden: false
     },
     {
       tab: COLLECT_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`),
       hidden: false
     },
     {
       tab: SUMMARY_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
       hidden: false
     },
     {
       tab: ATTACHMENTS_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
     },
     {
       tab: ADDITIONAL_INFO,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
       hidden: false
     },
     {
       tab: ACTION_POINTS,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`),
+      tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`),
       hidden: false
     }
   ];
@@ -322,7 +322,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       return [
         {
           tab: DETAILS_TAB,
-          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+          tabLabel: getTranslate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
           hidden: false
         }
       ];

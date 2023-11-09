@@ -1,6 +1,6 @@
 import {html, css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {StyleInfo, styleMap} from 'lit/directives/style-map';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 
 @customElement('column-item-progress-bar')
 export class ColumnItemProgressBar extends LitElement {
