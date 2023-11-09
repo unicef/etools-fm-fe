@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 import {IssueTrackerPopup} from './issue-tracker-popup';
 import {repeat} from 'lit/directives/repeat.js';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
-import '@unicef-polymer/etools-dialog/etools-dialog';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea';

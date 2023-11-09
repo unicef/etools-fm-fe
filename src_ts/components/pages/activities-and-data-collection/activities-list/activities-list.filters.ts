@@ -1,4 +1,4 @@
-import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {
   ACTION_POINTS_OFFICES,
   CP_OUTPUTS,
@@ -9,7 +9,8 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
+import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
 
 export interface ActivityFilter extends EtoolsFilter {
@@ -49,189 +50,206 @@ export const selectedValueTypeByFilterKey: GenericObject = {
   [ActivityFilterKeys.end_date__lte]: 'string'
 };
 
-setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
+export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilterKey);
 
-export const activitiesFilters: ActivityFilter[] = [
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
-    filterKey: ActivityFilterKeys.monitor_type,
-    type: EtoolsFilterTypes.Dropdown,
-    selectionOptions: [],
-    selectedValue: null,
-    optionValue: 'value',
-    optionLabel: 'display_name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
-    filterKey: ActivityFilterKeys.tpm_partner__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: TPM_PARTNERS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
-    filterKey: ActivityFilterKeys.team_members__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: true,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: USERS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
-    filterKey: ActivityFilterKeys.visit_lead__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: USERS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION'),
-    filterKey: ActivityFilterKeys.location__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: LOCATIONS_ENDPOINT
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.SITE'),
-    filterKey: ActivityFilterKeys.location_site__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: true,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS'),
-    filterKey: ActivityFilterKeys.partners__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: PARTNERS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE'),
-    filterKey: ActivityFilterKeys.offices__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: ACTION_POINTS_OFFICES
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
-    filterKey: ActivityFilterKeys.interventions__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'title',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: INTERVENTIONS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
-    filterKey: ActivityFilterKeys.cp_outputs__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: false,
-    disabled: false,
-    selectionOptionsEndpoint: CP_OUTPUTS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.STATUS'),
-    filterKey: ActivityFilterKeys.status__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'value',
-    optionLabel: 'display_name',
-    selected: true,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.SECTIONS'),
-    filterKey: ActivityFilterKeys.sections__in,
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: true,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false,
-    selectionOptionsEndpoint: SECTIONS
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
-    filterKey: ActivityFilterKeys.start_date__gte,
-    type: EtoolsFilterTypes.Date,
-    selectedValue: false,
-    selected: false
-  },
-  {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE'),
-    filterKey: ActivityFilterKeys.end_date__lte,
-    type: EtoolsFilterTypes.Date,
-    selectedValue: false,
-    selected: false
-  }
-];
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function getAllAtivitiesFilters() {
+  return [
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.MONITOR_TYPE',
+      filterKey: ActivityFilterKeys.monitor_type,
+      type: EtoolsFilterTypes.Dropdown,
+      selectionOptions: [],
+      selectedValue: null,
+      optionValue: 'value',
+      optionLabel: 'display_name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.TPM_PARTNERS',
+      filterKey: ActivityFilterKeys.tpm_partner__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: TPM_PARTNERS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS',
+      filterKey: ActivityFilterKeys.team_members__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: true,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: USERS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.VISIT_LEAD',
+      filterKey: ActivityFilterKeys.visit_lead__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: USERS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.LOCATION'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.LOCATION',
+      filterKey: ActivityFilterKeys.location__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: LOCATIONS_ENDPOINT
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.SITE'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.SITE',
+      filterKey: ActivityFilterKeys.location_site__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: true,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.PARTNERS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.PARTNERS',
+      filterKey: ActivityFilterKeys.partners__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: PARTNERS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.OFFICE'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.OFFICE',
+      filterKey: ActivityFilterKeys.offices__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: ACTION_POINTS_OFFICES
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.INTERVENTIONS',
+      filterKey: ActivityFilterKeys.interventions__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'title',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: INTERVENTIONS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.CP_OUTPUTS',
+      filterKey: ActivityFilterKeys.cp_outputs__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: false,
+      disabled: false,
+      selectionOptionsEndpoint: CP_OUTPUTS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.STATUS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.STATUS',
+      filterKey: ActivityFilterKeys.status__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'value',
+      optionLabel: 'display_name',
+      selected: true,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.SECTIONS'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.SECTIONS',
+      filterKey: ActivityFilterKeys.sections__in,
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: true,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false,
+      selectionOptionsEndpoint: SECTIONS
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.START_DATE'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.START_DATE',
+      filterKey: ActivityFilterKeys.start_date__gte,
+      type: EtoolsFilterTypes.Date,
+      selectedValue: false,
+      selected: false
+    },
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.END_DATE'),
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.END_DATE',
+      filterKey: ActivityFilterKeys.end_date__lte,
+      type: EtoolsFilterTypes.Date,
+      selectedValue: false,
+      selected: false
+    }
+  ];
+}
 
 const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.monitor_type,
@@ -242,9 +260,10 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.sections__in
 ];
 
-export const getActivitiesFilters = (isUnicefUser: boolean): ActivityFilter[] => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const getActivitiesFilters = (isUnicefUser: boolean) => {
   if (isUnicefUser) {
-    return activitiesFilters;
+    return getAllAtivitiesFilters();
   }
-  return activitiesFilters.filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
+  return getAllAtivitiesFilters().filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
 };

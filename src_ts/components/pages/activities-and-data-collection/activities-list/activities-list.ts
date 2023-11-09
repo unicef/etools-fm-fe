@@ -13,10 +13,14 @@ import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
-import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
-import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {getActivitiesFilters, ActivityFilter, ActivityFilterKeys} from './activities-list.filters';
+import {
+  getActivitiesFilters,
+  ActivityFilter,
+  ActivityFilterKeys,
+  ActivitiesFiltersHelper
+} from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
 import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
@@ -124,7 +128,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
         };
         waitForCondition(() => !!this.user).then(() => {
-          this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user);
+          this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user) as any;
           this.initFilters();
         });
       })
@@ -340,13 +344,17 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     this.populateDropdownFilterOptions(this.filtersData, this.activitiesListFilters);
 
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
     activitiesListFilters.forEach((filter: EtoolsFilter) => {
       if (filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti) {
-        updateFilterSelectionOptions(activitiesListFilters, filter.filterKey, filtersData[filter.filterKey]);
+        ActivitiesFiltersHelper.updateFilterSelectionOptions(
+          activitiesListFilters,
+          filter.filterKey,
+          filtersData[filter.filterKey]
+        );
       }
     });
   }

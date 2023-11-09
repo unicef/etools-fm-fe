@@ -3,7 +3,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {getEndpoint} from '../../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../../endpoints/endpoints-list';
-import '@unicef-polymer/etools-dialog/etools-dialog';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-loading';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-button/paper-button';

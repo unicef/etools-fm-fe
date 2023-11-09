@@ -12,7 +12,7 @@ import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';

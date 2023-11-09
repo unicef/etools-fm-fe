@@ -8,6 +8,7 @@ import {store} from '../../../../../redux/store';
 import {deleteDataCollectionChecklistItem} from '../../../../../redux/effects/data-collection.effects';
 import {Unsubscribe} from 'redux';
 import {removalInProgress} from '../../../../../redux/selectors/data-collection.selectors';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('remove-data-collect-popup')
 export class RemoveDataCollectPopup extends LitElement {

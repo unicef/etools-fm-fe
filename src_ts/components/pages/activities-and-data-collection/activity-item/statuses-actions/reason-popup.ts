@@ -9,6 +9,7 @@ import {get, translate} from 'lit-translate';
 import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
 import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {CardStyles} from '../../../../styles/card-styles';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {

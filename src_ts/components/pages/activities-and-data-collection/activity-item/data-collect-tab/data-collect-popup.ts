@@ -8,6 +8,7 @@ import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import '@polymer/paper-input/paper-textarea';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {
