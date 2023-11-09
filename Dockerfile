@@ -1,4 +1,4 @@
-FROM node:12-alpine3.12 as builder
+FROM node:14.21-alpine3.16  as builder
 RUN apk update
 RUN apk add --update bash
 
@@ -22,7 +22,7 @@ ENV NODE_OPTIONS --max_old_space_size=4096
 RUN npm run build
 
 
-FROM node:12-alpine3.12
+FROM node:14.21-alpine3.16 
 RUN apk update
 RUN apk add --update bash
 
