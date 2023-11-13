@@ -3,6 +3,7 @@ import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
@@ -20,7 +21,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
+          <etools-icon icon="search" slot="prefix"></etools-icon>
         </paper-input>
 
         <div class="toggle-button-control">
@@ -43,12 +44,12 @@ export function template(this: SitesTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${translate('SITES.TABLE_CAPTION')}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openDialog()}"
+          <etools-icon-button
+            @click="${() => this.openDialog()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_SITES)}"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 

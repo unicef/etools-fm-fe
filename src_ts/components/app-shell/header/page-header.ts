@@ -1,6 +1,7 @@
 import '@polymer/polymer/lib/elements/dom-if';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
-import '@polymer/paper-icon-button/paper-icon-button';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+
 import '@unicef-polymer/etools-app-selector/dist/etools-app-selector';
 import '@unicef-polymer/etools-profile-dropdown/etools-profile-dropdown';
 import '../../common/layout/support-btn';
@@ -176,12 +177,12 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
       <app-toolbar sticky class="content-align header">
         <div class="header__item header__left-group">
-          <paper-icon-button
+          <etools-icon-button
             id="menuButton"
             class="nav-menu-button"
-            icon="menu"
-            @tap="${() => this.menuBtnClicked()}"
-          ></paper-icon-button>
+            name="menu"
+            @click="${() => this.menuBtnClicked()}"
+          ></etools-icon-button>
           <etools-app-selector
             id="selector"
             .user="${this.profile}"
@@ -236,14 +237,14 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             @sign-out="${this._signOut}"
           >
           </etools-profile-dropdown>
-          <paper-icon-button
+          <etools-icon-button
             title="${translate('NAVIGATION_MENU.REFRESH')}"
             class="refresh-button"
-            icon="refresh"
+            name="refresh"
             tracker="Refresh"
-            @tap="${this.refresh}"
+            @click="${this.refresh}"
           >
-          </paper-icon-button>
+          </etools-icon-button>
         </div>
       </app-toolbar>
     `;

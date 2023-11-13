@@ -7,7 +7,8 @@ import '../../../common/layout/status/etools-status';
 import {RouterStyles} from '../../../app-shell/router-style';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -122,15 +123,18 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         <h1 slot="page-title">${this.partnerDetails && this.partnerDetails.name}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <paper-button
-            id="export"
-            @tap="${this.export}"
-            tracker="Export PDF"
-            ?hidden="${this.hideExportButton(this.partnerDetails)}"
-          >
-            <iron-icon icon="file-download" class="export-icon"></iron-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </paper-button>
+          <sl-button
+              class="neutral"
+              variant="text"
+              target="_blank"
+              id="export"
+              @click="${this.export}"
+              tracker="Export PDF"
+              ?hidden="${this.hideExportButton(this.partnerDetails)}"
+            >
+              <etools-icon name="file-download" slot="prefix"></etools-icon>
+              ${translate('ACTIVITY_DETAILS.EXPORT')}
+          </sl-button>
           <div class="status-container">
             <div class="status-icon">
               <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">

@@ -19,7 +19,7 @@ import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {apIcons} from '../../styles/app-icons';
+import {fmIcons} from '../../styles/app-icons';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {get as getTranslation} from 'lit-translate';
 
@@ -48,7 +48,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     // main template
     // language=HTML
     return html`
-      ${apIcons}
+      ${fmIcons}
 
       <div class="menu-header">
         <span id="app-name" class="app-name">
@@ -56,11 +56,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         </span>
 
         <span class="ripple-wrapper main">
-          <iron-icon
+          <etools-icon
             id="menu-header-top-icon"
-            icon="assignment-ind"
-            @tap="${() => this._toggleSmallMenu()}"
-          ></iron-icon>
+            name="assignment-ind"
+            @click="${() => this._toggleSmallMenu()}"
+          ></etools-icon>
           <paper-ripple class="circle" center></paper-ripple>
         </span>
 
@@ -69,12 +69,12 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         </paper-tooltip>
 
         <span class="chev-right">
-          <iron-icon id="expand-menu" icon="chevron-right" @tap="${() => this._toggleSmallMenu()}"></iron-icon>
+          <etools-icon id="expand-menu" name="chevron-right" @click="${() => this._toggleSmallMenu()}"></etools-icon>
           <paper-ripple class="circle" center></paper-ripple>
         </span>
 
         <span class="ripple-wrapper">
-          <iron-icon id="minimize-menu" icon="chevron-left" @tap="${() => this._toggleSmallMenu()}"></iron-icon>
+          <etools-icon id="minimize-menu" icon="chevron-left" @click="${() => this._toggleSmallMenu()}"></iron-icon>
           <paper-ripple class="circle" center></paper-ripple>
         </span>
       </div>
@@ -182,7 +182,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Implementation Intelligence"
         >
-          <iron-icon id="power-bi-icon" icon="ap-icons:power-bi"></iron-icon>
+          <iron-icon id="power-bi-icon" icon="powerBi"></iron-icon>
           <paper-tooltip for="power-bi-icon" position="right">
             ${this.translateKey(
               this.selectedLanguage,

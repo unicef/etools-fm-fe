@@ -77,13 +77,13 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">${translate('ISSUE_TRACKER.TABLE_CAPTION', this.tableInformation)}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openLogIssue()}"
+          <etools-icon-button
+            @click="${() => this.openLogIssue()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_LOG_ISSUES)}"
             data-type="add"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 

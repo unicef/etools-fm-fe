@@ -7,7 +7,6 @@ import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@polymer/paper-button/paper-button';
-import '@polymer/iron-icons/iron-icons';
 import {translate} from 'lit-translate';
 import {SummaryChecklistAttachmentsPopup} from './summary-checklist-attachments-popup';
 
@@ -65,24 +64,24 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
 
                 <!--        File name component          -->
                 <div class="filename-container">
-                  <iron-icon class="file-icon" icon="attachment"></iron-icon>
+                  <etools-icon class="file-icon" name="attachment"></etools-icon>
                   <span class="filename" title="${attachment.filename}">${attachment.filename}</span>
                 </div>
 
                 <!--         Download Button         -->
-                <paper-button class="download-button" @tap="${() => this.downloadFile(attachment)}">
-                  <iron-icon icon="cloud-download" class="dw-icon"></iron-icon>
+                <sl-button variant="text" class="primary" @click="${() => this.downloadFile(attachment)}">
+                  <etools-icon name="cloud-download"></etools-icon>
                   ${translate('MAIN.DOWNLOAD')}
-                </paper-button>
+                </sl-button>
 
                 <!--        Delete Button          -->
-                <paper-button
-                  class="delete-button"
+                <sl-button
+                  variant="danger"
                   ?hidden="${this.readonly}"
-                  @tap="${() => this.deleteAttachment(index)}"
+                  @click="${() => this.deleteAttachment(index)}"
                 >
                   ${translate('MAIN.BUTTONS.DELETE')}
-                </paper-button>
+                </sl-button>
               </div>
             `
           )}

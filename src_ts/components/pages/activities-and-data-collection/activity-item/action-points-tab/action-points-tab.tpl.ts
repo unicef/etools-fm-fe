@@ -2,6 +2,7 @@ import {html, TemplateResult} from 'lit';
 import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './action-points-popup/action-points-popup';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
@@ -18,13 +19,13 @@ export function template(this: ActionPointsTab): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">${translate('ACTIVITY_ITEM.ACTION_POINTS.TITLE')}</div>
         <div class="buttons-container">
-          <paper-icon-button
+          <etools-icon-button
             ?hidden="${!this.activityDetails.permissions.edit.action_points}"
-            @tap="${() => this.openPopup()}"
+            @click="${() => this.openPopup()}"
             class="panel-button"
             data-type="add"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 
@@ -77,7 +78,7 @@ export function template(this: ActionPointsTab): TemplateResult {
               <div class="col-data flex-1">
                 <a class="link-cell link-content" href="/apd/action-points/detail/${item.id}/" target="_blank">
                   <label class="link-text">${item.reference_number}</label>
-                  <paper-icon-button icon="icons:launch"></paper-icon-button>
+                  <etools-icon-button name="launch"></etools-icon-button>
                 </a>
               </div>
               <div class="col-data flex-2">${item.description}</div>

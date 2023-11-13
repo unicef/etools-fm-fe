@@ -1,6 +1,7 @@
 import {css, html, LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, query} from 'lit/decorators.js';
 import {translate} from 'lit-translate';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 
 @customElement('file-select-button')
@@ -17,7 +18,6 @@ export class FileSelectButton extends LitElement {
       buttonsStyles,
       css`
         .upload-button {
-          color: var(--primary-color);
           min-width: 130px;
           font-weight: 700;
           padding: 8px 0;
@@ -35,10 +35,15 @@ export class FileSelectButton extends LitElement {
     // language=HTML
     return html`
       <input id="file" hidden type="file" @change="${() => this.fileSelected()}" />
-      <paper-button class="upload-button" @tap="${() => this.selectFile()}">
-        <iron-icon icon="file-upload"></iron-icon>
-        ${translate('MAIN.UPLOAD')}
-      </paper-button>
+      <sl-button
+          class="primary"
+          variant="text"
+          target="_blank"
+          @click="${this.selectFile}"
+        >
+      <etools-icon name="file-upload" slot="prefix"></etools-icon>
+          ${translate('MAIN.UPLOAD')}
+      </sl-button>
     `;
   }
 

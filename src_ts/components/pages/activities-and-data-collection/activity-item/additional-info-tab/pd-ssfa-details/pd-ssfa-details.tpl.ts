@@ -1,6 +1,7 @@
 import {PdSsfaDetails} from './pd-ssfa-details';
 import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {translate} from 'lit-translate';
 
 export function template(this: PdSsfaDetails): TemplateResult {
@@ -47,7 +48,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-1">
                 <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/metadata" target="_blank">
-                  <paper-icon-button icon="icons:launch"></paper-icon-button>
+                  <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text">${intervention.number}</label>
                 </a>
               </div>
@@ -59,7 +60,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
                   href="/pmp/interventions/${intervention.id}/progress/reports"
                   target="_blank"
                 >
-                  <paper-icon-button icon="icons:launch"></paper-icon-button>
+                  <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text" style="text-transform: uppercase">${translate('VIEW')}</label>
                 </a>
               </div>

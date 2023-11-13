@@ -33,13 +33,13 @@ export function template(this: QuestionsTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">${translate('QUESTIONS.TABLE_CAPTION', this.tableInformation)}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openPopup()}"
+          <etools-icon-button
+            @click="${() => this.openPopup()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             data-type="add"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 

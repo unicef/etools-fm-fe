@@ -24,7 +24,6 @@ import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-button';
@@ -80,14 +79,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <paper-button class="back-button">
-            <a
+          <sl-button class="back-button"
+              target="_blank"
               href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
               class="layout horizontal"
             >
-              ${arrowLeftIcon} <span>${translate('MAIN.BACK')}</span>
-            </a>
-          </paper-button>
+            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            ${translate('MAIN.BACK')}
+          </sl-button>
         </div>
       </page-content-header>
 
