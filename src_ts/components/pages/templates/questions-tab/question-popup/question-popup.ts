@@ -1,5 +1,5 @@
 import {css, LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
-import {customElement, property, queryAll} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
@@ -7,8 +7,6 @@ import {getDifference} from '../../../../utils/objects-diff';
 import {addQuestion, updateQuestion} from '../../../../../redux/effects/questions.effects';
 import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';
-import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
-import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
 import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -25,7 +23,6 @@ import {get as getTranslation} from 'lit-translate';
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   @property() dialogOpened = true;
-  @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @property() answerTypes: AnswerTypeOption[] = applyDropdownTranslation(ANSWER_TYPES);
 
@@ -204,7 +201,6 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textareas);
   }
 
   private changeOptionsOnTypeChange(type: string): void {

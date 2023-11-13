@@ -2,7 +2,7 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
@@ -12,7 +12,7 @@ export function template(this: SitesTabComponent): TemplateResult {
   return html`
     <section class="elevation page-content filters" elevation="1">
       <div class="layout horizontal">
-        <paper-input
+        <etools-input
           class="search-input"
           type="search"
           .value="${this.queryParams && this.queryParams.search}"
@@ -21,7 +21,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           inline
         >
           <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+        </etools-input>
 
         <div class="toggle-button-control">
           <paper-toggle-button

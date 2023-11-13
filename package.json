@@ -34,7 +34,6 @@
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-checkbox": "^3.1.0",
     "@polymer/paper-icon-button": "^3.0.2",
-    "@polymer/paper-input": "^3.2.1",
     "@polymer/paper-item": "^3.0.1",
     "@polymer/paper-listbox": "^3.0.1",
     "@polymer/paper-menu-button": "^3.1.0",
@@ -42,7 +41,6 @@
     "@polymer/paper-radio-group": "^3.0.1",
     "@polymer/paper-ripple": "^3.0.2",
     "@polymer/paper-tabs": "^3.1.0",
-    "@polymer/paper-toast": "^3.0.1",
     "@polymer/paper-toggle-button": "^3.0.1",
     "@polymer/paper-tooltip": "^3.0.1",
     "@polymer/polymer": "^3.5.1",
@@ -59,9 +57,9 @@
     "@unicef-polymer/etools-dialog": "^7.0.1",
     "@unicef-polymer/etools-dropdown": "^5.0.1",
     "@unicef-polymer/etools-filters": "^2.0.3",
-    "@unicef-polymer/etools-form-builder": "^2.1.9",
+    "@unicef-polymer/etools-form-builder": "^3.0.0-rc.2",
     "@unicef-polymer/etools-info-tooltip": "^4.1.11",
-    "@unicef-polymer/etools-modules-common": "^3.0.3",
+    "@unicef-polymer/etools-modules-common": "^5.0.0-rc.25",
     "@unicef-polymer/etools-piwik-analytics": "^4.0.1-rc.3",
     "@unicef-polymer/etools-profile-dropdown": "^8.2.1",
     "@unicef-polymer/etools-types": "^1.11.16",
@@ -133,8 +131,5 @@
     "ua-parser-js": ">=1.0.33",
     "urijs": ">=1.19.11",
     "wd": ">=1.14.0"
-  },
-  "relativeDependencies": {
-    "@unicef-polymer/etools-unicef": "../../etools-polymer/etools-unicef/"
   }
 }

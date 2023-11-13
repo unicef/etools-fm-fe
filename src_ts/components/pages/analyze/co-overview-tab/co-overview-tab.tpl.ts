@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {html, TemplateResult} from 'lit';
 import {CoOverviewTabComponent} from './co-overview-tab';
 import {InputStyles} from '../../../styles/input-styles';
@@ -43,7 +44,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
               ><iron-icon icon="flag" class="flag-icon"></iron-icon
             ></a>
           </div>
-          <iron-collapse ?opened="${this.queryParams && String(this.queryParams.cp_output) === String(cpOutput.id)}">
+          <etools-collapse ?opened="${this.queryParams && String(this.queryParams.cp_output) === String(cpOutput.id)}">
             ${this.fullReports[cpOutput.id]
               ? html`
                   <cp-details-item
@@ -57,7 +58,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
                     <etools-loading active></etools-loading>
                   </div>
                 `}
-          </iron-collapse>
+          </etools-collapse>
         </section>
       `
     )}

@@ -143,7 +143,7 @@ export const CardStyles: CSSResult = css`
     line-height: 28px;
   }
 
-  paper-textarea {
+  etools-textarea {
     overflow: hidden;
   }
 
