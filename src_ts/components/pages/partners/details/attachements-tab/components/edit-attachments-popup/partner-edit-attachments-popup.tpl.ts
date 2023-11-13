@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-upload/etools-upload';
+import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {PartnerEditAttachmentsPopupComponent} from './partner-edit-attachments-popup';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';

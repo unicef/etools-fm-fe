@@ -1,18 +1,15 @@
 import {CSSResultArray, LitElement, PropertyValues, TemplateResult, html} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {get, translate} from 'lit-translate';
-import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
-import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {CardStyles} from '../../../../styles/card-styles';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
-  @query('#details-input') textarea!: PaperTextareaElement;
   @property() protected dialogOpened = true;
   @property() protected popupTitle: string | Callback = '';
   @property() protected label: string | Callback = '';
@@ -40,7 +37,7 @@ export class ChecklistAttachments extends LitElement {
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
         <div class="container">
-          <paper-textarea
+          <etools-textarea
             id="details-input"
             .value="${this.reason}"
             required
@@ -51,7 +48,7 @@ export class ChecklistAttachments extends LitElement {
             ?invalid="${Boolean(this.error)}"
             error-message="${this.error}"
             max-rows="3"
-          ></paper-textarea>
+          ></etools-textarea>
         </div>
       </etools-dialog>
     `;
@@ -71,7 +68,6 @@ export class ChecklistAttachments extends LitElement {
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textarea);
   }
 
   static get styles(): CSSResultArray {

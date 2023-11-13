@@ -1,6 +1,7 @@
 import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
 import '@polymer/iron-icons/iron-icons';
@@ -176,7 +177,7 @@ export class EtoolsCard extends LitElement {
           </div>
           <div class="flex-header__actions"><slot name="actions"></slot></div>
         </header>
-        <iron-collapse ?opened="${!this.collapsed}">
+        <etools-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">
             <slot name="content"></slot>
 
@@ -191,7 +192,7 @@ export class EtoolsCard extends LitElement {
                 `
               : ''}
           </section>
-        </iron-collapse>
+        </etools-collapse>
       </div>
     `;
   }

@@ -1,7 +1,7 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@polymer/paper-checkbox';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit/directives/repeat.js';
@@ -31,7 +31,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       ></etools-loading>
 
       <div class="container layout vertical">
-        <paper-textarea
+        <etools-textarea
           class="validate-input flex-7 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
@@ -46,8 +46,8 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             this.resetFieldError('text');
           }}"
           .autoValidate="${this.autoValidateQuestion}"
-          @tap="${() => this.resetFieldError('text')}"
-        ></paper-textarea>
+          @click="${() => this.resetFieldError('text')}"
+        ></etools-textarea>
 
         <etools-dropdown-multi
           class="validate-input flex-2"
@@ -203,7 +203,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             (option: EditedQuestionOption, index: number) => html`
               <div class="layout horizontal center">
                 <div class="option-index">${option.translation ? option.translation : option.value}:</div>
-                <paper-input
+                <etools-input
                   no-label-float
                   class="validate-input flex-7"
                   .value="${option.label}"
@@ -211,9 +211,9 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                   ?invalid="${this.errors?.options && this.errors.options[index]?.label}"
                   .errorMessage="${this.errors?.options && this.errors.options[index]?.label}"
                   @focus="${() => this.resetFieldError('options', index)}"
-                  @tap="${() => this.resetFieldError('options', index)}"
+                  @click="${() => this.resetFieldError('options', index)}"
                   maxlength="100"
-                ></paper-input>
+                ></etools-input>
               </div>
             `
           )}

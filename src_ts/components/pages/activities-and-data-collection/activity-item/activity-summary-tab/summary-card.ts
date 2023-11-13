@@ -157,7 +157,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               )}
             </div>
             <div class="flex-3">
-              <paper-textarea
+              <etools-textarea
                 id="details-input"
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
                 label="${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}"
@@ -167,7 +167,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                   : '—'}"
                 @value-changed="${({detail}: CustomEvent) =>
                   this.updateOverallFinding({narrative_finding: detail.value})}"
-              ></paper-textarea>
+              ></etools-textarea>
             </div>
           </div>
         `

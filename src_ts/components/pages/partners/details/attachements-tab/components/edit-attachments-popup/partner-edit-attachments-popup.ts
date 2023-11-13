@@ -12,7 +12,7 @@ import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
 import {DataMixin} from '../../../../../../common/mixins/data-mixin';
 import {get as getTranslation} from 'lit-translate';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
-import {EtoolsUpload} from '@unicef-polymer/etools-upload/etools-upload';
+import {EtoolsUpload} from '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 
 @customElement('partner-edit-attachment-popup')
 export class PartnerEditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
