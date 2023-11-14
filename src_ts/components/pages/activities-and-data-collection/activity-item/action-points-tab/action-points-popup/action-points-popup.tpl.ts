@@ -1,5 +1,5 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@polymer/paper-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';

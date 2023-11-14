@@ -5,7 +5,7 @@ import {getEndpoint} from '../../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import {translate} from 'lit-translate';
 import {SummaryChecklistAttachmentsPopup} from './summary-checklist-attachments-popup';
 

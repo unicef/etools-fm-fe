@@ -3,7 +3,7 @@ import {IssueTrackerPopup} from './issue-tracker-popup';
 import {repeat} from 'lit/directives/repeat.js';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
