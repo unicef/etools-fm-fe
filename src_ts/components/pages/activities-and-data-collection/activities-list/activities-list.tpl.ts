@@ -41,7 +41,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
+          <etools-icon name="search" slot="prefix"></etools-icon>
         </etools-input>
       </div>
 

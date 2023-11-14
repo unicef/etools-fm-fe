@@ -72,7 +72,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                   <div class="col-data flex-1">${formatDate(attachment.created) || '-'}</div>
                   <div class="col-data flex-1">${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}</div>
                   <div class="col-data flex-4 file-link">
-                    <iron-icon icon="icons:attachment"></iron-icon>
+                    <etools-icon icon="icons:attachment"></etools-icon>
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>
 

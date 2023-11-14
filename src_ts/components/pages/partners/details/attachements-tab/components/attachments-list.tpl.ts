@@ -71,7 +71,7 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
                   <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
                   <div class="col-data flex-1">${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}</div>
                   <div class="col-data flex-4 file-link">
-                    <iron-icon icon="icons:attachment"></iron-icon>
+                    <etools-icon name="icons:attachment"></etools-icon>
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>
 

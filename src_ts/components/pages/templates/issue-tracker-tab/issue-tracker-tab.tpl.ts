@@ -150,7 +150,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
               ${hasPermission(Permissions.EDIT_LOG_ISSUES)
                 ? html`
                     <div class="hover-block">
-                      <iron-icon icon="icons:create" @click="${() => this.openLogIssue(logIssue)}"></iron-icon>
+                      <etools-icon name="create" @click="${() => this.openLogIssue(logIssue)}"></etools-icon>
                     </div>
                   `
                 : ''}

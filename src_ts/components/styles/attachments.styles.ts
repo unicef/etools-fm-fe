@@ -39,7 +39,7 @@ export const AttachmentsStyles: CSSResult = css`
   .change-button {
     color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
   }
-  iron-icon {
+  etools-icon {
     margin-right: 8px;
   }
   paper-button {

@@ -24,7 +24,7 @@ export class FileSelectButton extends LitElement {
           margin: 0;
         }
 
-        iron-icon {
+        etools-icon {
           margin-right: 8px;
         }
       `

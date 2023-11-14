@@ -23,7 +23,7 @@ export function template(this: PartnersListComponent): TemplateResult {
         </sl-button>
 
         <sl-button variant="primary" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
-          <etools-icon name="add" slot="prefix"></iron-icon>
+          <etools-icon name="add" slot="prefix"></etools-icon>
           ${translate('TPM.ADD_NEW_VENDOR')}
         </sl-button>
       </div>
@@ -38,7 +38,7 @@ export function template(this: PartnersListComponent): TemplateResult {
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
+          <etools-icon name="search" slot="prefix"></etools-icon>
         </etools-input>
       </div>
     </section>

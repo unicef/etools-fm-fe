@@ -71,10 +71,10 @@ export function template(this: CpDetailsItem): TemplateResult {
                           (intervention: FullReportIntervention) => html`
                             <div class="layout horizontal">
                               <div class="flex-none space-for-arrow layout horizontal center-center">
-                                <iron-icon
-                                  icon="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
-                                  @tap="${() => this.toggleDetails(intervention)}"
-                                ></iron-icon>
+                                <etools-icon
+                                  name="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
+                                  @click="${() => this.toggleDetails(intervention)}"
+                                ></etools-icon>
                               </div>
                               <div class="flex-auto truncate line" title="${intervention.number}">
                                 ${intervention.number}
@@ -87,16 +87,16 @@ export function template(this: CpDetailsItem): TemplateResult {
                                 ?hidden="${!this.isUnicefUser}"
                               >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
-                                  <iron-icon icon="folder" class="grey"></iron-icon>
+                                  <etools-icon name="folder" class="grey"></etools-icon>
                                 </a>
                                 <a
                                   href="${`/apd/action-points/list?cp_output=${this.cpItem.id}&intervention=${intervention.pk}`}"
                                   target="_blank"
                                 >
-                                  <iron-icon icon="flag" class="grey"></iron-icon>
+                                  <etools-icon name="flag" class="grey"></etools-icon>
                                 </a>
                                 <a href="${`/pmp/interventions/${intervention.pk}/progress/reports`}" target="_blank">
-                                  <iron-icon icon="trending-up" class="grey"></iron-icon>
+                                  <etools-icon name="trending-up" class="grey"></etools-icon>
                                 </a>
                               </div>
                             </div>

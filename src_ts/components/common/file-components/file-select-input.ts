@@ -54,7 +54,7 @@ export class FileSelectInput extends LitElement {
         ${this.hasFileName
           ? html`
               <div class="filename-container">
-                <iron-icon class="file-icon" icon="attachment"></iron-icon>
+                <etools-icon class="file-icon" name="attachment"></etools-icon>
                 <span class="filename" title="${this.fileName}">${this.fileName}</span>
               </div>
             `

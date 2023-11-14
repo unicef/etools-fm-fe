@@ -90,7 +90,7 @@ export function template(this: ActionPointsTab): TemplateResult {
               <div class="col-data flex-1">${formatDate(item.due_date) || '-'}</div>
               <div class="col-data flex-1 editable-row">${item.high_priority ? 'High' : ''}</div>
               <div class="hover-block" ?hidden="${!this.activityDetails.permissions.edit.action_points}">
-                <iron-icon icon="icons:create" @tap="${() => this.openPopup(item)}"></iron-icon>
+                <etools-icon name="create" @click="${() => this.openPopup(item)}"></etools-icon>
               </div>
             </div>
 

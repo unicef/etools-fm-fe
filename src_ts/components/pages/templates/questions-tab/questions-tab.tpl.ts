@@ -100,7 +100,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
               </div>
               <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}">
-                <iron-icon icon="icons:create" @tap="${() => this.openPopup(question)}"></iron-icon>
+                <etools-icon name="create" @tap="${() => this.openPopup(question)}"></etools-icon>
               </div>
             </div>
             <div slot="row-data-details" class="layout horizontal">

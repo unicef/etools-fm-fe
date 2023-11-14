@@ -52,11 +52,13 @@ import {globalLoading} from './redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from './components/utils/check-flags';
-import {ROOT_PATH} from './config/config';
+import {ROOT_PATH, BASE_URL} from './config/config';
 import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from './components/utils/utils';
 import {MapHelper} from './components/common/map-mixin';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
+import {EtoolsIconSet, initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -68,6 +70,19 @@ registerTranslateConfig({
   empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
+
+setBasePath(BASE_URL);
+initializeIcons(
+  [
+    EtoolsIconSet.communication,
+    EtoolsIconSet.device,
+    EtoolsIconSet.social,
+    EtoolsIconSet.av,
+    EtoolsIconSet.image,
+    EtoolsIconSet.maps
+  ],
+  pmpIcons
+);
 
 // These are the actions needed by this element.
 

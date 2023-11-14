@@ -1,10 +1,7 @@
 /* eslint-disable lit/attribute-value-entities */
-import '@polymer/iron-icons/iron-icons.js';
-import '@polymer/iron-icons/maps-icons.js';
-import '@polymer/iron-icons/av-icons.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@polymer/iron-selector/iron-selector.js';
-import '@polymer/paper-tooltip/paper-tooltip.js';
-import '@polymer/paper-ripple/paper-ripple.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -61,21 +58,18 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             name="assignment-ind"
             @click="${() => this._toggleSmallMenu()}"
           ></etools-icon>
-          <paper-ripple class="circle" center></paper-ripple>
         </span>
 
-        <paper-tooltip for="menu-header-top-icon" position="right">
+        <sl-tooltip for="menu-header-top-icon" placement="right">
           ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
-        </paper-tooltip>
+        </sl-tooltip>
 
         <span class="chev-right">
           <etools-icon id="expand-menu" name="chevron-right" @click="${() => this._toggleSmallMenu()}"></etools-icon>
-          <paper-ripple class="circle" center></paper-ripple>
         </span>
 
         <span class="ripple-wrapper">
-          <etools-icon id="minimize-menu" icon="chevron-left" @click="${() => this._toggleSmallMenu()}"></iron-icon>
-          <paper-ripple class="circle" center></paper-ripple>
+          <etools-icon id="minimize-menu" name="chevron-left" @click="${() => this._toggleSmallMenu()}"></etools-icon>
         </span>
       </div>
 
@@ -94,10 +88,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Visits"
           >
-            <iron-icon id="page1-icon" icon="assignment"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}
-            </paper-tooltip>
+
+            <sl-tooltip for="page1-icon" placement="right" content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}">
+              <etools-icon id="page1-icon" name="assignment"></etools-icon>
+            </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
           </a>
 
@@ -110,10 +104,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Analysis"
           >
-            <iron-icon id="page2-icon" icon="av:equalizer"></iron-icon>
-            <paper-tooltip for="page2-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}
-            </paper-tooltip>
+
+            <sl-tooltip for="page2-icon" placement="right"
+            content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}">
+             <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
+            </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}</div>
           </a>
 
@@ -126,10 +121,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Templates"
           >
-            <iron-icon id="page3-icon" icon="icons:settings-applications"></iron-icon>
-            <paper-tooltip for="page3-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
-            </paper-tooltip>
+
+            <sl-tooltip for="page3-icon" placement="right"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}">
+              <etools-icon id="page3-icon" name="icons:settings-applications"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
             </div>
@@ -144,10 +140,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Management"
           >
-            <iron-icon id="page4-icon" icon="av:playlist-add-check"></iron-icon>
-            <paper-tooltip for="page4-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
-            </paper-tooltip>
+
+            <sl-tooltip for="page4-icon" placement="right" content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}">
+              <etools-icon id="page4-icon" name="av:playlist-add-check"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
             </div>
@@ -161,10 +157,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="TPM"
           >
-            <iron-icon id="page5-icon" icon="social:people"></iron-icon>
-            <paper-tooltip for="page5-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
-            </paper-tooltip>
+
+            <sl-tooltip for="page5-icon" placement="right" cotent="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}">
+              <etools-icon id="page5-icon" name="social:people"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
             </div>
@@ -182,14 +178,15 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Implementation Intelligence"
         >
-          <iron-icon id="power-bi-icon" icon="powerBi"></iron-icon>
-          <paper-tooltip for="power-bi-icon" position="right">
-            ${this.translateKey(
+
+          <sl-tooltip for="power-bi-icon" placement="right"
+             content="${this.translateKey(
               this.selectedLanguage,
               'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
               'Implementation Intelligence'
-            )}
-          </paper-tooltip>
+            )}">
+            <etools-icon id="power-bi-icon" name="powerBi"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(
               this.selectedLanguage,
@@ -206,10 +203,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Knowledge base"
         >
-          <iron-icon id="knoledge-icon" icon="maps:local-library"></iron-icon>
-          <paper-tooltip for="knoledge-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
-          </paper-tooltip>
+
+          <sl-tooltip for="knoledge-icon" placement="right"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}">
+            <etools-icon id="knoledge-icon" name="maps:local-library"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
           </div>
@@ -222,10 +220,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Discussion"
         >
-          <iron-icon id="discussion-icon" icon="icons:question-answer"></iron-icon>
-          <paper-tooltip for="discussion-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
-          </paper-tooltip>
+
+          <sl-tooltip for="discussion-icon" placement="right"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}"
+            <etools-icon id="discussion-icon" name="question-answer"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
           </div>
@@ -237,10 +236,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Information"
         >
-          <iron-icon id="information-icon" icon="icons:info"></iron-icon>
-          <paper-tooltip for="information-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
-          </paper-tooltip>
+
+          <sl-tooltip for="information-icon" placement="right"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}">
+            <etools-icon id="information-icon" name="info"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
           </div>

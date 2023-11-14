@@ -138,10 +138,10 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           <div class="status-container">
             <div class="status-icon">
               <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">
-                <iron-icon icon="info"></iron-icon>
-                <iron-icon icon="autorenew"></iron-icon>
-                <iron-icon icon="block"></iron-icon>
-                <iron-icon icon="delete-forever"></iron-icon>
+                <etools-icon name="info"></etools-icon>
+                <etools-icon name="autorenew"></etools-icon>
+                <etools-icon name="block"></etools-icon>
+                <etools-icon name="delete-forever"></etools-icon>
               </span>
             </div>
 

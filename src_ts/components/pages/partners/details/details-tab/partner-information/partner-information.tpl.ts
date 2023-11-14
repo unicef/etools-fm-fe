@@ -91,7 +91,7 @@ export function template(this: PartnerInformation): TemplateResult {
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('email', detail.value)}"
               error-message=${this.emailValidationMessage}
             >
-              <iron-icon slot="prefix" icon="communication:email"> </iron-icon>
+              <etools-icon slot="prefix" name="communication:email"> </etools-icon>
             </etools-input>
           </div>
           <div class="col-data flex-4">
@@ -106,7 +106,7 @@ export function template(this: PartnerInformation): TemplateResult {
               maxlength="${getMaxLength(this.permissions, 'phone_number')}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('phone_number', detail.value)}"
             >
-              <iron-icon slot="prefix" icon="communication:phone"> </iron-icon>
+              <etools-icon slot="prefix" name="communication:phone"> </etools-icon>
             </etools-input>
           </div>
         </div>
