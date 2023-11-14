@@ -24,7 +24,7 @@ import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 
 import {use} from 'lit-translate';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
@@ -165,7 +165,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     // main template
     // language=HTML
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <style>
         app-toolbar {
           background-color: ${this.headerColor};
@@ -199,6 +199,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         <div class="header__item header__right-group">
           <div class="dropdowns">
             <etools-dropdown
+              transparent
               id="languageSelector"
               .selected="${this.selectedLanguage}"
               .options="${appLanguages}"
