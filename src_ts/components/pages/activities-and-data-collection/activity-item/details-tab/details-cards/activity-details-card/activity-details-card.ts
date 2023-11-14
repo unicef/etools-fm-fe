@@ -112,8 +112,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     }
   }
 
-  onChangeMapTab(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onChangeMapTab(tabName: string): void {
     this.activeTab = tabName;
   }
 

@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
-import '../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {SharedStyles} from '../../styles/shared-styles';
@@ -62,24 +62,19 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <sl-button
-                class="neutral"
-                variant="text"
-                @click="${this.exportData}"
-                tracker="Export"
-              >
-              <etools-icon name="file-download" slot="prefix"></etools-icon>
-              ${translate('MANAGEMENT.EXPORT')}
-            </sl-button>
+              <sl-button class="neutral" variant="text" @click="${this.exportData}" tracker="Export">
+                <etools-icon name="file-download" slot="prefix"></etools-icon>
+                ${translate('MANAGEMENT.EXPORT')}
+              </sl-button>
             </div>
 
-            <etools-tabs
+            <etools-tabs-lit
               id="tabs"
               slot="tabs"
               .tabs="${this.pageTabs}"
-              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
               .activeTab="${this.activeTab}"
-            ></etools-tabs>
+            ></etools-tabs-lit>
           </page-content-header>
 
           ${this.getTabElement()}
@@ -107,8 +102,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     this.activeLanguageUnsubscribe();
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

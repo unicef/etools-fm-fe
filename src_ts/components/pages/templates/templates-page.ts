@@ -8,7 +8,7 @@ import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-h
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
-import '../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import {questionTemplates} from '../../../redux/reducers/templates.reducer';
 import {questions} from '../../../redux/reducers/questions.reducer';
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
@@ -61,13 +61,13 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('TEMPLATES_NAV.TITLE')}</h1>
 
-            <etools-tabs
+            <etools-tabs-lit
               id="tabs"
               slot="tabs"
               .tabs="${this.pageTabs}"
-              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
               .activeTab="${this.activeTab}"
-            ></etools-tabs>
+            ></etools-tabs-lit>
           </page-content-header>
 
           ${this.getTabElement()}
@@ -108,8 +108,7 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
     }
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

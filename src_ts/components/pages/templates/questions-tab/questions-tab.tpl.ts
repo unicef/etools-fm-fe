@@ -1,5 +1,5 @@
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import './question-popup/question-popup';
 import {html, TemplateResult} from 'lit';
 import {QuestionsTabComponent} from './questions-tab';

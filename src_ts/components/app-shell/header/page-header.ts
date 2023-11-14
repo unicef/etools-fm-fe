@@ -4,7 +4,6 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
-
 import '../../common/layout/support-btn';
 import './countries-dropdown';
 import './organizations-dropdown';
