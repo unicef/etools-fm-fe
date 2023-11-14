@@ -1,6 +1,6 @@
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
-import '@unicef-polymer/etools-dropdown/etools-dropdown.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown.js';
 import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown.js';
 
