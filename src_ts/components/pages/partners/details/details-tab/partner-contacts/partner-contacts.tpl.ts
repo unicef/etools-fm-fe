@@ -25,9 +25,9 @@ export function template(this: PartnerContacts): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${this.getTitle(this.staffMembersListAll)}</div>
         <div class="buttons-container">
-          <paper-toggle-button ?checked="${this.showInactive}" @checked-changed="${this.onShowInactiveChange}">
+          <sl-switch ?checked="${this.showInactive}" @sl-changed="${this.onShowInactiveChange}">
             ${translate('TPM_DETAILS.SHOW_INACTIVE')}
-          </paper-toggle-button>
+          </sl-switch>
           <sl-tooltip content="${translate('TPM_DETAILS.ACCESS_MANAGEMENT_PORTAL')}">
             <a class="edit-button" href="${this.getAMPLink(this.organizationId, this.userData)}" target="_blank">
               <etools-icon name="open-in-new"></etools-icon>

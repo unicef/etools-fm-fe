@@ -1,12 +1,12 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import '@polymer/paper-checkbox';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '../../../../../common/layout/etools-card';
 import {html, TemplateResult} from 'lit';
 import {ChecklistSelectionTable} from './checklist-selection-table';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
+
 import {ROOT_PATH} from '../../../../../../config/config';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {translate} from 'lit-translate';
@@ -54,13 +54,12 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
         <!-- Table Header -->
         <etools-data-table-header no-title no-collapse>
           <div class="checkbox-container layout horizontal center-center">
-            <paper-checkbox
+            <sl-checkbox
               ?checked="${this.allQuestionsEnabled}"
               class="nolabel"
               ?hidden="${!this.isEditMode}"
-              @change="${(event: CustomEvent) =>
-                this.toggleAll((event.target as PaperCheckboxElement).checked as boolean)}"
-            ></paper-checkbox>
+              @sl-change="${(e: any) => this.toggleAll(e.target.checked as boolean)}"
+            ></sl-checkbox>
           </div>
           <etools-data-table-column class="flex-1" field="text">
             ${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}
@@ -80,15 +79,15 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <!-- Checkbox to mark question  as enabled -->
                 <div class="checkbox-container layout horizontal center-center">
-                  <paper-checkbox
+                  <sl-checkbox
                     ?checked="${question.is_enabled}"
                     class="nolabel"
                     ?hidden="${!this.isEditMode}"
-                    @change="${(event: CustomEvent) => {
-                      question.is_enabled = (event.target as PaperCheckboxElement).checked as boolean;
+                    @sl-change="${(e: any) => {
+                      question.is_enabled = e.target.checked as boolean;
                       this.requestUpdate();
                     }}"
-                  ></paper-checkbox>
+                  ></sl-checkbox>
                   <img
                     src="${ROOT_PATH}assets/images/icon-check.svg"
                     ?hidden="${this.isEditMode || !question.is_enabled}"

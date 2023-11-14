@@ -1,5 +1,5 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import '@polymer/paper-toggle-button';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
@@ -25,10 +25,10 @@ export function template(this: SitesTabComponent): TemplateResult {
         </etools-input>
 
         <div class="toggle-button-control">
-          <paper-toggle-button
+          <sl-switch
             .checked="${this.queryParams && this.queryParams.show_inactive}"
-            @checked-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"
-          ></paper-toggle-button>
+            @sl-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"
+          ></sl-switch>
           <span>${translate('SITES.SHOW_INACTIVE')}</span>
         </div>
       </div>

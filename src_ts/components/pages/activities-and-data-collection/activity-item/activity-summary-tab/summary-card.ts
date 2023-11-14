@@ -1,6 +1,6 @@
 import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import '@polymer/paper-toggle-button';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
@@ -11,8 +11,8 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
-import '@polymer/paper-radio-group/paper-radio-group';
-import '@polymer/paper-radio-button/paper-radio-button';
+import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
@@ -24,6 +24,7 @@ import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-lis
 import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -198,11 +199,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <paper-radio-group>
-          <paper-radio-button name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
+        <sl-radio-group>
+          <sl-radio name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
-          </paper-radio-button>
-        </paper-radio-group>
+          </sl-radio>
+        </sl-radio-group>
         ${this.getAttachmentsButton()}
       `;
     }
@@ -216,11 +217,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
-          <sl-button
-            id="editAo"
-            variant="primary"
-            @click="${this.openAttachmentsPopup}"
-          >
+          <sl-button id="editAo" variant="primary" @click="${this.openAttachmentsPopup}">
             <etools-icon name="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></etools-icon>
             ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
           </sl-button>
@@ -372,11 +369,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     return html`
       <div class="ontrack-container layout horizontal">
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        <paper-toggle-button
+        <sl-switch
           ?readonly="${this.readonly}"
           ?checked="${this.overallInfo?.on_track || false}"
-          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
-        ></paper-toggle-button>
+          @sl-changed="${(event: CustomEvent) => this.toggleChange((event.target as SlSwitch).checked)}"
+        ></sl-switch>
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
       </div>
     `;
@@ -393,12 +390,12 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         .completed-finding {
           flex-basis: 50%;
         }
-        paper-toggle-button {
+        sl-switch {
           margin: 0 4px 0 15px;
           --paper-toggle-button-unchecked-button-color: var(--error-color);
           --paper-toggle-button-unchecked-bar-color: var(--error-color);
         }
-        paper-toggle-button[readonly] {
+        sl-switch[readonly] {
           pointer-events: none;
         }
         .ontrack-container {
