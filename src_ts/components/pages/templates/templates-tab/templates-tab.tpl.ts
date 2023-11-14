@@ -1,11 +1,10 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
-import '@polymer/paper-checkbox';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {TemplatesTabComponent} from './templates-tab';
 import {html, TemplateResult} from 'lit';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {InputStyles} from '../../../styles/input-styles';
@@ -156,16 +155,12 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                 <div slot="row-data" class="layout horizontal editable-row flex">
                   <!-- Checkbox to mark template as active -->
                   <div class="checkbox-container layout horizontal center-center">
-                    <paper-checkbox
+                    <sl-checkbox
                       ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
                       class="nolabel"
-                      @change="${(event: CustomEvent) =>
-                        this.updateTemplate(
-                          questionTemplate.id,
-                          'is_active',
-                          (event.target as PaperCheckboxElement).checked as boolean
-                        )}"
-                    ></paper-checkbox>
+                      @sl-change="${(e: any) =>
+                        this.updateTemplate(questionTemplate.id, 'is_active', e.target.checked as boolean)}"
+                    ></sl-checkbox>
                   </div>
 
                   <!-- Question item Text -->

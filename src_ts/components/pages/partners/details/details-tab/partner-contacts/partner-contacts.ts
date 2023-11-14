@@ -13,6 +13,7 @@ import {get as getTranslation} from 'lit-translate';
 import {getEndpoint} from '../../../../../../endpoints/endpoints';
 import {TPM_PARTNER_STAFF} from '../../../../../../endpoints/endpoints-list';
 import {request} from '../../../../../../endpoints/request';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 
 @customElement('partner-contacts')
 export class PartnerContacts extends connect(store)(LitElement) {
@@ -46,10 +47,10 @@ export class PartnerContacts extends connect(store)(LitElement) {
   }
 
   onShowInactiveChange(e: CustomEvent): void {
-    if (!e.detail) {
+    if (!e.target) {
       return;
     }
-    this.showInactive = e.detail.value;
+    this.showInactive = (e.target as SlSwitch).checked;
     this.filterStaffMembersByActive();
   }
 

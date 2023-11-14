@@ -5,8 +5,8 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {repeat} from 'lit/directives/repeat.js';
-import '@polymer/paper-radio-group/paper-radio-group';
-import '@polymer/paper-radio-button/paper-radio-button';
+import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
@@ -90,23 +90,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
           ></etools-loading>
           <div class="layout horizontal user-types">
             <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
-            <paper-radio-group
-              selected="${this.userType}"
-              @iron-select="${({detail}: CustomEvent) => this.setUserType(detail.item.name)}"
+            <sl-radio-group
+              .value="${this.userType}"
+              @sl-change="${({detail}: CustomEvent) => this.setUserType(detail.item.value)}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
             >
               ${repeat(
                 this.userTypes,
                 (type: UserType) => html`
-                  <paper-radio-button
-                    name="${type}"
-                    ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
-                  >
+                  <sl-radio value="${type}" ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}">
                     ${translate(`ACTIVITY_DETAILS.USER_TYPES.${type.toUpperCase()}`)}
-                  </paper-radio-button>
+                  </sl-radio>
                 `
               )}
-            </paper-radio-group>
+            </sl-radio-group>
           </div>
           <div class="layout horizontal">
             ${this.editedData.monitor_type === USER_TPM

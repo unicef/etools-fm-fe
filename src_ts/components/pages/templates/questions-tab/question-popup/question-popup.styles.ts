@@ -13,7 +13,7 @@ export const QuestionPopupStyles: CSSResult = css`
   .scales-container {
     padding-left: 12px;
   }
-  paper-checkbox {
+  sl-checkbox {
     margin-right: 30px;
   }
 `;

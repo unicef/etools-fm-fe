@@ -1,11 +1,10 @@
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
-import '@polymer/paper-checkbox';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit/directives/repeat.js';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
 import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
@@ -139,20 +138,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         </div>
 
         <div class="checkboxes">
-          <paper-checkbox
+          <sl-checkbox
             ?checked="${this.editedData.is_hact}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('is_hact', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('is_hact', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_HACT')}
-          </paper-checkbox>
-          <paper-checkbox
+          </sl-checkbox>
+          <sl-checkbox
             ?checked="${this.editedData.is_active}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('is_active', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
-          </paper-checkbox>
+          </sl-checkbox>
         </div>
 
         <div class="layout horizontal">
