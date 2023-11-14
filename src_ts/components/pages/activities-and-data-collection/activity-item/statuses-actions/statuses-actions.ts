@@ -1,6 +1,10 @@
-import '@polymer/paper-button';
-import '@polymer/paper-menu-button';
-import '@polymer/paper-icon-button';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/button-group/button-group.js';
+import '@shoelace-style/shoelace/dist/components/menu/menu.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
@@ -13,7 +17,6 @@ import {
   SEPARATE_TRANSITIONS,
   TRANSITIONS_ORDER
 } from './activity-statuses';
-import {arrowLeftIcon} from '../../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
@@ -52,13 +55,13 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button
-            class="back-button"
-            @tap="${() => this.changeStatus(transition)}"
+          <sl-button
+            variant="success"
+            @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
-            ${arrowLeftIcon}
-          </paper-button>
+            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+          </sl-button>
         `
       : html``;
   }
@@ -69,13 +72,13 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button
+          <sl-button
             class="main-button reject-button"
-            @tap="${() => this.changeStatus(transition)}"
+            @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-          </paper-button>
+          </sl-button>
         `
       : html``;
   }
@@ -90,13 +93,16 @@ export class StatusesActionsComponent extends LitElement {
     const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
-          <paper-button
-            class="${className}"
-            @tap="${() => this.changeStatus(mainTransition)}"
-            ?disabled="${this.disableBtns}"
-          >
-            ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
-          </paper-button>
+          <sl-button-group>
+            <sl-button
+              variant="primary"
+              class="${className}"
+              @click="${() => this.changeStatus(mainTransition)}"
+              ?disabled="${this.disableBtns}"
+            >
+              ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
+            </sl-button>
+          </sl-button-group>
         `
       : html``;
   }
@@ -111,18 +117,18 @@ export class StatusesActionsComponent extends LitElement {
       return html``;
     }
     return html`
-      <paper-menu-button horizontal-align="right" @tap="${(event: MouseEvent) => event.stopImmediatePropagation()}">
-        <paper-icon-button slot="dropdown-trigger" class="option-button" icon="expand-more"></paper-icon-button>
-        <div slot="dropdown-content">
+      <sl-dropdown @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
+        <sl-button slot="trigger" variant="primary" caret></sl-button>
+        <sl-menu>
           ${transitions.map(
             (transition: ActivityTransition) => html`
-              <div class="other-options" @tap="${() => this.changeStatus(transition)}">
+              <sl-menu-item @click="${() => this.changeStatus(transition)}">
                 ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-              </div>
+              </sl-menu-item>
             `
           )}
-        </div>
-      </paper-menu-button>
+        </sl-menu>
+      </sl-dropdown>
     `;
   }
 
@@ -176,6 +182,7 @@ export class StatusesActionsComponent extends LitElement {
     return [
       FlexLayoutClasses,
       SharedStyles,
+      buttonsStyles,
       css`
         :host {
           display: flex;
@@ -216,10 +223,6 @@ export class StatusesActionsComponent extends LitElement {
 
         .main-button span {
           margin-right: 7px;
-        }
-
-        paper-button[disabled] {
-          color: lightgray;
         }
 
         div[slot='dropdown-content'] {

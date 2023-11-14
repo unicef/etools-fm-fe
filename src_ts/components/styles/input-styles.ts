@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 // language=HTML
 export const InputStyles: TemplateResult = html`
   <style>
-    paper-icon-button[hidden] {
+    etools-icon-button[hidden] {
       display: inline-block !important;
       visibility: hidden;
     }

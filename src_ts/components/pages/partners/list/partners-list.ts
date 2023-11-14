@@ -19,7 +19,7 @@ import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-conten
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';

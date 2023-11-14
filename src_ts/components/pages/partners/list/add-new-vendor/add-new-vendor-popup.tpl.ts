@@ -95,7 +95,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               @click="${() => this.resetError('', this)}"
               ?required="${isRequired(this.permissions, 'phone_number')}"
             >
-              <iron-icon slot="prefix" icon="communication:phone"> </iron-icon>
+              <etools-icon slot="prefix" name="communication:phone"> </etools-icon>
             </etools-input>
           </div>
           <div class="col-data flex-6">
@@ -111,7 +111,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               @click="${() => this.resetError('email', this)}"
               ?required="${isRequired(this.permissions, 'email')}"
             >
-              <iron-icon slot="prefix" icon="communication:email"> </iron-icon>
+              <etools-icon slot="prefix" name="communication:email"> </etools-icon>
             </etools-input>
           </div>
         </div>

@@ -1,8 +1,10 @@
-import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {translate} from 'lit-translate';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {
@@ -11,9 +13,9 @@ export class EntriesList extends LitElement {
   @property() items: [] = [];
   @property() formatItem!: (item: any) => void;
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultArray {
     // language=CSS
-    return css`
+    return [buttonsStyles, css`
       :host {
         flex: 1;
         overflow: hidden;
@@ -78,7 +80,7 @@ export class EntriesList extends LitElement {
         margin: 0;
         text-transform: uppercase;
       }
-    `;
+    `];
   }
 
   addEntry(): void {
@@ -103,7 +105,7 @@ export class EntriesList extends LitElement {
                 ${!this.isReadonly
                   ? html`
                       <div class="hover-block" @click="${() => this.removeEntry(item.id)}">
-                        <iron-icon icon="icons:delete"></iron-icon>
+                        <etools-icon name="delete"></etools-icon>
                       </div>
                     `
                   : ''}
@@ -112,9 +114,9 @@ export class EntriesList extends LitElement {
           )}
           ${!this.isReadonly
             ? html`
-                <paper-button class="add-entry" @click="${() => this.addEntry()}">
-                  <iron-icon icon="add"></iron-icon>${translate('ACTIVITY_DETAILS.ADD_ENTRY')}
-                </paper-button>
+                <sl-button variant="primary" class="add-entry" @click="${() => this.addEntry()}">
+                  <etools-icon name="add" slot="prefix"></etools-icon>${translate('ACTIVITY_DETAILS.ADD_ENTRY')}
+                </sl-button>
               `
             : ''}
         </div>

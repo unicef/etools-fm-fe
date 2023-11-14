@@ -5,7 +5,7 @@ import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../routing/routes';
 import {SharedStyles} from '../../styles/shared-styles';
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../styles/button-styles';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
 import '../../common/layout/etools-tabs';

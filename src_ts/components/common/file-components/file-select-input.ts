@@ -1,6 +1,8 @@
-import {CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {CSSResult, CSSResultArray, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {translate} from 'lit-translate';
 
 @customElement('file-select-input')
@@ -26,9 +28,9 @@ export class FileSelectInput extends LitElement {
   @query('#link')
   link!: HTMLLinkElement;
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultArray {
     // language=CSS
-    return AttachmentsStyles;
+    return [AttachmentsStyles, buttonsStyles];
   }
 
   get hasFileName(): boolean {
@@ -52,7 +54,7 @@ export class FileSelectInput extends LitElement {
         ${this.hasFileName
           ? html`
               <div class="filename-container">
-                <iron-icon class="file-icon" icon="attachment"></iron-icon>
+                <etools-icon class="file-icon" name="attachment"></etools-icon>
                 <span class="filename" title="${this.fileName}">${this.fileName}</span>
               </div>
             `
@@ -61,27 +63,37 @@ export class FileSelectInput extends LitElement {
           ? html`
               ${!this.hasFileName
                 ? html`
-                    <paper-button class="upload-button" @tap="${() => this.selectFile()}">
-                      <iron-icon icon="file-upload"></iron-icon>
-                      ${translate('MAIN.UPLOAD')}
-                    </paper-button>
+                    <sl-button
+                        class="upload-button"
+                        variant="text"
+                        target="_blank"
+                        @click="${this.selectFile}"
+                      >
+                      <etools-icon name="file-upload" slot="prefix"></etools-icon>
+                        ${translate('MAIN.UPLOAD')}
+                    </sl-button>
                   `
                 : ''}
             `
           : ''}
         ${this.isStoredFile
           ? html`
-              <paper-button class="download-button" @tap="${() => this.downloadFile()}">
-                <iron-icon icon="cloud-download" class="dw-icon"></iron-icon>
-                ${translate('MAIN.DOWNLOAD')}
-              </paper-button>
+              <sl-button
+                  class="download-button"
+                  variant="text"
+                  target="_blank"
+                  @click="${this.downloadFile}"
+                >
+                <etools-icon name="cloud-download" slot="prefix"></etools-icon>
+                  ${translate('MAIN.DOWNLOAD')}
+              </sl-button>
             `
           : ''}
         ${!this.isReadonly && this.hasDelete
           ? html`
-              <paper-button class="delete-button" @tap="${() => this.deleteFile()}"
-                >${translate('MAIN.BUTTONS.DELETE')}</paper-button
-              >
+              <sl-button variant="text" class="danger" @tap="${() => this.deleteFile()}">
+                ${translate('MAIN.BUTTONS.DELETE')}
+              </sl-button>
             `
           : ''}
       </div>

@@ -26,7 +26,6 @@ import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-conten
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
@@ -139,7 +138,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       FlexLayoutClasses,
       CardStyles,
       SharedStyles,
-      buttonsStyles,
       ActivitiesListStyles,
       css`
         .search-container {
