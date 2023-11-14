@@ -71,18 +71,18 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
                   <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
                   <div class="col-data flex-1">${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}</div>
                   <div class="col-data flex-4 file-link">
-                    <etools-icon name="icons:attachment"></etools-icon>
+                    <etools-icon name="attachment"></etools-icon>
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>
 
                   <div class="hover-block">
                     <etools-icon-button
                       ?hidden="${this.readonly}"
-                      name="icons:create"
+                      name="create"
                       @click="${() => this.openPopup(attachment)}"
                     ></etools-icon-button>
                     <etools-icon-button
-                      name="icons:delete"
+                      name="delete"
                       ?hidden="${this.readonly}"
                       @click="${() => this.openDeletePopup(attachment.id)}"
                     ></etools-icon-button>

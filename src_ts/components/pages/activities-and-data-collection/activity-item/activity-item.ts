@@ -2,7 +2,7 @@ import {html, css, LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
-import '../../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import './statuses-actions/statuses-actions';
 import {RouterStyles} from '../../../app-shell/router-style';
@@ -164,16 +164,16 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
         <div slot="title-row-actions" class="content-header-actions">
           <sl-button
-              id="export"
-              class="neutral"
-              variant="text"
-              @click="${this.export}"
-              tracker="Export PDF"
-              ?hidden="${this.hideExportButton()}"
-            >
-              <etools-icon name="file-download"></etools-icon>
-              ${translate('ACTIVITY_DETAILS.EXPORT')}
-           </sl-button>
+            id="export"
+            class="neutral"
+            variant="text"
+            @click="${this.export}"
+            tracker="Export PDF"
+            ?hidden="${this.hideExportButton()}"
+          >
+            <etools-icon name="file-download"></etools-icon>
+            ${translate('ACTIVITY_DETAILS.EXPORT')}
+          </sl-button>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -193,13 +193,13 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           </sl-button>
         </div>
 
-        <etools-tabs
+        <etools-tabs-lit
           id="tabs"
           slot="tabs"
           .tabs="${this.getTabList()}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+          @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
-        ></etools-tabs>
+        ></etools-tabs-lit>
       </page-content-header>
 
       ${this.getTabElement()}
@@ -344,8 +344,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     return this.activityDetails?.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

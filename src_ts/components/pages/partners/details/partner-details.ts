@@ -2,7 +2,7 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
-import '../../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import {RouterStyles} from '../../../app-shell/router-style';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
@@ -124,16 +124,16 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
 
         <div slot="title-row-actions" class="content-header-actions">
           <sl-button
-              class="neutral"
-              variant="text"
-              target="_blank"
-              id="export"
-              @click="${this.export}"
-              tracker="Export PDF"
-              ?hidden="${this.hideExportButton(this.partnerDetails)}"
-            >
-              <etools-icon name="file-download" slot="prefix"></etools-icon>
-              ${translate('ACTIVITY_DETAILS.EXPORT')}
+            class="neutral"
+            variant="text"
+            target="_blank"
+            id="export"
+            @click="${this.export}"
+            tracker="Export PDF"
+            ?hidden="${this.hideExportButton(this.partnerDetails)}"
+          >
+            <etools-icon name="file-download" slot="prefix"></etools-icon>
+            ${translate('ACTIVITY_DETAILS.EXPORT')}
           </sl-button>
           <div class="status-container">
             <div class="status-icon">
@@ -151,13 +151,13 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           </div>
         </div>
 
-        <etools-tabs
+        <etools-tabs-lit
           id="tabs"
           slot="tabs"
           .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+          @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
-        ></etools-tabs>
+        ></etools-tabs-lit>
       </page-content-header>
 
       ${this.isLoad ? html`` : this.getTabElement()}
@@ -228,8 +228,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
     }
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }
