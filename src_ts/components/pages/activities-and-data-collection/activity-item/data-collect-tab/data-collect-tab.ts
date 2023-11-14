@@ -25,7 +25,7 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';

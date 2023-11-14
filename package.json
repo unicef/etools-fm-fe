@@ -50,7 +50,6 @@
     "@types/ramda": "0.27.37",
     "@unicef-polymer/etools-app-selector": "^5.0.2",
     "@unicef-polymer/etools-currency-amount-input": "^4.0.4",
-    "@unicef-polymer/etools-data-table": "^7.0.3",
     "@unicef-polymer/etools-dialog": "^7.0.1",
     "@unicef-polymer/etools-dropdown": "^5.0.1",
     "@unicef-polymer/etools-filters": "^2.0.3",
@@ -128,5 +127,8 @@
     "ua-parser-js": ">=1.0.33",
     "urijs": ">=1.19.11",
     "wd": ">=1.14.0"
+  },
+  "relativeDependencies": {
+    "@unicef-polymer/etools-form-builder": "../../etools-form-builder"
   }
 }
