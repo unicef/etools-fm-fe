@@ -14,7 +14,7 @@ import {updateAppLocation} from '../../../routing/routes';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {get as getTranslation} from 'lit-translate';
@@ -59,9 +59,10 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     // main template
     // language=HTML
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown
+        transparent
         id="countrySelector"
         class="w100"
         .selected="${this.currentCountry.id}"

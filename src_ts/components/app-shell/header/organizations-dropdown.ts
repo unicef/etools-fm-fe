@@ -8,7 +8,7 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {get as getTranslation, translate} from 'lit-translate';
 import {updateAppLocation} from '../../../routing/routes';
 import {ROOT_PATH} from '../../../config/config';
@@ -57,8 +57,9 @@ export class organizationsDropdown extends connect(store)(LitElement) {
 
   render(): TemplateResult {
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <etools-dropdown
+        transparent
         id="organizationSelector"
         placeholder="${translate('SELECT_ORGANIZATION')}"
         class="w100 ${this.checkMustSelectOrganization(this.user)}"
