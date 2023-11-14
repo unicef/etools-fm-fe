@@ -6,8 +6,8 @@ import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
-import '@polymer/paper-radio-group/paper-radio-group';
-import '@polymer/paper-radio-button/paper-radio-button';
+import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {simplifyValue} from '../../../../utils/objects-diff';
 import '../../../../common/file-components/file-select-input';
 import '../../../../common/file-components/file-select-button';
@@ -45,20 +45,20 @@ export function template(this: IssueTrackerPopup): TemplateResult {
         <div class="layout horizontal center">
           <div class="layout vertical related-to-type flex-2">
             <label id="related-to-type">${translate('ISSUE_TRACKER.RELATED_TO_TYPE')}</label>
-            <paper-radio-group
-              selected="${this.relatedToType}"
-              @iron-select="${({detail}: CustomEvent) => this.changeRelatedType(detail.item)}"
+            <sl-radio-group
+              .value="${this.relatedToType}"
+              @sl-change="${({detail}: CustomEvent) => this.changeRelatedType(detail.item)}"
               ?disabled="${this.isReadOnly}"
             >
               ${repeat(
                 this.relatedTypes,
                 (type: RelatedType) => html`
-                  <paper-radio-button name="${type}" ?disabled="${this.isReadOnly || !this.isNew}">
+                  <sl-radio value="${type}" ?disabled="${this.isReadOnly || !this.isNew}">
                     ${translate(`ISSUE_TRACKER.RELATED_TYPE.${type.toUpperCase()}`)}
-                  </paper-radio-button>
+                  </sl-radio>
                 `
               )}
-            </paper-radio-group>
+            </sl-radio-group>
           </div>
 
           <etools-dropdown

@@ -2,7 +2,8 @@ import {html, TemplateResult} from 'lit';
 import {IssueTrackerTabComponent} from './issue-tracker-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {repeat} from 'lit/directives/repeat.js';
-import '@polymer/paper-toggle-button';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {prettyDate} from '@unicef-polymer/etools-utils/dist/date.util';
@@ -62,10 +63,10 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
         ></etools-dropdown-multi>
       </div>
       <div class="toggle-button-control filter">
-        <paper-toggle-button
+        <sl-switch
           .checked="${this.queryParams && this.queryParams.status}"
-          @checked-changed="${({detail}: CustomEvent) => this.changeShowOnlyNew(detail.value)}"
-        ></paper-toggle-button>
+          @sl-changed="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
+        ></sl-switch>
         <span>${translate('ISSUE_TRACKER.IS_NEW')}</span>
       </div>
     </section>

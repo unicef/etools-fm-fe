@@ -8,7 +8,6 @@ import {issueTrackerIsUpdate} from '../../../../../redux/selectors/issue-tracker
 import {getDifference} from '../../../../utils/objects-diff';
 import {createLogIssue, updateLogIssue} from '../../../../../redux/effects/issue-tracker.effects';
 import {template} from './issue-tracker-popup.tpl';
-import {PaperRadioButtonElement} from '@polymer/paper-radio-button/paper-radio-button';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
@@ -199,8 +198,8 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     this.updateUnsubscribe();
   }
 
-  changeRelatedType(item: PaperRadioButtonElement): void {
-    const type: RelatedType = item.get('name');
+  changeRelatedType(item: any): void {
+    const type: RelatedType = item.get('value');
     this.relatedToType = type;
     if (type !== this.editedData.related_to_type) {
       this.editedData.partner = null;

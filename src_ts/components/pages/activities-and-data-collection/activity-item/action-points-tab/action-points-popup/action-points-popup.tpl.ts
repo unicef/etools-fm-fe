@@ -1,13 +1,13 @@
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@polymer/paper-checkbox';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
+
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {translate} from 'lit-translate';
 
@@ -188,14 +188,13 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Priority    -->
         <div class="without-border flex priority-container additional-padding">
-          <paper-checkbox
+          <sl-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('high_priority', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('high_priority', e.target.checked)}"
           >
             ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
-          </paper-checkbox>
+          </sl-checkbox>
         </div>
 
         ${this.url

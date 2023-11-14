@@ -10,7 +10,7 @@ export const ChecklistSelectionTableStyles: CSSResult = css`
   .table-container {
     position: relative;
   }
-  paper-checkbox {
+  sl-checkbox {
     width: 18px;
   }
 `;
