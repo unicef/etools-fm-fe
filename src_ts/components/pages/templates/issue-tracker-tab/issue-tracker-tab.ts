@@ -6,7 +6,7 @@ import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {requestLogIssue} from '../../../../redux/effects/issue-tracker.effects';
 
-import {EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
+import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {template} from './issue-tracker-tab.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';

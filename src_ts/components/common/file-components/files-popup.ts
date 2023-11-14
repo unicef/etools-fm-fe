@@ -5,6 +5,7 @@ import {DialogStyles} from '../../styles/dialog-styles';
 import {translate} from 'lit-translate';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {repeat} from 'lit/directives/repeat.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 
 @customElement('files-popup')

@@ -1,24 +1,13 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit';
+import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
-    <style>
-      etools-filters {
-        --paper-input-prefix: {
-          color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
-        }
-        --paper-input-container-label-floating: {
-          font-size: 14px;
-          top: 0px;
-        }
-      }
-    </style>
     <page-content-header with-tabs-visible>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div

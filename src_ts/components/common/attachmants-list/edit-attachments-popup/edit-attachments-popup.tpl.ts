@@ -7,6 +7,7 @@ import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {getEndpoint} from '../../../../endpoints/endpoints';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   // language=HTML

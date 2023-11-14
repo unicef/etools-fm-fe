@@ -5,6 +5,7 @@ import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../styles/dialog-styles';
 import {resetError} from '../../../../../../utils/utils';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: PartnerEditAttachmentsPopupComponent): TemplateResult {
   // language=HTML

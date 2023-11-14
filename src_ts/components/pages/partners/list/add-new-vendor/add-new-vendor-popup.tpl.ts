@@ -4,6 +4,7 @@ import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {isRequired} from '../../../../utils/utils';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: AddNewVendorPopupComponent): TemplateResult {
   // language=HTML

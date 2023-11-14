@@ -1,5 +1,5 @@
-import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
-import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-filters/src/filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
+import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-unicef/src/etools-filters/filters';
 import {get} from 'lit-translate';
 
 export enum QuestionFilterKeys {

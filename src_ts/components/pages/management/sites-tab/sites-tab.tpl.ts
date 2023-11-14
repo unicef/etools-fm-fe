@@ -1,7 +1,7 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';

@@ -4,6 +4,7 @@ import {SitesPopupComponent} from './sites-popup';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: SitesPopupComponent): TemplateResult {
   return html`

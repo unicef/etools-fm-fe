@@ -7,6 +7,7 @@ import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {get, translate} from 'lit-translate';
 import {CardStyles} from '../../../../styles/card-styles';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('reason-popup')
 export class ChecklistAttachments extends LitElement {
