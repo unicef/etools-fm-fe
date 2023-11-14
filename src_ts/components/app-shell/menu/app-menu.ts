@@ -1,6 +1,5 @@
 /* eslint-disable lit/attribute-value-entities */
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
-import '@polymer/iron-selector/iron-selector.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
@@ -16,7 +15,6 @@ import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {fmIcons} from '../../styles/app-icons';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {get as getTranslation} from 'lit-translate';
 

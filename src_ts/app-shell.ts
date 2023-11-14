@@ -2,7 +2,6 @@
  @license
  Copyright (c) 2019 The eTools Project Authors. All rights reserved.
  */
-import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings';
 import {connect} from 'pwa-helpers/connect-mixin';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query';
 import {installRouter} from 'pwa-helpers/router';
@@ -26,7 +25,6 @@ import './components/app-shell/menu/app-menu.js';
 import './components/app-shell/header/page-header.js';
 import './components/app-shell/footer/page-footer.js';
 
-import './components/app-shell/app-theme.js';
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from './config/config';
 import {getCurrentUserData} from './redux/effects/user.effects';
 import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
@@ -141,9 +139,6 @@ export class AppShell extends connect(store)(LitElement) {
 
   constructor() {
     super();
-    // Gesture events like tap and track generated from touch will not be
-    // preventable, allowing for better scrolling performance.
-    setPassiveTouchGestures(true);
 
     const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
     if (!menuTypeStoredVal) {
