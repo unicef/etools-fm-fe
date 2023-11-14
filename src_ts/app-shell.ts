@@ -233,7 +233,6 @@ export class AppShell extends connect(store)(LitElement) {
     this.routeDetails = state.app.routeDetails;
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
-    console.log(state.app.drawerOpened);
     this.drawerOpened = state.app.drawerOpened;
     // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
