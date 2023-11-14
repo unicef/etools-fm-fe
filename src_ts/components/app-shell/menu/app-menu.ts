@@ -45,8 +45,6 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     // main template
     // language=HTML
     return html`
-      ${fmIcons}
-
       <div class="menu-header">
         <span id="app-name" class="app-name">
           ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
@@ -74,7 +72,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
       </div>
 
       <div class="nav-menu">
-        <div class="menu-selector" role="navigation">
+        <div class="menu-selector" role="navigation"
           .selected="${this.selectedOption}"
           attr-for-selected="menu-name"
           selectable="a"
@@ -89,7 +87,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             tracker="Visits"
           >
 
-            <sl-tooltip for="page1-icon" placement="right" content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}">
+            <sl-tooltip for="page1-icon" placement="right" content="${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.VISITS',
+              'Visits'
+            )}">
               <etools-icon id="page1-icon" name="assignment"></etools-icon>
             </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
@@ -124,7 +126,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
             <sl-tooltip for="page3-icon" placement="right"
               content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}">
-              <etools-icon id="page3-icon" name="icons:settings-applications"></etools-icon>
+              <etools-icon id="page3-icon" name="settings-applications"></etools-icon>
             </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
@@ -141,7 +143,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             tracker="Management"
           >
 
-            <sl-tooltip for="page4-icon" placement="right" content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}">
+            <sl-tooltip for="page4-icon" placement="right" content="${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.MANAGEMENT',
+              'Management'
+            )}">
               <etools-icon id="page4-icon" name="av:playlist-add-check"></etools-icon>
             </sl-tooltip>
             <div class="name">
@@ -158,7 +164,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             tracker="TPM"
           >
 
-            <sl-tooltip for="page5-icon" placement="right" cotent="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}">
+            <sl-tooltip for="page5-icon" placement="right" cotent="${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.TPM',
+              'Third Party Monitors'
+            )}">
               <etools-icon id="page5-icon" name="social:people"></etools-icon>
             </sl-tooltip>
             <div class="name">
@@ -181,10 +191,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <sl-tooltip for="power-bi-icon" placement="right"
              content="${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
-              'Implementation Intelligence'
-            )}">
+               this.selectedLanguage,
+               'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
+               'Implementation Intelligence'
+             )}">
             <etools-icon id="power-bi-icon" name="powerBi"></etools-icon>
           </sl-tooltip>
           <div class="name">

@@ -8,6 +8,7 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {store} from '../../../../../redux/store';
 import {SwitchTab} from '../../../../../redux/actions/monitoring-activity.actions';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 
 @customElement('shared-section-with-tabs-template')
 export class SharedSectionWithTabsTemplate extends LitElement {
@@ -23,14 +24,14 @@ export class SharedSectionWithTabsTemplate extends LitElement {
         <div class="card-title-box with-bottom-line">
           <div class="card-title">${this.sectionTitle}</div>
         </div>
-        <etools-tabs
+        <etools-tabs-lit
           class="tabs-container"
           id="tabs"
           slot="tabs"
           .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+          @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
-        ></etools-tabs>
+        ></etools-tabs-lit>
         <div class="layout vertical card-content">${this.tabElement}</div>
       </section>
     `;
@@ -41,8 +42,7 @@ export class SharedSectionWithTabsTemplate extends LitElement {
     this.tabElement = this.getTabElement();
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

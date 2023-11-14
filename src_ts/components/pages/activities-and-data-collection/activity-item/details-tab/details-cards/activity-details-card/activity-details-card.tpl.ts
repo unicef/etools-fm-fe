@@ -5,7 +5,7 @@ import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
-import '../../../../../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
@@ -46,13 +46,13 @@ export function template(this: ActivityDetailsCard): TemplateResult {
         <!--    Collapsed location Widget    -->
         ${this.isEditMode && !this.isFieldReadonly('location')
           ? html`
-              <etools-tabs
+              <etools-tabs-lit
                 id="tabs"
                 slot="tabs"
                 .tabs="${this.getTabList()}"
-                @iron-select="${({detail}: any) => this.onChangeMapTab(detail.item)}"
+                @sl-tab-show="${({detail}: any) => this.onChangeMapTab(detail.name)}"
                 .activeTab="${this.activeTab}"
-              ></etools-tabs>
+              ></etools-tabs-lit>
               ${this.getTabElement()}
             `
           : ''}

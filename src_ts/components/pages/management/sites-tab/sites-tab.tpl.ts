@@ -85,7 +85,7 @@ export function template(this: SitesTabComponent): TemplateResult {
 
                       <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_SITES)}">
                         <etools-icon
-                          name="icons:create"
+                          name="create"
                           @click="${() => this.openDialog(site)}"
                           data-type="edit"
                         ></etools-icon>
