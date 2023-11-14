@@ -8,7 +8,8 @@ import './statuses-actions/statuses-actions';
 import {RouterStyles} from '../../../app-shell/router-style';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -162,10 +163,17 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <paper-button id="export" @tap="${this.export}" tracker="Export PDF" ?hidden="${this.hideExportButton()}">
-            <iron-icon icon="file-download" class="export-icon"></iron-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </paper-button>
+          <sl-button
+              id="export"
+              class="neutral"
+              variant="text"
+              @click="${this.export}"
+              tracker="Export PDF"
+              ?hidden="${this.hideExportButton()}"
+            >
+              <etools-icon name="file-download"></etools-icon>
+              ${translate('ACTIVITY_DETAILS.EXPORT')}
+           </sl-button>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -174,17 +182,15 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
 
-          <paper-button
+          <sl-button
             ?hidden="${this.activityDetails?.status !== DATA_COLLECTION || this.activityDetails.monitor_type !== TPM}"
-            class="visit-letter-button"
-            @tap="${() =>
-              window.open(
-                `/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/visit-letter/`,
-                '_blank'
-              )}"
+            variant="text"
+            class="neutral"
+            target="_blank"
+            href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/visit-letter/`}"
           >
             ${translate('ACTIVITY_DETAILS.VISIT_LETTER')}
-          </paper-button>
+          </sl-button>
         </div>
 
         <etools-tabs

@@ -30,7 +30,6 @@ import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-conten
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
@@ -38,7 +37,7 @@ import {activityDetails} from '../../../../redux/reducers/activity-details.reduc
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {
@@ -143,7 +142,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       FlexLayoutClasses,
       CardStyles,
       SharedStyles,
-      buttonsStyles,
       ActivitiesListStyles,
       css`
         .search-container {

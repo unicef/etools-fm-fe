@@ -1,5 +1,5 @@
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import './question-popup/question-popup';
 import {html, TemplateResult} from 'lit';
 import {QuestionsTabComponent} from './questions-tab';
@@ -33,13 +33,13 @@ export function template(this: QuestionsTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">${translate('QUESTIONS.TABLE_CAPTION', this.tableInformation)}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openPopup()}"
+          <etools-icon-button
+            @click="${() => this.openPopup()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             data-type="add"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 
@@ -100,7 +100,7 @@ export function template(this: QuestionsTabComponent): TemplateResult {
                 <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
               </div>
               <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}">
-                <iron-icon icon="icons:create" @tap="${() => this.openPopup(question)}"></iron-icon>
+                <etools-icon name="create" @tap="${() => this.openPopup(question)}"></etools-icon>
               </div>
             </div>
             <div slot="row-data-details" class="layout horizontal">

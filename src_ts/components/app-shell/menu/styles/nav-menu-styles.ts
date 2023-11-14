@@ -144,42 +144,43 @@ export const navMenuStyles: CSSResult = css`
     height: 0;
   }
 
-  .nav-menu-item.iron-selected {
+  .nav-menu-item.selected {
     background-color: var(--secondary-background-color);
   }
 
-  .nav-menu-item.iron-selected:active {
-    background-color: var(--light-divider-color);
+  .nav-menu-item.selected:active {
+    background-color: var(--dark-divider-color);
   }
 
   .nav-menu-item .name {
-    margin-left: 16px;
+    margin-inline-start: 16px;
     color: var(--primary-text-color);
   }
 
-  .nav-menu-item iron-icon {
+  .nav-menu-item etools-icon {
     margin: 0 16px;
     min-width: 24px;
     color: var(--dark-icon-color);
   }
 
-  :host([small-menu]) .nav-menu-item iron-icon {
+  :host([small-menu]) .nav-menu-item etools-icon {
     margin: 0;
   }
 
-  .nav-menu-item.iron-selected .name,
-  .nav-menu-item.iron-selected iron-icon {
-    color: var(--module-color);
+  .nav-menu-item.selected .name,
+  .nav-menu-item.selected etools-icon {
+    color: var(--primary-color);
   }
 
   .nav-menu-item.lighter-item .name,
-  .nav-menu-item.lighter-item iron-icon {
+  .nav-menu-item.lighter-item etools-icon {
     color: var(--secondary-text-color);
   }
 
   .last-one {
     margin-bottom: 18px;
   }
+
 
   .ripple-wrapper {
     position: relative;

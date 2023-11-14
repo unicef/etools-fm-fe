@@ -1,7 +1,7 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
@@ -15,23 +15,23 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <paper-button class="create-new" @tap="${this.goNew}" tracker="Create New Visit">
-          ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</paper-button
+        <sl-button variant="primary" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
+          ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</sl-button
         >
       </div>
     </page-content-header>
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
       <div class="search-input">
-        <paper-input
+        <etools-input
           type="search"
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+          <etools-icon name="search" slot="prefix"></etools-icon>
+        </etools-input>
       </div>
 
       <etools-filters

@@ -2,7 +2,7 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../../common/layout/page-content-header/page-content-header';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../../routing/routes';
@@ -24,10 +24,8 @@ import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
-import '@polymer/paper-input/paper-input';
-import '@polymer/paper-button';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -80,14 +78,14 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <paper-button class="back-button">
-            <a
+          <sl-button class="back-button"
+              target="_blank"
               href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
               class="layout horizontal"
             >
-              ${arrowLeftIcon} <span>${translate('MAIN.BACK')}</span>
-            </a>
-          </paper-button>
+            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            ${translate('MAIN.BACK')}
+          </sl-button>
         </div>
       </page-content-header>
 

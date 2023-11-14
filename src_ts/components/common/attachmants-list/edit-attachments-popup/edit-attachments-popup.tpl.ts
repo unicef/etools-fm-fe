@@ -1,5 +1,5 @@
 import '../../file-components/file-select-input';
-import '@unicef-polymer/etools-upload/etools-upload';
+import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {EditAttachmentsPopupComponent} from './edit-attachments-popup';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';

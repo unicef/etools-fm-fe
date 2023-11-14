@@ -3,7 +3,7 @@ import {IssueTrackerTabComponent} from './issue-tracker-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {repeat} from 'lit/directives/repeat.js';
 import '@polymer/paper-toggle-button';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import {prettyDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {simplifyValue} from '../../../utils/objects-diff';
@@ -77,13 +77,13 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">${translate('ISSUE_TRACKER.TABLE_CAPTION', this.tableInformation)}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openLogIssue()}"
+          <etools-icon-button
+            @click="${() => this.openLogIssue()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_LOG_ISSUES)}"
             data-type="add"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 
@@ -150,7 +150,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
               ${hasPermission(Permissions.EDIT_LOG_ISSUES)
                 ? html`
                     <div class="hover-block">
-                      <iron-icon icon="icons:create" @click="${() => this.openLogIssue(logIssue)}"></iron-icon>
+                      <etools-icon name="create" @click="${() => this.openLogIssue(logIssue)}"></etools-icon>
                     </div>
                   `
                 : ''}

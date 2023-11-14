@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 // language=HTML
 export const InputStyles: TemplateResult = html`
   <style>
-    paper-icon-button[hidden] {
+    etools-icon-button[hidden] {
       display: inline-block !important;
       visibility: hidden;
     }
@@ -26,8 +26,8 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown,
     etools-dropdown-multi,
-    paper-input,
-    paper-textarea,
+    etools-input,
+    etools-textarea,
     paper-dropdown-menu,
     etools-currency-amount-input,
     datepicker-lite {
@@ -101,7 +101,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown.no-data-fetched,
     etools-dropdown-multi.no-data-fetched,
-    paper-input.no-data-fetched {
+    etools-Input.no-data-fetched {
       --esmm-placeholder-color: var(--gray-dark);
       --paper-input-container-color: var(--gray-dark);
     }
@@ -116,9 +116,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi[disabled],
     etools-dropdown[disabled],
-    paper-textarea[disabled],
+    etools-textarea[disabled],
     paper-dropdown-menu[disabled],
-    paper-input[disabled],
+    etools-Input[disabled],
     datepicker-lite[disabled] {
       --paper-input-container: {
         opacity: 1 !important;
@@ -138,9 +138,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi[readonly]:not(.datepicker),
     etools-dropdown[readonly]:not(.datepicker),
-    paper-textarea[readonly]:not(.datepicker),
+    etools-textarea[readonly]:not(.datepicker),
     paper-dropdown-menu[readonly]:not(.datepicker),
-    paper-input[readonly]:not(.datepicker),
+    etools-Input[readonly]:not(.datepicker),
     datepicker-lite[readonly]:not(.datepicker) {
       --paper-input-container-focus-color: var(
         --paper-input-container-label_-_color,
@@ -170,12 +170,12 @@ export const InputStyles: TemplateResult = html`
     paper-dropdown-menu.required:not([disabled]),
     paper-dropdown-menu[required]:not([disabled]),
     paper-dropdown-menu[required].readonly-required,
-    paper-textarea.required:not([disabled]),
-    paper-textarea[required]:not([disabled]),
-    paper-textarea[required].readonly-required,
-    paper-input.required:not([disabled]),
-    paper-input[required].readonly-required,
-    paper-input[required]:not([disabled]) {
+    etools-textarea.required:not([disabled]),
+    etools-textarea[required]:not([disabled]),
+    etools-textarea[required].readonly-required,
+    etools-Input.required:not([disabled]),
+    etools-Input[required].readonly-required,
+    etools-Input[required]:not([disabled]) {
       --paper-input-container-label: {
         background: url('/fm/assets/images/required.svg') no-repeat 98% 14%/7px;
         width: auto !important;
@@ -199,7 +199,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi.bold,
     etools-dropdown.bold,
-    paper-input.bold {
+    etools-Input.bold {
       --paper-input-container-input: {
         font-weight: 500;
       }
@@ -219,7 +219,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi.deleted,
     etools-dropdown.deleted,
-    paper-input.deleted {
+    etools-Input.deleted {
       --paper-input-container-input: {
         color: #b0b0b0;
       }
@@ -240,9 +240,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown.readonly,
     etools-dropdown-multi.readonly,
-    paper-input.readonly,
+    etools-input.readonly,
     paper-dropdown-menu.readonly,
-    paper-textarea.readonly {
+    etools-textarea.readonly {
       --paper-input-container-underline: {
         display: none !important;
       }

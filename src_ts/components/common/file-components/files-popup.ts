@@ -5,8 +5,12 @@ import {DialogStyles} from '../../styles/dialog-styles';
 import {translate} from 'lit-translate';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {repeat} from 'lit/directives/repeat.js';
+<<<<<<< HEAD
 import '@unicef-polymer/etools-upload/etools-upload';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+=======
+import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
+>>>>>>> 3040d5ed1ccd40f869feb4be98eb6acfb7511571
 
 @customElement('files-popup')
 export class FilesPopup extends LitElement {

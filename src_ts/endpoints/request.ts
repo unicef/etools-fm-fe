@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import EtoolsAjaxRequestMixin from '@unicef-polymer/etools-ajax/etools-ajax-request-mixin';
+import AjaxRequestMixin from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request-mixin';
 import {etoolsCustomDexieDb} from './dexieDb';
 
 class RequestBase {
@@ -20,7 +20,7 @@ class RequestBase {
   }
 }
 
-export const EtoolsRequest: IEtoolsRequest = new (EtoolsAjaxRequestMixin(RequestBase as any))();
+export const EtoolsRequest: IEtoolsRequest = new (AjaxRequestMixin(RequestBase as any))();
 
 export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<T> {
   init.headers = getHeaders(init);

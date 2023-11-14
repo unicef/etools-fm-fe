@@ -1,7 +1,7 @@
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import '@polymer/paper-checkbox';
-import '@polymer/paper-input/paper-input';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '../../../../../common/layout/etools-card';
 import {html, TemplateResult} from 'lit';
@@ -39,7 +39,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
           ?hidden="${!this.editedDetails.opened}"
           style="${this.getDetailsInputStyles()}"
         >
-          <paper-textarea
+          <etools-textarea
             id="details-input"
             .value="${this.editedDetails.details}"
             max-rows="3"
@@ -48,7 +48,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
             @keyup="${() => this.onDetailsKeyUp()}"
             @keydown="${(event: KeyboardEvent) => this.onDetailsKeyDown(event)}"
             @blur="${() => this.updateItemDetails(this.editedDetails.id, this.editedDetails.details)}"
-          ></paper-textarea>
+          ></etools-textarea>
         </div>
 
         <!-- Table Header -->

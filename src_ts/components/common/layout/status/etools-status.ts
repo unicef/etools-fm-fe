@@ -1,6 +1,6 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import '@polymer/iron-icons/iron-icons';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {cancelledStatusIcon, completedStatusIcon} from './status-icons';
 import {
   CANCELLED,

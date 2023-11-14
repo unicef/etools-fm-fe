@@ -5,7 +5,8 @@ import '../../common/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {SharedStyles} from '../../styles/shared-styles';
-import {buttonsStyles} from '../../styles/button-styles';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {getEndpoint} from '../../../endpoints/endpoints';
 import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
@@ -61,9 +62,15 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <paper-button id="export" tracker="Export" @tap="${this.exportData}">
-                <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
-              </paper-button>
+              <sl-button
+                class="neutral"
+                variant="text"
+                @click="${this.exportData}"
+                tracker="Export"
+              >
+              <etools-icon name="file-download" slot="prefix"></etools-icon>
+              ${translate('MANAGEMENT.EXPORT')}
+            </sl-button>
             </div>
 
             <etools-tabs

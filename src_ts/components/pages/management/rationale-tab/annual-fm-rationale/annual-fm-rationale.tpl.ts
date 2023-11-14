@@ -1,4 +1,4 @@
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../styles/input-styles';
@@ -51,7 +51,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
         ></etools-loading>
         <div class="layout vertical card-content">
           <div>
-            <paper-textarea
+            <etools-textarea
               class="validate-input flex"
               .value="${this.editedData.prioritization_criteria}"
               @value-changed="${({detail}: CustomEvent) =>
@@ -61,13 +61,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.prioritization_criteria}"
               error-message="${this.errors.prioritization_criteria}"
               @focus="${() => this.resetFieldError('prioritization_criteria')}"
-              @tap="${() => this.resetFieldError('prioritization_criteria')}"
+              @click="${() => this.resetFieldError('prioritization_criteria')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-textarea>
+            </etools-textarea>
           </div>
           <div>
-            <paper-textarea
+            <etools-textarea
               class="validate-input flex"
               .value="${this.editedData.methodology_notes}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('methodology_notes', detail.value)}"
@@ -76,13 +76,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.methodology_notes}"
               error-message="${this.errors.methodology_notes}"
               @focus="${() => this.resetFieldError('methodology_notes')}"
-              @tap="${() => this.resetFieldError('methodology_notes')}"
+              @click="${() => this.resetFieldError('methodology_notes')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-textarea>
+            </etools-textarea>
           </div>
           <div>
-            <paper-textarea
+            <etools-textarea
               class="validate-input flex"
               .value="${this.editedData.modalities}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('modalities', detail.value)}"
@@ -91,13 +91,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.modalities}"
               error-message="${this.errors.modalities}"
               @focus="${() => this.resetFieldError('modalities')}"
-              @tap="${() => this.resetFieldError('modalities')}"
+              @click="${() => this.resetFieldError('modalities')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-textarea>
+            </etools-textarea>
           </div>
           <div>
-            <paper-input
+            <etools-input
               class="validate-input flex numeric-input"
               .value="${this.editedData.target_visits}"
               @input="${({target}: CustomEvent) => this.onTargetVisitsChange((target as HTMLInputElement).value)}"
@@ -107,13 +107,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.target_visits}"
               error-message="${this.errors.target_visits}"
               @focus="${() => this.resetFieldError('target_visits')}"
-              @tap="${() => this.resetFieldError('target_visits')}"
+              @click="${() => this.resetFieldError('target_visits')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-input>
+            </etools-input>
           </div>
           <div>
-            <paper-textarea
+            <etools-textarea
               class="validate-input flex"
               value="${this.editedData.partner_engagement}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('partner_engagement', detail.value)}"
@@ -122,13 +122,13 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.partner_engagement}"
               error-message="${this.errors.partner_engagement}"
               @focus="${() => this.resetFieldError('partner_engagement')}"
-              @tap="${() => this.resetFieldError('partner_engagement')}"
+              @click="${() => this.resetFieldError('partner_engagement')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-textarea>
+            </etools-textarea>
           </div>
           <div>
-            <paper-textarea
+            <etools-textarea
               class="validate-input flex"
               value="${this.editedData.other_aspects}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('other_aspects', detail.value)}"
@@ -137,10 +137,10 @@ export function template(this: AnnualFmRationale): TemplateResult {
               ?invalid="${this.errors.other_aspects}"
               error-message="${this.errors.other_aspects}"
               @focus="${() => this.resetFieldError('other_aspects')}"
-              @tap="${() => this.resetFieldError('other_aspects')}"
+              @click="${() => this.resetFieldError('other_aspects')}"
               ?readonly="${this.isReadonly}"
             >
-            </paper-textarea>
+            </etools-textarea>
           </div>
         </div>
       </div>

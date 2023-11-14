@@ -1,4 +1,4 @@
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../../styles/input-styles';
@@ -10,7 +10,7 @@ export function template(this: PartnerInformation): TemplateResult {
   return html`
     ${InputStyles}
     <style>
-      paper-input {
+      etools-input {
         width: 100%;
       }
       .card-content {
@@ -19,7 +19,7 @@ export function template(this: PartnerInformation): TemplateResult {
       .row {
         min-height: 75px;
       }
-      paper-input[readonly].without-border {
+      etools-input[readonly].without-border {
         --paper-input-container-underline: {
           border-bottom: none !important;
           display: none !important;
@@ -50,36 +50,36 @@ export function template(this: PartnerInformation): TemplateResult {
         ></etools-loading>
         <div class="layout horizontal row">
           <div class="col-data flex-4">
-            <paper-input
+            <etools-input
               class="without-border"
               .value="${this.editedData && this.editedData.vendor_number}"
               label="${translate('TPM_DETAILS.VENDOR_NUMBER')}"
               disabled
               readonly
-            ></paper-input>
+            ></etools-input>
           </div>
           <div class="col-data flex-8">
-            <paper-input
+            <etools-input
               class="without-border"
               .value="${this.getPartnerAddress(this.editedData)}"
               label="${translate('TPM_DETAILS.ADDRESS')}"
               disabled
               readonly
-            ></paper-input>
+            ></etools-input>
           </div>
         </div>
         <div class="layout horizontal row">
           <div class="col-data flex-4">
-            <paper-input
+            <etools-input
               class="without-border"
               .value="${this.editedData && this.editedData.name}"
               label="${translate('TPM_DETAILS.TPM_NAME')}"
               disabled
               readonly
-            ></paper-input>
+            ></etools-input>
           </div>
           <div class="col-data flex-4">
-            <paper-input
+            <etools-input
               id="emailInput"
               always-float-label
               type="email"
@@ -91,11 +91,11 @@ export function template(this: PartnerInformation): TemplateResult {
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('email', detail.value)}"
               error-message=${this.emailValidationMessage}
             >
-              <iron-icon slot="prefix" icon="communication:email"> </iron-icon>
-            </paper-input>
+              <etools-icon slot="prefix" name="communication:email"> </etools-icon>
+            </etools-input>
           </div>
           <div class="col-data flex-4">
-            <paper-input
+            <etools-input
               id="phoneInput"
               always-float-label
               .value="${this.editedData && this.editedData.phone_number}"
@@ -106,8 +106,8 @@ export function template(this: PartnerInformation): TemplateResult {
               maxlength="${getMaxLength(this.permissions, 'phone_number')}"
               @value-changed="${({detail}: CustomEvent) => this.updateModelValue('phone_number', detail.value)}"
             >
-              <iron-icon slot="prefix" icon="communication:phone"> </iron-icon>
-            </paper-input>
+              <etools-icon slot="prefix" name="communication:phone"> </etools-icon>
+            </etools-input>
           </div>
         </div>
       </div>

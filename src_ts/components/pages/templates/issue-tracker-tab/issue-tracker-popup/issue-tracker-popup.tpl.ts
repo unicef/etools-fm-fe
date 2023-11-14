@@ -4,8 +4,8 @@ import {repeat} from 'lit/directives/repeat.js';
 import {ISSUE_STATUSES} from '../issue-tracker-tab';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@polymer/paper-input/paper-input';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import {simplifyValue} from '../../../../utils/objects-diff';
@@ -181,7 +181,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             `
           : ''}
 
-        <paper-textarea
+        <etools-textarea
           class="validate-input preparation-input-container issue-tracker-input"
           .value=${this.editedData.issue}
           max-rows="3"
@@ -196,9 +196,9 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             this.autoValidateIssue = true;
             this.resetFieldError('issue');
           }}"
-          @tap="${() => this.resetFieldError('issue')}"
+          @click="${() => this.resetFieldError('issue')}"
           .autoValidate="${this.autoValidateIssue}"
-        ></paper-textarea>
+        ></etools-textarea>
 
         <div>
           ${repeat(

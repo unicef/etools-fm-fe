@@ -43,7 +43,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
     >
           <div class="layout horizontal row">
           <div class="col-data flex-6 p-relative">
-            <paper-input
+            <etools-input
               id="inputVendorNumber"
               always-float-label
               .value="${this.editedData && this.editedData.vendor_number}"
@@ -56,35 +56,35 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               @keyup="${this.onVendorNumberKeyUp}"
               error-message=${this.vendorNumberMessage}
               @click="${() => this.resetError('vendor_number', this)}"
-            ></paper-input>
+            ></etools-input>
             <etools-loading .active="${this.vendorRequestInProcess}"
               no-overlay loading-text="" class="po-loading">
             </etools-loading>
           </div>
           <div class="col-data flex-6">
-            <paper-input
+            <etools-input
               always-float-label
               .value="${this.editedData && this.editedData.name}"
               label="${translate('TPM_DETAILS.TPM_NAME')}"
               disabled
               readonly
-            ></paper-input>
+            ></etools-input>
           </div>
         </div>
         <div class="layout horizontal">
           <div class="col-data flex-12">
-            <paper-input
+            <etools-input
               always-float-label
               .value="${this.getPartnerAddress(this.editedData)}"
               label="${translate('TPM_DETAILS.ADDRESS')}"
               disabled
               readonly
-            ></paper-input>
+            ></etools-input>
           </div>
         </div>
         <div class="layout horizontal row">
           <div class="col-data flex-6">
-            <paper-input
+            <etools-input
               id="phoneInput"
               always-float-label
               .value="${this.editedData && this.editedData.phone_number}"
@@ -96,11 +96,11 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               @click="${() => this.resetError('', this)}"
               ?required="${isRequired(this.permissions, 'phone_number')}"
             >
-              <iron-icon slot="prefix" icon="communication:phone"> </iron-icon>
-            </paper-input>
+              <etools-icon slot="prefix" name="communication:phone"> </etools-icon>
+            </etools-input>
           </div>
           <div class="col-data flex-6">
-            <paper-input
+            <etools-input
               id="emailInput"
               always-float-label
               type="email"
@@ -112,8 +112,8 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               @click="${() => this.resetError('email', this)}"
               ?required="${isRequired(this.permissions, 'email')}"
             >
-              <iron-icon slot="prefix" icon="communication:email"> </iron-icon>
-            </paper-input>
+              <etools-icon slot="prefix" name="communication:email"> </etools-icon>
+            </etools-input>
           </div>
         </div>
       </div>

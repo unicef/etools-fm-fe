@@ -1,9 +1,12 @@
 import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
-import '@polymer/iron-icons/iron-icons';
+import '@unicef-polymer/etools-unicef/src/etools-icon-button/etools-icon-button';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {translate} from 'lit-translate';
 
@@ -30,6 +33,7 @@ export class EtoolsCard extends LitElement {
       elevationStyles,
       CardStyles,
       FlexLayoutClasses,
+      buttonsStyles,
       css`
         :host {
           display: block;
@@ -153,45 +157,46 @@ export class EtoolsCard extends LitElement {
         <header class="card-title-box with-bottom-line flex-header" ?is-collapsible="${this.isCollapsible}">
           ${this.isCollapsible
             ? html`
-                <paper-icon-button
+                <etools-icon-button
                   class="flex-header__collapse"
-                  @tap="${() => this.toggleCollapse()}"
-                  icon="${this.collapsed ? 'expand-more' : 'expand-less'}"
-                ></paper-icon-button>
+                  @click="${() => this.toggleCollapse()}"
+                  name="${this.collapsed ? 'expand-more' : 'expand-less'}"
+                >
+                </etools-icon-button>
               `
             : ''}
           <div class="flex-header__title">${this.cardTitle}</div>
           <div class="layout horizontal center flex-header__edit">
             ${this.isEditable
               ? html`
-                  <paper-icon-button
-                    icon="create"
-                    ?edit=${this.edit}
+                  <etools-icon-button
+                    class="flex-header__collapse"
+                    @click="${() => this.startEdit()}"
                     ?hidden="${this.hideEditButton}"
-                    class="edit-button"
-                    @tap="${() => this.startEdit()}"
-                  ></paper-icon-button>
+                    name="create"
+                  >
+                  </etools-icon-button>
                 `
               : ''}
           </div>
           <div class="flex-header__actions"><slot name="actions"></slot></div>
         </header>
-        <iron-collapse ?opened="${!this.collapsed}">
+        <etools-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">
             <slot name="content"></slot>
 
             ${this.isEditable && this.edit
               ? html`
                   <div class="layout horizontal end-justified card-buttons">
-                    <paper-button @tap="${() => this.cancel()}">${translate('MAIN.BUTTONS.CANCEL')}</paper-button>
-                    <paper-button class="save-button" @tap="${() => this.save()}"
-                      >${translate('MAIN.BUTTONS.SAVE')}</paper-button
-                    >
+                    <sl-button variant="neutral" @click="${() => this.cancel()}">${translate('MAIN.BUTTONS.CANCEL')}</sl-button>
+                    <sl-button variant="primary" class="save-button" @click="${() => this.save()}">
+                      ${translate('MAIN.BUTTONS.SAVE')}
+                    </sl-button>
                   </div>
                 `
               : ''}
           </section>
-        </iron-collapse>
+        </etools-collapse>
       </div>
     `;
   }

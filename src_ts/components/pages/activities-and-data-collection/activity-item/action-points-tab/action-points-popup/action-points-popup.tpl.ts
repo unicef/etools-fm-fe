@@ -1,8 +1,8 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@polymer/paper-checkbox';
-import '@polymer/paper-input/paper-textarea';
-import '@unicef-polymer/etools-date-time/datepicker-lite';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
@@ -32,7 +32,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
       <!--     Description   -->
-      <paper-textarea
+      <etools-textarea
         class="validate-input additional-padding"
         .value="${this.editedData.description}"
         @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
@@ -43,8 +43,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
         ?invalid="${this.errors && this.errors.description}"
         .errorMessage="${this.errors && this.errors.description}"
         @focus="${() => this.resetFieldError('description')}"
-        @tap="${() => this.resetFieldError('description')}"
-      ></paper-textarea>
+        @click="${() => this.resetFieldError('description')}"
+      ></etools-textarea>
 
       <div class="grid-container">
         <!--    Assignee    -->
@@ -202,9 +202,8 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ? html`
               <div class="without-border flex">
                 <a class="link-cell action-point-link" href="${this.url}" target="_blank"
-                  >${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.GO_TO_ACTION_POINTS_TO_COMPLETE')}<paper-icon-button
-                    icon="icons:launch"
-                  ></paper-icon-button
+                  >${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.GO_TO_ACTION_POINTS_TO_COMPLETE')}
+                  <etools-icon-button name="launch"></etools-icon-button
                 ></a>
               </div>
             `

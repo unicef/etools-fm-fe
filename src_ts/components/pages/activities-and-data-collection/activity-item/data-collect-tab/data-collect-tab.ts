@@ -25,11 +25,12 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 
 store.addReducers({dataCollection});
 
@@ -127,13 +128,13 @@ export class DataCollectTab extends LitElement {
           html`
             <etools-card class="page-content" card-title="${method.name}" is-collapsible>
               <div slot="actions">
-                <paper-icon-button
-                  @tap="${() => this.onCreateChecklist(method)}"
+                <etools-icon-button
+                  @click="${() => this.onCreateChecklist(method)}"
                   ?disabled="${this.createInProgress}"
                   ?hidden="${this.isReadonly}"
-                  icon="icons:add-box"
+                  name="add-box"
                   class="panel-button"
-                ></paper-icon-button>
+                ></etools-icon-button>
               </div>
               <div slot="content" class="layout vertical">
                 <!--   Spinner for loading data   -->
@@ -198,13 +199,13 @@ export class DataCollectTab extends LitElement {
 
               <div class="hover-block">
                 <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
-                  <iron-icon icon="${this.isReadonly ? 'icons:visibility' : 'icons:create'}"></iron-icon>
+                  <etools-icon name="${this.isReadonly ? 'visibility' : 'create'}"></etools-icon>
                 </a>
-                <paper-icon-button
+                <etools-icon-button
                   ?hidden="${this.isReadonly}"
-                  icon="icons:delete"
-                  @tap="${() => this.openDeletePopup(item.id)}"
-                ></paper-icon-button>
+                  name="delete"
+                  @click="${() => this.openDeletePopup(item.id)}"
+                ></etools-icon-button>
               </div>
             </div>
           </etools-data-table-row>

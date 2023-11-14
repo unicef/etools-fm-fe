@@ -14,6 +14,8 @@ import {clone} from 'ramda';
 import '@polymer/paper-radio-group/paper-radio-group';
 import '@polymer/paper-radio-button/paper-radio-button';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 import {store} from '../../../../../redux/store';
 import {Unsubscribe} from 'redux';
@@ -157,7 +159,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               )}
             </div>
             <div class="flex-3">
-              <paper-textarea
+              <etools-textarea
                 id="details-input"
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
                 label="${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}"
@@ -167,7 +169,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                   : '—'}"
                 @value-changed="${({detail}: CustomEvent) =>
                   this.updateOverallFinding({narrative_finding: detail.value})}"
-              ></paper-textarea>
+              ></etools-textarea>
             </div>
           </div>
         `
@@ -214,10 +216,14 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
-          <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">
-            <iron-icon icon="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></iron-icon>
+          <sl-button
+            id="editAo"
+            variant="primary"
+            @click="${this.openAttachmentsPopup}"
+          >
+            <etools-icon name="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></etools-icon>
             ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
-          </paper-button>
+          </sl-button>
         `
       : html``;
   }
@@ -382,6 +388,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       // FormBuilderCardStyles,
       FlexLayoutClasses,
       RadioButtonStyles,
+      buttonsStyles,
       css`
         .completed-finding {
           flex-basis: 50%;

@@ -31,7 +31,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
     >
       <div class="container">
         <div class="layout horizontal">
-          <paper-input
+          <etools-input
             class="validate-input flex-7"
             .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
@@ -46,10 +46,10 @@ export function template(this: SitesPopupComponent): TemplateResult {
               this.autoValidateName = true;
               this.resetFieldError('name');
             }}"
-            @tap="${() => this.resetFieldError('name')}"
+            @click="${() => this.resetFieldError('name')}"
             .autoValidate="${this.autoValidateName}"
             required
-          ></paper-input>
+          ></etools-input>
 
           <etools-dropdown
             id="statusDropdown"
@@ -76,12 +76,12 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
         ${this.editedData.id
           ? html`
-              <paper-input
+              <etools-input
                 .value="${this.editedData && this.editedData.parent!.name}"
                 label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
                 placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
                 disabled
-              ></paper-input>
+              ></etools-input>
             `
           : ''}
 
@@ -89,20 +89,20 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
         <div class="layout horizontal">
           <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
-          <paper-input
+          <etools-input
             class="validate-input flex-5"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
             label="${translate('MAIN.LATITUDE')}"
             placeholder="-"
-          ></paper-input>
-          <paper-input
+          ></etools-input>
+          <etools-input
             class="validate-input flex-5"
             .value="${this.longitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
             label="${translate('MAIN.LONGITUDE')}"
             placeholder="-"
-          ></paper-input>
+          ></etools-input>
         </div>
       </div>
     </etools-dialog>

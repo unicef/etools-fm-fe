@@ -8,7 +8,7 @@ import {partnersCoverageSelector} from '../../../../../../redux/selectors/monito
 import {partnershipTabStyles} from './partnership-tab.styles';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 enum SortingTypes {

@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';
