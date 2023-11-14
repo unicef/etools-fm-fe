@@ -6,7 +6,6 @@ import {ATTACHMENTS_STORE} from '../../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@polymer/paper-button/paper-button';
 import {translate} from 'lit-translate';
 import {SummaryChecklistAttachmentsPopup} from './summary-checklist-attachments-popup';
 

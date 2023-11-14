@@ -59,6 +59,7 @@ import {MapHelper} from './components/common/map-mixin';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {EtoolsIconSet, initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
+import {fmIcons} from './components/styles/app-icons';
 declare const dayjs: any;
 declare const dayjs_plugin_utc: any;
 declare const dayjs_plugin_isSameOrBefore: any;
@@ -81,7 +82,7 @@ initializeIcons(
     EtoolsIconSet.image,
     EtoolsIconSet.maps
   ],
-  pmpIcons
+  fmIcons
 );
 
 // These are the actions needed by this element.

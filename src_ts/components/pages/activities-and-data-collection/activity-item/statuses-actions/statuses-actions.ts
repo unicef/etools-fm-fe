@@ -225,10 +225,6 @@ export class StatusesActionsComponent extends LitElement {
           margin-right: 7px;
         }
 
-        paper-button[disabled] {
-          color: lightgray;
-        }
-
         div[slot='dropdown-content'] {
           padding: 20px 24px;
           color: var(--primary-text-color);
