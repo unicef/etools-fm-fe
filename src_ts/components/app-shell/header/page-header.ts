@@ -1,5 +1,5 @@
 import '@polymer/polymer/lib/elements/dom-if';
-import '@polymer/app-layout/app-toolbar/app-toolbar';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';

@@ -9,11 +9,11 @@ import {installRouter} from 'pwa-helpers/router';
 // This element is connected to the Redux store.
 import {store} from './redux/store';
 // These are the elements needed by this element.
-import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
-import '@polymer/app-layout/app-drawer/app-drawer.js';
-import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-header/app-header.js';
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer-layout';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-form-builder';
 import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
@@ -29,9 +29,8 @@ import './components/app-shell/footer/page-footer.js';
 import './components/app-shell/app-theme.js';
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from './config/config';
 import {getCurrentUserData} from './redux/effects/user.effects';
-import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
-import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
-import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
+import {AppHeaderLayout} from '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
+import {AppDrawer} from '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
 
 import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
@@ -133,9 +132,8 @@ export class AppShell extends connect(store)(LitElement) {
   @property({type: Boolean})
   hasLoadedTranslationFile = false;
 
-  @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
-  @query('#drawer') private drawer!: AppDrawerElement;
-  @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
+  @query('#drawer') private drawer!: AppDrawer;
+  @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayout;
 
   private selectedLanguageAux = '';
 
@@ -262,8 +260,6 @@ export class AppShell extends connect(store)(LitElement) {
 
   toggleMenu(e: CustomEvent): void {
     this.smallMenu = e.detail.value;
-    this._updateDrawerStyles();
-    this._notifyLayoutResize();
   }
 
   render(): TemplateResult {
@@ -422,15 +418,5 @@ export class AppShell extends connect(store)(LitElement) {
         });
       }
     }
-  }
-
-  private _updateDrawerStyles(): void {
-    this.drawerLayout.updateStyles();
-    this.drawer.updateStyles();
-  }
-
-  private _notifyLayoutResize(): void {
-    this.drawerLayout.notifyResize();
-    this.appHeaderLayout.notifyResize();
   }
 }
