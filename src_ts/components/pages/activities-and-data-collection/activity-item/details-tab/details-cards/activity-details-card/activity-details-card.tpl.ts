@@ -7,7 +7,7 @@ import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
 import '../../../../../../common/layout/etools-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
 
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [

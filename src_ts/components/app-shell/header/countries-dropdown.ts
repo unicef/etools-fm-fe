@@ -82,13 +82,6 @@ export class CountriesDropdown extends connect(store)(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    setTimeout(() => {
-      const fitInto: HTMLElement | null = document
-        .querySelector('app-shell')!
-        .shadowRoot!.querySelector('#appHeadLayout');
-      this.countryDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {
