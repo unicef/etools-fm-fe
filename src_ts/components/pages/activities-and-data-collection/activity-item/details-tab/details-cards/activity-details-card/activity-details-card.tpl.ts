@@ -6,7 +6,7 @@ import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/paper-tabs/paper-tab';
 import '../../../../../../common/layout/etools-tabs';
-import '@unicef-polymer/etools-date-time/datepicker-lite';
+import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi.js';
 import {translate} from 'lit-translate';
 

@@ -11,7 +11,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
       <div class="history" ?hidden="${!this.history.length}">
         ${this.history.map(
           (location: WidgetLocation, index: number) => html`
-            <paper-input
+            <etools-input
               label="${this.getHistoryInputLabel(location.admin_level, location.admin_level_name)}"
               value="${this.getLocationPart(location.name, 'name')}"
               readonly
@@ -20,7 +20,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
               <div slot="suffix" @tap="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
               </div>
-            </paper-input>
+            </etools-input>
           `
         )}
       </div>
@@ -28,7 +28,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
       <div class="map-and-list">
         <div id="map"></div>
         <div class="list">
-          <paper-input
+          <etools-input
             class="search-input"
             type="search"
             .value="${this.locationSearch}"
@@ -37,7 +37,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
             inline
           >
             <iron-icon icon="search" slot="prefix"></iron-icon>
-          </paper-input>
+          </etools-input>
 
           <div class="locations-list">
             ${!this.isSiteList

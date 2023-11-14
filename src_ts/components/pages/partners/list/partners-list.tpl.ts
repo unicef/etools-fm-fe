@@ -31,7 +31,7 @@ export function template(this: PartnersListComponent): TemplateResult {
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
       <div class="search-input">
-        <paper-input
+        <etools-input
           type="search"
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('TPM.FILTERS.SEARCH')}"
@@ -39,7 +39,7 @@ export function template(this: PartnersListComponent): TemplateResult {
           inline
         >
           <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+        </etools-input>
       </div>
     </section>
 

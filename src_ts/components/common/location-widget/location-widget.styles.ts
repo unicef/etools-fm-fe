@@ -26,11 +26,11 @@ export const LocationWidgetStyles: CSSResult = css`
     cursor: pointer;
   }
 
-  .widget-container .history paper-input {
+  .widget-container .history etools-input {
     margin-right: 22px;
   }
 
-  .widget-container .history paper-input div[slot] {
+  .widget-container .history etools-input div[slot] {
     margin-left: 5px;
     color: #dd0000;
   }
@@ -69,7 +69,7 @@ export const LocationWidgetStyles: CSSResult = css`
     overflow-y: auto;
   }
 
-  .widget-container .map-and-list .list paper-input {
+  .widget-container .map-and-list .list etools-input {
     margin-top: -20px;
   }
 

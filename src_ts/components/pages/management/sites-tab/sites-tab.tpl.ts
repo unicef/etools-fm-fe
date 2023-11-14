@@ -2,8 +2,8 @@ import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@polymer/paper-toggle-button';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@polymer/paper-input/paper-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
@@ -13,7 +13,7 @@ export function template(this: SitesTabComponent): TemplateResult {
   return html`
     <section class="elevation page-content filters" elevation="1">
       <div class="layout horizontal">
-        <paper-input
+        <etools-input
           class="search-input"
           type="search"
           .value="${this.queryParams && this.queryParams.search}"
@@ -21,8 +21,8 @@ export function template(this: SitesTabComponent): TemplateResult {
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <etools-icon icon="search" slot="prefix"></etools-icon>
-        </paper-input>
+          <etools-icon name="search" slot="prefix"></etools-icon>
+        </etools-input>
 
         <div class="toggle-button-control">
           <paper-toggle-button
@@ -84,11 +84,11 @@ export function template(this: SitesTabComponent): TemplateResult {
                       <div class="col-data flex-auto">${site.name}</div>
 
                       <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_SITES)}">
-                        <iron-icon
-                          icon="icons:create"
-                          @tap="${() => this.openDialog(site)}"
+                        <etools-icon
+                          name="icons:create"
+                          @click="${() => this.openDialog(site)}"
                           data-type="edit"
-                        ></iron-icon>
+                        ></etools-icon>
                       </div>
                     </div>
                   `

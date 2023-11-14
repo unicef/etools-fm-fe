@@ -25,7 +25,7 @@ import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
-import '@polymer/paper-input/paper-input';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@polymer/paper-button';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';

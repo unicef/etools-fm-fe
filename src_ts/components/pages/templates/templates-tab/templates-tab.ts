@@ -1,5 +1,5 @@
 import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
-import {customElement, property, query, queryAll} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './templates-tab.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {updateQueryParams} from '../../../../routing/routes';
@@ -15,8 +15,6 @@ import {getEndpoint} from '../../../../endpoints/endpoints';
 import {request} from '../../../../endpoints/request';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {hasPermission, Permissions} from '../../../../config/permissions';
-import {setTextareasMaxHeight} from '../../../utils/textarea-max-rows-helper';
-import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
@@ -41,7 +39,6 @@ const ESCAPE = 27;
 export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
   @property() listLoadingInProcess = false;
   @property() editedDetails: GenericObject = {opened: false};
-  @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private additionalDataLoadingCount = 0;
@@ -235,7 +232,6 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textareas);
   }
 
   private requestTemplateUpdate(

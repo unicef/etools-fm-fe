@@ -6,7 +6,7 @@ import {DialogStyles} from '../../../../styles/dialog-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {translate} from 'lit-translate';
 
 @customElement('data-collect-popup')
@@ -46,7 +46,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
         @close="${() => this.onClose()}"
       >
         <div class="container layout vertical">
-          <paper-textarea
+          <etools-textarea
             required
             maxlength="100"
             always-float-label
@@ -56,10 +56,10 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
             ?invalid="${this.errors.information_source}"
             .errorMessage="${this.errors.information_source}"
             @focus="${() => this.resetFieldError('information_source')}"
-            @tap="${() => this.resetFieldError('information_source')}"
+            @click="${() => this.resetFieldError('information_source')}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('information_source', detail.value)}"
           >
-          </paper-textarea>
+          </etools-textarea>
         </div>
       </etools-dialog>
     `;

@@ -1,5 +1,5 @@
 import {css, LitElement, TemplateResult, CSSResult, PropertyValues} from 'lit';
-import {customElement, property, queryAll} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './action-points-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../../redux/store';
@@ -15,8 +15,6 @@ import {InterventionsMixin} from '../../../../../common/mixins/interventions-mix
 import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
-import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
-import {setTextareasMaxHeight} from '../../../../../utils/textarea-max-rows-helper';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
@@ -26,7 +24,6 @@ import {CardStyles} from '../../../../../styles/card-styles';
 export class ActionPointsPopup extends InterventionsMixin(
   PartnersMixin(CpOutputsMixin(SectionsMixin(DataMixin()<EditableActionPoint>(LitElement))))
 ) {
-  @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   @property() dialogOpened = true;
   @property() users: User[] = [];
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
@@ -222,7 +219,6 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textareas);
   }
 
   private checkRequiredFields(): void {

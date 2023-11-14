@@ -14,7 +14,7 @@ import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {get as getTranslation} from 'lit-translate';
-import {PaperInputElement} from '@polymer/paper-input/paper-input';
+import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {
   resetRequiredFields,
   validateRequiredFields
@@ -29,7 +29,7 @@ export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmP
   @property() canEditPhone = false;
   @property() canEditAtLeastOneField = false;
   @property({type: String}) emailValidationMessage!: string;
-  @query('#emailInput') private emailEl!: PaperInputElement;
+  @query('#emailInput') private emailEl!: EtoolsInput;
   permissions!: GenericObject;
 
   static get styles(): CSSResultArray {
@@ -130,7 +130,7 @@ export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmP
     var re =
       /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if ((required && !value) || (value && !re.test(value))) {
+    if ((required && !value) || (value && !re.test(value as string))) {
       this.emailValidationMessage = getTranslation('TPM_DETAILS.VALID_EMAIL_REQUIRED');
       this.emailEl.setAttribute('invalid', 'true');
       return false;

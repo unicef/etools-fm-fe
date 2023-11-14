@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {CpDetailsItem} from './cp-details-item';
@@ -100,7 +101,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                               </div>
                             </div>
 
-                            <iron-collapse ?opened="${this.detailsOpened[intervention.pk]}">
+                            <etools-collapse ?opened="${this.detailsOpened[intervention.pk]}">
                               <div class="intervention-details">
                                 <div class="line title">
                                   ${translate('CO_OVERVIEW.PD_OUTPUT')}/${translate('CO_OVERVIEW.SPD_EXPECTED_RESULT')}
@@ -112,7 +113,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                                     )
                                   : ''}
                               </div>
-                            </iron-collapse>
+                            </etools-collapse>
                           `
                         )
                       : html`

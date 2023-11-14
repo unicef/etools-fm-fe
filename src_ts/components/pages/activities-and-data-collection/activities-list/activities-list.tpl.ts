@@ -34,7 +34,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
       <div class="search-input">
-        <paper-input
+        <etools-input
           type="search"
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
@@ -42,7 +42,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           inline
         >
           <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+        </etools-input>
       </div>
 
       <etools-filters

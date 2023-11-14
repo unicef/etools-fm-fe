@@ -10,7 +10,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
       <div class="map-and-list">
         <div id="map"></div>
         <div class="list">
-          <paper-input
+          <etools-input
             class="search-input"
             type="search"
             .value="${this.locationSearch}"
@@ -19,7 +19,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
             inline
           >
             <iron-icon icon="search" slot="prefix"></iron-icon>
-          </paper-input>
+          </etools-input>
 
           <div class="locations-list">
             ${repeat(

@@ -9,7 +9,7 @@ import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {get as getTranslation} from 'lit-translate';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
 import {activateVendor, getVendorByNumber} from '../../../../../redux/effects/tpm-partners.effects';
-import {PaperInputElement} from '@polymer/paper-input/paper-input';
+import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {getDifference} from '../../../../utils/objects-diff';
 import {store} from '../../../../../redux/store';
@@ -28,8 +28,8 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   @property() permissions!: GenericObject;
   @property() canEditEmail!: boolean;
   @property() canEditPhone!: boolean;
-  @query('#emailInput') private emailEl!: PaperInputElement;
-  @query('#inputVendorNumber') private inputVendorEl!: PaperInputElement;
+  @query('#emailInput') private emailEl!: EtoolsInput;
+  @query('#inputVendorNumber') private inputVendorEl!: EtoolsInput;
 
   static get styles(): CSSResultArray {
     return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
@@ -164,7 +164,7 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
     var re =
       /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if ((required && !value) || (value && !re.test(value))) {
+    if ((required && !value) || (value && !re.test(value as string))) {
       this.emailValidationMessage = getTranslation('TPM_DETAILS.VALID_EMAIL_REQUIRED');
       this.emailEl.setAttribute('invalid', 'true');
       return false;

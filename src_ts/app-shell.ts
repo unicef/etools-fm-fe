@@ -46,7 +46,7 @@ import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from './endpoints/endpoints-list'
 import {currentUser, userSelector} from './redux/selectors/user.selectors';
 import {setUser} from './config/permissions';
 import {appDrawerStyles} from './components/app-shell/menu/styles/app-drawer-styles';
-import '@unicef-polymer/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import {globalLoadingSelector} from './redux/selectors/global-loading.selectors';
 import {globalLoading} from './redux/reducers/global-loading.reducer';
 
