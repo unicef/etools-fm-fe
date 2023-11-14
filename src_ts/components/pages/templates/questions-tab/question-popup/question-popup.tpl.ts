@@ -1,11 +1,10 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit/directives/repeat.js';
-
 import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';

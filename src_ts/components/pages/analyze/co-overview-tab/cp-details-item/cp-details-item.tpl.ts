@@ -1,5 +1,5 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';

@@ -1,11 +1,10 @@
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {TemplatesTabComponent} from './templates-tab';
 import {html, TemplateResult} from 'lit';
-
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {InputStyles} from '../../../styles/input-styles';

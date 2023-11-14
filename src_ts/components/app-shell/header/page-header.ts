@@ -31,7 +31,6 @@ import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate, get as getTranslation} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
-import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {appLanguages} from '../../../config/app-constants';
 import {languageIsAvailableInApp} from '../../utils/utils';
 
@@ -90,8 +89,6 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property({type: String})
   environment = 'LOCAL';
-
-  @query('#languageSelector') private languageDropdown!: EtoolsDropdownEl;
 
   rootPath: string = ROOT_PATH;
 
@@ -254,11 +251,6 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     super.connectedCallback();
     this.setBgColor();
     this.checkEnvironment();
-
-    setTimeout(() => {
-      const fitInto = document.querySelector('app-shell')!.shadowRoot!.querySelector('#appHeadLayout');
-      this.languageDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {

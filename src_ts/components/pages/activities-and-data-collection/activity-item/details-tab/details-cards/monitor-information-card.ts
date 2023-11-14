@@ -17,7 +17,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 import {clone} from 'ramda';
-import {EtoolsDropdownMulti} from '@unicef-polymer/etools-dropdown/src/EtoolsDropdownMulti';
+import {EtoolsDropdownMulti} from '@unicef-polymer/etools-unicef/src/etools-dropdown/src/EtoolsDropdownMulti';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 
 export const CARD_NAME = 'monitor-information';
