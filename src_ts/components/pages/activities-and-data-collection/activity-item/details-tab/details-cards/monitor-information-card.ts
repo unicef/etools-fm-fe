@@ -17,7 +17,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 import {clone} from 'ramda';
-import {EtoolsDropdownMulti} from '@unicef-polymer/etools-unicef/src/etools-dropdown/src/EtoolsDropdownMulti';
+import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 
 export const CARD_NAME = 'monitor-information';
@@ -42,7 +42,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() teamMembers?: ActivityTeamMember[] = [];
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
-  teamMembersDd!: EtoolsDropdownMulti;
+  teamMembersDd!: EtoolsDropdownMultiEl;
 
   userTypes: UserType[] = [USER_STAFF, USER_TPM];
   users: User[] = [];

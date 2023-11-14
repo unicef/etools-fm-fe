@@ -27,8 +27,7 @@ import {activeLanguageSelector} from '../../../../redux/selectors/active-languag
 import {clone} from 'ramda';
 import {
   updateFilterSelectionOptions,
-  updateFiltersSelectedValues,
-  clearSelectedValuesInFilters
+  updateFiltersSelectedValues
 } from '@unicef-polymer/etools-unicef/src/etools-filters/filters';
 import {get as getTranslation} from 'lit-translate';
 import {
@@ -194,11 +193,13 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
 
-        clearSelectedValuesInFilters(questionsFilters);
-        this.populateDropdownFilterOptions(optionsCollection, questionsFilters);
+        const availableFilters = JSON.parse(JSON.stringify(questionsFilters()));
+
+        //@dci clearSelectedValuesInFilters(questionsFilters);
+        this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-        this.filters = updateFiltersSelectedValues(currentParams, questionsFilters);
+        this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
       }
     );
   }
