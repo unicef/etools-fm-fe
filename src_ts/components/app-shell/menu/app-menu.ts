@@ -16,7 +16,6 @@ import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {fmIcons} from '../../styles/app-icons';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {get as getTranslation} from 'lit-translate';
 

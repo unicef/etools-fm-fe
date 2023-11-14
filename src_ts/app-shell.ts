@@ -100,7 +100,7 @@ store.addReducers({
 @customElement('app-shell')
 export class AppShell extends connect(store)(LitElement) {
   @property({type: Boolean})
-  narrow = true;
+  narrow!: boolean;
 
   @property({type: Boolean})
   drawerOpened = false;
@@ -207,7 +207,7 @@ export class AppShell extends connect(store)(LitElement) {
     installRouter((location: Location) =>
       store.dispatch<AsyncEffect>(navigate(decodeURIComponent(location.pathname + location.search)))
     );
-    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
+    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(!this.drawerOpened)));
 
     checkEnvFlags().then(() => store.dispatch<AsyncEffect>(getCurrentUserData()));
     store.subscribe(
@@ -233,6 +233,7 @@ export class AppShell extends connect(store)(LitElement) {
     this.routeDetails = state.app.routeDetails;
     this.mainPage = state.app.routeDetails.routeName;
     this.subPage = state.app.routeDetails.subRouteName;
+    console.log(state.app.drawerOpened);
     this.drawerOpened = state.app.drawerOpened;
     // reset currentToastMessage to trigger observer in etools-piwik when it's changed again
     this.currentToastMessage = '';
