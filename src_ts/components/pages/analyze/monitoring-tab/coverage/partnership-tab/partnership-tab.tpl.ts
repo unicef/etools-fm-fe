@@ -4,7 +4,7 @@ import '../../../../../common/progressbar/proportional-progress-bar';
 import '@unicef-polymer/etools-dropdown/etools-dropdown';
 import {repeat} from 'lit/directives/repeat.js';
 import {translate} from 'lit-translate';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 
 export function template(this: PartnershipTab): TemplateResult {
   return html`

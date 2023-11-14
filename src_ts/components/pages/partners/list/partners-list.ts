@@ -23,7 +23,7 @@ import {buttonsStyles} from '../../../styles/button-styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNERS_EXPORT} from '../../../../endpoints/endpoints-list';
