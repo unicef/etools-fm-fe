@@ -48,16 +48,18 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
         </span>
 
-        <span class="ripple-wrapper main">
+        <span class="ripple-wrapper main"> </span>
+
+        <sl-tooltip
+          content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}"
+          for="menu-header-top-icon"
+          placement="right"
+        >
           <etools-icon
             id="menu-header-top-icon"
             name="assignment-ind"
             @click="${() => this._toggleSmallMenu()}"
           ></etools-icon>
-        </span>
-
-        <sl-tooltip for="menu-header-top-icon" placement="right">
-          ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
         </sl-tooltip>
 
         <span class="chev-right">
@@ -70,7 +72,9 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
       </div>
 
       <div class="nav-menu">
-        <div class="menu-selector" role="navigation"
+        <div
+          class="menu-selector"
+          role="navigation"
           .selected="${this.selectedOption}"
           attr-for-selected="menu-name"
           selectable="a"
@@ -84,12 +88,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Visits"
           >
-
-            <sl-tooltip for="page1-icon" placement="right" content="${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.VISITS',
-              'Visits'
-            )}">
+            <sl-tooltip
+              for="page1-icon"
+              placement="right"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}"
+            >
               <etools-icon id="page1-icon" name="assignment"></etools-icon>
             </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
@@ -104,10 +107,12 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Analysis"
           >
-
-            <sl-tooltip for="page2-icon" placement="right"
-            content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}">
-             <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
+            <sl-tooltip
+              for="page2-icon"
+              placement="right"
+              content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}"
+            >
+              <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
             </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}</div>
           </a>
@@ -121,9 +126,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Templates"
           >
-
-            <sl-tooltip for="page3-icon" placement="right"
-              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}">
+            <sl-tooltip
+              for="page3-icon"
+              placement="right"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}"
+            >
               <etools-icon id="page3-icon" name="settings-applications"></etools-icon>
             </sl-tooltip>
             <div class="name">
@@ -140,12 +147,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="Management"
           >
-
-            <sl-tooltip for="page4-icon" placement="right" content="${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.MANAGEMENT',
-              'Management'
-            )}">
+            <sl-tooltip
+              for="page4-icon"
+              placement="right"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}"
+            >
               <etools-icon id="page4-icon" name="av:playlist-add-check"></etools-icon>
             </sl-tooltip>
             <div class="name">
@@ -161,12 +167,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             @tap="${this.trackAnalytics}"
             tracker="TPM"
           >
-
-            <sl-tooltip for="page5-icon" placement="right" cotent="${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.TPM',
-              'Third Party Monitors'
-            )}">
+            <sl-tooltip
+              for="page5-icon"
+              placement="right"
+              cotent="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}"
+            >
               <etools-icon id="page5-icon" name="social:people"></etools-icon>
             </sl-tooltip>
             <div class="name">
@@ -186,13 +191,15 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Implementation Intelligence"
         >
-
-          <sl-tooltip for="power-bi-icon" placement="right"
-             content="${this.translateKey(
-               this.selectedLanguage,
-               'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
-               'Implementation Intelligence'
-             )}">
+          <sl-tooltip
+            for="power-bi-icon"
+            placement="right"
+            content="${this.translateKey(
+              this.selectedLanguage,
+              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
+              'Implementation Intelligence'
+            )}"
+          >
             <etools-icon id="power-bi-icon" name="powerBi"></etools-icon>
           </sl-tooltip>
           <div class="name">
@@ -211,9 +218,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Knowledge base"
         >
-
-          <sl-tooltip for="knoledge-icon" placement="right"
-            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}">
+          <sl-tooltip
+            for="knoledge-icon"
+            placement="right"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}"
+          >
             <etools-icon id="knoledge-icon" name="maps:local-library"></etools-icon>
           </sl-tooltip>
           <div class="name">
@@ -228,9 +237,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Discussion"
         >
-
-          <sl-tooltip for="discussion-icon" placement="right"
+          <sl-tooltip
+            for="discussion-icon"
+            placement="right"
             content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}"
+          >
             <etools-icon id="discussion-icon" name="question-answer"></etools-icon>
           </sl-tooltip>
           <div class="name">
@@ -244,9 +255,11 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           @tap="${this.trackAnalytics}"
           tracker="Information"
         >
-
-          <sl-tooltip for="information-icon" placement="right"
-            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}">
+          <sl-tooltip
+            for="information-icon"
+            placement="right"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}"
+          >
             <etools-icon id="information-icon" name="info"></etools-icon>
           </sl-tooltip>
           <div class="name">
