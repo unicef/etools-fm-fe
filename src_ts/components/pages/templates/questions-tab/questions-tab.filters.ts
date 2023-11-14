@@ -1,6 +1,6 @@
-import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
+import {EtoolsFilterTypes} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {setselectedValueTypeByFilterKey} from '@unicef-polymer/etools-unicef/src/etools-filters/filters';
-import {get} from 'lit-translate';
+import {get as getTranslation} from 'lit-translate';
 
 export enum QuestionFilterKeys {
   level__in = 'level__in',
@@ -24,9 +24,10 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
-export const questionsFilters: EtoolsFilter[] = [
+export function questionsFilters() {
+  return [
   {
-    filterName: get('QUESTIONS.LABELS.LEVEL'),
+    filterName: getTranslation('QUESTIONS.LABELS.LEVEL'),
     filterKey: 'level__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -39,7 +40,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.SECTIONS'),
+    filterName: getTranslation('QUESTIONS.LABELS.SECTIONS'),
     filterKey: 'sections__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -52,7 +53,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.METHODS'),
+    filterName: getTranslation('QUESTIONS.LABELS.METHODS'),
     filterKey: 'methods__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -65,7 +66,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.GROUP'),
+    filterName: getTranslation('QUESTIONS.LABELS.GROUP'),
     filterKey: 'category__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -78,7 +79,7 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.ANSWER_TYPE'),
+    filterName: getTranslation('QUESTIONS.LABELS.ANSWER_TYPE'),
     filterKey: 'answer_type__in',
     type: EtoolsFilterTypes.DropdownMulti,
     selectionOptions: [],
@@ -91,17 +92,17 @@ export const questionsFilters: EtoolsFilter[] = [
     disabled: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.IS_HACT'),
+    filterName: getTranslation('QUESTIONS.LABELS.IS_HACT'),
     filterKey: 'is_hact',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,
     selected: false
   },
   {
-    filterName: get('QUESTIONS.LABELS.IS_ACTIVE'),
+    filterName: getTranslation('QUESTIONS.LABELS.IS_ACTIVE'),
     filterKey: 'is_active',
     type: EtoolsFilterTypes.Toggle,
     selectedValue: false,
     selected: false
   }
-];
+]};
