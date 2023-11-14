@@ -1,5 +1,5 @@
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {PartnerContacts} from './partner-contacts';

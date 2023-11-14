@@ -1,6 +1,6 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-filters/src/etools-filters';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';

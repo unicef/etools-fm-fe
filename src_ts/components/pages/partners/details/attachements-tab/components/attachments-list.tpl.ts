@@ -1,5 +1,5 @@
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import './edit-attachments-popup/partner-edit-attachments-popup';
 import './remove-attachment-popup/partner-remove-attachment-popup';
 import {PartnerAttachmentsListComponent} from './attachments-list';

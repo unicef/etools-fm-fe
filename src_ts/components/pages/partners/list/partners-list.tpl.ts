@@ -1,7 +1,7 @@
 import {PartnersListComponent} from './partners-list';
 import {html, TemplateResult} from 'lit';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
 export function template(this: PartnersListComponent): TemplateResult {

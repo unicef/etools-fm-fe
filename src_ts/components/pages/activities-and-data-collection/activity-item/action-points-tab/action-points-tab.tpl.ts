@@ -1,8 +1,8 @@
 import {html, TemplateResult} from 'lit';
 import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import './action-points-popup/action-points-popup';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
