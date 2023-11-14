@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {PartnershipTab} from './partnership-tab';
 import '../../../../../common/progressbar/proportional-progress-bar';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import {repeat} from 'lit/directives/repeat.js';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';

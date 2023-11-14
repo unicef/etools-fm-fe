@@ -77,13 +77,6 @@ export class organizationsDropdown extends connect(store)(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    setTimeout(() => {
-      const fitInto: HTMLElement | null = document
-        .querySelector('app-shell')!
-        .shadowRoot!.querySelector('#appHeadLayout');
-      this.organizationSelectorDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {
