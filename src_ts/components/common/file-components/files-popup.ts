@@ -30,7 +30,6 @@ export class FilesPopup extends LitElement {
       <etools-dialog
         id="dialog"
         size="md"
-        no-padding
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         hide-confirm-btn

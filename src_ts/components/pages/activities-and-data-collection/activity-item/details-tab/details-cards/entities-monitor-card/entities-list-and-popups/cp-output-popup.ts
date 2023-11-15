@@ -66,7 +66,6 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       <etools-dialog
         id="dialog"
         size="md"
-        no-padding
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
         .cancelBtnText="${translate('CANCEL')}"

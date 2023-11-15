@@ -35,7 +35,6 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
       <etools-dialog
         id="dialog"
         size="md"
-        no-padding
         keep-dialog-open
         .okBtnText="${this.isNew ? translate('MAIN.BUTTONS.ADD') : translate('MAIN.BUTTONS.SAVE')}"
         .cancelBtnText="${translate('CANCEL')}"

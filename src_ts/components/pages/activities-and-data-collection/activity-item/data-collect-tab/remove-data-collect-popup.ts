@@ -51,7 +51,6 @@ export class RemoveDataCollectPopup extends LitElement {
       ${InputStyles} ${DialogStyles}
       <etools-dialog
         size="md"
-        no-padding
         keep-dialog-open
         theme="confirmation"
         ?opened="${this.dialogOpened}"

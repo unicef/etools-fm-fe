@@ -28,7 +28,6 @@ export class ChecklistAttachments extends LitElement {
       <etools-dialog
         id="dialog"
         size="md"
-        no-padding
         keep-dialog-open
         ?opened="${this.dialogOpened}"
         .okBtnText="${translate('MAIN.BUTTONS.CONFIRM')}"

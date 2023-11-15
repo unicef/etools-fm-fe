@@ -1,6 +1,7 @@
 :root,
 :host {
-    --green-color: #009A54;
+        --green-color: #009A54;
+        --green-color-darker: #007D54;
         --module-color: #008080;
         --primary-color: #0099ff;
         --primary-background-color: #FFFFFF;
@@ -17,7 +18,8 @@
         --nonprod-text-warn-color: #e6e600;
 
         --light-divider-color: rgba(0, 0, 0, 0.12);
-        --dark-divider-color: #9D9D9D;
+        --dark-divider-color: rgba(0, 0, 0, 0.4);
+        --darker-divider-color: var(--medium-primary-text-color);
 
         --dark-icon-color: rgba(0, 0, 0, 0.65);
         --light-icon-color: rgba(255, 255, 255, 1);
@@ -38,10 +40,14 @@
         --paper-input-container-label: {
           font-weight: 600;
         }
+        --primary-color-hover: #027ac9;
+        --default-btn-bg-color: rgba(0, 0, 0, 0.45);
+        --default-btn-bg-hover-color: rgba(0, 0, 0, 0.55);
 
         --sl-color-primary-600: var(--primary-color);
         --sl-color-primary-500: var(--primary-color-hover);
-        --sl-color-success-600: var(--ternary-color);
+        --sl-color-success-600: var(--green-color);
+        --sl-color-success-500: var(--green-color-darker);
         --sl-color-neutral-600: var(--default-btn-bg-color);
         --sl-color-neutral-500: var(--default-btn-bg-hover-color);
         --sl-color-danger-600: var(--error-color);
@@ -122,6 +128,14 @@
         --module-sent: rgba(30,134,191,.45);
         --module-completed: rgba(141,198,63,1);
 
-    /* sl-tooltip styles */
-    --sl-tooltip-background-color: rgba(97, 97, 97, 0.9);
+        /* sl-tooltip styles */
+        --sl-tooltip-background-color: rgba(97, 97, 97, 0.9);
+
+        /* etools-dialog styles */
+        --etools-dialog-primary-color: #ffffff;
+        --etools-dialog-contrast-text-color: var(--primary-text-color);
+
+        /* global loading box content */
+        --etools-loading-border-color: rgba(255, 255, 255, 0.12);
+        --etools-loading-shadow-color: #333333;
 }
