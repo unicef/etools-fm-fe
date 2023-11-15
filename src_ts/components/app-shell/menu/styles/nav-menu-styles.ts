@@ -13,6 +13,7 @@ export const navMenuStyles: CSSResult = css`
     overflow-y: var(--side-bar-scrolling);
     overflow-x: hidden;
     border-right: 1px solid var(--light-divider-color);
+    --sl-tooltip-arrow-size: 0;
   }
 
   .chev-right {
@@ -99,8 +100,7 @@ export const navMenuStyles: CSSResult = css`
   }
 
   #menu-header-top-icon {
-    --iron-icon-height: 36px;
-    --iron-icon-width: 36px;
+    --etools-icon-font-size: 36px;
   }
 
   .divider {
@@ -117,7 +117,7 @@ export const navMenuStyles: CSSResult = css`
   }
 
   .nav-menu,
-  .nav-menu iron-selector[role='navigation'] {
+  .nav-menu .menu-selector[role='navigation'] {
     flex: 1;
   }
 
@@ -169,7 +169,7 @@ export const navMenuStyles: CSSResult = css`
 
   .nav-menu-item.selected .name,
   .nav-menu-item.selected etools-icon {
-    color: var(--primary-color);
+    color: var(--module-color);
   }
 
   .nav-menu-item.lighter-item .name,
@@ -180,7 +180,6 @@ export const navMenuStyles: CSSResult = css`
   .last-one {
     margin-bottom: 18px;
   }
-
 
   .ripple-wrapper {
     position: relative;
