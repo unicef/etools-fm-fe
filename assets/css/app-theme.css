@@ -121,4 +121,7 @@
         --module-submitted: rgba(206,188,6,.6);
         --module-sent: rgba(30,134,191,.45);
         --module-completed: rgba(141,198,63,1);
+
+    /* sl-tooltip styles */
+    --sl-tooltip-background-color: rgba(97, 97, 97, 0.9);
 }

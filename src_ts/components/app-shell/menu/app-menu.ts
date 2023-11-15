@@ -54,6 +54,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}"
           for="menu-header-top-icon"
           placement="right"
+          ?disabled="${!this.smallMenu}"
         >
           <etools-icon
             id="menu-header-top-icon"
@@ -82,7 +83,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         >
           <!-- Sidebar item - DATA VISITS -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities')}"
             menu-name="activities"
             href="${this.rootPath + 'activities'}"
             @tap="${this.trackAnalytics}"
@@ -91,6 +92,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <sl-tooltip
               for="page1-icon"
               placement="right"
+              ?disabled="${!this.smallMenu}"
               content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}"
             >
               <etools-icon id="page1-icon" name="assignment"></etools-icon>
@@ -100,7 +102,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - ANALYSIS -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'analyze')}"
             menu-name="analyze"
             href="${this.rootPath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
@@ -110,6 +112,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <sl-tooltip
               for="page2-icon"
               placement="right"
+              ?disabled="${!this.smallMenu}"
               content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}"
             >
               <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
@@ -119,7 +122,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - TEMPLATES -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'templates')}"
             menu-name="templates"
             href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
@@ -129,6 +132,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <sl-tooltip
               for="page3-icon"
               placement="right"
+              ?disabled="${!this.smallMenu}"
               content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}"
             >
               <etools-icon id="page3-icon" name="settings-applications"></etools-icon>
@@ -140,7 +144,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - PLANING -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'management')}"
             menu-name="management"
             href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
@@ -150,6 +154,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <sl-tooltip
               for="page4-icon"
               placement="right"
+              ?disabled="${!this.smallMenu}"
               content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}"
             >
               <etools-icon id="page4-icon" name="av:playlist-add-check"></etools-icon>
@@ -161,7 +166,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - TPM -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'partners')}"
             menu-name="partners"
             href="${this.rootPath + 'partners'}"
             @tap="${this.trackAnalytics}"
@@ -170,7 +175,8 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <sl-tooltip
               for="page5-icon"
               placement="right"
-              cotent="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}"
             >
               <etools-icon id="page5-icon" name="social:people"></etools-icon>
             </sl-tooltip>
@@ -194,6 +200,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <sl-tooltip
             for="power-bi-icon"
             placement="right"
+            ?disabled="${!this.smallMenu}"
             content="${this.translateKey(
               this.selectedLanguage,
               'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
@@ -221,6 +228,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <sl-tooltip
             for="knoledge-icon"
             placement="right"
+            ?disabled="${!this.smallMenu}"
             content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}"
           >
             <etools-icon id="knoledge-icon" name="maps:local-library"></etools-icon>
@@ -240,6 +248,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <sl-tooltip
             for="discussion-icon"
             placement="right"
+            ?disabled="${!this.smallMenu}"
             content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}"
           >
             <etools-icon id="discussion-icon" name="question-answer"></etools-icon>
@@ -258,6 +267,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <sl-tooltip
             for="information-icon"
             placement="right"
+            ?disabled="${!this.smallMenu}"
             content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}"
           >
             <etools-icon id="information-icon" name="info"></etools-icon>
@@ -297,6 +307,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     const localStorageVal: number = this.smallMenu ? 1 : 0;
     localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
     fireEvent(this, 'toggle-small-menu', {value: this.smallMenu});
+  }
+
+  getItemClass(selectedValue: string, itemValue: string) {
+    return selectedValue === itemValue ? 'selected' : '';
   }
 
   static get styles(): CSSResult {
