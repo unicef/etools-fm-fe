@@ -7,7 +7,7 @@ const basedir = __dirname + '/src/'; // eslint-disable-line
 app.use(compression());
 
 function getSourcesPath(_request) {
-  return basedir + 'esm-bundled/';
+  return basedir;
 }
 
 app.use('/fm/', (req, res, next) => {
