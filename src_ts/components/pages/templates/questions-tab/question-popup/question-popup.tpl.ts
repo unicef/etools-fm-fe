@@ -23,7 +23,6 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       @close="${this.onClose}"
       .cancelBtnText="${translate('CANCEL')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"

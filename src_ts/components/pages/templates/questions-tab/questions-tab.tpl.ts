@@ -11,7 +11,7 @@ import {translate} from 'lit-translate';
 export function template(this: QuestionsTabComponent): TemplateResult {
   return html`
     ${InputStyles}
-    <section class="elevation page-content card-container question-filters-section" elevation="1">
+    <section class="elevation page-content question-filters-section" elevation="1">
       <etools-filters
         .filters="${this.filters}"
         .textFilters="${translate('FILTERS_ELEMENT.TITLE')}"

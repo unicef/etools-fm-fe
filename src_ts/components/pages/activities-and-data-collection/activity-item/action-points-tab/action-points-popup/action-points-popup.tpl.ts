@@ -25,7 +25,6 @@ export function template(this: ActionPointsPopup): TemplateResult {
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
       .cancelBtnText="${translate('MAIN.BUTTONS.CANCEL')}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"

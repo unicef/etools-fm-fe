@@ -29,7 +29,6 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       .cancelBtnText="${translate('CANCEL')}"
       ?show-spinner="${this.savingInProcess}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"

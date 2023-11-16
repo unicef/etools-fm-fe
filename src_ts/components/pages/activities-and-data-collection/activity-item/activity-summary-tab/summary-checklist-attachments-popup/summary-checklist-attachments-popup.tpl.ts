@@ -16,7 +16,6 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
     <etools-dialog
       id="dialog"
       size="md"
-      no-padding
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
