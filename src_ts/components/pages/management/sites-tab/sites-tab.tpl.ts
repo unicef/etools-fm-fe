@@ -27,7 +27,7 @@ export function template(this: SitesTabComponent): TemplateResult {
         <div class="toggle-button-control">
           <sl-switch
             .checked="${this.queryParams && this.queryParams.show_inactive}"
-            @sl-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"
+            @sl-change="${(event: CustomEvent) => this.changeShowInactive(event)}"
           ></sl-switch>
           <span>${translate('SITES.SHOW_INACTIVE')}</span>
         </div>

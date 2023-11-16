@@ -11,6 +11,10 @@ export const InputStyles: TemplateResult = html`
       color: var(--dark-icon-color);
     }
 
+    etools-icon {
+      color: var(--dark-secondary-text-color);
+    }
+
     .file-link a {
       padding-left: 5px;
       color: var(--accent-color);

@@ -67,7 +67,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
             ?invalid="${this.errors && this.errors.is_active}"
             .errorMessage="${this.errors && this.errors.is_active}"
             @focus="${() => this.resetFieldError('is_active')}"
-            @tap="${() => this.resetFieldError('is_active')}"
+            @click="${() => this.resetFieldError('is_active')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>

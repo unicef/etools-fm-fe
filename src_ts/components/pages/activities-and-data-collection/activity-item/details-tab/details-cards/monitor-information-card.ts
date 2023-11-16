@@ -123,7 +123,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                     ?invalid="${this.errors && this.errors.tpm_partner}"
                     .errorMessage="${this.errors && this.errors.tpm_partner}"
                     @focus="${() => this.resetFieldError('tpm_partner')}"
-                    @tap="${() => this.resetFieldError('tpm_partner')}"
+                    @click="${() => this.resetFieldError('tpm_partner')}"
                     allow-outside-scroll
                     dynamic-align
                   ></etools-dropdown>
@@ -144,7 +144,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?invalid="${this.errors && this.errors.team_members}"
               .errorMessage="${this.errors && this.errors.team_members}"
               @focus="${() => this.resetFieldError('team_members')}"
-              @tap="${() => this.resetFieldError('team_members')}"
+              @click="${() => this.resetFieldError('team_members')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown-multi>
@@ -164,7 +164,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?invalid="${this.errors && this.errors.visit_lead}"
               .errorMessage="${this.errors && this.errors.visit_lead}"
               @focus="${() => this.resetFieldError('visit_lead')}"
-              @tap="${() => this.resetFieldError('visit_lead')}"
+              @click="${() => this.resetFieldError('visit_lead')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
@@ -313,6 +313,15 @@ export class MonitorInformationCard extends BaseDetailsCard {
         .user-types {
           margin: 0 12px;
           align-items: center;
+        }
+        sl-radio {
+          display: inline-block;
+          margin-inline-end: 15px;
+        }
+        sl-radio-group {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-left: 10px;
         }
       `
     ];

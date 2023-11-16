@@ -62,7 +62,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ?invalid="${this.errors && this.errors.sections}"
           .errorMessage="${(this.errors && this.errors.sections) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('sections')}"
-          @tap="${() => this.resetFieldError('sections')}"
+          @click="${() => this.resetFieldError('sections')}"
           auto-validate
           allow-outside-scroll
           dynamic-align
@@ -84,7 +84,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ?invalid="${this.errors && this.errors.methods}"
           .errorMessage="${(this.errors && this.errors.methods) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('methods')}"
-          @tap="${() => this.resetFieldError('methods')}"
+          @click="${() => this.resetFieldError('methods')}"
           auto-validate
           allow-outside-scroll
           dynamic-align
@@ -109,7 +109,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
               this.resetFieldError('category');
               this.autovlidateCateg = true;
             }}"
-            @tap="${() => this.resetFieldError('category')}"
+            @click="${() => this.resetFieldError('category')}"
             .autoValidate="${this.autovlidateCateg}"
             allow-outside-scroll
             dynamic-align
@@ -130,7 +130,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             ?invalid="${this.errors && this.errors.level}"
             .errorMessage="${this.errors && this.errors.level}"
             @focus="${() => this.resetFieldError('level')}"
-            @tap="${() => this.resetFieldError('level')}"
+            @click="${() => this.resetFieldError('level')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
@@ -167,7 +167,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             ?invalid="${this.errors && this.errors.answer_type}"
             .errorMessage="${this.errors && this.errors.answer_type}"
             @focus="${() => this.resetFieldError('answer_type')}"
-            @tap="${() => this.resetFieldError('answer_type')}"
+            @click="${() => this.resetFieldError('answer_type')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
