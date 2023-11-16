@@ -80,6 +80,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
         }
         datepicker-lite {
           white-space: nowrap;
+          --etools-icon-fill-color: var(--secondary-text-color);
         }
         .field-office {
           width: 30%;

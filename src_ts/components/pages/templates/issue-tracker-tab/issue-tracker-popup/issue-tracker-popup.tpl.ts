@@ -74,7 +74,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
             ?invalid="${this.errors && this.errors.status}"
             .errorMessage="${this.errors && this.errors.status}"
             @focus="${() => this.resetFieldError('status')}"
-            @tap="${() => this.resetFieldError('status')}"
+            @click="${() => this.resetFieldError('status')}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
               this.updateModelValue('status', detail.selectedItem && detail.selectedItem.value)}"
             trigger-value-change-event
@@ -100,7 +100,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   .errorMessage="${this.errors && this.errors.partner}"
                   trigger-value-change-event
                   @focus="${() => this.resetFieldError('partner')}"
-                  @tap="${() => this.resetFieldError('partner')}"
+                  @click="${() => this.resetFieldError('partner')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('partner', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
@@ -128,7 +128,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   .errorMessage="${this.errors && this.errors.cp_output}"
                   trigger-value-change-event
                   @focus="${() => this.resetFieldError('cp_output')}"
-                  @tap="${() => this.resetFieldError('cp_output')}"
+                  @click="${() => this.resetFieldError('cp_output')}"
                   allow-outside-scroll
                 >
                 </etools-dropdown>
@@ -152,7 +152,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   .errorMessage="${this.errors && this.errors.location}"
                   trigger-value-change-event
                   @focus="${() => this.resetFieldError('location')}"
-                  @tap="${() => this.resetFieldError('location')}"
+                  @click="${() => this.resetFieldError('location')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
@@ -171,7 +171,7 @@ export function template(this: IssueTrackerPopup): TemplateResult {
                   .errorMessage="${this.errors && this.errors.location_site}"
                   trigger-value-change-event
                   @focus="${() => this.resetFieldError('location_site')}"
-                  @tap="${() => this.resetFieldError('location_site')}"
+                  @click="${() => this.resetFieldError('location_site')}"
                   @etools-selected-item-changed="${({detail}: CustomEvent) =>
                     this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll

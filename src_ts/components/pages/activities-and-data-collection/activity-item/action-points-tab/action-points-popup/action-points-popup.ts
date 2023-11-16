@@ -306,6 +306,7 @@ export class ActionPointsPopup extends InterventionsMixin(
 
         datepicker-lite {
           white-space: nowrap;
+          --etools-icon-fill-color: var(--secondary-text-color);
         }
 
         .additional-padding {

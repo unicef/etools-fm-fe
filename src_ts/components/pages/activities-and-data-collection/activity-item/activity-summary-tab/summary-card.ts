@@ -372,7 +372,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         <sl-switch
           ?readonly="${this.readonly}"
           ?checked="${this.overallInfo?.on_track || false}"
-          @sl-changed="${(event: CustomEvent) => this.toggleChange((event.target as SlSwitch).checked)}"
+          @sl-change="${(event: CustomEvent) => this.toggleChange((event.target as SlSwitch).checked)}"
         ></sl-switch>
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
       </div>

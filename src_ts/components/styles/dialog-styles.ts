@@ -15,6 +15,15 @@ export const DialogStyles: TemplateResult = html`
       margin-top: 0;
       padding-top: 12px !important;
     }
+    etools-dialog:not(.remove)::part(header) {
+      background: var(--etools-dialog-primary-color, var(--primary-color));
+    }
+    etools-dialog:not(.remove)::part(close-button) {
+      color: var(--primary-background-color);
+    }
+    etools-dialog.remove::part(header-actions) {
+      background-color: var(--primary-background-color);
+    }
 
     etools-dialog::part(ed-button-styles) {
       margin-top: 0;

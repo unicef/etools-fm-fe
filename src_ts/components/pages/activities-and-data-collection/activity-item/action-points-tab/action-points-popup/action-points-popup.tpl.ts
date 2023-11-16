@@ -65,7 +65,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.assigned_to}"
           .errorMessage="${this.errors && this.errors.assigned_to}"
           @focus="${() => this.resetFieldError('assigned_to')}"
-          @tap="${() => this.resetFieldError('assigned_to')}"
+          @click="${() => this.resetFieldError('assigned_to')}"
         ></etools-dropdown>
 
         <!--    Due on     -->
@@ -98,7 +98,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.section}"
           .errorMessage="${this.errors && this.errors.section}"
           @focus="${() => this.resetFieldError('section')}"
-          @tap="${() => this.resetFieldError('section')}"
+          @click="${() => this.resetFieldError('section')}"
         ></etools-dropdown>
 
         <!--    Offices    -->
@@ -119,7 +119,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.office}"
           .errorMessage="${this.errors && this.errors.office}"
           @focus="${() => this.resetFieldError('office')}"
-          @tap="${() => this.resetFieldError('office')}"
+          @click="${() => this.resetFieldError('office')}"
         ></etools-dropdown>
 
         <!--    Related To    -->
@@ -140,7 +140,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.related_to}"
           .errorMessage="${this.errors && this.errors.related_to}"
           @focus="${() => this.resetFieldError('related_to')}"
-          @tap="${() => this.resetFieldError('related_to')}"
+          @click="${() => this.resetFieldError('related_to')}"
         ></etools-dropdown>
 
         <!--    Related Name    -->
@@ -161,7 +161,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.related_name}"
           .errorMessage="${this.errors && this.errors.related_name}"
           @focus="${() => this.resetFieldError('related_name')}"
-          @tap="${() => this.resetFieldError('related_name')}"
+          @click="${() => this.resetFieldError('related_name')}"
         ></etools-dropdown>
 
         <!--   Categories   -->
@@ -183,7 +183,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.category}"
           .errorMessage="${this.errors && this.errors.category}"
           @focus="${() => this.resetFieldError('category')}"
-          @tap="${() => this.resetFieldError('category')}"
+          @click="${() => this.resetFieldError('category')}"
         ></etools-dropdown>
 
         <!--    Priority    -->

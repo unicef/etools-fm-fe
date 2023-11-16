@@ -25,7 +25,7 @@ export function template(this: PartnerContacts): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${this.getTitle(this.staffMembersListAll)}</div>
         <div class="buttons-container">
-          <sl-switch ?checked="${this.showInactive}" @sl-changed="${this.onShowInactiveChange}">
+          <sl-switch ?checked="${this.showInactive}" @sl-change="${this.onShowInactiveChange}">
             ${translate('TPM_DETAILS.SHOW_INACTIVE')}
           </sl-switch>
           <sl-tooltip content="${translate('TPM_DETAILS.ACCESS_MANAGEMENT_PORTAL')}">

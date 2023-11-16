@@ -124,7 +124,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               ?invalid="${this.errors && this.errors.sections}"
               .errorMessage="${this.errors && this.errors.sections}"
               @focus="${() => this.resetFieldError('sections')}"
-              @tap="${() => this.resetFieldError('sections')}"
+              @click="${() => this.resetFieldError('sections')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown-multi>
@@ -149,7 +149,7 @@ export function template(this: ActivityDetailsCard): TemplateResult {
               ?invalid="${this.errors && this.errors.offices}"
               .errorMessage="${this.errors && this.errors.offices}"
               @focus="${() => this.resetFieldError('offices')}"
-              @tap="${() => this.resetFieldError('offices')}"
+              @click="${() => this.resetFieldError('offices')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown-multi>

@@ -65,7 +65,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
       <div class="toggle-button-control filter">
         <sl-switch
           .checked="${this.queryParams && this.queryParams.status}"
-          @sl-changed="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
+          @sl-change="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
         ></sl-switch>
         <span>${translate('ISSUE_TRACKER.IS_NEW')}</span>
       </div>
