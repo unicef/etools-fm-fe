@@ -8,7 +8,7 @@ import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
-    <page-content-header with-tabs-visible>
+    <page-content-header>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
         slot="title-row-actions"
@@ -21,7 +21,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       </div>
     </page-content-header>
 
-    <section class="elevation page-content search-container" elevation="1">
+    <section class="elevation page-content card-container filters-section search-container" elevation="1">
       <div class="search-input">
         <etools-input
           type="search"

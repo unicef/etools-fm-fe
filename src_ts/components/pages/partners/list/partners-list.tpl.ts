@@ -6,7 +6,7 @@ import {translate} from 'lit-translate';
 
 export function template(this: PartnersListComponent): TemplateResult {
   return html`
-    <page-content-header with-tabs-visible>
+    <page-content-header>
       <h1 slot="page-title">${translate('TPM.TITLE')}</h1>
 
       <div slot="title-row-actions" class="content-header-actions">

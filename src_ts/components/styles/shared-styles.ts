@@ -66,7 +66,7 @@ export const SharedStyles: CSSResult = css`
   }
 
   .filters-section {
-    padding: 0 30px;
+    padding: 0px 24px;
   }
 
   etools-content-panel::part(ecp-header) {
