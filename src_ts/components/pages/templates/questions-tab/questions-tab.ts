@@ -110,7 +110,8 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       updateQueryParams({page: 1, page_size: 10});
     } else if (params!.page !== 1 && this.isFilterChange(params)) {
       invalid = true;
-      // if filters changed and not on first page, reset to the first page to avoid error of missing data for the current page
+      // if filters changed and not on first page, reset to the first page
+      // to avoid error of missing data for the current page
       updateQueryParams({page: 1, page_size: params!.page_size});
     }
     return !invalid;
@@ -332,8 +333,8 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
 
-        let availableFilters = JSON.parse(JSON.stringify(questionsFilters()));
-        //@dci clearSelectedValuesInFilters(questionsFilters);
+        const availableFilters = JSON.parse(JSON.stringify(questionsFilters()));
+        // @dci clearSelectedValuesInFilters(questionsFilters);
         this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};

@@ -106,7 +106,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     } else if (geographicCoverageItem.completed_visits >= 11) {
       color = 'var(--mark-eleven)';
     } else {
-      //TODO throw an error instead?
+      // TODO throw an error instead?
       console.error(
         'Geographic coverage: wrong completed_visits count: ',
         JSON.stringify(geographicCoverageItem.completed_visits)

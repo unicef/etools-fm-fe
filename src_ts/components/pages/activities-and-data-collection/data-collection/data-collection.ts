@@ -1,6 +1,7 @@
 import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../../common/layout/page-content-header/page-content-header';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {store} from '../../../../redux/store';
@@ -78,11 +79,11 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <sl-button class="back-button"
-              target="_blank"
-              href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
-              class="layout horizontal"
-            >
+          <sl-button
+            class="back-button layout horizontal"
+            target="_blank"
+            href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+          >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
           </sl-button>

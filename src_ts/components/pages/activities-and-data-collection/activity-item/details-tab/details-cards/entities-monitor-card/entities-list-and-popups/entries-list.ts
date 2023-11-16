@@ -15,72 +15,75 @@ export class EntriesList extends LitElement {
 
   static get styles(): CSSResultArray {
     // language=CSS
-    return [buttonsStyles, css`
-      :host {
-        flex: 1;
-        overflow: hidden;
-      }
-      .entries-container {
-        border: 1px solid #e0e0e0;
-        overflow: hidden;
-      }
-      .entries-header,
-      .entries-item,
-      .add-entry {
-        display: flex;
-        align-items: center;
-        padding: 14px 25px;
-        box-shadow: inset 0 -1px 0 var(--light-divider-color);
-      }
-      .entries-header {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--secondary-text-color);
-        background-color: var(--secondary-background-color);
-      }
-      .entries-item {
-        display: block;
-        position: relative;
-      }
-      .entries-item,
-      .add-entry {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: pointer;
-      }
-      .add-entry:hover,
-      .entries-item:hover {
-        background-color: var(--secondary-background-color);
-      }
-      :host([is-readonly]) .entries-item {
-        cursor: default;
-        pointer-events: none;
-      }
-      :host([is-readonly]) .entries-item:hover {
-        background-color: var(--primary-background-color);
-      }
-      .hover-block {
-        display: none;
-        position: absolute;
-        right: 10px;
-        top: 15px;
-        color: var(--secondary-text-color);
-      }
-      .entries-item:hover > .hover-block {
-        display: block;
-      }
-      .add-entry {
-        justify-content: flex-start;
-        padding: 14px 25px 14px 18px;
-        color: var(--primary-color);
-        background: var(--primary-background-color);
-        border: none;
-        box-shadow: none;
-        margin: 0;
-        text-transform: uppercase;
-      }
-    `];
+    return [
+      buttonsStyles,
+      css`
+        :host {
+          flex: 1;
+          overflow: hidden;
+        }
+        .entries-container {
+          border: 1px solid #e0e0e0;
+          overflow: hidden;
+        }
+        .entries-header,
+        .entries-item,
+        .add-entry {
+          display: flex;
+          align-items: center;
+          padding: 14px 25px;
+          box-shadow: inset 0 -1px 0 var(--light-divider-color);
+        }
+        .entries-header {
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--secondary-text-color);
+          background-color: var(--secondary-background-color);
+        }
+        .entries-item {
+          display: block;
+          position: relative;
+        }
+        .entries-item,
+        .add-entry {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          cursor: pointer;
+        }
+        .add-entry:hover,
+        .entries-item:hover {
+          background-color: var(--secondary-background-color);
+        }
+        :host([is-readonly]) .entries-item {
+          cursor: default;
+          pointer-events: none;
+        }
+        :host([is-readonly]) .entries-item:hover {
+          background-color: var(--primary-background-color);
+        }
+        .hover-block {
+          display: none;
+          position: absolute;
+          right: 10px;
+          top: 15px;
+          color: var(--secondary-text-color);
+        }
+        .entries-item:hover > .hover-block {
+          display: block;
+        }
+        .add-entry {
+          justify-content: flex-start;
+          padding: 14px 25px 14px 18px;
+          color: var(--primary-color);
+          background: var(--primary-background-color);
+          border: none;
+          box-shadow: none;
+          margin: 0;
+          text-transform: uppercase;
+        }
+      `
+    ];
   }
 
   addEntry(): void {

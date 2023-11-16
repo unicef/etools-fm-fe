@@ -33,8 +33,6 @@ import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils
 import {appLanguages} from '../../../config/app-constants';
 import {languageIsAvailableInApp} from '../../utils/utils';
 
-// registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
-
 store.addReducers({
   activeLanguage
 });

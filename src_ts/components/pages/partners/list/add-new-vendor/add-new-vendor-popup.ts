@@ -161,8 +161,10 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
     const value = this.emailEl.value;
     const required = this.emailEl.required;
 
+    /* eslint-disable max-len */
     var re =
       /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    /* eslint-enable max-len */
 
     if ((required && !value) || (value && !re.test(value as string))) {
       this.emailValidationMessage = getTranslation('TPM_DETAILS.VALID_EMAIL_REQUIRED');

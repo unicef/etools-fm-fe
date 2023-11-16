@@ -6,6 +6,7 @@ import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import './statuses-actions/statuses-actions';
 import {RouterStyles} from '../../../app-shell/router-style';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';

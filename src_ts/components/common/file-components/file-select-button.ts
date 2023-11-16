@@ -35,14 +35,9 @@ export class FileSelectButton extends LitElement {
     // language=HTML
     return html`
       <input id="file" hidden type="file" @change="${() => this.fileSelected()}" />
-      <sl-button
-          class="primary"
-          variant="text"
-          target="_blank"
-          @click="${this.selectFile}"
-        >
-      <etools-icon name="file-upload" slot="prefix"></etools-icon>
-          ${translate('MAIN.UPLOAD')}
+      <sl-button class="primary" variant="text" target="_blank" @click="${this.selectFile}">
+        <etools-icon name="file-upload" slot="prefix"></etools-icon>
+        ${translate('MAIN.UPLOAD')}
       </sl-button>
     `;
   }

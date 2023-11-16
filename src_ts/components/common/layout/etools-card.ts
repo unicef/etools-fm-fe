@@ -188,7 +188,9 @@ export class EtoolsCard extends LitElement {
             ${this.isEditable && this.edit
               ? html`
                   <div class="layout horizontal end-justified card-buttons">
-                    <sl-button variant="neutral" @click="${() => this.cancel()}">${translate('MAIN.BUTTONS.CANCEL')}</sl-button>
+                    <sl-button variant="neutral" @click="${() => this.cancel()}"
+                      >${translate('MAIN.BUTTONS.CANCEL')}</sl-button
+                    >
                     <sl-button variant="primary" class="save-button" @click="${() => this.save()}">
                       ${translate('MAIN.BUTTONS.SAVE')}
                     </sl-button>

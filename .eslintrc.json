@@ -28,6 +28,11 @@
     "lit/attribute-value-entities": "off",
     "lit/no-legacy-template-syntax": "off",
     "linebreak-style": "off",
+    "no-invalid-this": "off",
+    "lit-a11y/anchor-has-content": "off",
+    "no-prototype-builtins": "off",
+    "lit-a11y/alt-text": "off",
+    "no-case-declarations": "off",
     "no-irregular-whitespace": [
       "error",
       {
