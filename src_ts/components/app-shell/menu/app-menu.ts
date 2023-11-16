@@ -86,7 +86,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities')}"
             menu-name="activities"
             href="${this.rootPath + 'activities'}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Visits"
           >
             <sl-tooltip
@@ -106,7 +106,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             menu-name="analyze"
             href="${this.rootPath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Analysis"
           >
             <sl-tooltip
@@ -126,7 +126,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             menu-name="templates"
             href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Templates"
           >
             <sl-tooltip
@@ -148,7 +148,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             menu-name="management"
             href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Management"
           >
             <sl-tooltip
@@ -169,7 +169,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             class="nav-menu-item ${this.getItemClass(this.selectedOption, 'partners')}"
             menu-name="partners"
             href="${this.rootPath + 'partners'}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="TPM"
           >
             <sl-tooltip
@@ -194,7 +194,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/9726e9e7-c72f-4153-9fd2-7b418a1e426c/ReportSection?ctid=77410195-14e1-4fb8-904b-ab1892023667"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Implementation Intelligence"
         >
           <sl-tooltip
@@ -222,7 +222,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="http://etools.zendesk.com"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Knowledge base"
         >
           <sl-tooltip
@@ -242,7 +242,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="https://www.yammer.com/unicef.org/#/threads/inGroup?type=in_group&feedId=5782560"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Discussion"
         >
           <sl-tooltip
@@ -261,7 +261,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item last-one"
           href="https://etools.unicef.org/landing"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Information"
         >
           <sl-tooltip

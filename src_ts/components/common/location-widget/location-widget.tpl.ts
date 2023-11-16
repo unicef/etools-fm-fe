@@ -17,7 +17,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
               readonly
               inline
             >
-              <div slot="suffix" @tap="${() => this.removeFromHistory(index)}" class="close-btn">
+              <div slot="suffix" @click="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
               </div>
             </etools-input>
@@ -46,7 +46,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                     .items="${this.items}"
                     .itemStyle="${this.itemStyle}"
                     .itemTemplate="${(location: WidgetLocation) => html`
-                      <div class="location-line" @tap="${() => this.onLocationLineClick(location)}">
+                      <div class="location-line" @click="${() => this.onLocationLineClick(location)}">
                         <div class="location-name">
                           <b>${this.getLocationPart(location.name, 'name')}</b>
                           <span class="location-code">${this.getLocationPart(location.name, 'code')}</span>
@@ -64,7 +64,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                     (site: Site) => html`
                       <div
                         class="site-line ${this.getSiteLineClass(site.id)}"
-                        @tap="${() => this.onSiteLineClick(site)}"
+                        @click="${() => this.onSiteLineClick(site)}"
                         @mouseenter="${() => this.onSiteHoverStart(site)}"
                         @mouseleave="${() => this.onSiteHoverEnd()}"
                       >

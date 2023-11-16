@@ -15,20 +15,20 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <sl-button variant="primary" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
+        <sl-button variant="success" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
           ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</sl-button
         >
       </div>
     </page-content-header>
 
-    <section class="elevation page-content card-container filters-section search-container" elevation="1">
+    <section class="elevation page-content search-container" elevation="1">
       <div class="search-input">
         <etools-input
           type="search"
+          label=""
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
-          inline
         >
           <etools-icon name="search" slot="prefix"></etools-icon>
         </etools-input>

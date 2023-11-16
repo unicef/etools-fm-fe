@@ -3,23 +3,17 @@ import {html, TemplateResult} from 'lit';
 // language=HTML
 export const DialogStyles: TemplateResult = html`
   <style>
-    etools-dialog etools-loading {
-      font-size: 14px;
-    }
-
-    etools-dialog[no-padding]::part(ed-scrollable) {
-      padding-top: 0 !important;
-    }
-
     etools-dialog::part(ed-scrollable) {
-      margin-top: 0;
-      padding-top: 12px !important;
+      margin-top: 0 !important;
+      padding-top: 12px;
+      padding-bottom: 16px;
     }
 
     etools-dialog::part(ed-button-styles) {
       margin-top: 0;
     }
 
+    /*
     etools-dialog::part(ed-title) {
       padding: 8px 45px 8px 24px;
     }
@@ -31,7 +25,7 @@ export const DialogStyles: TemplateResult = html`
         padding-bottom: 8px !important;
         padding-top: 8px !important;
       }
-    }
+    } */
 
     etools-dialog > etools-loading {
       margin-bottom: -56px;
@@ -43,7 +37,7 @@ export const DialogStyles: TemplateResult = html`
       padding: 0 30px;
     }
 
-    etools-content-panel::part(ecp-toggle-btn) {
+    /* etools-content-panel::part(ecp-toggle-btn) {
       position: absolute;
       top: 3px;
       left: 13px;
@@ -79,6 +73,6 @@ export const DialogStyles: TemplateResult = html`
         display: block;
         margin-top: 0;
       }
-    }
+    } */
   </style>
 `;

@@ -11,7 +11,6 @@ export function template(this: PartnerRemoveAttachmentPopupComponent): TemplateR
     ${InputStyles} ${DialogStyles}
     <etools-dialog
       size="md"
-      no-padding
       keep-dialog-open
       theme="confirmation"
       ?opened="${this.dialogOpened}"

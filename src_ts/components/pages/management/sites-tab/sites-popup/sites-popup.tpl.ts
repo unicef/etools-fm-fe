@@ -17,7 +17,6 @@ export function template(this: SitesPopupComponent): TemplateResult {
     <etools-dialog
       size="md"
       id="dialog"
-      no-padding
       .opened="${this.dialogOpened}"
       dialog-title="${translate(this.editedData.id ? 'SITES.EDIT_SL' : 'SITES.ADD_SL')}"
       keep-dialog-open

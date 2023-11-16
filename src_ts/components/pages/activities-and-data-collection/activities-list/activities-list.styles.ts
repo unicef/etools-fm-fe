@@ -7,9 +7,12 @@ export const ActivitiesListStyles: CSSResult = css`
 
   .create-new {
     min-width: 125px;
-    color: white;
-    background: var(--green-color);
-    font-weight: 500;
     margin-right: -25px;
+    text-transform: uppercase;
   }
+
+  .filters {
+    position: relative;
+  }
+
 `;

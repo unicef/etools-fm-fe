@@ -15,7 +15,7 @@ export const QuestionsTabStyles: CSSResult = css`
   }
 
   .question-filters-section {
-    padding: 0 30px;
+    padding: 0 30px 10px 30px;
   }
 
   .row-details-content div.image img {

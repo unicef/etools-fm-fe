@@ -25,7 +25,6 @@ export function template(this: IssueTrackerPopup): TemplateResult {
     <etools-dialog
       id="dialog"
       size="md"
-      no-padding
       keep-dialog-open
       ?opened="${this.dialogOpened}"
       .okBtnText="${translate(this.isNew ? 'MAIN.BUTTONS.ADD' : 'MAIN.BUTTONS.SAVE')}"
