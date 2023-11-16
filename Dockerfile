@@ -4,7 +4,6 @@ RUN apk add --update bash
 
 RUN apk add git
 RUN npm config set unsafe-perm true
-RUN npm install -g --unsafe-perm polymer-cli
 RUN npm install -g typescript
 
 
@@ -28,7 +27,8 @@ RUN apk add --update bash
 
 WORKDIR /code
 RUN npm install express --no-save
-RUN npm install browser-capabilities@1.1.3 --no-save
+RUN npm install compression --no-save
+RUN npm install browser-capabilities@1.1.x --no-save
 COPY --from=builder /code/express.js /code/express.js
 COPY --from=builder /code/build /code/build
 EXPOSE 8080

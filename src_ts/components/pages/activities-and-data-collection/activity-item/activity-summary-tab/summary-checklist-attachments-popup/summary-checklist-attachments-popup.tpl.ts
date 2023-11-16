@@ -73,11 +73,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                 </sl-button>
 
                 <!--        Delete Button          -->
-                <sl-button
-                  variant="danger"
-                  ?hidden="${this.readonly}"
-                  @click="${() => this.deleteAttachment(index)}"
-                >
+                <sl-button variant="danger" ?hidden="${this.readonly}" @click="${() => this.deleteAttachment(index)}">
                   ${translate('MAIN.BUTTONS.DELETE')}
                 </sl-button>
               </div>

@@ -15,6 +15,7 @@ import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/sel
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
@@ -121,8 +122,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
           padding-inline-start: 12px;
           padding-inline-end: 18px;
           margin-right: -25px;
-          --iron-icon-width: 20px;
-          --iron-icon-height: 20px;
+          --etools-icon-font-size: 20px;
         }
       `
     ];

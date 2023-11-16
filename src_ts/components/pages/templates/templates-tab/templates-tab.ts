@@ -139,7 +139,8 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
 
   getSelectedTarget(forLevel: string, collection: any): string | number | undefined {
     const {level, target}: EtoolsRouteQueryParams = this.queryParams || {};
-    // we need to check that options collection is loaded already. Otherwise value-change-event will be triggered with selectedItem as null
+    // we need to check that options collection is loaded already. Otherwise
+    // value-change-event will be triggered with selectedItem as null
     return Boolean(collection) && target && level === forLevel ? target : undefined;
   }
 

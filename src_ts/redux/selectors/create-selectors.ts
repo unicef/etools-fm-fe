@@ -7,7 +7,8 @@ export function createSelector<T>(
 ): Callback {
   let currentState: T = selector(store.getState() as IRootState);
   if (initialize) {
-    // Be ware: if you change state inside your onChange callback don't use initialize. That can lead to unexpected behavior
+    // Be ware: if you change state inside your onChange callback don't use initialize.
+    // That can lead to unexpected behavior
     onChange(currentState);
   }
 

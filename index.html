@@ -1,11 +1,6 @@
 <!--
 @license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+Can be accessed at ./LICENSE.txt
 -->
 
 <!doctype html>
@@ -162,12 +157,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-right: 0.2cm;
         background-color: #fff;
       }
+
+      /* TODO: move in assets. */
+      :root {
+        --sl-input-background-color-disabled: inherit;
+        --sl-input-background-color-focus: inherit;
+        --sl-input-height-small: 26px;
+        --sl-font-sans: 'Roboto', 'Noto', sans-serif;
+        --sl-input-color: rgba(0, 0, 0, 0.87);
+        --sl-input-label-font-size-small: 12px;
+      }
     </style>
   </head>
   <body>
     <!-- need this for leaflet -->
     <div class="leaflet-tile-pane hidden"></div>
     <div id="buildRevNo" style="display: none">revNo</div>
+    <div id="buildDate" style="display: none">bDate</div>
     <app-shell>
       <div id="loading-animation">
         <span>

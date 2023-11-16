@@ -45,7 +45,8 @@ export class AttachmentsListComponent extends LitElement {
       this.attachmentsListUnsubscribe();
     }
 
-    // subscribe on attachments list data. use DynamicSelector and endpointName to determine which field we need to take from store
+    // subscribe on attachments list data. use DynamicSelector and endpointName
+    // to determine which field we need to take from store
     this.attachmentsListUnsubscribe = store.subscribe(
       attachmentsListSelector(
         (attachments: IListData<IAttachment> | IAttachment[] | undefined) => {

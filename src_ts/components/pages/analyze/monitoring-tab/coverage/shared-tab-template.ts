@@ -10,7 +10,7 @@ enum WidthCalculationTargets {
   AVG = 'avg'
 }
 
-//TODO think about name
+// TODO think about name
 @customElement('shared-tab-template')
 export class SharedTabTemplate extends PaginationMixin(LitElement) {
   @property() paginatedData!: (InterventionsCoverage | CpOutputCoverage)[];

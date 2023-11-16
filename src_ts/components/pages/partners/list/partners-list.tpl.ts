@@ -11,15 +11,15 @@ export function template(this: PartnersListComponent): TemplateResult {
 
       <div slot="title-row-actions" class="content-header-actions">
         <sl-button
-            id="export"
-            class="neutral"
-            variant="text"
-            @click="${this.export}"
-            tracker="Export TPM Partners"
-            ?hidden=${!this.items || !this.items.length}
-          >
-            <etools-icon name="file-download" slot="prefix"></etools-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
+          id="export"
+          class="neutral"
+          variant="text"
+          @click="${this.export}"
+          tracker="Export TPM Partners"
+          ?hidden=${!this.items || !this.items.length}
+        >
+          <etools-icon name="file-download" slot="prefix"></etools-icon>
+          ${translate('ACTIVITY_DETAILS.EXPORT')}
         </sl-button>
 
         <sl-button variant="primary" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
@@ -33,6 +33,7 @@ export function template(this: PartnersListComponent): TemplateResult {
       <div class="search-input">
         <etools-input
           type="search"
+          always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('TPM.FILTERS.SEARCH')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"

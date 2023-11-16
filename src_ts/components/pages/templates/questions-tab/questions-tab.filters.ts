@@ -26,83 +26,84 @@ setselectedValueTypeByFilterKey(selectedValueTypeByFilterKey);
 
 export function questionsFilters() {
   return [
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.LEVEL'),
-    filterKey: 'level__in',
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'value',
-    optionLabel: 'display_name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.SECTIONS'),
-    filterKey: 'sections__in',
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.METHODS'),
-    filterKey: 'methods__in',
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.GROUP'),
-    filterKey: 'category__in',
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'id',
-    optionLabel: 'name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.ANSWER_TYPE'),
-    filterKey: 'answer_type__in',
-    type: EtoolsFilterTypes.DropdownMulti,
-    selectionOptions: [],
-    selectedValue: [],
-    optionValue: 'value',
-    optionLabel: 'display_name',
-    selected: false,
-    minWidth: '350px',
-    hideSearch: true,
-    disabled: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.IS_HACT'),
-    filterKey: 'is_hact',
-    type: EtoolsFilterTypes.Toggle,
-    selectedValue: false,
-    selected: false
-  },
-  {
-    filterName: getTranslation('QUESTIONS.LABELS.IS_ACTIVE'),
-    filterKey: 'is_active',
-    type: EtoolsFilterTypes.Toggle,
-    selectedValue: false,
-    selected: false
-  }
-]};
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.LEVEL'),
+      filterKey: 'level__in',
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'value',
+      optionLabel: 'display_name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.SECTIONS'),
+      filterKey: 'sections__in',
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.METHODS'),
+      filterKey: 'methods__in',
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.GROUP'),
+      filterKey: 'category__in',
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'id',
+      optionLabel: 'name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.ANSWER_TYPE'),
+      filterKey: 'answer_type__in',
+      type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'value',
+      optionLabel: 'display_name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.IS_HACT'),
+      filterKey: 'is_hact',
+      type: EtoolsFilterTypes.Toggle,
+      selectedValue: false,
+      selected: false
+    },
+    {
+      filterName: getTranslation('QUESTIONS.LABELS.IS_ACTIVE'),
+      filterKey: 'is_active',
+      type: EtoolsFilterTypes.Toggle,
+      selectedValue: false,
+      selected: false
+    }
+  ];
+}

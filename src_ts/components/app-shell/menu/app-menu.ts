@@ -79,7 +79,6 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           .selected="${this.selectedOption}"
           attr-for-selected="menu-name"
           selectable="a"
-          role="navigation"
         >
           <!-- Sidebar item - DATA VISITS -->
           <a

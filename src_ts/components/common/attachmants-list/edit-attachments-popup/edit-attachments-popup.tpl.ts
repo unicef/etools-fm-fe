@@ -54,7 +54,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"
-          @tap="${() => this.resetFieldError('file_type')}"
+          @click="${() => this.resetFieldError('file_type')}"
           allow-outside-scroll
           dynamic-align
         ></etools-dropdown>

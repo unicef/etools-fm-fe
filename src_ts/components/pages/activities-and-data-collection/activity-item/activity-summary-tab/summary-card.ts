@@ -16,6 +16,7 @@ import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+// eslint-disable-next-line
 import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 import {store} from '../../../../../redux/store';
 import {Unsubscribe} from 'redux';
@@ -210,7 +211,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   }
 
   /**
-   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab is readonly and no attachments uploaded
+   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab
+   * is readonly and no attachments uploaded
    */
   protected getAttachmentsButton(): TemplateResult {
     const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;

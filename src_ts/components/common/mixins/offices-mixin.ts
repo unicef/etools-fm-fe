@@ -7,7 +7,7 @@ import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {ACTION_POINTS_OFFICES} from '../../../endpoints/endpoints-list';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const OfficesMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

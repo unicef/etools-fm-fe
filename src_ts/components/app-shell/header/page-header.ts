@@ -1,4 +1,3 @@
-import '@polymer/polymer/lib/elements/dom-if';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 
@@ -33,8 +32,6 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {appLanguages} from '../../../config/app-constants';
 import {languageIsAvailableInApp} from '../../utils/utils';
-
-// registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
 store.addReducers({
   activeLanguage

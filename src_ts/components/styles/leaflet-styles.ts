@@ -1,7 +1,6 @@
 import {css, CSSResult} from 'lit';
-/* tslint:disable:max-file-line-count */
-/* tslint:disable:max-line-length */
 /* eslint-disable no-tabs */
+/* eslint-disable max-len */
 // language=CSS
 export const leafletStyles: CSSResult = css`
   /* required styles */

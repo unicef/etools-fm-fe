@@ -5,6 +5,7 @@ import '../../../common/layout/page-content-header/page-content-header';
 import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import {RouterStyles} from '../../../app-shell/router-style';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -76,34 +77,33 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           font-size: 16px;
           color: var(--secondary-text-color);
         }
-        .icon-wrapper iron-icon {
+        .icon-wrapper etools-icon {
           display: none;
           border-radius: 50%;
           text-align: center;
           padding: 2px;
-          --iron-icon-height: 18px;
-          --iron-icon-width: 18px;
+          --etools-icon-font-size: 18px;
         }
 
-        .icon-wrapper.autorenew iron-icon[icon='autorenew'] {
+        .icon-wrapper.autorenew etools-icon[name='autorenew'] {
           background: var(--module-success);
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.info iron-icon[icon='info'] {
+        .icon-wrapper.info etools-icon[name='info'] {
           background: #3a94ff;
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.block iron-icon[icon='block'] {
+        .icon-wrapper.block etools-icon[name='block'] {
           background: var(--module-warning);
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.delete-forever iron-icon[icon='delete-forever'] {
+        .icon-wrapper.delete-forever etools-icon[name='delete-forever'] {
           color: var(--module-error);
           display: inline-block;
         }

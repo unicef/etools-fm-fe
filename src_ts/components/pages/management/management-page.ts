@@ -3,6 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
 import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {SharedStyles} from '../../styles/shared-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';

@@ -1,6 +1,6 @@
+/* eslint-disable max-len */
 import {ThunkAction} from 'redux-thunk';
 import {AppAction, UpdateStoreRouteDetails} from '../actions/app.actions';
-import {updateAppLocation} from '../../routing/routes';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ROOT_PATH} from '../../config/config';
 import {ActionCreator, Dispatch} from 'redux';
@@ -75,7 +75,7 @@ const loadPageComponents: ActionCreator<ThunkResult> =
   (routeDetails: EtoolsRouteDetails) => (dispatch: Dispatch, getState: any) => {
     if (!routeDetails) {
       // invalid route => redirect to 404 page
-      updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.NOT_FOUND), true);
+      EtoolsRouter.updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.NOT_FOUND));
       return;
     }
     let routeImportsPathsKey: string = routeDetails.routeName;
@@ -172,14 +172,14 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
 
   // if app route is accessed, redirect to default route (if not already on it)
   if (path === ROOT_PATH) {
-    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT), true);
+    EtoolsRouter.updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
     return;
   }
 
   // some routes need redirect to subRoute list
   const redirectPath: string | undefined = getRedirectToListPath(path);
   if (redirectPath) {
-    updateAppLocation(redirectPath, true);
+    EtoolsRouter.updateAppLocation(redirectPath);
     return;
   }
 

@@ -90,10 +90,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     }
   }
 
-  onRemoveSelectedItem(event: Event): void {
-    const removedItem: string = (event as any).detail;
-    // red cross removal
-    this.selectedOptions = this.selectedOptions.filter((item: string) => item != removedItem);
+  onRemoveSelectedItems(event: Event): void {
     event.stopImmediatePropagation();
     this.dispatchGeographicCoverageLoading();
   }
@@ -109,7 +106,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     } else if (geographicCoverageItem.completed_visits >= 11) {
       color = 'var(--mark-eleven)';
     } else {
-      //TODO throw an error instead?
+      // TODO throw an error instead?
       console.error(
         'Geographic coverage: wrong completed_visits count: ',
         JSON.stringify(geographicCoverageItem.completed_visits)

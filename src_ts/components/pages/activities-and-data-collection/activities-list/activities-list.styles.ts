@@ -14,5 +14,4 @@ export const ActivitiesListStyles: CSSResult = css`
   .filters {
     position: relative;
   }
-
 `;

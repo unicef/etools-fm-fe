@@ -25,17 +25,11 @@ import {SiteMixin} from '../../../common/mixins/site-mixin';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
-import {get as getTranslation} from 'lit-translate';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-
-export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
-  {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},
-  {value: 'past', display_name: getTranslation('ISSUE_TRACKER.STATUSES.PAST')}
-];
 
 @customElement('issue-tracker-tab')
 export class IssueTrackerTabComponent extends SiteMixin(

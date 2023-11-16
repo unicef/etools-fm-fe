@@ -26,6 +26,7 @@ import {sitesSelector} from '../../../../redux/selectors/site-specific-locations
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {specificLocations} from '../../../../redux/reducers/site-specific-locations.reducer';
 import {SharedStyles} from '../../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
@@ -194,7 +195,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     return item ? item[labelField] : '';
   }
 
-  //fixme move common logic to utils function? (sites-tab)
+  // fixme move common logic to utils function? (sites-tab)
   searchKeyDown({detail}: CustomEvent): void {
     const {value} = detail;
     const currentValue: number | string = (this.queryParams && this.queryParams.search) || 0;

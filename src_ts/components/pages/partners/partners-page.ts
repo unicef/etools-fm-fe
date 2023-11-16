@@ -4,6 +4,7 @@ import '../../common/layout/page-content-header/page-content-header';
 import {store} from '../../../redux/store';
 import {tpmPartners} from '../../../redux/reducers/tpm-partners.reducer';
 import {SharedStyles} from '../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';

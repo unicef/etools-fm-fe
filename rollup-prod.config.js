@@ -32,6 +32,7 @@ const copyConfig = {
   targets: [
     { src: 'manifest.json', dest: 'src' },
     { src: 'version.json', dest: 'src' },
+    { src: 'upgrade-browser.html', dest: 'src' },
     { src: 'node_modules/@webcomponents/webcomponentsjs/**', dest: 'src/node_modules/@webcomponents/webcomponentsjs' },
     { src: 'node_modules/@webcomponents/shadycss', dest: 'src/node_modules/@webcomponents' },
     {
@@ -45,7 +46,7 @@ const copyConfig = {
       dest: 'src/node_modules/@mapbox/leaflet-omnivore/'
     },
     { src: 'node_modules/leaflet/dist/leaflet.css', dest: 'src/node_modules/leaflet/dist' },
-    { src: 'node_modules/leaflet/dist/images/marker-icon.png', dest: 'src/node_modules/leaflet/dist/images' },
+    { src: 'node_modules/leaflet/dist/images/**', dest: 'src/node_modules/leaflet/dist/images' },
     {
       src: 'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
       dest: 'src/node_modules/leaflet.markercluster/dist'

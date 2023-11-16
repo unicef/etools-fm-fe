@@ -50,7 +50,7 @@ export class CompletedFindingComponent extends LitElement {
         ${this.showCopyArrow
           ? html`<sl-tooltip placement="right" offset="5" content="Click to copy answer">
               <etools-icon name="arrow-forward" @click="${this.copyAnswer}" id="icon"></etools-icon>
-              </sl-tooltip>`
+            </sl-tooltip>`
           : ''}
       </div>
     `;
