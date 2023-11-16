@@ -29,10 +29,10 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
                   class="site-line ${this.getSiteLineClass(site.id)}"
                   @mouseenter="${() => this.onSiteHoverStart(site)}"
                 >
-                  <div class="location-name" @tap="${() => this.onSiteLineClick(site)}">
+                  <div class="location-name" @click="${() => this.onSiteLineClick(site)}">
                     <b>${site.name}</b>
                   </div>
-                  <div class="deselect-btn" @tap="${(event: CustomEvent) => this.onRemoveSiteClick(event)}">
+                  <div class="deselect-btn" @click="${(event: CustomEvent) => this.onRemoveSiteClick(event)}">
                     <span>&#10008;</span>
                   </div>
                 </div>

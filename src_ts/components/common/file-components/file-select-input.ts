@@ -91,7 +91,7 @@ export class FileSelectInput extends LitElement {
           : ''}
         ${!this.isReadonly && this.hasDelete
           ? html`
-              <sl-button variant="text" class="danger" @tap="${() => this.deleteFile()}">
+              <sl-button variant="text" class="danger" @click="${() => this.deleteFile()}">
                 ${translate('MAIN.BUTTONS.DELETE')}
               </sl-button>
             `
