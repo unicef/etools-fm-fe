@@ -30,6 +30,6 @@ RUN npm install express --no-save
 RUN npm install compression --no-save
 RUN npm install browser-capabilities@1.1.x --no-save
 COPY --from=builder /code/express.js /code/express.js
-COPY --from=builder /code/build /code/build
+COPY --from=builder /code/src /code/src
 EXPOSE 8080
 CMD ["node", "express.js"]
