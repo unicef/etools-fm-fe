@@ -187,7 +187,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             variant="text"
             class="neutral"
             target="_blank"
-            href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/visit-letter/`}"
+            href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/visit-letter/`}"
           >
             ${translate('ACTIVITY_DETAILS.VISIT_LETTER')}
           </sl-button>
@@ -362,7 +362,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   export(e: any): void {
     e.currentTarget.blur();
     this.trackAnalytics(e);
-    window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');
+    window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/pdf/`, '_blank');
   }
 
   private checkEditPermission(target: string): boolean {

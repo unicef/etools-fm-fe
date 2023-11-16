@@ -5,7 +5,7 @@ import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfac
 import {pageIsActive} from '../../utils/utils';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const ListMixin =
   <T extends Constructor<LitElement>>() =>
   <L>(superclass: T) =>

@@ -63,14 +63,9 @@ export class FileSelectInput extends LitElement {
           ? html`
               ${!this.hasFileName
                 ? html`
-                    <sl-button
-                        class="upload-button"
-                        variant="text"
-                        target="_blank"
-                        @click="${this.selectFile}"
-                      >
+                    <sl-button class="upload-button" variant="text" target="_blank" @click="${this.selectFile}">
                       <etools-icon name="file-upload" slot="prefix"></etools-icon>
-                        ${translate('MAIN.UPLOAD')}
+                      ${translate('MAIN.UPLOAD')}
                     </sl-button>
                   `
                 : ''}
@@ -78,14 +73,9 @@ export class FileSelectInput extends LitElement {
           : ''}
         ${this.isStoredFile
           ? html`
-              <sl-button
-                  class="download-button"
-                  variant="text"
-                  target="_blank"
-                  @click="${this.downloadFile}"
-                >
+              <sl-button class="download-button" variant="text" target="_blank" @click="${this.downloadFile}">
                 <etools-icon name="cloud-download" slot="prefix"></etools-icon>
-                  ${translate('MAIN.DOWNLOAD')}
+                ${translate('MAIN.DOWNLOAD')}
               </sl-button>
             `
           : ''}

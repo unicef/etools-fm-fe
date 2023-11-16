@@ -7,7 +7,7 @@ import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {CP_OUTPUTS} from '../../../endpoints/endpoints-list';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

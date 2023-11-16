@@ -7,7 +7,7 @@ export const InputStyles: TemplateResult = html`
       visibility: hidden;
     }
 
-    .file-link iron-icon {
+    .file-link etools-icon {
       color: var(--dark-icon-color);
     }
 
@@ -96,10 +96,6 @@ export const InputStyles: TemplateResult = html`
 
       --paper-input-error: {
         overflow: hidden;
-      }
-
-      --iron-autogrow-textarea: {
-        padding: 0;
       }
     }
 

@@ -90,10 +90,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     }
   }
 
-  onRemoveSelectedItem(event: Event): void {
-    const removedItem: string = (event as any).detail;
-    // red cross removal
-    this.selectedOptions = this.selectedOptions.filter((item: string) => item != removedItem);
+  onRemoveSelectedItems(event: Event): void {
     event.stopImmediatePropagation();
     this.dispatchGeographicCoverageLoading();
   }

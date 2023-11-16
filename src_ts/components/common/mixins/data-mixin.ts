@@ -4,7 +4,7 @@ import equals from 'ramda/es/equals';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const DataMixin =
   <B extends Constructor<LitElement>>() =>
   <T>(superclass: B) =>

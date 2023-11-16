@@ -25,7 +25,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <div class="search-input">
         <etools-input
           type="search"
-          label=""
+          always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"

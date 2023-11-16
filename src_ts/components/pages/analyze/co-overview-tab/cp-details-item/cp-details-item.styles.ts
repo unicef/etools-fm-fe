@@ -76,7 +76,7 @@ export const CpDetailsItemStyles: CSSResult = css`
     background-color: var(--secondary-background-color);
   }
 
-  iron-icon.grey {
+  etools-icon.grey {
     margin-left: 10px;
     color: var(--secondary-text-color);
   }

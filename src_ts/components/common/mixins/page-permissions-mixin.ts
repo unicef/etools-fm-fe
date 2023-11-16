@@ -5,7 +5,7 @@ import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const PagePermissionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

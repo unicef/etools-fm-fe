@@ -1,4 +1,3 @@
-import '@polymer/polymer/lib/elements/dom-if';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 

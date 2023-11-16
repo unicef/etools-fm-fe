@@ -121,8 +121,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
           padding-inline-start: 12px;
           padding-inline-end: 18px;
           margin-right: -25px;
-          --iron-icon-width: 20px;
-          --iron-icon-height: 20px;
+          --etools-icon-font-size: 20px;
         }
       `
     ];

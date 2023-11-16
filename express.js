@@ -1,7 +1,10 @@
-var express = require('express'); // eslint-disable-line
+const express = require('express'); // eslint-disable-line
+const compression = require('compression'); // eslint-disable-line
 
 const app = express();
 const basedir = __dirname + '/build/'; // eslint-disable-line
+
+app.use(compression());
 
 function getSourcesPath(_request) {
   return basedir + 'esm-bundled/';
