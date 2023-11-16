@@ -66,23 +66,6 @@ const VALID_TABS: Set<string> = new Set([
   ACTION_POINTS
 ]);
 
-export const STATUSES: IEtoolsStatusModel[] = [
-  {status: DRAFT, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
-  {status: CHECKLIST, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`)},
-  {status: REVIEW, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`)},
-  {status: ASSIGNED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`)},
-  {status: DATA_COLLECTION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`)},
-  {status: REPORT_FINALIZATION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
-  {status: SUBMITTED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
-  {status: COMPLETED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
-];
-const CANCELLED_STATUS: IEtoolsStatusModel[] = [
-  {
-    status: CANCELLED,
-    label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
-  }
-];
-
 @customElement('activity-item')
 export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityId: string | null = null;
@@ -139,6 +122,22 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   private routeDetailsUnsubscribe!: Unsubscribe;
   private userUnsubscribe!: Unsubscribe;
   private isLoad = false;
+  private statuses: IEtoolsStatusModel[] = [
+    {status: DRAFT, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
+    {status: CHECKLIST, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`)},
+    {status: REVIEW, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`)},
+    {status: ASSIGNED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`)},
+    {status: DATA_COLLECTION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`)},
+    {status: REPORT_FINALIZATION, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
+    {status: SUBMITTED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
+    {status: COMPLETED, label: getTranslate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
+  ];
+  private cancelledStatus: IEtoolsStatusModel[] = [
+    {
+      status: CANCELLED,
+      label: getTranslate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
+    }
+  ];
 
   render(): TemplateResult {
     // language=HTML
@@ -342,7 +341,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   }
 
   getStatuses(): IEtoolsStatusModel[] {
-    return this.activityDetails?.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
+    return this.activityDetails?.status === CANCELLED ? this.cancelledStatus : this.statuses;
   }
 
   onSelect(tabName: string): void {
