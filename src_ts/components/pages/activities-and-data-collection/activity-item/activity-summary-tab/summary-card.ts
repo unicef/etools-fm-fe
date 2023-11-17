@@ -200,8 +200,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <sl-radio-group>
-          <sl-radio name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
+        <sl-radio-group value="checked">
+          <sl-radio name="trackStatus" value="checked" class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
           </sl-radio>
         </sl-radio-group>

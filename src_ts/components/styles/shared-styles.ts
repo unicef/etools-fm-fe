@@ -86,8 +86,20 @@ export const SharedStyles: CSSResult = css`
     margin-inline-end: 15px;
   }
   sl-radio-group {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    margin: 10px;
+    line-height: 30px;
+  }
+  sl-radio,
+  sl-checkbox {
+    --sl-input-border-width: 2px;
+    --sl-input-border-color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
+  }
+  sl-radio[disabled]::part(base),
+  sl-checkbox[disabled]::part(base) {
+    opacity: 0.65;
+  }
+  sl-radio[disabled]::part(control--checked),
+  sl-checkbox[disabled]::part(control--checked) {
+    opacity: 0.65;
   }
 `;

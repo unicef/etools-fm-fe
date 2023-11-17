@@ -80,8 +80,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
         <div slot="title-row-actions">
           <sl-button
-            class="back-button layout horizontal"
-            target="_blank"
+            variant="success"
+            class="back-button"
+            target="_self"
             href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
@@ -285,25 +286,11 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         }
 
         .back-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+          --dark-secondary-text-color: #ffffff;
         }
-
-        .back-button a {
-          color: var(--primary-background-color);
-          text-decoration: none;
-          line-height: 21px;
-        }
-
-        .back-button a span {
-          margin-left: 10px;
-        }
-
-        .back-button a svg {
-          height: 21px;
+        .back-button::part(prefix),
+        .back-button::part(suffix) {
+          width: 18px;
         }
       `
     ];
