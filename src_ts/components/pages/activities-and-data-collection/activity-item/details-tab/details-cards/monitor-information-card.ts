@@ -19,6 +19,7 @@ import {translate} from 'lit-translate';
 import {clone} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
@@ -70,6 +71,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
     // language=HTML
     return html`
       ${InputStyles}
+      <style>
+        ${FormBuilderCardStyles}
+      </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
         ?is-editable="${(!this.editedCard || this.editedCard === CARD_NAME) &&

@@ -9,6 +9,7 @@ import '@shoelace-style/shoelace/dist/components/button/button.js';
 import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {translate} from 'lit-translate';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 @customElement('etools-card')
 export class EtoolsCard extends LitElement {
@@ -34,6 +35,7 @@ export class EtoolsCard extends LitElement {
       CardStyles,
       FlexLayoutClasses,
       buttonsStyles,
+      FormBuilderCardStyles,
       css`
         :host {
           display: block;

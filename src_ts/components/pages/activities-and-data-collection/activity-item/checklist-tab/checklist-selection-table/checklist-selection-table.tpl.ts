@@ -10,10 +10,14 @@ import {ChecklistSelectionTable} from './checklist-selection-table';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {translate} from 'lit-translate';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export function template(this: ChecklistSelectionTable): TemplateResult {
   return html`
     ${InputStyles}
+    <style>
+      ${FormBuilderCardStyles}
+    </style>
     <etools-card
       card-title="${this.tableTitle}"
       is-collapsible

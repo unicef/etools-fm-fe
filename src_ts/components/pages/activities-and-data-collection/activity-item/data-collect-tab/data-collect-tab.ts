@@ -31,6 +31,7 @@ import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 store.addReducers({dataCollection});
 
@@ -116,6 +117,9 @@ export class DataCollectTab extends LitElement {
 
   render(): TemplateResult {
     return html`
+      <style>
+        ${FormBuilderCardStyles}
+      </style>
       <!--   Spinner for loading methods   -->
       <etools-loading
         ?active="${this.methodsLoading}"
