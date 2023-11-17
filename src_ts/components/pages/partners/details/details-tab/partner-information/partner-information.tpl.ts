@@ -5,6 +5,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {PartnerInformation} from './partner-information';
 import '../../../../../common/layout/etools-card';
 import {getMaxLength, isRequired} from '../../../../../utils/utils';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export function template(this: PartnerInformation): TemplateResult {
   return html`
@@ -31,6 +32,7 @@ export function template(this: PartnerInformation): TemplateResult {
           display: none;
         }
       }
+       ${FormBuilderCardStyles}
     </style>
 
     <etools-card

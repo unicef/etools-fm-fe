@@ -17,6 +17,7 @@ import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 import {translate} from 'lit-translate';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export const CARD_NAME = 'entities-monitor';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['cp_outputs', 'partners', 'interventions'];
@@ -36,6 +37,9 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
 
   render(): TemplateResult {
     return html`
+      <style>
+        ${FormBuilderCardStyles}
+      </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.ENTRIES_TO_MONITOR')}"
         ?is-editable="${this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)}"

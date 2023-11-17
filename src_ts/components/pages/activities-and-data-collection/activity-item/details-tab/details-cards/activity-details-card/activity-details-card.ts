@@ -24,6 +24,7 @@ import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
@@ -112,6 +113,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <style>
+        ${FormBuilderCardStyles}
+      </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.ACTIVITY_DETAILS')}"
         ?is-editable="${this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)}"

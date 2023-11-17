@@ -117,6 +117,11 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   render(): TemplateResult {
     return html`
       ${InputStyles} ${DialogStyles}
+      <style>
+        .container {
+          padding: 14px;
+        }
+      </style>
       <etools-dialog
         id="dialog"
         size="md"
