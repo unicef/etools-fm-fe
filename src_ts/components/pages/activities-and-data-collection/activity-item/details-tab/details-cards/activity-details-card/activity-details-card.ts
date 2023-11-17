@@ -195,7 +195,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 .autoValidate="${true}"
                 ?fire-date-has-changed="${this.isEditMode}"
                 @date-has-changed="${({detail}: CustomEvent) =>
-                  this.updateModelValue('end_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : '')}}"
+                  this.updateModelValue('end_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : '')}"
                 label="${translate('ACTIVITY_DETAILS.END_DATE')}"
                 ?readonly="${!this.isEditMode || this.isFieldReadonly('end_date')}"
                 selected-date-display-format="D MMM YYYY"
