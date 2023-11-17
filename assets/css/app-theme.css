@@ -39,7 +39,7 @@
 
         --paper-input-container-label: {
           font-weight: 600;
-        }
+        };
         --primary-color-hover: #027ac9;
         --default-btn-bg-color: rgba(0, 0, 0, 0.45);
         --default-btn-bg-hover-color: rgba(0, 0, 0, 0.55);

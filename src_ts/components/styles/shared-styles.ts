@@ -81,4 +81,13 @@ export const SharedStyles: CSSResult = css`
   paper-button:focus {
     ${elevation2}
   }
+  sl-radio {
+    display: inline-block;
+    margin-inline-end: 15px;
+  }
+  sl-radio-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 `;

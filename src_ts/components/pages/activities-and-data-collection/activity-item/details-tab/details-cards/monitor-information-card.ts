@@ -314,15 +314,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
           margin: 0 12px;
           align-items: center;
         }
-        sl-radio {
-          display: inline-block;
-          margin-inline-end: 15px;
-        }
-        sl-radio-group {
-          margin-top: 10px;
-          margin-bottom: 10px;
-          margin-left: 10px;
-        }
       `
     ];
   }

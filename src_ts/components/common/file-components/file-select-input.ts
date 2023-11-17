@@ -1,4 +1,4 @@
-import {CSSResultArray, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultArray, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -30,7 +30,15 @@ export class FileSelectInput extends LitElement {
 
   static get styles(): CSSResultArray {
     // language=CSS
-    return [AttachmentsStyles, buttonsStyles];
+    return [
+      AttachmentsStyles,
+      buttonsStyles,
+      css`
+        sl-button.danger::part(base) {
+          color: var(--etools-upload-danger-color, #ea4022);
+        }
+      `
+    ];
   }
 
   get hasFileName(): boolean {
