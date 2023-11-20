@@ -10,8 +10,8 @@ export function template(this: SitesPopupComponent): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
     <style>
-      #statusDropdown {
-        margin-top: -4px;
+      .mr-15 {
+        margin-right: 15px;
       }
     </style>
     <etools-dialog
@@ -31,7 +31,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
       <div class="container">
         <div class="layout horizontal">
           <etools-input
-            class="validate-input flex-7"
+            class="validate-input flex-7 mr-15"
             .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
             maxlength="100"
@@ -89,7 +89,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
         <div class="layout horizontal">
           <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
           <etools-input
-            class="validate-input flex-5"
+            class="validate-input flex-5 mr-15"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
             label="${translate('MAIN.LATITUDE')}"

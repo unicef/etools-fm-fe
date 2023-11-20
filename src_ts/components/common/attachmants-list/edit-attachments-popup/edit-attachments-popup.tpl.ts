@@ -14,9 +14,6 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
     <style>
-      .file-upload-container {
-        padding: 0 12px;
-      }
     </style>
 
     <etools-dialog

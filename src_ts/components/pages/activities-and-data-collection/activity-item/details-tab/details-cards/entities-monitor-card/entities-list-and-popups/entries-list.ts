@@ -74,13 +74,16 @@ export class EntriesList extends LitElement {
         }
         .add-entry {
           justify-content: flex-start;
-          padding: 14px 25px 14px 18px;
+          padding: 5px 25px 5px 18px;
           color: var(--primary-color);
           background: var(--primary-background-color);
           border: none;
           box-shadow: none;
           margin: 0;
           text-transform: uppercase;
+        }
+        .f-left {
+          float: inline-start;
         }
       `
     ];
@@ -117,7 +120,7 @@ export class EntriesList extends LitElement {
           )}
           ${!this.isReadonly
             ? html`
-                <sl-button variant="primary" class="add-entry" @click="${() => this.addEntry()}">
+                <sl-button variant="text" class="add-entry" @click="${() => this.addEntry()}">
                   <etools-icon name="add" slot="prefix"></etools-icon>${translate('ACTIVITY_DETAILS.ADD_ENTRY')}
                 </sl-button>
               `

@@ -55,7 +55,7 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button variant="success" @click="${() => this.changeStatus(transition)}" ?disabled="${this.disableBtns}">
+          <sl-button variant="success" class="arrowBtn" @click="${() => this.changeStatus(transition)}" ?disabled="${this.disableBtns}">
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
           </sl-button>
         `
@@ -86,18 +86,17 @@ export class StatusesActionsComponent extends LitElement {
         (transitionA: ActivityTransition, transitionB: ActivityTransition) =>
           TRANSITIONS_ORDER.indexOf(transitionA.transition) - TRANSITIONS_ORDER.indexOf(transitionB.transition)
       );
-    const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
           <sl-button-group>
             <sl-button
-              variant="primary"
-              class="${className}"
+              variant="success"
               @click="${() => this.changeStatus(mainTransition)}"
               ?disabled="${this.disableBtns}"
             >
-              ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
+              ${this.getMainBtnText(mainTransition.transition)}
             </sl-button>
+            ${this.getAdditionalTransitions(otherTransitions)}
           </sl-button-group>
         `
       : html``;
@@ -113,8 +112,8 @@ export class StatusesActionsComponent extends LitElement {
       return html``;
     }
     return html`
-      <sl-dropdown @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
-        <sl-button slot="trigger" variant="primary" caret></sl-button>
+      <sl-dropdown placement="bottom-end" @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
+        <sl-button slot="trigger" variant="success" caret></sl-button>
         <sl-menu>
           ${transitions.map(
             (transition: ActivityTransition) => html`
@@ -184,46 +183,35 @@ export class StatusesActionsComponent extends LitElement {
           display: flex;
           flex-direction: row;
         }
-        .back-button {
-          width: 36px;
-          height: 36px;
-          min-width: 0;
-          color: white;
+
+        sl-button-group {
+          display: flex;
           background: var(--green-color);
-          font-weight: 500;
+          flex: 1;
+        }
+        sl-button-group::part(base) {
+          width: 100%;
+        }
+        sl-button.sl-button-group__button {
+          margin-inline: 0px !important;
+          --sl-spacing-medium: 10px;
         }
 
-        .back-button svg {
-          color: white;
+        sl-button[slot='trigger'] {
+          width: 45px;
+          min-width: 45px;
+          border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+          margin-inline: 0px;
+          --sl-spacing-medium: 0;
+        }
+        sl-button#primary {
+          flex: 1;
         }
 
-        .back-button[disabled] svg {
-          color: lightgray;
-        }
-
-        .main-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
-        }
-
-        .reject-button {
-          background: var(--reject-color);
-        }
-
-        .main-button.with-additional {
-          padding: 0 0 0 18px;
-        }
-
-        .main-button span {
-          margin-right: 7px;
-        }
-
-        div[slot='dropdown-content'] {
-          padding: 20px 24px;
-          color: var(--primary-text-color);
+        sl-button.arrowBtn {
+          min-width: 0px;
+          --sl-spacing-medium: 0px;
+          --sl-spacing-small: 5px;
         }
       `
     ];
