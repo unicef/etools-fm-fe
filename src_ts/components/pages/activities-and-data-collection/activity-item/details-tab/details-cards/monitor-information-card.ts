@@ -312,10 +312,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
       FlexLayoutClasses,
       css`
         .card-content {
-          padding: 10px;
+          padding: 12px;
+        }
+        #teamMembers {
+          padding-right: 12px;
         }
         .user-types {
-          margin: 0 12px;
           align-items: center;
         }
       `

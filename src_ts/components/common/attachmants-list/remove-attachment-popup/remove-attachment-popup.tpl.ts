@@ -13,6 +13,7 @@ export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
       size="md"
       keep-dialog-open
       theme="confirmation"
+      confirmBtnVariant="danger"
       ?opened="${this.dialogOpened}"
       ok-btn-text="${translate('MAIN.BUTTONS.DELETE')}"
       .cancelBtnText="${translate('CANCEL')}"

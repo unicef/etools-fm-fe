@@ -23,7 +23,6 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
@@ -132,9 +131,9 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     });
   }
 
-  changeShowInactive({detail}: CustomEvent): void {
+  changeShowInactive(event: CustomEvent): void {
     // prevent updating during initialization
-    const checked: boolean = (detail.target as SlSwitch).checked;
+    const checked = (event.currentTarget as HTMLInputElement).checked;
     if (!this.sitesObjects || checked === null || checked === undefined) {
       return;
     }
