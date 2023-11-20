@@ -55,7 +55,12 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button variant="success" class="arrowBtn" @click="${() => this.changeStatus(transition)}" ?disabled="${this.disableBtns}">
+          <sl-button
+            variant="success"
+            class="arrowBtn"
+            @click="${() => this.changeStatus(transition)}"
+            ?disabled="${this.disableBtns}"
+          >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
           </sl-button>
         `

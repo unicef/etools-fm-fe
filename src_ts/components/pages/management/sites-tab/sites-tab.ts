@@ -133,7 +133,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
 
   changeShowInactive(event: CustomEvent): void {
     // prevent updating during initialization
-    const checked: boolean =  (event.currentTarget as HTMLInputElement).checked;
+    const checked = (event.currentTarget as HTMLInputElement).checked;
     if (!this.sitesObjects || checked === null || checked === undefined) {
       return;
     }
