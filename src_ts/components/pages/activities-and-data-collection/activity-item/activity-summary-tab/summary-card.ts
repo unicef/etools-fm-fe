@@ -11,7 +11,7 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
-import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
 import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -200,11 +200,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <sl-radio-group>
+        <etools-radio-group>
           <sl-radio name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
-          </sl-radio>
-        </sl-radio-group>
+          </etools-radio>
+        </etools-radio-group>
         ${this.getAttachmentsButton()}
       `;
     }
