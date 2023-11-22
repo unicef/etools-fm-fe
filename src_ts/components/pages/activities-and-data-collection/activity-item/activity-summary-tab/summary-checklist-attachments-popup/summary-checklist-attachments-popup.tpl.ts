@@ -67,15 +67,19 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                 </div>
 
                 <!--         Download Button         -->
-                <sl-button variant="text" class="primary" @click="${() => this.downloadFile(attachment)}">
+                <etools-button variant="text" class="primary" @click="${() => this.downloadFile(attachment)}">
                   <etools-icon name="cloud-download"></etools-icon>
                   ${translate('MAIN.DOWNLOAD')}
-                </sl-button>
+                </etools-button>
 
                 <!--        Delete Button          -->
-                <sl-button variant="danger" ?hidden="${this.readonly}" @click="${() => this.deleteAttachment(index)}">
+                <etools-button
+                  variant="danger"
+                  ?hidden="${this.readonly}"
+                  @click="${() => this.deleteAttachment(index)}"
+                >
                   ${translate('MAIN.BUTTONS.DELETE')}
-                </sl-button>
+                </etools-button>
               </div>
             `
           )}

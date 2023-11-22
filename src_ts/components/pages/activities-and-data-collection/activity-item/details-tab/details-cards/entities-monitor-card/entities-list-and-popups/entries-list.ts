@@ -3,8 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {translate} from 'lit-translate';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {
@@ -16,7 +15,6 @@ export class EntriesList extends LitElement {
   static get styles(): CSSResultArray {
     // language=CSS
     return [
-      buttonsStyles,
       css`
         :host {
           flex: 1;
@@ -74,13 +72,16 @@ export class EntriesList extends LitElement {
         }
         .add-entry {
           justify-content: flex-start;
-          padding: 14px 25px 14px 18px;
+          padding: 5px 25px 5px 18px;
           color: var(--primary-color);
           background: var(--primary-background-color);
           border: none;
           box-shadow: none;
           margin: 0;
           text-transform: uppercase;
+        }
+        .f-left {
+          float: inline-start;
         }
       `
     ];
@@ -117,9 +118,9 @@ export class EntriesList extends LitElement {
           )}
           ${!this.isReadonly
             ? html`
-                <sl-button variant="primary" class="add-entry" @click="${() => this.addEntry()}">
+                <etools-button variant="text" class="add-entry" @click="${() => this.addEntry()}">
                   <etools-icon name="add" slot="prefix"></etools-icon>${translate('ACTIVITY_DETAILS.ADD_ENTRY')}
-                </sl-button>
+                </etools-button>
               `
             : ''}
         </div>

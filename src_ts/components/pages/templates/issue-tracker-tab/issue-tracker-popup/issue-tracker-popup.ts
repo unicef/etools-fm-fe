@@ -155,7 +155,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
                   (type: RelatedType) => html`
                     <sl-radio value="${type}" ?disabled="${this.isReadOnly || !this.isNew}">
                       ${translate(`ISSUE_TRACKER.RELATED_TYPE.${type.toUpperCase()}`)}
-                    </etools-radio>
+                    </sl-radio>
                   `
                 )}
               </etools-radio-group>

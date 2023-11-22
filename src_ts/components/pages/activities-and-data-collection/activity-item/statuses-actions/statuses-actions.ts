@@ -1,8 +1,6 @@
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import '@shoelace-style/shoelace/dist/components/button-group/button-group.js';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
@@ -55,9 +53,14 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button variant="success" @click="${() => this.changeStatus(transition)}" ?disabled="${this.disableBtns}">
+          <etools-button
+            variant="success"
+            class="arrowBtn"
+            @click="${() => this.changeStatus(transition)}"
+            ?disabled="${this.disableBtns}"
+          >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
-          </sl-button>
+          </etools-button>
         `
       : html``;
   }
@@ -68,13 +71,13 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button
+          <etools-button
             class="main-button reject-button"
             @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-          </sl-button>
+          </etools-button>
         `
       : html``;
   }
@@ -86,19 +89,18 @@ export class StatusesActionsComponent extends LitElement {
         (transitionA: ActivityTransition, transitionB: ActivityTransition) =>
           TRANSITIONS_ORDER.indexOf(transitionA.transition) - TRANSITIONS_ORDER.indexOf(transitionB.transition)
       );
-    const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
-          <sl-button-group>
-            <sl-button
-              variant="primary"
-              class="${className}"
+          <etools-button-group>
+            <etools-button
+              variant="success"
               @click="${() => this.changeStatus(mainTransition)}"
               ?disabled="${this.disableBtns}"
             >
-              ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
-            </sl-button>
-          </sl-button-group>
+              ${this.getMainBtnText(mainTransition.transition)}
+            </etools-button>
+            ${this.getAdditionalTransitions(otherTransitions)}
+          </etools-button-group>
         `
       : html``;
   }
@@ -113,8 +115,8 @@ export class StatusesActionsComponent extends LitElement {
       return html``;
     }
     return html`
-      <sl-dropdown @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
-        <sl-button slot="trigger" variant="primary" caret></sl-button>
+      <sl-dropdown placement="bottom-end" @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
+        <etools-button slot="trigger" variant="success" caret></etools-button>
         <sl-menu>
           ${transitions.map(
             (transition: ActivityTransition) => html`
@@ -178,52 +180,36 @@ export class StatusesActionsComponent extends LitElement {
     return [
       FlexLayoutClasses,
       SharedStyles,
-      buttonsStyles,
       css`
         :host {
           display: flex;
           flex-direction: row;
         }
-        .back-button {
-          width: 36px;
-          height: 36px;
-          min-width: 0;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+
+        etools-button-group {
+          --etools-button-group-color: var(--green-color);
         }
 
-        .back-button svg {
-          color: white;
+        etools-button.sl-button-group__button {
+          margin-inline: 0px !important;
+          --sl-spacing-medium: 10px;
         }
 
-        .back-button[disabled] svg {
-          color: lightgray;
+        etools-button[slot='trigger'] {
+          width: 45px;
+          min-width: 45px;
+          border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+          margin-inline: 0px;
+          --sl-spacing-medium: 0;
+        }
+        etools-button#primary {
+          flex: 1;
         }
 
-        .main-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
-        }
-
-        .reject-button {
-          background: var(--reject-color);
-        }
-
-        .main-button.with-additional {
-          padding: 0 0 0 18px;
-        }
-
-        .main-button span {
-          margin-right: 7px;
-        }
-
-        div[slot='dropdown-content'] {
-          padding: 20px 24px;
-          color: var(--primary-text-color);
+        etools-button.arrowBtn {
+          min-width: 0px;
+          --sl-spacing-medium: 0px;
+          --sl-spacing-small: 5px;
         }
       `
     ];

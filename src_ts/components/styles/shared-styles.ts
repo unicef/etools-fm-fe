@@ -51,7 +51,7 @@ export const SharedStyles: CSSResult = css`
     font-size: 16px;
   }
 
-  .toggle-button-control sl-checkbox {
+  .toggle-button-control etools-checkbox {
     --paper-checkbox-label: {
       padding-left: 0;
     }

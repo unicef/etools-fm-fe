@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import {html, TemplateResult} from 'lit';
@@ -30,21 +30,22 @@ export function template(this: ActionPointsPopup): TemplateResult {
         ?active="${this.savingInProcess}"
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <!--     Description   -->
-      <etools-textarea
-        class="validate-input additional-padding"
-        .value="${this.editedData.description}"
-        @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
-        required
-        label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DESCRIPTION')}"
-        max-rows="3"
-        placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ENTER_DESCRIPTION')}"
-        ?invalid="${this.errors && this.errors.description}"
-        .errorMessage="${this.errors && this.errors.description}"
-        @focus="${() => this.resetFieldError('description')}"
-        @click="${() => this.resetFieldError('description')}"
-      ></etools-textarea>
-
+      <div class="grid-container">
+        <!--     Description   -->
+        <etools-textarea
+          class="validate-input additional-padding"
+          .value="${this.editedData.description}"
+          @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
+          required
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DESCRIPTION')}"
+          max-rows="3"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ENTER_DESCRIPTION')}"
+          ?invalid="${this.errors && this.errors.description}"
+          .errorMessage="${this.errors && this.errors.description}"
+          @focus="${() => this.resetFieldError('description')}"
+          @click="${() => this.resetFieldError('description')}"
+        ></etools-textarea>
+      </div>
       <div class="grid-container">
         <!--    Assignee    -->
         <etools-dropdown
@@ -187,13 +188,13 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Priority    -->
         <div class="without-border flex priority-container additional-padding">
-          <sl-checkbox
+          <etools-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"
             @sl-change="${(e: any) => this.updateModelValue('high_priority', e.target.checked)}"
           >
             ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
-          </sl-checkbox>
+          </etools-checkbox>
         </div>
 
         ${this.url

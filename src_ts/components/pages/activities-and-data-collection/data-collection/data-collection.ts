@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import '../../../common/layout/page-content-header/page-content-header';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../../routing/routes';
@@ -79,14 +79,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <sl-button
-            class="back-button layout horizontal"
-            target="_blank"
+          <etools-button
+            variant="success"
+            class="back-button"
+            target="_self"
             href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
-          </sl-button>
+          </etools-button>
         </div>
       </page-content-header>
 
@@ -254,7 +255,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     return [
       SharedStyles,
       pageContentHeaderSlottedStyles,
-      buttonsStyles,
       FlexLayoutClasses,
       css`
         page-content-header {
@@ -285,25 +285,11 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         }
 
         .back-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+          --dark-secondary-text-color: #ffffff;
         }
-
-        .back-button a {
-          color: var(--primary-background-color);
-          text-decoration: none;
-          line-height: 21px;
-        }
-
-        .back-button a span {
-          margin-left: 10px;
-        }
-
-        .back-button a svg {
-          height: 21px;
+        .back-button::part(prefix),
+        .back-button::part(suffix) {
+          width: 18px;
         }
       `
     ];

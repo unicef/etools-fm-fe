@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {TemplatesTabComponent} from './templates-tab';
@@ -155,12 +155,12 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                 <div slot="row-data" class="layout horizontal editable-row flex">
                   <!-- Checkbox to mark template as active -->
                   <div class="checkbox-container layout horizontal center-center">
-                    <sl-checkbox
+                    <etools-checkbox
                       ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
                       class="nolabel"
                       @sl-change="${(e: any) =>
                         this.updateTemplate(questionTemplate.id, 'is_active', e.target.checked as boolean)}"
-                    ></sl-checkbox>
+                    ></etools-checkbox>
                   </div>
 
                   <!-- Question item Text -->

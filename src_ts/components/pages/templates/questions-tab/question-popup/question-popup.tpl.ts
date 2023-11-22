@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
@@ -137,18 +137,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         </div>
 
         <div class="checkboxes">
-          <sl-checkbox
+          <etools-checkbox
             ?checked="${this.editedData.is_hact}"
             @sl-change="${(e: any) => this.updateModelValue('is_hact', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_HACT')}
-          </sl-checkbox>
-          <sl-checkbox
+          </etools-checkbox>
+          <etools-checkbox
             ?checked="${this.editedData.is_active}"
             @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
-          </sl-checkbox>
+          </etools-checkbox>
         </div>
 
         <div class="layout horizontal">

@@ -36,7 +36,6 @@ export const InputStyles: TemplateResult = html`
     etools-currency-amount-input,
     datepicker-lite {
       outline: none !important;
-      padding: 0 12px;
       color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       box-sizing: border-box;
 

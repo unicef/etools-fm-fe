@@ -6,14 +6,12 @@ export const QuestionPopupStyles: CSSResult = css`
   }
   .validate-input {
     margin-bottom: 8px;
+    padding-right: 15px;
   }
   .checkboxes {
-    padding: 10px 14px 24px;
+    padding: 10px 14px 24px 0;
   }
-  .scales-container {
-    padding-left: 12px;
-  }
-  sl-checkbox {
+  etools-checkbox {
     margin-right: 30px;
   }
 `;

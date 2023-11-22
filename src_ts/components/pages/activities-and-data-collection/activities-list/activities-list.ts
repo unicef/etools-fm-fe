@@ -49,7 +49,6 @@ import {
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -145,7 +144,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       CardStyles,
       SharedStyles,
       ActivitiesListStyles,
-      buttonsStyles,
       css`
         .search-container {
           display: flex;

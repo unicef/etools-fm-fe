@@ -44,7 +44,7 @@ export const CardStyles: CSSResult = css`
   }
 
   .card-content {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   .editable-row {
