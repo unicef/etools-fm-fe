@@ -22,7 +22,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
       keep-dialog-open
       @confirm-btn-clicked="${() => this.saveSite()}"
       @close="${this.onClose}"
-      @dialog-opened="${() => this.mapInitialization()}"
+      @etools-dialog-opened="${() => this.mapInitialization()}"
       ?show-spinner="${this.savingInProcess}"
       .spinnerText="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"

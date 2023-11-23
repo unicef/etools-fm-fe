@@ -132,7 +132,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
         .cancelBtnText="${translate('CANCEL')}"
         .hideConfirmBtn="${this.isReadOnly}"
         dialog-title="${translate(this.isNew ? 'ISSUE_TRACKER.ADD_POPUP_TITLE' : 'ISSUE_TRACKER.EDIT_POPUP_TITLE')}"
-        @dialog-closed="${({target}: CustomEvent) => this.resetData(target)}"
+        @etools-dialog-closed="${({target}: CustomEvent) => this.resetData(target)}"
         @confirm-btn-clicked="${() => this.processRequest()}"
         @close="${this.onClose}"
       >
