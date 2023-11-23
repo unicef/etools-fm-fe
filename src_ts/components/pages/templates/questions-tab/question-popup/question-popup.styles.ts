@@ -11,7 +11,7 @@ export const QuestionPopupStyles: CSSResult = css`
   .checkboxes {
     padding: 10px 14px 24px 0;
   }
-  sl-checkbox {
+  etools-checkbox {
     margin-right: 30px;
   }
 `;

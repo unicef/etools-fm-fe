@@ -9,8 +9,8 @@ import {RouterStyles} from '../../../app-shell/router-style';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -163,7 +163,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <sl-button
+          <etools-button
             id="export"
             class="neutral"
             variant="text"
@@ -173,7 +173,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           >
             <etools-icon name="file-download"></etools-icon>
             ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </sl-button>
+          </etools-button>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -182,7 +182,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
 
-          <sl-button
+          <etools-button
             ?hidden="${this.activityDetails?.status !== DATA_COLLECTION || this.activityDetails.monitor_type !== TPM}"
             variant="text"
             class="neutral"
@@ -190,7 +190,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/visit-letter/`}"
           >
             ${translate('ACTIVITY_DETAILS.VISIT_LETTER')}
-          </sl-button>
+          </etools-button>
         </div>
 
         <etools-tabs-lit
@@ -398,7 +398,6 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       RouterStyles,
-      buttonsStyles,
       css`
         .visit-letter-button {
           height: 36px;

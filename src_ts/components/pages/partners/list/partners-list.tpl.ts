@@ -1,6 +1,6 @@
 import {PartnersListComponent} from './partners-list';
 import {html, TemplateResult} from 'lit';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
@@ -10,7 +10,7 @@ export function template(this: PartnersListComponent): TemplateResult {
       <h1 slot="page-title">${translate('TPM.TITLE')}</h1>
 
       <div slot="title-row-actions" class="content-header-actions">
-        <sl-button
+        <etools-button
           id="export"
           class="neutral"
           variant="text"
@@ -20,12 +20,12 @@ export function template(this: PartnersListComponent): TemplateResult {
         >
           <etools-icon name="file-download" slot="prefix"></etools-icon>
           ${translate('ACTIVITY_DETAILS.EXPORT')}
-        </sl-button>
+        </etools-button>
 
-        <sl-button variant="primary" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
+        <etools-button variant="primary" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
           <etools-icon name="add" slot="prefix"></etools-icon>
           ${translate('TPM.ADD_NEW_VENDOR')}
-        </sl-button>
+        </etools-button>
       </div>
     </page-content-header>
 

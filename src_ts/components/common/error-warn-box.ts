@@ -1,7 +1,6 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '@unicef-polymer/etools-unicef/src/etools-content-panel/etools-content-panel';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 
 /**
  * @LitElement
@@ -18,10 +17,6 @@ export class EtoolsErrorWarnBox extends LitElement {
 
   @property({type: Array})
   messages: string[] = [];
-
-  static get styles() {
-    return [buttonsStyles];
-  }
 
   render(): TemplateResult {
     // language=HTML
@@ -108,7 +103,7 @@ export class EtoolsErrorWarnBox extends LitElement {
             ${this.messages.map((msg: string) => this.getErrorHTML(msg))}
           </ul>
           <div class="errors-box-actions">
-            <sl-button variant="danger" @click="${this.resetErrors}"> Dismiss </sl-button>
+            <etools-button variant="danger" @click="${this.resetErrors}"> Dismiss </etools-button>
           </div>
         </etools-content-panel>
       `;

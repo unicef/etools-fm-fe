@@ -6,8 +6,7 @@ import {pageLayoutStyles} from '../../styles/page-layout-styles';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {SharedStyles} from '../../styles/shared-styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import {getEndpoint} from '../../../endpoints/endpoints';
 import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
@@ -52,7 +51,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
   private activeLanguageUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles];
   }
 
   render(): TemplateResult | void {
@@ -63,10 +62,10 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <sl-button class="neutral" variant="text" @click="${this.exportData}" tracker="Export">
+              <etools-button class="neutral" variant="text" @click="${this.exportData}" tracker="Export">
                 <etools-icon name="file-download" slot="prefix"></etools-icon>
                 ${translate('MANAGEMENT.EXPORT')}
-              </sl-button>
+              </etools-button>
             </div>
 
             <etools-tabs-lit

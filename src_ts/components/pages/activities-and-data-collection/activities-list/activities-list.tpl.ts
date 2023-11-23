@@ -15,8 +15,8 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         class="content-header-actions"
         ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
       >
-        <sl-button variant="success" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
-          ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</sl-button
+        <etools-button variant="success" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
+          ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</etools-button
         >
       </div>
     </page-content-header>

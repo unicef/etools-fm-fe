@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import {html, TemplateResult} from 'lit';
@@ -188,13 +188,13 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Priority    -->
         <div class="without-border flex priority-container additional-padding">
-          <sl-checkbox
+          <etools-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"
             @sl-change="${(e: any) => this.updateModelValue('high_priority', e.target.checked)}"
           >
             ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
-          </sl-checkbox>
+          </etools-checkbox>
         </div>
 
         ${this.url

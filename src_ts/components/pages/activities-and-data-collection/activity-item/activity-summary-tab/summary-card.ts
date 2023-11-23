@@ -11,11 +11,11 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
-import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
 import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 // eslint-disable-next-line
 import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 import {store} from '../../../../../redux/store';
@@ -200,11 +200,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <sl-radio-group value="checked">
+        <etools-radio-group value="checked">
           <sl-radio name="trackStatus" value="checked" class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
           </sl-radio>
-        </sl-radio-group>
+        </etools-radio-group>
         ${this.getAttachmentsButton()}
       `;
     }
@@ -219,10 +219,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
-          <sl-button id="editAo" variant="primary" @click="${this.openAttachmentsPopup}">
+          <etools-button id="editAo" variant="primary" @click="${this.openAttachmentsPopup}">
             <etools-icon name="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></etools-icon>
             ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
-          </sl-button>
+          </etools-button>
         `
       : html``;
   }
@@ -387,7 +387,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       // FormBuilderCardStyles,
       FlexLayoutClasses,
       RadioButtonStyles,
-      buttonsStyles,
       css`
         .completed-finding {
           flex-basis: 50%;

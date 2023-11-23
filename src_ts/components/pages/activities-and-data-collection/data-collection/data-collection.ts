@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import '../../../common/layout/page-content-header/page-content-header';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../../routing/routes';
@@ -79,7 +79,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <sl-button
+          <etools-button
             variant="success"
             class="back-button"
             target="_self"
@@ -87,7 +87,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
-          </sl-button>
+          </etools-button>
         </div>
       </page-content-header>
 
@@ -255,7 +255,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     return [
       SharedStyles,
       pageContentHeaderSlottedStyles,
-      buttonsStyles,
       FlexLayoutClasses,
       css`
         page-content-header {

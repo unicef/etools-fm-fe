@@ -1,8 +1,8 @@
-import {css, CSSResultArray, html, LitElement, TemplateResult} from 'lit';
+import {CSSResultArray, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {translate} from 'lit-translate';
 
 @customElement('file-select-input')
@@ -30,15 +30,7 @@ export class FileSelectInput extends LitElement {
 
   static get styles(): CSSResultArray {
     // language=CSS
-    return [
-      AttachmentsStyles,
-      buttonsStyles,
-      css`
-        sl-button.danger::part(base) {
-          color: var(--etools-upload-danger-color, #ea4022);
-        }
-      `
-    ];
+    return [AttachmentsStyles];
   }
 
   get hasFileName(): boolean {
@@ -71,27 +63,27 @@ export class FileSelectInput extends LitElement {
           ? html`
               ${!this.hasFileName
                 ? html`
-                    <sl-button class="upload-button" variant="text" target="_blank" @click="${this.selectFile}">
+                    <etools-button class="upload-button" variant="text" target="_blank" @click="${this.selectFile}">
                       <etools-icon name="file-upload" slot="prefix"></etools-icon>
                       ${translate('MAIN.UPLOAD')}
-                    </sl-button>
+                    </etools-button>
                   `
                 : ''}
             `
           : ''}
         ${this.isStoredFile
           ? html`
-              <sl-button class="download-button" variant="text" target="_blank" @click="${this.downloadFile}">
+              <etools-button class="download-button" variant="text" target="_blank" @click="${this.downloadFile}">
                 <etools-icon name="cloud-download" slot="prefix"></etools-icon>
                 ${translate('MAIN.DOWNLOAD')}
-              </sl-button>
+              </etools-button>
             `
           : ''}
         ${!this.isReadonly && this.hasDelete
           ? html`
-              <sl-button variant="text" class="danger" @click="${() => this.deleteFile()}">
+              <etools-button variant="text" class="danger" @click="${() => this.deleteFile()}">
                 ${translate('MAIN.BUTTONS.DELETE')}
-              </sl-button>
+              </etools-button>
             `
           : ''}
       </div>

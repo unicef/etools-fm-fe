@@ -1,8 +1,6 @@
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import '@shoelace-style/shoelace/dist/components/button-group/button-group.js';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
@@ -55,14 +53,14 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button
+          <etools-button
             variant="success"
             class="arrowBtn"
             @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
-          </sl-button>
+          </etools-button>
         `
       : html``;
   }
@@ -73,13 +71,13 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <sl-button
+          <etools-button
             class="main-button reject-button"
             @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-          </sl-button>
+          </etools-button>
         `
       : html``;
   }
@@ -93,16 +91,16 @@ export class StatusesActionsComponent extends LitElement {
       );
     return mainTransition
       ? html`
-          <sl-button-group>
-            <sl-button
+          <etools-button-group>
+            <etools-button
               variant="success"
               @click="${() => this.changeStatus(mainTransition)}"
               ?disabled="${this.disableBtns}"
             >
               ${this.getMainBtnText(mainTransition.transition)}
-            </sl-button>
+            </etools-button>
             ${this.getAdditionalTransitions(otherTransitions)}
-          </sl-button-group>
+          </etools-button-group>
         `
       : html``;
   }
@@ -118,7 +116,7 @@ export class StatusesActionsComponent extends LitElement {
     }
     return html`
       <sl-dropdown placement="bottom-end" @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
-        <sl-button slot="trigger" variant="success" caret></sl-button>
+        <etools-button slot="trigger" variant="success" caret></etools-button>
         <sl-menu>
           ${transitions.map(
             (transition: ActivityTransition) => html`
@@ -182,38 +180,33 @@ export class StatusesActionsComponent extends LitElement {
     return [
       FlexLayoutClasses,
       SharedStyles,
-      buttonsStyles,
       css`
         :host {
           display: flex;
           flex-direction: row;
         }
 
-        sl-button-group {
-          display: flex;
-          background: var(--green-color);
-          flex: 1;
+        etools-button-group {
+          --etools-button-group-color: var(--green-color);
         }
-        sl-button-group::part(base) {
-          width: 100%;
-        }
-        sl-button.sl-button-group__button {
+
+        etools-button.sl-button-group__button {
           margin-inline: 0px !important;
           --sl-spacing-medium: 10px;
         }
 
-        sl-button[slot='trigger'] {
+        etools-button[slot='trigger'] {
           width: 45px;
           min-width: 45px;
           border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
           margin-inline: 0px;
           --sl-spacing-medium: 0;
         }
-        sl-button#primary {
+        etools-button#primary {
           flex: 1;
         }
 
-        sl-button.arrowBtn {
+        etools-button.arrowBtn {
           min-width: 0px;
           --sl-spacing-medium: 0px;
           --sl-spacing-small: 5px;

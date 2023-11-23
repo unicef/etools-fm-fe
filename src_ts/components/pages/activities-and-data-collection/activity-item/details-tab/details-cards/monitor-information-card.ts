@@ -5,7 +5,7 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {repeat} from 'lit/directives/repeat.js';
-import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
 import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
@@ -94,9 +94,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
           ></etools-loading>
           <div class="layout horizontal user-types">
             <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
-            <sl-radio-group
+            <etools-radio-group
               .value="${this.userType}"
-              @sl-change="${({detail}: CustomEvent) => this.setUserType(detail.item.value)}"
+              @sl-change="${(e: any) => this.setUserType(e.target.value)}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
             >
               ${repeat(
@@ -107,7 +107,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                   </sl-radio>
                 `
               )}
-            </sl-radio-group>
+            </etools-radio-group>
           </div>
           <div class="layout horizontal">
             ${this.editedData.monitor_type === USER_TPM

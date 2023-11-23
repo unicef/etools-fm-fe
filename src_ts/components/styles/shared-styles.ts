@@ -51,7 +51,7 @@ export const SharedStyles: CSSResult = css`
     font-size: 16px;
   }
 
-  .toggle-button-control sl-checkbox {
+  .toggle-button-control etools-checkbox {
     --paper-checkbox-label: {
       padding-left: 0;
     }
@@ -80,26 +80,5 @@ export const SharedStyles: CSSResult = css`
   }
   paper-button:focus {
     ${elevation2}
-  }
-  sl-radio {
-    display: inline-block;
-    margin-inline-end: 15px;
-  }
-  sl-radio-group {
-    margin: 10px;
-    line-height: 30px;
-  }
-  sl-radio,
-  sl-checkbox {
-    --sl-input-border-width: 2px;
-    --sl-input-border-color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
-  }
-  sl-radio[disabled]::part(base),
-  sl-checkbox[disabled]::part(base) {
-    opacity: 0.65;
-  }
-  sl-radio[disabled]::part(control--checked),
-  sl-checkbox[disabled]::part(control--checked) {
-    opacity: 0.65;
   }
 `;

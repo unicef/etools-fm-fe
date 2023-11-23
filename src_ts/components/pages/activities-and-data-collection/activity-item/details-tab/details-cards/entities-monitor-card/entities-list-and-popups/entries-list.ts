@@ -3,8 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {translate} from 'lit-translate';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
 @customElement('entries-list')
 export class EntriesList extends LitElement {
@@ -16,7 +15,6 @@ export class EntriesList extends LitElement {
   static get styles(): CSSResultArray {
     // language=CSS
     return [
-      buttonsStyles,
       css`
         :host {
           flex: 1;
@@ -120,9 +118,9 @@ export class EntriesList extends LitElement {
           )}
           ${!this.isReadonly
             ? html`
-                <sl-button variant="text" class="add-entry" @click="${() => this.addEntry()}">
+                <etools-button variant="text" class="add-entry" @click="${() => this.addEntry()}">
                   <etools-icon name="add" slot="prefix"></etools-icon>${translate('ACTIVITY_DETAILS.ADD_ENTRY')}
-                </sl-button>
+                </etools-button>
               `
             : ''}
         </div>

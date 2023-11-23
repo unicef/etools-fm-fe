@@ -8,8 +8,8 @@ import {RouterStyles} from '../../../app-shell/router-style';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -62,7 +62,6 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       RouterStyles,
-      buttonsStyles,
       css`
         .export-icon {
           padding-inline-end: 4px;
@@ -123,7 +122,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         <h1 slot="page-title">${this.partnerDetails && this.partnerDetails.name}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <sl-button
+          <etools-button
             class="neutral"
             variant="text"
             target="_blank"
@@ -134,7 +133,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           >
             <etools-icon name="file-download" slot="prefix"></etools-icon>
             ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </sl-button>
+          </etools-button>
           <div class="status-container">
             <div class="status-icon">
               <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">

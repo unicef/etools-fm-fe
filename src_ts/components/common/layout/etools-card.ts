@@ -5,8 +5,8 @@ import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
 import '@unicef-polymer/etools-unicef/src/etools-icon-button/etools-icon-button';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {buttonsStyles} from '@unicef-polymer/etools-unicef/src/styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {translate} from 'lit-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
@@ -34,7 +34,6 @@ export class EtoolsCard extends LitElement {
       elevationStyles,
       CardStyles,
       FlexLayoutClasses,
-      buttonsStyles,
       FormBuilderCardStyles,
       css`
         :host {
@@ -190,12 +189,12 @@ export class EtoolsCard extends LitElement {
             ${this.isEditable && this.edit
               ? html`
                   <div class="layout horizontal end-justified card-buttons">
-                    <sl-button variant="neutral" @click="${() => this.cancel()}"
-                      >${translate('MAIN.BUTTONS.CANCEL')}</sl-button
+                    <etools-button variant="neutral" @click="${() => this.cancel()}"
+                      >${translate('MAIN.BUTTONS.CANCEL')}</etools-button
                     >
-                    <sl-button variant="primary" class="save-button" @click="${() => this.save()}">
+                    <etools-button variant="primary" class="save-button" @click="${() => this.save()}">
                       ${translate('MAIN.BUTTONS.SAVE')}
-                    </sl-button>
+                    </etools-button>
                   </div>
                 `
               : ''}
