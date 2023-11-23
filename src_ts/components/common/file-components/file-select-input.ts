@@ -1,4 +1,4 @@
-import {css, CSSResultArray, html, LitElement, TemplateResult} from 'lit';
+import {CSSResultArray, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
