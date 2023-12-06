@@ -53,9 +53,10 @@ export function template(this: SitesPopupComponent): TemplateResult {
           <etools-dropdown
             id="statusDropdown"
             class="validate-input flex-2"
-            .selected="${this.setStatusValue((this.editedData && this.editedData.is_active) || false)}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateModelValue('is_active', detail.selectedItem.value)}"
+            .selected="${this.setStatusValue(!!this.editedData?.is_active)}"
+            @etools-selected-item-changed="${({detail}: CustomEvent) => {
+              this.updateModelValue('is_active', detail.selectedItem?.value);
+            }}"
             trigger-value-change-event
             label="${translate('SITES.LABELS.STATUS')}"
             placeholder="${!hasPermission(Permissions.EDIT_SITES)

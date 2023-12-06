@@ -17,6 +17,7 @@ export interface ActivityFilter extends EtoolsFilter {
 }
 
 export enum ActivityFilterKeys {
+  search = 'search',
   monitor_type = 'monitor_type',
   tpm_partner__in = 'tpm_partner__in',
   team_members__in = 'team_members__in',
@@ -54,6 +55,14 @@ export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilt
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function getAllAtivitiesFilters() {
   return [
+    {
+      filterName: getTranslation('ACTIVITIES_LIST.REFERENCE_NO'),
+      filterNameKey: 'ACTIVITIES_LIST.REFERENCE_NO',
+      filterKey: ActivityFilterKeys.search,
+      type: EtoolsFilterTypes.Search,
+      selectedValue: '',
+      selected: true
+    },
     {
       filterName: getTranslation('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.MONITOR_TYPE',

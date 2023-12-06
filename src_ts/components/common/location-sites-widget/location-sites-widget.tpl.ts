@@ -13,6 +13,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
           <etools-input
             class="search-input"
             type="search"
+            clearable
             .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
             placeholder="${translate('MAIN.SEARCH')}"

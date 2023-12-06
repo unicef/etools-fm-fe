@@ -156,6 +156,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                   <!-- Checkbox to mark template as active -->
                   <div class="checkbox-container layout horizontal center-center">
                     <etools-checkbox
+                      ?disabled=${!hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)}
                       ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
                       class="nolabel"
                       @sl-change="${(e: any) =>

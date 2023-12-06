@@ -33,6 +33,7 @@ export function template(this: PartnersListComponent): TemplateResult {
       <div class="search-input">
         <etools-input
           type="search"
+          clearable
           always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('TPM.FILTERS.SEARCH')}"

@@ -10,6 +10,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
   return html`
@@ -18,10 +19,17 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       size="md"
       keep-dialog-open
       ?opened="${this.dialogOpened}"
-      dialog-title="${translate(this.editedData.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
+      dialog-title="${translate(
+        !hasPermission(Permissions.EDIT_QUESTIONS)
+          ? 'QUESTIONS.VIEW_POPUP_TITLE'
+          : this.editedData.id
+          ? 'QUESTIONS.EDIT_POPUP_TITLE'
+          : 'QUESTIONS.ADD_POPUP_TITLE'
+      )}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
-      .cancelBtnText="${translate('CANCEL')}"
+      .cancelBtnText="${translate(hasPermission(Permissions.EDIT_QUESTIONS) ? 'CANCEL' : 'CLOSE')}"
+      ?hide-confirm-btn="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
     >
       <etools-loading
@@ -38,6 +46,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           required
           label="${translate('QUESTIONS.LABELS.QUESTION')}"
           placeholder="${translate('QUESTIONS.PLACEHOLDERS.QUESTION')}"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.text}"
           .errorMessage="${(this.errors && this.errors.text) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => {
@@ -59,6 +68,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           .options="${this.sections}"
           option-label="name"
           option-value="id"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.sections}"
           .errorMessage="${(this.errors && this.errors.sections) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('sections')}"
@@ -81,6 +91,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           option-label="name"
           option-value="id"
           required
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.methods}"
           .errorMessage="${(this.errors && this.errors.methods) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('methods')}"
@@ -103,6 +114,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.categories}"
             option-label="name"
             option-value="id"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.category}"
             .errorMessage="${(this.errors && this.errors.category) || translate('THIS_FIELD_IS_REQUIRED')}"
             @focus="${() => {
@@ -127,6 +139,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.levels}"
             option-label="display_name"
             option-value="value"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.level}"
             .errorMessage="${this.errors && this.errors.level}"
             @focus="${() => this.resetFieldError('level')}"
@@ -138,12 +151,14 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
         <div class="checkboxes">
           <etools-checkbox
+            ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_hact}"
             @sl-change="${(e: any) => this.updateModelValue('is_hact', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_HACT')}
           </etools-checkbox>
           <etools-checkbox
+            ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_active}"
             @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
@@ -164,6 +179,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.answerTypes}"
             option-label="display_name"
             option-value="value"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.answer_type}"
             .errorMessage="${this.errors && this.errors.answer_type}"
             @focus="${() => this.resetFieldError('answer_type')}"
@@ -174,6 +190,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
 
           <etools-dropdown
             class="validate-input w25"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
             .selected="${this.currentOptionsLength}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -205,6 +222,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                   class="validate-input flex-7"
                   .value="${option.label}"
                   @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
+                  ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
                   ?invalid="${this.errors?.options && this.errors.options[index]?.label}"
                   .errorMessage="${this.errors?.options && this.errors.options[index]?.label}"
                   @focus="${() => this.resetFieldError('options', index)}"
