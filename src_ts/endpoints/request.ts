@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 import AjaxRequestMixin from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request-mixin';
 import {etoolsCustomDexieDb} from './dexieDb';
-import {formatServerErrorAsText, getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 
 class RequestBase {
   lastAjaxRequest: any;

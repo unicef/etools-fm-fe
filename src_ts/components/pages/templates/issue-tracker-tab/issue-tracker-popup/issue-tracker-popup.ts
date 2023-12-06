@@ -1,5 +1,5 @@
 import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import {Unsubscribe} from 'redux';
 import {clone} from 'ramda';
 import {store} from '../../../../../redux/store';
