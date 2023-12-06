@@ -210,8 +210,11 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                 <div class="col-data w45px flex-none truncate">
                   <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
                 </div>
-                <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}">
-                  <etools-icon name="create" @click="${() => this.openPopup(question)}"></etools-icon>
+                <div class="hover-block">
+                  <etools-icon
+                    name="${hasPermission(Permissions.EDIT_QUESTIONS) ? 'create' : 'visibility'}"
+                    @click="${() => this.openPopup(question)}"
+                  ></etools-icon>
                 </div>
               </div>
               <div slot="row-data-details" class="layout horizontal">
@@ -338,7 +341,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-        this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
+        if (!this.filters) {
+          this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
+        }
       }
     );
   }

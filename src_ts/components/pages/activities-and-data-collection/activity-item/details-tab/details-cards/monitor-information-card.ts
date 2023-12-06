@@ -57,6 +57,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (!data) {
       this.editedData.monitor_type = USER_STAFF;
     }
+
     if (this.editedData.monitor_type) {
       this.userType = this.editedData.monitor_type;
     }
@@ -199,14 +200,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
               (x) => x.id === this.personResponsible!.id
             );
           }
+
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
             this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
+            this.visitLeadOptions = (clone(this.editedData.team_members) || []) as User[];
           });
         },
         [USERS]
       )
     );
+
     this.tpmPartnerUnsubscribe = store.subscribe(
       staticDataDynamic(
         (tpmPartners: EtoolsTPMPartner[] | undefined) => {
@@ -218,9 +222,15 @@ export class MonitorInformationCard extends BaseDetailsCard {
         [TPM_PARTNERS]
       )
     );
+
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
+
     if (!data.users) {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
+    }
+
+    if (this.userType === USER_TPM && !data.tpmPartners) {
+      store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
   }
 
@@ -314,7 +324,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
         .card-content {
           padding: 12px;
         }
-        #teamMembers {
+        #teamMembers,
+        #tpmPartner {
           padding-right: 12px;
         }
         .user-types {

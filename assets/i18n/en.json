@@ -329,6 +329,7 @@
   "QUESTIONS": {
     "EDIT_POPUP_TITLE": "Edit Question",
     "ADD_POPUP_TITLE": "Add Question",
+    "VIEW_POPUP_TITLE": "View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Enter Question Text",
       "SECTIONS": "Select Sections",

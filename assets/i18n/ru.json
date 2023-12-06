@@ -327,6 +327,7 @@
   "QUESTIONS": {
     "EDIT_POPUP_TITLE": "Localized Edit Question",
     "ADD_POPUP_TITLE": "Localized Add Question",
+    "VIEW_POPUP_TITLE": "Localized View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Localized Enter Question Text",
       "SECTIONS": "Localized Select Sections",

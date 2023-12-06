@@ -22,18 +22,6 @@ export function template(this: ActivitiesListComponent): TemplateResult {
     </page-content-header>
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
-      <div class="search-input">
-        <etools-input
-          type="search"
-          always-float-label
-          .value="${this.queryParams && this.queryParams.search}"
-          placeholder="${translate('ACTIVITIES_LIST.REFERENCE_NO')}"
-          @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
-        >
-          <etools-icon name="search" slot="prefix"></etools-icon>
-        </etools-input>
-      </div>
-
       <etools-filters
         class="search-filters"
         .filters="${this.filters}"

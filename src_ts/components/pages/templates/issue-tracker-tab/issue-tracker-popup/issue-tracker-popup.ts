@@ -32,7 +32,6 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../endpoints/endpoints-list';
-import {ISSUE_STATUSES} from '../issue-tracker-tab-statuses';
 
 @customElement('issue-tracker-popup')
 export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
@@ -64,6 +63,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property({type: Boolean})
   autoValidateIssue = false;
 
+  @property({type: Array})
+  statusOptions: any[] = [];
+
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
   isNew = false;
   isRequest = false;
@@ -92,6 +94,11 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
         fireEvent(this, 'dialog-closed', {confirmed: true});
       }, false)
     );
+
+    this.statusOptions = [
+      {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},
+      {value: 'past', display_name: getTranslation('ISSUE_TRACKER.STATUSES.PAST')}
+    ];
   }
 
   static get styles(): CSSResultArray {
@@ -147,7 +154,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
               <label id="related-to-type">${translate('ISSUE_TRACKER.RELATED_TO_TYPE')}</label>
               <etools-radio-group
                 .value="${this.relatedToType}"
-                @sl-change="${({detail}: CustomEvent) => this.changeRelatedType(detail.item)}"
+                @sl-change="${(e: any) => this.changeRelatedType(e.target.value)}"
                 ?disabled="${this.isReadOnly}"
               >
                 ${repeat(
@@ -166,7 +173,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
               .selected="${this.editedData.status}"
               label="${translate('ISSUE_TRACKER.STATUS')}"
               placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.STATUS')}"
-              .options="${ISSUE_STATUSES}"
+              .options="${this.statusOptions}"
               option-label="display_name"
               option-value="value"
               required
@@ -290,14 +297,12 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             required
             ?readonly="${this.isReadOnly}"
             ?invalid="${this.errors && this.errors.issue}"
-            error-message="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"
+            .errorMessage="${(this.errors && this.errors.issue) || translate('THIS_FIELD_IS_REQUIRED')}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('issue', detail.value)}"
             @focus="${() => {
-              this.autoValidateIssue = true;
               this.resetFieldError('issue');
             }}"
             @click="${() => this.resetFieldError('issue')}"
-            .autoValidate="${this.autoValidateIssue}"
           ></etools-textarea>
 
           <div>
@@ -348,24 +353,27 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   validate(): boolean {
     const type: RelatedType = this.relatedToType;
+    let invalid = false;
     if (type === 'cp_output' && !this.editedData.cp_output) {
       this.errors = {...this.errors, ...{cp_output: translate('ISSUE_TRACKER.POPUP_ERROR_CP_OUTPUT')}};
-      return false;
+      invalid = true;
     }
     if (type === 'partner' && !this.editedData.partner) {
       this.errors = {...this.errors, ...{partner: translate('ISSUE_TRACKER.POPUP_ERROR_PARTNER')}};
-      return false;
+      invalid = true;
     }
     if (type === 'location') {
       if (!this.editedData.location) {
         this.errors = {...this.errors, ...{location: translate('ISSUE_TRACKER.POPUP_ERROR_LOCATION')}};
-        return false;
+        invalid = true;
       }
     }
+
     if (!validateRequiredFields(this)) {
-      return false;
+      invalid = true;
     }
-    return true;
+
+    return !invalid;
   }
 
   resetData(target: EventTarget | null): void {
@@ -425,8 +433,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     this.updateUnsubscribe();
   }
 
-  changeRelatedType(item: any): void {
-    const type: RelatedType = item.get('value');
+  changeRelatedType(type: RelatedType): void {
     this.relatedToType = type;
     if (type !== this.editedData.related_to_type) {
       this.editedData.partner = null;

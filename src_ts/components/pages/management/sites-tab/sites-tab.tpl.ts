@@ -16,6 +16,7 @@ export function template(this: SitesTabComponent): TemplateResult {
         <etools-input
           class="search-input"
           type="search"
+          clearable
           always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('SITES.PLACEHOLDERS.SEARCH')}"

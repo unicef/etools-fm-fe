@@ -347,7 +347,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     this.populateDropdownFilterOptions(this.filtersData, this.activitiesListFilters);
 
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    if (!this.filters) {
+      this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    }
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {

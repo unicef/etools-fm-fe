@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 import AjaxRequestMixin from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request-mixin';
 import {etoolsCustomDexieDb} from './dexieDb';
+import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 
 class RequestBase {
   lastAjaxRequest: any;
@@ -33,8 +34,12 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
         return response.text().then((error: string) => {
           try {
             const data: GenericObject = JSON.parse(error);
-            const {status, statusText} = response;
-            return Promise.reject({data, status, statusText});
+            const errorsArray = getErrorsArray(data);
+            let {status, statusText} = response;
+            if (errorsArray && errorsArray.length) {
+              statusText = errorsArray.join('\n');
+            }
+            return Promise.reject({data, status, statusText: statusText, initialResponse: response});
           } catch (e) {
             return Promise.reject({
               data: 'UnknownError',
@@ -47,12 +52,7 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
       }
     })
     .catch((err) => {
-      return Promise.reject({
-        data: 'UnknownError',
-        status: err.status,
-        statusText: 'UnknownError',
-        initialResponse: err
-      });
+      return Promise.reject(err);
     });
 }
 

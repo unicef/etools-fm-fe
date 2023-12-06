@@ -31,6 +31,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
           <etools-input
             class="search-input"
             type="search"
+            clearable
             always-float-label
             .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"

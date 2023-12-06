@@ -329,6 +329,7 @@
   "QUESTIONS": {
     "EDIT_POPUP_TITLE": "Modifier la question",
     "ADD_POPUP_TITLE": "Ajouter une question",
+    "VIEW_POPUP_TITLE": "Voir la question",
     "PLACEHOLDERS": {
       "QUESTION": "Saisir le texte de la question",
       "SECTIONS": "Sélectionnez les rubriques",
