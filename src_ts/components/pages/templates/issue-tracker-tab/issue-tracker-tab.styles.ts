@@ -25,4 +25,8 @@ export const IssueTrackerTabStyles: CSSResult = css`
     cursor: pointer;
     font-weight: 500;
   }
+
+  .editable-row .hover-block etools-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }
 `;

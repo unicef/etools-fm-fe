@@ -184,8 +184,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
           <etools-button
             ?hidden="${this.activityDetails?.status !== DATA_COLLECTION || this.activityDetails.monitor_type !== TPM}"
-            variant="text"
-            class="neutral"
+            variant="neutral"
             target="_blank"
             href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/visit-letter/`}"
           >

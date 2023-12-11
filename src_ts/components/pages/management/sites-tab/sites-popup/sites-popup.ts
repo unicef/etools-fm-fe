@@ -205,7 +205,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     const sitesCoords: MarkerDataObj[] = this.sitesObjects.map((site: Site) => {
       const coords: LatLngTuple = [...site.point.coordinates].reverse() as LatLngTuple;
       return {coords, staticData: site, popup: site.name};
-    });
+    }) as any;
     this.MapHelper.addCluster(sitesCoords);
   }
 

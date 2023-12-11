@@ -28,11 +28,17 @@ export const LocationWidgetStyles: CSSResult = css`
 
   .widget-container .history etools-input {
     margin-right: 22px;
+    max-width: 200px;
   }
 
   .widget-container .history etools-input div[slot] {
     margin-left: 5px;
     color: #dd0000;
+  }
+
+  .widget-container .history etools-input::part(readonly-input) {
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
   }
 
   .widget-container a.link {

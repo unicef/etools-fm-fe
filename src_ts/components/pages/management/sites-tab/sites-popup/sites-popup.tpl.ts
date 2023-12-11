@@ -81,6 +81,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
                 label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
                 placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
                 disabled
+                readonly
               ></etools-input>
             `
           : ''}

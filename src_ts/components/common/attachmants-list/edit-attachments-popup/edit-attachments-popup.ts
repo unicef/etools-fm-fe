@@ -131,13 +131,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   protected fileSelected({success}: {success?: any; error?: string}): void {
     this.uploadInProgress = false;
-    if (success) {
-      try {
-        this.selectedFileId = success.id;
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    this.selectedFileId = success?.id || null;
   }
 
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {

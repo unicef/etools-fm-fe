@@ -85,12 +85,8 @@ export const navMenuStyles: CSSResult = css`
     display: block;
   }
 
-  .menu-header paper-icon-button {
-    --paper-icon-button: {
-      width: 24px;
-      height: 24px;
-      padding: 0;
-    }
+  .menu-header etools-icon-button {
+    --etools-icon-font-size: 24px;
   }
 
   #menu-header-top-icon,

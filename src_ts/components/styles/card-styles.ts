@@ -62,7 +62,7 @@ export const CardStyles: CSSResult = css`
     z-index: 100;
   }
 
-  .editable-row .hover-block paper-icon-button {
+  .editable-row .hover-block etools-icon-button {
     color: rgba(0, 0, 0, 0.54);
     padding-left: 5px;
   }

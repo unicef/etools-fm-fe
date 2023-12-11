@@ -9,7 +9,7 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {get as getTranslation} from 'lit-translate';
+import {translate} from 'lit-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 
 export interface ActivityFilter extends EtoolsFilter {
@@ -56,7 +56,7 @@ export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilt
 export function getAllAtivitiesFilters() {
   return [
     {
-      filterName: getTranslation('ACTIVITIES_LIST.REFERENCE_NO'),
+      filterName: translate('ACTIVITIES_LIST.REFERENCE_NO') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.REFERENCE_NO',
       filterKey: ActivityFilterKeys.search,
       type: EtoolsFilterTypes.Search,
@@ -64,7 +64,7 @@ export function getAllAtivitiesFilters() {
       selected: true
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.MONITOR_TYPE') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.MONITOR_TYPE',
       filterKey: ActivityFilterKeys.monitor_type,
       type: EtoolsFilterTypes.Dropdown,
@@ -78,7 +78,7 @@ export function getAllAtivitiesFilters() {
       disabled: false
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.TPM_PARTNERS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.TPM_PARTNERS',
       filterKey: ActivityFilterKeys.tpm_partner__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -93,7 +93,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: TPM_PARTNERS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.TEAM_MEMBERS',
       filterKey: ActivityFilterKeys.team_members__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -108,7 +108,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: USERS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.VISIT_LEAD'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.VISIT_LEAD') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.VISIT_LEAD',
       filterKey: ActivityFilterKeys.visit_lead__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -123,7 +123,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: USERS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.LOCATION'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.LOCATION') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.LOCATION',
       filterKey: ActivityFilterKeys.location__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -138,7 +138,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: LOCATIONS_ENDPOINT
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.SITE'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.SITE') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.SITE',
       filterKey: ActivityFilterKeys.location_site__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -152,7 +152,7 @@ export function getAllAtivitiesFilters() {
       disabled: false
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.PARTNERS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.PARTNERS',
       filterKey: ActivityFilterKeys.partners__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -167,7 +167,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: PARTNERS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.OFFICE'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.OFFICE') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.OFFICE',
       filterKey: ActivityFilterKeys.offices__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -182,7 +182,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: ACTION_POINTS_OFFICES
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.INTERVENTIONS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.INTERVENTIONS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.INTERVENTIONS',
       filterKey: ActivityFilterKeys.interventions__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -197,7 +197,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: INTERVENTIONS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.CP_OUTPUTS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.CP_OUTPUTS',
       filterKey: ActivityFilterKeys.cp_outputs__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -212,7 +212,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: CP_OUTPUTS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.STATUS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.STATUS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.STATUS',
       filterKey: ActivityFilterKeys.status__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -226,7 +226,7 @@ export function getAllAtivitiesFilters() {
       disabled: false
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.SECTIONS'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.SECTIONS') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.SECTIONS',
       filterKey: ActivityFilterKeys.sections__in,
       type: EtoolsFilterTypes.DropdownMulti,
@@ -241,7 +241,7 @@ export function getAllAtivitiesFilters() {
       selectionOptionsEndpoint: SECTIONS
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.START_DATE'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.START_DATE',
       filterKey: ActivityFilterKeys.start_date__gte,
       type: EtoolsFilterTypes.Date,
@@ -249,7 +249,7 @@ export function getAllAtivitiesFilters() {
       selected: false
     },
     {
-      filterName: getTranslation('ACTIVITIES_LIST.FILTERS.END_DATE'),
+      filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE') as any as string,
       filterNameKey: 'ACTIVITIES_LIST.FILTERS.END_DATE',
       filterKey: ActivityFilterKeys.end_date__lte,
       type: EtoolsFilterTypes.Date,
