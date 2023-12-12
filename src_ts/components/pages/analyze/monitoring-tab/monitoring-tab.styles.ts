@@ -10,6 +10,13 @@ export const monitoringActivityStyles: CSSResult = css`
   .monitoring-activity__item {
     flex-grow: 1;
     flex-basis: 48%;
+    width: 50%;
+  }
+
+  @media (max-width: 1200px) {
+    .monitoring-activity__item {
+      width: 100%;
+    }
   }
 
   .monitoring-activity__overall-statistics {
