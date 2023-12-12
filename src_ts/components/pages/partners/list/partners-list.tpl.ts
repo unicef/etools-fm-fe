@@ -22,7 +22,7 @@ export function template(this: PartnersListComponent): TemplateResult {
           ${translate('ACTIVITY_DETAILS.EXPORT')}
         </etools-button>
 
-        <etools-button variant="primary" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
+        <etools-button variant="success" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
           <etools-icon name="add" slot="prefix"></etools-icon>
           ${translate('TPM.ADD_NEW_VENDOR')}
         </etools-button>

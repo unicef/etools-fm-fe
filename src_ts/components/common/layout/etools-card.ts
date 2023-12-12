@@ -171,7 +171,8 @@ export class EtoolsCard extends LitElement {
             ${this.isEditable
               ? html`
                   <etools-icon-button
-                    class="flex-header__collapse"
+                    class="edit-button"
+                    ?edit=${this.edit}
                     @click="${() => this.startEdit()}"
                     ?hidden="${this.hideEditButton}"
                     name="create"

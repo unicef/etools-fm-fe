@@ -107,7 +107,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
         .search-input {
           margin-right: 16px;
           display: flex;
-          min-width: 240px;
+          min-width: 400px;
           align-items: center;
         }
         .search-filters {

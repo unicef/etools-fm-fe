@@ -336,7 +336,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
 
-        const availableFilters = JSON.parse(JSON.stringify(questionsFilters()));
+        const availableFilters = [...questionsFilters()];
         // @dci clearSelectedValuesInFilters(questionsFilters);
         this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 

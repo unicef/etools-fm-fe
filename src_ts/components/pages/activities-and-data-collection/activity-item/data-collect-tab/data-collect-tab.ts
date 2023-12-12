@@ -298,6 +298,7 @@ export class DataCollectTab extends LitElement {
       css`
         .hover-block a {
           color: var(--secondary-text-color);
+          text-decoration: none;
         }
       `
     ];

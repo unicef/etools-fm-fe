@@ -119,6 +119,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     this.relatedToType = this.editedData.related_to_type || 'cp_output';
     this.originalFiles = clone(data.attachments);
     this.currentFiles = clone(data.attachments);
+    if (this.editedData.location) {
+      this.setLocation(simplifyValue(this.editedData.location));
+    }
   }
 
   render(): TemplateResult {

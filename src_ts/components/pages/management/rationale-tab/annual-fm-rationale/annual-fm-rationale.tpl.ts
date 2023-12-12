@@ -19,6 +19,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
 
       etools-input {
         width: 300px;
+        display: block;
       }
     </style>
 

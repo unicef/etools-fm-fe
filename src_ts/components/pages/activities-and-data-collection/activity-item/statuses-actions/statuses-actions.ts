@@ -211,6 +211,14 @@ export class StatusesActionsComponent extends LitElement {
           --sl-spacing-medium: 0px;
           --sl-spacing-small: 5px;
         }
+
+        sl-menu-item::part(label) {
+          text-transform: uppercase;
+        }
+
+        .reject-button::part(base) {
+          background-color: var(--reject-color);
+        }
       `
     ];
   }

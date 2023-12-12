@@ -51,6 +51,7 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
         <div class="file-upload-container">
           <etools-upload
             id="uploadFile"
+            label=${translate('ATTACHMENT')}
             .uploadBtnLabel="${translate('UPLOAD_FILE')}"
             .fileUrl="${this.editedData && this.editedData.file}"
             .showChange="${this.editedData && this.editedData.file}"
