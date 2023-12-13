@@ -81,4 +81,8 @@ export const SharedStyles: CSSResult = css`
   paper-button:focus {
     ${elevation2}
   }
+
+  .horizontal .validate-input:not(:last-child) {
+    padding-right: 15px;
+  }
 `;

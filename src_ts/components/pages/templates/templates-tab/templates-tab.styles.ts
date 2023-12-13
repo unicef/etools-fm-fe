@@ -6,7 +6,7 @@ export const TemplatesStyles: CSSResult = css`
   }
 
   section.filters-container .filter {
-    padding: 10px 23px;
+    padding: 8px 23px;
     border-right: 1px solid #c4c4c4;
   }
 

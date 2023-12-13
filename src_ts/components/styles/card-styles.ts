@@ -108,6 +108,10 @@ export const CardStyles: CSSResult = css`
     margin: 4px 0;
   }
 
+  .pr-15 {
+    padding-right: 15px;
+  }
+
   .row-details-content {
     font-size: 12px;
     padding-right: 100px;

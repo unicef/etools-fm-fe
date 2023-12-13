@@ -5,12 +5,14 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {isRequired} from '../../../../utils/utils';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import {CardStyles} from '../../../../styles/card-styles';
 
 export function template(this: AddNewVendorPopupComponent): TemplateResult {
   // language=HTML
   return html`
     ${InputStyles} ${DialogStyles}
     <style>
+      ${CardStyles}
       .po-loading {
         position: absolute;
         top: 25px;
@@ -42,7 +44,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
       ?show-spinner="${this.savingInProcess}"
     >
           <div class="layout horizontal row">
-          <div class="col-data flex-6 p-relative">
+          <div class="col-data flex-6 pr-15 p-relative">
             <etools-input
               id="inputVendorNumber"
               always-float-label
@@ -83,7 +85,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
           </div>
         </div>
         <div class="layout horizontal row">
-          <div class="col-data flex-6">
+          <div class="col-data flex-6 pr-15">
             <etools-input
               id="phoneInput"
               always-float-label
