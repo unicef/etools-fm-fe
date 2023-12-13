@@ -183,7 +183,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
           <div class="layout horizontal">
             <div class="layout horizontal flex">
               <datepicker-lite
-                class="datepicker-width"
+                class="validate-input datepicker-width"
                 value="${this.editedData.start_date || ''}"
                 label="${translate('ACTIVITY_DETAILS.START_DATE')}"
                 .autoValidate="${true}"
@@ -194,7 +194,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 selected-date-display-format="D MMM YYYY"
               ></datepicker-lite>
               <datepicker-lite
-                class="datepicker-width"
+                class="validate-input datepicker-width"
                 value="${this.editedData.end_date || ''}"
                 .autoValidate="${true}"
                 ?fire-date-has-changed="${this.isEditMode}"
