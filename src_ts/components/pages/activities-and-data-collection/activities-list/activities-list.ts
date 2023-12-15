@@ -345,11 +345,15 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     }
 
     this.populateDropdownFilterOptions(this.filtersData, this.activitiesListFilters);
-
+    const selectedFilters =
+      (this.filters || this.activitiesListFilters)
+        ?.filter((filter) => filter.selected)
+        .map((filter) => filter.filterKey) || [];
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    if (!this.filters) {
-      this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
-    }
+    this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    this.filters.forEach((filter) => {
+      filter.selected = filter.selected || selectedFilters?.indexOf(filter.filterKey) > -1;
+    });
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {

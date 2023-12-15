@@ -340,10 +340,14 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         // @dci clearSelectedValuesInFilters(questionsFilters);
         this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 
+        const selectedFilters =
+          (this.filters || availableFilters)?.filter((filter) => filter.selected).map((filter) => filter.filterKey) ||
+          [];
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-        if (!this.filters) {
-          this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
-        }
+        this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
+        this.filters.forEach((filter) => {
+          filter.selected = filter.selected || selectedFilters?.indexOf(filter.filterKey) > -1;
+        });
       }
     );
   }
