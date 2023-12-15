@@ -73,6 +73,7 @@ export class StatusesActionsComponent extends LitElement {
       ? html`
           <etools-button
             class="main-button reject-button"
+            variant="danger"
             @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >

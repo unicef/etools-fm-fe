@@ -117,8 +117,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
                     class="flex"
                     id="tpmPartner"
                     .selected="${simplifyValue(this.tpmPartner)}"
-                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                      this.setTpmPartner(detail.selectedItem)}"
+                    @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                      this.setTpmPartner(detail.selectedItem);
+                      this.setTeamMembers([]);
+                      this.setPersonResponsible(null);
+                    }}"
                     ?trigger-value-change-event="${this.isEditMode}"
                     label="${translate('ACTIVITY_DETAILS.TPM_PARTNER')}"
                     .options="${this.tpmPartnersOptions}"
@@ -139,7 +142,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
               class="flex"
               id="teamMembers"
               .selectedValues="${simplifyValue(this.teamMembers)}"
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => {
+                this.setTeamMembers(detail.selectedItems);
+                this.setPersonResponsible(null);
+              }}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
               .options="${this.membersOptions}"
@@ -202,7 +208,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
           }
 
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
-            this.teamMembersDd.triggerValueChangeEvent = true;
+            // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
             this.visitLeadOptions = (clone(this.editedData.team_members) || []) as User[];
           });
