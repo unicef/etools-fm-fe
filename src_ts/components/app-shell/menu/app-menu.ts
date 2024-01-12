@@ -166,6 +166,24 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
             </div>
           </a>
+
+          <!-- Sidebar item - Dashboard -->
+          <a
+            class="nav-menu-item"
+            menu-name="dash"
+            href="/dash/fmp"
+            @tap="${this.trackAnalytics}"
+            tracker="DASH"
+            target="_blank"
+          >
+            <iron-icon id="dash-icon" icon="dashboard"></iron-icon>
+            <paper-tooltip for="dash-icon" position="right">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}
+            </paper-tooltip>
+            <div class="name">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}
+            </div>
+          </a>
         </iron-selector>
 
         <div class="nav-menu-item section-title">
