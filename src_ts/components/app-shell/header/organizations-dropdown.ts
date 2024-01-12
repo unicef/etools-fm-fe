@@ -5,7 +5,7 @@ import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
 import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown.js';
 import {customElement, LitElement, html, property, query, TemplateResult} from 'lit-element';
 
-import {fireEvent} from '@unicef-polymer/etools-modules-common/dist/utils/fire-custom-event';
+import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {countriesDropdownStyles} from './countries-dropdown-styles';
 import {get as getTranslation, translate} from 'lit-translate';
 import {updateAppLocation} from '../../../routing/routes';

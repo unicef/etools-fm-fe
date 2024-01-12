@@ -670,5 +670,6 @@
   "NO_ACCESS": "Pas d'accès",
   "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Attention ! Vous êtes sur le point de soumettre cette visite à l'examen du rapport et certains (ou tous) des éléments connexes contrôlés sont marqués comme “non contrôlés”. Vous pouvez revenir à l'onglet “révision” pour apporter des modifications si vous le souhaitez. Sinon, êtes-vous sûr de vouloir continuer sans marquer les éléments comme surveillés ?",
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Vous êtes sur le point de terminer une visite qui comporte des éléments “non contrôlés”. Vous pouvez les rejeter si nécessaire. Sinon, êtes-vous sûr de vouloir poursuivre avec les éléments marqués comme “Non contrôlés” ?",
+  "ACTION_POINT_REMINDER": "Notant qu'il n'y a pas de points d'action soulevés, n'oubliez pas d'en ajouter avant de continuer si nécessaire.",
   "CONTINUE": "Continuer"
 }
