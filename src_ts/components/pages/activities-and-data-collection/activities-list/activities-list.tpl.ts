@@ -114,7 +114,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           <etools-data-table-row secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-none w130px">
-                <a class="link-cell" href="${`${this.rootPath}activities/${activity.id}/details/`}"
+                <a class="link-cell" href="${this.getActivityDetailsLink(activity)}"
                   >${activity.reference_number}</a
                 >
               </div>
