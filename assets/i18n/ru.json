@@ -479,7 +479,8 @@
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
     "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
-    "TPM": "Third Party Monitors"
+    "TPM": "Third Party Monitors",
+    "DASHBOARD": "Информационные панели"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",

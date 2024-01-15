@@ -482,7 +482,8 @@
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
     "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
-    "TPM": "Moniteurs tiers"
+    "TPM": "Moniteurs tiers",
+    "DASHBOARD": "Tableaux de bord"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filtres",
