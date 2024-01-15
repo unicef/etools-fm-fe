@@ -25,8 +25,8 @@
       "INTERVENTIONS": "PD/SPD",
       "CP_OUTPUTS": "Extrants PP",
       "STATUS": "Statut",
-      "START_DATE": "Date de début",
-      "END_DATE": "Date de fin",
+      "STARTS_AFTER": "Commence après",
+      "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
       "SECTIONS": "Sections"
     }
