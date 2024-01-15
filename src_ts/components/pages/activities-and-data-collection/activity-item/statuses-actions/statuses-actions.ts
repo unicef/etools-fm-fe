@@ -10,7 +10,10 @@ import {
   REJECT,
   REJECT_REPORT,
   SEPARATE_TRANSITIONS,
-  TRANSITIONS_ORDER
+  TRANSITIONS_ORDER,
+  SUBMITTED,
+  REPORT_FINALIZATION,
+  COMPLETED
 } from './activity-statuses';
 import {arrowLeftIcon} from '../../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
@@ -23,6 +26,7 @@ import {ACTIVITIES_PAGE} from '../../activities-page';
 import {translate, get as getTranslation} from 'lit-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {getErrorText} from '../../../../utils/utils';
+import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -138,8 +142,30 @@ export class StatusesActionsComponent extends LitElement {
     if (!newStatusData) {
       return;
     }
+
+    const storeState = store.getState();
+
+    if(newStatusData.status === COMPLETED ||
+      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)) {
+      const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some((x: SummaryOverall) => x.on_track === null);
+      let confirmText = [];
+      if (summaryIsNotCompleted) {
+        // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, without having all summary analysis completed
+        confirmText.push(getTranslation(newStatusData.status === SUBMITTED ?
+          'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE' : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'));
+      }
+      if(storeState.activityDetails.data.permissions.edit.action_points && !((storeState.actionPointsList?.data || []).length)) {
+        // if can add Action Point and doesn't have any, display reminder
+        confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
+      }
+
+      if (confirmText.length && !(await this.confirmSubmitSummaryNotCompleted(confirmText.join('<br/><br/>')))) {
+        return;
+      }
+    }
+
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
-      const errors: any = store.getState().activityDetails.error;
+      const errors: any = storeState.activityDetails.error;
       if (errors) {
         const backendMessage = getErrorText(errors);
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
@@ -168,6 +194,16 @@ export class StatusesActionsComponent extends LitElement {
         [field]: response.comment
       };
     });
+  }
+
+  async confirmSubmitSummaryNotCompleted(confirmText: string) : Promise<boolean> {
+    return await openDialog({
+      dialog: 'are-you-sure',
+      dialogData: {
+        content: confirmText,
+        confirmBtnText: getTranslation("CONTINUE"),
+      }
+    }).then(({confirmed}) => confirmed);
   }
 
   static get styles(): CSSResult[] {
