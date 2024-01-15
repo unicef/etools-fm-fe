@@ -218,14 +218,14 @@ export const activitiesFilters: ActivityFilter[] = [
     selectionOptionsEndpoint: SECTIONS
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.START_DATE'),
+    filterName: translate('ACTIVITIES_LIST.FILTERS.STARTS_AFTER'),
     filterKey: ActivityFilterKeys.start_date__gte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,
     selected: false
   },
   {
-    filterName: translate('ACTIVITIES_LIST.FILTERS.END_DATE'),
+    filterName: translate('ACTIVITIES_LIST.FILTERS.END_BEFORE'),
     filterKey: ActivityFilterKeys.end_date__lte,
     type: EtoolsFilterTypes.Date,
     selectedValue: false,

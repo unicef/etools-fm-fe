@@ -25,8 +25,8 @@
       "INTERVENTIONS": "Localized PD/SPD",
       "CP_OUTPUTS": "Localized CP Outputs",
       "STATUS": "Localized Status",
-      "START_DATE": "Localized Start Date",
-      "END_DATE": "Localized End Date",
+      "STARTS_AFTER": "Localized Start After",
+      "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
       "SECTIONS": "Localized Sections"
     }

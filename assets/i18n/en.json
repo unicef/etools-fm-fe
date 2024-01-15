@@ -25,8 +25,8 @@
       "INTERVENTIONS": "PD/SPD",
       "CP_OUTPUTS": "CP Outputs",
       "STATUS": "Status",
-      "START_DATE": "Start Date",
-      "END_DATE": "End Date",
+      "STARTS_AFTER": "Starts After",
+      "END_BEFORE": "End Before",
       "OFFICE": "Field Office",
       "SECTIONS": "Sections"
     }
