@@ -122,7 +122,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       pageHeaderStyles,
       css`
         .refresh-button {
-          color: #bcc1c6;
+          color: var(--header-color);
           margin-right: 10px;
         }
         .dropdowns {
@@ -233,6 +233,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           >
           </etools-profile-dropdown>
           <etools-icon-button
+            label="refresh"
             title="${translate('NAVIGATION_MENU.REFRESH')}"
             class="refresh-button"
             name="refresh"
