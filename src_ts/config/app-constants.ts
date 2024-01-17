@@ -4,3 +4,14 @@ export const appLanguages: GenericObject<string>[] = [
   {value: 'en', display_name: 'English'},
   {value: 'fr', display_name: 'French'}
 ];
+
+export const filterPDStatuses: IOption[] = [
+  {id: 'review', name: 'Review'},
+  {id: 'active', name: 'Active'},
+  {id: 'cancelled', name: 'Cancelled'},
+  {id: 'ended', name: 'Ended'},
+  {id: 'closed', name: 'Closed'},
+  {id: 'suspended', name: 'Suspended'},
+  {id: 'terminated', name: 'Terminated'},
+  {id: 'expired', name: 'Expired'},
+];
