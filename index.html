@@ -62,15 +62,16 @@ Can be accessed at ./LICENSE.txt
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com">
     <link rel="preconnect" crossorigin="anonymous" href="https://fonts.gstatic.com">
-    <link
-      rel="stylesheet"
-      type="text/css"
-      crossorigin="anonymous"
-      href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic"
-    />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css" />
-    <link rel="stylesheet" type="text/css" href="node_modules/leaflet/dist/leaflet.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/app-theme.css" />
+
+    <link rel="preload" as="style" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap"></noscript>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css"></noscript>
+    <link rel="preload" href="node_modules/leaflet/dist/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css"></noscript>
+    <link rel="preload" href="assets/css/app-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/app-theme.css"></noscript>
+
     <script>
       // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
@@ -186,17 +187,15 @@ Can be accessed at ./LICENSE.txt
       Please enable JavaScript to view this website.
     </noscript>
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
-    <script src="node_modules/leaflet/dist/leaflet.js"></script>
-    <script src="node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
-    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-    <script src="node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js"></script>
-    <script src="assets/packages/esri-leaflet-webmap.js"></script>
-    <script src="node_modules/dayjs/dayjs.min.js"></script>
-    <script src="node_modules/dayjs/plugin/utc.js"></script>
-    <script src="node_modules/dayjs/plugin/isSameOrBefore.js"></script>
+    <script src="node_modules/leaflet/dist/leaflet.js" defer></script>
+    <script src="node_modules/esri-leaflet/dist/esri-leaflet.js" defer></script>
+    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js" defer></script>
+    <script src="node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js" defer></script>
+    <script src="assets/packages/esri-leaflet-webmap.js" defer></script>
+    <script src="node_modules/dayjs/dayjs.min.js" defer></script>
+    <script src="node_modules/dayjs/plugin/utc.js" defer></script>
+    <script src="node_modules/dayjs/plugin/isSameOrBefore.js" defer></script>
     <!-- Built with love using PWA Starter Kit -->
-    <script type="module" src="src/app-shell.js"></script>
+    <script type="module" src="src/app-shell.js" defer></script>
   </body>
 </html>

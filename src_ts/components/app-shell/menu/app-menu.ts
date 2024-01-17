@@ -272,7 +272,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             <etools-icon id="information-icon" name="info"></etools-icon>
           </sl-tooltip>
           <div class="name">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
+            eTools ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
           </div>
         </a>
       </div>

@@ -21,7 +21,7 @@ export class SupportBtn extends MatomoMixin(LitElement) {
         }
 
         a {
-          color: var(--light-secondary-text-color);
+          color: var(--header-color);
           text-decoration: none;
           font-size: 16px;
         }

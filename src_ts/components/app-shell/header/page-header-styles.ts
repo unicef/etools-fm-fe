@@ -46,7 +46,7 @@ export const pageHeaderStyles: CSSResult = css`
   }
 
   .envWarning {
-    color: var(--nonprod-text-warn-color);
+    color: var(--header-color);
     font-weight: 700;
     font-size: 18px;
     line-height: 20px;

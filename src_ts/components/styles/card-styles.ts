@@ -131,7 +131,7 @@ export const CardStyles: CSSResult = css`
 
   etools-data-table-header {
     --list-divider-color: 1px solid rgba(244, 243, 242, 0.26);
-    --list-bg-color: #f2eee8;
+    --list-bg-color: #f9f9f9;
     border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   }
 
