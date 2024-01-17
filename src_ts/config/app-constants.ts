@@ -6,12 +6,9 @@ export const appLanguages: GenericObject<string>[] = [
 ];
 
 export const filterPDStatuses: IOption[] = [
-  {id: 'review', name: 'Review'},
   {id: 'active', name: 'Active'},
-  {id: 'cancelled', name: 'Cancelled'},
   {id: 'ended', name: 'Ended'},
   {id: 'closed', name: 'Closed'},
   {id: 'suspended', name: 'Suspended'},
   {id: 'terminated', name: 'Terminated'},
-  {id: 'expired', name: 'Expired'},
 ];
