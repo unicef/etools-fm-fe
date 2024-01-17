@@ -75,3 +75,4 @@ workflows:
                 - staging
                 - develop
                 - shoelace-migration
+                - bundle_singlefile

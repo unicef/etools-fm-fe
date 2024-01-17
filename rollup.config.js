@@ -17,9 +17,10 @@ const importMetaUrlCurrentModulePlugin = () => {
 const config = {
   input: 'src_ts/app-shell.ts',
   output: {
-    dir: 'src/src',
+    file: 'src/src/app-shell.js',
     format: 'es',
-    sourcemap: true
+    inlineDynamicImports: true,
+    sourcemap: true,
   },
   onwarn(warning, warn) {
     if (warning.code === 'THIS_IS_UNDEFINED') return;
