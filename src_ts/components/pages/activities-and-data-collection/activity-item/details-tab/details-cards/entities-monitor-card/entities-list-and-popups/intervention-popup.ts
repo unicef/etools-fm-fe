@@ -17,17 +17,20 @@ import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {request} from '../../../../../../../../endpoints/request';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {repeat} from 'lit/directives/repeat.js';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpoints-list';
+import {filterPDStatuses} from '../../../../../../../../config/app-constants';
 
 @customElement('intervention-popup')
 export class InterventionPopup extends PartnersMixin(LitElement) {
   @property() dialogOpened = true;
   @property() selectedPartners: EtoolsPartner[] = [];
   @property() selectedCpOutputs: EtoolsCpOutput[] = [];
+  @property() selectedPdStatuses: IOption[] = [];
   @property() selectedIntervention?: EtoolsInterventionShort;
 
   @property() outputs: EtoolsCpOutputShort[] = [];
+  @property() pdStatuses: IOption[] = [];
   @property() interventions: EtoolsInterventionShort[] = [];
   private queryParams: QueryParams = {};
 
@@ -73,6 +76,18 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                 trigger-value-change-event
                 @etools-selected-items-changed="${({detail}: CustomEvent) =>
                   this.selectCpOutputs(detail.selectedItems)}"
+                horizontal-align="left"
+                no-dynamic-align
+              ></etools-dropdown-multi>
+              <etools-dropdown-multi
+                label="${translate('ACTIVITY_DETAILS.PD_STATUS')}"
+                .options="${this.pdStatuses}"
+                option-label="name"
+                option-value="id"
+                .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
+                trigger-value-change-event
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.selectPdStatus(detail.selectedItems)}"
                 horizontal-align="left"
                 no-dynamic-align
               ></etools-dropdown-multi>
@@ -136,6 +151,12 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     }, 100);
     this.loadingInterventions();
     this.loadingOutputs();
+    this.setPDStatuses();
+  }
+
+  setPDStatuses() {
+    this.pdStatuses = [...filterPDStatuses];
+    this.pdStatuses.forEach(x => x.name = getTranslation(`PD_STATUS.${String(x.id).toUpperCase()}`));
   }
 
   selectPartners(partners: EtoolsPartner[]): void {
@@ -154,6 +175,15 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       this.loadingInterventions({cp_outputs__in: ids});
     }
   }
+
+  selectPdStatus(pdStatuses: IOption[]): void {
+    if (JSON.stringify(this.selectedPdStatuses) !== JSON.stringify(pdStatuses)) {
+      this.selectedPdStatuses = [...pdStatuses];
+      const ids: number[] = simplifyValue(pdStatuses);
+      this.loadingInterventions({status__in: ids});
+    }
+  }
+
 
   selectIntervention(intervention: EtoolsInterventionShort): void {
     if (this.selectedIntervention !== intervention) {

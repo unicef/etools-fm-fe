@@ -49,6 +49,8 @@ import {
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
+import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
+import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -299,6 +301,16 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       return true;
     }
     return false;
+  }
+
+  getActivityDetailsLink(activity: IListActivity): string {
+    let tab = DETAILS_TAB;
+    if(activity.status === DATA_COLLECTION) {
+      tab = COLLECT_TAB;
+    } else if(activity.status === REPORT_FINALIZATION) {
+      tab = SUMMARY_TAB;
+    }
+    return `${this.rootPath}activities/${activity.id}/${tab}/`;
   }
 
   private loadDataForFilters(): void {
