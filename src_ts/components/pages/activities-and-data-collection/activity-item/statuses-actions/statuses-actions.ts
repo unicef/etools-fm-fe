@@ -161,7 +161,7 @@ export class StatusesActionsComponent extends LitElement {
       );
       const confirmText = [];
       if (summaryIsNotCompleted) {
-        // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, without having all summary analysis completed
+        // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, if not all summary completed
         confirmText.push(
           getTranslation(
             newStatusData.status === SUBMITTED
