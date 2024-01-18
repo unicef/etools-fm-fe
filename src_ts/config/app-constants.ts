@@ -10,5 +10,5 @@ export const filterPDStatuses: IOption[] = [
   {id: 'ended', name: 'Ended'},
   {id: 'closed', name: 'Closed'},
   {id: 'suspended', name: 'Suspended'},
-  {id: 'terminated', name: 'Terminated'},
+  {id: 'terminated', name: 'Terminated'}
 ];

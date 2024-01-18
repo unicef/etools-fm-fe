@@ -152,16 +152,28 @@ export class StatusesActionsComponent extends LitElement {
     const storeState = store.getState();
 
     // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
-    if(newStatusData.status === COMPLETED ||
-      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)) {
-      const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some((x: SummaryOverall) => x.on_track === null);
-      let confirmText = [];
+    if (
+      newStatusData.status === COMPLETED ||
+      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)
+    ) {
+      const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some(
+        (x: SummaryOverall) => x.on_track === null
+      );
+      const confirmText = [];
       if (summaryIsNotCompleted) {
         // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, without having all summary analysis completed
-        confirmText.push(getTranslation(newStatusData.status === SUBMITTED ?
-          'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE' : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'));
+        confirmText.push(
+          getTranslation(
+            newStatusData.status === SUBMITTED
+              ? 'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE'
+              : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'
+          )
+        );
       }
-      if(storeState.activityDetails.data.permissions.edit.action_points && !((storeState.actionPointsList?.data || []).length)) {
+      if (
+        storeState.activityDetails.data.permissions.edit.action_points &&
+        !(storeState.actionPointsList?.data || []).length
+      ) {
         // if can add Action Point and doesn't have any, display reminder
         confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
       }
@@ -183,12 +195,12 @@ export class StatusesActionsComponent extends LitElement {
     });
   }
 
-  async confirmSubmitSummaryNotCompleted(confirmText: string) : Promise<boolean> {
+  async confirmSubmitSummaryNotCompleted(confirmText: string): Promise<boolean> {
     return await openDialog({
       dialog: 'are-you-sure',
       dialogData: {
         content: confirmText,
-        confirmBtnText: getTranslation("CONTINUE"),
+        confirmBtnText: getTranslation('CONTINUE')
       }
     }).then(({confirmed}) => confirmed);
   }

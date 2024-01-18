@@ -86,8 +86,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                 option-value="id"
                 .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
                 trigger-value-change-event
-                @etools-selected-items-changed="${({detail}: CustomEvent) =>
-                  this.selectPdStatus(detail.selectedItems)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPdStatus(detail.selectedItems)}"
                 horizontal-align="left"
                 no-dynamic-align
               ></etools-dropdown-multi>
@@ -156,7 +155,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
 
   setPDStatuses() {
     this.pdStatuses = [...filterPDStatuses];
-    this.pdStatuses.forEach(x => x.name = getTranslation(`PD_STATUS.${String(x.id).toUpperCase()}`));
+    this.pdStatuses.forEach((x) => (x.name = getTranslation(`PD_STATUS.${String(x.id).toUpperCase()}`)));
   }
 
   selectPartners(partners: EtoolsPartner[]): void {
@@ -183,7 +182,6 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       this.loadingInterventions({status__in: ids});
     }
   }
-
 
   selectIntervention(intervention: EtoolsInterventionShort): void {
     if (this.selectedIntervention !== intervention) {

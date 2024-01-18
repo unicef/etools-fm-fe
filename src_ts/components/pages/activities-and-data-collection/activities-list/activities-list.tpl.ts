@@ -91,9 +91,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           <etools-data-table-row secondary-bg-on-hover>
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-none w130px">
-                <a class="link-cell" href="${this.getActivityDetailsLink(activity)}"
-                  >${activity.reference_number}</a
-                >
+                <a class="link-cell" href="${this.getActivityDetailsLink(activity)}">${activity.reference_number}</a>
               </div>
               <div class="col-data flex-none w110px">${formatDate(activity.start_date!) || '-'}</div>
               <div class="col-data flex-2">

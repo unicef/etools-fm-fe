@@ -305,9 +305,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
 
   getActivityDetailsLink(activity: IListActivity): string {
     let tab = DETAILS_TAB;
-    if(activity.status === DATA_COLLECTION) {
+    if (activity.status === DATA_COLLECTION) {
       tab = COLLECT_TAB;
-    } else if(activity.status === REPORT_FINALIZATION) {
+    } else if (activity.status === REPORT_FINALIZATION) {
       tab = SUMMARY_TAB;
     }
     return `${this.rootPath}activities/${activity.id}/${tab}/`;
