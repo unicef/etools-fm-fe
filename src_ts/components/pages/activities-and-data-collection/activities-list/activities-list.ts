@@ -58,6 +58,7 @@ store.addReducers({activities, specificLocations, activityDetails});
 export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
+  @property() prevQueryParams!: EtoolsRouteQueryParam;
   @property() filters: EtoolsFilter[] | null = null;
   @property() activitiesListFilters: ActivityFilter[] = [];
   @property({type: Object}) user!: IEtoolsUserModel;
@@ -81,6 +82,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     // List loading request
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
+      this.prevQueryParams = params;
       store
         .dispatch<AsyncEffect>(loadActivitiesList(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')}))
@@ -219,10 +221,19 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       return;
     }
 
+    this.restoreFiltersIfComingBackToPage(queryParams);
+
     const paramsAreValid: boolean = this.checkParams(queryParams);
     if (paramsAreValid) {
       this.queryParams = queryParams;
       this.debouncedLoading(this.queryParams);
+    }
+  }
+
+  private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
+     if(!Object.keys(queryParams || {}).length && this.prevQueryParams) {
+      queryParams = {...this.prevQueryParams};
+      updateQueryParams(queryParams);
     }
   }
 
