@@ -183,6 +183,28 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
             </div>
           </a>
+
+          <!-- Sidebar item - Dashboard -->
+          <a
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'dashboard')}"
+            menu-name="dashboard"
+            href="/dash/fmp"
+            @click="${this.trackAnalytics}"
+            target="_blank"
+            tracker="DASH"
+          >
+            <sl-tooltip
+              for="dash-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}"
+            >
+              <etools-icon id="dash-icon" name="dashboard"></etools-icon>
+            </sl-tooltip>
+            <div class="name">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}
+            </div>
+          </a>
         </div>
 
         <div class="nav-menu-item section-title">

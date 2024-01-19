@@ -129,3 +129,8 @@ interface IEtoolsStatusModel extends IEtoolsStatusItem {
 interface IEtoolsPage {
   canView: () => boolean;
 }
+
+interface IOption {
+  id: number | string;
+  name: string;
+}

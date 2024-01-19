@@ -49,6 +49,8 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {ActivityDetailsActions} from '../../../../redux/actions/activity-details.actions';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
+import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
+import {loadActionPoints} from '../../../../redux/effects/action-points.effects';
 
 store.addReducers({activityDetails});
 
@@ -251,6 +253,11 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           const isNotLoaded: boolean = !loadedActivityId || `${loadedActivityId}` !== `${activityId}`;
 
           if (this.activityId && isNotLoaded) {
+            // loadSummaryFindingsAndOverall & loadActionPoints here because we need data loaded
+            // for Action button click even if user doesn't open the tabs
+            store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(Number(this.activityId)));
+            store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityId)));
+
             store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
               if (store.getState().activityDetails.error) {
                 updateAppLocation(ACTIVITIES_PAGE);
