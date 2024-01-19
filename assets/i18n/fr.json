@@ -587,7 +587,7 @@
     "COMPLETED_VISITS": "Visites terminées",
     "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "THIS_FIELD_IS_REQUIRED": "Ce champ est obligatoire",
   "LOCATION_TO_BE_VISITED": "Lieu à visiter",
   "SITE_TO_BE_VISITED": "Site à visiter",
   "ROWS_PER_PAGE": "Lignes per page:",
