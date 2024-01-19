@@ -231,7 +231,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
-     if(!Object.keys(queryParams || {}).length && this.prevQueryParams) {
+    if (!Object.keys(queryParams || {}).length && this.prevQueryParams) {
       queryParams = {...this.prevQueryParams};
       updateQueryParams(queryParams);
     }
