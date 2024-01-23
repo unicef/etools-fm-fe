@@ -55,14 +55,7 @@ import {languageIsAvailableInApp} from './components/utils/utils';
 import {MapHelper} from './components/common/map-mixin';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
-import {EtoolsIconSet, initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
-import {fmIcons} from './components/styles/app-icons';
-declare const dayjs: any;
-declare const dayjs_plugin_utc: any;
-declare const dayjs_plugin_isSameOrBefore: any;
-
-dayjs.extend(dayjs_plugin_utc);
-dayjs.extend(dayjs_plugin_isSameOrBefore);
+import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 
 registerTranslateConfig({
   empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
@@ -70,17 +63,7 @@ registerTranslateConfig({
 });
 
 setBasePath(BASE_URL);
-initializeIcons(
-  [
-    EtoolsIconSet.communication,
-    EtoolsIconSet.device,
-    EtoolsIconSet.social,
-    EtoolsIconSet.av,
-    EtoolsIconSet.image,
-    EtoolsIconSet.maps
-  ],
-  fmIcons
-);
+initializeIcons();
 
 // These are the actions needed by this element.
 
@@ -309,34 +292,25 @@ export class AppShell extends connect(store)(LitElement) {
               ?active="${this.globalLoadingMessage}"
               loading-text="${this.globalLoadingMessage}"
             ></etools-loading>
-            <templates-page
-              class="page"
-              ?active="${this.isActivePage(
-                this.mainPage,
-                'templates',
-                this.subPage,
-                'questions|issue-tracker|templates'
-              )}"
-            ></templates-page>
-            <management-page
-              class="page"
-              ?active="${this.isActivePage(this.mainPage, 'management', this.subPage, 'rationale|sites')}"
-            ></management-page>
-            <activities-page class="page" ?active="${this.isActivePage(this.mainPage, 'activities')}"></activities-page>
-            <analyze-page
-              class="page"
-              ?active="${this.isActivePage(
-                this.mainPage,
-                'analyze',
-                this.subPage,
-                'country-overview|monitoring-activity'
-              )}"
-            ></analyze-page>
-            <partners-page class="page" ?active="${this.isActivePage(this.mainPage, 'partners')}"></partners-page>
-            <page-not-found
-              class="page"
-              ?active="${this.isActivePage(this.mainPage, 'page-not-found')}"
-            ></page-not-found>
+
+            ${this.isActivePage(this.mainPage, 'templates', this.subPage, 'questions|issue-tracker|templates')
+              ? html`<templates-page class="page" active></templates-page>`
+              : html``}
+            ${this.isActivePage(this.mainPage, 'management', this.subPage, 'rationale|sites')
+              ? html`<management-page class="page" active></management-page>`
+              : html``}
+            ${this.isActivePage(this.mainPage, 'activities')
+              ? html`<activities-page class="page" active></activities-page>`
+              : html``}
+            ${this.isActivePage(this.mainPage, 'analyze', this.subPage, 'country-overview|monitoring-activity')
+              ? html`<analyze-page class="page" active></analyze-page>`
+              : html``}
+            ${this.isActivePage(this.mainPage, 'partners')
+              ? html`<partners-page class="page" active></partners-page>`
+              : html``}
+            ${this.isActivePage(this.mainPage, 'page-not-found')
+              ? html`<page-not-found class="page" active></page-not-found>`
+              : html``}
           </main>
 
           <page-footer></page-footer>

@@ -26,11 +26,38 @@ export class MapHelper {
       });
   }
 
-  initMap(element: HTMLElement): void {
+  loadScript(src: string) {
+    return new Promise((resolve) => {
+      var list = document.getElementsByTagName('script');
+      var i = list.length;
+      while (i--) {
+        if (list[i].src.includes(src)) {
+          resolve(true);
+          return;
+        }
+      }
+
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = function () {
+        resolve(true);
+      };
+
+      document.head.append(script);
+    });
+  }
+
+  async initMap(element: HTMLElement) {
     if (!element) {
       throw new Error('Please provide HTMLElement for map initialization!');
     }
+
     const arcgisMapIsAvailable = JSON.parse(localStorage.getItem('arcgisMapIsAvailable') || '');
+    await this.loadScript('node_modules/leaflet/dist/leaflet.js');
+    await this.loadScript('node_modules/esri-leaflet/dist/esri-leaflet.js');
+    await this.loadScript('node_modules/leaflet.markercluster/dist/leaflet.markercluster.js');
+    await this.loadScript('node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js');
+    await this.loadScript('assets/packages/esri-leaflet-webmap.js');
     return arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
   }
 

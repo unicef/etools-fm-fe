@@ -45,15 +45,6 @@ const copyConfig = {
       src: 'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
       dest: 'src/node_modules/leaflet.markercluster/dist'
     },
-    { src: 'node_modules/dayjs/dayjs.min.js', dest: 'src/node_modules/dayjs' },
-    { src: 'node_modules/dayjs/plugin/utc.js', dest: 'src/node_modules/dayjs/plugin' },
-    { src: 'node_modules/dayjs/plugin/isBetween.js', dest: 'src/node_modules/dayjs/plugin' },
-    { src: 'node_modules/dayjs/plugin/isSameOrBefore.js', dest: 'src/node_modules/dayjs/plugin' },
-    { src: 'node_modules/dayjs/plugin/isSameOrAfter.js', dest: 'src/node_modules/dayjs/plugin' },
-    {
-      src: 'node_modules/@unicef-polymer/etools-unicef/src/etools-icons/icons/**',
-      dest: 'src/node_modules/@unicef-polymer/etools-unicef/src/etools-icons/icons'
-    },
     { src: 'images', dest: 'src' },
     { src: 'assets', dest: 'src' },
     { src: 'index.html', dest: 'src' }

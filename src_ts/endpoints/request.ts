@@ -1,4 +1,3 @@
-import Dexie from 'dexie';
 import AjaxRequestMixin from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request-mixin';
 import {etoolsCustomDexieDb} from './dexieDb';
 import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
@@ -8,7 +7,7 @@ class RequestBase {
   reqProgress: any;
   etoolsAjaxCacheListsExpireMapTable = 'listsExpireMapTable';
 
-  get etoolsAjaxCacheDb(): Dexie {
+  get etoolsAjaxCacheDb() {
     return etoolsCustomDexieDb;
   }
 

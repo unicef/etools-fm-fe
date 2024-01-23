@@ -22,6 +22,9 @@ import {get as getTranslation} from 'lit-translate';
 import {getFromPath} from '../../../../../utils/utils';
 import './edit-attachments-popup/partner-edit-attachments-popup';
 import './remove-attachment-popup/partner-remove-attachment-popup';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+dayjs.extend(utc);
 
 store.addReducers({attachmentsList});
 

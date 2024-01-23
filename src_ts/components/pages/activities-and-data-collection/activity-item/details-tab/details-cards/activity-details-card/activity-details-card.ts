@@ -25,6 +25,9 @@ import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
+dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
