@@ -154,27 +154,29 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     return active ? 1 : 0;
   }
 
-  mapInitialization(): void {
+  async mapInitialization() {
+    let mapWasMissing = false;
     if (!this.MapHelper.map) {
       this.MapHelper.initMap(this.mapElement);
-      this.MapHelper.waitForMapToLoad().then(() => {
+      mapWasMissing = true;
+    }
+
+    this.MapHelper.waitForMapToLoad().then(() => {
+      if (mapWasMissing) {
         this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
           const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
           this.MapHelper.changeDMLocation([lat, lng]);
           this.setCoordsString();
         });
-      });
-    }
+      }
 
-    this.renderMarkers();
-    const id: number | null = (this.editedData && this.editedData.id) || null;
-    if (id) {
-      const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
-      this.MapHelper.dynamicMarker = site || null;
-      this.setCoordsString();
-    }
-
-    this.MapHelper.waitForMapToLoad().then(() => {
+      this.renderMarkers();
+      const id: number | null = (this.editedData && this.editedData.id) || null;
+      if (id) {
+        const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
+        this.MapHelper.dynamicMarker = site || null;
+        this.setCoordsString();
+      }
       this.setMapView();
     });
   }

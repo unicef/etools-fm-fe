@@ -47,28 +47,18 @@ export class MapHelper {
     });
   }
 
-  loadScripts(scripts: string[]) {
-    return Promise.all(scripts.map((script) => this.loadScript(script)));
-  }
-
-  initMap(element: HTMLElement): void {
+  async initMap(element: HTMLElement) {
     if (!element) {
       throw new Error('Please provide HTMLElement for map initialization!');
     }
 
     const arcgisMapIsAvailable = JSON.parse(localStorage.getItem('arcgisMapIsAvailable') || '');
-    this.loadScripts(['node_modules/leaflet/dist/leaflet.js']).then(() => {
-      this.loadScripts([
-        'node_modules/esri-leaflet/dist/esri-leaflet.js',
-        'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-        'node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js',
-        'assets/packages/esri-leaflet-webmap.js'
-      ]).then(() => {
-        arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
-      });
-    });
-
-    return;
+    await this.loadScript('node_modules/leaflet/dist/leaflet.js');
+    await this.loadScript('node_modules/esri-leaflet/dist/esri-leaflet.js');
+    await this.loadScript('node_modules/leaflet.markercluster/dist/leaflet.markercluster.js');
+    await this.loadScript('node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js');
+    await this.loadScript('assets/packages/esri-leaflet-webmap.js');
+    return arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
   }
 
   initOpenStreetMap(element: HTMLElement): void {
