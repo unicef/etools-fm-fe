@@ -26,12 +26,48 @@ export class MapHelper {
       });
   }
 
+  loadScript(src: string) {
+    return new Promise((resolve) => {
+      var list = document.getElementsByTagName('script');
+      var i = list.length;
+      while (i--) {
+        if (list[i].src.includes(src)) {
+          resolve(true);
+          return;
+        }
+      }
+
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = function () {
+        resolve(true);
+      };
+      document.head.append(script);
+    });
+  }
+
+  loadScripts(scripts: string[]) {
+    return Promise.all(scripts.map((script) => this.loadScript(script)));
+  }
+
   initMap(element: HTMLElement): void {
     if (!element) {
       throw new Error('Please provide HTMLElement for map initialization!');
     }
+
     const arcgisMapIsAvailable = JSON.parse(localStorage.getItem('arcgisMapIsAvailable') || '');
-    return arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
+
+    this.loadScripts([
+      'node_modules/leaflet/dist/leaflet.js',
+      'node_modules/esri-leaflet/dist/esri-leaflet.js',
+      'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+      'node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js',
+      'assets/packages/esri-leaflet-webmap.js'
+    ]).then(() => {
+      arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
+    });
+
+    return;
   }
 
   initOpenStreetMap(element: HTMLElement): void {

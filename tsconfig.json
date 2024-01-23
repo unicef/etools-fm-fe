@@ -13,7 +13,8 @@
     "esModuleInterop": true,
     "outDir": "src",
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src_ts/**/*.ts"],
   "exclude": []
