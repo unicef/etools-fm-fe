@@ -20,7 +20,7 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import dayjs from 'dayjs'; 
+import dayjs from 'dayjs';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {

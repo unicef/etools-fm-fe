@@ -12,7 +12,8 @@ import {rationaleUpdate, rationaleUpdateError} from '../../../../../redux/select
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import {SetRationaleUpdateError} from '../../../../../redux/actions/rationale.actions';
-import dayjs from 'dayjs'; 
+import dayjs from 'dayjs';
+
 @customElement('annual-fm-rationale')
 export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
   @property() errors: GenericObject = {};
