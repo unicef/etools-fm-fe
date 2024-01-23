@@ -124,7 +124,9 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     this.mapHelper = new MapHelper();
     this.mapHelper.initMap(this.mapElement);
     const zoom = 6;
-    this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
+    this.mapHelper.waitForMapToLoad().then(() => {
+      this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
+    });
   }
 
   resizeMap(): void {
