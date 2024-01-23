@@ -75,4 +75,3 @@ workflows:
                 - staging
                 - develop
                 - shoelace-migration
-                - performance
