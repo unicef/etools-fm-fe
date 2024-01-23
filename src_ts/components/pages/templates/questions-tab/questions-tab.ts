@@ -47,6 +47,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
   @property() filtersInitialized = false;
+  @property() prevQueryParams!: EtoolsRouteQueryParam;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -60,6 +61,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     super();
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
+      this.prevQueryParams = params;
       store
         .dispatch<AsyncEffect>(loadQuestions(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_QUESTIONS')}))
@@ -293,10 +295,19 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       return;
     }
 
+    this.restoreFiltersIfComingBackToPage(queryParams);
+
     const paramsAreValid: boolean = this.checkParams(queryParams);
     if (paramsAreValid) {
       this.queryParams = queryParams;
       this.debouncedLoading(this.queryParams);
+    }
+  }
+
+  private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
+    if (!Object.keys(queryParams || {}).length && this.prevQueryParams) {
+      queryParams = {...this.prevQueryParams};
+      updateQueryParams(queryParams);
     }
   }
 
