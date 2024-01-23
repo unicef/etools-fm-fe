@@ -157,10 +157,12 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
   mapInitialization(): void {
     if (!this.MapHelper.map) {
       this.MapHelper.initMap(this.mapElement);
-      this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
-        const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
-        this.MapHelper.changeDMLocation([lat, lng]);
-        this.setCoordsString();
+      this.MapHelper.waitForMapToLoad().then(() => {
+        this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
+          const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
+          this.MapHelper.changeDMLocation([lat, lng]);
+          this.setCoordsString();
+        });
       });
     }
 
