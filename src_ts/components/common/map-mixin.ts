@@ -42,6 +42,7 @@ export class MapHelper {
       script.onload = function () {
         resolve(true);
       };
+
       document.head.append(script);
     });
   }
@@ -56,15 +57,15 @@ export class MapHelper {
     }
 
     const arcgisMapIsAvailable = JSON.parse(localStorage.getItem('arcgisMapIsAvailable') || '');
-
-    this.loadScripts([
-      'node_modules/leaflet/dist/leaflet.js',
-      'node_modules/esri-leaflet/dist/esri-leaflet.js',
-      'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-      'node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js',
-      'assets/packages/esri-leaflet-webmap.js'
-    ]).then(() => {
-      arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
+    this.loadScripts(['node_modules/leaflet/dist/leaflet.js']).then(() => {
+      this.loadScripts([
+        'node_modules/esri-leaflet/dist/esri-leaflet.js',
+        'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+        'node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js',
+        'assets/packages/esri-leaflet-webmap.js'
+      ]).then(() => {
+        arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
+      });
     });
 
     return;
