@@ -126,6 +126,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    this.handleLanguageChange = this.handleLanguageChange.bind(this);
+    document.addEventListener('language-changed', this.handleLanguageChange as any);
     const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
     AttachmentsHelper.initialize(attachmentsEndpoint);
     window.addEventListener('beforeprint', () => {
@@ -203,6 +206,13 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.checklistUnsubscribe();
     this.activityDetailsUnsubscribe();
     this.blueprintUnsubscribe();
+    document.removeEventListener('language-changed', this.handleLanguageChange as any);
+  }
+
+  handleLanguageChange(_e: CustomEvent) {
+    if (this.activityId && this.checklistId) {
+      store.dispatch<AsyncEffect>(loadBlueprint(this.activityId, this.checklistId));
+    }
   }
 
   /**
