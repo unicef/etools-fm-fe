@@ -41,6 +41,7 @@ import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
+import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -55,11 +56,13 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
+  private readonly prevQueryParamsKey = 'QuestionsPrevParams';
 
   constructor() {
     super();
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
+      setDataOnSessionStorage(this.prevQueryParamsKey, params);
       store
         .dispatch<AsyncEffect>(loadQuestions(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_QUESTIONS')}))
@@ -293,10 +296,20 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       return;
     }
 
+    this.restoreFiltersIfComingBackToPage(queryParams);
+
     const paramsAreValid: boolean = this.checkParams(queryParams);
     if (paramsAreValid) {
       this.queryParams = queryParams;
       this.debouncedLoading(this.queryParams);
+    }
+  }
+
+  private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
+    const prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    if (!Object.keys(queryParams || {}).length && prevQueryParams) {
+      queryParams = {...prevQueryParams};
+      updateQueryParams(queryParams);
     }
   }
 

@@ -51,6 +51,7 @@ import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
 import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
+import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -58,7 +59,6 @@ store.addReducers({activities, specificLocations, activityDetails});
 export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
   @property() rootPath: string = ROOT_PATH;
-  @property() prevQueryParams!: EtoolsRouteQueryParam;
   @property() filters: EtoolsFilter[] | null = null;
   @property() activitiesListFilters: ActivityFilter[] = [];
   @property({type: Object}) user!: IEtoolsUserModel;
@@ -76,13 +76,14 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
   private readonly userUnsubscribe: Unsubscribe;
+  private readonly prevQueryParamsKey = 'ActivitiesPrevParams';
 
   constructor() {
     super();
     // List loading request
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
-      this.prevQueryParams = params;
+      setDataOnSessionStorage(this.prevQueryParamsKey, params);
       store
         .dispatch<AsyncEffect>(loadActivitiesList(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')}))
@@ -231,8 +232,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
-    if (!Object.keys(queryParams || {}).length && this.prevQueryParams) {
-      queryParams = {...this.prevQueryParams};
+    const prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    if (!Object.keys(queryParams || {}).length && prevQueryParams) {
+      queryParams = {...prevQueryParams};
       updateQueryParams(queryParams);
     }
   }

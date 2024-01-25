@@ -62,6 +62,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <style>
+        page-content-header {
+          padding: 12px 24px 0 24px;
+          min-height: 72px;
+        }
+      </style>
       <etools-loading
         ?active="${this.isLoad}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"

@@ -123,7 +123,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'templates')}"
             menu-name="templates"
-            href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
+            href="${this.rootPath + 'templates/questions'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
             @click="${this.trackAnalytics}"
             tracker="Templates"
