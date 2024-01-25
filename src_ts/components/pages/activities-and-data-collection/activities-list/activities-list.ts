@@ -76,7 +76,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
   private readonly userUnsubscribe: Unsubscribe;
-  private readonly prevQueryParamsKey =  'ActivitiesPrevParams';
+  private readonly prevQueryParamsKey = 'ActivitiesPrevParams';
 
   constructor() {
     super();
@@ -232,7 +232,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
-    let prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    const prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
     if (!Object.keys(queryParams || {}).length && prevQueryParams) {
       queryParams = {...prevQueryParams};
       updateQueryParams(queryParams);

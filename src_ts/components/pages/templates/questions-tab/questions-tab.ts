@@ -56,7 +56,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
-  private readonly prevQueryParamsKey =  'QuestionsPrevParams';
+  private readonly prevQueryParamsKey = 'QuestionsPrevParams';
 
   constructor() {
     super();
@@ -306,7 +306,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
-   let prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    const prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
     if (!Object.keys(queryParams || {}).length && prevQueryParams) {
       queryParams = {...prevQueryParams};
       updateQueryParams(queryParams);

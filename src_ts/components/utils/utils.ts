@@ -55,11 +55,11 @@ export const getErrorText = (errors: GenericObject): string => {
 
 export const setDataOnSessionStorage = (key: string, data: any): void => {
   sessionStorage.setItem(key, JSON.stringify(data));
-}
+};
 
 export const getDataFromSessionStorage = (key: string): any => {
-  let data = sessionStorage.getItem(key);
-  if(data) {
+  const data = sessionStorage.getItem(key);
+  if (data) {
     try {
       return JSON.parse(data);
     } catch (err) {
@@ -67,4 +67,4 @@ export const getDataFromSessionStorage = (key: string): any => {
     }
   }
   return null;
-}
+};
