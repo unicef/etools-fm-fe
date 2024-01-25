@@ -41,13 +41,13 @@ import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
+import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
   @property() filtersInitialized = false;
-  @property() prevQueryParams!: EtoolsRouteQueryParam;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -56,12 +56,13 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
+  private readonly prevQueryParamsKey =  'QuestionsPrevParams';
 
   constructor() {
     super();
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
-      this.prevQueryParams = params;
+      setDataOnSessionStorage(this.prevQueryParamsKey, params);
       store
         .dispatch<AsyncEffect>(loadQuestions(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_QUESTIONS')}))
@@ -305,8 +306,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
-    if (!Object.keys(queryParams || {}).length && this.prevQueryParams) {
-      queryParams = {...this.prevQueryParams};
+   let prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    if (!Object.keys(queryParams || {}).length && prevQueryParams) {
+      queryParams = {...prevQueryParams};
       updateQueryParams(queryParams);
     }
   }
