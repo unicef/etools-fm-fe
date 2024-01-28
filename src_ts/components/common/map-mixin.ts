@@ -1,14 +1,13 @@
-import {Map, Marker} from 'leaflet';
 const TILE_LAYER: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
 const TILE_LAYER_LABELS: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
 const arcgisWebmapId = '71608a6be8984b4694f7c613d7048114'; // Default WebMap ID
 
-export interface IMarker extends Marker {
+export interface IMarker extends L.Marker {
   staticData?: any;
 }
 
 export class MapHelper {
-  map: Map | null = null;
+  map: L.Map | null = null;
   webmap!: GenericObject;
   staticMarkers: IMarker[] | null = null;
   dynamicMarker: IMarker | null = null;
@@ -79,7 +78,7 @@ export class MapHelper {
 
   setStaticMarkers(markersData: MarkerDataObj[]): void {
     this.removeStaticMarkers();
-    const markers: Marker[] = [];
+    const markers: L.Marker[] = [];
     markersData.forEach((data: MarkerDataObj) => {
       const marker: IMarker = this.createMarker(data);
       markers.push(marker);
@@ -101,7 +100,7 @@ export class MapHelper {
 
   addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
     this.markerClusters = (L as any).markerClusterGroup();
-    const markers: Marker[] = [];
+    const markers: L.Marker[] = [];
     let marker: IMarker;
     (markersData || []).forEach((mark: MarkerDataObj) => {
       marker = L.marker(mark.coords).bindPopup(`<b>${mark.popup}</b>`);
@@ -114,8 +113,8 @@ export class MapHelper {
       markers.push(marker);
       this.markerClusters.addLayer(marker);
     });
-    (this.map as Map).setMaxZoom(19);
-    (this.map as Map).addLayer(this.markerClusters);
+    (this.map as L.Map).setMaxZoom(19);
+    (this.map as L.Map).addLayer(this.markerClusters);
     this.staticMarkers = markers;
   }
 
@@ -129,7 +128,7 @@ export class MapHelper {
 
   removeStaticMarkers(): void {
     if (this.map && this.staticMarkers && this.staticMarkers.length) {
-      this.staticMarkers.forEach((marker: Marker) => marker.removeFrom(this.map as Map));
+      this.staticMarkers.forEach((marker: L.Marker) => marker.removeFrom(this.map as L.Map));
       this.staticMarkers = [];
     }
   }
@@ -138,7 +137,7 @@ export class MapHelper {
     const markers: IMarker[] = this.staticMarkers || [];
     const index: number = markers.findIndex(({staticData}: any) => staticData && staticData.id === dataId);
     if (~index && this.staticMarkers) {
-      this.staticMarkers[index].removeFrom(this.map as Map);
+      this.staticMarkers[index].removeFrom(this.map as L.Map);
       this.staticMarkers.splice(index, 1);
     }
   }
@@ -185,12 +184,12 @@ export class MapHelper {
     }
   }
 
-  invalidateSize(): Map | null {
+  invalidateSize(): L.Map | null {
     return this.map && this.map.invalidateSize();
   }
 
   private createMarker(data: MarkerDataObj): IMarker {
-    const marker: IMarker = L.marker(data.coords).addTo(this.map as Map);
+    const marker: IMarker = L.marker(data.coords).addTo(this.map as L.Map);
     marker.staticData = data.staticData;
     if (data.popup) {
       marker.bindPopup(`<b>${data.popup}</b>`);

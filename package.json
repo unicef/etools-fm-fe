@@ -36,7 +36,6 @@
     "@unicef-polymer/etools-types": "^1.11.17",
     "@unicef-polymer/etools-unicef": "^1.0.0-rc.57",
     "@unicef-polymer/etools-utils": "^2.0.0-rc.6",
-    "@webcomponents/webcomponentsjs": "^2.8.0",
     "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "esri-leaflet": "^3.0.8",
@@ -51,8 +50,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "relative-deps": "^1.0.7",
-    "reselect": "^4.1.6",
-    "web-animations-js": "^2.3.2"
+    "reselect": "^4.1.6"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",

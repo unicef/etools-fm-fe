@@ -38,7 +38,7 @@ export class PageFooter extends LitElement {
 
         #unicef-logo img {
           height: 28px;
-          width: 118px;
+          width: 115px;
         }
 
         .footer-link {
