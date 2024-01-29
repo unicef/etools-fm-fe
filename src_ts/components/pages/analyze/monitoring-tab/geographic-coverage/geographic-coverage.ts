@@ -7,7 +7,6 @@ import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {MapHelper} from '../../../../common/map-mixin';
-import {LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
@@ -18,7 +17,7 @@ import {geographicCoverageStyles} from './geographic-coverage.styles';
 import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {equals, clone} from 'ramda';
 
-const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505].reverse() as LatLngTuple;
+const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505].reverse() as L.LatLngTuple;
 
 @customElement('geographic-coverage')
 export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
@@ -26,12 +25,12 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   @property() loading = false;
   @query('#geomap') private mapElement!: HTMLElement;
   lastDispatchedSelectedOptions: string[] = [];
-  private polygons: Polygon[] = [];
+  private polygons: L.Polygon[] = [];
   private mapHelper!: MapHelper;
   private geographicCoverageUnsubscribe!: Unsubscribe;
 
   private _invalidMapSize = false;
-  private mapTarget: LatLngTuple = DEFAULT_COORDINATES;
+  private mapTarget: L.LatLngTuple = DEFAULT_COORDINATES;
 
   @property({type: Array})
   get invalidMapSize(): boolean {
@@ -95,7 +94,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     this.dispatchGeographicCoverageLoading();
   }
 
-  getPolygonOptions(geographicCoverageItem: GeographicCoverage): PolylineOptions {
+  getPolygonOptions(geographicCoverageItem: GeographicCoverage): L.PolylineOptions {
     let color = 'grey';
     if (geographicCoverageItem.completed_visits == 0) {
       color = 'var(--mark-no-visits-color)';
@@ -155,15 +154,15 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   }
 
   private drawPolygons(location: GeographicCoverage): void {
-    const polygonOptions: PolylineOptions = this.getPolygonOptions(location);
+    const polygonOptions: L.PolylineOptions = this.getPolygonOptions(location);
     const reversedCoordinates: CoordinatesArray[] = this.getReversedCoordinates(location);
-    const polygon: Polygon = L.polygon(reversedCoordinates, polygonOptions);
+    const polygon: L.Polygon = L.polygon(reversedCoordinates, polygonOptions);
     polygon.addTo(this.mapHelper.map!);
     this.polygons.push(polygon);
   }
 
   private clearMap(): void {
-    this.polygons.forEach((polygon: Polygon) => polygon.removeFrom(this.mapHelper.map!));
+    this.polygons.forEach((polygon: L.Polygon) => polygon.removeFrom(this.mapHelper.map!));
     this.polygons.length = 0;
   }
 

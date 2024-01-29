@@ -45,7 +45,6 @@ const copyConfig = {
       src: 'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
       dest: 'src/node_modules/leaflet.markercluster/dist'
     },
-    { src: 'images', dest: 'src' },
     { src: 'assets', dest: 'src' },
     { src: 'index.html', dest: 'src' }
   ]

@@ -4,7 +4,6 @@ import {template} from './location-sites-widget.tpl';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.selectors';
-import {LatLngTuple} from 'leaflet';
 import {IMarker, MapHelper} from '../map-mixin';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
 import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
@@ -18,7 +17,7 @@ import {elevationStyles} from '../../styles/elevation-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {leafletStyles} from '../../styles/leaflet-styles';
 
-const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505];
 
 @customElement('location-sites-widget')
 export class LocationSitesWidgetComponent extends LitElement {
@@ -34,7 +33,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
 
-  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
+  protected defaultMapCenter: L.LatLngTuple = DEFAULT_COORDINATES;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private sitesUnsubscribe!: Unsubscribe;
@@ -300,7 +299,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   }
 
   private setInitialMapView(): void {
-    const reversedCoords: LatLngTuple = [...this.defaultMapCenter].reverse() as LatLngTuple;
+    const reversedCoords: L.LatLngTuple = [...this.defaultMapCenter].reverse() as L.LatLngTuple;
     const zoom = 6;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }
