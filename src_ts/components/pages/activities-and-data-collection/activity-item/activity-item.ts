@@ -52,6 +52,7 @@ import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
 import {loadActionPoints} from '../../../../redux/effects/action-points.effects';
 import {AnyObject} from '@unicef-polymer/etools-types';
+import {hasPermission, Permissions} from '../../../../config/permissions';
 
 store.addReducers({activityDetails});
 
@@ -184,8 +185,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             ${translate('ACTIVITY_DETAILS.EXPORT')}
           </etools-button>
 
-          <sl-dropdown id="pdMenuBtn">
-            <etools-icon-button label="export" name="more-vert" slot="trigger"> </etools-icon-button>
+          <sl-dropdown id="pdMenuBtn" ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}">
+            <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
             <sl-menu>
               <sl-menu-item tracker="Duplicate Activity" @click="${this.onDuplicateClick}"
                 >${translate('DUPLICATE')}</sl-menu-item
