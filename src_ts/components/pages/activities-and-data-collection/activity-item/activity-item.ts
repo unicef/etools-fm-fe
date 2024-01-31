@@ -184,7 +184,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             ${translate('ACTIVITY_DETAILS.EXPORT')}
           </etools-button>
 
-          <sl-dropdown id="pdExportMenuBtn">
+          <sl-dropdown id="pdMenuBtn">
             <etools-icon-button label="export" name="more-vert" slot="trigger"> </etools-icon-button>
             <sl-menu>
               <sl-menu-item tracker="Duplicate Activity" @click="${this.onDuplicateClick}"
