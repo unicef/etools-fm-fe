@@ -1,5 +1,5 @@
 import {css, LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
@@ -19,6 +19,7 @@ import {activeLanguageSelector} from '../../../../../redux/selectors/active-lang
 import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 import {get as getTranslation} from 'lit-translate';
+import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
@@ -47,6 +48,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     {value: 5, display_name: '5'},
     {value: 7, display_name: '7'}
   ];
+
+  @query('#orderInput') orderInput!: EtoolsInput;
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
@@ -169,6 +172,14 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     if (!validateRequiredFields(this)) {
       return;
     }
+    if(this.orderInput) {
+      if (String(this.orderInput.value) !== String(parseInt(this.orderInput.value as string))) {
+        this.orderInput.errorMessage = (getTranslation('INVALID_NUMBER'));
+        this.orderInput.invalid = true;
+        return;
+      }
+    }
+
     const scaleErrors: GenericObject[] | null = this.validateScales();
     if (scaleErrors) {
       const currentErrors: GenericObject = this.errors || {};

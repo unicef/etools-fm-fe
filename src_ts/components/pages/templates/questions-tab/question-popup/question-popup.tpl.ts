@@ -2,6 +2,7 @@ import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit/directives/repeat.js';
@@ -149,7 +150,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           ></etools-dropdown>
         </div>
 
-        <div class="checkboxes">
+        <div class="layout horizontal wrap center">
           <etools-checkbox
             ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_hact}"
@@ -164,6 +165,21 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
           </etools-checkbox>
+          <div>
+            <etools-input
+                  id="orderInput"
+                  class="w25"
+                  label=${translate('QUESTIONS.LABELS.ORDER')}
+                  .value="${this.editedData.order || 1}"
+                  allowed-pattern="[0-9]"
+                  maxlength="4"
+                  ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+                  required
+                  @focus="${() => {this.orderInput.invalid = false}}"
+                  @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
+              >
+              </etools-input>
+          </div>
         </div>
 
         <div class="layout horizontal">
