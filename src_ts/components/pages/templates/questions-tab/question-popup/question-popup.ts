@@ -172,9 +172,9 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     if (!validateRequiredFields(this)) {
       return;
     }
-    if(this.orderInput) {
+    if (this.orderInput) {
       if (String(this.orderInput.value) !== String(parseInt(this.orderInput.value as string))) {
-        this.orderInput.errorMessage = (getTranslation('INVALID_NUMBER'));
+        this.orderInput.errorMessage = getTranslation('INVALID_NUMBER');
         this.orderInput.invalid = true;
         return;
       }

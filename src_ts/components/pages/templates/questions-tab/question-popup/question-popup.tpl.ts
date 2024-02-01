@@ -167,18 +167,20 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           </etools-checkbox>
           <div>
             <etools-input
-                  id="orderInput"
-                  class="w25"
-                  label=${translate('QUESTIONS.LABELS.ORDER')}
-                  .value="${this.editedData.order || 1}"
-                  allowed-pattern="[0-9]"
-                  maxlength="4"
-                  ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-                  required
-                  @focus="${() => {this.orderInput.invalid = false}}"
-                  @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
-              >
-              </etools-input>
+              id="orderInput"
+              class="w25"
+              label=${translate('QUESTIONS.LABELS.ORDER')}
+              .value="${this.editedData.order || 1}"
+              allowed-pattern="[0-9]"
+              maxlength="4"
+              ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+              required
+              @focus="${() => {
+                this.orderInput.invalid = false;
+              }}"
+              @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
+            >
+            </etools-input>
           </div>
         </div>
 
