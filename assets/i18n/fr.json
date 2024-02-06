@@ -677,6 +677,9 @@
   "ACTION_POINT_REMINDER": "Notant qu'il n'y a pas de points d'action soulevés, n'oubliez pas d'en ajouter avant de continuer si nécessaire.",
   "CONTINUE": "Continuer",
   "INVALID_NUMBER": "Numéro invalide",
+  "DUPLICATE": "Dupliquer",
+  "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",
