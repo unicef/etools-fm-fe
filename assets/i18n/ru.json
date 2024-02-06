@@ -347,7 +347,8 @@
       "ANSWER_TYPE": "Localized Answer Type",
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
-      "SCALE_SIZE": "Localized Scale Size"
+      "SCALE_SIZE": "Localized Scale Size",
+      "ORDER": "Order"
     },
     "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
@@ -672,6 +673,7 @@
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Вы собираетесь завершить визит, в котором есть пункты “Не контролируется”. При необходимости вы можете отклонить их, но в противном случае вы уверены, что хотите продолжить работу с пунктами, помеченными как “Не контролируется” ?",
   "ACTION_POINT_REMINDER": "Отмечая, что нет никаких пунктов действий, пожалуйста, не забудьте добавить их перед продолжением, если это необходимо.",
   "CONTINUE": "Продолжить",
+  "INVALID_NUMBER": "Invalid number",
   "DUPLICATE": "Duplicate",
   "ERROR_AT_SAVING_DUPLICATE": "Ошибка при сохранении дубликата",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Нет данных о деятельности для дублирования",

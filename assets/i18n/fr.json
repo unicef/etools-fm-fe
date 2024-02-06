@@ -350,7 +350,8 @@
       "ANSWER_TYPE": "Type de réponse",
       "IS_HACT": "Compte pour HACT",
       "IS_ACTIVE": "C'est actif",
-      "SCALE_SIZE": "Taille de l'échelle"
+      "SCALE_SIZE": "Taille de l'échelle",
+      "ORDER": "Ordre"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
     "COLUMNS": {
@@ -675,6 +676,7 @@
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Vous êtes sur le point de terminer une visite qui comporte des éléments “non contrôlés”. Vous pouvez les rejeter si nécessaire. Sinon, êtes-vous sûr de vouloir poursuivre avec les éléments marqués comme “Non contrôlés” ?",
   "ACTION_POINT_REMINDER": "Notant qu'il n'y a pas de points d'action soulevés, n'oubliez pas d'en ajouter avant de continuer si nécessaire.",
   "CONTINUE": "Continuer",
+  "INVALID_NUMBER": "Numéro invalide",
   "DUPLICATE": "Dupliquer",
   "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
