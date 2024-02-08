@@ -173,11 +173,14 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          
           <sl-dropdown id="pdMenuBtn" ?hidden="${this.hideMoreActionsButton()}">
             <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
             <sl-menu>
-              <sl-menu-item tracker="Duplicate Activity" ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}" @click="${this.onDuplicateClick}">
+              <sl-menu-item
+                tracker="Duplicate Activity"
+                ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+                @click="${this.onDuplicateClick}"
+              >
                 ${translate('DUPLICATE')}
               </sl-menu-item>
               <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
@@ -328,7 +331,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
       }
     });
-    ['location', 'location_site', 'tpm_partner', 'visit_lead',].forEach((key) => {
+    ['location', 'location_site', 'tpm_partner', 'visit_lead'].forEach((key) => {
       if (this.activityDetails![key as keyof IActivityDetails]) {
         // @ts-ignore: Object is possibly 'null'
         dataToDuplicate[key] = this.activityDetails[key].id;
@@ -421,10 +424,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   }
 
   hideMoreActionsButton() {
-    if(!this.activityDetails?.id) {
+    if (!this.activityDetails?.id) {
       return true;
     }
-    return (!hasPermission(Permissions.CREATE_VISIT) && this.hideExportButton());
+    return !hasPermission(Permissions.CREATE_VISIT) && this.hideExportButton();
   }
 
   export(e: any): void {
