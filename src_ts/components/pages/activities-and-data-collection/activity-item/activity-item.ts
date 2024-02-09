@@ -181,6 +181,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
                 ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
                 @click="${this.onDuplicateClick}"
               >
+                <etools-icon slot="prefix" name="content-copy"></etools-icon>              
                 ${translate('DUPLICATE')}
               </sl-menu-item>
               <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
