@@ -1,141 +1,261 @@
 :root,
 :host {
-        --green-color: #009A54;
-        --green-color-darker: #007D54;
-        --module-color: #008080;
-        --primary-color: #0099ff;
-        --primary-background-color: #FFFFFF;
-        --secondary-background-color: #eeeeee;
+  --sl-font-mono: Roboto, Noto, sans-serif;
+  --sl-font-sans: Roboto, Noto, sans-serif;
+  --sl-font-serif: Roboto, Noto, sans-serif;
 
-        --primary-text-color: rgba(0, 0, 0, 0.87);
-        --secondary-text-color: rgba(0, 0, 0, 0.54);
-        --gray-mid: #9d9d9d;
-        --gray-light-background: #E7E7E7;
+  --green-color: #009A54;
+  --green-color-darker: #007D54;
+  --module-color: #008080;
+  --primary-color: #0099ff;
+  --primary-background-color: #FFFFFF;
+  --secondary-background-color: #eeeeee;
 
-        --header-color: #ffffff;
-        --header-bg-color: var(--dark-theme-background-color);
-        --nonprod-header-color: #a94442;
-        --nonprod-text-warn-color: #e6e600;
+  --primary-text-color: rgba(0, 0, 0, 0.87);
+  --secondary-text-color: rgba(0, 0, 0, 0.54);
+  --gray-mid: #9d9d9d;
+  --gray-light-background: #E7E7E7;
 
-        --light-divider-color: rgba(0, 0, 0, 0.12);
-        --dark-divider-color: rgba(0, 0, 0, 0.4);
-        --darker-divider-color: var(--medium-primary-text-color);
+  --header-color: #ffffff;
+  --header-bg-color: var(--dark-theme-background-color);
+  --nonprod-header-color: #a94442;
+  --nonprod-text-warn-color: #e6e600;
 
-        --dark-icon-color: rgba(0, 0, 0, 0.65);
-        --light-icon-color: rgba(255, 255, 255, 1);
+  --light-divider-color: rgba(0, 0, 0, 0.12);
+  --dark-divider-color: rgba(0, 0, 0, 0.4);
+  --darker-divider-color: var(--medium-primary-text-color);
 
-        --side-bar-scrolling: visible;
+  --dark-icon-color: rgba(0, 0, 0, 0.65);
+  --light-icon-color: rgba(255, 255, 255, 1);
 
-        --success-color: #72c300;
-        --error-color: #ea4022;
+  --side-bar-scrolling: visible;
 
-        --red-color: #FF0000;
+  --success-color: #72c300;
+  --error-color: #ea4022;
 
-        --primary-shade-of-green: #1A9251;
-        --primary-shade-of-red: #E32526;
-        --primary-shade-of-orange: orange;
-        --reject-color: #88304E;
-        --note-color: #FF9044;
+  --red-color: #FF0000;
 
-        --paper-input-container-label: {
-          font-weight: 600;
-        };
-        --primary-color-hover: #027ac9;
-        --default-btn-bg-color: rgba(0, 0, 0, 0.45);
-        --default-btn-bg-hover-color: rgba(0, 0, 0, 0.55);
+  --primary-shade-of-green: #1A9251;
+  --primary-shade-of-red: #E32526;
+  --primary-shade-of-orange: orange;
+  --reject-color: #88304E;
+  --note-color: #FF9044;
 
-        --sl-color-primary-600: var(--primary-color);
-        --sl-color-primary-500: var(--primary-color-hover);
-        --sl-color-success-600: var(--green-color);
-        --sl-color-success-500: var(--green-color-darker);
-        --sl-color-neutral-600: var(--default-btn-bg-color);
-        --sl-color-neutral-500: var(--default-btn-bg-hover-color);
-        --sl-color-danger-600: var(--error-color);
+  --primary-color-hover: #027ac9;
+  --default-btn-bg-color: rgba(0, 0, 0, 0.45);
+  --default-btn-bg-hover-color: rgba(0, 0, 0, 0.55);
 
-        --paper-checkbox-checked-color: var(--primary-color);
-        --paper-checkbox-unchecked-color: var(--secondary-text-color);
-        --paper-radio-button-checked-color: var(--primary-color);
-        --paper-radio-button-unchecked-color: var(--secondary-text-color);
+  --etools-font-size-zoom: 1;
+  --etools-font-size-10: calc(10px * var(--etools-font-size-zoom));
+  --etools-font-size-11: calc(11px * var(--etools-font-size-zoom));
+  --etools-font-size-12: calc(12px * var(--etools-font-size-zoom));
+  --etools-font-size-13: calc(13px * var(--etools-font-size-zoom));
+  --etools-font-size-14: calc(14px * var(--etools-font-size-zoom));
+  --etools-font-size-15: calc(15px * var(--etools-font-size-zoom));
+  --etools-font-size-16: calc(16px * var(--etools-font-size-zoom));
+  --etools-font-size-18: calc(18px * var(--etools-font-size-zoom));
+  --etools-font-size-20: calc(20px * var(--etools-font-size-zoom));
+  --etools-font-size-22: calc(22px * var(--etools-font-size-zoom));
+  --etools-font-size-24: calc(24px * var(--etools-font-size-zoom));
+  --etools-font-size-28: calc(28px * var(--etools-font-size-zoom));
+  --etools-font-size-30: calc(30px * var(--etools-font-size-zoom));
+  --etools-font-size-36: calc(36px * var(--etools-font-size-zoom));
+  --etools-font-size-48: calc(48px * var(--etools-font-size-zoom));
+  --etools-font-size-72: calc(72px * var(--etools-font-size-zoom));
 
-        --esmm-external-wrapper: {
-          width: 100%;
-          margin: 0;
-        };
+  --sl-font-size-2x-small: var(--etools-font-size-10, 10px);
+  --sl-font-size-x-small: var(--etools-font-size-12, 12px);
+  --sl-font-size-small: var(--etools-font-size-14, 14px);
+  --sl-font-size-medium: var(--etools-font-size-16, 16px);
+  --sl-font-size-large: var(--etools-font-size-20, 20px);
+  --sl-font-size-x-large: var(--etools-font-size-24, 24px);
+  --sl-font-size-2x-large: var(--etools-font-size-36, 36px);
+  --sl-font-size-3x-large: var(--etools-font-size-48, 48px);
+  --sl-font-size-4x-large: var(--etools-font-size-72, 72px);
 
-        --ternary-background-color: var(--paper-indigo-800);
-        --accent-color: var(--paper-light-blue-a200);
-        --dark-primary-text-color: rgba(0, 0, 0, 0.87);
-        --light-primary-text-color: rgba(255, 255, 255, 1);
-        --dark-secondary-text-color: rgba(0, 0, 0, 0.54);
-        --light-secondary-text-color: rgba(255, 255, 255, 0.7);
-        --dark-disabled-text-color: rgba(0, 0, 0, 0.38);
-        --light-disabled-text-color: rgba(255, 255, 255, 0.5);
-        --dark-disabled-icon-color: rgba(0, 0, 0, 0.38);
-        --light-disabled-icon-color: rgba(255, 255, 255, 0.5);
-        --dark-divider-color: rgba(0, 0, 0, 0.12);
-        --dark-hover-color: rgba(0, 0, 0, 0.01);
-        --light-hover-color: rgba(255, 255, 255, 0.01);
-        --dark-ink-color: rgba(0, 0, 0, 0.3);
-        --light-ink-color: rgba(255, 255, 255, 0.30);
-        --light-theme-background-color: var(--paper-grey-50);
-        --light-theme-content-color: #FFFFFF;
-        --dark-theme-background-color: #233944;
+  --sl-input-background-color-disabled: inherit;
+  --sl-input-background-color-focus: inherit;
+  --sl-input-height-small: 26px;
+  --sl-input-color: rgba(0, 0, 0, 0.87);
+  --sl-input-label-font-size-small: var(--etools-font-size-12, 12px);
+  --sl-input-label-color: var(--secondary-text-color);
+
+  --sl-color-primary-600: var(--primary-color);
+  --sl-color-primary-500: var(--primary-color-hover);
+  --sl-color-success-600: var(--green-color);
+  --sl-color-success-500: var(--green-color-darker);
+  --sl-color-neutral-600: var(--default-btn-bg-color);
+  --sl-color-neutral-500: var(--default-btn-bg-hover-color);
+  --sl-color-danger-600: var(--error-color);
+
+  --paper-checkbox-checked-color: var(--primary-color);
+  --paper-checkbox-unchecked-color: var(--secondary-text-color);
+  --paper-radio-button-checked-color: var(--primary-color);
+  --paper-radio-button-unchecked-color: var(--secondary-text-color);
+
+  --ternary-background-color: var(--paper-indigo-800);
+  --accent-color: var(--paper-light-blue-a200);
+  --dark-primary-text-color: rgba(0, 0, 0, 0.87);
+  --light-primary-text-color: rgba(255, 255, 255, 1);
+  --dark-secondary-text-color: rgba(0, 0, 0, 0.54);
+  --light-secondary-text-color: rgba(255, 255, 255, 0.7);
+  --dark-disabled-text-color: rgba(0, 0, 0, 0.38);
+  --light-disabled-text-color: rgba(255, 255, 255, 0.5);
+  --dark-disabled-icon-color: rgba(0, 0, 0, 0.38);
+  --light-disabled-icon-color: rgba(255, 255, 255, 0.5);
+  --dark-divider-color: rgba(0, 0, 0, 0.12);
+  --dark-hover-color: rgba(0, 0, 0, 0.01);
+  --light-hover-color: rgba(255, 255, 255, 0.01);
+  --dark-ink-color: rgba(0, 0, 0, 0.3);
+  --light-ink-color: rgba(255, 255, 255, 0.30);
+  --light-theme-background-color: var(--paper-grey-50);
+  --light-theme-content-color: #FFFFFF;
+  --dark-theme-background-color: #233944;
 
 
-        --partnership-management-color: var(--primary-background-color);
-        --work-planning-color: var(--paper-light-green-500);
-        --field-monitering-color: var(--paper-green-500);
+  --partnership-management-color: var(--primary-background-color);
+  --work-planning-color: var(--paper-light-green-500);
+  --field-monitering-color: var(--paper-green-500);
 
-        --title-toolbar-secondary-text-color : #C7CED2;
+  --title-toolbar-secondary-text-color : #C7CED2;
 
-        --toolbar-height: 60px;
+  --toolbar-height: 60px;
 
-        --gray-06: rgba(0,0,0,.06);
-        --gray-08: rgba(0,0,0,.08);
-        --gray-lighter: rgba(0,0,0,.12);
-        --gray-20: rgba(0,0,0,.20);
-        --gray-28: rgba(0,0,0,.28);
-        --gray-light: rgba(0,0,0,.38);
-        --gray-50: rgba(0,0,0,.50);
-        --gray-mid: rgba(0,0,0,.54);
-        --gray-mid-dark: rgba(0,0,0,.70);
-        --gray-dark: rgba(0,0,0,.87);
-        --gray-darkest: #000000;
+  --gray-06: rgba(0,0,0,.06);
+  --gray-08: rgba(0,0,0,.08);
+  --gray-lighter: rgba(0,0,0,.12);
+  --gray-20: rgba(0,0,0,.20);
+  --gray-28: rgba(0,0,0,.28);
+  --gray-light: rgba(0,0,0,.38);
+  --gray-50: rgba(0,0,0,.50);
+  --gray-mid: rgba(0,0,0,.54);
+  --gray-mid-dark: rgba(0,0,0,.70);
+  --gray-dark: rgba(0,0,0,.87);
+  --gray-darkest: #000000;
 
-        --gray-border: rgba(0,0,0,.15);
+  --gray-border: rgba(0,0,0,.15);
 
-        /*--module-primary: #00AEEF;*/
-        --module-primary: #0099ff;
-        /*--module-primary-dark: #4893ff;*/
+  /*--module-primary: #00AEEF;*/
+  --module-primary: #0099ff;
+  /*--module-primary-dark: #4893ff;*/
 
-        --module-sec-blue: #0061e9;
-        --module-sec-green: #009a54;
-        --module-sec-lightgreen: #72c300;
-        --module-sec-gray: #233944;
+  --module-sec-blue: #0061e9;
+  --module-sec-green: #009a54;
+  --module-sec-lightgreen: #72c300;
+  --module-sec-gray: #233944;
 
-        --module-error: #EA4022;
-        --module-error-2: #f1B8AE;
-        --module-warning: #FF9044;
-        --module-warning-2: #FFC8a2;
-        --module-success: #72c300;
-        --module-success-2: #bef078;
-        --module-info: #CEBC06;
-        --module-info-2: #FFF176;
+  --module-error: #EA4022;
+  --module-error-2: #f1B8AE;
+  --module-warning: #FF9044;
+  --module-warning-2: #FFC8a2;
+  --module-success: #72c300;
+  --module-success-2: #bef078;
+  --module-info: #CEBC06;
+  --module-info-2: #FFF176;
 
-        --module-planned: rgba(250,237,119,.6);
-        --module-approved: rgba(141,198,63,.45);
-        --module-submitted: rgba(206,188,6,.6);
-        --module-sent: rgba(30,134,191,.45);
-        --module-completed: rgba(141,198,63,1);
+  --module-planned: rgba(250,237,119,.6);
+  --module-approved: rgba(141,198,63,.45);
+  --module-submitted: rgba(206,188,6,.6);
+  --module-sent: rgba(30,134,191,.45);
+  --module-completed: rgba(141,198,63,1);
 
-        /* sl-tooltip styles */
-        --sl-tooltip-background-color: rgba(97, 97, 97, 0.9);
+  /* sl-tooltip styles */
+  --sl-tooltip-background-color: rgba(97, 97, 97, 0.9);
 
-        /* etools-dialog styles */
-        --etools-dialog-primary-color: #ffffff;
-        --etools-dialog-contrast-text-color: var(--primary-text-color);
+  /* etools-dialog styles */
+  --etools-dialog-primary-color: #ffffff;
+  --etools-dialog-contrast-text-color: var(--primary-text-color);
 
-        /* global loading box content */
-        --etools-loading-border-color: rgba(255, 255, 255, 0.12);
-        --etools-loading-shadow-color: #333333;
+  /* global loading box content */
+  --etools-loading-border-color: rgba(255, 255, 255, 0.12);
+  --etools-loading-shadow-color: #333333;
+}
+
+
+
+html.contrastSoft {
+  --primary-color: #0077C7;
+  --primary-background-color: #ffffff;
+  --secondary-background-color: #eeeeee;
+  --medium-theme-background-color: #eeeeee;
+  --light-theme-background-color: #eeeeee;
+
+  --primary-text-color: #000000;
+  --secondary-text-color: #000000;
+  --default-btn-bg-color: #000000;
+
+  --header-color: #ffffff;
+  --header-bg-color: #233944;
+  --header-icon-color: #ffffff;
+  --nonprod-header-color: #a94442;
+  --nonprod-text-warn-color: #fff;
+
+  --expand-icon-color: #000000;
+
+  --main-border-color: #000000;
+  --light-divider-color: #000000;
+  --light-hex-divider-color: #000000;
+  --dark-divider-color: #000000;
+  --darker-divider-color: #000000;
+
+  --dark-icon-color: #000000;
+  --light-icon-color: #ffffff;
+
+  --side-bar-scrolling: visible;
+
+  --success-color: #72c300;
+  --error-color: #ea4022;
+
+  --add-button-color: var(--success-color);
+  --icon-delete-color: var(--error-color);
+
+  --primary-shade-of-green: #1a9251;
+  --primary-shade-of-red: #e32526;
+  --primary-shade-of-orange: orange;
+  --light-hex-divider-color: #000000;
+
+  --info-color: #cebc06;
+  --light-info-color: #fff176;
+  --lightest-info-color: #fef9cd;
+  --warning-background-color: #fff3cd;
+  --warning-color: #856404;
+  --warning-border-color: #ffeeba;
+
+  --error-box-heading-color: var(--error-color);
+  --error-box-bg-color: #f2dede;
+  --error-box-border-color: #ebccd1;
+  --error-box-text-color: var(--error-color);
+  --primary-color-hover: #0063A5;
+  --default-btn-bg-hover-color: #000000;
+  --error-hover-color: #d1391e;
+
+  --sl-color-primary-600: var(--primary-color);
+  --sl-color-primary-500: var(--primary-color-hover);
+  --sl-color-success-600: var(--ternary-color);
+  --sl-color-neutral-600: var(--default-btn-bg-color);
+  --sl-color-neutral-500: var(--default-btn-bg-hover-color);
+  --sl-color-danger-600: var(--error-color);
+  --sl-color-danger-500: var(--error-hover-color);
+
+  --gray-06: rgba(0, 0, 0, 0.06);
+  --gray-20: rgba(0, 0, 0, 0.2);
+  --gray-50: rgba(0, 0, 0, 0.5);
+  --gray-light: rgba(0, 0, 0, 0.38);
+
+  --ecp-header-color: var(--primary-text-color);
+
+  --etools-dialog-primary-color: #ffffff;
+  --etools-dialog-contrast-text-color: var(--primary-text-color);
+  --sl-input-color: #000000;
+  --sl-tooltip-background-color: #000000;
+  --etools-table-secondary-text-color: #000000;
+  --etools-table-rows-border-color: #000000;
+  --sl-input-label-color: #000000;
+}
+
+html.readableText {
+  --sl-font-mono: Arial,Helvetica,sans-serif!important;
+  --sl-font-sans: Arial,Helvetica,sans-serif!important;
+  --sl-font-serif: Arial,Helvetica,sans-serif!important;
+  font-family: var(--sl-font-sans);
 }

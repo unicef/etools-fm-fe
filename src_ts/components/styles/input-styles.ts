@@ -46,7 +46,7 @@ export const InputStyles: TemplateResult = html`
 
       --paper-input-container-input: {
         display: block !important;
-        font-size: 15px;
+        font-size: var(--etools-font-size-15, 15px);
         box-sizing: border-box;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -69,7 +69,7 @@ export const InputStyles: TemplateResult = html`
         transform: none;
         top: -21px;
         width: 100%;
-        font-size: 12px;
+        font-size: var(--etools-font-size-12, 12px);
       }
 
       --etools-currency-container-label-floating: {
@@ -80,11 +80,11 @@ export const InputStyles: TemplateResult = html`
         transform: none;
         top: -21px;
         width: 100%;
-        font-size: 12px;
+        font-size: var(--etools-font-size-12, 12px);
       }
 
       --paper-input-container-shared-input-style: {
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         width: 100%;
       }
 
@@ -249,7 +249,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-checkable-input {
       --etools-checkable-input-label: {
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         font-weight: 400;
         line-height: 21px;
       }

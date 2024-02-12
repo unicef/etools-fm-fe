@@ -25,7 +25,7 @@ export const monitoringActivityStyles: CSSResult = css`
 
   .overall-completed-label {
     font-weight: 500;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     line-height: 16px;
     align-self: flex-end;
     margin: 1%;

@@ -14,7 +14,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
       ${FormBuilderCardStyles} .helper-text {
         padding: 0 12px;
         margin-top: -6px;
-        font-size: 12px;
+        font-size: var(--etools-font-size-12, 12px);
       }
 
       etools-input {

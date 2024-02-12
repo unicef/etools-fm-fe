@@ -25,7 +25,7 @@ export const pageHeaderStyles: CSSResult = css`
   .titlebar {
     display: flex;
     flex: 1;
-    font-size: 28px;
+    font-size: var(--etools-font-size-28, 28px);
     font-weight: 300;
   }
 
@@ -48,7 +48,7 @@ export const pageHeaderStyles: CSSResult = css`
   .envWarning {
     color: var(--header-color);
     font-weight: 700;
-    font-size: 18px;
+    font-size: var(--etools-font-size-18, 18px);
     line-height: 20px;
   }
 

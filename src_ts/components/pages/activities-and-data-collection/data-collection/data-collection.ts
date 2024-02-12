@@ -285,7 +285,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         }
 
         .title-description {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
           font-weight: normal;
           line-height: 30px;
         }

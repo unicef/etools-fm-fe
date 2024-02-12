@@ -89,29 +89,18 @@ Can be accessed at ./LICENSE.txt
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
-      /*@font-face {*/
-        /*font-family: 'Pacifico';*/
-        /*font-style: normal;*/
-        /*font-weight: 400;*/
-        /*src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');*/
-        /*!* THe browser draws the text immediately in the fallback font if the font*/
-           /*isn't loaded, then swaps it with the webfont when it eventually loads*/
-           /*See: https://developers.google.com/web/updates/2016/02/font-display*/
-        /**!*/
-        /*font-display: swap;*/
-      /*}*/
-
       body {
         margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        font-size: 14px;
+        font-family: var(--sl-font-sans);
+        font-size: var(--etools-font-size-14, 14px);
         font-weight: 400;
         line-height: 1.5;
         min-height: 100vh;
-        background-color: #eeeeee;
-        color: rgba(0, 0, 0, 0.87);
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
         -webkit-font-smoothing: antialiased;
       }
+
       * {
         outline: none;
       }
@@ -157,16 +146,6 @@ Can be accessed at ./LICENSE.txt
         margin-left: 0.2cm;
         margin-right: 0.2cm;
         background-color: #fff;
-      }
-
-      /* TODO: move in assets. */
-      :root {
-        --sl-input-background-color-disabled: inherit;
-        --sl-input-background-color-focus: inherit;
-        --sl-input-height-small: 26px;
-        --sl-font-sans: 'Roboto', 'Noto', sans-serif;
-        --sl-input-color: rgba(0, 0, 0, 0.87);
-        --sl-input-label-font-size-small: 12px;
       }
     </style>
     <link rel="preload" as="image" href="./assets/images/etools-logo-color-white.svg" />

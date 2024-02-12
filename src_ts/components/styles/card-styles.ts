@@ -19,11 +19,11 @@ export const CardStyles: CSSResult = css`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-size: var(--etools-font-size-18, 18px);
   }
 
   .card-title-box .card-title.counter {
-    font-size: 20px;
+    font-size: var(--etools-font-size-20, 20px);
     font-weight: 500;
   }
 
@@ -113,7 +113,7 @@ export const CardStyles: CSSResult = css`
   }
 
   .row-details-content {
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
     padding-right: 100px;
   }
 
@@ -141,7 +141,7 @@ export const CardStyles: CSSResult = css`
 
   .remove-title {
     padding: 16px 25px 15px;
-    font-size: 17px;
+    font-size: var(--etools-font-size-16, 16px);
     color: rgba(0, 0, 0, 0.87);
     font-weight: 500;
     line-height: 28px;

@@ -3,6 +3,7 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
 import './organizations-dropdown';
@@ -241,6 +242,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             @click="${this.refresh}"
           >
           </etools-icon-button>
+
+          <etools-accesibility></etools-accesibility>
         </div>
       </app-toolbar>
     `;
