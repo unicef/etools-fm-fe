@@ -73,7 +73,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         .status-header {
           margin-left: 8px;
           font-weight: bold;
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
           color: var(--secondary-text-color);
         }
         .icon-wrapper etools-icon {
@@ -81,7 +81,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           border-radius: 50%;
           text-align: center;
           padding: 2px;
-          --etools-icon-font-size: 18px;
+          --etools-icon-font-size: var(--etools-font-size-18, 18px);
         }
 
         .icon-wrapper.autorenew etools-icon[name='autorenew'] {

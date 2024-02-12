@@ -33,7 +33,7 @@ export class EntriesList extends LitElement {
           box-shadow: inset 0 -1px 0 var(--light-divider-color);
         }
         .entries-header {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
           font-weight: 500;
           color: var(--secondary-text-color);
           background-color: var(--secondary-background-color);
