@@ -124,11 +124,12 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       css`
         .refresh-button {
           color: var(--header-color);
-          margin-right: 10px;
+          margin-inline-end: 10px;
         }
         .dropdowns {
           display: flex;
-          margin-right: 20px;
+          padding-block-start: 6px;
+          margin-inline-end: 20px;
         }
         .header {
           flex-wrap: wrap;
