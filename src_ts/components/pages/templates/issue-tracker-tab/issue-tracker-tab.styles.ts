@@ -4,8 +4,14 @@ export const IssueTrackerTabStyles: CSSResult = css`
   :host {
     position: relative;
     display: block;
+    --list-row-wrapper-padding-inline: 0;
   }
-
+  .no-rm {
+    margin-right: 0;
+  }
+  .no-lm {
+    margin-left: 0;
+  }
   .issue-tracker-table-section {
     padding: 0;
   }

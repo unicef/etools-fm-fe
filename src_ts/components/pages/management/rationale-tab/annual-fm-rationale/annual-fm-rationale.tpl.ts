@@ -51,7 +51,7 @@ export function template(this: AnnualFmRationale): TemplateResult {
           ?active="${this.savingInProcess}"
           loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
         ></etools-loading>
-        <div class="layout vertical card-content">
+        <div class="layout-vertical card-content">
           <div>
             <etools-textarea
               class="validate-input flex"

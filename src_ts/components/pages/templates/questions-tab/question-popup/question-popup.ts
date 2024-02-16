@@ -10,7 +10,7 @@ import {questionUpdate} from '../../../../../redux/selectors/questions.selectors
 import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
@@ -86,7 +86,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     return [
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       QuestionPopupStyles,
       css`

@@ -1,6 +1,6 @@
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';

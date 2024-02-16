@@ -4,6 +4,7 @@ import {css, CSSResult} from 'lit';
 export const pageHeaderStyles: CSSResult = css`
   app-toolbar {
     padding: 0;
+    height: var(--toolbar-height);
   }
 
   .titlebar {
@@ -17,6 +18,7 @@ export const pageHeaderStyles: CSSResult = css`
 
   support-btn {
     color: var(--header-color);
+    margin-left: auto;
   }
 
   etools-profile-dropdown {
@@ -50,6 +52,50 @@ export const pageHeaderStyles: CSSResult = css`
     font-weight: 700;
     font-size: 18px;
     line-height: 20px;
+  }
+  @media (max-width: 1024px) {
+    .envWarning {
+      display: none;
+    }
+    .envLong {
+      display: none;
+    }
+    .titlebar img {
+      margin: 0 8px 0 12px;
+    }
+    etools-profile-dropdown {
+      margin-left: 12px;
+      width: 40px;
+    }
+  }
+  @media (max-width: 820px) {
+    .dropdown {
+      order: 1;
+      margin-top: 0;
+    }
+    app-toolbar {
+      --toolbar-height: auto;
+      padding-inline-end: 0px;
+      margin: 0 !important;
+    }
+  }
+  @media (max-width: 576px) {
+    #app-logo {
+      display: none;
+    }
+    .titlebar img {
+      margin: 0 8px 0 4px;
+    }
+
+    .refresh-button {
+      margin-right: 0;
+    }
+    .envWarning {
+      font-size: 10px;
+      line-height: 12px;
+      white-space: nowrap;
+      margin-left: 2px;
+    }
   }
 
   @media (min-width: 850px) {

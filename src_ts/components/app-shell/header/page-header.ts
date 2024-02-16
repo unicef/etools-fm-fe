@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
@@ -120,31 +121,20 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   static get styles(): CSSResultArray {
     return [
       pageHeaderStyles,
+      layoutStyles,
       css`
         .refresh-button {
           color: var(--header-color);
           margin-right: 10px;
         }
-        .dropdowns {
-          display: flex;
-          margin-right: 20px;
+        .titlebar {
+          flex: 1;
+          font-size: 28px;
+          font-weight: 300;
         }
-        .header {
-          flex-wrap: wrap;
-          height: 100%;
-          justify-content: space-between;
-        }
+
         .nav-menu-button {
           min-width: 70px;
-        }
-        .header__item {
-          display: flex;
-          align-items: center;
-        }
-        .header__left-group {
-        }
-        .header__right-group {
-          justify-content: space-evenly;
         }
         .logo {
           margin: 0 10px 0 20px;
@@ -169,8 +159,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         }
       </style>
 
-      <app-toolbar sticky class="content-align header">
-        <div class="header__item header__left-group">
+      <app-toolbar sticky class="layout-horizontal align-items-center row">
+        <div class="titlebar layout-horizontal align-items-center col-lg-4 col-4">
           <etools-icon-button
             id="menuButton"
             class="nav-menu-button"
@@ -193,32 +183,31 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             : html`<div class="envWarning">
             <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
         </div>
-        <div class="header__item header__right-group">
-          <div class="dropdowns">
-            <etools-dropdown
-              transparent
-              id="languageSelector"
-              .selected="${this.selectedLanguage}"
-              .options="${appLanguages}"
-              option-label="display_name"
-              option-value="value"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                if (detail.selectedItem) {
-                  this.languageChanged(detail.selectedItem.value);
-                }
-              }}"
-              trigger-value-change-event
-              hide-search
-              allow-outside-scroll
-              no-label-float
-              .readonly="${this.langUpdateInProgress}"
-              .autoWidth="${true}"
-            ></etools-dropdown>
+        <div class="dropdown layout-horizontal align-items-center col-lg-6 col-12">
+          <etools-dropdown
+            transparent
+            id="languageSelector"
+            .selected="${this.selectedLanguage}"
+            .options="${appLanguages}"
+            option-label="display_name"
+            option-value="value"
+            @etools-selected-item-changed="${({detail}: CustomEvent) => {
+              if (detail.selectedItem) {
+                this.languageChanged(detail.selectedItem.value);
+              }
+            }}"
+            trigger-value-change-event
+            hide-search
+            allow-outside-scroll
+            no-label-float
+            .readonly="${this.langUpdateInProgress}"
+            .autoWidth="${true}"
+          ></etools-dropdown>
 
-            <countries-dropdown></countries-dropdown>
-            <organizations-dropdown></organizations-dropdown>
-          </div>
-
+          <countries-dropdown></countries-dropdown>
+          <organizations-dropdown></organizations-dropdown>
+        </div>
+        <div class="layout-horizontal align-items-center col-lg-2 col-8">
           <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
 
           <etools-profile-dropdown

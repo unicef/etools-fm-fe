@@ -8,7 +8,7 @@ import {translate} from 'lit-translate';
 export function template(this: LocationWidgetComponent): TemplateResult {
   return html`
     <div class="widget-container">
-      <div class="history" ?hidden="${!this.history.length}">
+      <div class="history row" ?hidden="${!this.history.length}">
         ${this.history.map(
           (location: WidgetLocation, index: number) => html`
             <etools-input
@@ -16,6 +16,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
               value="${this.getLocationPart(location.name, 'name')}"
               readonly
               inline
+              class="col-md-2 col-4"
             >
               <div slot="suffix" @click="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
@@ -25,9 +26,9 @@ export function template(this: LocationWidgetComponent): TemplateResult {
         )}
       </div>
 
-      <div class="map-and-list">
-        <div id="map"></div>
-        <div class="list">
+      <div class="map-and-list row">
+        <div id="map" class="col-md-6 col-12"></div>
+        <div class="list col-md-6 col-12">
           <etools-input
             class="search-input"
             type="search"

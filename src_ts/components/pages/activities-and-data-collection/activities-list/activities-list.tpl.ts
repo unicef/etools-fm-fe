@@ -5,9 +5,20 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: ActivitiesListComponent): TemplateResult {
   return html`
+    <style>
+      ${dataTableStylesLit}
+    </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
     <page-content-header>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
       <div
@@ -40,46 +51,45 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-        <etools-data-table-column class="col-data flex-none w130px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-none w110px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2">
-          ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1">
-          ${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-none w90px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2">
-          ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-none w80px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-none w100px">
-          ${translate('ACTIVITIES_LIST.COLUMNS.STATUS')}
-        </etools-data-table-column>
+      <etools-data-table-header
+        no-title
+        ?no-collapse="${!this.items.length}"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
+      >
+        <div class="row">
+          <etools-data-table-column class="col-md-2">
+            ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-1">
+            ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-2">
+            ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-2">
+            ${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-1">
+            ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-2">
+            ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-1">
+            ${translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-md-1">
+            ${translate('ACTIVITIES_LIST.COLUMNS.STATUS')}
+          </etools-data-table-column>
+        </div>
       </etools-data-table-header>
 
       <!-- Table Empty Row -->
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
-                <div class="col-data flex-none w130px">-</div>
-                <div class="col-data flex-none w110px">-</div>
-                <div class="col-data flex-2">-</div>
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-none w90px">-</div>
-                <div class="col-data flex-2">-</div>
-                <div class="col-data flex-none w80px">-</div>
-                <div class="col-data flex-none w100px">-</div>
+              <div slot="row-data" class="row">
+                <div class="col-data col-12 no-data">No records found.</div>
               </div>
             </etools-data-table-row>
           `
@@ -88,33 +98,54 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <!-- Table Row items -->
       ${this.items.map(
         (activity: IListActivity) => html`
-          <etools-data-table-row secondary-bg-on-hover>
-            <div slot="row-data" class="layout horizontal editable-row flex">
-              <div class="col-data flex-none w130px">
+          <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="editable-row row">
+              <div
+                class="col-data col-md-2"
+                data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}"
+              >
                 <a class="link-cell" href="${this.getActivityDetailsLink(activity)}">${activity.reference_number}</a>
               </div>
-              <div class="col-data flex-none w110px">${formatDate(activity.start_date!) || '-'}</div>
-              <div class="col-data flex-2">
+              <div class="col-data col-md-1" data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}">
+                ${formatDate(activity.start_date!) || '-'}
+              </div>
+              <div
+                class="col-data col-md-2"
+                data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}"
+              >
                 ${activity.location && activity.location.name}
                 ${activity.location_site ? `[${activity.location_site.name}]` : ''}
               </div>
-              <div class="col-data flex-1">${activity.sections?.map((s: any) => s.name).join(' | ')}</div>
-              <div class="col-data flex-none w90px">
+              <div class="col-data col-md-2" data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}">
+                ${activity.sections?.map((s: any) => s.name).join(' | ')}
+              </div>
+              <div
+                class="col-data col-md-1"
+                data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}"
+              >
                 ${this.serializeName(activity.monitor_type, this.activityTypes, 'display_name', 'value') || '-'}
               </div>
-              <div class="col-data flex-2">
+              <div
+                class="col-data col-md-2"
+                data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}"
+              >
                 <span style="font-weight: 500">${activity.visit_lead?.name}</span>&nbsp;
                 ${(activity.team_members &&
                   activity.team_members.map((member: ActivityTeamMember) => ' | ' + member.name)) ||
                 '-'}
               </div>
-              <div class="col-data flex-none w80px">${activity.checklists_count}</div>
-              <div class="col-data flex-none w100px">
+              <div
+                class="col-data col-md-1"
+                data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT')}"
+              >
+                ${activity.checklists_count}
+              </div>
+              <div class="col-data col-md-1" data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.STATUS')}">
                 ${this.serializeName(activity.status, this.activityStatuses, 'display_name', 'value')}
               </div>
             </div>
 
-            <div slot="row-data-details" class="layout horizontal">
+            <div slot="row-data-details" class="layout-horizontal">
               ${activity.tpm_partner
                 ? html`
                     <div class="row-details-content">

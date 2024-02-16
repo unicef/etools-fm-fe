@@ -25,6 +25,7 @@ export const TemplatesStyles: CSSResult = css`
   .checkbox-container {
     margin-right: 24px;
     width: 18px;
+    display: inline-flex;
   }
 
   .detail-placeholder {

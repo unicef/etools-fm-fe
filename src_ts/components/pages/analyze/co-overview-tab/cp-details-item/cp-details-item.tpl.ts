@@ -13,45 +13,40 @@ export function template(this: CpDetailsItem): TemplateResult {
     ${InputStyles}
     <div class="full-report-container">
       <div class="cp-indicators">
-        <div class="line layout horizontal title">
-          <div class="flex-auto">${translate('CO_OVERVIEW.CP_INDICATORS')}</div>
-          <div class="target flex-none">${translate('CO_OVERVIEW.TARGET')}</div>
+        <div class="line row title">
+          <div class="col-10">${translate('CO_OVERVIEW.CP_INDICATORS')}</div>
+          <div class="target col-2">${translate('CO_OVERVIEW.TARGET')}</div>
         </div>
 
         ${this.fullReport && this.fullReport.ram_indicators && this.fullReport.ram_indicators.length
           ? this.fullReport.ram_indicators.map(
               (item: RamIndicator) =>
                 html`
-                  <div class="line ram-indicator layout horizontal">
-                    <div class="flex-auto">${item.name}</div>
-                    <div class="target flex-none">${item.target}</div>
+                  <div class="line ram-indicator row">
+                    <div class="col-md-10 col-12">${item.name}</div>
+                    <div class="target col-md-2 col-12">${item.target}</div>
                   </div>
                 `
             )
           : html`
-              <div class="line layout horizontal empty">
-                <div class="flex-auto">--</div>
-                <div class="target flex-none">--</div>
+              <div class="line row empty">
+                <div class="col-md-10 col-12">--</div>
+                <div class="target col-md-2 col-12">--</div>
               </div>
             `}
       </div>
 
       <div class="partners">
-        <div class="layout horizontal">
-          <div class="flex-2 layout horizontal partners-data">
-            <div class="flex-auto layout horizontal center line title">${translate('CO_OVERVIEW.PARTNERS')}</div>
-            <div class="flex-none prog-visits-width layout horizontal center line title">
-              ${translate('CO_OVERVIEW.PROG_VISITS')}
-            </div>
+        <div class="row">
+          <div class="col-md-4 align-items-center line title">${translate('CO_OVERVIEW.PARTNERS')}</div>
+          <div class="col-md-1 prog-visits-width align-items-center line title">
+            ${translate('CO_OVERVIEW.PROG_VISITS')}
           </div>
-          <div class="flex-4 layout horizontal">
-            <div class="flex-none space-for-arrow"></div>
-            <div class="flex-auto layout horizontal center line title">${translate('CO_OVERVIEW.PARTNERSHIPS')}</div>
-            <div class="flex-none layout horizontal center-center days-since-last-visit line title">
-              ${translate('CO_OVERVIEW.SINCE_LAST_VISIT')}
-            </div>
-            <div class="flex-none interact-icons"></div>
+          <div class="col-md-4 align-items-center line title">${translate('CO_OVERVIEW.PARTNERSHIPS')}</div>
+          <div class="col-md-2 center-align days-since-last-visit line title">
+            ${translate('CO_OVERVIEW.SINCE_LAST_VISIT')}
           </div>
+          <div class="col-md-2 interact-icons"></div>
         </div>
 
         ${this.fullReport && this.fullReport.partners && this.fullReport.partners.length
@@ -59,32 +54,30 @@ export function template(this: CpDetailsItem): TemplateResult {
               this.fullReport.partners,
               (partner: FullReportPartner) => partner.id,
               (partner: FullReportPartner) => html`
-                <div class="partner layout horizontal">
-                  <div class="flex-2 layout horizontal partners-data">
-                    <div class="flex-auto truncate line" title="${partner.name}">${partner.name}</div>
-                    <div class="prog-visits flex-none prog-visits-width line">${partner.prog_visit_mr}</div>
-                  </div>
-                  <div class="flex-4 intervention-data">
+                <div class="partner row">
+                  <div class="col-md-4 truncate line intervention-data" title="${partner.name}">${partner.name}</div>
+                  <div class="prog-visits col-md-1 prog-visits-width line partners-data">${partner.prog_visit_mr}</div>
+                  <div class="col-7 intervention-data">
                     ${partner.interventions && partner.interventions.length
                       ? repeat(
                           partner.interventions,
                           (intervention: FullReportIntervention) => intervention.pk,
                           (intervention: FullReportIntervention) => html`
-                            <div class="layout horizontal">
-                              <div class="flex-none space-for-arrow layout horizontal center-center">
+                            <div class="row">
+                              <div class="space-for-arrow layout-horizontal center-align">
                                 <etools-icon
                                   name="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
                                   @click="${() => this.toggleDetails(intervention)}"
                                 ></etools-icon>
                               </div>
-                              <div class="flex-auto truncate line" title="${intervention.number}">
+                              <div class="col-md-7 truncate line" title="${intervention.number}">
                                 ${intervention.number}
                               </div>
-                              <div class="flex-none layout horizontal center-center days-since-last-visit line">
+                              <div class="col-md-2 center-align days-since-last-visit line">
                                 ${intervention.days_from_last_pv}
                               </div>
                               <div
-                                class="flex-none interact-icons layout horizontal links"
+                                class="col-md-2 interact-icons layout-horizontal links"
                                 ?hidden="${!this.isUnicefUser}"
                               >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
@@ -118,14 +111,11 @@ export function template(this: CpDetailsItem): TemplateResult {
                           `
                         )
                       : html`
-                          <div
-                            class="layout horizontal"
-                            ?hidden="${!partner.interventions || !partner.interventions.length}"
-                          >
-                            <div class="flex-none space-for-arrow layout horizontal center-center"></div>
-                            <div class="flex-auto truncate line">--</div>
-                            <div class="flex-none layout horizontal center-center days-since-last-visit line">--</div>
-                            <div class="flex-none interact-icons layout horizontal links"></div>
+                          <div class="row" ?hidden="${!partner.interventions || !partner.interventions.length}">
+                            <div class="col-md-4 space-for-arrow center-align"></div>
+                            <div class="col-md-1 truncate line">--</div>
+                            <div class="col-md-6 center-align days-since-last-visit line">--</div>
+                            <div class="col-md-1 interact-icons links"></div>
                           </div>
                         `}
                   </div>
@@ -133,17 +123,16 @@ export function template(this: CpDetailsItem): TemplateResult {
               `
             )
           : html`
-              <div class="partner layout horizontal">
-                <div class="flex-2 layout horizontal partners-data">
-                  <div class="flex-auto truncate line">--</div>
-                  <div class="prog-visits flex-none prog-visits-width line">--</div>
-                </div>
-                <div class="flex-4 intervention-data">
-                  <div class="layout horizontal">
-                    <div class="flex-none space-for-arrow layout horizontal center-center"></div>
-                    <div class="flex-auto truncate line">--</div>
-                    <div class="flex-none layout horizontal center-center days-since-last-visit line">--</div>
-                    <div class="flex-none interact-icons layout horizontal links"></div>
+              <div class="partner row">
+                <div class="col-md-4 truncate line intervention-data">--</div>
+                <div class="prog-visits col-md-1 prog-visits-width line partners-data">--</div>
+
+                <div class="col-md-7 intervention-data">
+                  <div class="row">
+                    <div class="space-for-arrow layout-horizontal center-align"></div>
+                    <div class="col-md-7 truncate line">--</div>
+                    <div class="col-md-2 center-align days-since-last-visit line">--</div>
+                    <div class="col-md-2 interact-icons layout-horizontal links"></div>
                   </div>
                 </div>
               </div>

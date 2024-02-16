@@ -9,11 +9,11 @@ import {sitesSelector} from '../../../redux/selectors/site-specific-locations.se
 import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
 import {LocationWidgetStyles} from '../location-widget/location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {SharedStyles} from '../../styles/shared-styles';
 import {TemplatesStyles} from '../../pages/templates/templates-tab/templates-tab.styles';
 import {CardStyles} from '../../styles/card-styles';
-import {elevationStyles} from '../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {leafletStyles} from '../../styles/leaflet-styles';
 
@@ -44,7 +44,7 @@ export class LocationSitesWidgetComponent extends LitElement {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       TemplatesStyles,
       LocationWidgetStyles,

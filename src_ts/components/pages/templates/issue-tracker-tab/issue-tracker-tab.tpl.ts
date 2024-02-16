@@ -6,6 +6,8 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {prettyDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {simplifyValue} from '../../../utils/objects-diff';
 import {translate} from 'lit-translate';
@@ -13,8 +15,17 @@ import {translate} from 'lit-translate';
 export function template(this: IssueTrackerTabComponent): TemplateResult {
   // language=HTML
   return html`
-    <section class="elevation page-content filters layout horizontal" elevation="1">
-      <div class="filter">
+    <style>
+      ${dataTableStylesLit}
+    </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
+    <section class="elevation row page-content filters" elevation="1">
+      <div class="filter col-md-2 col-12">
         <etools-dropdown-multi
           label="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
           placeholder="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
@@ -30,7 +41,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
           no-dynamic-align
         ></etools-dropdown-multi>
       </div>
-      <div class="filter">
+      <div class="filter col-md-2 col-12">
         <etools-dropdown-multi
           label="${translate('ISSUE_TRACKER.PARTNER')}"
           placeholder="${translate('ISSUE_TRACKER.PARTNER')}"
@@ -46,7 +57,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
           no-dynamic-align
         ></etools-dropdown-multi>
       </div>
-      <div>
+      <div class="col-md-2 col-12">
         <etools-dropdown-multi
           label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
           placeholder="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
@@ -62,7 +73,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
           no-dynamic-align
         ></etools-dropdown-multi>
       </div>
-      <div class="toggle-button-control filter">
+      <div class="toggle-button-control filter col-md-2 col-12">
         <sl-switch
           .checked="${this.queryParams && this.queryParams.status}"
           @sl-change="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
@@ -88,27 +99,31 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
         </div>
       </div>
 
-      <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-        <etools-data-table-column class="flex-1" field="related_to_type">
+      <etools-data-table-header
+        no-title
+        ?no-collapse="${!this.items.length}"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
+      >
+        <etools-data-table-column class="col-data table-header-padding col-md-2" field="related_to_type">
           ${translate('ISSUE_TRACKER.RELATED_TO')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-2" field="name" sortable>
+        <etools-data-table-column class="col-data table-header-padding col-md-3" field="name" sortable>
           ${translate('ISSUE_TRACKER.NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-3" field="issue">
+        <etools-data-table-column class="col-data table-header-padding col-md-5" field="issue">
           ${translate('ISSUE_TRACKER.ISSUE')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-1" field="attachments">
+        <etools-data-table-column class="col-data table-header-padding col-md-1" field="attachments">
           ${translate('ISSUE_TRACKER.ATTACHMENTS')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-1" field="status">
+        <etools-data-table-column class="col-data table-header-padding col-md-1" field="status">
           ${translate('ISSUE_TRACKER.STATUS')}
         </etools-data-table-column>
       </etools-data-table-header>
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
+              <div slot="row-data" class="layout-horizontal editable-row flex">
                 <div class="col-data flex-1 truncate">-</div>
                 <div class="col-data flex-2 truncate">-</div>
                 <div class="col-data flex-3 truncate">-</div>
@@ -121,20 +136,23 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
       ${repeat(
         this.items,
         (logIssue: LogIssue) => html`
-          <etools-data-table-row secondary-bg-on-hover>
-            <div slot="row-data" class="layout horizontal editable-row flex">
-              <div class="col-data flex-1">
+          <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="editable-row row no-rm no-lm">
+              <div class="col-data col-md-2" data-col-header-label="${translate('ISSUE_TRACKER.RELATED_TO')}">
                 <span class="truncate">
                   ${translate(`ISSUE_TRACKER.RELATED_TYPE.${(logIssue.related_to_type as string).toUpperCase()}`)}
                 </span>
               </div>
-              <div class="col-data flex-2">
+              <div class="col-data col-md-3" data-col-header-label="${translate('ISSUE_TRACKER.NAME')}">
                 <span class="truncate">${this.getName(logIssue)}</span>
               </div>
-              <div class="col-data layout center flex-3">
+              <div
+                class="col-data align-items-center col-md-5"
+                data-col-header-label="${translate('ISSUE_TRACKER.ISSUE')}"
+              >
                 <span class="flexible-text">${logIssue.issue}</span>
               </div>
-              <div class="col-data flex-1">
+              <div class="col-data col-md-1" data-col-header-label="${translate('ISSUE_TRACKER.ATTACHMENTS')}">
                 ${logIssue.attachments.length
                   ? html`
                       <div class="files-column" @click="${() => this.viewFiles(logIssue)}">
@@ -146,7 +164,9 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                   : ''}
               </div>
 
-              <div class="col-data flex-1">${translate(`ISSUE_TRACKER.STATUSES.${logIssue.status.toUpperCase()}`)}</div>
+              <div class="col-data col-md-1" data-col-header-label="${translate('ISSUE_TRACKER.STATUS')}">
+                ${translate(`ISSUE_TRACKER.STATUSES.${logIssue.status.toUpperCase()}`)}
+              </div>
 
               ${hasPermission(Permissions.EDIT_LOG_ISSUES)
                 ? html`
@@ -157,12 +177,12 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
                 : ''}
             </div>
 
-            <div slot="row-data-details" class="layout horizontal">
-              <div class="row-details-content">
+            <div slot="row-data-details" class="row">
+              <div class="row-details-content col-md-2 col-12">
                 <div class="rdc-title">${translate('ISSUE_TRACKER.AUTHOR')}</div>
                 <div class="truncate">${logIssue.author.name}</div>
               </div>
-              <div class="row-details-content">
+              <div class="row-details-content col-md-2 col-12">
                 <div class="rdc-title">${translate('ISSUE_TRACKER.LAST_MODIFIED_BY')}</div>
                 <div class="truncate">
                   ${`${logIssue.history[0].by_user_display} - ${prettyDate(
@@ -173,7 +193,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
               </div>
               ${logIssue.closed_by
                 ? html`
-                    <div class="row-details-content">
+                    <div class="row-details-content col-md-2 col-12">
                       <div class="rdc-title">${translate('ISSUE_TRACKER.CLOSED_BY')}</div>
                       <div class="truncate">${logIssue.closed_by.name}</div>
                     </div>

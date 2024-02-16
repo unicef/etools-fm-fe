@@ -56,20 +56,15 @@ export const LocationWidgetStyles: CSSResult = css`
   }
 
   .widget-container .map-and-list #map {
-    flex: 1;
     height: 300px;
-    margin-right: 25px;
   }
 
   .widget-container .map-and-list .list {
-    flex: 1;
     overflow: hidden;
   }
 
   .locations-list {
     display: flex;
-    flex: 1;
-    flex-flow: column;
     height: calc(100% - 43px);
     position: relative;
     overflow-y: auto;

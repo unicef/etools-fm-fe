@@ -43,8 +43,8 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
       ?disableDismissBtn="${this.vendorRequestInProcess}"
       ?show-spinner="${this.savingInProcess}"
     >
-          <div class="layout horizontal row">
-          <div class="col-data flex-6 pr-15 p-relative">
+          <div class="row">
+          <div class="col-data col-md-6 col-12">
             <etools-input
               id="inputVendorNumber"
               always-float-label
@@ -63,7 +63,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               no-overlay loading-text="" class="po-loading">
             </etools-loading>
           </div>
-          <div class="col-data flex-6">
+          <div class="col-data col-md-6 col-12">
             <etools-input
               always-float-label
               .value="${this.editedData && this.editedData.name}"
@@ -72,9 +72,9 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               readonly
             ></etools-input>
           </div>
-        </div>
-        <div class="layout horizontal">
-          <div class="col-data flex-12">
+       
+
+          <div class="col-data col-12">
             <etools-input
               always-float-label
               .value="${this.getPartnerAddress(this.editedData)}"
@@ -83,9 +83,9 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               readonly
             ></etools-input>
           </div>
-        </div>
-        <div class="layout horizontal row">
-          <div class="col-data flex-6 pr-15">
+
+
+          <div class="col-data col-md-6 col-12">
             <etools-input
               id="phoneInput"
               always-float-label
@@ -101,7 +101,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               <etools-icon slot="prefix" name="communication:phone"> </etools-icon>
             </etools-input>
           </div>
-          <div class="col-data flex-6">
+          <div class="col-data col-md-6 col-12">
             <etools-input
               id="emailInput"
               always-float-label
@@ -117,7 +117,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               <etools-icon slot="prefix" name="communication:email"> </etools-icon>
             </etools-input>
           </div>
-        </div>
+          </div>
       </div>
 
 

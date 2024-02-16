@@ -8,7 +8,7 @@ import {listAttachmentUpdate} from '../../../../redux/selectors/attachments-list
 import {Unsubscribe} from 'redux';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from 'lit-translate';
 
@@ -25,7 +25,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
+    return [SharedStyles, pageLayoutStyles, layoutStyles];
   }
 
   set dialogData(data: IAttachmentPopupData) {

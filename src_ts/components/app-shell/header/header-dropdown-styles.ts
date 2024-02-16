@@ -38,6 +38,7 @@ export const headerDropdownStyles: TemplateResult = html`
 
     #languageSelector {
       width: 120px;
+      margin-left: auto;
     }
 
     .w100 {
@@ -58,11 +59,36 @@ export const headerDropdownStyles: TemplateResult = html`
       /* Edge 12-18 */
       color: var(--sl-input-color);
     }
+    @media (max-width: 1024px) {
+      etools-dropdown {
+        min-width: 130px;
+        width: 130px;
+      }
+      organizations-dropdown {
+        width: 130px;
+      }
+
+      countries-dropdown {
+        width: 130px;
+      }
+    }
 
     @media (max-width: 768px) {
       etools-dropdown {
         min-width: 130px;
         width: 130px;
+      }
+    }
+    @media (max-width: 576px) {
+      #app-logo {
+        display: none;
+      }
+
+      etools-dropdown {
+        min-width: auto;
+      }
+      #languageSelector {
+        width: 110px;
       }
     }
   </style>

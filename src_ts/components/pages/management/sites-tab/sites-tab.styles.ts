@@ -5,7 +5,12 @@ export const SitesTabStyles: CSSResult = css`
     position: relative;
     display: block;
   }
-
+  .start {
+    align-items: flex-start;
+  }
+  .no-pr {
+    padding-right: 0;
+  }
   .sites-table-section {
     padding: 0;
   }
@@ -50,7 +55,7 @@ export const SitesTabStyles: CSSResult = css`
   .site-row:first-child {
     border-top: none;
   }
-  .site-row .hover-block {
+  .row .hover-block {
     right: 24px;
   }
   .site-row .active-marker {
@@ -77,13 +82,6 @@ export const SitesTabStyles: CSSResult = css`
     white-space: pre;
     font-size: 17px;
   }
-  paper-card {
-    padding: 8px 0;
-    display: block;
-    margin-top: 25px;
-    --paper-card_-_background-color: white;
-    --paper-card_-_margin: 0 24px;
-  }
 
   etools-data-table-row::part(edt-list-row-wrapper) {
     padding: 0 0 0 24px;
@@ -93,7 +91,7 @@ export const SitesTabStyles: CSSResult = css`
     padding: 0 0 0 24px;
   }
 
-  .editable-row .hover-block {
+  .row .hover-block {
     padding: 0 20px;
   }
 `;

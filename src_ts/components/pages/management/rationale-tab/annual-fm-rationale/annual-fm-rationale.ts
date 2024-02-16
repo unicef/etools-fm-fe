@@ -4,7 +4,7 @@ import {store} from '../../../../../redux/store';
 import {updateRationale} from '../../../../../redux/effects/rationale.effects';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {template} from './annual-fm-rationale.tpl';
 import {Unsubscribe} from 'redux';
@@ -109,7 +109,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
     return [
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       css`
         .history-info {

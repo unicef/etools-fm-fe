@@ -1,5 +1,7 @@
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {PartnerContacts} from './partner-contacts';
@@ -8,12 +10,18 @@ export function template(this: PartnerContacts): TemplateResult {
   // language=HTML
   return html`
     <style>
-      .edit-button {
+      ${dataTableStylesLit} .edit-button {
         color: var(--gray-mid);
         margin-right: 5px;
         margin-left: 20px;
       }
     </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
 
     <section class="elevation page-content card-container" elevation="1">
       <etools-loading
@@ -37,23 +45,23 @@ export function template(this: PartnerContacts): TemplateResult {
       </div>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="col-data flex-2" field="job_title">
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+        <etools-data-table-column class="col-data table-header-padding  col-2" field="job_title">
           ${translate('TPM_CONTACTS.COLUMNS.POSITION')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2" field="first_name">
+        <etools-data-table-column class="col-data table-header-padding  col-2" field="first_name">
           ${translate('TPM_CONTACTS.COLUMNS.FIRST_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2" field="last_name">
+        <etools-data-table-column class="col-data table-header-padding  col-2" field="last_name">
           ${translate('TPM_CONTACTS.COLUMNS.LAST_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2" field="phone_number">
+        <etools-data-table-column class="col-data table-header-padding  col-2" field="phone_number">
           ${translate('TPM_CONTACTS.COLUMNS.PHONE_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-3" field="email">
+        <etools-data-table-column class="col-data table-header-padding  col-3" field="email">
           ${translate('TPM_CONTACTS.COLUMNS.EMAIL')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1" field="is_active">
+        <etools-data-table-column class="col-data table-header-padding  col-1" field="is_active">
           ${translate('TPM_CONTACTS.COLUMNS.ACTIVE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -62,7 +70,7 @@ export function template(this: PartnerContacts): TemplateResult {
       ${this.loadingInProcess || !this.staffMembersList || !this.staffMembersList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
+              <div slot="row-data" class="editable-row row">
                 <div class="col-data flex-2">-</div>
                 <div class="col-data flex-2">-</div>
                 <div class="col-data flex-2">-</div>
@@ -78,14 +86,28 @@ export function template(this: PartnerContacts): TemplateResult {
       ${!this.loadingInProcess
         ? this.getStaffMembers(this.staffMembersList).map(
             (staffMember: ITpmPartnerStaffMemberUser) => html`
-              <etools-data-table-row no-collapse secondary-bg-on-hover>
-                <div slot="row-data" class="layout horizontal editable-row flex">
-                  <div class="col-data flex-2">${staffMember.profile.job_title}</div>
-                  <div class="col-data flex-2">${staffMember.first_name}</div>
-                  <div class="col-data flex-2">${staffMember.last_name}</div>
-                  <div class="col-data flex-2">${staffMember.profile.phone_number}</div>
-                  <div class="col-data flex-3">${staffMember.email}</div>
-                  <div class="col-data flex-1">
+              <etools-data-table-row
+                no-collapse
+                secondary-bg-on-hover
+                .lowResolutionLayout="${this.lowResolutionLayout}"
+              >
+                <div slot="row-data" class="editable-row row">
+                  <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.POSITION')}">
+                    ${staffMember.profile.job_title}
+                  </div>
+                  <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.FIRST_NAME')}">
+                    ${staffMember.first_name}
+                  </div>
+                  <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.LAST_NAME')}">
+                    ${staffMember.last_name}
+                  </div>
+                  <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.PHONE_NUMBER')}">
+                    ${staffMember.profile.phone_number}
+                  </div>
+                  <div class="col-data col-3" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.EMAIL')}">
+                    ${staffMember.email}
+                  </div>
+                  <div class="col-data col-1" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.ACTIVE')}">
                     <span ?hidden="${staffMember.has_active_realm}" class="placeholder-style"
                       >${!staffMember.is_active
                         ? translate('INACTIVE')

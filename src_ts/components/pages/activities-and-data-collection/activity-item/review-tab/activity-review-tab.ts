@@ -1,6 +1,6 @@
 import {LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {store} from '../../../../../redux/store';
@@ -8,7 +8,7 @@ import {activityChecklist} from '../../../../../redux/reducers/activity-checklis
 import {Unsubscribe} from 'redux';
 import {loadActivityChecklist} from '../../../../../redux/effects/activity-checklist.effects';
 import {activityChecklistData} from '../../../../../redux/selectors/activity-checklist.selectors';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import './review-checklist-item/review-checklist-item';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
@@ -25,7 +25,7 @@ export class ActivityReviewTab extends LitElement {
   private activeLanguageUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
   }
 
   private _activityId: number | null = null;

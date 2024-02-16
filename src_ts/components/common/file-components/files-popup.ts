@@ -37,7 +37,7 @@ export class FilesPopup extends LitElement {
         dialog-title="${translate('ATTACHMENTS_LIST.TITLE')}"
         @close="${this.onClose}"
       >
-        <div class="layout vertical files">
+        <div class="layout-vertical files">
           ${repeat(
             this.attachments,
             (attachment: IAttachment) =>

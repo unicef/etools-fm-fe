@@ -12,9 +12,9 @@ import {translate} from 'lit-translate';
 export function template(this: SitesTabComponent): TemplateResult {
   return html`
     <section class="elevation page-content filters" elevation="1">
-      <div class="layout horizontal">
+      <div class="row">
         <etools-input
-          class="search-input"
+          class="search-input col-md-2 col-12"
           type="search"
           clearable
           always-float-label
@@ -26,7 +26,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           <etools-icon name="search" slot="prefix"></etools-icon>
         </etools-input>
 
-        <div class="toggle-button-control">
+        <div class="toggle-button-control col-md-2 col-12">
           <sl-switch
             .checked="${this.queryParams && this.queryParams.show_inactive}"
             @sl-change="${(event: CustomEvent) => this.changeShowInactive(event)}"
@@ -56,45 +56,47 @@ export function template(this: SitesTabComponent): TemplateResult {
       </div>
 
       <etools-data-table-header id="listHeader" no-collapse no-title>
-        <etools-data-table-column class="w30 col-data">
+        <etools-data-table-column class="col-4 col-data">
           ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
         </etools-data-table-column>
-        <etools-data-table-column class="w90px col-data layout center-center">
+        <etools-data-table-column class="col-1 col-data layout center-align">
           ${translate('SITES.COLUMNS.STATUS')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-auto col-data">
-          ${translate('SITES.COLUMNS.NAME')}
-        </etools-data-table-column>
+        <etools-data-table-column class="col-7 col-data"> ${translate('SITES.COLUMNS.NAME')} </etools-data-table-column>
       </etools-data-table-header>
 
       ${this.items.map(
         (parentLocation: IGroupedSites) => html`
           <etools-data-table-row no-collapse>
-            <div slot="row-data" class="layout horizontal editable-row parent-row">
-              <div class="col-data w30 layout vertical start center-justified flex-none">
+            <div slot="row-data" class="row editable-row parent-row">
+              <div class="col-data col-4 layout-vertical start center-justified">
                 <span class="admin-level-text">${this.getAdminLevel(parentLocation.admin_level)}</span>
                 <span>${parentLocation.name}</span>
               </div>
 
-              <div class="sites-list">
-                ${parentLocation.sites.map(
-                  (site: Site) => html`
-                    <div class="layout horizontal editable-row site-row center">
-                      <div class="col-data w90px layout center-center flex-none">
-                        <div class="active-marker ${this.getActiveClass(site.is_active)}"></div>
-                      </div>
-                      <div class="col-data flex-auto">${site.name}</div>
+              <div class="sites-list col-8 no-pr">
+                <div class="row">
+                  ${parentLocation.sites.map(
+                    (site: Site) => html`
+                      <div class="sites-list col-12 site-row align-items-center no-pr">
+                        <div class="row editable-row">
+                          <div class="col-data col-1 center-align">
+                            <div class="active-marker ${this.getActiveClass(site.is_active)}"></div>
+                          </div>
+                          <div class="col-data col-11">${site.name}</div>
 
-                      <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_SITES)}">
-                        <etools-icon
-                          name="create"
-                          @click="${() => this.openDialog(site)}"
-                          data-type="edit"
-                        ></etools-icon>
+                          <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_SITES)}">
+                            <etools-icon
+                              name="create"
+                              @click="${() => this.openDialog(site)}"
+                              data-type="edit"
+                            ></etools-icon>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  `
-                )}
+                    `
+                  )}
+                </div>
               </div>
             </div>
           </etools-data-table-row>
@@ -103,9 +105,9 @@ export function template(this: SitesTabComponent): TemplateResult {
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal">
+              <div slot="row-data" class="layout-horizontal">
                 <div class="col-data w30">-</div>
-                <div class="col-data w90px layout center-center">-</div>
+                <div class="col-data w90px layout center-align">-</div>
                 <div class="col-data w150px">-</div>
                 <div class="col-data flex-auto">-</div>
               </div>

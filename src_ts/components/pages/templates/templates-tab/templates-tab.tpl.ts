@@ -3,21 +3,29 @@ import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {TemplatesTabComponent} from './templates-tab';
 import {html, TemplateResult} from 'lit';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: TemplatesTabComponent): TemplateResult {
   return html`
+    <style>
+      ${dataTableStylesLit}
+    </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
     ${InputStyles}
-    <section
-      class="filters-container elevation page-content card-container question-filters-section layout horizontal"
-      elevation="1"
-    >
-      <div class="filter">
+    <section class="filters-container elevation row page-content card-container question-filters-section" elevation="1">
+      <div class="filter col-md-2 col-12">
         <etools-dropdown
           .options="${this.levels}"
           .selected="${(this.queryParams && this.queryParams.level) || undefined}"
@@ -34,7 +42,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
         ></etools-dropdown>
       </div>
 
-      <div class="filter">
+      <div class="filter col-md-2 col-12">
         <etools-dropdown
           ?hidden="${!this.queryParams || this.queryParams.level !== PARTNER}"
           .options="${this.partners}"
@@ -120,15 +128,15 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
         <div class="checkbox-container"></div>
-        <etools-data-table-column class="flex-1" field="text">
+        <etools-data-table-column class="col-data table-header-padding col-md-4" field="text">
           ${translate('TEMPLATES.COLUMNS.TEXT')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-2" field="level">
+        <etools-data-table-column class="col-data table-header-padding col-md-7" field="level">
           ${translate('TEMPLATES.COLUMNS.DETAILS')}
         </etools-data-table-column>
-        <etools-data-table-column class="flex-none w210px">
+        <etools-data-table-column class="col-data table-header-padding col-md-1">
           ${translate('TEMPLATES.COLUMNS.METHODS')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -137,7 +145,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ${this.loadingInProcess || !this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
+              <div slot="row-data" class="layout-horizontal editable-row flex">
                 <div class="checkbox-container"></div>
                 <div class="col-data flex-1 truncate">-</div>
                 <div class="col-data flex-2 truncate">-</div>
@@ -151,27 +159,27 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ${!this.loadingInProcess
         ? this.items.map(
             (questionTemplate: IQuestionTemplate) => html`
-              <etools-data-table-row no-collapse>
-                <div slot="row-data" class="layout horizontal editable-row flex">
-                  <!-- Checkbox to mark template as active -->
-                  <div class="checkbox-container layout horizontal center-center">
-                    <etools-checkbox
-                      ?disabled=${!hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)}
-                      ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
-                      class="nolabel"
-                      @sl-change="${(e: any) =>
-                        this.updateTemplate(questionTemplate.id, 'is_active', e.target.checked as boolean)}"
-                    ></etools-checkbox>
-                  </div>
-
+              <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+                <div slot="row-data" class="editable-row row">
                   <!-- Question item Text -->
-                  <div class="col-data flex-1 truncate">${questionTemplate.text}</div>
+                  <div class="col-data col-md-4" data-col-header-label="${translate('TEMPLATES.COLUMNS.TEXT')}">
+                    <!-- Checkbox to mark template as active -->
+                    <div class="checkbox-container layout-horizontal center-align">
+                      <etools-checkbox
+                        ?disabled=${!hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)}
+                        ?checked="${questionTemplate.template && questionTemplate.template.is_active}"
+                        class="nolabel"
+                        @sl-change="${(e: any) =>
+                          this.updateTemplate(questionTemplate.id, 'is_active', e.target.checked as boolean)}"
+                      ></etools-checkbox>
+                    </div>
+                    ${questionTemplate.text}
+                  </div>
 
                   <!-- Editable Question Specific Details -->
                   <div
-                    class="col-data flex-2 truncate ${hasPermission(Permissions.EDIT_QUESTION_TEMPLATES)
-                      ? 'edited-col'
-                      : ''}"
+                    data-col-header-label="${translate('TEMPLATES.COLUMNS.DETAILS')}"
+                    class="col-data col-md-7 ${hasPermission(Permissions.EDIT_QUESTION_TEMPLATES) ? 'edited-col' : ''}"
                     @click="${({currentTarget}: CustomEvent) =>
                       this.showDetailsInput(
                         currentTarget as HTMLElement,
@@ -186,7 +194,10 @@ export function template(this: TemplatesTabComponent): TemplateResult {
                   </div>
 
                   <!-- Question Methods -->
-                  <div class="col-data flex-none w210px truncate methods">
+                  <div
+                    class="col-data col-md-1 methods"
+                    data-col-header-label="${translate('TEMPLATES.COLUMNS.METHODS')}"
+                  >
                     ${this.serializeMethods(questionTemplate.methods)}
                   </div>
                 </div>
@@ -204,6 +215,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
         .totalResults="${this.count}"
         @page-size-changed="${(event: CustomEvent) => this.changePageParam(event.detail.value, 'page_size')}"
         @page-number-changed="${(event: CustomEvent) => this.changePageParam(event.detail.value, 'page')}"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
       >
       </etools-data-table-footer>
     </section>

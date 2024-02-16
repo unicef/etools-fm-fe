@@ -79,7 +79,6 @@ export const CardStyles: CSSResult = css`
     align-items: center;
     min-width: 0;
     overflow: hidden;
-    margin-right: 5px;
   }
 
   .col-data:last-child {

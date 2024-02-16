@@ -37,9 +37,9 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
 
-      <div class="container layout vertical">
+      <div class="row">
         <etools-textarea
-          class="validate-input flex-7 question-textarea"
+          class="validate-input col-md-12 col-12 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
           max-rows="3"
@@ -58,7 +58,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         ></etools-textarea>
 
         <etools-dropdown-multi
-          class="validate-input flex-2"
+          class="validate-input col-md-12 col-12"
           .selectedValues="${this.editedData.sections}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('sections', detail.selectedItems)}"
@@ -79,7 +79,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         ></etools-dropdown-multi>
 
         <etools-dropdown-multi
-          class="validate-input flex-2"
+          class="validate-input col-md-12 col-12"
           .selectedValues="${this.editedData.methods}"
           @etools-selected-items-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('methods', detail.selectedItems)}"
@@ -101,55 +101,53 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           dynamic-align
         ></etools-dropdown-multi>
 
-        <div class="layout horizontal">
-          <etools-dropdown
-            class="validate-input w50"
-            .selected="${this.editedData.category}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id)}"
-            trigger-value-change-event
-            label="${translate('QUESTIONS.LABELS.GROUP')}"
-            placeholder="${translate('QUESTIONS.PLACEHOLDERS.GROUP')}"
-            required
-            .options="${this.categories}"
-            option-label="name"
-            option-value="id"
-            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-            ?invalid="${this.errors && this.errors.category}"
-            .errorMessage="${(this.errors && this.errors.category) || translate('THIS_FIELD_IS_REQUIRED')}"
-            @focus="${() => {
-              this.resetFieldError('category');
-              this.autovlidateCateg = true;
-            }}"
-            @click="${() => this.resetFieldError('category')}"
-            .autoValidate="${this.autovlidateCateg}"
-            allow-outside-scroll
-            dynamic-align
-          ></etools-dropdown>
+        <etools-dropdown
+          class="validate-input col-md-6 col-12"
+          .selected="${this.editedData.category}"
+          @etools-selected-item-changed="${({detail}: CustomEvent) =>
+            this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id)}"
+          trigger-value-change-event
+          label="${translate('QUESTIONS.LABELS.GROUP')}"
+          placeholder="${translate('QUESTIONS.PLACEHOLDERS.GROUP')}"
+          required
+          .options="${this.categories}"
+          option-label="name"
+          option-value="id"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+          ?invalid="${this.errors && this.errors.category}"
+          .errorMessage="${(this.errors && this.errors.category) || translate('THIS_FIELD_IS_REQUIRED')}"
+          @focus="${() => {
+            this.resetFieldError('category');
+            this.autovlidateCateg = true;
+          }}"
+          @click="${() => this.resetFieldError('category')}"
+          .autoValidate="${this.autovlidateCateg}"
+          allow-outside-scroll
+          dynamic-align
+        ></etools-dropdown>
 
-          <etools-dropdown
-            class="validate-input w50"
-            .selected="${this.editedData.level}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateModelValue('level', detail.selectedItem.value)}"
-            trigger-value-change-event
-            hide-search
-            label="${translate('QUESTIONS.LABELS.LEVEL')}"
-            placeholder="${translate('QUESTIONS.PLACEHOLDERS.LEVEL')}"
-            .options="${this.levels}"
-            option-label="display_name"
-            option-value="value"
-            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-            ?invalid="${this.errors && this.errors.level}"
-            .errorMessage="${this.errors && this.errors.level}"
-            @focus="${() => this.resetFieldError('level')}"
-            @click="${() => this.resetFieldError('level')}"
-            allow-outside-scroll
-            dynamic-align
-          ></etools-dropdown>
-        </div>
+        <etools-dropdown
+          class="validate-input col-md-6 col-12"
+          .selected="${this.editedData.level}"
+          @etools-selected-item-changed="${({detail}: CustomEvent) =>
+            this.updateModelValue('level', detail.selectedItem.value)}"
+          trigger-value-change-event
+          hide-search
+          label="${translate('QUESTIONS.LABELS.LEVEL')}"
+          placeholder="${translate('QUESTIONS.PLACEHOLDERS.LEVEL')}"
+          .options="${this.levels}"
+          option-label="display_name"
+          option-value="value"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+          ?invalid="${this.errors && this.errors.level}"
+          .errorMessage="${this.errors && this.errors.level}"
+          @focus="${() => this.resetFieldError('level')}"
+          @click="${() => this.resetFieldError('level')}"
+          allow-outside-scroll
+          dynamic-align
+        ></etools-dropdown>
 
-        <div class="checkboxes">
+        <div class="col-md-6 col-12 layout-horizontal">
           <etools-checkbox
             ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_hact}"
@@ -166,60 +164,57 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           </etools-checkbox>
         </div>
 
-        <div class="layout horizontal">
-          <etools-dropdown
-            class="validate-input w50"
-            .selected="${this.editedData.answer_type}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateAnswerType(detail.selectedItem.value)}"
-            trigger-value-change-event
-            hide-search
-            label="${translate('QUESTIONS.LABELS.ANSWER_TYPE')}"
-            placeholder="${translate('QUESTIONS.PLACEHOLDERS.ANSWER_TYPE')}"
-            .options="${this.answerTypes}"
-            option-label="display_name"
-            option-value="value"
-            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-            ?invalid="${this.errors && this.errors.answer_type}"
-            .errorMessage="${this.errors && this.errors.answer_type}"
-            @focus="${() => this.resetFieldError('answer_type')}"
-            @click="${() => this.resetFieldError('answer_type')}"
-            allow-outside-scroll
-            dynamic-align
-          ></etools-dropdown>
+        <etools-dropdown
+          class="validate-input col-md-6 col-12"
+          .selected="${this.editedData.answer_type}"
+          @etools-selected-item-changed="${({detail}: CustomEvent) => this.updateAnswerType(detail.selectedItem.value)}"
+          trigger-value-change-event
+          hide-search
+          label="${translate('QUESTIONS.LABELS.ANSWER_TYPE')}"
+          placeholder="${translate('QUESTIONS.PLACEHOLDERS.ANSWER_TYPE')}"
+          .options="${this.answerTypes}"
+          option-label="display_name"
+          option-value="value"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+          ?invalid="${this.errors && this.errors.answer_type}"
+          .errorMessage="${this.errors && this.errors.answer_type}"
+          @focus="${() => this.resetFieldError('answer_type')}"
+          @click="${() => this.resetFieldError('answer_type')}"
+          allow-outside-scroll
+          dynamic-align
+        ></etools-dropdown>
 
-          <etools-dropdown
-            class="validate-input w25"
-            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-            ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
-            .selected="${this.currentOptionsLength}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.changeOptionsSize(detail.selectedItem && detail.selectedItem.value)}"
-            trigger-value-change-event
-            hide-search
-            label="${translate('QUESTIONS.LABELS.SCALE_SIZE')}"
-            placeholder="${translate('QUESTIONS.PLACEHOLDERS.SCALE_SIZE')}"
-            .options="${this.scaleSizes}"
-            option-label="display_name"
-            option-value="value"
-            allow-outside-scroll
-            dynamic-align
-          ></etools-dropdown>
-        </div>
+        <etools-dropdown
+          class="validate-input col-md-6 col-12"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+          ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
+          .selected="${this.currentOptionsLength}"
+          @etools-selected-item-changed="${({detail}: CustomEvent) =>
+            this.changeOptionsSize(detail.selectedItem && detail.selectedItem.value)}"
+          trigger-value-change-event
+          hide-search
+          label="${translate('QUESTIONS.LABELS.SCALE_SIZE')}"
+          placeholder="${translate('QUESTIONS.PLACEHOLDERS.SCALE_SIZE')}"
+          .options="${this.scaleSizes}"
+          option-label="display_name"
+          option-value="value"
+          allow-outside-scroll
+          dynamic-align
+        ></etools-dropdown>
 
         <div
-          class="scales-container"
+          class="scales-container col-md-12 col-12 row"
           ?hidden="${this.editedData.answer_type !== SCALE_TYPE && this.editedData.answer_type !== BOOL_TYPE}"
         >
           ${repeat(
             this.editedData.options as Partial<QuestionOption>[],
             (option: EditedQuestionOption) => option.value,
             (option: EditedQuestionOption, index: number) => html`
-              <div class="layout horizontal center">
+              <div class="col-md-12 col-12 align-items-center layout-horizontal">
                 <div class="option-index">${option.translation ? option.translation : option.value}:</div>
                 <etools-input
                   no-label-float
-                  class="validate-input flex-7"
+                  class="validate-input"
                   .value="${option.label}"
                   @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
                   ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"

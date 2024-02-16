@@ -8,13 +8,13 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {updateQueryParams} from '../../../../routing/routes';
 import {locationsInvert} from './locations-invert';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import './sites-popup/sites-popup';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SitesTabStyles} from './sites-tab.styles';
@@ -219,14 +219,6 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   }
 
   static get styles(): CSSResult[] {
-    return [
-      elevationStyles,
-      SharedStyles,
-      pageLayoutStyles,
-      FlexLayoutClasses,
-      CardStyles,
-      SitesTabStyles,
-      leafletStyles
-    ];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, SitesTabStyles, leafletStyles];
   }
 }
