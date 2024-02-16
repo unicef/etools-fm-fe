@@ -82,7 +82,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
           background-color: var(--gray-06);
           text-transform: uppercase;
           font-weight: 500;
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
         }
 
         .widget-dropdown span,

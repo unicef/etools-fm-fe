@@ -114,7 +114,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
       css`
         .history-info {
           color: var(--gray-light);
-          font-size: 13px;
+          font-size: var(--etools-font-size-13, 13px);
           font-style: italic;
           margin-right: 20px;
           letter-spacing: 0.04em;

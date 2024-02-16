@@ -13,9 +13,6 @@ export const QuestionPopupStyles: CSSResult = css`
     padding-right: 15px;
   }
 
-  .checkboxes {
-    padding: 10px 14px 24px 0;
-  }
   etools-checkbox {
     margin-right: 30px;
   }

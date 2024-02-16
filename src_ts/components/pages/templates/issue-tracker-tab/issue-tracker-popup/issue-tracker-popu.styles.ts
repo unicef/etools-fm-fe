@@ -4,7 +4,7 @@ import {css, CSSResult} from 'lit';
 export const IssueTrackerPopupStyles: CSSResult = css`
   .related-to-type label {
     color: var(--secondary-text-color);
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
     padding: 0 12px;
   }
 

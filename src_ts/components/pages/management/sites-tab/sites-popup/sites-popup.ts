@@ -246,7 +246,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         .selected-sites-label {
           padding: 13px 12px;
           color: #858585;
-          font-size: 17px;
+          font-size: var(--etools-font-size-16, 16px);
           display: flex;
           align-content: center;
           align-items: flex-end;

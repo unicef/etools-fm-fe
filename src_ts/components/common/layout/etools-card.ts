@@ -80,7 +80,7 @@ export class EtoolsCard extends LitElement {
           flex-basis: auto;
         }
         .flex-header__title {
-          font-size: 18px;
+          font-size: var(--etools-font-size-18, 18px);
           flex-basis: auto;
           flex-grow: 1;
           overflow: hidden;

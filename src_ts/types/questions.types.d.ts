@@ -12,6 +12,7 @@ interface IQuestion<O = QuestionOption> {
   is_hact: boolean;
   is_active: boolean;
   is_custom: boolean;
+  order: number;
 }
 
 type IEditedQuestion = Partial<IQuestion<EditedQuestionOption>>;

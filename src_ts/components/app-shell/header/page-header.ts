@@ -4,6 +4,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
 import './organizations-dropdown';
@@ -125,12 +126,16 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       css`
         .refresh-button {
           color: var(--header-color);
-          margin-right: 10px;
+          margin-inline-end: 10px;
         }
         .titlebar {
           flex: 1;
           font-size: 28px;
           font-weight: 300;
+        .dropdowns {
+          display: flex;
+          padding-block-start: 6px;
+          margin-inline-end: 20px;
         }
 
         .nav-menu-button {
@@ -230,6 +235,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             @click="${this.refresh}"
           >
           </etools-icon-button>
+
+          <etools-accesibility></etools-accesibility>
         </div>
       </app-toolbar>
     `;

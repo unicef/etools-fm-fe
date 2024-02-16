@@ -18,12 +18,12 @@ export const CpDetailsItemStyles: CSSResult = css`
 
   .line.title {
     color: var(--secondary-text-color);
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
   }
 
   .line {
     padding: 5px 0;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     color: var(--primary-text-color);
   }
   .line.ram-indicator:nth-child(odd) {

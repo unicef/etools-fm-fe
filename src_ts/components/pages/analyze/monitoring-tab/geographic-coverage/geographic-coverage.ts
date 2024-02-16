@@ -47,24 +47,6 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
     this.dispatchGeographicCoverageLoading();
-    this.geographicCoverageUnsubscribe = store.subscribe(
-      geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
-        this.clearMap();
-        geographicCoverage = clone(geographicCoverage);
-        geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item));
-        if (geographicCoverage.length) {
-          let viewCoordinates: any = geographicCoverage[0].geom.coordinates;
-          // coordinates are nested arrays, navigate to last level to get valid Lat and Lng
-          while (Array.isArray(viewCoordinates) && viewCoordinates[0] && Array.isArray(viewCoordinates[0][0])) {
-            viewCoordinates = viewCoordinates[0];
-          }
-          this.mapTarget = viewCoordinates[0] || DEFAULT_COORDINATES;
-          this.mapHelper.map!.setView(this.mapTarget, 6);
-          this.mapHelper.map!.invalidateSize();
-        }
-        this.loading = false;
-      }, false)
-    );
   }
 
   dispatchGeographicCoverageLoading(): void {
@@ -125,7 +107,29 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
     const zoom = 6;
     this.mapHelper.waitForMapToLoad().then(() => {
       this.mapHelper.map!.setView(DEFAULT_COORDINATES, zoom);
+      this.addGeographicCoverage();
     });
+  }
+
+  addGeographicCoverage() {
+    this.geographicCoverageUnsubscribe = store.subscribe(
+      geographicCoverageSelector((geographicCoverage: GeographicCoverage[]) => {
+        this.clearMap();
+        geographicCoverage = clone(geographicCoverage);
+        geographicCoverage.forEach((item: GeographicCoverage) => this.drawPolygons(item));
+        if (geographicCoverage.length) {
+          let viewCoordinates: any = geographicCoverage[0].geom.coordinates;
+          // coordinates are nested arrays, navigate to last level to get valid Lat and Lng
+          while (Array.isArray(viewCoordinates) && viewCoordinates[0] && Array.isArray(viewCoordinates[0][0])) {
+            viewCoordinates = viewCoordinates[0];
+          }
+          this.mapTarget = viewCoordinates[0] || DEFAULT_COORDINATES;
+          this.mapHelper.map!.setView(this.mapTarget, 6);
+          this.mapHelper.map!.invalidateSize();
+        }
+        this.loading = false;
+      }, false)
+    );
   }
 
   resizeMap(): void {

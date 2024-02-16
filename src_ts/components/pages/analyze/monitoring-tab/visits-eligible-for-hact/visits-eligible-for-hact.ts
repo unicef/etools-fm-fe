@@ -96,7 +96,7 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
           justify-content: space-between;
         }
         .custom-row-details-content {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
           overflow: hidden;
           text-overflow: ellipsis;
           margin: 0.5%;

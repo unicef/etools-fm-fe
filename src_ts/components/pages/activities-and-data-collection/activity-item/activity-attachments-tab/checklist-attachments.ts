@@ -94,7 +94,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
           margin-top: 1%;
         }
         .custom-row-details-content {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
         }
         .sub-title {
           opacity: 0.6;

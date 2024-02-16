@@ -16,7 +16,7 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {activityDetailsData, activityStatusIsChanging} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
-import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
+import {createActivityDetails, requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
   CANCELLED,
@@ -42,15 +42,17 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {ActivityDetailsActions} from '../../../../redux/actions/activity-details.actions';
+import {ActivityDetailsActions, ActivityDetailsCreation} from '../../../../redux/actions/activity-details.actions';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
 import {loadActionPoints} from '../../../../redux/effects/action-points.effects';
+import {AnyObject} from '@unicef-polymer/etools-types';
+import {hasPermission, Permissions} from '../../../../config/permissions';
 
 store.addReducers({activityDetails});
 
@@ -73,6 +75,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
+  @property() isSaving = false;
   @property() activeTab!: string;
   @property() childInEditMode = false;
   @property() isUnicefUser = false;
@@ -154,6 +157,11 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         loading-text="${translate('ACTIVITY_ITEM.STATUS_CHANGE')}"
       ></etools-loading>
 
+      <etools-loading
+        ?active="${this.isSaving}"
+        loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
       <etools-status
         .statuses="${this.getStatuses()}"
         .activeStatus="${this.activityDetails?.status || DRAFT}"
@@ -165,17 +173,23 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <etools-button
-            id="export"
-            class="neutral"
-            variant="text"
-            @click="${this.export}"
-            tracker="Export PDF"
-            ?hidden="${this.hideExportButton()}"
-          >
-            <etools-icon name="file-download"></etools-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </etools-button>
+          <sl-dropdown id="pdMenuBtn" ?hidden="${this.hideMoreActionsButton()}">
+            <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
+            <sl-menu>
+              <sl-menu-item
+                tracker="Duplicate Activity"
+                ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+                @click="${this.onDuplicateClick}"
+              >
+                <etools-icon slot="prefix" name="content-copy"></etools-icon>
+                ${translate('DUPLICATE')}
+              </sl-menu-item>
+              <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
+                <etools-icon slot="prefix" name="file-download"></etools-icon>
+                ${translate('ACTIVITY_DETAILS.EXPORT')}
+              </sl-menu-item>
+            </sl-menu>
+          </sl-dropdown>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -283,6 +297,51 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     );
   }
 
+  onDuplicateClick(e: Event) {
+    this.trackAnalytics(e);
+
+    const activityToDuplicate = this.getActivityDataForDuplicate();
+    if (!activityToDuplicate) {
+      fireEvent(this, 'toast', {text: getTranslation('NO_ACTIVITY_DATA_TO_DUPLICATE')});
+      return;
+    }
+    this.isSaving = true;
+    store
+      .dispatch<AsyncEffect>(createActivityDetails(activityToDuplicate))
+      .then(({payload}: ActivityDetailsCreation) => {
+        if (payload && payload.id) {
+          updateAppLocation(`activities/${payload.id}/details/`);
+        } else {
+          fireEvent(this, 'toast', {
+            text: `${getTranslation('ERROR_AT_SAVING_DUPLICATE')}\n ${(payload as any).statusText || ''}`
+          });
+          console.log((payload as any).statusText);
+        }
+      })
+      .finally(() => (this.isSaving = false));
+  }
+
+  getActivityDataForDuplicate() {
+    if (!this.activityDetails) {
+      return null;
+    }
+    const dataToDuplicate: AnyObject = {};
+    ['offices', 'sections', 'team_members', 'partners', 'cp_outputs', 'interventions'].forEach((key) => {
+      if (this.activityDetails![key as keyof IActivityDetails]) {
+        // @ts-ignore: Object is possibly 'null'
+        dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
+      }
+    });
+    ['location', 'location_site', 'tpm_partner', 'visit_lead'].forEach((key) => {
+      if (this.activityDetails![key as keyof IActivityDetails]) {
+        // @ts-ignore: Object is possibly 'null'
+        dataToDuplicate[key] = this.activityDetails[key].id;
+      }
+    });
+    dataToDuplicate.monitor_type = this.activityDetails!.monitor_type;
+    return dataToDuplicate;
+  }
+
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.isLoadUnsubscribe();
@@ -363,6 +422,13 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     return (
       !this.activityDetails?.id || ![REPORT_FINALIZATION, SUBMITTED, COMPLETED].includes(this.activityDetails.status)
     );
+  }
+
+  hideMoreActionsButton() {
+    if (!this.activityDetails?.id) {
+      return true;
+    }
+    return !hasPermission(Permissions.CREATE_VISIT) && this.hideExportButton();
   }
 
   export(e: any): void {

@@ -80,7 +80,7 @@ export const SitesTabStyles: CSSResult = css`
     padding: 0 12px;
     color: #858585;
     white-space: pre;
-    font-size: 17px;
+    font-size: var(--etools-font-size-16, 16px);
   }
 
   etools-data-table-row::part(edt-list-row-wrapper) {

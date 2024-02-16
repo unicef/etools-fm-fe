@@ -350,7 +350,8 @@
       "ANSWER_TYPE": "Answer Type",
       "IS_HACT": "Counts towards HACT",
       "IS_ACTIVE": "Is Active",
-      "SCALE_SIZE": "Scale Size"
+      "SCALE_SIZE": "Scale Size",
+      "ORDER": "Order"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
@@ -675,6 +676,10 @@
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "You are about to complete a visit that has “Not Monitored” items. You may reject instead if needed, otherwise, are you sure you want to proceed with items marked as “Not Monitored” ?",
   "ACTION_POINT_REMINDER": "Noting there are no action points raised, please remember to add any before continuing if needed.",
   "CONTINUE": "Continue",
+  "INVALID_NUMBER": "Invalid number",
+  "DUPLICATE": "DUPLICATE",
+  "ERROR_AT_SAVING_DUPLICATE": "Error at saving duplicate",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",

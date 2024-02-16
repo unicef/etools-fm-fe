@@ -37,7 +37,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
       ${InputStyles} ${DialogStyles}
       <etools-dialog
         id="dialog"
-        size="md"
+        size="lg"
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
         .cancelBtnText="${translate('CANCEL')}"

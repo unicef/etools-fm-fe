@@ -51,7 +51,7 @@ export const partnershipTabStyles: CSSResult = css`
   .progressbar-container__header {
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
+    font-size: var(--etools-font-size-16, 16px);
     line-height: 36px;
     color: grey;
   }

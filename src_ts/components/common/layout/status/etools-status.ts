@@ -46,7 +46,7 @@ export class EtoolsStatus extends LitElement {
           flex-direction: row;
           align-items: center;
           color: var(--secondary-text-color);
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
           margin-bottom: 22px;
         }
 
@@ -72,7 +72,7 @@ export class EtoolsStatus extends LitElement {
           color: #fff;
           background-color: var(--secondary-text-color);
           margin-right: 8px;
-          font-size: 14px;
+          font-size: var(--etools-font-size-14, 14px);
         }
 
         .status.active .icon {

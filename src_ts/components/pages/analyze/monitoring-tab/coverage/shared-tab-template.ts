@@ -125,7 +125,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
       }
       .coverage-label {
         margin-bottom: 2%;
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
       }
       .progressbar-container {
         margin-bottom: 2%;
@@ -135,7 +135,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
       }
       .progressbar__header {
         color: grey;
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         line-height: 47px;
       }
     `;
