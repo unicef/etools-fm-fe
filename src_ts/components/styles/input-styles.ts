@@ -32,7 +32,6 @@ export const InputStyles: TemplateResult = html`
     etools-dropdown-multi,
     etools-input,
     etools-textarea,
-    paper-dropdown-menu,
     etools-currency-amount-input,
     datepicker-lite {
       outline: none !important;

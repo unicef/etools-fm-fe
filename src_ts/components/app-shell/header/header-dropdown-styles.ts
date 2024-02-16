@@ -16,10 +16,6 @@ export const headerDropdownStyles: TemplateResult = html`
       cursor: pointer;
     }
 
-    :host([dir='rtl']) etools-dropdown {
-      --paper-input-container-shared-input-style_-_max-width: 75px;
-    }
-
     etools-dropdown::part(display-input) {
       text-align: end;
     }

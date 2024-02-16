@@ -42,11 +42,6 @@ export const AttachmentsStyles: CSSResult = css`
   etools-icon {
     margin-right: 8px;
   }
-  paper-button {
-    font-weight: 700;
-    margin: 0 0;
-    padding: 0 0;
-  }
   .file-selector-container.with-type-dropdown {
     padding: 0;
   }

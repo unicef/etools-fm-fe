@@ -20,13 +20,6 @@ export class FilesPopup extends LitElement {
   render(): TemplateResult {
     return html`
       ${InputStyles} ${DialogStyles}
-      <style>
-        etools-upload {
-          --paper-input-container: {
-            padding: 0;
-          }
-        }
-      </style>
       <etools-dialog
         id="dialog"
         size="md"

@@ -393,8 +393,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
         sl-switch {
           margin: 0 4px 0 15px;
-          --paper-toggle-button-unchecked-button-color: var(--error-color);
-          --paper-toggle-button-unchecked-bar-color: var(--error-color);
         }
         sl-switch[readonly] {
           pointer-events: none;

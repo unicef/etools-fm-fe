@@ -20,18 +20,6 @@ export function template(this: PartnerInformation): TemplateResult {
       .row {
         min-height: 75px;
       }
-      etools-input[readonly].without-border {
-        --paper-input-container-underline: {
-          border-bottom: none !important;
-          display: none !important;
-        }
-        --paper-input-container-underline-focus: {
-          display: none;
-        }
-        --paper-input-container-underline-disabled: {
-          display: none;
-        }
-      }
        ${FormBuilderCardStyles}
     </style>
 
