@@ -42,8 +42,11 @@ export class SupportBtn extends MatomoMixin(LitElement) {
         tracker="Support"
         @click="${this.trackAnalytics}"
       >
-        <etools-icon name="communication:textsms"></etools-icon>
-        <span class="support-text">${translate('SUPPORT')}</span>
+        <etools-icon
+          name="communication:textsms"
+          label="${translate('SUPPORT')}"
+          title="${translate('SUPPORT')}"
+        ></etools-icon>
       </a>
     `;
   }

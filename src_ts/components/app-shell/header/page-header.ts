@@ -11,7 +11,14 @@ import './organizations-dropdown';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
-import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
+import {
+  isProductionServer,
+  isStagingServer,
+  isDevServer,
+  isDemoServer,
+  ROOT_PATH,
+  isTestingServer
+} from '../../../config/config';
 
 import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
@@ -147,6 +154,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         }
         .header__right-group {
           justify-content: space-evenly;
+          margin-inline-start: auto;
         }
         .logo {
           margin: 0 10px 0 20px;
@@ -155,6 +163,21 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           .header__item {
             flex-grow: 1;
           }
+        }
+
+        .logo-wrapper {
+          display: flex;
+          align-items: center;
+        }
+
+        .envWarning {
+          color: #000;
+          background-color: var(--header-color);
+          font-weight: 700;
+          padding: 5px 10px;
+          font-size: var(--etools-font-size-14, 14px);
+          line-height: 1;
+          border-radius: 10px;
         }
       `
     ];
@@ -184,16 +207,17 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             .user="${this.profile}"
             .language="${this.selectedLanguage}"
           ></etools-app-selector>
-          <img
-            id="app-logo"
-            class="logo"
-            src="${this.rootPath}assets/images/etools-logo-color-white.svg"
-            alt="eTools"
-          />
-          ${this.isProduction
-            ? ``
-            : html`<div class="envWarning">
-            <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
+          <div class="logo-wrapper">
+            <img
+              id="app-logo"
+              class="logo"
+              src="${this.rootPath}assets/images/etools-logo-color-white.svg"
+              alt="eTools"
+            />
+            ${this.isProduction
+              ? ``
+              : html`<div class="envWarning" title="${this.environment} TESTING ENVIRONMENT">${this.environment}</div>`}
+          </div>
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
@@ -213,8 +237,10 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               hide-search
               allow-outside-scroll
               no-label-float
-              .readonly="${this.langUpdateInProgress}"
-              .autoWidth="${true}"
+              .disabled="${this.langUpdateInProgress}"
+              min-width="120px"
+              placement="bottom-end"
+              .syncWidth="${false}"
             ></etools-dropdown>
 
             <countries-dropdown></countries-dropdown>
@@ -318,11 +344,13 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   protected checkEnvironment(): void {
     this.isProduction = isProductionServer();
     this.environment = isDevServer()
-      ? 'DEVELOPMENT'
+      ? 'DEV'
       : isDemoServer()
       ? 'DEMO'
       : isStagingServer()
-      ? 'STAGING'
+      ? 'STAGE'
+      : isTestingServer()
+      ? 'TEST'
       : 'LOCAL';
   }
 
