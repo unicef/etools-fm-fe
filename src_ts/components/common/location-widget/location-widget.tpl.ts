@@ -16,7 +16,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
               value="${this.getLocationPart(location.name, 'name')}"
               readonly
               inline
-              class="col-md-2 col-4"
+              class="col-md-2 col-12"
             >
               <div slot="suffix" @click="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
