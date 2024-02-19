@@ -61,7 +61,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                   <div class="prog-visits col-md-1 col-12 prog-visits-width line partners-data">
                     ${partner.prog_visit_mr}
                   </div>
-                  <div class="col-md-7 col-12 intervention-data">
+                  <div class="col-md-7 col-12 intervention-data no-pl">
                     ${partner.interventions && partner.interventions.length
                       ? repeat(
                           partner.interventions,
