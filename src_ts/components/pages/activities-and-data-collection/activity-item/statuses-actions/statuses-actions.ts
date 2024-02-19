@@ -225,6 +225,16 @@ export class StatusesActionsComponent extends LitElement {
     });
   }
 
+  async confirmSubmitSummaryNotCompleted(confirmText: string) : Promise<boolean> {
+    return await openDialog({
+      dialog: 'are-you-sure',
+      dialogData: {
+        content: confirmText,
+        confirmBtnText: getTranslation("CONTINUE"),
+      }
+    }).then(({confirmed}) => confirmed);
+  }
+
   static get styles(): CSSResult[] {
     // language=CSS
     return [
