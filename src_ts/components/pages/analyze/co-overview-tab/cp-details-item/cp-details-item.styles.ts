@@ -62,8 +62,8 @@ export const CpDetailsItemStyles: CSSResult = css`
     border-bottom: solid 1px #dcdbdc;
     overflow: hidden;
   }
-  [class^="col-"].no-pl {
-    padding-left: 0
+  [class^='col-'].no-pl {
+    padding-left: 0;
   }
   .partner .intervention-data .links {
     justify-content: space-evenly;
