@@ -99,7 +99,6 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
           font-size: var(--etools-font-size-12, 12px);
           overflow: hidden;
           text-overflow: ellipsis;
-          margin: 0.5%;
         }
         .custom-row-details-nowrap {
           white-space: nowrap;
