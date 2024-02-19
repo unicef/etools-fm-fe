@@ -25,7 +25,6 @@ export const navMenuStyles: CSSResult = css`
   }
 
   @media (max-height: 600px) {
-
     :host([small-menu]) {
       overflow-x: hidden;
     }

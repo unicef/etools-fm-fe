@@ -136,6 +136,7 @@ export const CardStyles: CSSResult = css`
 
   .card-container {
     padding: 0;
+    position: relative;
   }
 
   .remove-title {

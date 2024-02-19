@@ -42,12 +42,16 @@ import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
   @property() filtersInitialized = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -123,6 +127,15 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <style>
+        ${dataTableStylesLit}
+      </style>
+      <etools-media-query
+        query="(max-width: 767px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
       <section class="elevation page-content card-container question-filters-section" elevation="1">
         <etools-filters
           .filters="${this.filters}"
@@ -155,7 +168,11 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           </div>
         </div>
 
-        <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
+        <etools-data-table-header
+          no-title
+          ?no-collapse="${!this.items.length}"
+          .lowResolutionLayout="${this.lowResolutionLayout}"
+        >
           <etools-data-table-column class="col-data table-header-padding  col-md-4" field="text" sortable>
             ${translate('QUESTIONS.COLUMNS.TEXT')}
           </etools-data-table-column>
@@ -192,25 +209,30 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           : ''}
         ${this.items.map(
           (question: IQuestion) => html`
-            <etools-data-table-row secondary-bg-on-hover>
+            <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
               <div slot="row-data" class="editable-row row no-rm no-lm">
-                <div class="col-data col-md-4">${question.text || '-'}</div>
-                <div class="col-data col-md-2">
+                <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
+                  ${question.text || '-'}
+                </div>
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.LEVEL')}">
                   ${translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-'}
                 </div>
-                <div class="col-data col-md-2">
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.METHODS')}">
                   <div class="truncate">
                     ${question.methods.map((method: number) => this.serializeName(method, this.methods)).join(', ') ||
                     '-'}
                   </div>
                 </div>
-                <div class="col-data col-md-1">
+                <div class="col-data col-md-1" data-col-header-label="${translate('QUESTIONS.COLUMNS.ANSWER_TYPE')}">
                   ${translate(`ANSWER_TYPE_OPTIONS.${question.answer_type.toUpperCase()}`) || '-'}
                 </div>
-                <div class="col-data col-md-2">
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.CATEGORY')}">
                   <div class="truncate">${this.serializeName(question.category, this.categories) || '-'}</div>
                 </div>
-                <div class="col-data col-md-1 truncate">
+                <div
+                  class="col-data col-md-1 truncate"
+                  data-col-header-label="${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}"
+                >
                   <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
                 </div>
                 <div class="hover-block">
@@ -247,6 +269,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         )}
 
         <etools-data-table-footer
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           id="footer"
           .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
           .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"

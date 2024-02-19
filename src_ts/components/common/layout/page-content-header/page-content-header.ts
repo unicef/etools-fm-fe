@@ -82,10 +82,10 @@ export class PageContentHeader extends LitElement {
             margin-bottom: 16px;
           }
 
-        .title-row h1 {
-          font-size: var(--etools-font-size-18, 18px);
+          .title-row h1 {
+            font-size: var(--etools-font-size-18, 18px);
+          }
         }
-      }
 
         @media (max-width: 380px) {
           .title-row {

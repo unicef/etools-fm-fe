@@ -27,7 +27,8 @@ import {
 @customElement('sites-tab')
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   @property() items: IGroupedSites[] = [];
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   @property() listLoadingInProcess = false;
   private sitesObjects: Site[] | null = null;
 

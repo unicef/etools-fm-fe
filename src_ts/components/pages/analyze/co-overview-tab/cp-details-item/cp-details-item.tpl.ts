@@ -55,29 +55,36 @@ export function template(this: CpDetailsItem): TemplateResult {
               (partner: FullReportPartner) => partner.id,
               (partner: FullReportPartner) => html`
                 <div class="partner row">
-                  <div class="col-md-4 truncate line intervention-data" title="${partner.name}">${partner.name}</div>
-                  <div class="prog-visits col-md-1 prog-visits-width line partners-data">${partner.prog_visit_mr}</div>
-                  <div class="col-7 intervention-data">
+                  <div class="col-md-4 col-12 truncate line intervention-data" title="${partner.name}">
+                    ${partner.name}
+                  </div>
+                  <div class="prog-visits col-md-1 col-12 prog-visits-width line partners-data">
+                    ${partner.prog_visit_mr}
+                  </div>
+                  <div class="col-md-7 col-12 intervention-data">
                     ${partner.interventions && partner.interventions.length
                       ? repeat(
                           partner.interventions,
                           (intervention: FullReportIntervention) => intervention.pk,
                           (intervention: FullReportIntervention) => html`
                             <div class="row">
-                              <div class="space-for-arrow layout-horizontal center-align">
-                                <etools-icon
-                                  name="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
-                                  @click="${() => this.toggleDetails(intervention)}"
-                                ></etools-icon>
-                              </div>
-                              <div class="col-md-7 truncate line" title="${intervention.number}">
+                              <div
+                                class="col-md-8 col-12 truncate line layout-horizontal"
+                                title="${intervention.number}"
+                              >
+                                <div class="space-for-arrow layout-horizontal center-align">
+                                  <etools-icon
+                                    name="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
+                                    @click="${() => this.toggleDetails(intervention)}"
+                                  ></etools-icon>
+                                </div>
                                 ${intervention.number}
                               </div>
-                              <div class="col-md-2 center-align days-since-last-visit line">
+                              <div class="col-md-2 col-2 center-align days-since-last-visit line">
                                 ${intervention.days_from_last_pv}
                               </div>
                               <div
-                                class="col-md-2 interact-icons layout-horizontal links"
+                                class="col-md-2 col-8 interact-icons layout-horizontal links"
                                 ?hidden="${!this.isUnicefUser}"
                               >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
