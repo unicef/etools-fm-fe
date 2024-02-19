@@ -55,11 +55,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
           ? html`
               <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
                 <div slot="row-data" class="editable-row row">
-                  <div class="col-data col-md-2 truncate">-</div>
-                  <div class="col-data col-md-2 truncate">-</div>
-                  <div class="col-data col-md-2 truncate">-</div>
-                  <div class="col-data col-md-2 truncate">-</div>
-                  <div class="col-data col-md-4 truncate">-</div>
+                  <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
             `

@@ -60,11 +60,9 @@ export function template(this: AttachmentsListComponent): TemplateResult {
       <!-- Table Empty Row -->
       ${this.loadingInProcess || !this.attachmentsList.length
         ? html`
-            <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+            <etools-data-table-row no-collapse>
               <div slot="row-data" class="editable-row row">
-                <div class="col-data col-3">-</div>
-                <div class="col-data col-3">-</div>
-                <div class="col-data col-6">-</div>
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

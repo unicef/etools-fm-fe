@@ -76,13 +76,8 @@ export function template(this: ActionPointsTab): TemplateResult {
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="layout-horizontal flex">
-                <div class="col-data col-md-3">-</div>
-                <div class="col-data col-md-3">-</div>
-                <div class="col-data col-md-3">-</div>
-                <div class="col-data col-md-1">-</div>
-                <div class="col-data col-md-1">-</div>
-                <div class="col-data col-md-1">-</div>
+              <div slot="row-data" class="row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

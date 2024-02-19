@@ -145,11 +145,8 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ${this.loadingInProcess || !this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout-horizontal editable-row flex">
-                <div class="checkbox-container"></div>
-                <div class="col-data flex-1 truncate">-</div>
-                <div class="col-data flex-2 truncate">-</div>
-                <div class="col-data flex-none w210px truncate">-</div>
+              <div slot="row-data" class="editable-row row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

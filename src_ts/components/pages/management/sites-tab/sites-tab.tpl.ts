@@ -134,11 +134,8 @@ export function template(this: SitesTabComponent): TemplateResult {
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout-horizontal">
-                <div class="col-data w30">-</div>
-                <div class="col-data w90px layout center-align">-</div>
-                <div class="col-data w150px">-</div>
-                <div class="col-data flex-auto">-</div>
+              <div slot="row-data" class="row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

@@ -61,10 +61,8 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
       ${this.loadingInProcess || !this.attachmentsList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout-horizontal editable-row flex">
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-4 ">-</div>
+              <div slot="row-data" class="editable-row row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

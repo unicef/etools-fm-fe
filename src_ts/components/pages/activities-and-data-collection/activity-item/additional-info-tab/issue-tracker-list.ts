@@ -119,11 +119,8 @@ export class IssueTrackerList extends LitElement {
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-                <div slot="row-data" class="layout-horizontal flex">
-                  <div class="col-data col-md-1 truncate">-</div>
-                  <div class="col-data col-md-4 truncate">-</div>
-                  <div class="col-data col-md-6 truncate">-</div>
-                  <div class="col-data col-md-1 truncate">-</div>
+                <div slot="row-data" class="row">
+                  <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
             `

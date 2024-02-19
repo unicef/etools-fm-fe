@@ -89,7 +89,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         ? html`
             <etools-data-table-row no-collapse>
               <div slot="row-data" class="row">
-                <div class="col-data col-12 no-data">No records found.</div>
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `

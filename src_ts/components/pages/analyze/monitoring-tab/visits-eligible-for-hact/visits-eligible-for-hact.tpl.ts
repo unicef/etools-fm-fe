@@ -103,10 +103,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
                   )
                 : html`
                     <div slot="row-data-details" class="row">
-                      <div class="custom-row-details-content col-md-2 col-12">-</div>
-                      <div class="custom-row-details-content col-md-4 col-12">-</div>
-                      <div class="custom-row-details-content col-md-4 col-12">-</div>
-                      <div class="custom-row-details-content col-md-2 col-12">-</div>
+                      <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                     </div>
                   `}
             </etools-data-table-row>
