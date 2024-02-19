@@ -29,15 +29,17 @@ export const headerDropdownStyles: TemplateResult = html`
     }
 
     organizations-dropdown {
-      width: 180px;
+      max-width: 180px;
+      margin-inline-start: 10px;
     }
 
     countries-dropdown {
-      width: 160px;
+      max-width: 160px;
+      margin-inline-start: 10px;
     }
 
     #languageSelector {
-      width: 120px;
+      max-width: 120px;
     }
 
     .w100 {
