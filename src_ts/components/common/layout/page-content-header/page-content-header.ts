@@ -87,7 +87,7 @@ export class PageContentHeader extends LitElement {
           }
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 576px) {
           .title-row {
             display: flex;
             margin-bottom: 3%;
@@ -112,10 +112,10 @@ export class PageContentHeader extends LitElement {
     // language=HTML
     return html`
       <div class="content-header-row title-row row">
-        <h1 class="col-lg-6 col-12">
+        <h1 class="col-md-6 col-12">
           <slot name="page-title"></slot>
         </h1>
-        <div class="title-row-actions col-lg-6 col-12">
+        <div class="title-row-actions col-md-6 col-12">
           <slot name="title-row-actions"></slot>
         </div>
       </div>
