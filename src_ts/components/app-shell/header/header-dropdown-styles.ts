@@ -39,6 +39,10 @@ export const headerDropdownStyles: TemplateResult = html`
       margin-inline-start: auto;
     }
 
+    etools-accesibility {
+      margin-inline-end: 10px;
+    }
+
     .w100 {
       width: 100%;
     }
@@ -48,15 +52,11 @@ export const headerDropdownStyles: TemplateResult = html`
       padding: 4px;
     }
 
-    etools-dropdown::part(display-input)::placeholder {
-      color: var(--sl-input-color);
+    etools-dropdown {
+      --sl-input-placeholder-color: var(--light-secondary-text-color);
       opacity: 1;
     }
 
-    etools-dropdown::part(display-input)::-ms-input-placeholder {
-      /* Edge 12-18 */
-      color: var(--sl-input-color);
-    }
     @media (max-width: 1024px) {
       etools-dropdown {
         min-width: 130px;
@@ -73,8 +73,7 @@ export const headerDropdownStyles: TemplateResult = html`
 
     @media (max-width: 768px) {
       etools-dropdown {
-        min-width: 130px;
-        width: 130px;
+        max-width: 130px;
       }
     }
     @media (max-width: 576px) {
