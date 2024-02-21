@@ -44,6 +44,7 @@ export const headerDropdownStyles: TemplateResult = html`
 
     etools-accesibility {
       margin-inline-end: 10px;
+      display: none;
     }
 
     .w100 {

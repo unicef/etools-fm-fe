@@ -290,7 +290,23 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       this.selectedLanguage = state.activeLanguage.activeLanguage;
       window.EtoolsLanguage = this.selectedLanguage;
       this.initialLanguage = this.selectedLanguage;
+      this.setLanguageDirection();
     }
+  }
+
+  private setLanguageDirection() {
+    setTimeout(() => {
+      const htmlTag = document.querySelector('html');
+      if (this.selectedLanguage === 'ar') {
+        htmlTag!.setAttribute('dir', 'rtl');
+        this.setAttribute('dir', 'rtl');
+        this.dir = 'rtl';
+      } else if (htmlTag!.getAttribute('dir')) {
+        htmlTag!.removeAttribute('dir');
+        this.removeAttribute('dir');
+        this.dir = '';
+      }
+    });
   }
 
   handleSaveProfile(e: any): void {
