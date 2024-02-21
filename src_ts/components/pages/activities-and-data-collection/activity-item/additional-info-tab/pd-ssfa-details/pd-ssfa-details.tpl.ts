@@ -55,11 +55,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
               <div class="col-data flex-1">${intervention.title}</div>
               <div class="col-data flex-1">${intervention.document_type}</div>
               <div class="col-data flex-1">
-                <a
-                  class="link-cell link-content"
-                  href="/pmp/interventions/${intervention.id}/progress/reports"
-                  target="_blank"
-                >
+                <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/reports" target="_blank">
                   <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text" style="text-transform: uppercase">${translate('VIEW')}</label>
                 </a>
