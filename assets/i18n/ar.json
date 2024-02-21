@@ -1,0 +1,705 @@
+{
+  "ACTIVITIES_LIST": {
+    "TITLE": "أنشطة",
+    "CREATE_NEW_BUTTON": "خلق جديد إبداع جديد",
+    "COLUMNS": {
+      "REFERENCE_NUMBER": "مرجع #",
+      "START_DATE": "تاريخ البدء",
+      "LOCATION_AND_SITE": "الموقع والموقع",
+      "MONITOR_TYPE": "FM الابتدائية",
+      "VISIT_LEAD": "زيارة الرصاص",
+      "TEAM_MEMBERS": "أعضاء الفريق",
+      "CHECKLISTS_COUNT": "قوائم المراجعة",
+      "STATUS": "حالة",
+      "SECTIONS": "الأقسام"
+    },
+    "REFERENCE_NO": "مرجع #",
+    "FILTERS": {
+      "MONITOR_TYPE": "FM الابتدائية",
+      "TEAM_MEMBERS": "أعضاء الفريق",
+      "VISIT_LEAD": "زيارة الرصاص",
+      "LOCATION": "موقع",
+      "SITE": "موقع",
+      "PARTNERS": "الشركاء",
+      "TPM_PARTNERS": "شركاء TPM",
+      "INTERVENTIONS": "بي دي/SPD",
+      "CP_OUTPUTS": "مخرجات حزب المحافظين",
+      "STATUS": "حالة",
+      "STARTS_AFTER": "يبدأ بعد",
+      "END_BEFORE": "نهاية قبل",
+      "OFFICE": "المكتب الميداني",
+      "SECTIONS": "الأقسام"
+    }
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "نقاط ملحوظة",
+    "PD_SPD_DETAILS": {
+      "TITLE": "تفاصيل PD/SPD",
+      "REFERENCE_NUMBER": "رقم المرجع",
+      "DOCUMENT_TYTLE": "عنوان الوثيقة",
+      "TYPE": "يكتب",
+      "PROGRESS_REPORTS": "تقارير مرحلية"
+    },
+    "SUMMARY": {
+      "OVERALL_FINDING_PLACEHOLDER": "أدخل النتيجة الشاملة",
+      "OVERALL_FINDING": "النتيجة الشاملة",
+      "ADDITIONAL_BUTTONS": {
+        "OFF_TRACK": "عن مسارها",
+        "ON_TRACK": "على الطريق",
+        "NOT_MONITORED": "غير مراقب"
+      }
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "NO_QUESTIONS_FOUND": "لم يتم العثور على أسئلة قابلة للتطبيق لهذا القسم. يرجى إضافتها في القوالب أو تحديد قسم آخر في تفاصيل النشاط",
+    "DETAIL_INPUT_PLACEHOLDER": "أدخل تفاصيل محددة للتحقيق",
+    "ADD_DETAIL": "أضف التفاصيل",
+    "COLUMNS":{
+      "TEXT": "قائمة مرجعية",
+      "DETAILS": "تفاصيل محددة للتحقيق",
+      "METHODS": "طُرق"
+    }
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "إضافة قائمة مرجعية",
+    "EDIT_CHECKLIST": "تحرير قائمة التحقق",
+    "COLUMNS": {
+      "TEAM_MEMBER": "أعضاء الفريق",
+      "METHOD_TYPE": "طريقة",
+      "INFO_SOURCE": "مصدر المعلومات"
+    },
+    "LABELS":{
+      "METHOD": "طريقة",
+      "INFO_SOURCE": "مصدر المعلومات"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "تفاصيل النشاط",
+    "OFFICE": "المكاتب الميدانية",
+    "VISIT_LETTER": "رسالة الزيارة",
+    "MONITOR_INFO": "مراقبة المعلومات",
+    "ENTRIES_TO_MONITOR": "الجهات التي يجب مراقبتها",
+    "START_DATE": "تاريخ البدء",
+    "END_DATE": "تاريخ الانتهاء",
+    "SECTIONS": "الأقسام",
+    "TEAM_MEMBERS": "أعضاء الفريق",
+    "VISIT_LEAD": "زيارة الرصاص",
+    "TPM_PARTNER": "شريك مراقبة الطرف الثالث",
+    "USER_TYPE": "المراقب الميداني الأساسي هو",
+    "USER_TYPES": {
+      "STAFF": "طاقم عمل",
+      "TPM": "مراقب طرف ثالث"
+    },
+    "PARTNER": "شريك",
+    "CP_OUTPUT": "إخراج سي بي",
+    "INTERVENTION": "تدخل",
+    "PARTNERS": "الشركاء",
+    "PARTNER_ORGANIZATION": "منظمة شريكة",
+    "CP_OUTPUTS": "مخرجات حزب المحافظين",
+    "CP_OUTPUTS_FOUND": "{{ count }} تم العثور على مخرجات CP:",
+    "PD_STATUS": "حالة PD",
+    "INTERVENTIONS_FOUND": "{{ count }} تم العثور على PD/SPD:",
+    "INTERVENTIONS": "PD/SPDs",
+    "CONNECTED_ENTRIES": "الإدخالات المتصلة المراد إضافتها مع PD/SPD المحدد:",
+    "ADD_ENTRY": "أضف أداة جديدة",
+    "ADD_PARTNER": "إضافة شريك",
+    "ADD_CP_OUTPUT": "إضافة إخراج CP",
+    "ADD_INTERVENTION": "أضف PD/SPD",
+    "REJECTION_NOTE": "مذكرة الرفض",
+    "REPORT_REJECTION_REASON": "سبب رفض التقرير",
+    "CANCELLATION_NOTE": "مذكرة الإلغاء",
+    "MAP_SELECT_LOCATION_BY_SITE": "حدد الموقع حسب الموقع",
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "حدد الموقع حسب مستوى المسؤول",
+    "EXPORT": "يصدّر"
+  },
+  "ACTIVITY_ITEM": {
+    "NEW_ACTIVITY": "نشاط جديد",
+  "STATUS_CHANGE": "تغيير الحالة",
+  "TRANSITIONS": {
+    "mark_details_configured": "التالي",
+    "mark_checklist_configured": "مراجعة",
+    "ASSIGN_AND_ACCEPT": "تعيين",
+    "assign": "تعيين",
+    "accept": "يقبل",
+    "mark_data_collected": "وضع اللمسات الأخيرة",
+    "submit_report": "يُقدِّم",
+    "complete": "مكتمل",
+    "reject": "يرفض",
+    "cancel": "يلغي",
+    "reject_report": "رفض التقرير"
+  },
+    "REASON_FOR_TRANSITION": {
+      "cancel": {
+        "LABEL": "تعليق الإلغاء",
+        "TITLE": "سبب الإلغاء"
+      },
+      "reject": {
+        "LABEL": "تعليق الرفض",
+        "TITLE": "سبب الرفض"
+      },
+      "reject_report": {
+        "LABEL": "الإبلاغ عن تعليق الرفض",
+        "TITLE": "الإبلاغ عن سبب الرفض"
+      }
+    },
+    "STATUSES": {
+      "draft": "مسودة",
+      "checklist": "قائمة تدقيق",
+      "review": "مراجعة",
+      "assigned": "مُكَلَّف",
+      "data_collection": "جمع البيانات",
+      "report_finalization": "الانتهاء من التقرير",
+      "submitted": "مراجعة التقرير",
+      "completed": "مكتمل",
+      "cancelled": "ألغيت"
+    },
+    "TABS": {
+      "details": "تفاصيل",
+      "attachments": "المرفقات",
+      "checklist": "قائمة تدقيق",
+      "review": "مراجعة",
+      "collect": "جمع البيانات",
+      "summary": "ملخص",
+      "additional-info": "معلومات إضافية",
+      "action-points": "نقاط العمل"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "TITLE": "مرفقات قائمة المراجعة",
+      "METHOD": "طريقة",
+      "DATA_COLLECTOR": "جامع البيانات",
+      "METHOD_TYPE": "نوع الطريقة",
+      "RELATED_TO": "متعلق ب",
+      "RELATED_NAME": "الاسم ذو الصلة",
+      "DATE_UPLOADED": "تاريخ الرفع",
+      "DOCUMENT_TYPE": "نوع الوثيقة",
+      "FILE_ATTACHMENT": "ملف مرفق"
+    },
+    "ACTION_POINTS": {
+      "TITLE": "نقاط العمل",
+      "REFERENCE": "رقم المرجع.",
+      "DESCRIPTION": "وصف",
+      "ASSIGNEE": "المكلف",
+      "SECTION_OFFICE": "القسم / المكتب",
+      "STATUS": "حالة",
+      "DUE_ON": "بسبب",
+      "PRIORITY": "أولوية",
+      "RELATED_TO": "متعلق ب",
+      "CONTENT": "محتوى",
+      "POPUP": {
+        "DESCRIPTION": "وصف",
+        "ENTER_DESCRIPTION": "أدخل الوصف",
+        "ASSIGNEE": "المكلف",
+        "ASSIGN_TO": "يسند إلى",
+        "DUE_ON": "بسبب",
+        "SECTION": "قسم",
+        "SELECT_SECTION": "حدد القسم",
+        "OFFICES": "مكاتب",
+        "SELECT_OFFICE": "حدد المكتب",
+        "RELATED_TO": "متعلق ب",
+        "SELECT_RELATED_TO": "حدد ذات صلة بـ",
+        "RELATED_NAME": "الاسم ذو الصلة",
+        "SELECT_RELATED_NAME": "حدد الاسم ذو الصلة",
+        "CATEGORIES": "فئات",
+        "SELECT_CATEGORY": "اختر الفئة",
+        "HIGH_PRIORITY": "ذا أهيمة عليا",
+        "ADD_AP": "إنشاء نقطة العمل",
+        "EDIT_AP": "تحرير نقطة العمل",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "انتقل إلى نقاط العمل لإكمالها"
+      }
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_POPUP_TITLE": "المرفقات ل",
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "SINGLE": "{{ count }} ملف",
+        "MULTIPLE": "{{ count }} ملفات",
+        "DEFAULT": "تحميل الملفات"
+      },
+      "DELETE_ITEM": "هل تريد حذف العنصر؟"
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "TEXT": "قائمة مرجعية",
+      "DETAILS": "تفاصيل محددة للتحقيق"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "مصدر المعلومات"
+  },
+  "CO_OVERVIEW": {
+    "CP_OUTCOME": "نتيجة CP",
+    "CP_INDICATORS": "مؤشرات حزب المحافظين",
+    "TARGET": "هدف",
+    "PARTNERS": "الشركاء",
+    "PROG_VISITS": "إم آر بروغ. ",
+    "PARTNERSHIPS": "الشراكه",
+    "SINCE_LAST_VISIT": "الأيام المنقضية منذ آخر زيارة للموقع",
+    "PD_OUTPUT": "إخراج بي دي",
+    "SPD_EXPECTED_RESULT": "SPD النتيجة المتوقعة",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "حدد نتيجة CP"
+    }
+  },
+  "ISSUE_TRACKER": {
+    "CP_OUTPUT": "إخراج سي بي",
+    "PARTNER": "شريك",
+    "LOCATION": "موقع",
+    "SITE": "موقع",
+    "LOCATION_SITE": "موقع",
+    "IS_NEW": "عرض الجديد فقط",
+    "RELATED_TO_TYPE": "نقاط ملحوظة ذات صلة بـ",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "إخراج سي بي",
+      "PARTNER": "شريك",
+      "LOCATION": "الموقع/الموقع"
+    },
+    "STATUS": "حالة",
+    "STATUSES": {
+      "NEW": "جديد",
+      "PAST": "ماضي"
+    },
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "حدد إخراج CP",
+      "PARTNER": "حدد الشريك",
+      "LOCATION": "اختر موقعا",
+      "SITE": "حدد الموقع",
+      "STATUS": "حدد الحالة",
+      "ISSUE": "أدخل النقاط المهمة"
+    },
+    "ADD_POPUP_TITLE": "أضف نقاطًا للملاحظة",
+    "EDIT_POPUP_TITLE": "تحرير نقاط الملاحظة",
+    "POPUP_ERROR_CP_OUTPUT": "لم يتم توفير إخراج CP",
+    "POPUP_ERROR_PARTNER": "لم يتم توفير الشريك",
+    "POPUP_ERROR_LOCATION": "لم يتم توفير الموقع",
+    "RELATED_TO": "متعلق ب",
+    "NAME": "اسم",
+    "ISSUE": "نقاط ملحوظة",
+    "ATTACHMENTS": "المرفقات",
+    "ATTACHMENT": "مرفق",
+    "UPLOAD_LABEL": "أرفق ملف",
+    "TABLE_CAPTION": "{{ start }} - {{ end }} ل {{ count }} ملاحظات للعرض",
+    "LAST_MODIFIED_BY": "التعديل الأخير من قبل",
+    "AUTHOR": "النقاط المهمة التي أثارها",
+    "CLOSED_BY": "ملاحظات مغلقة بواسطة",
+    "ATTACHMENTS_FILES": {
+      "SINGLE": "ملف",
+      "MULTIPLE": "الملفات"
+    }
+  },
+  "RATIONALE": {
+    "TITLE": "الأساس المنطقي للرصد الميداني السنوي",
+  "POPUP_TITLE": "الأساس المنطقي",
+  "YEAR_DRD_LABEL": "سنة",
+  "YEAR_DRD_PLACEHOLDER": "اختر السنة",
+  "LABELS": {
+    "PRIORITIZATION": "معايير تحديد الأولويات",
+    "METHODOLOGY": "ملاحظات المنهجية",
+    "MODALITIES": "أشكال",
+    "VISITS": "الزيارات المستهدفة لهذا العام",
+    "PARTNER_ENGAGEMENT": "مشاركة الشريك",
+    "OTHER": "تعليقات أخرى"
+  },
+  "PLACEHOLDERS": {
+    "PRIORITIZATION": "أدخل معايير الأولوية",
+    "METHODOLOGY": "أدخل ملاحظات المنهجية",
+    "MODALITIES": "أدخل الطرائق",
+    "VISITS": "أدخل الزيارات المستهدفة لهذا العام",
+    "PARTNER_ENGAGEMENT": "أدخل مشاركة الشريك",
+    "OTHER": "أدخل تعليقات أخرى"
+  },
+  "HELPER_TEXTS": {
+    "PRIORITIZATION": "على سبيل المثال، المناطق الجغرافية التي تواجه فيها النتائج أكبر التحديات، والمخرجات المرتبطة بالاستجابة الإنسانية",
+    "METHODOLOGY": "على سبيل المثال، الاختلافات في المنهجية القياسية والأساس المنطقي، والمواصفات المتعلقة بالحد الأدنى لعدد ونوع مناقشات مجموعات التركيز",
+    "MODALITIES": "على سبيل المثال، الموظفون، ومتطوعو الأمم المتحدة، واتفاقيات الخدمات الخاصة، ومراقبي التكنولوجيا الخارجيين للقيام بالرصد الميداني",
+    "PARTNER_ENGAGEMENT": "على سبيل المثال، أي ترتيبات تم وضعها للزيارات المشتركة"
+  },
+  "ANNUAL_FM_RATIONALE": {
+    "LAST_EDITED": "التعديل الأخير تم بواسطة {{ user }} على {{ date }}"
+  }
+  },
+  "TEMPLATES": {
+    "FILTERS": {
+      "LEVEL_LABEL": "اختار مستوى",
+      "LEVEL_PLACEHOLDER": "اختار مستوى",
+      "OUTPUT_LABEL": "حدد إخراج CP",
+      "OUTPUT_PLACEHOLDER": "حدد إخراج CP",
+      "PARTNER_LABEL": "حدد الشريك",
+      "PARTNER_PLACEHOLDER": "حدد الشريك",
+      "INTERVENTION_LABEL": "حدد PD/SPD",
+      "INTERVENTION_PLACEHOLDER": "حدد PD/SPD"
+    },
+    "COLUMNS": {
+      "DETAILS": "تفاصيل محددة للتحقيق",
+      "TEXT": "قائمة مرجعية",
+      "METHODS": "طُرق"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "أدخل تفاصيل محددة للتحقيق",
+    "ADD_DETAIL": "أضف التفاصيل"
+  },
+  "QUESTIONS": {
+    "EDIT_POPUP_TITLE": "تحرير السؤال",
+  "ADD_POPUP_TITLE": "أضف سؤال",
+  "VIEW_POPUP_TITLE": "عرض السؤال",
+  "PLACEHOLDERS": {
+    "QUESTION": "أدخل نص السؤال",
+    "SECTIONS": "حدد الأقسام",
+    "METHODS": "حدد طرق التجميع",
+    "CATEGORY": "اختر مجموعة",
+    "GROUP": "اختر مجموعة",
+    "LEVEL": "حدد المستوى المستهدف للسؤال",
+    "ANSWER_TYPE": "حدد نوع الإجابة",
+    "SCALE_SIZE": "حدد حجم المقياس"
+  },
+  "LABELS": {
+    "QUESTION": "سؤال",
+    "LEVEL": "مستوى السؤال المستهدف",
+    "SECTIONS": "الأقسام",
+    "METHODS": "طرق الجمع",
+    "GROUP": "مجموعة",
+    "ANSWER_TYPE": "نوع الإجابة",
+    "IS_HACT": "يتم احتسابه في النهج المنسق",
+    "IS_ACTIVE": "نشط",
+    "SCALE_SIZE": "حجم المقياس",
+    "ORDER": "طلب"
+  },
+  "TABLE_CAPTION": "{{ start }} - {{ end }} ل {{ count }} أسئلة للعرض",
+  "COLUMNS": {
+    "TEXT": "سؤال",
+    "LEVEL": "مستوى السؤال المستهدف",
+    "METHODS": "طرق الجمع",
+    "ANSWER_TYPE": "نوع الإجابة",
+    "CATEGORY": "مجموعة",
+    "IS_ACTIVE": "نشط",
+    "SECTIONS": "الأقسام",
+    "IS_HACT": "يتم احتسابه في النهج المنسق",
+    "ANSWER_OPTIONS": "تفاصيل التقارير"
+  },
+  "DETAILS": {
+    "1": "الأقسام",
+    "2": "التهم الخاصة بالنهج المنسق",
+    "3": "تفاصيل التقارير"
+  },
+  "LEVEL": {
+    "PARTNER": "شريك",
+    "OUTPUT": "إخراج سي بي",
+    "INTERVENTION": "بي دي/SPD"
+  }
+  },
+  "SITES": {
+    "PLACEHOLDERS": {
+      "SEARCH": "البحث عن الموقع أو الموقع",
+      "NAME": "أدخل اسم الموقع",
+      "STATUS": "حدد حالة الموقع",
+      "ADMIN_LOCATION": "حقل فارغ"
+    },
+    "LABELS": {
+      "NAME": "اسم الموقع",
+      "STATUS": "هي الحالة النشطة",
+      "ADMIN_LOCATION": "الموقع الإداري للوالدين"
+    },
+    "SHOW_INACTIVE": "إظهار المواقع غير النشطة",
+    "TABLE_CAPTION": "مواقع المواقع",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "الموقع الإداري للوالدين",
+      "STATUS": "هي الحالة النشطة",
+      "NAME": "اسم الموقع"
+    },
+    "REMOVE_CONFIRMATION": "هل أنت متأكد أنك تريد حذف هذا الموقع المحدد؟",
+    "SELECTED_SITE": "الموقع المختار",
+    "ADD_SL": "أضف موقعًا محددًا للموقع",
+    "EDIT_SL": "تحرير الموقع المحدد للموقع",
+    "STATUS": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير فعال"
+    }
+  },
+  "MAIN": {
+    "SAVING_DATA_IN_PROCESS": "حفظ البيانات",
+    "LOADING_DATA_IN_PROCESS": "تحميل البيانات",
+    "LOADING_FILTERS_DATA": "جارٍ تحميل المرشحات",
+    "REMOVING_DATA_IN_PROCESS": "حذف البيانات",
+    "EMPTY_FIELD": "حقل فارغ",
+    "LATITUDE": "خط العرض",
+    "LONGITUDE": "خط الطول",
+    "BUTTONS": {
+      "ADD": "يضيف",
+      "SAVE": "يحفظ",
+      "DELETE": "يمسح",
+      "CONFIRM": "يتأكد",
+      "CANCEL": "يلغي",
+      "OK": "نعم"
+    },
+    "ENTER": "يدخل",
+    "UPLOAD": "رفع ملف",
+    "DOWNLOAD": "تحميل",
+    "SEARCH": "يبحث",
+    "FILTER": "منقي",
+    "BACK": "خلف"
+  },
+  "LEVELS_OPTIONS": {
+    "PARTNER": "شريك",
+    "OUTPUT": "إخراج سي بي",
+    "INTERVENTION": "بي دي/SPD"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "TEXT": "نص",
+  "NUMBER": "رقم",
+  "NUMBER_INTEGER_TYPE": "رقم صحيح",
+  "NUMBER_FLOAT_TYPE": "عدد تعويم",
+  "BOOL": "منطقية",
+  "LIKERT_SCALE": "مقياس ليكرت"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "طاقم عمل",
+    "TPM": "TPM"
+  },
+  "ACTIVITY_STATUSES": {
+    "DRAFT": "مسودة",
+    "CHECKLIST": "قائمة تدقيق",
+    "REVIEW": "مراجعة",
+    "ASSIGNED": "مُكَلَّف",
+    "DATA_COLLECTION": "جمع البيانات",
+    "REPORT_FINALIZATION": "الانتهاء من التقرير",
+    "SUBMITTED": "مراجعة التقرير",
+    "COMPLETED": "مكتمل",
+    "CANCELLED": "ألغيت"
+  },
+  "ATTACHMENTS_LIST": {
+    "TITLE": "المرفقات",
+    "RELATED_DOCUMENTS": "الوثائق ذات الصلة",
+    "REPORT_ATTACHMENTS": "مرفقات التقرير",
+    "EDIT_POPUP_TITLE": "تحرير المرفق",
+    "ADD_POPUP_TITLE": "إضافة مرفق",
+    "DELETE_POPUP_TITLE": "هل تريد حذف المرفق؟",
+    "FILE_TYPE_LABEL": "نوع الوثيقة",
+    "FILE_TYPE_PLACEHOLDER": "حدد نوع المستند",
+    "COLUMNS": {
+      "CREATED": "تاريخ الرفع",
+      "FILE_TYPE": "نوع الوثيقة",
+      "FILE": "ملف مرفق"
+    }
+  },
+  "NAVIGATION_MENU": {
+    "TITLE": "المراقبة الميدانية",
+    "MANAGEMENT": "إدارة",
+    "TEMPLATES": "قوالب",
+    "VISITS": "الزيارات",
+    "ANALYSIS": "تحليل",
+    "COMMUNITY_CHANNELS": "قنوات مجتمع eTools",
+    "KNOWLEDGE_BASE": "قاعدة المعرفة",
+    "DISCUSSION": "مناقشة",
+    "INFORMATION": "معلومة",
+    "PROFILEANDSIGNOUT": "الملف الشخصي وتسجيل الخروج",
+    "REFRESH": "ينعش",
+    "SUPPORT": "يدعم",
+    "APPSELECTOR": "محدد التطبيق",
+    "IMPLEMENTATION_INTELLIGENCE": "ذكاء التنفيذ",
+    "TPM": "مراقبو الطرف الثالث",
+    "DASHBOARD": "لوحة القيادة"
+  },
+  "FILTERS_ELEMENT": {
+    "TITLE": "المرشحات",
+    "CLEAR_ALL": "امسح الكل"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "موقع",
+    "MISSING_SITES": {
+      "NO_SITES": "لا يوجد مواقع لهذا الموقع..",
+      "ADD_MISSING": "يمكنك إضافة المواقع المفقودة في "
+    },
+    "NO_SEARCH_RESULTS": {
+      "NO_LOCATIONS": "لم يتم العثور على مواقع أو مواقع. ",
+      "CHANGE_REQUEST": "من فضلك قم بتغيير طلب البحث الخاص بك"
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "HEADER": "أُووبس! ",
+    "CONTENT_DOESNT_EXIST": "يبدو أن الصفحة التي تبحث عنها غير موجودة.  ",
+    "HOME": "بيت",
+    "TRY_AGAIN": " وحاول مرة أخرى؟"
+  },
+  "MANAGEMENT": {
+    "TITLE": "إدارة",
+    "EXPORT": "يصدّر",
+    "NAVIGATION_TABS": {
+      "SITES": "مواقع",
+      "RATIONALE": "الأساس المنطقي"
+    }
+  },
+  "TEMPLATES_NAV": {
+    "TITLE": "قوالب",
+  "NAVIGATION_TABS": {
+    "QUESTIONS": "أسئلة",
+    "ISSUE_TRACKER": "نقاط ملحوظة",
+    "TEMPLATE": "قوالب"
+  }
+  },
+  "ANALYZE": {
+    "TITLE": "تحليل",
+    "NAVIGATION_TABS": {
+      "MONITORING_ACTIVITY": "نشاط الرصد",
+      "COUNTRY_OVERVIEW": "نظرة عامة على البلد"
+    },
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": " تم الانتهاء من الزيارات",
+      "NAVIGATION_TABS": {
+        "BY_PARTNER": "بواسطة الشريك",
+        "BY_PD_SPD": "بواسطة PD/SPD",
+        "BY_CP_OUTPUT": "بواسطة إخراج CP",
+        "BY_LOCATION": "حسب الموقع"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "TITLE": "الزيارات المؤهلة للزيارة البرنامجية لـ HACT",
+        "PARTNER": "شريك",
+        "HACT_ELIGIBLE_VISITS": "الزيارات المؤهلة لـ HACT",
+        "VISIT": "يزور",
+        "CP_OUTPUT": "إخراج سي بي",
+        "PD_SPD": "بي دي/SPD",
+        "VISIT_END_DATE": "قم بزيارة تاريخ الانتهاء"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "TITLE": "التغطية الجغرافية",
+        "COMPLETED_VISITS": "الزيارات المكتملة",
+        "NO_VISITS": "لا زيارات"
+      },
+      "COVERAGE": {
+        "TITLE": "تغطية الشراكات النشطة",
+        "CP_OUTPUT": {
+          "LABEL": "عرض مخرجات الإنتاج الأنظف التي يمكن مراقبتها على مستوى المجتمع."
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "نسبة الإكمال ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "نسبة الإكمال ↓",
+          "COMPLETED_TASKS": "المهام المكتملة",
+          "MINIMUM_REQUIRED": "الحد الأدنى المطلوب من الزيارات البرنامجية",
+          "SORT_BY": "ترتيب حسب",
+          "MINIMUM_REQUIRED_VISITS": "الحد الأدنى المطلوب ",
+          "DAYS_SINCE_LAST_VISIT": "الأيام منذ آخر زيارة "
+        },
+        "PD_SPD": {          
+          "LABEL": "عرض PD/SPDs النشطة التي تقدم مخرجات CP التي يمكن مراقبتها على مستوى المجتمع. (إذا لم تكن هناك أية زيارات لـ PD/SPD، فإن “الأيام منذ آخر زيارة” هي عدد الأيام منذ بداية PD/SPD)"
+        },
+        "OPEN_ISSUES": {
+          "TITLE": "افتح الملاحظات ونقاط العمل",
+          "ISSUES": "نقاط ملحوظة",
+          "ACTION_POINTS": "نقاط العمل"
+        },
+        "SHARED_TAB": {
+          "DAYS_SINCE_LAST_VISIT": "الأيام منذ آخر زيارة",
+          "AVERAGE_DAYS_SINCE": "متوسط ​​الأيام بين الزيارات"
+        }
+      }
+    }
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "مكتمل",
+  "PLANNED": "المخطط لها",
+  "COMPLETED_VISITS": "الزيارات المكتملة",
+  "PLANNED_VISITS": "الزيارات المخططة (حتى ديسمبر)"
+  },
+  "THIS_FIELD_IS_REQUIRED": "هذه الخانة مطلوبه",
+  "LOCATION_TO_BE_VISITED": "الموقع المراد زيارته",
+  "SITE_TO_BE_VISITED": "الموقع المراد زيارته",
+  "ROWS_PER_PAGE": "صفوف لكل صفحة:",
+  "UPLOAD_FILE": "رفع ملف",
+  "SELECT": "يختار",
+  "CANCEL": "يلغي",
+  "TRUE": "حقيقي",
+  "FALSE": "خطأ شنيع",
+  "VIEW": "منظر",
+  "FILTER_BY_SECTION": "تصفية حسب القسم",
+  "SUPPORT": "يدعم",
+  "ERROR_CHANGING_WORKSPACE": "حدث خطأ أثناء تغيير مساحة العمل",
+  "ERROR_CHANGING_ORGANIZATION": "حدث خطأ أثناء تغيير مؤسستك",
+  "SELECT_ORGANIZATION": "حدد المنظمة",
+  "CHANGES_SAVED": "يتم حفظ كافة التغييرات",
+  "ERROR_ATTACHEMENT_LOAD": "لا يمكن تحميل المرفقات",
+  "ERROR_CHANGES_SAVE": "لا يمكن حفظ التغييرات. ",
+  "SELECT_CORRECT_FILE": "من فضلك، حدد الملف الصحيح",
+  "ERROR_LOAD_LOCATIONS": "لا يمكن تحميل المواقع للقطعة",
+  "ERROR_LOAD_ACTIVITIES_LIST": "لا يمكن تحميل قائمة الأنشطة",
+  "ERROR_CREATE_ACTIVITY": "لا يمكن إنشاء النشاط",
+  "ERROR_UPLOAD": "لا يمكن تحميل المرفقات. ",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "خطأ في تحميل الملف: الملف كبير جدًا",
+  "ERROR_UPDATE_CHECKLIST": "لا يمكن تحديث قائمة التحقق، يرجى المحاولة مرة أخرى",
+  "START_DATE_BEFORE_END_DATE": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
+  "ERROR_LOAD_REPORT": "لا يمكن تحميل بيانات FullReport",
+  "ERROR_PLAN_YEAR": "لا يمكن التخطيط للسنة المحددة",
+  "SELECT_CORRECT_LOCATION": "من فضلك، حدد الموقع الصحيح على الخريطة",
+  "ERROR_LOAD_QUESTIONS": "لا يمكن تحميل قائمة الأسئلة",
+  "ERROR_LOAD_TEMPLATES": "لا يمكن تحميل قائمة قوالب الأسئلة",
+  "ERROR_UPDATE_QUESTION_TEMPLATE": "لا يمكن تحديث قوالب الأسئلة بالمعرف",
+  "ERROR_CHANGE_ACTIVITY_STATUS": "لا يمكن تغيير حالة النشاط",
+  "PLEASE_TRY_AGAIN": "الرجاء معاودة المحاولة في وقت لاحق",
+  "PLEASE_WAIT_COUNTRY_CHANGE": "الرجاء الانتظار بينما تتغير بيانات الدولة...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "الرجاء الانتظار بينما تتغير بيانات المؤسسة...",
+  "ERROR_SAVE_PROFILE": "لم يتم حفظ بيانات الملف الشخصي. ",
+  "TPM": {
+    "TITLE": "مراقبو الطرف الثالث",
+  "ADD_NEW_VENDOR": "إضافة بائع جديد",
+  "VENDOR_NUMBER_NOT_FOUND": "لم يتم العثور على رقم البائع",
+  "NOT_SYNCED": "غير متزامن",
+  "MARKED_FOR_DELETION_IN_VISION": "تم وضع علامة للحذف في VISION",
+  "BLOCKED_IN_VISION": "محظور في VISION",
+  "SYNCED_FROM_VISION": "تمت المزامنة من VISION",
+    "FILTERS": {
+      "SEARCH": "بحث البائع"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "رقم البائع",
+      "TPM_NAME": "اسم TPM",
+      "PHONE_NUMBER": "رقم التليفون",
+      "EMAIL": "بريد إلكتروني"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "جهات اتصال TPM",
+    "ATTACH_FILE_FOR_VISIT": "إرفاق ملف للزيارة الشاملة",
+  "ACCESS_MANAGEMENT_PORTAL": "بوابة إدارة الوصول",
+  "SHOW_INACTIVE": "إظهار غير نشط",
+  "TABS": {
+    "details": "تفاصيل الشريك",
+    "attachments": "المرفقات"
+  },
+  "TPM_PARTNER_DETAILS": "تفاصيل شريك TPM",
+  "VENDOR_NUMBER": "رقم البائع",
+  "TPM_NAME": "اسم TPM",
+  "PHONE_NUMBER": "رقم التليفون",
+  "EMAIL": "بريد إلكتروني",
+  "ADDRESS": "عنوان",
+  "VALID_EMAIL_REQUIRED": "مطلوب بريد إلكتروني صحيح"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "موضع",
+      "FIRST_NAME": "الاسم الأول",
+      "LAST_NAME": "اسم العائلة",
+      "PHONE_NUMBER": "رقم التليفون",
+      "EMAIL": "بريد إلكتروني",
+      "ACTIVE": "نشيط"
+    }
+  },
+  "INACTIVE": "غير نشط",
+  "NO_ACCESS": "ممنوع الدخول",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "تحذير! ",
+  "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "أنت على وشك إكمال زيارة تحتوي على عناصر \"غير خاضعة للمراقبة\". ",
+  "ACTION_POINT_REMINDER": "مع ملاحظة أنه لم يتم طرح أي نقاط عمل، يرجى تذكر إضافة أي نقاط قبل المتابعة إذا لزم الأمر.",
+  "CONTINUE": "يكمل",
+  "INVALID_NUMBER": "رقم غير صالح",
+  "DUPLICATE": "ينسخ",
+  "ERROR_AT_SAVING_DUPLICATE": "حدث خطأ أثناء حفظ النسخة المكررة",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "لا توجد بيانات نشاط لتكرارها",
+  "PD_STATUS": {
+    "DRAFT": "تطوير",
+    "REVIEW": "مراجعة",
+    "SIGNATURE": "إمضاء",
+    "SIGNED": "وقعت",
+    "ACTIVE": "نشيط",
+    "CANCELLED": "ألغيت",
+    "ENDED": "انتهى",
+    "CLOSED": "مغلق",
+    "SUSPENDED": "معلق",
+    "TERMINATED": "تم إنهاؤه",
+    "EXPIRED": "منتهي الصلاحية"
+  }
+}
