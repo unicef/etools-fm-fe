@@ -1,11 +1,11 @@
-import {css, CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './sites-popup.tpl';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
 import {sitesUpdateSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/site-specific-locations.effects';
-import {LatLng, LatLngTuple, LeafletEvent, LeafletMouseEvent} from 'leaflet';
 import {getDifference} from '../../../../utils/objects-diff';
 import {IMarker, MapHelper} from '../../../../common/map-mixin';
 import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
@@ -23,7 +23,7 @@ import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 
-const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
+const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505];
 const LAT_LNG_DEBOUNCE_TIME = 300;
 
 @customElement('sites-popup')
@@ -40,7 +40,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
 
   @query('#map') private mapElement!: HTMLElement;
 
-  defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
+  defaultMapCenter: L.LatLngTuple = DEFAULT_COORDINATES;
 
   private sitesObjects: Site[] | null = null;
   private readonly updateSiteLocationUnsubscribe: Unsubscribe;
@@ -124,8 +124,8 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       return;
     }
     this.savingInProcess = true;
-    const {lat, lng}: LatLng =
-      (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as LatLng);
+    const {lat, lng}: L.LatLng =
+      (this.MapHelper.dynamicMarker && this.MapHelper.dynamicMarker.getLatLng()) || ({} as L.LatLng);
     if (lat && lng) {
       this.editedData.point = {
         type: 'Point',
@@ -153,25 +153,29 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     return active ? 1 : 0;
   }
 
-  mapInitialization(): void {
+  async mapInitialization() {
+    let mapWasMissing = false;
     if (!this.MapHelper.map) {
       this.MapHelper.initMap(this.mapElement);
-      this.MapHelper.map!.on('click', (clickEvent: LeafletEvent) => {
-        const {lat, lng} = (clickEvent as LeafletMouseEvent).latlng;
-        this.MapHelper.changeDMLocation([lat, lng]);
-        this.setCoordsString();
-      });
-    }
-
-    this.renderMarkers();
-    const id: number | null = (this.editedData && this.editedData.id) || null;
-    if (id) {
-      const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
-      this.MapHelper.dynamicMarker = site || null;
-      this.setCoordsString();
+      mapWasMissing = true;
     }
 
     this.MapHelper.waitForMapToLoad().then(() => {
+      if (mapWasMissing) {
+        this.MapHelper.map!.on('click', (clickEvent: L.LeafletEvent) => {
+          const {lat, lng} = (clickEvent as L.LeafletMouseEvent).latlng;
+          this.MapHelper.changeDMLocation([lat, lng]);
+          this.setCoordsString();
+        });
+      }
+
+      this.renderMarkers();
+      const id: number | null = (this.editedData && this.editedData.id) || null;
+      if (id) {
+        const site = (this.MapHelper.staticMarkers || []).find((marker: IMarker) => marker.staticData.id === id);
+        this.MapHelper.dynamicMarker = site || null;
+        this.setCoordsString();
+      }
       this.setMapView();
     });
   }
@@ -202,16 +206,16 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
       return;
     }
     const sitesCoords: MarkerDataObj[] = this.sitesObjects.map((site: Site) => {
-      const coords: LatLngTuple = [...site.point.coordinates].reverse() as LatLngTuple;
+      const coords: L.LatLngTuple = [...site.point.coordinates].reverse() as L.LatLngTuple;
       return {coords, staticData: site, popup: site.name};
-    });
+    }) as any;
     this.MapHelper.addCluster(sitesCoords);
   }
 
   private setMapView(): void {
-    const coords: LatLngTuple =
+    const coords: L.LatLngTuple =
       (this.editedData && this.editedData.point && this.editedData.point.coordinates) || this.defaultMapCenter;
-    const reversedCoords: LatLngTuple = [...coords].reverse() as LatLngTuple;
+    const reversedCoords: L.LatLngTuple = [...coords].reverse() as L.LatLngTuple;
     const zoom: number = coords === this.defaultMapCenter ? 8 : 15;
     this.MapHelper.map!.setView(reversedCoords, zoom);
     if (this.MapHelper.dynamicMarker) {
@@ -242,7 +246,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
         .selected-sites-label {
           padding: 13px 12px;
           color: #858585;
-          font-size: 17px;
+          font-size: var(--etools-font-size-16, 16px);
           display: flex;
           align-content: center;
           align-items: flex-end;

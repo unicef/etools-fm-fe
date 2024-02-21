@@ -1,10 +1,12 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
-import '../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {SharedStyles} from '../../styles/shared-styles';
-import {buttonsStyles} from '../../styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import {getEndpoint} from '../../../endpoints/endpoints';
 import {SITES_EXPORT} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
@@ -47,31 +49,33 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
 
   @property() activeTab: string = RATIONALE_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
+  @property()
+  allowView = false;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles];
   }
 
   render(): TemplateResult | void {
-    const canView: boolean = this.canView();
-    return canView
+    return this.allowView
       ? html`
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
 
             <div slot="title-row-actions" class="content-header-actions" ?hidden="${this.activeTab !== SITES_TAB}">
-              <paper-button id="export" tracker="Export" @tap="${this.exportData}">
-                <iron-icon icon="file-download"></iron-icon>${translate('MANAGEMENT.EXPORT')}
-              </paper-button>
+              <etools-button class="neutral" variant="text" @click="${this.exportData}" tracker="Export">
+                <etools-icon name="file-download" slot="prefix"></etools-icon>
+                ${translate('MANAGEMENT.EXPORT')}
+              </etools-button>
             </div>
 
-            <etools-tabs
+            <etools-tabs-lit
               id="tabs"
               slot="tabs"
               .tabs="${this.pageTabs}"
-              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
               .activeTab="${this.activeTab}"
-            ></etools-tabs>
+            ></etools-tabs-lit>
           </page-content-header>
 
           ${this.getTabElement()}
@@ -87,6 +91,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
           return;
         }
         this.activeTab = subRouteName as string;
+        this.allowView = this.canView();
       })
     );
     this.activeLanguageUnsubscribe = store.subscribe(
@@ -99,8 +104,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
     this.activeLanguageUnsubscribe();
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

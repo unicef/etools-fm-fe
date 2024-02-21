@@ -1,9 +1,10 @@
-import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import {StyleInfo, styleMap} from 'lit-html/directives/style-map';
+import {CSSResult, LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
 import {translate} from 'lit-translate';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 
 @customElement('open-issues-shared-tab-template')
 export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {

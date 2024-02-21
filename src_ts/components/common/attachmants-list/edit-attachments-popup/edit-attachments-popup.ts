@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './edit-attachments-popup.tpl';
 import {store} from '../../../../redux/store';
@@ -130,13 +131,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   protected fileSelected({success}: {success?: any; error?: string}): void {
     this.uploadInProgress = false;
-    if (success) {
-      try {
-        this.selectedFileId = success.id;
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    this.selectedFileId = success?.id || null;
   }
 
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {

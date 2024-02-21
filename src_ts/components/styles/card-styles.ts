@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 
 // language=CSS
 export const CardStyles: CSSResult = css`
@@ -19,11 +19,11 @@ export const CardStyles: CSSResult = css`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-size: var(--etools-font-size-18, 18px);
   }
 
   .card-title-box .card-title.counter {
-    font-size: 20px;
+    font-size: var(--etools-font-size-20, 20px);
     font-weight: 500;
   }
 
@@ -44,7 +44,7 @@ export const CardStyles: CSSResult = css`
   }
 
   .card-content {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   .editable-row {
@@ -62,7 +62,7 @@ export const CardStyles: CSSResult = css`
     z-index: 100;
   }
 
-  .editable-row .hover-block paper-icon-button {
+  .editable-row .hover-block etools-icon-button {
     color: rgba(0, 0, 0, 0.54);
     padding-left: 5px;
   }
@@ -108,8 +108,12 @@ export const CardStyles: CSSResult = css`
     margin: 4px 0;
   }
 
+  .pr-15 {
+    padding-right: 15px;
+  }
+
   .row-details-content {
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
     padding-right: 100px;
   }
 
@@ -127,7 +131,7 @@ export const CardStyles: CSSResult = css`
 
   etools-data-table-header {
     --list-divider-color: 1px solid rgba(244, 243, 242, 0.26);
-    --list-bg-color: #f2eee8;
+    --list-bg-color: #f9f9f9;
     border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   }
 
@@ -137,13 +141,13 @@ export const CardStyles: CSSResult = css`
 
   .remove-title {
     padding: 16px 25px 15px;
-    font-size: 17px;
+    font-size: var(--etools-font-size-16, 16px);
     color: rgba(0, 0, 0, 0.87);
     font-weight: 500;
     line-height: 28px;
   }
 
-  paper-textarea {
+  etools-textarea {
     overflow: hidden;
   }
 

@@ -1,4 +1,4 @@
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {sectionsDataSelector} from '../../../redux/selectors/static-data.selectors';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
@@ -7,7 +7,7 @@ import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {SECTIONS} from '../../../endpoints/endpoints-list';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const SectionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

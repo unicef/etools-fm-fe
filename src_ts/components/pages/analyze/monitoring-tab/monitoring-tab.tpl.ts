@@ -1,14 +1,12 @@
 import {MonitoringTabComponent} from './monitoring-tab';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '../../../common/progressbar/proportional-progress-bar';
 import './geographic-coverage/geographic-coverage';
 import './shared-section-with-tabs-template/shared-section-with-tabs-template';
 import './visits-eligible-for-hact/visits-eligible-for-hact';
 import {
   COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP,
-  COVERAGE_PAGE_TABS,
-  OPEN_ISSUES_CONTENT_MAP,
-  OPEN_ISSUES_PAGE_TABS
+  OPEN_ISSUES_CONTENT_MAP
 } from './monitoring-tab.navigation.constants';
 import {translate} from 'lit-translate';
 
@@ -41,7 +39,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
       <shared-section-with-tabs-template
         class="monitoring-activity__item"
         .sectionTitle="${translate('ANALYZE.MONITORING_TAB.COVERAGE.TITLE')}"
-        .pageTabs="${COVERAGE_PAGE_TABS}"
+        .pageTabs="${this.coverageTabs}"
         .activeTab="${this.coverageActiveTab}"
         .tabContentMap="${COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP}"
       ></shared-section-with-tabs-template>
@@ -54,7 +52,7 @@ export function template(this: MonitoringTabComponent): TemplateResult {
               <!--  Open issues and Action points  -->
               <shared-section-with-tabs-template
                 .sectionTitle="${translate('ANALYZE.MONITORING_TAB.COVERAGE.OPEN_ISSUES.TITLE')}"
-                .pageTabs="${OPEN_ISSUES_PAGE_TABS}"
+                .pageTabs="${this.openIssuesTabs}"
                 .activeTab="${this.openIssuesActiveTab}"
                 .tabContentMap="${OPEN_ISSUES_CONTENT_MAP}"
               ></shared-section-with-tabs-template>

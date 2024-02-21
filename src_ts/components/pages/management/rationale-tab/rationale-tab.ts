@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './rationale-tab.tpl';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -19,6 +20,7 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import dayjs from 'dayjs';
 
 @customElement('rationale-tab')
 export class RationaleTabComponent extends LitElement {

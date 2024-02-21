@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {store} from '../../../../../redux/store';
 import {activitySummary} from '../../../../../redux/reducers/activity-summary.reducer';
 import {
@@ -16,7 +17,7 @@ import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {SUMMARY_TAB} from '../activities-tabs';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({activitySummary, findingsComponents});

@@ -1,18 +1,22 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import '@polymer/paper-toggle-button';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+// import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
-import '@polymer/paper-radio-group/paper-radio-group';
-import '@polymer/paper-radio-button/paper-radio-button';
+import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
+// eslint-disable-next-line
 import '../../../activities-and-data-collection/activity-item/activity-summary-tab/summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 import {store} from '../../../../../redux/store';
 import {Unsubscribe} from 'redux';
@@ -21,6 +25,7 @@ import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-lis
 import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -156,7 +161,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               )}
             </div>
             <div class="flex-3">
-              <paper-textarea
+              <etools-textarea
                 id="details-input"
                 .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
                 label="${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}"
@@ -166,7 +171,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                   : '—'}"
                 @value-changed="${({detail}: CustomEvent) =>
                   this.updateOverallFinding({narrative_finding: detail.value})}"
-              ></paper-textarea>
+              ></etools-textarea>
             </div>
           </div>
         `
@@ -195,39 +200,40 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <paper-radio-group>
-          <paper-radio-button name="trackStatus" checked class="epc-header-radio-button ${this.trackStatusColor}">
+        <etools-radio-group value="checked">
+          <sl-radio name="trackStatus" value="checked" class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
-          </paper-radio-button>
-        </paper-radio-group>
+          </sl-radio>
+        </etools-radio-group>
         ${this.getAttachmentsButton()}
       `;
     }
   }
 
   /**
-   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab is readonly and no attachments uploaded
+   * Open Attachments popup button. Is Hidden if OverallInfo property is null or if tab
+   * is readonly and no attachments uploaded
    */
   protected getAttachmentsButton(): TemplateResult {
     const isReadonly: boolean = this.readonly || !this.attachmentsEndpoint;
     const showAttachmentsButton = Boolean(this.overallInfo && (!isReadonly || this.overallInfo.attachments.length));
     return showAttachmentsButton
       ? html`
-          <paper-button @click="${() => this.openAttachmentsPopup()}" class="attachments-button">
-            <iron-icon icon="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></iron-icon>
+          <etools-button id="editAo" variant="primary" @click="${this.openAttachmentsPopup}">
+            <etools-icon name="${this.overallInfo!.attachments.length ? 'file-download' : 'file-upload'}"></etools-icon>
             ${this.getAttachmentsBtnText(this.overallInfo!.attachments.length)}
-          </paper-button>
+          </etools-button>
         `
       : html``;
   }
 
-  protected getAttachmentsBtnText(attachmentsCount: number): Callback {
+  protected getAttachmentsBtnText(attachmentsCount: number): string {
     if (attachmentsCount === 1) {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.SINGLE', {count: attachmentsCount});
     } else if (attachmentsCount > 1) {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.MULTIPLE', {count: attachmentsCount});
     } else {
-      return translate('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
+      return get('ACTIVITY_ITEM.DATA_COLLECTION.ATTACHMENTS_BUTTON_TEXT.DEFAULT');
     }
   }
 
@@ -365,11 +371,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     return html`
       <div class="ontrack-container layout horizontal">
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
-        <paper-toggle-button
+        <sl-switch
           ?readonly="${this.readonly}"
           ?checked="${this.overallInfo?.on_track || false}"
-          @checked-changed="${({detail}: CustomEvent) => this.toggleChange(detail.value)}"
-        ></paper-toggle-button>
+          @sl-change="${(event: CustomEvent) => this.toggleChange((event.target as SlSwitch).checked)}"
+        ></sl-switch>
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ON_TRACK')}
       </div>
     `;
@@ -378,19 +384,19 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   static get styles(): CSSResultArray {
     // language=CSS
     return [
-      FormBuilderCardStyles,
+      // FormBuilderCardStyles,
       FlexLayoutClasses,
       RadioButtonStyles,
       css`
         .completed-finding {
           flex-basis: 50%;
         }
-        paper-toggle-button {
+        sl-switch {
           margin: 0 4px 0 15px;
           --paper-toggle-button-unchecked-button-color: var(--error-color);
           --paper-toggle-button-unchecked-bar-color: var(--error-color);
         }
-        paper-toggle-button[readonly] {
+        sl-switch[readonly] {
           pointer-events: none;
         }
         .ontrack-container {

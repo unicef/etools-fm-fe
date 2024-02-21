@@ -1,4 +1,4 @@
-import {css} from 'lit-element';
+import {css} from 'lit';
 /**
  * LitElement css version for used paper-material-styles
  * TODO:

@@ -2,12 +2,12 @@ import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {staticDataDynamic} from '../../../redux/selectors/static-data.selectors';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {CP_OUTPUTS} from '../../../endpoints/endpoints-list';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const CpOutputsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

@@ -1,12 +1,14 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
-import '@polymer/paper-input/paper-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {
@@ -33,7 +35,6 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
       <etools-dialog
         id="dialog"
         size="md"
-        no-padding
         keep-dialog-open
         .okBtnText="${this.isNew ? translate('MAIN.BUTTONS.ADD') : translate('MAIN.BUTTONS.SAVE')}"
         .cancelBtnText="${translate('CANCEL')}"
@@ -45,7 +46,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
         @close="${() => this.onClose()}"
       >
         <div class="container layout vertical">
-          <paper-textarea
+          <etools-textarea
             required
             maxlength="100"
             always-float-label
@@ -55,10 +56,10 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
             ?invalid="${this.errors.information_source}"
             .errorMessage="${this.errors.information_source}"
             @focus="${() => this.resetFieldError('information_source')}"
-            @tap="${() => this.resetFieldError('information_source')}"
+            @click="${() => this.resetFieldError('information_source')}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('information_source', detail.value)}"
           >
-          </paper-textarea>
+          </etools-textarea>
         </div>
       </etools-dialog>
     `;

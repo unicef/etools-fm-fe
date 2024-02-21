@@ -1,8 +1,9 @@
 import {PartnerRemoveAttachmentPopupComponent} from './partner-remove-attachment-popup';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../styles/dialog-styles';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: PartnerRemoveAttachmentPopupComponent): TemplateResult {
   // language=HTML
@@ -10,7 +11,6 @@ export function template(this: PartnerRemoveAttachmentPopupComponent): TemplateR
     ${InputStyles} ${DialogStyles}
     <etools-dialog
       size="md"
-      no-padding
       keep-dialog-open
       theme="confirmation"
       ?opened="${this.dialogOpened}"

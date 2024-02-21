@@ -1,14 +1,18 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 // language=HTML
 export const InputStyles: TemplateResult = html`
   <style>
-    paper-icon-button[hidden] {
+    etools-icon-button[hidden] {
       display: inline-block !important;
       visibility: hidden;
     }
 
-    .file-link iron-icon {
+    .file-link etools-icon {
       color: var(--dark-icon-color);
+    }
+
+    etools-icon {
+      color: var(--dark-secondary-text-color);
     }
 
     .file-link a {
@@ -26,13 +30,12 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown,
     etools-dropdown-multi,
-    paper-input,
-    paper-textarea,
+    etools-input,
+    etools-textarea,
     paper-dropdown-menu,
     etools-currency-amount-input,
     datepicker-lite {
       outline: none !important;
-      padding: 0 12px;
       color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       box-sizing: border-box;
 
@@ -43,7 +46,7 @@ export const InputStyles: TemplateResult = html`
 
       --paper-input-container-input: {
         display: block !important;
-        font-size: 15px;
+        font-size: var(--etools-font-size-15, 15px);
         box-sizing: border-box;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -66,7 +69,7 @@ export const InputStyles: TemplateResult = html`
         transform: none;
         top: -21px;
         width: 100%;
-        font-size: 12px;
+        font-size: var(--etools-font-size-12, 12px);
       }
 
       --etools-currency-container-label-floating: {
@@ -77,11 +80,11 @@ export const InputStyles: TemplateResult = html`
         transform: none;
         top: -21px;
         width: 100%;
-        font-size: 12px;
+        font-size: var(--etools-font-size-12, 12px);
       }
 
       --paper-input-container-shared-input-style: {
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         width: 100%;
       }
 
@@ -93,15 +96,11 @@ export const InputStyles: TemplateResult = html`
       --paper-input-error: {
         overflow: hidden;
       }
-
-      --iron-autogrow-textarea: {
-        padding: 0;
-      }
     }
 
     etools-dropdown.no-data-fetched,
     etools-dropdown-multi.no-data-fetched,
-    paper-input.no-data-fetched {
+    etools-Input.no-data-fetched {
       --esmm-placeholder-color: var(--gray-dark);
       --paper-input-container-color: var(--gray-dark);
     }
@@ -116,9 +115,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi[disabled],
     etools-dropdown[disabled],
-    paper-textarea[disabled],
+    etools-textarea[disabled],
     paper-dropdown-menu[disabled],
-    paper-input[disabled],
+    etools-Input[disabled],
     datepicker-lite[disabled] {
       --paper-input-container: {
         opacity: 1 !important;
@@ -138,9 +137,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi[readonly]:not(.datepicker),
     etools-dropdown[readonly]:not(.datepicker),
-    paper-textarea[readonly]:not(.datepicker),
+    etools-textarea[readonly]:not(.datepicker),
     paper-dropdown-menu[readonly]:not(.datepicker),
-    paper-input[readonly]:not(.datepicker),
+    etools-Input[readonly]:not(.datepicker),
     datepicker-lite[readonly]:not(.datepicker) {
       --paper-input-container-focus-color: var(
         --paper-input-container-label_-_color,
@@ -170,12 +169,12 @@ export const InputStyles: TemplateResult = html`
     paper-dropdown-menu.required:not([disabled]),
     paper-dropdown-menu[required]:not([disabled]),
     paper-dropdown-menu[required].readonly-required,
-    paper-textarea.required:not([disabled]),
-    paper-textarea[required]:not([disabled]),
-    paper-textarea[required].readonly-required,
-    paper-input.required:not([disabled]),
-    paper-input[required].readonly-required,
-    paper-input[required]:not([disabled]) {
+    etools-textarea.required:not([disabled]),
+    etools-textarea[required]:not([disabled]),
+    etools-textarea[required].readonly-required,
+    etools-Input.required:not([disabled]),
+    etools-Input[required].readonly-required,
+    etools-Input[required]:not([disabled]) {
       --paper-input-container-label: {
         background: url('/fm/assets/images/required.svg') no-repeat 98% 14%/7px;
         width: auto !important;
@@ -199,7 +198,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi.bold,
     etools-dropdown.bold,
-    paper-input.bold {
+    etools-Input.bold {
       --paper-input-container-input: {
         font-weight: 500;
       }
@@ -219,7 +218,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown-multi.deleted,
     etools-dropdown.deleted,
-    paper-input.deleted {
+    etools-Input.deleted {
       --paper-input-container-input: {
         color: #b0b0b0;
       }
@@ -240,9 +239,9 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown.readonly,
     etools-dropdown-multi.readonly,
-    paper-input.readonly,
+    etools-input.readonly,
     paper-dropdown-menu.readonly,
-    paper-textarea.readonly {
+    etools-textarea.readonly {
       --paper-input-container-underline: {
         display: none !important;
       }
@@ -250,7 +249,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-checkable-input {
       --etools-checkable-input-label: {
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         font-weight: 400;
         line-height: 21px;
       }

@@ -1,11 +1,12 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import '../../../../common/attachmants-list/attachments-list';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';
@@ -91,7 +92,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
           margin-top: 1%;
         }
         .custom-row-details-content {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
         }
         .sub-title {
           opacity: 0.6;

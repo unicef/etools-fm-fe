@@ -1,11 +1,12 @@
-import {css, CSSResultArray, customElement, html, property, query, TemplateResult} from 'lit-element';
+import {css, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
-import {repeat} from 'lit-html/directives/repeat';
-import '@polymer/paper-radio-group/paper-radio-group';
-import '@polymer/paper-radio-button/paper-radio-button';
+import {repeat} from 'lit/directives/repeat.js';
+import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
@@ -16,8 +17,9 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
 import {clone} from 'ramda';
-import {EtoolsDropdownMulti} from '@unicef-polymer/etools-dropdown/src/EtoolsDropdownMulti';
+import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
@@ -41,7 +43,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() teamMembers?: ActivityTeamMember[] = [];
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
-  teamMembersDd!: EtoolsDropdownMulti;
+  teamMembersDd!: EtoolsDropdownMultiEl;
 
   userTypes: UserType[] = [USER_STAFF, USER_TPM];
   users: User[] = [];
@@ -55,6 +57,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (!data) {
       this.editedData.monitor_type = USER_STAFF;
     }
+
     if (this.editedData.monitor_type) {
       this.userType = this.editedData.monitor_type;
     }
@@ -69,6 +72,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
     // language=HTML
     return html`
       ${InputStyles}
+      <style>
+        ${FormBuilderCardStyles}
+      </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
         ?is-editable="${(!this.editedCard || this.editedCard === CARD_NAME) &&
@@ -89,23 +95,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
           ></etools-loading>
           <div class="layout horizontal user-types">
             <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
-            <paper-radio-group
-              selected="${this.userType}"
-              @iron-select="${({detail}: CustomEvent) => this.setUserType(detail.item.name)}"
+            <etools-radio-group
+              .value="${this.userType}"
+              @sl-change="${(e: any) => this.setUserType(e.target.value)}"
               ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
             >
               ${repeat(
                 this.userTypes,
                 (type: UserType) => html`
-                  <paper-radio-button
-                    name="${type}"
-                    ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}"
-                  >
+                  <sl-radio value="${type}" ?disabled="${!this.isEditMode || this.isFieldReadonly('monitor_type')}">
                     ${translate(`ACTIVITY_DETAILS.USER_TYPES.${type.toUpperCase()}`)}
-                  </paper-radio-button>
+                  </sl-radio>
                 `
               )}
-            </paper-radio-group>
+            </etools-radio-group>
           </div>
           <div class="layout horizontal">
             ${this.editedData.monitor_type === USER_TPM
@@ -114,8 +117,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
                     class="flex"
                     id="tpmPartner"
                     .selected="${simplifyValue(this.tpmPartner)}"
-                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                      this.setTpmPartner(detail.selectedItem)}"
+                    @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                      this.setTpmPartner(detail.selectedItem);
+                      this.setTeamMembers([]);
+                      this.setPersonResponsible(null);
+                    }}"
                     ?trigger-value-change-event="${this.isEditMode}"
                     label="${translate('ACTIVITY_DETAILS.TPM_PARTNER')}"
                     .options="${this.tpmPartnersOptions}"
@@ -125,7 +131,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                     ?invalid="${this.errors && this.errors.tpm_partner}"
                     .errorMessage="${this.errors && this.errors.tpm_partner}"
                     @focus="${() => this.resetFieldError('tpm_partner')}"
-                    @tap="${() => this.resetFieldError('tpm_partner')}"
+                    @click="${() => this.resetFieldError('tpm_partner')}"
                     allow-outside-scroll
                     dynamic-align
                   ></etools-dropdown>
@@ -136,7 +142,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
               class="flex"
               id="teamMembers"
               .selectedValues="${simplifyValue(this.teamMembers)}"
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.setTeamMembers(detail.selectedItems)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => {
+                this.setTeamMembers(detail.selectedItems);
+                this.setPersonResponsible(null);
+              }}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
               .options="${this.membersOptions}"
@@ -146,7 +155,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?invalid="${this.errors && this.errors.team_members}"
               .errorMessage="${this.errors && this.errors.team_members}"
               @focus="${() => this.resetFieldError('team_members')}"
-              @tap="${() => this.resetFieldError('team_members')}"
+              @click="${() => this.resetFieldError('team_members')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown-multi>
@@ -166,7 +175,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?invalid="${this.errors && this.errors.visit_lead}"
               .errorMessage="${this.errors && this.errors.visit_lead}"
               @focus="${() => this.resetFieldError('visit_lead')}"
-              @tap="${() => this.resetFieldError('visit_lead')}"
+              @click="${() => this.resetFieldError('visit_lead')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
@@ -197,14 +206,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
               (x) => x.id === this.personResponsible!.id
             );
           }
+
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
-            this.teamMembersDd.triggerValueChangeEvent = true;
+            // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
+            this.visitLeadOptions = (clone(this.editedData.team_members) || []) as User[];
           });
         },
         [USERS]
       )
     );
+
     this.tpmPartnerUnsubscribe = store.subscribe(
       staticDataDynamic(
         (tpmPartners: EtoolsTPMPartner[] | undefined) => {
@@ -216,9 +228,15 @@ export class MonitorInformationCard extends BaseDetailsCard {
         [TPM_PARTNERS]
       )
     );
+
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
+
     if (!data.users) {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
+    }
+
+    if (this.userType === USER_TPM && !data.tpmPartners) {
+      store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
   }
 
@@ -310,10 +328,13 @@ export class MonitorInformationCard extends BaseDetailsCard {
       FlexLayoutClasses,
       css`
         .card-content {
-          padding: 10px;
+          padding: 12px;
+        }
+        #teamMembers,
+        #tpmPartner {
+          padding-right: 12px;
         }
         .user-types {
-          margin: 0 12px;
           align-items: center;
         }
       `

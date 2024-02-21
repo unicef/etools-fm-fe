@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 
 // language=CSS
 export const navMenuStyles: CSSResult = css`
@@ -13,6 +13,7 @@ export const navMenuStyles: CSSResult = css`
     overflow-y: var(--side-bar-scrolling);
     overflow-x: hidden;
     border-right: 1px solid var(--light-divider-color);
+    --sl-tooltip-arrow-size: 0;
   }
 
   .chev-right {
@@ -47,7 +48,7 @@ export const navMenuStyles: CSSResult = css`
     color: white;
     min-height: 60px;
     padding: 0 16px;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     line-height: 18px;
     text-transform: uppercase;
   }
@@ -84,12 +85,8 @@ export const navMenuStyles: CSSResult = css`
     display: block;
   }
 
-  .menu-header paper-icon-button {
-    --paper-icon-button: {
-      width: 24px;
-      height: 24px;
-      padding: 0;
-    }
+  .menu-header etools-icon-button {
+    --etools-icon-font-size: var(--etools-font-size-24, 24px);
   }
 
   #menu-header-top-icon,
@@ -99,8 +96,7 @@ export const navMenuStyles: CSSResult = css`
   }
 
   #menu-header-top-icon {
-    --iron-icon-height: 36px;
-    --iron-icon-width: 36px;
+    --etools-icon-font-size: var(--etools-font-size-36, 36px);
   }
 
   .divider {
@@ -117,13 +113,13 @@ export const navMenuStyles: CSSResult = css`
   }
 
   .nav-menu,
-  .nav-menu iron-selector[role='navigation'] {
+  .nav-menu .menu-selector[role='navigation'] {
     flex: 1;
   }
 
   .nav-menu-item {
     width: 100%;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     font-weight: 500;
     position: relative;
     height: 48px;
@@ -134,7 +130,7 @@ export const navMenuStyles: CSSResult = css`
 
   .nav-menu-item.section-title {
     color: var(--primary-text-color);
-    font-size: 13px;
+    font-size: var(--etools-font-size-13, 13px);
     font-weight: 500;
     text-transform: none;
     border-top: 1px solid var(--light-divider-color);
@@ -144,36 +140,36 @@ export const navMenuStyles: CSSResult = css`
     height: 0;
   }
 
-  .nav-menu-item.iron-selected {
+  .nav-menu-item.selected {
     background-color: var(--secondary-background-color);
   }
 
-  .nav-menu-item.iron-selected:active {
-    background-color: var(--light-divider-color);
+  .nav-menu-item.selected:active {
+    background-color: var(--dark-divider-color);
   }
 
   .nav-menu-item .name {
-    margin-left: 16px;
+    margin-inline-start: 16px;
     color: var(--primary-text-color);
   }
 
-  .nav-menu-item iron-icon {
+  .nav-menu-item etools-icon {
     margin: 0 16px;
     min-width: 24px;
     color: var(--dark-icon-color);
   }
 
-  :host([small-menu]) .nav-menu-item iron-icon {
+  :host([small-menu]) .nav-menu-item etools-icon {
     margin: 0;
   }
 
-  .nav-menu-item.iron-selected .name,
-  .nav-menu-item.iron-selected iron-icon {
+  .nav-menu-item.selected .name,
+  .nav-menu-item.selected etools-icon {
     color: var(--module-color);
   }
 
   .nav-menu-item.lighter-item .name,
-  .nav-menu-item.lighter-item iron-icon {
+  .nav-menu-item.lighter-item etools-icon {
     color: var(--secondary-text-color);
   }
 

@@ -1,6 +1,6 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
-import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
+import {html, TemplateResult} from 'lit';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from 'lit-translate';
 
 export function template(this: GeographicCoverageComponent): TemplateResult {
@@ -52,8 +52,8 @@ export function template(this: GeographicCoverageComponent): TemplateResult {
                 trigger-value-change-event
                 @etools-selected-items-changed="${({detail}: CustomEvent) =>
                   this.onSelectionChange(detail.selectedItems)}"
-                @iron-overlay-closed="${() => this.onDropdownClose()}"
-                @remove-selected-item="${(event: Event) => this.onRemoveSelectedItem(event)}"
+                @dropdown-closed="${() => this.onDropdownClose()}"
+                @removed-selected-items="${(event: Event) => this.onRemoveSelectedItems(event)}"
                 hide-search
                 allow-outside-scroll
               >

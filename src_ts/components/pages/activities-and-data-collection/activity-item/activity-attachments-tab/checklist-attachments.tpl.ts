@@ -1,8 +1,8 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import '../../../../common/attachmants-list/attachments-list';
-import {repeat} from 'lit-html/directives/repeat';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import '@polymer/iron-icons';
+import {repeat} from 'lit/directives/repeat.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';
 import {translate} from 'lit-translate';
@@ -92,7 +92,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
                 </div>
                 <div class="custom-row-details-content flex-3">
                   <a href="${item.file}" class="download-link" download="${item.filename}"
-                    ><iron-icon icon="file-download"></iron-icon>${item.filename}
+                    ><etools-icon name="file-download"></etools-icon>${item.filename}
                   </a>
                 </div>
               </div>

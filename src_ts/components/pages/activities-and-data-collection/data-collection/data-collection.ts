@@ -1,7 +1,9 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../../common/layout/page-content-header/page-content-header';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../../routing/routes';
@@ -23,10 +25,8 @@ import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {arrowLeftIcon} from '../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
-import '@polymer/paper-input/paper-input';
-import '@polymer/paper-button';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -62,6 +62,12 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <style>
+        page-content-header {
+          padding: 12px 24px 0 24px;
+          min-height: 72px;
+        }
+      </style>
       <etools-loading
         ?active="${this.isLoad}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
@@ -79,14 +85,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         </div>
 
         <div slot="title-row-actions">
-          <paper-button class="back-button">
-            <a
-              href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
-              class="layout horizontal"
-            >
-              ${arrowLeftIcon} <span>${translate('MAIN.BACK')}</span>
-            </a>
-          </paper-button>
+          <etools-button
+            variant="success"
+            class="back-button"
+            target="_self"
+            href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+          >
+            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            ${translate('MAIN.BACK')}
+          </etools-button>
         </div>
       </page-content-header>
 
@@ -119,6 +126,9 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    this.handleLanguageChange = this.handleLanguageChange.bind(this);
+    document.addEventListener('language-changed', this.handleLanguageChange as any);
     const attachmentsEndpoint: string = getEndpoint(ATTACHMENTS_STORE).url;
     AttachmentsHelper.initialize(attachmentsEndpoint);
     window.addEventListener('beforeprint', () => {
@@ -196,6 +206,13 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     this.checklistUnsubscribe();
     this.activityDetailsUnsubscribe();
     this.blueprintUnsubscribe();
+    document.removeEventListener('language-changed', this.handleLanguageChange as any);
+  }
+
+  handleLanguageChange(_e: CustomEvent) {
+    if (this.activityId && this.checklistId) {
+      store.dispatch<AsyncEffect>(loadBlueprint(this.activityId, this.checklistId));
+    }
   }
 
   /**
@@ -254,7 +271,6 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     return [
       SharedStyles,
       pageContentHeaderSlottedStyles,
-      buttonsStyles,
       FlexLayoutClasses,
       css`
         page-content-header {
@@ -269,7 +285,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         }
 
         .title-description {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
           font-weight: normal;
           line-height: 30px;
         }
@@ -285,25 +301,11 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
         }
 
         .back-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+          --dark-secondary-text-color: #ffffff;
         }
-
-        .back-button a {
-          color: var(--primary-background-color);
-          text-decoration: none;
-          line-height: 21px;
-        }
-
-        .back-button a span {
-          margin-left: 10px;
-        }
-
-        .back-button a svg {
-          height: 21px;
+        .back-button::part(prefix),
+        .back-button::part(suffix) {
+          width: 18px;
         }
       `
     ];

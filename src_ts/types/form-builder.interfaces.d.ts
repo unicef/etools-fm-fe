@@ -1,4 +1,4 @@
-import {TemplateResult} from 'lit-element';
+import {TemplateResult} from 'lit';
 
 /** Component for rendering BlueprintGroup with group.extra.type.includes('abstract') or group.name === 'root' */
 export interface IFormBuilderAbstractGroup {

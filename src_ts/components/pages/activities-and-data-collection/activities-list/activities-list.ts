@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {Unsubscribe} from 'redux';
@@ -12,20 +13,24 @@ import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
-import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
-import {updateFilterSelectionOptions, updateFiltersSelectedValues} from '@unicef-polymer/etools-filters/src/filters';
+import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {getActivitiesFilters, ActivityFilter, ActivityFilterKeys} from './activities-list.filters';
+import {
+  getActivitiesFilters,
+  ActivityFilter,
+  ActivityFilterKeys,
+  ActivitiesFiltersHelper
+} from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
 import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {specificLocations} from '../../../../redux/reducers/site-specific-locations.reducer';
 import {SharedStyles} from '../../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {activityDetailsError} from '../../../../redux/selectors/activity-details.selectors';
@@ -33,7 +38,7 @@ import {activityDetails} from '../../../../redux/reducers/activity-details.reduc
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {
@@ -46,6 +51,7 @@ import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
 import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
+import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -70,12 +76,14 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly debouncedLoading: Callback;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
   private readonly userUnsubscribe: Unsubscribe;
+  private readonly prevQueryParamsKey = 'ActivitiesPrevParams';
 
   constructor() {
     super();
     // List loading request
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
+      setDataOnSessionStorage(this.prevQueryParamsKey, params);
       store
         .dispatch<AsyncEffect>(loadActivitiesList(params))
         .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')}))
@@ -125,7 +133,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
         };
         waitForCondition(() => !!this.user).then(() => {
-          this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user);
+          this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user) as any;
           this.initFilters();
         });
       })
@@ -140,19 +148,22 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       FlexLayoutClasses,
       CardStyles,
       SharedStyles,
-      buttonsStyles,
       ActivitiesListStyles,
       css`
         .search-container {
           display: flex;
           min-height: 73px;
+          position: relative;
+          padding: 0 24px;
         }
         .search-input {
           margin-right: 16px;
+          align-items: center;
+          display: flex;
         }
         .search-filters {
           flex-grow: 1;
-          margin-bottom: 11px;
+          margin-block: 5px;
         }
       `
     ];
@@ -186,7 +197,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     return item ? item[labelField] : '';
   }
 
-  //fixme move common logic to utils function? (sites-tab)
+  // fixme move common logic to utils function? (sites-tab)
   searchKeyDown({detail}: CustomEvent): void {
     const {value} = detail;
     const currentValue: number | string = (this.queryParams && this.queryParams.search) || 0;
@@ -211,10 +222,20 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       return;
     }
 
+    this.restoreFiltersIfComingBackToPage(queryParams);
+
     const paramsAreValid: boolean = this.checkParams(queryParams);
     if (paramsAreValid) {
       this.queryParams = queryParams;
       this.debouncedLoading(this.queryParams);
+    }
+  }
+
+  private restoreFiltersIfComingBackToPage(queryParams: EtoolsRouteQueryParams | null) {
+    const prevQueryParams = getDataFromSessionStorage(this.prevQueryParamsKey) as EtoolsRouteQueryParams | null;
+    if (!Object.keys(queryParams || {}).length && prevQueryParams) {
+      queryParams = {...prevQueryParams};
+      updateQueryParams(queryParams);
     }
   }
 
@@ -295,6 +316,16 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     return false;
   }
 
+  getActivityDetailsLink(activity: IListActivity): string {
+    let tab = DETAILS_TAB;
+    if (activity.status === DATA_COLLECTION) {
+      tab = COLLECT_TAB;
+    } else if (activity.status === REPORT_FINALIZATION) {
+      tab = SUMMARY_TAB;
+    }
+    return `${this.rootPath}activities/${activity.id}/${tab}/`;
+  }
+
   private loadDataForFilters(): void {
     const storeState: IRootState = store.getState();
     if (!storeState.specificLocations.data) {
@@ -339,26 +370,26 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     }
 
     this.populateDropdownFilterOptions(this.filtersData, this.activitiesListFilters);
-
+    const selectedFilters =
+      (this.filters || this.activitiesListFilters)
+        ?.filter((filter) => filter.selected)
+        .map((filter) => filter.filterKey) || [];
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
-    this.filters = updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+    this.filters.forEach((filter) => {
+      filter.selected = filter.selected || selectedFilters?.indexOf(filter.filterKey) > -1;
+    });
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
     activitiesListFilters.forEach((filter: EtoolsFilter) => {
       if (filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti) {
-        updateFilterSelectionOptions(activitiesListFilters, filter.filterKey, filtersData[filter.filterKey]);
+        ActivitiesFiltersHelper.updateFilterSelectionOptions(
+          activitiesListFilters,
+          filter.filterKey,
+          filtersData[filter.filterKey]
+        );
       }
     });
-  }
-
-  getActivityDetailsLink(activity: IListActivity): string {
-    let tab = DETAILS_TAB;
-    if(activity.status === DATA_COLLECTION) {
-      tab = COLLECT_TAB;
-    } else if(activity.status === REPORT_FINALIZATION) {
-      tab = SUMMARY_TAB;
-    }
-    return `${this.rootPath}activities/${activity.id}/${tab}/`;
   }
 }

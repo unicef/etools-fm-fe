@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
 import '../coverage/shared-tab-template';
 import {elevationStyles} from '../../../../styles/elevation-styles';
@@ -95,7 +96,7 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
           justify-content: space-between;
         }
         .custom-row-details-content {
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
           overflow: hidden;
           text-overflow: ellipsis;
           margin: 0.5%;

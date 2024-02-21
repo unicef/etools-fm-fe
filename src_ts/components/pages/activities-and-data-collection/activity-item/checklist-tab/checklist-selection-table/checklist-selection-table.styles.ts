@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const ChecklistSelectionTableStyles: CSSResult = css`
   etools-card {
@@ -10,7 +10,7 @@ export const ChecklistSelectionTableStyles: CSSResult = css`
   .table-container {
     position: relative;
   }
-  paper-checkbox {
+  etools-checkbox {
     width: 18px;
   }
 `;

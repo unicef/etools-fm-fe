@@ -1,7 +1,9 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+/* eslint-disable max-len */
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
 import {translate} from 'lit-translate';
@@ -70,10 +72,10 @@ export function template(this: CpDetailsItem): TemplateResult {
                           (intervention: FullReportIntervention) => html`
                             <div class="layout horizontal">
                               <div class="flex-none space-for-arrow layout horizontal center-center">
-                                <iron-icon
-                                  icon="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
-                                  @tap="${() => this.toggleDetails(intervention)}"
-                                ></iron-icon>
+                                <etools-icon
+                                  name="${!this.detailsOpened[intervention.pk] ? 'expand-more' : 'expand-less'}"
+                                  @click="${() => this.toggleDetails(intervention)}"
+                                ></etools-icon>
                               </div>
                               <div class="flex-auto truncate line" title="${intervention.number}">
                                 ${intervention.number}
@@ -86,21 +88,21 @@ export function template(this: CpDetailsItem): TemplateResult {
                                 ?hidden="${!this.isUnicefUser}"
                               >
                                 <a href="${`/pmp/interventions/${intervention.pk}/attachments`}" target="_blank">
-                                  <iron-icon icon="folder" class="grey"></iron-icon>
+                                  <etools-icon name="folder" class="grey"></etools-icon>
                                 </a>
                                 <a
                                   href="${`/apd/action-points/list?cp_output=${this.cpItem.id}&intervention=${intervention.pk}`}"
                                   target="_blank"
                                 >
-                                  <iron-icon icon="flag" class="grey"></iron-icon>
+                                  <etools-icon name="flag" class="grey"></etools-icon>
                                 </a>
                                 <a href="${`/pmp/interventions/${intervention.pk}/progress/reports`}" target="_blank">
-                                  <iron-icon icon="trending-up" class="grey"></iron-icon>
+                                  <etools-icon name="trending-up" class="grey"></etools-icon>
                                 </a>
                               </div>
                             </div>
 
-                            <iron-collapse ?opened="${this.detailsOpened[intervention.pk]}">
+                            <etools-collapse ?opened="${this.detailsOpened[intervention.pk]}">
                               <div class="intervention-details">
                                 <div class="line title">
                                   ${translate('CO_OVERVIEW.PD_OUTPUT')}/${translate('CO_OVERVIEW.SPD_EXPECTED_RESULT')}
@@ -112,7 +114,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                                     )
                                   : ''}
                               </div>
-                            </iron-collapse>
+                            </etools-collapse>
                           `
                         )
                       : html`

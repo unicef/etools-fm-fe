@@ -1,19 +1,22 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {html, css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
-import '../../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import './statuses-actions/statuses-actions';
 import {RouterStyles} from '../../../app-shell/router-style';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {activityDetailsData, activityStatusIsChanging} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
-import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
+import {createActivityDetails, requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
   CANCELLED,
@@ -39,15 +42,17 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from 'lit-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {ActivityDetailsActions} from '../../../../redux/actions/activity-details.actions';
+import {ActivityDetailsActions, ActivityDetailsCreation} from '../../../../redux/actions/activity-details.actions';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
 import {loadActionPoints} from '../../../../redux/effects/action-points.effects';
+import {AnyObject} from '@unicef-polymer/etools-types';
+import {hasPermission, Permissions} from '../../../../config/permissions';
 
 store.addReducers({activityDetails});
 
@@ -65,28 +70,12 @@ const VALID_TABS: Set<string> = new Set([
   ACTION_POINTS
 ]);
 
-export const STATUSES: IEtoolsStatusModel[] = [
-  {status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`)},
-  {status: CHECKLIST, label: translate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`)},
-  {status: REVIEW, label: translate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`)},
-  {status: ASSIGNED, label: translate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`)},
-  {status: DATA_COLLECTION, label: translate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`)},
-  {status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`)},
-  {status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`)},
-  {status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`)}
-];
-const CANCELLED_STATUS: IEtoolsStatusModel[] = [
-  {
-    status: CANCELLED,
-    label: translate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`)
-  }
-];
-
 @customElement('activity-item')
 export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activityId: string | null = null;
   @property() activityDetails: IActivityDetails | null = null;
   @property() isStatusUpdating = false;
+  @property() isSaving = false;
   @property() activeTab!: string;
   @property() childInEditMode = false;
   @property() isUnicefUser = false;
@@ -94,42 +83,42 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: CHECKLIST_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${CHECKLIST_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${CHECKLIST_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: REVIEW_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${REVIEW_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${REVIEW_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: COLLECT_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${COLLECT_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: SUMMARY_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${SUMMARY_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: ATTACHMENTS_TAB,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ATTACHMENTS_TAB}`) as any as string,
       hidden: false
     },
     {
       tab: ADDITIONAL_INFO,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ADDITIONAL_INFO}`) as any as string,
       hidden: false
     },
     {
       tab: ACTION_POINTS,
-      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`),
+      tabLabel: translate(`ACTIVITY_ITEM.TABS.${ACTION_POINTS}`) as any as string,
       hidden: false
     }
   ];
@@ -138,6 +127,22 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   private routeDetailsUnsubscribe!: Unsubscribe;
   private userUnsubscribe!: Unsubscribe;
   private isLoad = false;
+  private statuses: IEtoolsStatusModel[] = [
+    {status: DRAFT, label: translate(`ACTIVITY_ITEM.STATUSES.${DRAFT}`) as any as string},
+    {status: CHECKLIST, label: translate(`ACTIVITY_ITEM.STATUSES.${CHECKLIST}`) as any as string},
+    {status: REVIEW, label: translate(`ACTIVITY_ITEM.STATUSES.${REVIEW}`) as any as string},
+    {status: ASSIGNED, label: translate(`ACTIVITY_ITEM.STATUSES.${ASSIGNED}`) as any as string},
+    {status: DATA_COLLECTION, label: translate(`ACTIVITY_ITEM.STATUSES.${DATA_COLLECTION}`) as any as string},
+    {status: REPORT_FINALIZATION, label: translate(`ACTIVITY_ITEM.STATUSES.${REPORT_FINALIZATION}`) as any as string},
+    {status: SUBMITTED, label: translate(`ACTIVITY_ITEM.STATUSES.${SUBMITTED}`) as any as string},
+    {status: COMPLETED, label: translate(`ACTIVITY_ITEM.STATUSES.${COMPLETED}`) as any as string}
+  ];
+  private cancelledStatus: IEtoolsStatusModel[] = [
+    {
+      status: CANCELLED,
+      label: translate(`ACTIVITY_ITEM.STATUSES.${CANCELLED}`) as any as string
+    }
+  ];
 
   render(): TemplateResult {
     // language=HTML
@@ -152,6 +157,11 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         loading-text="${translate('ACTIVITY_ITEM.STATUS_CHANGE')}"
       ></etools-loading>
 
+      <etools-loading
+        ?active="${this.isSaving}"
+        loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+
       <etools-status
         .statuses="${this.getStatuses()}"
         .activeStatus="${this.activityDetails?.status || DRAFT}"
@@ -163,10 +173,23 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         </h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <paper-button id="export" @tap="${this.export}" tracker="Export PDF" ?hidden="${this.hideExportButton()}">
-            <iron-icon icon="file-download" class="export-icon"></iron-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </paper-button>
+          <sl-dropdown id="pdMenuBtn" ?hidden="${this.hideMoreActionsButton()}">
+            <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
+            <sl-menu>
+              <sl-menu-item
+                tracker="Duplicate Activity"
+                ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+                @click="${this.onDuplicateClick}"
+              >
+                <etools-icon slot="prefix" name="content-copy"></etools-icon>
+                ${translate('DUPLICATE')}
+              </sl-menu-item>
+              <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
+                <etools-icon slot="prefix" name="file-download"></etools-icon>
+                ${translate('ACTIVITY_DETAILS.EXPORT')}
+              </sl-menu-item>
+            </sl-menu>
+          </sl-dropdown>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -175,26 +198,23 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             ?is-staff="${this.activityDetails && this.activityDetails.monitor_type === STAFF}"
           ></statuses-actions>
 
-          <paper-button
+          <etools-button
             ?hidden="${this.activityDetails?.status !== DATA_COLLECTION || this.activityDetails.monitor_type !== TPM}"
-            class="visit-letter-button"
-            @tap="${() =>
-              window.open(
-                `/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/visit-letter/`,
-                '_blank'
-              )}"
+            variant="neutral"
+            target="_blank"
+            href="${`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/visit-letter/`}"
           >
             ${translate('ACTIVITY_DETAILS.VISIT_LETTER')}
-          </paper-button>
+          </etools-button>
         </div>
 
-        <etools-tabs
+        <etools-tabs-lit
           id="tabs"
           slot="tabs"
           .tabs="${this.getTabList()}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+          @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
-        ></etools-tabs>
+        ></etools-tabs-lit>
       </page-content-header>
 
       ${this.getTabElement()}
@@ -277,6 +297,51 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     );
   }
 
+  onDuplicateClick(e: Event) {
+    this.trackAnalytics(e);
+
+    const activityToDuplicate = this.getActivityDataForDuplicate();
+    if (!activityToDuplicate) {
+      fireEvent(this, 'toast', {text: getTranslation('NO_ACTIVITY_DATA_TO_DUPLICATE')});
+      return;
+    }
+    this.isSaving = true;
+    store
+      .dispatch<AsyncEffect>(createActivityDetails(activityToDuplicate))
+      .then(({payload}: ActivityDetailsCreation) => {
+        if (payload && payload.id) {
+          updateAppLocation(`activities/${payload.id}/details/`);
+        } else {
+          fireEvent(this, 'toast', {
+            text: `${getTranslation('ERROR_AT_SAVING_DUPLICATE')}\n ${(payload as any).statusText || ''}`
+          });
+          console.log((payload as any).statusText);
+        }
+      })
+      .finally(() => (this.isSaving = false));
+  }
+
+  getActivityDataForDuplicate() {
+    if (!this.activityDetails) {
+      return null;
+    }
+    const dataToDuplicate: AnyObject = {};
+    ['offices', 'sections', 'team_members', 'partners', 'cp_outputs', 'interventions'].forEach((key) => {
+      if (this.activityDetails![key as keyof IActivityDetails]) {
+        // @ts-ignore: Object is possibly 'null'
+        dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
+      }
+    });
+    ['location', 'location_site', 'tpm_partner', 'visit_lead'].forEach((key) => {
+      if (this.activityDetails![key as keyof IActivityDetails]) {
+        // @ts-ignore: Object is possibly 'null'
+        dataToDuplicate[key] = this.activityDetails[key].id;
+      }
+    });
+    dataToDuplicate.monitor_type = this.activityDetails!.monitor_type;
+    return dataToDuplicate;
+  }
+
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.isLoadUnsubscribe();
@@ -328,7 +393,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       return [
         {
           tab: DETAILS_TAB,
-          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`),
+          tabLabel: translate(`ACTIVITY_ITEM.TABS.${DETAILS_TAB}`) as any as string,
           hidden: false
         }
       ];
@@ -341,11 +406,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   }
 
   getStatuses(): IEtoolsStatusModel[] {
-    return this.activityDetails?.status === CANCELLED ? CANCELLED_STATUS : STATUSES;
+    return this.activityDetails?.status === CANCELLED ? this.cancelledStatus : this.statuses;
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }
@@ -360,10 +424,17 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     );
   }
 
+  hideMoreActionsButton() {
+    if (!this.activityDetails?.id) {
+      return true;
+    }
+    return !hasPermission(Permissions.CREATE_VISIT) && this.hideExportButton();
+  }
+
   export(e: any): void {
     e.currentTarget.blur();
     this.trackAnalytics(e);
-    window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails!.id}/pdf/`, '_blank');
+    window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/pdf/`, '_blank');
   }
 
   private checkEditPermission(target: string): boolean {
@@ -399,7 +470,6 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       RouterStyles,
-      buttonsStyles,
       css`
         .visit-letter-button {
           height: 36px;

@@ -1,13 +1,15 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../routing/routes';
 import {SharedStyles} from '../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../styles/button-styles';
+
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
-import '../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
 import {translate} from 'lit-translate';
@@ -38,21 +40,22 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   @property() activeTab: string = MONITORING_ACTIVITY;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
   private activeLanguageUnsubscribe!: Unsubscribe;
+  @property()
+  allowView = false;
 
   render(): TemplateResult {
-    const canView: boolean = this.canView();
-    return canView
+    return this.allowView
       ? html`
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('ANALYZE.TITLE')}</h1>
 
-            <etools-tabs
+            <etools-tabs-lit
               id="tabs"
               slot="tabs"
               .tabs="${this.pageTabs}"
-              @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+              @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
               .activeTab="${this.activeTab}"
-            ></etools-tabs>
+            ></etools-tabs-lit>
           </page-content-header>
 
           ${this.getTabElement()}
@@ -68,6 +71,7 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
           return;
         }
         this.activeTab = subRouteName as string;
+        this.allowView = this.canView();
       })
     );
 
@@ -92,8 +96,7 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
     }
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }
@@ -111,6 +114,6 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, buttonsStyles];
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles];
   }
 }

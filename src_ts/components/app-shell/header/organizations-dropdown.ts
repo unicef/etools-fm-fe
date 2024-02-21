@@ -1,12 +1,14 @@
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
-import '@unicef-polymer/etools-dropdown/etools-dropdown.js';
-import {logError} from '@unicef-polymer/etools-behaviors/etools-logging';
-import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown.js';
-import {customElement, LitElement, html, property, query, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown.js';
+import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
+import {EtoolsDropdownEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown.js';
+
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {get as getTranslation, translate} from 'lit-translate';
 import {updateAppLocation} from '../../../routing/routes';
 import {ROOT_PATH} from '../../../config/config';
@@ -55,8 +57,9 @@ export class organizationsDropdown extends connect(store)(LitElement) {
 
   render(): TemplateResult {
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <etools-dropdown
+        transparent
         id="organizationSelector"
         placeholder="${translate('SELECT_ORGANIZATION')}"
         class="w100 ${this.checkMustSelectOrganization(this.user)}"
@@ -69,19 +72,15 @@ export class organizationsDropdown extends connect(store)(LitElement) {
         trigger-value-change-event
         @etools-selected-item-changed="${this.onOrganizationChange}"
         hide-search
+        min-width="180px"
+        placement="bottom-end"
+        .syncWidth="${false}"
       ></etools-dropdown>
     `;
   }
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    setTimeout(() => {
-      const fitInto: HTMLElement | null = document
-        .querySelector('app-shell')!
-        .shadowRoot!.querySelector('#appHeadLayout');
-      this.organizationSelectorDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {
@@ -128,7 +127,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
   }
 
   protected handleOrganizationChangeError(error: any): void {
-    logError('Organization change failed!', 'organization-dropdown', error);
+    EtoolsLogger.error('Organization change failed!', 'organization-dropdown', error);
     this.organizationSelectorDropdown.selected = this.currentOrganizationId;
     fireEvent(this, 'toast', {text: getTranslation('ERROR_CHANGING_ORGANIZATION')});
   }

@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const monitoringActivityStyles: CSSResult = css`
   .monitoring-activity-container {
@@ -10,6 +10,13 @@ export const monitoringActivityStyles: CSSResult = css`
   .monitoring-activity__item {
     flex-grow: 1;
     flex-basis: 48%;
+    width: 50%;
+  }
+
+  @media (max-width: 1200px) {
+    .monitoring-activity__item {
+      width: 100%;
+    }
   }
 
   .monitoring-activity__overall-statistics {
@@ -18,7 +25,7 @@ export const monitoringActivityStyles: CSSResult = css`
 
   .overall-completed-label {
     font-weight: 500;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     line-height: 16px;
     align-self: flex-end;
     margin: 1%;

@@ -1,9 +1,10 @@
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import '@polymer/paper-toggle-button';
-import '@unicef-polymer/etools-loading';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@polymer/paper-input/paper-textarea';
-import {html, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from 'lit-translate';
@@ -12,22 +13,24 @@ export function template(this: SitesTabComponent): TemplateResult {
   return html`
     <section class="elevation page-content filters" elevation="1">
       <div class="layout horizontal">
-        <paper-input
+        <etools-input
           class="search-input"
           type="search"
+          clearable
+          always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('SITES.PLACEHOLDERS.SEARCH')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+          <etools-icon name="search" slot="prefix"></etools-icon>
+        </etools-input>
 
         <div class="toggle-button-control">
-          <paper-toggle-button
+          <sl-switch
             .checked="${this.queryParams && this.queryParams.show_inactive}"
-            @checked-changed="${(event: CustomEvent) => this.changeShowInactive(event)}"
-          ></paper-toggle-button>
+            @sl-change="${(event: CustomEvent) => this.changeShowInactive(event)}"
+          ></sl-switch>
           <span>${translate('SITES.SHOW_INACTIVE')}</span>
         </div>
       </div>
@@ -43,12 +46,12 @@ export function template(this: SitesTabComponent): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${translate('SITES.TABLE_CAPTION')}</div>
         <div class="buttons-container">
-          <paper-icon-button
-            @tap="${() => this.openDialog()}"
+          <etools-icon-button
+            @click="${() => this.openDialog()}"
             class="panel-button"
             ?hidden="${!hasPermission(Permissions.EDIT_SITES)}"
-            icon="add-box"
-          ></paper-icon-button>
+            name="add-box"
+          ></etools-icon-button>
         </div>
       </div>
 
@@ -83,11 +86,11 @@ export function template(this: SitesTabComponent): TemplateResult {
                       <div class="col-data flex-auto">${site.name}</div>
 
                       <div class="hover-block" ?hidden="${!hasPermission(Permissions.EDIT_SITES)}">
-                        <iron-icon
-                          icon="icons:create"
-                          @tap="${() => this.openDialog(site)}"
+                        <etools-icon
+                          name="create"
+                          @click="${() => this.openDialog(site)}"
                           data-type="edit"
-                        ></iron-icon>
+                        ></etools-icon>
                       </div>
                     </div>
                   `
