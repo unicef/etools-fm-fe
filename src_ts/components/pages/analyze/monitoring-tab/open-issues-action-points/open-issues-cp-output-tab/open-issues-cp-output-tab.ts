@@ -1,4 +1,5 @@
-import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../open-issues-shared-tab-template';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../../redux/store';

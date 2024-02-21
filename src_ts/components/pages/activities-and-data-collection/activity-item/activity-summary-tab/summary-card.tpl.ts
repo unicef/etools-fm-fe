@@ -1,15 +1,19 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../styles/input-styles';
 import '../../../../common/layout/etools-card';
-import '@polymer/paper-input/paper-textarea';
-import '@unicef-polymer/etools-loading';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import {translate} from 'lit-translate';
 import {SummaryCard} from './summary-card';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export function template(this: SummaryCard): TemplateResult {
   return html`
     ${InputStyles}
+    <style>
+      ${FormBuilderCardStyles}
+    </style>
     <etools-card
       card-title="${this.tabName}"
       is-collapsible

@@ -1,12 +1,15 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {updateAppLocation} from '../../../../routing/routes';
 import '../../../common/layout/page-content-header/page-content-header';
-import '../../../common/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
 import '../../../common/layout/status/etools-status';
 import {RouterStyles} from '../../../app-shell/router-style';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -39,12 +42,12 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
   pageTabs: PageTab[] = [
     {
       tab: DETAILS_TAB,
-      tabLabel: translate(`TPM_DETAILS.TABS.${DETAILS_TAB}`),
+      tabLabel: getTranslation(`TPM_DETAILS.TABS.${DETAILS_TAB}`),
       hidden: false
     },
     {
       tab: ATTACHMENTS_TAB,
-      tabLabel: translate(`TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`),
+      tabLabel: getTranslation(`TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`),
       hidden: false
     }
   ];
@@ -59,7 +62,6 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
       RouterStyles,
-      buttonsStyles,
       css`
         .export-icon {
           padding-inline-end: 4px;
@@ -71,37 +73,36 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         .status-header {
           margin-left: 8px;
           font-weight: bold;
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
           color: var(--secondary-text-color);
         }
-        .icon-wrapper iron-icon {
+        .icon-wrapper etools-icon {
           display: none;
           border-radius: 50%;
           text-align: center;
           padding: 2px;
-          --iron-icon-height: 18px;
-          --iron-icon-width: 18px;
+          --etools-icon-font-size: var(--etools-font-size-18, 18px);
         }
 
-        .icon-wrapper.autorenew iron-icon[icon='autorenew'] {
+        .icon-wrapper.autorenew etools-icon[name='autorenew'] {
           background: var(--module-success);
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.info iron-icon[icon='info'] {
+        .icon-wrapper.info etools-icon[name='info'] {
           background: #3a94ff;
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.block iron-icon[icon='block'] {
+        .icon-wrapper.block etools-icon[name='block'] {
           background: var(--module-warning);
           color: #ffffff;
           display: inline-block;
         }
 
-        .icon-wrapper.delete-forever iron-icon[icon='delete-forever'] {
+        .icon-wrapper.delete-forever etools-icon[name='delete-forever'] {
           color: var(--module-error);
           display: inline-block;
         }
@@ -121,22 +122,25 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         <h1 slot="page-title">${this.partnerDetails && this.partnerDetails.name}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <paper-button
+          <etools-button
+            class="neutral"
+            variant="text"
+            target="_blank"
             id="export"
-            @tap="${this.export}"
+            @click="${this.export}"
             tracker="Export PDF"
             ?hidden="${this.hideExportButton(this.partnerDetails)}"
           >
-            <iron-icon icon="file-download" class="export-icon"></iron-icon>
+            <etools-icon name="file-download" slot="prefix"></etools-icon>
             ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </paper-button>
+          </etools-button>
           <div class="status-container">
             <div class="status-icon">
               <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">
-                <iron-icon icon="info"></iron-icon>
-                <iron-icon icon="autorenew"></iron-icon>
-                <iron-icon icon="block"></iron-icon>
-                <iron-icon icon="delete-forever"></iron-icon>
+                <etools-icon name="info"></etools-icon>
+                <etools-icon name="autorenew"></etools-icon>
+                <etools-icon name="block"></etools-icon>
+                <etools-icon name="delete-forever"></etools-icon>
               </span>
             </div>
 
@@ -146,13 +150,13 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           </div>
         </div>
 
-        <etools-tabs
+        <etools-tabs-lit
           id="tabs"
           slot="tabs"
           .tabs="${this.pageTabs}"
-          @iron-select="${({detail}: any) => this.onSelect(detail.item)}"
+          @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
-        ></etools-tabs>
+        ></etools-tabs-lit>
       </page-content-header>
 
       ${this.isLoad ? html`` : this.getTabElement()}
@@ -223,8 +227,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
     }
   }
 
-  onSelect(selectedTab: HTMLElement): void {
-    const tabName: string = selectedTab.getAttribute('name') || '';
+  onSelect(tabName: string): void {
     if (this.activeTab === tabName) {
       return;
     }

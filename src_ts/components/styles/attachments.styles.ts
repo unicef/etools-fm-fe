@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 
 // language=CSS
 export const AttachmentsStyles: CSSResult = css`
@@ -15,7 +15,7 @@ export const AttachmentsStyles: CSSResult = css`
     margin: 0 14px;
     min-width: 145px;
     overflow-wrap: break-word;
-    font-size: 16px;
+    font-size: var(--etools-font-size-16, 16px);
   }
   .filename {
     overflow: hidden;
@@ -39,7 +39,7 @@ export const AttachmentsStyles: CSSResult = css`
   .change-button {
     color: var(--secondary-text-color, rgba(0, 0, 0, 0.54));
   }
-  iron-icon {
+  etools-icon {
     margin-right: 8px;
   }
   paper-button {

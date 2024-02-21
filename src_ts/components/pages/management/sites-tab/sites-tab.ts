@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './sites-tab.tpl';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
@@ -130,9 +131,9 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     });
   }
 
-  changeShowInactive({detail}: CustomEvent): void {
+  changeShowInactive(event: CustomEvent): void {
     // prevent updating during initialization
-    const checked: boolean = detail.value;
+    const checked = (event.currentTarget as HTMLInputElement).checked;
     if (!this.sitesObjects || checked === null || checked === undefined) {
       return;
     }

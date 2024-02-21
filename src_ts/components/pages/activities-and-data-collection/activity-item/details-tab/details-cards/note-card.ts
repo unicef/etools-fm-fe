@@ -1,4 +1,5 @@
-import {CSSResult, customElement, css, html, LitElement, TemplateResult, property} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';
@@ -119,7 +120,7 @@ export class DetailsNoteCard extends LitElement {
 
         .title {
           font-weight: 500;
-          font-size: 14px;
+          font-size: var(--etools-font-size-14, 14px);
           margin-bottom: 15px;
         }
       `

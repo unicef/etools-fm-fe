@@ -1,5 +1,4 @@
-import {html, TemplateResult} from 'lit-element';
-import '@polymer/iron-icons/iron-icons';
+import {html, TemplateResult} from 'lit';
 
 /* eslint-disable max-len */
 export const completedStatusIcon: TemplateResult = html`

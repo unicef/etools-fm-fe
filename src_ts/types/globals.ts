@@ -7,8 +7,6 @@
  */
 type Constructor<T> = new (...args: any[]) => T;
 
-declare const dayjs: any;
-
 type GenericObject<T = any> = {
   [key: string]: T;
 };
@@ -128,4 +126,9 @@ interface IEtoolsStatusModel extends IEtoolsStatusItem {
 
 interface IEtoolsPage {
   canView: () => boolean;
+}
+
+interface IOption {
+  id: number | string;
+  name: string;
 }

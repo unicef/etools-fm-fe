@@ -1,20 +1,16 @@
-import '@unicef-polymer/etools-upload/etools-upload';
+import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {PartnerEditAttachmentsPopupComponent} from './partner-edit-attachments-popup';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../styles/dialog-styles';
 import {resetError} from '../../../../../../utils/utils';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: PartnerEditAttachmentsPopupComponent): TemplateResult {
   // language=HTML
   return html`
     ${InputStyles} ${DialogStyles}
-    <style>
-      .file-upload-container {
-        padding: 0 12px;
-      }
-    </style>
 
     <etools-dialog
       size="md"
@@ -28,7 +24,6 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       .cancelBtnText="${translate('CANCEL')}"
       ?show-spinner="${this.savingInProcess}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"
@@ -56,6 +51,7 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
         <div class="file-upload-container">
           <etools-upload
             id="uploadFile"
+            label=${translate('ATTACHMENT')}
             .uploadBtnLabel="${translate('UPLOAD_FILE')}"
             .fileUrl="${this.editedData && this.editedData.file}"
             .showChange="${this.editedData && this.editedData.file}"

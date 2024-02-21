@@ -1,13 +1,5 @@
-import {
-  css,
-  CSSResultArray,
-  customElement,
-  LitElement,
-  property,
-  PropertyValues,
-  queryAll,
-  TemplateResult
-} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
@@ -15,8 +7,6 @@ import {getDifference} from '../../../../utils/objects-diff';
 import {addQuestion, updateQuestion} from '../../../../../redux/effects/questions.effects';
 import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';
-import {PaperTextareaElement} from '@polymer/paper-input/paper-textarea';
-import {setTextareasMaxHeight} from '../../../../utils/textarea-max-rows-helper';
 import {ANSWER_TYPES, BOOL_TYPE, LEVELS, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
@@ -26,14 +16,14 @@ import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
-import {getErrorsArray} from '@unicef-polymer/etools-ajax/ajax-error-parser';
+import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 import {get as getTranslation} from 'lit-translate';
+import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 
 @customElement('question-popup')
 export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
   @property() dialogOpened = true;
-  @queryAll('paper-textarea') textareas!: PaperTextareaElement[];
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @property() answerTypes: AnswerTypeOption[] = applyDropdownTranslation(ANSWER_TYPES);
 
@@ -58,6 +48,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     {value: 5, display_name: '5'},
     {value: 7, display_name: '7'}
   ];
+
+  @query('#orderInput') orderInput!: EtoolsInput;
 
   private readonly updateQuestionUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
@@ -180,6 +172,14 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     if (!validateRequiredFields(this)) {
       return;
     }
+    if (this.orderInput) {
+      if (String(this.orderInput.value) !== String(parseInt(this.orderInput.value as string))) {
+        this.orderInput.errorMessage = getTranslation('INVALID_NUMBER');
+        this.orderInput.invalid = true;
+        return;
+      }
+    }
+
     const scaleErrors: GenericObject[] | null = this.validateScales();
     if (scaleErrors) {
       const currentErrors: GenericObject = this.errors || {};
@@ -212,7 +212,6 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    setTextareasMaxHeight(this.textareas);
   }
 
   private changeOptionsOnTypeChange(type: string): void {

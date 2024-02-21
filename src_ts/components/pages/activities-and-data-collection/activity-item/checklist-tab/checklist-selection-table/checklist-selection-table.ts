@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, query, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './checklist-selection-table.tpl';
 import {clone} from 'ramda';
 import {store} from '../../../../../../redux/store';

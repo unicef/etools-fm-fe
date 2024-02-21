@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const CpDetailsItemStyles: CSSResult = css`
   :host {
@@ -18,12 +18,12 @@ export const CpDetailsItemStyles: CSSResult = css`
 
   .line.title {
     color: var(--secondary-text-color);
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
   }
 
   .line {
     padding: 5px 15px;
-    font-size: 14px;
+    font-size: var(--etools-font-size-14, 14px);
     color: var(--primary-text-color);
   }
   .line.ram-indicator:nth-child(odd) {
@@ -76,7 +76,7 @@ export const CpDetailsItemStyles: CSSResult = css`
     background-color: var(--secondary-background-color);
   }
 
-  iron-icon.grey {
+  etools-icon.grey {
     margin-left: 10px;
     color: var(--secondary-text-color);
   }

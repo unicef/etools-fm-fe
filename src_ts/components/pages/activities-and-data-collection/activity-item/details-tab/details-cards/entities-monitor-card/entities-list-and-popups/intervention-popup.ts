@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -8,25 +9,28 @@ import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {request} from '../../../../../../../../endpoints/request';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {repeat} from 'lit-html/directives/repeat';
-import {translate} from 'lit-translate';
+import {repeat} from 'lit/directives/repeat.js';
+import {translate, get as getTranslation} from 'lit-translate';
 import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpoints-list';
+import {filterPDStatuses} from '../../../../../../../../config/app-constants';
 
 @customElement('intervention-popup')
 export class InterventionPopup extends PartnersMixin(LitElement) {
   @property() dialogOpened = true;
   @property() selectedPartners: EtoolsPartner[] = [];
   @property() selectedCpOutputs: EtoolsCpOutput[] = [];
+  @property() selectedPdStatuses: IOption[] = [];
   @property() selectedIntervention?: EtoolsInterventionShort;
 
   @property() outputs: EtoolsCpOutputShort[] = [];
+  @property() pdStatuses: IOption[] = [];
   @property() interventions: EtoolsInterventionShort[] = [];
   private queryParams: QueryParams = {};
 
@@ -39,8 +43,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       ${InputStyles} ${DialogStyles}
       <etools-dialog
         id="dialog"
-        size="md"
-        no-padding
+        size="lg"
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
         .cancelBtnText="${translate('CANCEL')}"
@@ -73,6 +76,17 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                 trigger-value-change-event
                 @etools-selected-items-changed="${({detail}: CustomEvent) =>
                   this.selectCpOutputs(detail.selectedItems)}"
+                horizontal-align="left"
+                no-dynamic-align
+              ></etools-dropdown-multi>
+              <etools-dropdown-multi
+                label="${translate('ACTIVITY_DETAILS.PD_STATUS')}"
+                .options="${this.pdStatuses}"
+                option-label="name"
+                option-value="id"
+                .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
+                trigger-value-change-event
+                @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPdStatus(detail.selectedItems)}"
                 horizontal-align="left"
                 no-dynamic-align
               ></etools-dropdown-multi>
@@ -136,6 +150,12 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     }, 100);
     this.loadingInterventions();
     this.loadingOutputs();
+    this.setPDStatuses();
+  }
+
+  setPDStatuses() {
+    this.pdStatuses = [...filterPDStatuses];
+    this.pdStatuses.forEach((x) => (x.name = getTranslation(`PD_STATUS.${String(x.id).toUpperCase()}`)));
   }
 
   selectPartners(partners: EtoolsPartner[]): void {
@@ -152,6 +172,14 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       this.selectedCpOutputs = [...cpOutputs];
       const ids: number[] = simplifyValue(cpOutputs);
       this.loadingInterventions({cp_outputs__in: ids});
+    }
+  }
+
+  selectPdStatus(pdStatuses: IOption[]): void {
+    if (JSON.stringify(this.selectedPdStatuses) !== JSON.stringify(pdStatuses)) {
+      this.selectedPdStatuses = [...pdStatuses];
+      const ids: number[] = simplifyValue(pdStatuses);
+      this.loadingInterventions({status__in: ids});
     }
   }
 

@@ -1,9 +1,12 @@
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
-import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
-import {customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+import {EtoolsDropdownEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
 import {countrySelector} from '../../../redux/selectors/country.selectors';
@@ -11,7 +14,7 @@ import {updateAppLocation} from '../../../routing/routes';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {get as getTranslation} from 'lit-translate';
@@ -56,9 +59,10 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     // main template
     // language=HTML
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown
+        transparent
         id="countrySelector"
         class="w100"
         .selected="${this.currentCountry.id}"
@@ -72,20 +76,15 @@ export class CountriesDropdown extends connect(store)(LitElement) {
         @etools-selected-item-changed="${this.countrySelected}"
         .shownOptionsLimit="${250}"
         hide-search
-        .autoWidth="${true}"
+        min-width="160px"
+        placement="bottom-end"
+        .syncWidth="${false}"
       ></etools-dropdown>
     `;
   }
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    setTimeout(() => {
-      const fitInto: HTMLElement | null = document
-        .querySelector('app-shell')!
-        .shadowRoot!.querySelector('#appHeadLayout');
-      this.countryDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {

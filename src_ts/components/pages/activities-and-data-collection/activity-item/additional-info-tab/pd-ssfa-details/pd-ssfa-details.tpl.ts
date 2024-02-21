@@ -1,6 +1,7 @@
 import {PdSsfaDetails} from './pd-ssfa-details';
-import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import {html, TemplateResult} from 'lit';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
 export function template(this: PdSsfaDetails): TemplateResult {
@@ -47,19 +48,15 @@ export function template(this: PdSsfaDetails): TemplateResult {
             <div slot="row-data" class="layout horizontal editable-row flex">
               <div class="col-data flex-1">
                 <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/metadata" target="_blank">
-                  <paper-icon-button icon="icons:launch"></paper-icon-button>
+                  <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text">${intervention.number}</label>
                 </a>
               </div>
               <div class="col-data flex-1">${intervention.title}</div>
               <div class="col-data flex-1">${intervention.document_type}</div>
               <div class="col-data flex-1">
-                <a
-                  class="link-cell link-content"
-                  href="/pmp/interventions/${intervention.id}/progress/reports"
-                  target="_blank"
-                >
-                  <paper-icon-button icon="icons:launch"></paper-icon-button>
+                <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/reports" target="_blank">
+                  <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text" style="text-transform: uppercase">${translate('VIEW')}</label>
                 </a>
               </div>

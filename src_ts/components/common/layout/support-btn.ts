@@ -1,6 +1,7 @@
 /* eslint-disable lit/attribute-value-entities */
-import {css, CSSResult, customElement, html, LitElement, TemplateResult} from 'lit-element';
-import '@polymer/iron-icons/communication-icons';
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 /* eslint-disable max-len */
@@ -11,42 +12,41 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
  */
 @customElement('support-btn')
 export class SupportBtn extends MatomoMixin(LitElement) {
-  static get styles(): CSSResult {
-    // language=CSS
-    return css`
-      :host(:hover) {
-        cursor: pointer;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-        font-size: 16px;
-      }
-
-      iron-icon {
-        margin-right: 4px;
-      }
-
-      @media (max-width: 650px) {
-        .support-text {
-          display: none;
-        }
-      }
-    `;
-  }
-
   render(): TemplateResult {
     // language=HTML
     return html`
+      <style>
+        :host(:hover) {
+          cursor: pointer;
+        }
+
+        a {
+          color: var(--header-color);
+          text-decoration: none;
+          font-size: var(--etools-font-size-16, 16px);
+        }
+
+        etools-icon {
+          margin-right: 4px;
+        }
+
+        @media (max-width: 650px) {
+          .support-text {
+            display: none;
+          }
+        }
+      </style>
       <a
         href="https://unicef.service-now.com/cc?id=sc_cat_item&sys_id=c8e43760db622450f65a2aea4b9619ad&sysparm_category=99c51053db0a6f40f65a2aea4b9619af"
         target="_blank"
         tracker="Support"
-        @tap="${this.trackAnalytics}"
+        @click="${this.trackAnalytics}"
       >
-        <iron-icon icon="communication:textsms"></iron-icon>
-        <span class="support-text">${translate('SUPPORT')}</span>
+        <etools-icon
+          name="communication:textsms"
+          label="${translate('SUPPORT')}"
+          title="${translate('SUPPORT')}"
+        ></etools-icon>
       </a>
     `;
   }

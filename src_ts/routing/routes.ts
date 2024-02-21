@@ -191,10 +191,12 @@ export function updateQueryParams(newQueryParams: EtoolsRouteQueryParams, reset 
   const resultParams: EtoolsRouteQueryParams = {};
 
   for (const key in computed) {
-    const value: any = computed[key];
-    const removeParam: boolean = !value || (Array.isArray(value) && !value.length);
-    if (!removeParam) {
-      resultParams[key] = value;
+    if (key) {
+      const value: any = computed[key];
+      const removeParam: boolean = !value || (Array.isArray(value) && !value.length);
+      if (!removeParam) {
+        resultParams[key] = value;
+      }
     }
   }
 

@@ -1,22 +1,18 @@
 import '../../file-components/file-select-input';
-import '@unicef-polymer/etools-upload/etools-upload';
+import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {EditAttachmentsPopupComponent} from './edit-attachments-popup';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {getEndpoint} from '../../../../endpoints/endpoints';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   // language=HTML
   return html`
     ${InputStyles} ${DialogStyles}
-    <style>
-      .file-upload-container {
-        padding: 0 12px;
-      }
-    </style>
 
     <etools-dialog
       size="md"
@@ -29,7 +25,6 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
       @close="${this.onClose}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       .cancelBtnText="${translate('CANCEL')}"
-      no-padding
       ?disable-confirm-btn="${this.uploadInProgress}"
       ?disable-dismiss-btn="${this.uploadInProgress}"
     >
@@ -54,7 +49,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"
-          @tap="${() => this.resetFieldError('file_type')}"
+          @click="${() => this.resetFieldError('file_type')}"
           allow-outside-scroll
           dynamic-align
         ></etools-dropdown>

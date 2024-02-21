@@ -1,6 +1,6 @@
 import {LocationSitesWidgetComponent} from './location-sites-widget';
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import {updateAppLocation} from '../../../routing/routes';
 import {translate} from 'lit-translate';
 
@@ -10,16 +10,17 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
       <div class="map-and-list">
         <div id="map"></div>
         <div class="list">
-          <paper-input
+          <etools-input
             class="search-input"
             type="search"
+            clearable
             .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
             placeholder="${translate('MAIN.SEARCH')}"
             inline
           >
-            <iron-icon icon="search" slot="prefix"></iron-icon>
-          </paper-input>
+            <etools-icon name="search" slot="prefix"></etools-icon>
+          </etools-input>
 
           <div class="locations-list">
             ${repeat(
@@ -29,10 +30,10 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
                   class="site-line ${this.getSiteLineClass(site.id)}"
                   @mouseenter="${() => this.onSiteHoverStart(site)}"
                 >
-                  <div class="location-name" @tap="${() => this.onSiteLineClick(site)}">
+                  <div class="location-name" @click="${() => this.onSiteLineClick(site)}">
                     <b>${site.name}</b>
                   </div>
-                  <div class="deselect-btn" @tap="${(event: CustomEvent) => this.onRemoveSiteClick(event)}">
+                  <div class="deselect-btn" @click="${(event: CustomEvent) => this.onRemoveSiteClick(event)}">
                     <span>&#10008;</span>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const SitesTabStyles: CSSResult = css`
   :host {
@@ -75,7 +75,7 @@ export const SitesTabStyles: CSSResult = css`
     padding: 0 12px;
     color: #858585;
     white-space: pre;
-    font-size: 17px;
+    font-size: var(--etools-font-size-16, 16px);
   }
   paper-card {
     padding: 8px 0;

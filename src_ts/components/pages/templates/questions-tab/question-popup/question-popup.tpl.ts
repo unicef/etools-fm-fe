@@ -1,15 +1,17 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@unicef-polymer/etools-dropdown/etools-dropdown-multi';
-import '@polymer/paper-checkbox';
-import '@polymer/paper-input/paper-textarea';
-import {html, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
+import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
-import {repeat} from 'lit-html/directives/repeat';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
+import {repeat} from 'lit/directives/repeat.js';
 import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 export function template(this: QuestionPopupComponent): TemplateResult {
   return html`
@@ -18,12 +20,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       size="md"
       keep-dialog-open
       ?opened="${this.dialogOpened}"
-      dialog-title="${translate(this.editedData.id ? 'QUESTIONS.EDIT_POPUP_TITLE' : 'QUESTIONS.ADD_POPUP_TITLE')}"
+      dialog-title="${translate(
+        !hasPermission(Permissions.EDIT_QUESTIONS)
+          ? 'QUESTIONS.VIEW_POPUP_TITLE'
+          : this.editedData.id
+          ? 'QUESTIONS.EDIT_POPUP_TITLE'
+          : 'QUESTIONS.ADD_POPUP_TITLE'
+      )}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
-      .cancelBtnText="${translate('CANCEL')}"
+      .cancelBtnText="${translate(hasPermission(Permissions.EDIT_QUESTIONS) ? 'CANCEL' : 'CLOSE')}"
+      ?hide-confirm-btn="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"
@@ -31,7 +39,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
       ></etools-loading>
 
       <div class="container layout vertical">
-        <paper-textarea
+        <etools-textarea
           class="validate-input flex-7 question-textarea"
           .value="${this.editedData.text}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('text', detail.value)}"
@@ -39,6 +47,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           required
           label="${translate('QUESTIONS.LABELS.QUESTION')}"
           placeholder="${translate('QUESTIONS.PLACEHOLDERS.QUESTION')}"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.text}"
           .errorMessage="${(this.errors && this.errors.text) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => {
@@ -46,8 +55,8 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             this.resetFieldError('text');
           }}"
           .autoValidate="${this.autoValidateQuestion}"
-          @tap="${() => this.resetFieldError('text')}"
-        ></paper-textarea>
+          @click="${() => this.resetFieldError('text')}"
+        ></etools-textarea>
 
         <etools-dropdown-multi
           class="validate-input flex-2"
@@ -60,10 +69,11 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           .options="${this.sections}"
           option-label="name"
           option-value="id"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.sections}"
           .errorMessage="${(this.errors && this.errors.sections) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('sections')}"
-          @tap="${() => this.resetFieldError('sections')}"
+          @click="${() => this.resetFieldError('sections')}"
           auto-validate
           allow-outside-scroll
           dynamic-align
@@ -82,10 +92,11 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           option-label="name"
           option-value="id"
           required
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
           ?invalid="${this.errors && this.errors.methods}"
           .errorMessage="${(this.errors && this.errors.methods) || translate('THIS_FIELD_IS_REQUIRED')}"
           @focus="${() => this.resetFieldError('methods')}"
-          @tap="${() => this.resetFieldError('methods')}"
+          @click="${() => this.resetFieldError('methods')}"
           auto-validate
           allow-outside-scroll
           dynamic-align
@@ -104,13 +115,14 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.categories}"
             option-label="name"
             option-value="id"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.category}"
             .errorMessage="${(this.errors && this.errors.category) || translate('THIS_FIELD_IS_REQUIRED')}"
             @focus="${() => {
               this.resetFieldError('category');
               this.autovlidateCateg = true;
             }}"
-            @tap="${() => this.resetFieldError('category')}"
+            @click="${() => this.resetFieldError('category')}"
             .autoValidate="${this.autovlidateCateg}"
             allow-outside-scroll
             dynamic-align
@@ -128,30 +140,48 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.levels}"
             option-label="display_name"
             option-value="value"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.level}"
             .errorMessage="${this.errors && this.errors.level}"
             @focus="${() => this.resetFieldError('level')}"
-            @tap="${() => this.resetFieldError('level')}"
+            @click="${() => this.resetFieldError('level')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
         </div>
 
-        <div class="checkboxes">
-          <paper-checkbox
+        <div class="layout horizontal wrap center">
+          <etools-checkbox
+            ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_hact}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('is_hact', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('is_hact', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_HACT')}
-          </paper-checkbox>
-          <paper-checkbox
+          </etools-checkbox>
+          <etools-checkbox
+            ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_active}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('is_active', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
-          </paper-checkbox>
+          </etools-checkbox>
+          <div>
+            <etools-input
+              id="orderInput"
+              class="w25"
+              label=${translate('QUESTIONS.LABELS.ORDER')}
+              .value="${this.editedData.order || 1}"
+              allowed-pattern="[0-9]"
+              maxlength="4"
+              ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+              required
+              @focus="${() => {
+                this.orderInput.invalid = false;
+              }}"
+              @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
+            >
+            </etools-input>
+          </div>
         </div>
 
         <div class="layout horizontal">
@@ -167,16 +197,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             .options="${this.answerTypes}"
             option-label="display_name"
             option-value="value"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?invalid="${this.errors && this.errors.answer_type}"
             .errorMessage="${this.errors && this.errors.answer_type}"
             @focus="${() => this.resetFieldError('answer_type')}"
-            @tap="${() => this.resetFieldError('answer_type')}"
+            @click="${() => this.resetFieldError('answer_type')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
 
           <etools-dropdown
             class="validate-input w25"
+            ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?hidden="${this.editedData.answer_type !== SCALE_TYPE}"
             .selected="${this.currentOptionsLength}"
             @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -203,17 +235,18 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             (option: EditedQuestionOption, index: number) => html`
               <div class="layout horizontal center">
                 <div class="option-index">${option.translation ? option.translation : option.value}:</div>
-                <paper-input
+                <etools-input
                   no-label-float
                   class="validate-input flex-7"
                   .value="${option.label}"
                   @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
+                  ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
                   ?invalid="${this.errors?.options && this.errors.options[index]?.label}"
                   .errorMessage="${this.errors?.options && this.errors.options[index]?.label}"
                   @focus="${() => this.resetFieldError('options', index)}"
-                  @tap="${() => this.resetFieldError('options', index)}"
+                  @click="${() => this.resetFieldError('options', index)}"
                   maxlength="100"
-                ></paper-input>
+                ></etools-input>
               </div>
             `
           )}

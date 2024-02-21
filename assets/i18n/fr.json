@@ -25,8 +25,8 @@
       "INTERVENTIONS": "PD/SPD",
       "CP_OUTPUTS": "Extrants PP",
       "STATUS": "Statut",
-      "START_DATE": "Date de début",
-      "END_DATE": "Date de fin",
+      "STARTS_AFTER": "Commence après",
+      "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
       "SECTIONS": "Sections"
     }
@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Organisation Partenaire",
     "CP_OUTPUTS": "Extrant PP",
     "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
+    "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
     "INTERVENTIONS": "PD/SPDs",
     "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SPD sélectionné:",
@@ -329,6 +330,7 @@
   "QUESTIONS": {
     "EDIT_POPUP_TITLE": "Modifier la question",
     "ADD_POPUP_TITLE": "Ajouter une question",
+    "VIEW_POPUP_TITLE": "Voir la question",
     "PLACEHOLDERS": {
       "QUESTION": "Saisir le texte de la question",
       "SECTIONS": "Sélectionnez les rubriques",
@@ -348,7 +350,8 @@
       "ANSWER_TYPE": "Type de réponse",
       "IS_HACT": "Compte pour HACT",
       "IS_ACTIVE": "C'est actif",
-      "SCALE_SIZE": "Taille de l'échelle"
+      "SCALE_SIZE": "Taille de l'échelle",
+      "ORDER": "Ordre"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
     "COLUMNS": {
@@ -482,7 +485,8 @@
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
     "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
-    "TPM": "Moniteurs tiers"
+    "TPM": "Moniteurs tiers",
+    "DASHBOARD": "Tableaux de bord"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Filtres",
@@ -584,7 +588,7 @@
     "COMPLETED_VISITS": "Visites terminées",
     "PLANNED_VISITS": "Visites planifiées (jusqu'en décembre)"
   },
-  "THIS_FIELD_IS_REQUIRED": "This field is required",
+  "THIS_FIELD_IS_REQUIRED": "Ce champ est obligatoire",
   "LOCATION_TO_BE_VISITED": "Lieu à visiter",
   "SITE_TO_BE_VISITED": "Site à visiter",
   "ROWS_PER_PAGE": "Lignes per page:",
@@ -667,5 +671,26 @@
     }
   },
   "INACTIVE": "Inactif",
-  "NO_ACCESS": "Pas d'accès"
+  "NO_ACCESS": "Pas d'accès",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Attention ! Vous êtes sur le point de soumettre cette visite à l'examen du rapport et certains (ou tous) des éléments connexes contrôlés sont marqués comme “non contrôlés”. Vous pouvez revenir à l'onglet “révision” pour apporter des modifications si vous le souhaitez. Sinon, êtes-vous sûr de vouloir continuer sans marquer les éléments comme surveillés ?",
+  "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Vous êtes sur le point de terminer une visite qui comporte des éléments “non contrôlés”. Vous pouvez les rejeter si nécessaire. Sinon, êtes-vous sûr de vouloir poursuivre avec les éléments marqués comme “Non contrôlés” ?",
+  "ACTION_POINT_REMINDER": "Notant qu'il n'y a pas de points d'action soulevés, n'oubliez pas d'en ajouter avant de continuer si nécessaire.",
+  "CONTINUE": "Continuer",
+  "INVALID_NUMBER": "Numéro invalide",
+  "DUPLICATE": "DUPLIQUER",
+  "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
+  "PD_STATUS": {
+      "DRAFT": "Développement",
+      "REVIEW": "Consultez le site",
+      "SIGNATURE": "Signature",
+      "SIGNED": "Signé",
+      "ACTIVE": "Actif",
+      "CANCELLED": "Annulé",
+      "ENDED": "Fini",
+      "CLOSED": "Fermé",
+      "SUSPENDED": "Suspendu",
+      "TERMINATED": "Terminé",
+      "EXPIRED": "Expiré"
+  }
 }

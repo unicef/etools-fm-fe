@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './attachments-list.tpl';
 import {loadAttachmentsListWithOptions} from '../../../../../../redux/effects/attachments-list.effects';
 import {store} from '../../../../../../redux/store';
@@ -21,6 +22,9 @@ import {get as getTranslation} from 'lit-translate';
 import {getFromPath} from '../../../../../utils/utils';
 import './edit-attachments-popup/partner-edit-attachments-popup';
 import './remove-attachment-popup/partner-remove-attachment-popup';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+dayjs.extend(utc);
 
 store.addReducers({attachmentsList});
 
@@ -56,7 +60,8 @@ export class PartnerAttachmentsListComponent extends LitElement {
       this.attachmentsListUnsubscribe();
     }
 
-    // subscribe on attachments list data. use DynamicSelector and endpointName to determine which field we need to take from store
+    // subscribe on attachments list data. use DynamicSelector and endpointName to
+    // determine which field we need to take from store
     this.attachmentsListUnsubscribe = store.subscribe(
       attachmentsListSelector(
         (attachments: IListData<IAttachment> | IAttachment[] | undefined) => {

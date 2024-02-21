@@ -1,16 +1,23 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 
 // language=CSS
 export const RadioButtonStyles: CSSResult = css`
   .epc-header-radio-button {
     min-width: 120px;
   }
-  paper-radio-button.notMonitored {
-    --paper-radio-button-checked-color: var(--primary-shade-of-orange);
-    --paper-radio-button-unchecked-color: var(--primary-shade-of-orange);
+  sl-radio.notMonitored {
+    --sl-input-border-color: var(--primary-shade-of-orange);
   }
-  paper-radio-button.offTrack {
-    --paper-radio-button-checked-color: var(--error-color);
-    --paper-radio-button-unchecked-color: var(--error-color);
+  sl-radio.notMonitored::part(control control--checked) {
+    background-color: var(--primary-shade-of-orange);
+    border-color: var(--primary-shade-of-orange);
+  }
+
+  sl-radio.offTrack {
+    --sl-input-border-color: var(--error-color);
+  }
+  sl-radio.offTrack::part(control control--checked) {
+    background-color: var(--error-color);
+    border-color: var(--error-color);
   }
 `;

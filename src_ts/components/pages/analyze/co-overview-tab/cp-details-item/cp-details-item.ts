@@ -1,5 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
-
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {CpDetailsItemStyles} from './cp-details-item.styles';
 import {template} from './cp-details-item.tpl';
 

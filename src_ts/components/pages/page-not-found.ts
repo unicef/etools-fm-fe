@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 // These are the shared styles needed by this element.
 import {SharedStyles} from '../styles/shared-styles';
 import {ROOT_PATH} from '../../config/config';
