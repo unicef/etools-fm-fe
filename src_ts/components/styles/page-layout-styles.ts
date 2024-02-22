@@ -10,10 +10,10 @@ export const pageLayoutStyles: CSSResult = css`
   }
 
   .pr-25 {
-    padding-right: 25px !important;
+    padding-inline-end: 25px !important;
   }
   .pr-45 {
-    padding-right: 45px !important;
+    padding-inline-end: 45px !important;
   }
 
   .f1 {

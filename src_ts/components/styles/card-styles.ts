@@ -109,12 +109,12 @@ export const CardStyles: CSSResult = css`
   }
 
   .pr-15 {
-    padding-right: 15px;
+    padding-inline-end: 15px;
   }
 
   .row-details-content {
     font-size: var(--etools-font-size-12, 12px);
-    padding-right: 100px;
+    padding-inline-end: 100px;
   }
 
   .row-details-content .rdc-title {

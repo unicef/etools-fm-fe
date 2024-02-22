@@ -37,7 +37,7 @@ export const CpDetailsItemStyles: CSSResult = css`
   }
 
   .partners-data {
-    padding-right: 25px;
+    padding-inline-end: 25px;
   }
 
   .partners-data .prog-visits {
