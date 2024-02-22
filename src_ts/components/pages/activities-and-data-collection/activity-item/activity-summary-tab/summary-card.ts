@@ -400,7 +400,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
           pointer-events: none;
         }
         .ontrack-container {
-          margin-right: 40px;
+          margin-inline-end: 40px;
         }
       `
     ];

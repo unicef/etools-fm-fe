@@ -18,7 +18,7 @@ export const IssueTrackerTabStyles: CSSResult = css`
     min-width: 160px;
   }
   .filter:not(:last-of-type) {
-    margin-right: 16px;
+    margin-inline-end: 16px;
   }
   .files-column {
     color: var(--module-primary);

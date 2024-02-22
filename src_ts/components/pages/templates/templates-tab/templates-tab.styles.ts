@@ -23,7 +23,7 @@ export const TemplatesStyles: CSSResult = css`
   }
 
   .checkbox-container {
-    margin-right: 24px;
+    margin-inline-end: 24px;
     width: 18px;
   }
 

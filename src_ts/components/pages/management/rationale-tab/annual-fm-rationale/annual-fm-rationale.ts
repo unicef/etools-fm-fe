@@ -116,7 +116,7 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
           color: var(--gray-light);
           font-size: var(--etools-font-size-13, 13px);
           font-style: italic;
-          margin-right: 20px;
+          margin-inline-end: 20px;
           letter-spacing: 0.04em;
         }
       `

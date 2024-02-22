@@ -10,10 +10,10 @@ export const QuestionPopupStyles: CSSResult = css`
   }
 
   .horizontal .validate-input:not(:last-child) {
-    padding-right: 15px;
+    padding-inline-end: 15px;
   }
 
   etools-checkbox {
-    margin-right: 30px;
+    margin-inline-end: 30px;
   }
 `;

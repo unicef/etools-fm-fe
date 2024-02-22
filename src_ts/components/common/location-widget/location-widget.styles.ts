@@ -27,7 +27,7 @@ export const LocationWidgetStyles: CSSResult = css`
   }
 
   .widget-container .history etools-input {
-    margin-right: 22px;
+    margin-inline-end: 22px;
     max-width: 200px;
   }
 
@@ -58,7 +58,7 @@ export const LocationWidgetStyles: CSSResult = css`
   .widget-container .map-and-list #map {
     flex: 1;
     height: 300px;
-    margin-right: 25px;
+    margin-inline-end: 25px;
   }
 
   .widget-container .map-and-list .list {

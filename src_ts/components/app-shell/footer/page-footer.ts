@@ -33,7 +33,7 @@ export class PageFooter extends LitElement {
 
         #unicef-logo {
           display: inline-flex;
-          padding-right: 30px;
+          padding-inline-end: 30px;
         }
 
         #unicef-logo img {
