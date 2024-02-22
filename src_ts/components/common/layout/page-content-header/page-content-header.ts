@@ -64,7 +64,7 @@ export class PageContentHeader extends LitElement {
 
       .title-row > .title-row-actions {
         flex: none;
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       .tabs {

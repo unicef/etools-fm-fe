@@ -332,7 +332,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
         }
         #teamMembers,
         #tpmPartner {
-          padding-right: 12px;
+          padding-inline-end: 12px;
         }
         .user-types {
           align-items: center;

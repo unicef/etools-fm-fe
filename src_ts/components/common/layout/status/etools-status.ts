@@ -71,7 +71,7 @@ export class EtoolsStatus extends LitElement {
           border-radius: 50%;
           color: #fff;
           background-color: var(--secondary-text-color);
-          margin-right: 8px;
+          margin-inline-end: 8px;
           font-size: var(--etools-font-size-14, 14px);
         }
 

@@ -157,7 +157,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           padding: 0 24px;
         }
         .search-input {
-          margin-right: 16px;
+          margin-inline-end: 16px;
           align-items: center;
           display: flex;
         }
