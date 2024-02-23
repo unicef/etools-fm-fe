@@ -24,6 +24,8 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNER_EXPORT} from '../../../../endpoints/endpoints-list';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import { applyPageTabsTranslation } from '../../../utils/translation-helper';
+import { activeLanguageSelector } from '../../../../redux/selectors/active-language.selectors';
 
 store.addReducers({tpmPartnerDetails});
 
@@ -32,28 +34,30 @@ const SUB_ROUTE = 'item';
 const DETAILS_TAB = 'details';
 const ATTACHMENTS_TAB = 'attachments';
 
+const PARTNER_DETAILS_TABS: PageTab[] = [
+  {
+    tab: DETAILS_TAB,
+    tabLabel: `TPM_DETAILS.TABS.${DETAILS_TAB}`,
+    hidden: false
+  },
+  {
+    tab: ATTACHMENTS_TAB,
+      tabLabel: `TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`,
+      hidden: false
+  }
+];
+
 @customElement('partner-details')
 export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
   @property() partnerId: string | null = null;
   @property() partnerDetails: IActivityTpmPartnerExtended | null = null;
   @property() isStatusUpdating = false;
   @property() activeTab!: string;
-
-  pageTabs: PageTab[] = [
-    {
-      tab: DETAILS_TAB,
-      tabLabel: getTranslation(`TPM_DETAILS.TABS.${DETAILS_TAB}`),
-      hidden: false
-    },
-    {
-      tab: ATTACHMENTS_TAB,
-      tabLabel: getTranslation(`TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`),
-      hidden: false
-    }
-  ];
+  @property() pageTabs: PageTab[] = applyPageTabsTranslation(PARTNER_DETAILS_TABS);
 
   private partnerDetailsUnsubscribe!: Unsubscribe;
   private routeDetailsUnsubscribe!: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
   private isLoad = false;
 
   static get styles(): CSSResultArray {
@@ -208,12 +212,17 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         }
       })
     );
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(PARTNER_DETAILS_TABS)))
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.partnerDetailsUnsubscribe();
     this.routeDetailsUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   getTabElement(): TemplateResult {
