@@ -24,8 +24,8 @@ import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNER_EXPORT} from '../../../../endpoints/endpoints-list';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import { applyPageTabsTranslation } from '../../../utils/translation-helper';
-import { activeLanguageSelector } from '../../../../redux/selectors/active-language.selectors';
+import {applyPageTabsTranslation} from '../../../utils/translation-helper';
+import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 
 store.addReducers({tpmPartnerDetails});
 
@@ -42,8 +42,8 @@ const PARTNER_DETAILS_TABS: PageTab[] = [
   },
   {
     tab: ATTACHMENTS_TAB,
-      tabLabel: `TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`,
-      hidden: false
+    tabLabel: `TPM_DETAILS.TABS.${ATTACHMENTS_TAB}`,
+    hidden: false
   }
 ];
 
