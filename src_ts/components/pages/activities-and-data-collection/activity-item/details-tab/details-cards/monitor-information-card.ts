@@ -328,7 +328,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       FlexLayoutClasses,
       css`
         .card-content {
-          padding: 12px;
+          padding: 12px 18px;
         }
         #teamMembers,
         #tpmPartner {
