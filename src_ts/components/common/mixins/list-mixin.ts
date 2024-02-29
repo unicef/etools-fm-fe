@@ -51,10 +51,10 @@ export const ListMixin =
         updateQueryParams({[paramName]: newValue});
       }
 
-      updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string): void {
+      updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string, reset?: boolean): void {
         if (pageName && !pageIsActive(pageName)) {
           return;
         }
-        updateQueryParams(queryParams);
+        updateQueryParams(queryParams, reset);
       }
     };
