@@ -170,7 +170,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
               id="orderInput"
               class="w25"
               label=${translate('QUESTIONS.LABELS.ORDER')}
-              .value="${this.editedData.order || 1}"
+              .value="${this.editedData.order}"
               allowed-pattern="[0-9]"
               maxlength="4"
               ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
