@@ -34,7 +34,7 @@
     "@unicef-polymer/etools-modules-common": "^5.0.0-rc.47",
     "@unicef-polymer/etools-piwik-analytics": "^4.0.1-rc.3",
     "@unicef-polymer/etools-types": "^1.11.17",
-    "@unicef-polymer/etools-unicef": "^1.0.0-rc.71",
+    "@unicef-polymer/etools-unicef": "^1.0.0-rc.74",
     "@unicef-polymer/etools-utils": "^2.0.0-rc.6",
     "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
