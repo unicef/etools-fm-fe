@@ -221,28 +221,28 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
-            <etools-dropdown
-              transparent
-              id="languageSelector"
-              .selected="${this.selectedLanguage}"
-              .options="${appLanguages}"
-              option-label="display_name"
-              option-value="value"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                if (detail.selectedItem) {
-                  this.languageChanged(detail.selectedItem.value);
-                }
-              }}"
-              trigger-value-change-event
-              hide-search
-              allow-outside-scroll
-              no-label-float
-              .disabled="${this.langUpdateInProgress}"
-              min-width="120px"
-              placement="bottom-end"
-              .syncWidth="${false}"
-            ></etools-dropdown>
-
+            <div id="languageSelector">
+              <etools-dropdown
+                transparent
+                .selected="${this.selectedLanguage}"
+                .options="${appLanguages}"
+                option-label="display_name"
+                option-value="value"
+                @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                  if (detail.selectedItem) {
+                    this.languageChanged(detail.selectedItem.value);
+                  }
+                }}"
+                trigger-value-change-event
+                hide-search
+                allow-outside-scroll
+                no-label-float
+                .disabled="${this.langUpdateInProgress}"
+                min-width="120px"
+                placement="bottom-end"
+                .syncWidth="${false}"
+              ></etools-dropdown>
+            </div>
             <countries-dropdown></countries-dropdown>
             <organizations-dropdown></organizations-dropdown>
           </div>
