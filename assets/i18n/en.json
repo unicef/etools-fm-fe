@@ -672,7 +672,7 @@
   },
   "INACTIVE": "Inactive",
   "NO_ACCESS": "No Access",
-  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Warning! You are about to submit this visit for Report Review and some (or all) of the related items monitored are marked as “Not Monitored”. You may revisit the “review” tab to make any edits if desired, otherwise are you sure you want to proceed without marking the items as monitored ?",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Warning! You are about to submit this visit for Report Review and some (or all) of the related items monitored are marked as “Not Monitored”. You may revisit the “Summary” tab to make any edits if desired, otherwise are you sure you want to proceed without marking the items as monitored ?",
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "You are about to complete a visit that has “Not Monitored” items. You may reject instead if needed, otherwise, are you sure you want to proceed with items marked as “Not Monitored” ?",
   "ACTION_POINT_REMINDER": "Noting there are no action points raised, please remember to add any before continuing if needed.",
   "CONTINUE": "Continue",

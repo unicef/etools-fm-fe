@@ -681,7 +681,7 @@
   },
   "INACTIVE": "Inactivo",
   "NO_ACCESS": "Sin acceso",
-  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "¡Advertencia! Está a punto de enviar esta visita para revisión del informe y algunos (o todos) los elementos relacionados monitoreados están marcados como “No monitoreados”. Puede volver a visitar la pestaña “revisar” para realizar modificaciones si lo desea; de lo contrario, ¿está seguro de que desea continuar sin marcar los elementos como monitoreados?",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "¡Advertencia! Está a punto de enviar esta visita para revisión del informe y algunos (o todos) los elementos relacionados monitoreados están marcados como “No monitoreados”. Puede volver a visitar la pestaña “Resumen” para realizar modificaciones si lo desea; de lo contrario, ¿está seguro de que desea continuar sin marcar los elementos como monitoreados?",
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Está a punto de completar una visita que tiene elementos “No monitoreados”. Puede rechazarlos si es necesario; de lo contrario, ¿está seguro de que desea continuar con los elementos marcados como “No supervisados”?",
   "ACTION_POINT_REMINDER": "Teniendo en cuenta que no se plantearon puntos de acción, recuerde agregar ninguno antes de continuar si es necesario.",
   "CONTINUE": "Continuar",
