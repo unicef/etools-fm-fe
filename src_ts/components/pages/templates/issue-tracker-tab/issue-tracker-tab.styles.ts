@@ -15,7 +15,7 @@ export const IssueTrackerTabStyles: CSSResult = css`
   }
   .filter {
     width: auto;
-    min-width: 160px;
+    min-width: 200px;
   }
   .filter:not(:last-of-type) {
     margin-inline-end: 16px;

@@ -31,6 +31,11 @@ export const TemplatesStyles: CSSResult = css`
     color: rgba(0, 0, 0, 0.38);
   }
 
+  .filter {
+    width: 40%;
+    max-width: 300px;
+  }
+
   .methods {
     font-weight: 500;
   }
