@@ -46,7 +46,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
           no-dynamic-align
         ></etools-dropdown-multi>
       </div>
-      <div>
+      <div class="filter">
         <etools-dropdown-multi
           label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
           placeholder="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
