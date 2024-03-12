@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const QuestionsTabStyles: CSSResult = css`
   :host {
@@ -15,7 +15,7 @@ export const QuestionsTabStyles: CSSResult = css`
   }
 
   .question-filters-section {
-    padding: 0 30px;
+    padding: 8px 30px;
   }
 
   .row-details-content div.image img {

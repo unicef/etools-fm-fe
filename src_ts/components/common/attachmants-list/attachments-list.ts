@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './attachments-list.tpl';
 import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
 import {store} from '../../../redux/store';
@@ -44,7 +45,8 @@ export class AttachmentsListComponent extends LitElement {
       this.attachmentsListUnsubscribe();
     }
 
-    // subscribe on attachments list data. use DynamicSelector and endpointName to determine which field we need to take from store
+    // subscribe on attachments list data. use DynamicSelector and endpointName
+    // to determine which field we need to take from store
     this.attachmentsListUnsubscribe = store.subscribe(
       attachmentsListSelector(
         (attachments: IListData<IAttachment> | IAttachment[] | undefined) => {

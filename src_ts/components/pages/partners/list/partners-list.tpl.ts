@@ -1,42 +1,47 @@
 import {PartnersListComponent} from './partners-list';
-import {html, TemplateResult} from 'lit-element';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import {html, TemplateResult} from 'lit';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 
 export function template(this: PartnersListComponent): TemplateResult {
   return html`
-    <page-content-header with-tabs-visible>
+    <page-content-header>
       <h1 slot="page-title">${translate('TPM.TITLE')}</h1>
 
       <div slot="title-row-actions" class="content-header-actions">
-        <paper-button
+        <etools-button
           id="export"
-          @tap="${this.export}"
-          ?hidden=${!this.items || !this.items.length}
+          class="neutral"
+          variant="text"
+          @click="${this.export}"
           tracker="Export TPM Partners"
+          ?hidden=${!this.items || !this.items.length}
         >
-          <iron-icon icon="file-download" class="export-icon"></iron-icon>
+          <etools-icon name="file-download" slot="prefix"></etools-icon>
           ${translate('ACTIVITY_DETAILS.EXPORT')}
-        </paper-button>
+        </etools-button>
 
-        <paper-button class="primary-btn with-prefix" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
-          <iron-icon icon="add"></iron-icon>
+        <etools-button variant="success" ?hidden="${!this.showAddButton}" @click="${this.openAddDialog}">
+          <etools-icon name="add" slot="prefix"></etools-icon>
           ${translate('TPM.ADD_NEW_VENDOR')}
-        </paper-button>
+        </etools-button>
       </div>
     </page-content-header>
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
       <div class="search-input">
-        <paper-input
+        <etools-input
           type="search"
+          clearable
+          always-float-label
           .value="${this.queryParams && this.queryParams.search}"
           placeholder="${translate('TPM.FILTERS.SEARCH')}"
           @value-changed="${(event: CustomEvent) => this.searchKeyDown(event)}"
           inline
         >
-          <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
+          <etools-icon name="search" slot="prefix"></etools-icon>
+        </etools-input>
       </div>
     </section>
 

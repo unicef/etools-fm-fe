@@ -1,6 +1,6 @@
 import {LocationWidgetComponent} from './location-widget';
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import './lazy-list';
 import {updateAppLocation} from '../../../routing/routes';
 import {translate} from 'lit-translate';
@@ -11,16 +11,16 @@ export function template(this: LocationWidgetComponent): TemplateResult {
       <div class="history" ?hidden="${!this.history.length}">
         ${this.history.map(
           (location: WidgetLocation, index: number) => html`
-            <paper-input
+            <etools-input
               label="${this.getHistoryInputLabel(location.admin_level, location.admin_level_name)}"
               value="${this.getLocationPart(location.name, 'name')}"
               readonly
               inline
             >
-              <div slot="suffix" @tap="${() => this.removeFromHistory(index)}" class="close-btn">
+              <div slot="suffix" @click="${() => this.removeFromHistory(index)}" class="close-btn">
                 <span>&#10008;</span>
               </div>
-            </paper-input>
+            </etools-input>
           `
         )}
       </div>
@@ -28,16 +28,18 @@ export function template(this: LocationWidgetComponent): TemplateResult {
       <div class="map-and-list">
         <div id="map"></div>
         <div class="list">
-          <paper-input
+          <etools-input
             class="search-input"
             type="search"
+            clearable
+            always-float-label
             .value="${this.locationSearch}"
             @value-changed="${({detail}: CustomEvent<{value: string}>) => this.search(detail)}"
             placeholder="${translate('MAIN.SEARCH')}"
             inline
           >
-            <iron-icon icon="search" slot="prefix"></iron-icon>
-          </paper-input>
+            <etools-icon name="search" slot="prefix"></etools-icon>
+          </etools-input>
 
           <div class="locations-list">
             ${!this.isSiteList
@@ -46,7 +48,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                     .items="${this.items}"
                     .itemStyle="${this.itemStyle}"
                     .itemTemplate="${(location: WidgetLocation) => html`
-                      <div class="location-line" @tap="${() => this.onLocationLineClick(location)}">
+                      <div class="location-line" @click="${() => this.onLocationLineClick(location)}">
                         <div class="location-name">
                           <b>${this.getLocationPart(location.name, 'name')}</b>
                           <span class="location-code">${this.getLocationPart(location.name, 'code')}</span>
@@ -64,7 +66,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                     (site: Site) => html`
                       <div
                         class="site-line ${this.getSiteLineClass(site.id)}"
-                        @tap="${() => this.onSiteLineClick(site)}"
+                        @click="${() => this.onSiteLineClick(site)}"
                         @mouseenter="${() => this.onSiteHoverStart(site)}"
                         @mouseleave="${() => this.onSiteHoverEnd()}"
                       >

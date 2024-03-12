@@ -1,4 +1,5 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult, query} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../../../../redux/store';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';
@@ -11,9 +12,9 @@ import {getDifference} from '../../../../../utils/objects-diff';
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {get as getTranslation} from 'lit-translate';
-import {PaperInputElement} from '@polymer/paper-input/paper-input';
+import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {
   resetRequiredFields,
   validateRequiredFields
@@ -28,7 +29,7 @@ export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmP
   @property() canEditPhone = false;
   @property() canEditAtLeastOneField = false;
   @property({type: String}) emailValidationMessage!: string;
-  @query('#emailInput') private emailEl!: PaperInputElement;
+  @query('#emailInput') private emailEl!: EtoolsInput;
   permissions!: GenericObject;
 
   static get styles(): CSSResultArray {
@@ -126,10 +127,12 @@ export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmP
     const value = this.emailEl.value;
     const required = this.emailEl.required;
 
+    /* eslint-disable max-len */
     var re =
       /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    /* eslint-enable max-len */
 
-    if ((required && !value) || (value && !re.test(value))) {
+    if ((required && !value) || (value && !re.test(value as string))) {
       this.emailValidationMessage = getTranslation('TPM_DETAILS.VALID_EMAIL_REQUIRED');
       this.emailEl.setAttribute('invalid', 'true');
       return false;

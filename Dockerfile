@@ -1,10 +1,9 @@
-FROM node:12-alpine3.12 as builder
+FROM node:14.21-alpine3.16  as builder
 RUN apk update
 RUN apk add --update bash
 
 RUN apk add git
 RUN npm config set unsafe-perm true
-RUN npm install -g --unsafe-perm polymer-cli
 RUN npm install -g typescript
 
 
@@ -22,14 +21,16 @@ ENV NODE_OPTIONS --max_old_space_size=4096
 RUN npm run build
 
 
-FROM node:12-alpine3.12
+FROM node:14.21-alpine3.16 
 RUN apk update
 RUN apk add --update bash
 
 WORKDIR /code
-RUN npm install express --no-save
-RUN npm install browser-capabilities@1.1.3 --no-save
+RUN npm init -y
+RUN npm install express
+RUN npm install compression
+RUN npm install browser-capabilities@1.1.x
 COPY --from=builder /code/express.js /code/express.js
-COPY --from=builder /code/build /code/build
+COPY --from=builder /code/src /code/src
 EXPOSE 8080
 CMD ["node", "express.js"]

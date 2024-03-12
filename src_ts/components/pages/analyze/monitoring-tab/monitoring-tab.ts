@@ -1,4 +1,5 @@
-import {CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './monitoring-tab.tpl';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
@@ -14,7 +15,16 @@ import {
   overallActivitiesSelector
 } from '../../../../redux/selectors/monitoring-activities.selectors';
 import {monitoringActivityStyles} from './monitoring-tab.styles';
-import {COVERAGE_TABS, OPEN_ISSUES_PARTNER_TAB, PARTNER_TAB} from './monitoring-tab.navigation.constants';
+import {
+  COVERAGE_TABS,
+  OPEN_ISSUES_PARTNER_TAB,
+  PARTNER_TAB,
+  PD_SPD_TAB,
+  CP_OUTPUT_TAB,
+  OPEN_ISSUES_CP_OUTPUT_TAB,
+  OPEN_ISSUES_LOCATION_TAB
+} from './monitoring-tab.navigation.constants';
+import {translate} from 'lit-translate';
 
 store.addReducers({monitoringActivities});
 
@@ -26,6 +36,8 @@ export class MonitoringTabComponent extends LitElement {
   @property() invalidMapSize = false;
   coverageActiveTab: string = PARTNER_TAB;
   openIssuesActiveTab: string = OPEN_ISSUES_PARTNER_TAB;
+  coverageTabs: PageTab[] = [];
+  openIssuesTabs: PageTab[] = [];
 
   private overallActivitiesUnsubscribe!: Unsubscribe;
   private lastActivatedTabUnsubscribe!: Unsubscribe;
@@ -34,7 +46,8 @@ export class MonitoringTabComponent extends LitElement {
     super.connectedCallback();
     store.dispatch<AsyncEffect>(loadOverallStatistics());
 
-    // conditional tabs routing: Hact visits section appearance depends on whether Coverage 'By partner' tab is active. If it's not, then Open Issues section appear
+    // conditional tabs routing: Hact visits section appearance depends on whether
+    // Coverage 'By partner' tab is active. If it's not, then Open Issues section appear
     this.lastActivatedTabUnsubscribe = store.subscribe(
       lastActivatedTabSelector((lastActivatedTab: string) => {
         if (COVERAGE_TABS.includes(lastActivatedTab)) {
@@ -52,6 +65,42 @@ export class MonitoringTabComponent extends LitElement {
       })
     );
     this.addEventListener('resize-map', this.resizeMap as any);
+
+    this.coverageTabs = [
+      {
+        tab: PARTNER_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER') as any as string,
+        hidden: false
+      },
+      {
+        tab: PD_SPD_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PD_SPD') as any as string,
+        hidden: false
+      },
+      {
+        tab: CP_OUTPUT_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT') as any as string,
+        hidden: false
+      }
+    ];
+
+    this.openIssuesTabs = [
+      {
+        tab: OPEN_ISSUES_PARTNER_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_PARTNER') as any as string,
+        hidden: false
+      },
+      {
+        tab: OPEN_ISSUES_CP_OUTPUT_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_CP_OUTPUT') as any as string,
+        hidden: false
+      },
+      {
+        tab: OPEN_ISSUES_LOCATION_TAB,
+        tabLabel: translate('ANALYZE.MONITORING_TAB.NAVIGATION_TABS.BY_LOCATION') as any as string,
+        hidden: false
+      }
+    ];
   }
 
   render(): TemplateResult {

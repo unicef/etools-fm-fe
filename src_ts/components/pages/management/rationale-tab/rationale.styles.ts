@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const RationaleStyles: CSSResult = css`
   :host {
@@ -7,7 +7,7 @@ export const RationaleStyles: CSSResult = css`
   }
 
   .year-dropdown-container {
-    padding: 16px 20px 0;
+    padding: 16px 20px 0 24px;
   }
 
   .year-dropdown {

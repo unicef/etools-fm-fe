@@ -1,5 +1,6 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import '@polymer/paper-tooltip';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
@@ -23,7 +24,7 @@ export class CompletedFindingComponent extends LitElement {
           --paper-tooltip-delay-in: 0ms;
           --paper-tooltip-duration-in: 0ms;
           --paper-tooltip: {
-            font-size: 13px;
+            font-size: var(--etools-font-size-13, 13px);
             box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px,
               rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
             width: max-content;
@@ -41,17 +42,15 @@ export class CompletedFindingComponent extends LitElement {
           ? html` <label class="completed-finding-title">${this.completedFindingTitle}</label> `
           : html`
               <label class="completed-finding-title shorted-title">
-                <span id="ellipsis">...</span>
-                <paper-tooltip position="right" offset="5" for="ellipsis">
-                  <div>${this.completedFindingTitle}</div>
-                </paper-tooltip>
+                <sl-tooltip placement="right" offset="5" content="${this.completedFindingTitle}">
+                  <span id="ellipsis">...</span>
+                </sl-tooltip>
               </label>
             `}
         ${this.showCopyArrow
-          ? html`<iron-icon icon="arrow-forward" @click="${this.copyAnswer}" id="icon"></iron-icon>
-              <paper-tooltip position="right" offset="5" for="icon">
-                <div>Click to copy answer</div>
-              </paper-tooltip>`
+          ? html`<sl-tooltip placement="right" offset="5" content="Click to copy answer">
+              <etools-icon name="arrow-forward" @click="${this.copyAnswer}" id="icon"></etools-icon>
+            </sl-tooltip>`
           : ''}
       </div>
     `;
@@ -75,7 +74,7 @@ export class CompletedFindingComponent extends LitElement {
         :host([show-copy-arrow]) .completed-finding__content {
           width: 146px;
         }
-        iron-icon {
+        etools-icon {
           margin-right: 3px;
         }
         .completed-finding__content {

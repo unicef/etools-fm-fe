@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 
 // language=CSS
 export const LocationWidgetStyles: CSSResult = css`
@@ -26,13 +26,19 @@ export const LocationWidgetStyles: CSSResult = css`
     cursor: pointer;
   }
 
-  .widget-container .history paper-input {
-    margin-right: 22px;
+  .widget-container .history etools-input {
+    margin-inline-end: 22px;
+    max-width: 200px;
   }
 
-  .widget-container .history paper-input div[slot] {
+  .widget-container .history etools-input div[slot] {
     margin-left: 5px;
     color: #dd0000;
+  }
+
+  .widget-container .history etools-input::part(readonly-input) {
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
   }
 
   .widget-container a.link {
@@ -52,7 +58,7 @@ export const LocationWidgetStyles: CSSResult = css`
   .widget-container .map-and-list #map {
     flex: 1;
     height: 300px;
-    margin-right: 25px;
+    margin-inline-end: 25px;
   }
 
   .widget-container .map-and-list .list {
@@ -69,7 +75,7 @@ export const LocationWidgetStyles: CSSResult = css`
     overflow-y: auto;
   }
 
-  .widget-container .map-and-list .list paper-input {
+  .widget-container .map-and-list .list etools-input {
     margin-top: -20px;
   }
 

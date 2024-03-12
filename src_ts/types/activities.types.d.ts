@@ -199,7 +199,7 @@ type NoteInfo = {
   text: string;
 };
 
-//TODO search existent type
+// TODO search existent type
 type Person = {
   id: number;
   name: string;

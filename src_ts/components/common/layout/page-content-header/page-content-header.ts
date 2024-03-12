@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 
 /**
  * @LitElement
@@ -30,15 +31,6 @@ export class PageContentHeader extends LitElement {
         padding: 0 24px;
         min-height: 85px;
         border-bottom: 1px solid var(--dark-divider-color);
-
-        --page-title: {
-          margin: 0;
-          font-weight: normal;
-          text-transform: capitalize;
-          font-size: 24px;
-          line-height: 1.3;
-          min-height: 31px;
-        }
       }
 
       :host([with-tabs-visible]) {
@@ -53,17 +45,26 @@ export class PageContentHeader extends LitElement {
       .title-row {
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        flex-wrap: nowrap;
         margin: var(--table-row-margin, 30px 0 0);
         padding: 0 24px;
-        height: var(--table-row-height, 36px);
+        min-height: var(--table-row-height, 36px);
       }
 
       .title-row h1 {
         display: flex;
         margin: var(--title-margin);
-        @apply --page-title;
+        margin: 0;
+        font-weight: normal;
+        text-transform: capitalize;
+        font-size: var(--etools-font-size-24, 24px);
+        line-height: 1.3;
+        min-height: 31px;
+      }
+
+      .title-row > .title-row-actions {
+        flex: none;
+        margin-inline-start: auto;
       }
 
       .tabs {
@@ -79,7 +80,7 @@ export class PageContentHeader extends LitElement {
         }
 
         .title-row h1 {
-          font-size: 18px;
+          font-size: var(--etools-font-size-18, 18px);
         }
       }
 
@@ -92,7 +93,7 @@ export class PageContentHeader extends LitElement {
           margin-bottom: 3%;
         }
         .title-row h1 {
-          font-size: 18px;
+          font-size: var(--etools-font-size-18, 18px);
           width: 100%;
         }
       }
@@ -112,7 +113,9 @@ export class PageContentHeader extends LitElement {
         <h1>
           <slot name="page-title"></slot>
         </h1>
-        <slot name="title-row-actions"></slot>
+        <div class="title-row-actions">
+          <slot name="title-row-actions"></slot>
+        </div>
       </div>
 
       <div class="content-header-row tabs" ?hidden="${!this.withTabsVisible}">

@@ -1,6 +1,6 @@
 {
   "/": {
-    "src/components/app-shell/app-shell.js": {
+    "src/app-shell.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -16,7 +16,7 @@
     }
   },
   "/page-one": {
-    "src/components/app-shell/app-shell.js": {
+    "src/app-shell.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -32,7 +32,7 @@
     }
   },
   "/page-two": {
-    "src/components/app-shell/app-shell.js": {
+    "src/app-shell.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1

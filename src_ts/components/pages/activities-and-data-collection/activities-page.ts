@@ -1,14 +1,17 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
 import {store} from '../../../redux/store';
 import {activities} from '../../../redux/reducers/activities.reducer';
 import {SharedStyles} from '../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../styles/button-styles';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
+import {USERS} from '../../../endpoints/endpoints-list';
 
 store.addReducers({activities});
 export const ACTIVITIES_PAGE = 'activities';
@@ -27,7 +30,7 @@ export class ActivitiesPageComponent extends LitElement {
   @property() subRoute: string = LIST_ROUTE;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles];
   }
 
   render(): TemplateResult | void {
@@ -41,6 +44,10 @@ export class ActivitiesPageComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    const data: IStaticDataState = (store.getState() as IRootState).staticData;
+    if (!data.users) {
+      store.dispatch<AsyncEffect>(loadStaticData(USERS));
+    }
     store.subscribe(
       routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {
         if (routeName !== PAGE) {

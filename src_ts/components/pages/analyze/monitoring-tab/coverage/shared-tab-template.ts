@@ -1,6 +1,7 @@
-import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {translate} from 'lit-translate';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
@@ -9,7 +10,7 @@ enum WidthCalculationTargets {
   AVG = 'avg'
 }
 
-//TODO think about name
+// TODO think about name
 @customElement('shared-tab-template')
 export class SharedTabTemplate extends PaginationMixin(LitElement) {
   @property() paginatedData!: (InterventionsCoverage | CpOutputCoverage)[];
@@ -124,7 +125,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
       }
       .coverage-label {
         margin-bottom: 2%;
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
       }
       .progressbar-container {
         margin-bottom: 2%;
@@ -134,7 +135,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
       }
       .progressbar__header {
         color: grey;
-        font-size: 16px;
+        font-size: var(--etools-font-size-16, 16px);
         line-height: 47px;
       }
     `;

@@ -1,8 +1,9 @@
 import {RemoveAttachmentPopupComponent} from './remove-attachment-popup';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
   // language=HTML
@@ -10,9 +11,9 @@ export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
     ${InputStyles} ${DialogStyles}
     <etools-dialog
       size="md"
-      no-padding
       keep-dialog-open
       theme="confirmation"
+      confirmBtnVariant="danger"
       ?opened="${this.dialogOpened}"
       ok-btn-text="${translate('MAIN.BUTTONS.DELETE')}"
       .cancelBtnText="${translate('CANCEL')}"

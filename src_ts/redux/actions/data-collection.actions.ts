@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export enum DataCollectionChecklistActionTypes {
   DATA_COLLECTION_CREATE_REQUEST = '[Data Collection Checklist Action]: DATA_COLLECTION_CREATE_REQUEST',
   DATA_COLLECTION_CREATE_SUCCESS = '[Data Collection Checklist Action]: DATA_COLLECTION_CREATE_SUCCESS',

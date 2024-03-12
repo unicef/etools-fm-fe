@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './action-points-tab.tpl';
 import {elevationStyles} from '../../../../styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -7,7 +8,6 @@ import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
 import {store} from '../../../../../redux/store';
 import {actionPointsList} from '../../../../../redux/reducers/action-points.reducer';
-import {loadActionPoints} from '../../../../../redux/effects/action-points.effects';
 import {Unsubscribe} from 'redux';
 import {actionPointsListSelector} from '../../../../../redux/selectors/action-points.selectors';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
@@ -34,7 +34,7 @@ export class ActionPointsTab extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.loading = true;
-    store.dispatch<AsyncEffect>(loadActionPoints(this.activityDetails.id));
+
     this.actionPointsListUnsubscribe = store.subscribe(
       actionPointsListSelector((actionPointsList: ActionPoint[]) => {
         this.items = actionPointsList;

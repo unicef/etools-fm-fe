@@ -1,4 +1,5 @@
-import {CSSResultArray, css, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {store} from '../../../../../redux/store';
 import {updateRationale} from '../../../../../redux/effects/rationale.effects';
 import {SharedStyles} from '../../../../styles/shared-styles';
@@ -11,6 +12,7 @@ import {rationaleUpdate, rationaleUpdateError} from '../../../../../redux/select
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import {SetRationaleUpdateError} from '../../../../../redux/actions/rationale.actions';
+import dayjs from 'dayjs';
 
 @customElement('annual-fm-rationale')
 export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
@@ -112,9 +114,9 @@ export class AnnualFmRationale extends DataMixin()<IRationale>(LitElement) {
       css`
         .history-info {
           color: var(--gray-light);
-          font-size: 13px;
+          font-size: var(--etools-font-size-13, 13px);
           font-style: italic;
-          margin-right: 20px;
+          margin-inline-end: 20px;
           letter-spacing: 0.04em;
         }
       `

@@ -1,9 +1,9 @@
-import {CSSResultArray, customElement, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './location-widget.tpl';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.selectors';
-import {FitBoundsOptions, LatLngTuple, Polygon, PolylineOptions} from 'leaflet';
 import {MapHelper} from '../map-mixin';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
 import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
@@ -33,8 +33,8 @@ import {get as getTranslation} from 'lit-translate';
 
 store.addReducers({widgetLocations, specificLocations});
 
-const DEFAULT_COORDINATES: LatLngTuple = [-0.09, 51.505];
-const POLYGON_OPTIONS: PolylineOptions = {color: '#eddaa3', stroke: false, fillOpacity: 0.4, pane: 'tilePane'};
+const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505];
+const POLYGON_OPTIONS: L.PolylineOptions = {color: '#eddaa3', stroke: false, fillOpacity: 0.4, pane: 'tilePane'};
 
 @customElement('location-widget')
 export class LocationWidgetComponent extends LitElement {
@@ -54,8 +54,8 @@ export class LocationWidgetComponent extends LitElement {
   @property() private pathLoading = false;
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
-  protected defaultMapCenter: LatLngTuple = DEFAULT_COORDINATES;
-  private polygon: Polygon | null = null;
+  protected defaultMapCenter: L.LatLngTuple = DEFAULT_COORDINATES;
+  private polygon: L.Polygon | null = null;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private widgetLoadingUnsubscribe!: Unsubscribe;
@@ -468,7 +468,7 @@ export class LocationWidgetComponent extends LitElement {
       const coordinates: CoordinatesArray[] = polygonIsEmpty ? [pointCoordinates] : polygonCoordinates;
       const reversedCoordinates: any[] = reverseNestedArray(clone(coordinates));
 
-      const options: FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
+      const options: L.FitBoundsOptions = polygonIsEmpty ? {maxZoom: this.MapHelper.map!.getZoom()} : {};
       this.MapHelper.map!.flyToBounds(reversedCoordinates, options);
 
       if (!polygonIsEmpty) {
@@ -499,7 +499,7 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   private setInitialMapView(): void {
-    const reversedCoords: LatLngTuple = [...this.defaultMapCenter].reverse() as LatLngTuple;
+    const reversedCoords: L.LatLngTuple = [...this.defaultMapCenter].reverse() as L.LatLngTuple;
     const zoom = 6;
     this.MapHelper.map!.setView(reversedCoords, zoom);
   }

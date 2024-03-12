@@ -2,69 +2,68 @@
  @license
  Copyright (c) 2019 The eTools Project Authors. All rights reserved.
  */
-import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings';
 import {connect} from 'pwa-helpers/connect-mixin';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query';
 import {installRouter} from 'pwa-helpers/router';
 // This element is connected to the Redux store.
-import {store} from '../../redux/store';
+import {store} from './redux/store';
 // These are the elements needed by this element.
-import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
-import '@polymer/app-layout/app-drawer/app-drawer.js';
-import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-header/app-header.js';
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer-layout';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-form-builder';
-import '@unicef-polymer/etools-toasts/src/etools-toasts';
-import {createDynamicDialog} from '@unicef-polymer/etools-dialog/dynamic-dialog';
+import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
+import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
 
 import '@unicef-polymer/etools-piwik-analytics/etools-piwik-analytics.js';
-import {AppShellStyles} from './app-shell-styles';
-import {RouterStyles} from './router-style';
+import {AppShellStyles} from './components/app-shell/app-shell-styles';
+import {RouterStyles} from './components/app-shell/router-style';
 
-import './menu/app-menu.js';
-import './header/page-header.js';
-import './footer/page-footer.js';
+import './components/app-shell/menu/app-menu.js';
+import './components/app-shell/header/page-header.js';
+import './components/app-shell/footer/page-footer.js';
 
-import './app-theme.js';
-import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../config/config';
-import {getCurrentUserData} from '../../redux/effects/user.effects';
-import {AppDrawerLayoutElement} from '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
-import {AppHeaderLayoutElement} from '@polymer/app-layout/app-header-layout/app-header-layout';
-import {AppDrawerElement} from '@polymer/app-layout/app-drawer/app-drawer';
-import {CSSResultArray, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
-import {navigate} from '../../redux/effects/app.effects';
-import {UpdateDrawerState} from '../../redux/actions/app.actions';
-import {loadStaticData} from '../../redux/effects/load-static-data.effect';
-import {user} from '../../redux/reducers/user.reducer';
-import {country} from '../../redux/reducers/country.reducer';
-import {organization} from '../../redux/reducers/organization.reducer';
-import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from '../../endpoints/endpoints-list';
-import {currentUser, userSelector} from '../../redux/selectors/user.selectors';
-import {setUser} from '../../config/permissions';
-import {appDrawerStyles} from './menu/styles/app-drawer-styles';
-import '@unicef-polymer/etools-loading';
-import {globalLoadingSelector} from '../../redux/selectors/global-loading.selectors';
-import {globalLoading} from '../../redux/reducers/global-loading.reducer';
+import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from './config/config';
+import {getCurrentUserData} from './redux/effects/user.effects';
+import {AppHeaderLayout} from '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
+import {AppDrawer} from '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
+
+import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+
+import {navigate} from './redux/effects/app.effects';
+import {UpdateDrawerState} from './redux/actions/app.actions';
+import {loadStaticData} from './redux/effects/load-static-data.effect';
+import {user} from './redux/reducers/user.reducer';
+import {country} from './redux/reducers/country.reducer';
+import {organization} from './redux/reducers/organization.reducer';
+import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT} from './endpoints/endpoints-list';
+import {currentUser, userSelector} from './redux/selectors/user.selectors';
+import {setUser} from './config/permissions';
+import {appDrawerStyles} from './components/app-shell/menu/styles/app-drawer-styles';
+import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
+import {globalLoadingSelector} from './redux/selectors/global-loading.selectors';
+import {globalLoading} from './redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
-import {checkEnvFlags} from '../utils/check-flags';
-import {ROOT_PATH} from '../../config/config';
-import {ActiveLanguageSwitched} from '../../redux/actions/active-language.actions';
-import {languageIsAvailableInApp} from '../utils/utils';
-import {MapHelper} from '../common/map-mixin';
+import {checkEnvFlags} from './components/utils/check-flags';
+import {ROOT_PATH, BASE_URL} from './config/config';
+import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';
+import {languageIsAvailableInApp} from './components/utils/utils';
+import {MapHelper} from './components/common/map-mixin';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-declare const dayjs: any;
-declare const dayjs_plugin_utc: any;
-declare const dayjs_plugin_isSameOrBefore: any;
-
-dayjs.extend(dayjs_plugin_utc);
-dayjs.extend(dayjs_plugin_isSameOrBefore);
+import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
+import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 
 registerTranslateConfig({
   empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
+
+setBasePath(BASE_URL);
+initializeIcons();
 
 // These are the actions needed by this element.
 
@@ -82,7 +81,7 @@ store.addReducers({
 @customElement('app-shell')
 export class AppShell extends connect(store)(LitElement) {
   @property({type: Boolean})
-  narrow = true;
+  narrow!: boolean;
 
   @property({type: Boolean})
   drawerOpened = false;
@@ -114,17 +113,13 @@ export class AppShell extends connect(store)(LitElement) {
   @property({type: Boolean})
   hasLoadedTranslationFile = false;
 
-  @query('#layout') private drawerLayout!: AppDrawerLayoutElement;
-  @query('#drawer') private drawer!: AppDrawerElement;
-  @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayoutElement;
+  @query('#drawer') private drawer!: AppDrawer;
+  @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayout;
 
   private selectedLanguageAux = '';
 
   constructor() {
     super();
-    // Gesture events like tap and track generated from touch will not be
-    // preventable, allowing for better scrolling performance.
-    setPassiveTouchGestures(true);
 
     const menuTypeStoredVal: string | null = localStorage.getItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY);
     if (!menuTypeStoredVal) {
@@ -190,7 +185,7 @@ export class AppShell extends connect(store)(LitElement) {
     installRouter((location: Location) =>
       store.dispatch<AsyncEffect>(navigate(decodeURIComponent(location.pathname + location.search)))
     );
-    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(false)));
+    installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(new UpdateDrawerState(!this.drawerOpened)));
 
     checkEnvFlags().then(() => store.dispatch<AsyncEffect>(getCurrentUserData()));
     store.subscribe(
@@ -224,7 +219,8 @@ export class AppShell extends connect(store)(LitElement) {
       // selectedLanguageAux is used to avoid multiple [lang].json fetch until this.locadLocalization finishes
       this.selectedLanguageAux = state.activeLanguage.activeLanguage;
       await this.loadLocalization(state.activeLanguage.activeLanguage);
-      // seletedLanguage has to be set after loadLocalization finishes to trigger UI updates only after the [lang].json is loaded
+      // seletedLanguage has to be set after loadLocalization finishes to
+      // trigger UI updates only after the [lang].json is loaded
       this.selectedLanguage = state.activeLanguage.activeLanguage;
     }
   }
@@ -243,8 +239,6 @@ export class AppShell extends connect(store)(LitElement) {
 
   toggleMenu(e: CustomEvent): void {
     this.smallMenu = e.detail.value;
-    this._updateDrawerStyles();
-    this._notifyLayoutResize();
   }
 
   render(): TemplateResult {
@@ -403,15 +397,5 @@ export class AppShell extends connect(store)(LitElement) {
         });
       }
     }
-  }
-
-  private _updateDrawerStyles(): void {
-    this.drawerLayout.updateStyles();
-    this.drawer.updateStyles();
-  }
-
-  private _notifyLayoutResize(): void {
-    this.drawerLayout.notifyResize();
-    this.appHeaderLayout.notifyResize();
   }
 }

@@ -1,3 +1,4 @@
+import {GenericObject} from '@unicef-polymer/etools-types';
 import {appLanguages} from '../../config/app-constants';
 import path from 'ramda/es/path';
 
@@ -40,4 +41,30 @@ export const isRequired = (permissions: GenericObject, field: string): boolean =
 
 export const getMaxLength = (permissions: GenericObject, field: string): number => {
   return getFromPath(permissions, ['actions', 'GET', field, 'max_length']);
+};
+
+export const getErrorText = (errors: GenericObject): string => {
+  let errSource = '';
+  if (errors.data && errors.data !== 'UnknownError') {
+    errSource = errors.data;
+  } else if (errors.initialResponse?.data) {
+    errSource = errors.initialResponse.data;
+  }
+  return Array.isArray(errSource) ? errSource.join('\n') : errSource;
+};
+
+export const setDataOnSessionStorage = (key: string, data: any): void => {
+  sessionStorage.setItem(key, JSON.stringify(data));
+};
+
+export const getDataFromSessionStorage = (key: string): any => {
+  const data = sessionStorage.getItem(key);
+  if (data) {
+    try {
+      return JSON.parse(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return null;
 };

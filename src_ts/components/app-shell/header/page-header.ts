@@ -1,8 +1,9 @@
-import '@polymer/polymer/lib/elements/dom-if';
-import '@polymer/app-layout/app-toolbar/app-toolbar';
-import '@polymer/paper-icon-button/paper-icon-button';
-import '@unicef-polymer/etools-app-selector/dist/etools-app-selector';
-import '@unicef-polymer/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+
+import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
+import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
 import '../../common/layout/support-btn';
 import './countries-dropdown';
 import './organizations-dropdown';
@@ -10,8 +11,18 @@ import './organizations-dropdown';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {store} from '../../../redux/store';
 
-import {isProductionServer, isStagingServer, isDevServer, isDemoServer, ROOT_PATH} from '../../../config/config';
-import {css, CSSResultArray, customElement, html, LitElement, property, query, TemplateResult} from 'lit-element';
+import {
+  isProductionServer,
+  isStagingServer,
+  isDevServer,
+  isDemoServer,
+  ROOT_PATH,
+  isTestingServer
+} from '../../../config/config';
+
+import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {pageHeaderStyles} from './page-header-styles';
 import {isEmpty} from 'ramda';
@@ -20,18 +31,15 @@ import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 
 import {use} from 'lit-translate';
-import {countriesDropdownStyles} from './countries-dropdown-styles';
+import {headerDropdownStyles} from './header-dropdown-styles';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate, get as getTranslation} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-ajax/ajax-error-parser.js';
-import {EtoolsDropdownEl} from '@unicef-polymer/etools-dropdown/etools-dropdown';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {appLanguages} from '../../../config/app-constants';
 import {languageIsAvailableInApp} from '../../utils/utils';
-
-// registerTranslateConfig({loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())});
 
 store.addReducers({
   activeLanguage
@@ -87,8 +95,6 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: String})
   environment = 'LOCAL';
 
-  @query('#languageSelector') private languageDropdown!: EtoolsDropdownEl;
-
   rootPath: string = ROOT_PATH;
 
   constructor() {
@@ -124,12 +130,13 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       pageHeaderStyles,
       css`
         .refresh-button {
-          color: #bcc1c6;
-          margin-right: 10px;
+          color: var(--header-color);
+          margin-inline-end: 10px;
         }
         .dropdowns {
           display: flex;
-          margin-right: 20px;
+          padding-block-start: 6px;
+          margin-inline-end: 20px;
         }
         .header {
           flex-wrap: wrap;
@@ -147,6 +154,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         }
         .header__right-group {
           justify-content: space-evenly;
+          margin-inline-start: auto;
         }
         .logo {
           margin: 0 10px 0 20px;
@@ -156,6 +164,21 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             flex-grow: 1;
           }
         }
+
+        .logo-wrapper {
+          display: flex;
+          align-items: center;
+        }
+
+        .envWarning {
+          color: #000;
+          background-color: var(--header-color);
+          font-weight: 700;
+          padding: 5px 10px;
+          font-size: var(--etools-font-size-14, 14px);
+          line-height: 1;
+          border-radius: 10px;
+        }
       `
     ];
   }
@@ -164,7 +187,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     // main template
     // language=HTML
     return html`
-      ${countriesDropdownStyles}
+      ${headerDropdownStyles}
       <style>
         app-toolbar {
           background-color: ${this.headerColor};
@@ -173,49 +196,53 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
       <app-toolbar sticky class="content-align header">
         <div class="header__item header__left-group">
-          <paper-icon-button
+          <etools-icon-button
             id="menuButton"
             class="nav-menu-button"
-            icon="menu"
-            @tap="${() => this.menuBtnClicked()}"
-          ></paper-icon-button>
+            name="menu"
+            @click="${() => this.menuBtnClicked()}"
+          ></etools-icon-button>
           <etools-app-selector
             id="selector"
             .user="${this.profile}"
             .language="${this.selectedLanguage}"
           ></etools-app-selector>
-          <img
-            id="app-logo"
-            class="logo"
-            src="${this.rootPath}assets/images/etools-logo-color-white.svg"
-            alt="eTools"
-          />
-          ${this.isProduction
-            ? ``
-            : html`<div class="envWarning">
-            <span class='envLong'> - </span>${this.environment} <span class='envLong'>TESTING ENVIRONMENT<span></div>`}
+          <div class="logo-wrapper">
+            <img
+              id="app-logo"
+              class="logo"
+              src="${this.rootPath}assets/images/etools-logo-color-white.svg"
+              alt="eTools"
+            />
+            ${this.isProduction
+              ? ``
+              : html`<div class="envWarning" title="${this.environment} TESTING ENVIRONMENT">${this.environment}</div>`}
+          </div>
         </div>
         <div class="header__item header__right-group">
           <div class="dropdowns">
-            <etools-dropdown
-              id="languageSelector"
-              .selected="${this.selectedLanguage}"
-              .options="${appLanguages}"
-              option-label="display_name"
-              option-value="value"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                if (detail.selectedItem) {
-                  this.languageChanged(detail.selectedItem.value);
-                }
-              }}"
-              trigger-value-change-event
-              hide-search
-              allow-outside-scroll
-              no-label-float
-              .readonly="${this.langUpdateInProgress}"
-              .autoWidth="${true}"
-            ></etools-dropdown>
-
+            <div id="languageSelector">
+              <etools-dropdown
+                transparent
+                .selected="${this.selectedLanguage}"
+                .options="${appLanguages}"
+                option-label="display_name"
+                option-value="value"
+                @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                  if (detail.selectedItem) {
+                    this.languageChanged(detail.selectedItem.value);
+                  }
+                }}"
+                trigger-value-change-event
+                hide-search
+                allow-outside-scroll
+                no-label-float
+                .disabled="${this.langUpdateInProgress}"
+                min-width="120px"
+                placement="bottom-end"
+                .syncWidth="${false}"
+              ></etools-dropdown>
+            </div>
             <countries-dropdown></countries-dropdown>
             <organizations-dropdown></organizations-dropdown>
           </div>
@@ -233,14 +260,17 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
             @sign-out="${this._signOut}"
           >
           </etools-profile-dropdown>
-          <paper-icon-button
+          <etools-icon-button
+            label="refresh"
             title="${translate('NAVIGATION_MENU.REFRESH')}"
             class="refresh-button"
-            icon="refresh"
+            name="refresh"
             tracker="Refresh"
-            @tap="${this.refresh}"
+            @click="${this.refresh}"
           >
-          </paper-icon-button>
+          </etools-icon-button>
+
+          <etools-accesibility></etools-accesibility>
         </div>
       </app-toolbar>
     `;
@@ -250,11 +280,6 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     super.connectedCallback();
     this.setBgColor();
     this.checkEnvironment();
-
-    setTimeout(() => {
-      const fitInto = document.querySelector('app-shell')!.shadowRoot!.querySelector('#appHeadLayout');
-      this.languageDropdown.fitInto = fitInto;
-    }, 0);
   }
 
   stateChanged(state: IRootState): void {
@@ -265,7 +290,23 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
       this.selectedLanguage = state.activeLanguage.activeLanguage;
       window.EtoolsLanguage = this.selectedLanguage;
       this.initialLanguage = this.selectedLanguage;
+      this.setLanguageDirection();
     }
+  }
+
+  private setLanguageDirection() {
+    setTimeout(() => {
+      const htmlTag = document.querySelector('html');
+      if (this.selectedLanguage === 'ar') {
+        htmlTag!.setAttribute('dir', 'rtl');
+        this.setAttribute('dir', 'rtl');
+        this.dir = 'rtl';
+      } else if (htmlTag!.getAttribute('dir')) {
+        htmlTag!.removeAttribute('dir');
+        this.removeAttribute('dir');
+        this.dir = '';
+      }
+    });
   }
 
   handleSaveProfile(e: any): void {
@@ -319,11 +360,13 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   protected checkEnvironment(): void {
     this.isProduction = isProductionServer();
     this.environment = isDevServer()
-      ? 'DEVELOPMENT'
+      ? 'DEV'
       : isDemoServer()
       ? 'DEMO'
       : isStagingServer()
-      ? 'STAGING'
+      ? 'STAGE'
+      : isTestingServer()
+      ? 'TEST'
       : 'LOCAL';
   }
 

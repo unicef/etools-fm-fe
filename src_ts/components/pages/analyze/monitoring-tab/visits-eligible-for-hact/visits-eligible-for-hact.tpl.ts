@@ -1,9 +1,9 @@
-import {html, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {html, TemplateResult} from 'lit';
+import {repeat} from 'lit/directives/repeat.js';
 import {VisitsEligibleForHact} from './visits-eligible-for-hact';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
@@ -39,7 +39,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           this.items,
           (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
-            <etools-data-table-row id="hactVisits" secondary-bg-on-hover @tap="${() => this._resizeMap()}">
+            <etools-data-table-row id="hactVisits" secondary-bg-on-hover @click="${() => this._resizeMap()}">
               <div slot="row-data" class="layout horizontal editable-row flex">
                 <div class="col-data flex-1">
                   <span class="truncate">${hactVisit.name}</span>

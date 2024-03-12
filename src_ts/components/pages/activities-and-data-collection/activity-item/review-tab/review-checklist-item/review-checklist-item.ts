@@ -1,5 +1,6 @@
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';

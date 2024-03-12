@@ -1,13 +1,13 @@
-import '@unicef-polymer/etools-dropdown/etools-dropdown';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
-import '@polymer/paper-checkbox';
-import '@polymer/paper-input/paper-textarea';
-import '@unicef-polymer/etools-date-time/datepicker-lite';
-import {html, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
+import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
+import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
+import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
-import {PaperCheckboxElement} from '@polymer/paper-checkbox/paper-checkbox';
+
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {translate} from 'lit-translate';
 
@@ -25,27 +25,27 @@ export function template(this: ActionPointsPopup): TemplateResult {
       @close="${this.onClose}"
       .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
       .cancelBtnText="${translate('MAIN.BUTTONS.CANCEL')}"
-      no-padding
     >
       <etools-loading
         ?active="${this.savingInProcess}"
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <!--     Description   -->
-      <paper-textarea
-        class="validate-input additional-padding"
-        .value="${this.editedData.description}"
-        @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
-        required
-        label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DESCRIPTION')}"
-        max-rows="3"
-        placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ENTER_DESCRIPTION')}"
-        ?invalid="${this.errors && this.errors.description}"
-        .errorMessage="${this.errors && this.errors.description}"
-        @focus="${() => this.resetFieldError('description')}"
-        @tap="${() => this.resetFieldError('description')}"
-      ></paper-textarea>
-
+      <div class="grid-container">
+        <!--     Description   -->
+        <etools-textarea
+          class="validate-input additional-padding"
+          .value="${this.editedData.description}"
+          @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
+          required
+          label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DESCRIPTION')}"
+          max-rows="3"
+          placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.ENTER_DESCRIPTION')}"
+          ?invalid="${this.errors && this.errors.description}"
+          .errorMessage="${this.errors && this.errors.description}"
+          @focus="${() => this.resetFieldError('description')}"
+          @click="${() => this.resetFieldError('description')}"
+        ></etools-textarea>
+      </div>
       <div class="grid-container">
         <!--    Assignee    -->
         <etools-dropdown
@@ -65,7 +65,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.assigned_to}"
           .errorMessage="${this.errors && this.errors.assigned_to}"
           @focus="${() => this.resetFieldError('assigned_to')}"
-          @tap="${() => this.resetFieldError('assigned_to')}"
+          @click="${() => this.resetFieldError('assigned_to')}"
         ></etools-dropdown>
 
         <!--    Due on     -->
@@ -98,7 +98,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.section}"
           .errorMessage="${this.errors && this.errors.section}"
           @focus="${() => this.resetFieldError('section')}"
-          @tap="${() => this.resetFieldError('section')}"
+          @click="${() => this.resetFieldError('section')}"
         ></etools-dropdown>
 
         <!--    Offices    -->
@@ -119,7 +119,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.office}"
           .errorMessage="${this.errors && this.errors.office}"
           @focus="${() => this.resetFieldError('office')}"
-          @tap="${() => this.resetFieldError('office')}"
+          @click="${() => this.resetFieldError('office')}"
         ></etools-dropdown>
 
         <!--    Related To    -->
@@ -140,7 +140,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.related_to}"
           .errorMessage="${this.errors && this.errors.related_to}"
           @focus="${() => this.resetFieldError('related_to')}"
-          @tap="${() => this.resetFieldError('related_to')}"
+          @click="${() => this.resetFieldError('related_to')}"
         ></etools-dropdown>
 
         <!--    Related Name    -->
@@ -161,7 +161,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.related_name}"
           .errorMessage="${this.errors && this.errors.related_name}"
           @focus="${() => this.resetFieldError('related_name')}"
-          @tap="${() => this.resetFieldError('related_name')}"
+          @click="${() => this.resetFieldError('related_name')}"
         ></etools-dropdown>
 
         <!--   Categories   -->
@@ -183,28 +183,26 @@ export function template(this: ActionPointsPopup): TemplateResult {
           ?invalid="${this.errors && this.errors.category}"
           .errorMessage="${this.errors && this.errors.category}"
           @focus="${() => this.resetFieldError('category')}"
-          @tap="${() => this.resetFieldError('category')}"
+          @click="${() => this.resetFieldError('category')}"
         ></etools-dropdown>
 
         <!--    Priority    -->
         <div class="without-border flex priority-container additional-padding">
-          <paper-checkbox
+          <etools-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"
-            @change="${(event: CustomEvent) =>
-              this.updateModelValue('high_priority', (event.target as PaperCheckboxElement).checked)}"
+            @sl-change="${(e: any) => this.updateModelValue('high_priority', e.target.checked)}"
           >
             ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.HIGH_PRIORITY')}
-          </paper-checkbox>
+          </etools-checkbox>
         </div>
 
         ${this.url
           ? html`
               <div class="without-border flex">
                 <a class="link-cell action-point-link" href="${this.url}" target="_blank"
-                  >${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.GO_TO_ACTION_POINTS_TO_COMPLETE')}<paper-icon-button
-                    icon="icons:launch"
-                  ></paper-icon-button
+                  >${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.GO_TO_ACTION_POINTS_TO_COMPLETE')}
+                  <etools-icon-button name="launch"></etools-icon-button
                 ></a>
               </div>
             `

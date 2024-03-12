@@ -1,11 +1,11 @@
 import {updateQueryParams} from '../../../routing/routes';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {pageIsActive} from '../../utils/utils';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
-/* @polymerMixin */
+/* @LitMixin */
 export const ListMixin =
   <T extends Constructor<LitElement>>() =>
   <L>(superclass: T) =>
@@ -51,10 +51,10 @@ export const ListMixin =
         updateQueryParams({[paramName]: newValue});
       }
 
-      updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string): void {
+      updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string, reset?: boolean): void {
         if (pageName && !pageIsActive(pageName)) {
           return;
         }
-        updateQueryParams(queryParams);
+        updateQueryParams(queryParams, reset);
       }
     };

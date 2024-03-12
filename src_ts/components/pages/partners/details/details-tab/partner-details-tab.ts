@@ -1,4 +1,5 @@
-import {CSSResult, customElement, html, LitElement, property, PropertyValues, TemplateResult} from 'lit-element';
+import {CSSResult, LitElement, PropertyValues, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import './partner-information/partner-information';
 import './partner-contacts/partner-contacts';
