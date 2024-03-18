@@ -75,3 +75,4 @@ workflows:
                 - staging
                 - develop
                 - shoelace-migration
+                - 36245-mobile-layout
