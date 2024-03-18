@@ -20,18 +20,6 @@ export function template(this: PartnerInformation): TemplateResult {
       .row {
         min-height: 75px;
       }
-      etools-input[readonly].without-border {
-        --paper-input-container-underline: {
-          border-bottom: none !important;
-          display: none !important;
-        }
-        --paper-input-container-underline-focus: {
-          display: none;
-        }
-        --paper-input-container-underline-disabled: {
-          display: none;
-        }
-      }
        ${FormBuilderCardStyles}
     </style>
 
@@ -50,8 +38,8 @@ export function template(this: PartnerInformation): TemplateResult {
           ?active="${this.savingInProcess}"
           loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
         ></etools-loading>
-        <div class="layout horizontal row">
-          <div class="col-data flex-4">
+        <div class="row">
+          <div class="col-data col-12 col-md-4">
             <etools-input
               class="without-border"
               .value="${this.editedData && this.editedData.vendor_number}"
@@ -60,7 +48,7 @@ export function template(this: PartnerInformation): TemplateResult {
               readonly
             ></etools-input>
           </div>
-          <div class="col-data flex-8">
+          <div class="col-data col-12 col-md-8">
             <etools-input
               class="without-border"
               .value="${this.getPartnerAddress(this.editedData)}"
@@ -70,8 +58,8 @@ export function template(this: PartnerInformation): TemplateResult {
             ></etools-input>
           </div>
         </div>
-        <div class="layout horizontal row">
-          <div class="col-data flex-4">
+        <div class="row">
+          <div class="col-data col-12 col-md-4">
             <etools-input
               class="without-border"
               .value="${this.editedData && this.editedData.name}"
@@ -80,7 +68,7 @@ export function template(this: PartnerInformation): TemplateResult {
               readonly
             ></etools-input>
           </div>
-          <div class="col-data flex-4">
+          <div class="col-data col-12 col-md-4">
             <etools-input
               id="emailInput"
               always-float-label
@@ -96,7 +84,7 @@ export function template(this: PartnerInformation): TemplateResult {
               <etools-icon slot="prefix" name="communication:email"> </etools-icon>
             </etools-input>
           </div>
-          <div class="col-data flex-4">
+          <div class="col-data col-12 col-md-4">
             <etools-input
               id="phoneInput"
               always-float-label

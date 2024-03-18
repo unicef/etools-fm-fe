@@ -24,9 +24,9 @@ export function template(this: SitesPopupComponent): TemplateResult {
       .cancelBtnText="${translate('CANCEL')}"
     >
       <div class="container">
-        <div class="layout horizontal">
+        <div class="row">
           <etools-input
-            class="validate-input flex-7"
+            class="validate-input col-md-9 col-12"
             .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
             maxlength="100"
@@ -47,7 +47,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
           <etools-dropdown
             id="statusDropdown"
-            class="validate-input flex-2"
+            class="validate-input col-md-3 col-12"
             .selected="${this.setStatusValue(!!this.editedData?.is_active)}"
             @etools-selected-item-changed="${({detail}: CustomEvent) => {
               this.updateModelValue('is_active', detail.selectedItem?.value);
@@ -67,33 +67,32 @@ export function template(this: SitesPopupComponent): TemplateResult {
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
-        </div>
 
-        ${this.editedData.id
-          ? html`
-              <etools-input
-                .value="${this.editedData && this.editedData.parent!.name}"
-                label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
-                placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
-                disabled
-                readonly
-              ></etools-input>
-            `
-          : ''}
+          ${this.editedData.id
+            ? html`
+                <etools-input
+                  class="col-12"
+                  .value="${this.editedData && this.editedData.parent!.name}"
+                  label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
+                  placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
+                  disabled
+                  readonly
+                ></etools-input>
+              `
+            : ''}
 
-        <div class="map" id="map"></div>
+          <div class="map col-12" id="map"></div>
 
-        <div class="layout horizontal">
-          <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
+          <label class="selected-sites-label col-md-2 col-12"> ${translate('SITES.SELECTED_SITE')}: </label>
           <etools-input
-            class="validate-input flex-5"
+            class="validate-input col-md-5 col-12"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
             label="${translate('MAIN.LATITUDE')}"
             placeholder="-"
           ></etools-input>
           <etools-input
-            class="validate-input flex-5"
+            class="validate-input col-md-5 col-12"
             .value="${this.longitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
             label="${translate('MAIN.LONGITUDE')}"

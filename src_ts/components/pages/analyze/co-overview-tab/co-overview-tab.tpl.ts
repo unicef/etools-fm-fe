@@ -10,7 +10,7 @@ import {translate} from 'lit-translate';
 export function template(this: CoOverviewTabComponent): TemplateResult {
   return html`
     ${InputStyles}
-    <section class="elevation page-content layout horizontal" elevation="1">
+    <section class="elevation page-content layout-horizontal" elevation="1">
       <etools-loading
         ?active="${this.isLoad}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
@@ -34,7 +34,7 @@ export function template(this: CoOverviewTabComponent): TemplateResult {
       (cpOutput: EtoolsCpOutput) => cpOutput.id,
       (cpOutput: EtoolsCpOutput) => html`
         <section class="elevation page-content card-container" elevation="1">
-          <div class="card-title-box with-bottom-line layout horizontal">
+          <div class="card-title-box with-bottom-line layout-horizontal">
             <etools-icon
               name="${this.queryParams && this.queryParams.cp_output === cpOutput.id ? 'expand-less' : 'expand-more'}"
               @click="${() => this.toggleDetails(cpOutput.id)}"

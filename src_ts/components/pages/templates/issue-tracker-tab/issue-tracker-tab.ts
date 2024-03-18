@@ -7,14 +7,14 @@ import {updateQueryParams} from '../../../../routing/routes';
 import {requestLogIssue} from '../../../../redux/effects/issue-tracker.effects';
 
 import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {template} from './issue-tracker-tab.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
 import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {IssueTrackerTabStyles} from './issue-tracker-tab.styles';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -41,6 +41,9 @@ export class IssueTrackerTabComponent extends SiteMixin(
   @property()
   filters: EtoolsFilter[] | null = [];
 
+  @property({type: Boolean})
+  lowResolutionLayout = false;
+
   private readonly debouncedLoading: Callback;
 
   private routeUnsubscribe!: Unsubscribe;
@@ -62,7 +65,7 @@ export class IssueTrackerTabComponent extends SiteMixin(
   }
 
   static get styles(): CSSResultArray {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerTabStyles];
+    return [elevationStyles, SharedStyles, layoutStyles, pageLayoutStyles, CardStyles, IssueTrackerTabStyles];
   }
 
   render(): TemplateResult {

@@ -22,7 +22,7 @@ export const CpDetailsItemStyles: CSSResult = css`
   }
 
   .line {
-    padding: 5px 15px;
+    padding: 5px 0;
     font-size: var(--etools-font-size-14, 14px);
     color: var(--primary-text-color);
   }
@@ -34,10 +34,6 @@ export const CpDetailsItemStyles: CSSResult = css`
     text-align: right;
     padding-left: 70px;
     width: 210px;
-  }
-
-  .partners-data {
-    padding-right: 25px;
   }
 
   .partners-data .prog-visits {
@@ -66,7 +62,9 @@ export const CpDetailsItemStyles: CSSResult = css`
     border-bottom: solid 1px #dcdbdc;
     overflow: hidden;
   }
-
+  [class^='col-'].no-pl {
+    padding-left: 0;
+  }
   .partner .intervention-data .links {
     justify-content: space-evenly;
   }

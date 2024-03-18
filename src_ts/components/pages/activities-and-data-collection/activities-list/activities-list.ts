@@ -1,7 +1,7 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -29,7 +29,7 @@ import {SharedStyles} from '../../../styles/shared-styles';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
@@ -62,7 +62,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   @property() filters: EtoolsFilter[] | null = null;
   @property() activitiesListFilters: ActivityFilter[] = [];
   @property({type: Object}) user!: IEtoolsUserModel;
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
   @property() private filtersData: GenericObject = {
@@ -145,7 +146,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       elevationStyles,
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       SharedStyles,
       ActivitiesListStyles,
@@ -164,6 +165,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         .search-filters {
           flex-grow: 1;
           margin-block: 5px;
+        }
+        .row {
+          width: 100%;
         }
       `
     ];

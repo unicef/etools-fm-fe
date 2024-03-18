@@ -9,7 +9,7 @@ import {getDifference} from '../../../../utils/objects-diff';
 import {createLogIssue, updateLogIssue} from '../../../../../redux/effects/issue-tracker.effects';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {IssueTrackerPopupStyles} from './issue-tracker-popu.styles';
 import {SiteMixin} from '../../../../common/mixins/site-mixin';
@@ -102,7 +102,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, IssueTrackerPopupStyles];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, IssueTrackerPopupStyles];
   }
 
   set readonly(value: boolean) {
@@ -151,9 +151,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
           loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
         ></etools-loading>
 
-        <div class="container layout vertical">
-          <div class="layout horizontal center">
-            <div class="layout vertical related-to-type flex-2">
+        <div class="container row">
+          <div class="col-md-8 col-12 align-items-center">
+            <div class="layout-vertical related-to-type">
               <label id="related-to-type">${translate('ISSUE_TRACKER.RELATED_TO_TYPE')}</label>
               <etools-radio-group
                 .value="${this.relatedToType}"
@@ -170,34 +170,33 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
                 )}
               </etools-radio-group>
             </div>
-
-            <etools-dropdown
-              class="validate-input flex-1"
-              .selected="${this.editedData.status}"
-              label="${translate('ISSUE_TRACKER.STATUS')}"
-              placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.STATUS')}"
-              .options="${this.statusOptions}"
-              option-label="display_name"
-              option-value="value"
-              required
-              ?readonly="${this.isReadOnly}"
-              ?invalid="${this.errors && this.errors.status}"
-              .errorMessage="${this.errors && this.errors.status}"
-              @focus="${() => this.resetFieldError('status')}"
-              @click="${() => this.resetFieldError('status')}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('status', detail.selectedItem && detail.selectedItem.value)}"
-              trigger-value-change-event
-              hide-search
-              allow-outside-scroll
-            ></etools-dropdown>
           </div>
+          <etools-dropdown
+            class="validate-input col-md-4 col-12"
+            .selected="${this.editedData.status}"
+            label="${translate('ISSUE_TRACKER.STATUS')}"
+            placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.STATUS')}"
+            .options="${this.statusOptions}"
+            option-label="display_name"
+            option-value="value"
+            required
+            ?readonly="${this.isReadOnly}"
+            ?invalid="${this.errors && this.errors.status}"
+            .errorMessage="${this.errors && this.errors.status}"
+            @focus="${() => this.resetFieldError('status')}"
+            @click="${() => this.resetFieldError('status')}"
+            @etools-selected-item-changed="${({detail}: CustomEvent) =>
+              this.updateModelValue('status', detail.selectedItem && detail.selectedItem.value)}"
+            trigger-value-change-event
+            hide-search
+            allow-outside-scroll
+          ></etools-dropdown>
 
           ${this.relatedToType === 'partner'
             ? html`
-                <div class="layout horizontal preparation-input-container">
+                <div class="col-12 preparation-input-container">
                   <etools-dropdown
-                    class="validate-input flex"
+                    class="validate-input"
                     .selected="${simplifyValue(this.editedData.partner)}"
                     label="${translate('ISSUE_TRACKER.PARTNER')}"
                     placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.PARTNER')}"
@@ -221,9 +220,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             : ''}
           ${this.relatedToType === 'cp_output'
             ? html`
-                <div class="layout horizontal preparation-input-container">
+                <div class="col-12 preparation-input-container">
                   <etools-dropdown
-                    class="validate-input flex"
+                    class="validate-input"
                     .selected="${simplifyValue(this.editedData.cp_output)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) =>
                       this.updateModelValue('cp_output', detail.selectedItem && detail.selectedItem.id)}"
@@ -247,52 +246,50 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             : ''}
           ${this.relatedToType === 'location'
             ? html`
-                <div class="layout horizontal preparation-input-container">
-                  <etools-dropdown
-                    class="validate-input flex"
-                    .selected="${simplifyValue(this.editedData.location)}"
-                    label="${translate('ISSUE_TRACKER.LOCATION')}"
-                    placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.LOCATION')}"
-                    .options=${this.locations}
-                    option-label="name"
-                    option-value="id"
-                    required
-                    ?readonly="${this.isReadOnly}"
-                    ?invalid="${this.errors && this.errors.location}"
-                    .errorMessage="${this.errors && this.errors.location}"
-                    trigger-value-change-event
-                    @focus="${() => this.resetFieldError('location')}"
-                    @click="${() => this.resetFieldError('location')}"
-                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                      this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
-                    allow-outside-scroll
-                  >
-                  </etools-dropdown>
-                  <etools-dropdown
-                    class="validate-input flex"
-                    .selected="${simplifyValue(this.editedData.location_site)}"
-                    label="${translate('ISSUE_TRACKER.SITE')}"
-                    placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.SITE')}"
-                    .options=${this.locationSites}
-                    option-label="name"
-                    option-value="id"
-                    ?readonly="${this.isReadOnly}"
-                    ?invalid="${this.errors && this.errors.location_site}"
-                    .errorMessage="${this.errors && this.errors.location_site}"
-                    trigger-value-change-event
-                    @focus="${() => this.resetFieldError('location_site')}"
-                    @click="${() => this.resetFieldError('location_site')}"
-                    @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                      this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
-                    allow-outside-scroll
-                  >
-                  </etools-dropdown>
-                </div>
+                <etools-dropdown
+                  class="validate-input col-md-6 col-12"
+                  .selected="${simplifyValue(this.editedData.location)}"
+                  label="${translate('ISSUE_TRACKER.LOCATION')}"
+                  placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.LOCATION')}"
+                  .options=${this.locations}
+                  option-label="name"
+                  option-value="id"
+                  required
+                  ?readonly="${this.isReadOnly}"
+                  ?invalid="${this.errors && this.errors.location}"
+                  .errorMessage="${this.errors && this.errors.location}"
+                  trigger-value-change-event
+                  @focus="${() => this.resetFieldError('location')}"
+                  @click="${() => this.resetFieldError('location')}"
+                  @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                    this.setLocation(detail.selectedItem && detail.selectedItem.id)}"
+                  allow-outside-scroll
+                >
+                </etools-dropdown>
+                <etools-dropdown
+                  class="validate-input col-md-6 col-12"
+                  .selected="${simplifyValue(this.editedData.location_site)}"
+                  label="${translate('ISSUE_TRACKER.SITE')}"
+                  placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.SITE')}"
+                  .options=${this.locationSites}
+                  option-label="name"
+                  option-value="id"
+                  ?readonly="${this.isReadOnly}"
+                  ?invalid="${this.errors && this.errors.location_site}"
+                  .errorMessage="${this.errors && this.errors.location_site}"
+                  trigger-value-change-event
+                  @focus="${() => this.resetFieldError('location_site')}"
+                  @click="${() => this.resetFieldError('location_site')}"
+                  @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                    this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
+                  allow-outside-scroll
+                >
+                </etools-dropdown>
               `
             : ''}
 
           <etools-textarea
-            class="validate-input preparation-input-container issue-tracker-input"
+            class="validate-input col-md-12 col-12 issue-tracker-input"
             .value=${this.editedData.issue}
             max-rows="3"
             label="${translate('ISSUE_TRACKER.ISSUE')}"
@@ -308,7 +305,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             @click="${() => this.resetFieldError('issue')}"
           ></etools-textarea>
 
-          <div>
+          <div class="col-12">
             ${repeat(
               this.currentFiles,
               (attachment: IAttachment) => html`

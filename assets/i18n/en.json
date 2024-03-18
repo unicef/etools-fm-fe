@@ -680,6 +680,7 @@
   "DUPLICATE": "DUPLICATE",
   "ERROR_AT_SAVING_DUPLICATE": "Error at saving duplicate",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
+  "NO_RECORDS": "No records found.",
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",

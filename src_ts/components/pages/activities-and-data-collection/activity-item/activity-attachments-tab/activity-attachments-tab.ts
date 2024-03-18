@@ -1,6 +1,6 @@
 import {html, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import '../../../../common/attachmants-list/attachments-list';

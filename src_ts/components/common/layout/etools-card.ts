@@ -3,11 +3,11 @@ import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
-import {elevationStyles} from '../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import '@unicef-polymer/etools-unicef/src/etools-icon-button/etools-icon-button';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
-import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {translate} from 'lit-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
@@ -33,7 +33,7 @@ export class EtoolsCard extends LitElement {
     return [
       elevationStyles,
       CardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       FormBuilderCardStyles,
       css`
         :host {
@@ -95,6 +95,9 @@ export class EtoolsCard extends LitElement {
         }
         .flex-header__edit {
           order: 2;
+        }
+        .end-justified {
+          justify-content: end;
         }
         @media (max-width: 380px) {
           .card-title-box[is-collapsible] {
@@ -167,7 +170,7 @@ export class EtoolsCard extends LitElement {
               `
             : ''}
           <div class="flex-header__title">${this.cardTitle}</div>
-          <div class="layout horizontal center flex-header__edit">
+          <div class="layout-horizontal align-items-center flex-header__edit">
             ${this.isEditable
               ? html`
                   <etools-icon-button
@@ -189,7 +192,7 @@ export class EtoolsCard extends LitElement {
 
             ${this.isEditable && this.edit
               ? html`
-                  <div class="layout horizontal end-justified card-buttons">
+                  <div class="layout-horizontal end-justified card-buttons">
                     <etools-button variant="neutral" @click="${() => this.cancel()}"
                       >${translate('MAIN.BUTTONS.CANCEL')}</etools-button
                     >

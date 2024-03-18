@@ -7,9 +7,9 @@ import {translate} from 'lit-translate';
 export function template(this: LocationSitesWidgetComponent): TemplateResult {
   return html`
     <div class="widget-container">
-      <div class="map-and-list">
-        <div id="map"></div>
-        <div class="list">
+      <div class="map-and-list row">
+        <div id="map" class="col-md-6 col-12"></div>
+        <div class="list col-md-6 col-12">
           <etools-input
             class="search-input"
             type="search"
@@ -22,7 +22,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
             <etools-icon name="search" slot="prefix"></etools-icon>
           </etools-input>
 
-          <div class="locations-list">
+          <div class="locations-list layout-vertical">
             ${repeat(
               this.sitesList || [],
               (site: Site) => html`

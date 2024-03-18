@@ -3,7 +3,7 @@ import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {ReviewChecklistItemStyles} from './review-checklist-item.styles';
 import {translate} from 'lit-translate';
 
@@ -21,19 +21,19 @@ export class ReviewChecklistItemComponent extends LitElement {
       </style>
 
       <etools-data-table-row .detailsOpened="${true}">
-        <div slot="row-data" class="layout horizontal item-title">${this.itemTitle}</div>
+        <div slot="row-data" class="layout-horizontal item-title">${this.itemTitle}</div>
 
         <div slot="row-data-details">
-          <div class="header layout horizontal">
+          <div class="header layout-horizontal">
             <div class="rdc-title flex-2">${translate('ACTIVITY_REVIEW.COLUMNS.TEXT')}</div>
             <div class="rdc-title flex-3">${translate('ACTIVITY_REVIEW.COLUMNS.DETAILS')}</div>
           </div>
 
           ${this.checklist.map(
             (checklistItem: IChecklistItem) => html`
-              <div class="layout horizontal checklist-line">
-                <div class="row-details-content flex-2">${checklistItem.text}</div>
-                <div class="row-details-content flex-3">${checklistItem.specific_details}</div>
+              <div class="row checklist-line">
+                <div class="row-details-content col-md-4 col-12">${checklistItem.text}</div>
+                <div class="row-details-content col-md-8 col-12">${checklistItem.specific_details}</div>
               </div>
             `
           )}
@@ -43,6 +43,6 @@ export class ReviewChecklistItemComponent extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, ReviewChecklistItemStyles];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, ReviewChecklistItemStyles];
   }
 }

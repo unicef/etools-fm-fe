@@ -16,10 +16,6 @@ export const headerDropdownStyles: TemplateResult = html`
       cursor: pointer;
     }
 
-    :host([dir='rtl']) etools-dropdown {
-      --paper-input-container-shared-input-style_-_max-width: 75px;
-    }
-
     etools-dropdown::part(display-input) {
       text-align: end;
     }
@@ -40,6 +36,7 @@ export const headerDropdownStyles: TemplateResult = html`
 
     #languageSelector {
       max-width: 120px;
+      margin-inline-start: auto;
     }
 
     etools-accesibility {
@@ -61,9 +58,35 @@ export const headerDropdownStyles: TemplateResult = html`
       opacity: 1;
     }
 
+    @media (max-width: 1024px) {
+      etools-dropdown {
+        min-width: 130px;
+        width: 130px;
+      }
+      organizations-dropdown {
+        width: 130px;
+      }
+
+      countries-dropdown {
+        width: 130px;
+      }
+    }
+
     @media (max-width: 768px) {
       etools-dropdown {
         max-width: 130px;
+      }
+    }
+    @media (max-width: 576px) {
+      #app-logo {
+        display: none;
+      }
+
+      etools-dropdown {
+        min-width: auto;
+      }
+      #languageSelector {
+        width: 110px;
       }
     }
   </style>

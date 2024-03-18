@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './templates-tab.tpl';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {updateQueryParams} from '../../../../routing/routes';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
@@ -18,7 +18,7 @@ import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {TemplatesStyles} from './templates-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
@@ -42,6 +42,8 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private additionalDataLoadingCount = 0;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   partners!: EtoolsPartner[];
   interventions!: EtoolsIntervention[];
   outputs!: EtoolsCpOutput[];
@@ -93,7 +95,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
   }
 
   static get styles(): CSSResultArray {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, TemplatesStyles];
+    return [elevationStyles, SharedStyles, layoutStyles, pageLayoutStyles, CardStyles, TemplatesStyles];
   }
 
   @property() get loadingInProcess(): boolean {

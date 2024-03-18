@@ -28,7 +28,7 @@ export function template(this: SummaryCard): TemplateResult {
       @cancel="${() => this.cancelEdit()}"
     >
       <!-- Open Attachments popup button -->
-      <div slot="actions" class="layout horizontal center">${this.getAdditionalButtons()}</div>
+      <div slot="actions" class="layout-horizontal align-items-center">${this.getAdditionalButtons()}</div>
 
       <div slot="content">
         <!-- Spinner -->

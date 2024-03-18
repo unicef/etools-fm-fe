@@ -26,11 +26,6 @@ export const LocationWidgetStyles: CSSResult = css`
     cursor: pointer;
   }
 
-  .widget-container .history etools-input {
-    margin-right: 22px;
-    max-width: 200px;
-  }
-
   .widget-container .history etools-input div[slot] {
     margin-left: 5px;
     color: #dd0000;
@@ -51,25 +46,19 @@ export const LocationWidgetStyles: CSSResult = css`
     display: flex;
     width: 100%;
     padding: 10px;
-    max-height: 320px;
     box-sizing: border-box;
   }
 
   .widget-container .map-and-list #map {
-    flex: 1;
     height: 300px;
-    margin-right: 25px;
   }
 
   .widget-container .map-and-list .list {
-    flex: 1;
     overflow: hidden;
   }
 
   .locations-list {
     display: flex;
-    flex: 1;
-    flex-flow: column;
     height: calc(100% - 43px);
     position: relative;
     overflow-y: auto;

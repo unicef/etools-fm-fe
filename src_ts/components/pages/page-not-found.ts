@@ -4,7 +4,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {SharedStyles} from '../styles/shared-styles';
 import {ROOT_PATH} from '../../config/config';
 import {pageLayoutStyles} from '../styles/page-layout-styles';
-import {elevationStyles} from '../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {translate} from 'lit-translate';
 
 /**

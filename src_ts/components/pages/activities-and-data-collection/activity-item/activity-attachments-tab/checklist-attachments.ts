@@ -1,10 +1,10 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import '../../../../common/attachmants-list/attachments-list';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
@@ -26,6 +26,8 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
   @property() items: IChecklistAttachment[] = [];
   @property() attachmentsTypes: AttachmentType[] = [];
   @property() loading = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   private checklistAttachmentsUnsubscribe!: Unsubscribe;
   private checklistAttachmentsTypesUnsubscribe!: Unsubscribe;
 
@@ -82,7 +84,7 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
       SharedStyles,
       pageLayoutStyles,
       CardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .custom-row-data-title {
           display: flex;

@@ -8,7 +8,7 @@ import {Unsubscribe} from 'redux';
 import {deleteListAttachment} from '../../../../../../../redux/effects/attachments-list.effects';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 @customElement('partner-remove-attachment-popup')
 export class PartnerRemoveAttachmentPopupComponent extends LitElement {
@@ -41,7 +41,7 @@ export class PartnerRemoveAttachmentPopupComponent extends LitElement {
   }
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
+    return [SharedStyles, pageLayoutStyles, layoutStyles];
   }
 
   set dialogData(data: IRemmoveAttachmentPopupData) {

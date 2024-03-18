@@ -1,6 +1,6 @@
 import {css, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
@@ -12,7 +12,7 @@ import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-det
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
 import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
@@ -93,7 +93,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ?active="${this.isUpdate}"
             loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
           ></etools-loading>
-          <div class="layout horizontal user-types">
+          <div class="layout-horizontal user-types">
             <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
             <etools-radio-group
               .value="${this.userType}"
@@ -110,11 +110,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
               )}
             </etools-radio-group>
           </div>
-          <div class="layout horizontal">
+          <div class="row">
             ${this.editedData.monitor_type === USER_TPM
               ? html`
                   <etools-dropdown
-                    class="flex"
+                    class="col-md-6 col-12"
                     id="tpmPartner"
                     .selected="${simplifyValue(this.tpmPartner)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) => {
@@ -139,7 +139,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               : ''}
 
             <etools-dropdown-multi
-              class="flex"
+              class="col-md-6 col-12"
               id="teamMembers"
               .selectedValues="${simplifyValue(this.teamMembers)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => {
@@ -161,7 +161,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ></etools-dropdown-multi>
 
             <etools-dropdown
-              class="flex"
+              class="col-md-6 col-12"
               id="visitLead"
               .selected="${simplifyValue(this.personResponsible)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -325,7 +325,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       elevationStyles,
       SharedStyles,
       CardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .card-content {
           padding: 12px;

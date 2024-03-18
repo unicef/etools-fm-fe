@@ -8,14 +8,20 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-fo
 
 export function template(this: PartnershipTab): TemplateResult {
   return html`
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
     <div class="partner-coverage">
       <etools-loading
         ?active="${this.loading}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <div class="partner-coverage__header">
+      <div class="partner-coverage__header row">
         <!--  Progress bar legend  -->
-        <div class="partner-coverage__header-item">
+        <div class="partner-coverage__header-item col-md-8 col-12">
           <div class="coverage-legend">
             <div class="coverage-legend__mark coverage-legend__mark-completed"></div>
             <label class="coverage-legend__label"
@@ -31,7 +37,7 @@ export function template(this: PartnershipTab): TemplateResult {
         </div>
 
         <!--  Sorting  -->
-        <div class="partner-coverage__header-item sorting-dropdown">
+        <div class="partner-coverage__header-item sorting-dropdown col-md-4 col-12">
           <etools-dropdown
             .selected="${this.selectedSortingOption}"
             label="${translate('ANALYZE.MONITORING_TAB.COVERAGE.PARTNERSHIP.SORT_BY')}"
@@ -72,6 +78,7 @@ export function template(this: PartnershipTab): TemplateResult {
         `
       )}
       <etools-data-table-footer
+        .lowResolutionLayout="${this.lowResolutionLayout}"
         .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${this.paginator.page_size}"
         .pageNumber="${this.paginator.page}"

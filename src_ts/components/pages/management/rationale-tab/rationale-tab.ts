@@ -9,10 +9,10 @@ import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadRationale} from '../../../../redux/effects/rationale.effects';
 import {rationaleData} from '../../../../redux/selectors/rationale.selectors';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
 import {get as getTranslation} from 'lit-translate';
@@ -64,7 +64,7 @@ export class RationaleTabComponent extends LitElement {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, RationaleStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, RationaleStyles];
   }
 
   render(): TemplateResult {

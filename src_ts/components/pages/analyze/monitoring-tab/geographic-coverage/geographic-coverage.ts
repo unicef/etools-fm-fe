@@ -1,10 +1,10 @@
 import {CSSResult, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './geographic-coverage.tpl';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {MapHelper} from '../../../../common/map-mixin';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
@@ -179,7 +179,7 @@ export class GeographicCoverageComponent extends SectionsMixin(LitElement) {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       geographicCoverageStyles,
       leafletStyles

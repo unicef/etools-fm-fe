@@ -18,7 +18,7 @@ import {
   REPORT_FINALIZATION,
   COMPLETED
 } from './activity-statuses';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -228,7 +228,7 @@ export class StatusesActionsComponent extends LitElement {
   static get styles(): CSSResult[] {
     // language=CSS
     return [
-      FlexLayoutClasses,
+      layoutStyles,
       SharedStyles,
       css`
         :host {

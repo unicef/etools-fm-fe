@@ -5,10 +5,10 @@ import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {simplifyValue} from '../../../../../../../utils/objects-diff';
-import {elevationStyles} from '../../../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
@@ -52,10 +52,10 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addIntervention()}"
         @close="${this.onClose}"
       >
-        <div class="container layout vertical">
-          <div class="elevation card-container layout horizontal center filters" elevation="2">
+        <div class="container layout-vertical">
+          <div class="elevation card-container layout-horizontal align-items-center filters" elevation="2">
             <div class="filter-name">${translate('MAIN.FILTER')}</div>
-            <div class="layout vertical flex-1">
+            <div class="layout-vertical flex-1">
               <etools-dropdown-multi
                 label="${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}"
                 .options="${this.partners}"
@@ -108,14 +108,14 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
           ></etools-dropdown>
           ${this.selectedIntervention
             ? html`
-                <div class="layout vertical connected-entries">
+                <div class="layout-vertical connected-entries">
                   <span class="connected-entries__title">${translate('ACTIVITY_DETAILS.CONNECTED_ENTRIES')}</span>
-                  <div class="layout horizontal">
-                    <div class="layout vertical flex-1 text-control">
+                  <div class="layout-horizontal">
+                    <div class="layout-vertical flex-1 text-control">
                       <label>${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}</label>
                       <div class="value">${this.getPartnerName(this.selectedIntervention.partner)}</div>
                     </div>
-                    <div class="layout vertical flex-1 text-control">
+                    <div class="layout-vertical flex-1 text-control">
                       <label>${translate('ACTIVITY_DETAILS.CP_OUTPUT')}</label>
                       ${repeat(
                         this.getOutputs(this.selectedIntervention.cp_outputs),
@@ -219,7 +219,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
       elevationStyles,
       CardStyles,
       SharedStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .filters {
           padding: 8px 12px;
