@@ -1,8 +1,11 @@
-import '@polymer/paper-button';
-import '@polymer/paper-menu-button';
-import '@polymer/paper-icon-button';
+import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
+import '@shoelace-style/shoelace/dist/components/menu/menu.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
-import {css, CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {
   ASSIGN,
   BACK_TRANSITIONS,
@@ -10,9 +13,11 @@ import {
   REJECT,
   REJECT_REPORT,
   SEPARATE_TRANSITIONS,
-  TRANSITIONS_ORDER
+  TRANSITIONS_ORDER,
+  SUBMITTED,
+  REPORT_FINALIZATION,
+  COMPLETED
 } from './activity-statuses';
-import {arrowLeftIcon} from '../../../../styles/app-icons';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
@@ -23,6 +28,7 @@ import {ACTIVITIES_PAGE} from '../../activities-page';
 import {translate, get as getTranslation} from 'lit-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {getErrorText} from '../../../../utils/utils';
+import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -51,13 +57,14 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button
-            class="back-button"
-            @tap="${() => this.changeStatus(transition)}"
+          <etools-button
+            variant="success"
+            class="arrowBtn"
+            @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
-            ${arrowLeftIcon}
-          </paper-button>
+            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+          </etools-button>
         `
       : html``;
   }
@@ -68,13 +75,14 @@ export class StatusesActionsComponent extends LitElement {
     );
     return transition
       ? html`
-          <paper-button
+          <etools-button
             class="main-button reject-button"
-            @tap="${() => this.changeStatus(transition)}"
+            variant="danger"
+            @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
             ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-          </paper-button>
+          </etools-button>
         `
       : html``;
   }
@@ -86,21 +94,23 @@ export class StatusesActionsComponent extends LitElement {
         (transitionA: ActivityTransition, transitionB: ActivityTransition) =>
           TRANSITIONS_ORDER.indexOf(transitionA.transition) - TRANSITIONS_ORDER.indexOf(transitionB.transition)
       );
-    const className = `main-button${otherTransitions.length ? ' with-additional' : ''}`;
     return mainTransition
       ? html`
-          <paper-button
-            class="${className}"
-            @tap="${() => this.changeStatus(mainTransition)}"
-            ?disabled="${this.disableBtns}"
-          >
-            ${this.getMainBtnText(mainTransition.transition)} ${this.getAdditionalTransitions(otherTransitions)}
-          </paper-button>
+          <etools-button-group>
+            <etools-button
+              variant="success"
+              @click="${() => this.changeStatus(mainTransition)}"
+              ?disabled="${this.disableBtns}"
+            >
+              ${this.getMainBtnText(mainTransition.transition)}
+            </etools-button>
+            ${this.getAdditionalTransitions(otherTransitions)}
+          </etools-button-group>
         `
       : html``;
   }
 
-  private getMainBtnText(transitionName: string): string | Callback {
+  private getMainBtnText(transitionName: string) {
     const key: string = transitionName === ASSIGN && this.isStaff ? 'ASSIGN_AND_ACCEPT' : transitionName;
     return translate(`ACTIVITY_ITEM.TRANSITIONS.${key}`);
   }
@@ -110,18 +120,18 @@ export class StatusesActionsComponent extends LitElement {
       return html``;
     }
     return html`
-      <paper-menu-button horizontal-align="right" @tap="${(event: MouseEvent) => event.stopImmediatePropagation()}">
-        <paper-icon-button slot="dropdown-trigger" class="option-button" icon="expand-more"></paper-icon-button>
-        <div slot="dropdown-content">
+      <sl-dropdown placement="bottom-end" @click="${(event: MouseEvent) => event.stopImmediatePropagation()}">
+        <etools-button slot="trigger" variant="success" caret></etools-button>
+        <sl-menu>
           ${transitions.map(
             (transition: ActivityTransition) => html`
-              <div class="other-options" @tap="${() => this.changeStatus(transition)}">
+              <sl-menu-item @click="${() => this.changeStatus(transition)}">
                 ${translate(`ACTIVITY_ITEM.TRANSITIONS.${transition.transition}`)}
-              </div>
+              </sl-menu-item>
             `
           )}
-        </div>
-      </paper-menu-button>
+        </sl-menu>
+      </sl-dropdown>
     `;
   }
 
@@ -138,8 +148,43 @@ export class StatusesActionsComponent extends LitElement {
     if (!newStatusData) {
       return;
     }
+
+    const storeState = store.getState();
+
+    // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
+    if (
+      newStatusData.status === COMPLETED ||
+      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)
+    ) {
+      const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some(
+        (x: SummaryOverall) => x.on_track === null
+      );
+      const confirmText = [];
+      if (summaryIsNotCompleted) {
+        // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, if not all summary completed
+        confirmText.push(
+          getTranslation(
+            newStatusData.status === SUBMITTED
+              ? 'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE'
+              : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'
+          )
+        );
+      }
+      if (
+        storeState.activityDetails.data.permissions.edit.action_points &&
+        !(storeState.actionPointsList?.data || []).length
+      ) {
+        // if can add Action Point and doesn't have any, display reminder
+        confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
+      }
+
+      if (confirmText.length && !(await this.confirmSubmitSummaryNotCompleted(confirmText.join('<br/><br/>')))) {
+        return;
+      }
+    }
+
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
-      const errors: any = store.getState().activityDetails.error;
+      const errors: any = storeState.activityDetails.error;
       if (errors) {
         const backendMessage = getErrorText(errors);
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
@@ -148,6 +193,16 @@ export class StatusesActionsComponent extends LitElement {
         updateAppLocation(`${ACTIVITIES_PAGE}`);
       }
     });
+  }
+
+  async confirmSubmitSummaryNotCompleted(confirmText: string): Promise<boolean> {
+    return await openDialog({
+      dialog: 'are-you-sure',
+      dialogData: {
+        content: confirmText,
+        confirmBtnText: getTranslation('CONTINUE')
+      }
+    }).then(({confirmed}) => confirmed);
   }
 
   private getReasonComment(transition: ActivityTransition): Promise<Partial<IActivityDetails | null>> {
@@ -180,50 +235,39 @@ export class StatusesActionsComponent extends LitElement {
           display: flex;
           flex-direction: row;
         }
-        .back-button {
-          width: 36px;
-          height: 36px;
-          min-width: 0;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+
+        etools-button-group {
+          --etools-button-group-color: var(--green-color);
         }
 
-        .back-button svg {
-          color: white;
+        etools-button.sl-button-group__button {
+          margin-inline: 0px !important;
+          --sl-spacing-medium: 10px;
         }
 
-        .back-button[disabled] svg {
-          color: lightgray;
+        etools-button[slot='trigger'] {
+          width: 45px;
+          min-width: 45px;
+          border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+          margin-inline: 0px;
+          --sl-spacing-medium: 0;
+        }
+        etools-button#primary {
+          flex: 1;
         }
 
-        .main-button {
-          height: 36px;
-          padding: 0 18px;
-          color: white;
-          background: var(--green-color);
-          font-weight: 500;
+        etools-button.arrowBtn {
+          min-width: 0px;
+          --sl-spacing-medium: 0px;
+          --sl-spacing-small: 5px;
         }
 
-        .reject-button {
-          background: var(--reject-color);
+        sl-menu-item::part(label) {
+          text-transform: uppercase;
         }
 
-        .main-button.with-additional {
-          padding: 0 0 0 18px;
-        }
-
-        .main-button span {
-          margin-right: 7px;
-        }
-
-        paper-button[disabled] {
-          color: lightgray;
-        }
-
-        div[slot='dropdown-content'] {
-          padding: 20px 24px;
-          color: var(--primary-text-color);
+        .reject-button::part(base) {
+          background-color: var(--reject-color);
         }
       `
     ];

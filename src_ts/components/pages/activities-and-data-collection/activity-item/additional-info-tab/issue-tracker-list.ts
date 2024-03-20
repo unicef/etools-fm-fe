@@ -1,5 +1,6 @@
-import {LitElement, html, TemplateResult, customElement, property, CSSResultArray, css} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../../styles/card-styles';
@@ -11,7 +12,7 @@ import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import '../../../../common/file-components/files-popup';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 

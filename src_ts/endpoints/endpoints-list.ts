@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const PROFILE_ENDPOINT = 'userProfile';
 export const CP_OUTCOMES = 'cpOutcomes';
 export const LOCATIONS_ENDPOINT = 'locations';

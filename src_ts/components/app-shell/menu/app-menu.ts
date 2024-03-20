@@ -1,22 +1,20 @@
 /* eslint-disable lit/attribute-value-entities */
-import '@polymer/iron-icons/iron-icons.js';
-import '@polymer/iron-icons/maps-icons.js';
-import '@polymer/iron-icons/av-icons.js';
-import '@polymer/iron-selector/iron-selector.js';
-import '@polymer/paper-tooltip/paper-tooltip.js';
-import '@polymer/paper-ripple/paper-ripple.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
-import {CSSResult, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+
+import {CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {apIcons} from '../../styles/app-icons';
 import {connect} from 'pwa-helpers/connect-mixin.js';
 import {get as getTranslation} from 'lit-translate';
 
@@ -45,88 +43,99 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     // main template
     // language=HTML
     return html`
-      ${apIcons}
-
       <div class="menu-header">
         <span id="app-name" class="app-name">
           ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
         </span>
 
-        <span class="ripple-wrapper main">
-          <iron-icon
-            id="menu-header-top-icon"
-            icon="assignment-ind"
-            @tap="${() => this._toggleSmallMenu()}"
-          ></iron-icon>
-          <paper-ripple class="circle" center></paper-ripple>
-        </span>
+        <span class="ripple-wrapper main"> </span>
 
-        <paper-tooltip for="menu-header-top-icon" position="right">
-          ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}
-        </paper-tooltip>
+        <sl-tooltip
+          content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TITLE', 'Field Monitoring')}"
+          for="menu-header-top-icon"
+          placement="right"
+          ?disabled="${!this.smallMenu}"
+        >
+          <etools-icon
+            id="menu-header-top-icon"
+            name="assignment-ind"
+            @click="${() => this._toggleSmallMenu()}"
+          ></etools-icon>
+        </sl-tooltip>
 
         <span class="chev-right">
-          <iron-icon id="expand-menu" icon="chevron-right" @tap="${() => this._toggleSmallMenu()}"></iron-icon>
-          <paper-ripple class="circle" center></paper-ripple>
+          <etools-icon id="expand-menu" name="chevron-right" @click="${() => this._toggleSmallMenu()}"></etools-icon>
         </span>
 
         <span class="ripple-wrapper">
-          <iron-icon id="minimize-menu" icon="chevron-left" @tap="${() => this._toggleSmallMenu()}"></iron-icon>
-          <paper-ripple class="circle" center></paper-ripple>
+          <etools-icon id="minimize-menu" name="chevron-left" @click="${() => this._toggleSmallMenu()}"></etools-icon>
         </span>
       </div>
 
       <div class="nav-menu">
-        <iron-selector
+        <div
+          class="menu-selector"
+          role="navigation"
           .selected="${this.selectedOption}"
           attr-for-selected="menu-name"
           selectable="a"
-          role="navigation"
         >
           <!-- Sidebar item - DATA VISITS -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities')}"
             menu-name="activities"
             href="${this.rootPath + 'activities'}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Visits"
           >
-            <iron-icon id="page1-icon" icon="assignment"></iron-icon>
-            <paper-tooltip for="page1-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}
-            </paper-tooltip>
+            <sl-tooltip
+              for="page1-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}"
+            >
+              <etools-icon id="page1-icon" name="assignment"></etools-icon>
+            </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
           </a>
 
           <!-- Sidebar item - ANALYSIS -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'analyze')}"
             menu-name="analyze"
             href="${this.rootPath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Analysis"
           >
-            <iron-icon id="page2-icon" icon="av:equalizer"></iron-icon>
-            <paper-tooltip for="page2-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}
-            </paper-tooltip>
+            <sl-tooltip
+              for="page2-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}"
+            >
+              <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
+            </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}</div>
           </a>
 
           <!-- Sidebar item - TEMPLATES -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'templates')}"
             menu-name="templates"
-            href="${this.rootPath + 'templates/questions?page=1&page_size=10'}"
+            href="${this.rootPath + 'templates/questions'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Templates"
           >
-            <iron-icon id="page3-icon" icon="icons:settings-applications"></iron-icon>
-            <paper-tooltip for="page3-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
-            </paper-tooltip>
+            <sl-tooltip
+              for="page3-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}"
+            >
+              <etools-icon id="page3-icon" name="settings-applications"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TEMPLATES', 'Templates')}
             </div>
@@ -134,17 +143,21 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - PLANING -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'management')}"
             menu-name="management"
             href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="Management"
           >
-            <iron-icon id="page4-icon" icon="av:playlist-add-check"></iron-icon>
-            <paper-tooltip for="page4-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
-            </paper-tooltip>
+            <sl-tooltip
+              for="page4-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}"
+            >
+              <etools-icon id="page4-icon" name="av:playlist-add-check"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.MANAGEMENT', 'Management')}
             </div>
@@ -152,21 +165,47 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
 
           <!-- Sidebar item - TPM -->
           <a
-            class="nav-menu-item"
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'partners')}"
             menu-name="partners"
             href="${this.rootPath + 'partners'}"
-            @tap="${this.trackAnalytics}"
+            @click="${this.trackAnalytics}"
             tracker="TPM"
           >
-            <iron-icon id="page5-icon" icon="social:people"></iron-icon>
-            <paper-tooltip for="page5-icon" position="right">
-              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
-            </paper-tooltip>
+            <sl-tooltip
+              for="page5-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}"
+            >
+              <etools-icon id="page5-icon" name="social:people"></etools-icon>
+            </sl-tooltip>
             <div class="name">
               ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.TPM', 'Third Party Monitors')}
             </div>
           </a>
-        </iron-selector>
+
+          <!-- Sidebar item - Dashboard -->
+          <a
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'dashboard')}"
+            menu-name="dashboard"
+            href="/dash/fmp"
+            @click="${this.trackAnalytics}"
+            target="_blank"
+            tracker="DASH"
+          >
+            <sl-tooltip
+              for="dash-icon"
+              placement="right"
+              ?disabled="${!this.smallMenu}"
+              content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}"
+            >
+              <etools-icon id="dash-icon" name="dashboard"></etools-icon>
+            </sl-tooltip>
+            <div class="name">
+              ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DASHBOARD', 'Dashboard')}
+            </div>
+          </a>
+        </div>
 
         <div class="nav-menu-item section-title">
           <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
@@ -176,17 +215,21 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/9726e9e7-c72f-4153-9fd2-7b418a1e426c/ReportSection?ctid=77410195-14e1-4fb8-904b-ab1892023667"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Implementation Intelligence"
         >
-          <iron-icon id="power-bi-icon" icon="ap-icons:power-bi"></iron-icon>
-          <paper-tooltip for="power-bi-icon" position="right">
-            ${this.translateKey(
+          <sl-tooltip
+            for="power-bi-icon"
+            placement="right"
+            ?disabled="${!this.smallMenu}"
+            content="${this.translateKey(
               this.selectedLanguage,
               'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
               'Implementation Intelligence'
-            )}
-          </paper-tooltip>
+            )}"
+          >
+            <etools-icon id="power-bi-icon" name="powerBi"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(
               this.selectedLanguage,
@@ -200,13 +243,17 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="http://etools.zendesk.com"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Knowledge base"
         >
-          <iron-icon id="knoledge-icon" icon="maps:local-library"></iron-icon>
-          <paper-tooltip for="knoledge-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
-          </paper-tooltip>
+          <sl-tooltip
+            for="knoledge-icon"
+            placement="right"
+            ?disabled="${!this.smallMenu}"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}"
+          >
+            <etools-icon id="knoledge-icon" name="maps:local-library"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.KNOWLEDGE_BASE', 'Knowledge Base')}
           </div>
@@ -216,13 +263,17 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item"
           href="https://www.yammer.com/unicef.org/#/threads/inGroup?type=in_group&feedId=5782560"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Discussion"
         >
-          <iron-icon id="discussion-icon" icon="icons:question-answer"></iron-icon>
-          <paper-tooltip for="discussion-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
-          </paper-tooltip>
+          <sl-tooltip
+            for="discussion-icon"
+            placement="right"
+            ?disabled="${!this.smallMenu}"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}"
+          >
+            <etools-icon id="discussion-icon" name="question-answer"></etools-icon>
+          </sl-tooltip>
           <div class="name">
             ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.DISCUSSION', 'Discussion')}
           </div>
@@ -231,15 +282,19 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           class="nav-menu-item lighter-item last-one"
           href="https://etools.unicef.org/landing"
           target="_blank"
-          @tap="${this.trackAnalytics}"
+          @click="${this.trackAnalytics}"
           tracker="Information"
         >
-          <iron-icon id="information-icon" icon="icons:info"></iron-icon>
-          <paper-tooltip for="information-icon" position="right">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
-          </paper-tooltip>
+          <sl-tooltip
+            for="information-icon"
+            placement="right"
+            ?disabled="${!this.smallMenu}"
+            content="${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}"
+          >
+            <etools-icon id="information-icon" name="info"></etools-icon>
+          </sl-tooltip>
           <div class="name">
-            ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
+            eTools ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.INFORMATION', 'Information')}
           </div>
         </a>
       </div>
@@ -273,6 +328,10 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
     const localStorageVal: number = this.smallMenu ? 1 : 0;
     localStorage.setItem(SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY, String(localStorageVal));
     fireEvent(this, 'toggle-small-menu', {value: this.smallMenu});
+  }
+
+  getItemClass(selectedValue: string, itemValue: string) {
+    return selectedValue === itemValue ? 'selected' : '';
   }
 
   static get styles(): CSSResult {

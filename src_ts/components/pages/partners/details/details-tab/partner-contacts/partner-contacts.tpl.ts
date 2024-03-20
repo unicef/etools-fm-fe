@@ -1,6 +1,6 @@
-import '@polymer/iron-icons';
-import '@unicef-polymer/etools-data-table/etools-data-table.js';
-import {html, TemplateResult} from 'lit-element';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {PartnerContacts} from './partner-contacts';
 
@@ -25,14 +25,14 @@ export function template(this: PartnerContacts): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title">${this.getTitle(this.staffMembersListAll)}</div>
         <div class="buttons-container">
-          <paper-toggle-button ?checked="${this.showInactive}" @checked-changed="${this.onShowInactiveChange}">
+          <sl-switch ?checked="${this.showInactive}" @sl-change="${this.onShowInactiveChange}">
             ${translate('TPM_DETAILS.SHOW_INACTIVE')}
-          </paper-toggle-button>
-
-          <a class="edit-button" href="${this.getAMPLink(this.organizationId, this.userData)}" target="_blank">
-            <iron-icon icon="icons:open-in-new"></iron-icon>
-          </a>
-          <paper-tooltip offset="0">${translate('TPM_DETAILS.ACCESS_MANAGEMENT_PORTAL')}</paper-tooltip>
+          </sl-switch>
+          <sl-tooltip content="${translate('TPM_DETAILS.ACCESS_MANAGEMENT_PORTAL')}">
+            <a class="edit-button" href="${this.getAMPLink(this.organizationId, this.userData)}" target="_blank">
+              <etools-icon name="open-in-new"></etools-icon>
+            </a>
+          </sl-tooltip>
         </div>
       </div>
 
@@ -93,7 +93,7 @@ export function template(this: PartnerContacts): TemplateResult {
                         ? translate('NO_ACCESS')
                         : ''}</span
                     >
-                    <iron-icon icon="check" ?hidden="${!staffMember.has_active_realm}"></iron-icon>
+                    <etools-icon name="check" ?hidden="${!staffMember.has_active_realm}"></etools-icon>
                   </div>
                 </div>
               </etools-data-table-row>

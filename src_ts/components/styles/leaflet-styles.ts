@@ -1,7 +1,6 @@
-import {css, CSSResult} from 'lit-element';
-/* tslint:disable:max-file-line-count */
-/* tslint:disable:max-line-length */
+import {css, CSSResult} from 'lit';
 /* eslint-disable no-tabs */
+/* eslint-disable max-len */
 // language=CSS
 export const leafletStyles: CSSResult = css`
   /* required styles */
@@ -404,7 +403,7 @@ export const leafletStyles: CSSResult = css`
 
   .leaflet-touch .leaflet-control-zoom-in,
   .leaflet-touch .leaflet-control-zoom-out {
-    font-size: 22px;
+    font-size: var(--etools-font-size-22, 22px);
   }
 
   /* layers control */
@@ -498,7 +497,7 @@ export const leafletStyles: CSSResult = css`
 
   .leaflet-container .leaflet-control-attribution,
   .leaflet-container .leaflet-control-scale {
-    font-size: 11px;
+    font-size: var(--etools-font-size-11, 11px);
   }
 
   .leaflet-left .leaflet-control-scale {
@@ -514,7 +513,7 @@ export const leafletStyles: CSSResult = css`
     border-top: none;
     line-height: 1.1;
     padding: 2px 5px 1px;
-    font-size: 11px;
+    font-size: var(--etools-font-size-11, 11px);
     white-space: nowrap;
     overflow: hidden;
     -moz-box-sizing: border-box;
@@ -557,7 +556,7 @@ export const leafletStyles: CSSResult = css`
   .leaflet-popup-content-wrapper {
     display: block;
     outline: none;
-    font-size: 12px;
+    font-size: var(--etools-font-size-12, 12px);
     line-height: 1;
     background-color: #616161 !important;
     color: white !important;

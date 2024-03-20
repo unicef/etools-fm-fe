@@ -1,11 +1,6 @@
 <!--
 @license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+Can be accessed at ./LICENSE.txt
 -->
 
 <!doctype html>
@@ -63,8 +58,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta property="og:image" content="assets/images/manifest/icon-144x144.png" />
 
     <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link rel="stylesheet" type="text/css" href="node_modules/leaflet/dist/leaflet.css">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com">
+    <link rel="preconnect" crossorigin="anonymous" href="https://fonts.gstatic.com">
+
+    <link rel="preload" as="style" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap"></noscript>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css"></noscript>
+    <link rel="preload" href="node_modules/leaflet/dist/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css"></noscript>
+    <link rel="preload" href="assets/css/app-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/app-theme.css"></noscript>
+
     <script>
       // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
@@ -82,29 +89,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
-      /*@font-face {*/
-        /*font-family: 'Pacifico';*/
-        /*font-style: normal;*/
-        /*font-weight: 400;*/
-        /*src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');*/
-        /*!* THe browser draws the text immediately in the fallback font if the font*/
-           /*isn't loaded, then swaps it with the webfont when it eventually loads*/
-           /*See: https://developers.google.com/web/updates/2016/02/font-display*/
-        /**!*/
-        /*font-display: swap;*/
-      /*}*/
-
       body {
         margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        font-size: 14px;
+        font-family: var(--sl-font-sans);
+        font-size: var(--etools-font-size-14, 14px);
         font-weight: 400;
         line-height: 1.5;
         min-height: 100vh;
-        background-color: #eeeeee;
-        color: rgba(0, 0, 0, 0.87);
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
         -webkit-font-smoothing: antialiased;
       }
+
       * {
         outline: none;
       }
@@ -152,16 +148,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #fff;
       }
     </style>
+    <link rel="preload" as="image" href="./assets/images/etools-logo-color-white.svg" />
+    <link rel="preload" as="image" href="./assets/images/loading.svg" />
   </head>
   <body>
     <!-- need this for leaflet -->
     <div class="leaflet-tile-pane hidden"></div>
     <div id="buildRevNo" style="display: none">revNo</div>
+    <div id="buildDate" style="display: none">bDate</div>
     <app-shell>
       <div id="loading-animation">
         <span>
-          <img src="assets/images/etools-logo-color-white.svg" alt="UNICEF Logo">
-          <img src="assets/images/loading.svg" alt="loading animation">
+          <img src="./assets/images/etools-logo-color-white.svg" alt="UNICEF Logo">
+          <img src="./assets/images/loading.svg" alt="loading animation">
         </span>
       </div>
     </app-shell>
@@ -169,17 +168,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Please enable JavaScript to view this website.
     </noscript>
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
-    <script src="node_modules/leaflet/dist/leaflet.js"></script>
-    <script src="node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
-    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-    <script src="node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js"></script>
-    <script src="assets/packages/esri-leaflet-webmap.js"></script>
-    <script src="node_modules/dayjs/dayjs.min.js"></script>
-    <script src="node_modules/dayjs/plugin/utc.js"></script>
-    <script src="node_modules/dayjs/plugin/isSameOrBefore.js"></script>
+    
     <!-- Built with love using PWA Starter Kit -->
-    <script type="module" src="src/components/app-shell/app-shell.js"></script>
+    <script type="module" src="src/app-shell.js" defer></script>
   </body>
 </html>

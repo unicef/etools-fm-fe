@@ -78,7 +78,7 @@ export function updateSummaryFindingsAndOverall(
 
 function updateSummaryOverall(activityId: number, overall?: Partial<SummaryOverall>): Promise<SummaryOverall> | null {
   const {id, ...requestData} = overall || {};
-  if (!id || !Object.keys(requestData).length) {
+  if (!activityId || !id || !Object.keys(requestData).length) {
     return null;
   }
   const {url}: IResultEndpoint = getEndpoint(ACTIVITY_OVERALL_FINDING, {activityId, overallId: id});

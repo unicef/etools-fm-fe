@@ -1,28 +1,23 @@
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
 import {SitesPopupComponent} from './sites-popup';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: SitesPopupComponent): TemplateResult {
   return html`
     ${InputStyles} ${DialogStyles}
-    <style>
-      #statusDropdown {
-        margin-top: -4px;
-      }
-    </style>
     <etools-dialog
       size="md"
       id="dialog"
-      no-padding
       .opened="${this.dialogOpened}"
       dialog-title="${translate(this.editedData.id ? 'SITES.EDIT_SL' : 'SITES.ADD_SL')}"
       keep-dialog-open
       @confirm-btn-clicked="${() => this.saveSite()}"
       @close="${this.onClose}"
-      @iron-overlay-opened="${() => this.mapInitialization()}"
+      @etools-dialog-opened="${() => this.mapInitialization()}"
       ?show-spinner="${this.savingInProcess}"
       .spinnerText="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
@@ -30,7 +25,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
     >
       <div class="container">
         <div class="layout horizontal">
-          <paper-input
+          <etools-input
             class="validate-input flex-7"
             .value="${this.editedData.name}"
             @value-changed="${({detail}: CustomEvent) => this.updateModelValue('name', detail.value)}"
@@ -45,17 +40,18 @@ export function template(this: SitesPopupComponent): TemplateResult {
               this.autoValidateName = true;
               this.resetFieldError('name');
             }}"
-            @tap="${() => this.resetFieldError('name')}"
+            @click="${() => this.resetFieldError('name')}"
             .autoValidate="${this.autoValidateName}"
             required
-          ></paper-input>
+          ></etools-input>
 
           <etools-dropdown
             id="statusDropdown"
             class="validate-input flex-2"
-            .selected="${this.setStatusValue((this.editedData && this.editedData.is_active) || false)}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) =>
-              this.updateModelValue('is_active', detail.selectedItem.value)}"
+            .selected="${this.setStatusValue(!!this.editedData?.is_active)}"
+            @etools-selected-item-changed="${({detail}: CustomEvent) => {
+              this.updateModelValue('is_active', detail.selectedItem?.value);
+            }}"
             trigger-value-change-event
             label="${translate('SITES.LABELS.STATUS')}"
             placeholder="${!hasPermission(Permissions.EDIT_SITES)
@@ -67,7 +63,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
             ?invalid="${this.errors && this.errors.is_active}"
             .errorMessage="${this.errors && this.errors.is_active}"
             @focus="${() => this.resetFieldError('is_active')}"
-            @tap="${() => this.resetFieldError('is_active')}"
+            @click="${() => this.resetFieldError('is_active')}"
             allow-outside-scroll
             dynamic-align
           ></etools-dropdown>
@@ -75,12 +71,13 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
         ${this.editedData.id
           ? html`
-              <paper-input
+              <etools-input
                 .value="${this.editedData && this.editedData.parent!.name}"
                 label="${translate('SITES.LABELS.ADMIN_LOCATION')}"
                 placeholder="${translate('SITES.PLACEHOLDERS.ADMIN_LOCATION')}"
                 disabled
-              ></paper-input>
+                readonly
+              ></etools-input>
             `
           : ''}
 
@@ -88,20 +85,20 @@ export function template(this: SitesPopupComponent): TemplateResult {
 
         <div class="layout horizontal">
           <label class="selected-sites-label"> ${translate('SITES.SELECTED_SITE')}: </label>
-          <paper-input
+          <etools-input
             class="validate-input flex-5"
             .value="${this.latitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'latitude')}"
             label="${translate('MAIN.LATITUDE')}"
             placeholder="-"
-          ></paper-input>
-          <paper-input
+          ></etools-input>
+          <etools-input
             class="validate-input flex-5"
             .value="${this.longitude}"
             @value-changed="${({detail}: CustomEvent) => this.updateLatLng(detail && detail.value, 'longitude')}"
             label="${translate('MAIN.LONGITUDE')}"
             placeholder="-"
-          ></paper-input>
+          ></etools-input>
         </div>
       </div>
     </etools-dialog>

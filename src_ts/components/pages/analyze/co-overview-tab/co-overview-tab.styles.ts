@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const CoOverviewTabStyles: CSSResult = css`
   :host {
@@ -15,13 +15,13 @@ export const CoOverviewTabStyles: CSSResult = css`
     max-width: max-content;
   }
 
-  iron-icon {
+  etools-icon {
     margin-left: 5px;
     margin-right: 10px;
     cursor: pointer;
   }
 
-  iron-icon.flag-icon {
+  etools-icon.flag-icon {
     margin-left: 10px;
     color: var(--secondary-text-color);
   }

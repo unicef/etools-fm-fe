@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const TemplatesStyles: CSSResult = css`
   section.filters-container {
@@ -6,7 +6,7 @@ export const TemplatesStyles: CSSResult = css`
   }
 
   section.filters-container .filter {
-    padding: 10px 23px;
+    padding: 8px 23px;
     border-right: 1px solid #c4c4c4;
   }
 
@@ -23,12 +23,17 @@ export const TemplatesStyles: CSSResult = css`
   }
 
   .checkbox-container {
-    margin-right: 24px;
+    margin-inline-end: 24px;
     width: 18px;
   }
 
   .detail-placeholder {
     color: rgba(0, 0, 0, 0.38);
+  }
+
+  .filter {
+    width: 40%;
+    max-width: 300px;
   }
 
   .methods {

@@ -1,19 +1,19 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 // language=CSS
 export const QuestionPopupStyles: CSSResult = css`
   .option-index {
     margin-bottom: 4px;
   }
+
   .validate-input {
     margin-bottom: 8px;
   }
-  .checkboxes {
-    padding: 10px 14px 24px;
+
+  .horizontal .validate-input:not(:last-child) {
+    padding-inline-end: 15px;
   }
-  .scales-container {
-    padding-left: 12px;
-  }
-  paper-checkbox {
-    margin-right: 30px;
+
+  etools-checkbox {
+    margin-inline-end: 30px;
   }
 `;

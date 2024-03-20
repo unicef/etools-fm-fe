@@ -1,10 +1,12 @@
-import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
-import '@polymer/iron-icons/iron-icons';
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {cancelledStatusIcon, completedStatusIcon} from './status-icons';
 import {
   CANCELLED,
   COMPLETED
 } from '../../../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
+import {langChanged} from 'lit-translate';
 
 /**
  * @LitElement
@@ -30,8 +32,10 @@ export class EtoolsStatus extends LitElement {
       <style>
         :host {
           display: flex;
-          flex-flow: row wrap;
+          flex-direction: row;
           align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
           border-bottom: 1px solid var(--dark-divider-color);
           padding: 24px 24px 0;
           background-color: var(--primary-background-color);
@@ -39,19 +43,21 @@ export class EtoolsStatus extends LitElement {
 
         .status {
           display: flex;
+          flex-direction: row;
           align-items: center;
-          flex: auto;
           color: var(--secondary-text-color);
-          font-size: 16px;
-          padding-bottom: 24px;
+          font-size: var(--etools-font-size-16, 16px);
+          margin-bottom: 22px;
         }
 
         .status:not(:last-of-type)::after {
           content: '';
-          display: flex;
-          flex: auto;
-          height: 0;
-          margin: 0 24px;
+          display: inline-block;
+          vertical-align: middle;
+          width: 40px;
+          height: 1px;
+          margin-inline-end: 16px;
+          margin-inline-start: 24px;
           border-top: 1px solid var(--secondary-text-color);
         }
 
@@ -65,8 +71,8 @@ export class EtoolsStatus extends LitElement {
           border-radius: 50%;
           color: #fff;
           background-color: var(--secondary-text-color);
-          margin-right: 8px;
-          font-size: 14px;
+          margin-inline-end: 8px;
+          font-size: var(--etools-font-size-14, 14px);
         }
 
         .status.active .icon {
@@ -91,7 +97,7 @@ export class EtoolsStatus extends LitElement {
     return html`
       <div class="status ${this.getStatusClasses(index, this.activeStatusIndex)}">
         <span class="icon"> ${this.getIcon(index)} </span>
-        <span class="label">${item.label}</span>
+        <span class="label">${langChanged(() => item.label)}</span>
       </div>
     `;
   }

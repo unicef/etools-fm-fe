@@ -1,4 +1,5 @@
-import {css, CSSResult, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {css, CSSResult, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './partners-list.tpl';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {Unsubscribe} from 'redux';
@@ -14,15 +15,16 @@ import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/sel
 import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
 import {CardStyles} from '../../../styles/card-styles';
-import {buttonsStyles} from '../../../styles/button-styles';
+
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import '@unicef-polymer/etools-data-table/etools-data-table-footer';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from 'lit-translate';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNERS_EXPORT} from '../../../../endpoints/endpoints-list';
@@ -97,19 +99,20 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
       FlexLayoutClasses,
       CardStyles,
       SharedStyles,
-      buttonsStyles,
       css`
         .search-container {
           display: flex;
           min-height: 73px;
         }
         .search-input {
-          margin-right: 16px;
-          min-width: 240px;
+          margin-inline-end: 16px;
+          display: flex;
+          min-width: 400px;
+          align-items: center;
         }
         .search-filters {
           flex-grow: 1;
-          margin-bottom: 11px;
+          margin-block: 5px;
         }
         .primary-btn {
           background-color: var(--green-color);
@@ -120,8 +123,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
           padding-inline-start: 12px;
           padding-inline-end: 18px;
           margin-right: -25px;
-          --iron-icon-width: 20px;
-          --iron-icon-height: 20px;
+          --etools-icon-font-size: var(--etools-font-size-20, 20px);
         }
       `
     ];

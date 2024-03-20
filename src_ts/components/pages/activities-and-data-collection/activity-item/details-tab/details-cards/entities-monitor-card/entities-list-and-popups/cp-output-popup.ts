@@ -1,4 +1,5 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -11,7 +12,7 @@ import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
-import '@unicef-polymer/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
@@ -64,8 +65,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       ${InputStyles} ${DialogStyles}
       <etools-dialog
         id="dialog"
-        size="md"
-        no-padding
+        size="lg"
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
         .cancelBtnText="${translate('CANCEL')}"

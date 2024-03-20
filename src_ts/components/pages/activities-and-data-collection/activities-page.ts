@@ -1,10 +1,11 @@
-import {CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {html, LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
 import {store} from '../../../redux/store';
 import {activities} from '../../../redux/reducers/activities.reducer';
 import {SharedStyles} from '../../styles/shared-styles';
+// eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
-import {buttonsStyles} from '../../styles/button-styles';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
@@ -29,7 +30,7 @@ export class ActivitiesPageComponent extends LitElement {
   @property() subRoute: string = LIST_ROUTE;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles, buttonsStyles];
+    return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles, RouterStyles];
   }
 
   render(): TemplateResult | void {

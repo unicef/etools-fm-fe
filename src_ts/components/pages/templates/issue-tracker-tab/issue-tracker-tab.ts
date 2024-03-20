@@ -1,11 +1,12 @@
-import {CSSResultArray, customElement, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {requestLogIssue} from '../../../../redux/effects/issue-tracker.effects';
 
-import {EtoolsFilter} from '@unicef-polymer/etools-filters/src/etools-filters';
+import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {elevationStyles} from '../../../styles/elevation-styles';
 import {template} from './issue-tracker-tab.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
@@ -24,17 +25,11 @@ import {SiteMixin} from '../../../common/mixins/site-mixin';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
-import {get as getTranslation} from 'lit-translate';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-
-export const ISSUE_STATUSES: DefaultDropdownOption<string>[] = [
-  {value: 'new', display_name: getTranslation('ISSUE_TRACKER.STATUSES.NEW')},
-  {value: 'past', display_name: getTranslation('ISSUE_TRACKER.STATUSES.PAST')}
-];
 
 @customElement('issue-tracker-tab')
 export class IssueTrackerTabComponent extends SiteMixin(

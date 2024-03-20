@@ -1,4 +1,5 @@
-import {customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {LitElement, TemplateResult, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from 'lit-translate';
@@ -7,6 +8,7 @@ import {store} from '../../../../../redux/store';
 import {deleteDataCollectionChecklistItem} from '../../../../../redux/effects/data-collection.effects';
 import {Unsubscribe} from 'redux';
 import {removalInProgress} from '../../../../../redux/selectors/data-collection.selectors';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('remove-data-collect-popup')
 export class RemoveDataCollectPopup extends LitElement {
@@ -49,7 +51,6 @@ export class RemoveDataCollectPopup extends LitElement {
       ${InputStyles} ${DialogStyles}
       <etools-dialog
         size="md"
-        no-padding
         keep-dialog-open
         theme="confirmation"
         ?opened="${this.dialogOpened}"

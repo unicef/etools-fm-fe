@@ -1,4 +1,4 @@
-import {css, CSSResult} from 'lit-element';
+import {css, CSSResult} from 'lit';
 import {elevation2} from './elevation-styles';
 // language=CSS
 export const SharedStyles: CSSResult = css`
@@ -20,11 +20,11 @@ export const SharedStyles: CSSResult = css`
 
   h1 {
     text-transform: capitalize;
-    font-size: 24px;
+    font-size: var(--etools-font-size-24, 24px);
   }
 
   h2 {
-    font-size: 20px;
+    font-size: var(--etools-font-size-20, 20px);
   }
 
   a {
@@ -48,10 +48,10 @@ export const SharedStyles: CSSResult = css`
 
   .toggle-button-control span {
     padding: 0 12px;
-    font-size: 16px;
+    font-size: var(--etools-font-size-16, 16px);
   }
 
-  .toggle-button-control paper-checkbox {
+  .toggle-button-control etools-checkbox {
     --paper-checkbox-label: {
       padding-left: 0;
     }
@@ -66,7 +66,7 @@ export const SharedStyles: CSSResult = css`
   }
 
   .filters-section {
-    padding: 0 30px;
+    padding: 0px 24px;
   }
 
   etools-content-panel::part(ecp-header) {
@@ -80,5 +80,9 @@ export const SharedStyles: CSSResult = css`
   }
   paper-button:focus {
     ${elevation2}
+  }
+
+  .horizontal .validate-input:not(:last-child) {
+    padding-inline-end: 15px;
   }
 `;

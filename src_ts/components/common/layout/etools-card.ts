@@ -1,10 +1,15 @@
-import {css, CSSResultArray, customElement, html, LitElement, property, TemplateResult} from 'lit-element';
+import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '../../styles/elevation-styles';
-import '@polymer/iron-icons/iron-icons';
+import '@unicef-polymer/etools-unicef/src/etools-icon-button/etools-icon-button';
+import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
+
 import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
 import {translate} from 'lit-translate';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 @customElement('etools-card')
 export class EtoolsCard extends LitElement {
@@ -29,6 +34,7 @@ export class EtoolsCard extends LitElement {
       elevationStyles,
       CardStyles,
       FlexLayoutClasses,
+      FormBuilderCardStyles,
       css`
         :host {
           display: block;
@@ -39,8 +45,8 @@ export class EtoolsCard extends LitElement {
         }
 
         .card-title-box[is-collapsible] {
-          padding-left: 17px;
-          padding-right: 25px;
+          padding-inline-start: 17px;
+          padding-inline-end: 25px;
         }
 
         .card-content {
@@ -74,7 +80,7 @@ export class EtoolsCard extends LitElement {
           flex-basis: auto;
         }
         .flex-header__title {
-          font-size: 18px;
+          font-size: var(--etools-font-size-18, 18px);
           flex-basis: auto;
           flex-grow: 1;
           overflow: hidden;
@@ -152,45 +158,49 @@ export class EtoolsCard extends LitElement {
         <header class="card-title-box with-bottom-line flex-header" ?is-collapsible="${this.isCollapsible}">
           ${this.isCollapsible
             ? html`
-                <paper-icon-button
+                <etools-icon-button
                   class="flex-header__collapse"
-                  @tap="${() => this.toggleCollapse()}"
-                  icon="${this.collapsed ? 'expand-more' : 'expand-less'}"
-                ></paper-icon-button>
+                  @click="${() => this.toggleCollapse()}"
+                  name="${this.collapsed ? 'expand-more' : 'expand-less'}"
+                >
+                </etools-icon-button>
               `
             : ''}
           <div class="flex-header__title">${this.cardTitle}</div>
           <div class="layout horizontal center flex-header__edit">
             ${this.isEditable
               ? html`
-                  <paper-icon-button
-                    icon="create"
-                    ?edit=${this.edit}
-                    ?hidden="${this.hideEditButton}"
+                  <etools-icon-button
                     class="edit-button"
-                    @tap="${() => this.startEdit()}"
-                  ></paper-icon-button>
+                    ?edit=${this.edit}
+                    @click="${() => this.startEdit()}"
+                    ?hidden="${this.hideEditButton}"
+                    name="create"
+                  >
+                  </etools-icon-button>
                 `
               : ''}
           </div>
           <div class="flex-header__actions"><slot name="actions"></slot></div>
         </header>
-        <iron-collapse ?opened="${!this.collapsed}">
+        <etools-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">
             <slot name="content"></slot>
 
             ${this.isEditable && this.edit
               ? html`
                   <div class="layout horizontal end-justified card-buttons">
-                    <paper-button @tap="${() => this.cancel()}">${translate('MAIN.BUTTONS.CANCEL')}</paper-button>
-                    <paper-button class="save-button" @tap="${() => this.save()}"
-                      >${translate('MAIN.BUTTONS.SAVE')}</paper-button
+                    <etools-button variant="neutral" @click="${() => this.cancel()}"
+                      >${translate('MAIN.BUTTONS.CANCEL')}</etools-button
                     >
+                    <etools-button variant="primary" class="save-button" @click="${() => this.save()}">
+                      ${translate('MAIN.BUTTONS.SAVE')}
+                    </etools-button>
                   </div>
                 `
               : ''}
           </section>
-        </iron-collapse>
+        </etools-collapse>
       </div>
     `;
   }

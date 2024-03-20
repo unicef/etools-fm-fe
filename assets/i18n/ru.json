@@ -25,8 +25,8 @@
       "INTERVENTIONS": "Localized PD/SPD",
       "CP_OUTPUTS": "Localized CP Outputs",
       "STATUS": "Localized Status",
-      "START_DATE": "Localized Start Date",
-      "END_DATE": "Localized End Date",
+      "STARTS_AFTER": "Localized Start After",
+      "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
       "SECTIONS": "Localized Sections"
     }
@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Localized Partner Organization",
     "CP_OUTPUTS": "Localized CP Outputs",
     "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
     "INTERVENTIONS": "Localized PD/SPDs",
     "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SPD:",
@@ -327,6 +328,7 @@
   "QUESTIONS": {
     "EDIT_POPUP_TITLE": "Localized Edit Question",
     "ADD_POPUP_TITLE": "Localized Add Question",
+    "VIEW_POPUP_TITLE": "Localized View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Localized Enter Question Text",
       "SECTIONS": "Localized Select Sections",
@@ -345,7 +347,8 @@
       "ANSWER_TYPE": "Localized Answer Type",
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
-      "SCALE_SIZE": "Localized Scale Size"
+      "SCALE_SIZE": "Localized Scale Size",
+      "ORDER": "Order"
     },
     "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
@@ -479,7 +482,8 @@
     "SUPPORT": "Support",
     "APPSELECTOR": "App Selector",
     "IMPLEMENTATION_INTELLIGENCE": "Implementation Intelligence",
-    "TPM": "Third Party Monitors"
+    "TPM": "Third Party Monitors",
+    "DASHBOARD": "Информационные панели"
   },
   "FILTERS_ELEMENT": {
     "TITLE": "Localized Filters",
@@ -664,5 +668,26 @@
     }
   },
   "INACTIVE": "Ru Inactive",
-  "NO_ACCESS": "Ru No Access"
+  "NO_ACCESS": "Ru No Access",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Внимание! Вы собираетесь отправить это посещение на проверку отчета, а некоторые (или все) связанные с ним контролируемые элементы отмечены как “Не контролируемые”. При желании вы можете вернуться на вкладку “Краткое содержание”, чтобы внести любые изменения, в противном случае вы уверены, что хотите продолжить работу, не помечая эти пункты как контролируемые ?",
+  "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Вы собираетесь завершить визит, в котором есть пункты “Не контролируется”. При необходимости вы можете отклонить их, но в противном случае вы уверены, что хотите продолжить работу с пунктами, помеченными как “Не контролируется” ?",
+  "ACTION_POINT_REMINDER": "Отмечая, что нет никаких пунктов действий, пожалуйста, не забудьте добавить их перед продолжением, если это необходимо.",
+  "CONTINUE": "Продолжить",
+  "INVALID_NUMBER": "Invalid number",
+  "DUPLICATE": "ДУБЛИКАЦИЯ",
+  "ERROR_AT_SAVING_DUPLICATE": "Ошибка при сохранении дубликата",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "Нет данных о деятельности для дублирования",
+  "PD_STATUS": {
+      "DRAFT": "Развитие",
+      "REVIEW": "Рассмотрение",
+      "SIGNATURE": "Подпись",
+      "SIGNED": "Подписано",
+      "ACTIVE": "Активен",
+      "CANCELLED": "Отменено",
+      "ENDED": "Завершено",
+      "CLOSED": "Закрытый",
+      "SUSPENDED": "Приостановлено",
+      "TERMINATED": "Прекращено",
+      "EXPIRED": "Просроченный"
+  }
 }
