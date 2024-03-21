@@ -8,7 +8,7 @@ import '../../common/layout/support-btn';
 import './countries-dropdown';
 import './organizations-dropdown';
 
-import {connect} from 'pwa-helpers/connect-mixin.js';
+import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {store} from '../../../redux/store';
 
 import {

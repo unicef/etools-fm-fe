@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../../../../redux/store';
-import {connect} from 'pwa-helpers/connect-mixin.js';
+import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
