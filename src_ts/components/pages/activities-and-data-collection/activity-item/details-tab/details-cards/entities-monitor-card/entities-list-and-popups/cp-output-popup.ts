@@ -41,6 +41,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => {
         this.cpOutputs = response;
         if (!this.showExpired && this.selectedCpOutput) {
+          // if only active displayed and have item already selected, check if exists in the options
           if (!this.cpOutputs.find((x) => x.id === this.selectedCpOutput!.id)) {
             this.selectedCpOutput = undefined;
           }
