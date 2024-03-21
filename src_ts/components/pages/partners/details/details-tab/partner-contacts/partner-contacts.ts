@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {template} from './partner-contacts.tpl';
 import {store} from '../../../../../../redux/store';
 import {elevationStyles} from '../../../../../styles/elevation-styles';
-import {connect} from 'pwa-helpers/connect-mixin.js';
+import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
