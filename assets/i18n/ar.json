@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "منظمة شريكة",
     "CP_OUTPUTS": "مخرجات حزب المحافظين",
     "CP_OUTPUTS_FOUND": "{{ count }} تم العثور على مخرجات CP:",
+    "SHOW_EXPIRED": "عرض منتهية الصلاحية",
     "PD_STATUS": "حالة PD",
     "INTERVENTIONS_FOUND": "{{ count }} تم العثور على PD/SPD:",
     "INTERVENTIONS": "PD/SPDs",

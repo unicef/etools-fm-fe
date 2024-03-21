@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Partner Organization",
     "CP_OUTPUTS": "CP Outputs",
     "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
+    "SHOW_EXPIRED": "Show Expired",
     "PD_STATUS": "PD Status",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
     "INTERVENTIONS": "PD/SPDs",

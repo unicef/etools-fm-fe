@@ -12,10 +12,12 @@ import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
 import {elevationStyles} from '../../../../../../../styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {translate} from 'lit-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 
 @customElement('cp-output-popup')
 export class CpOutputPopup extends PartnersMixin(LitElement) {
@@ -23,6 +25,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
   @property() selectedCpOutput?: EtoolsCpOutput;
   @property() cpOutputs: EtoolsCpOutput[] = [];
   @property() selectedPartners: EtoolsPartner[] = [];
+  @property() showExpired = false;
 
   private loadingCpOutputs!: Callback;
 
@@ -31,7 +34,10 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
     this.loadingCpOutputs = debounce((ids: number[] = []) => {
       const {url} = getEndpoint(CP_OUTPUTS);
       const queryString: string = EtoolsRouter.encodeQueryParams({partners__in: ids});
-      const endpoint: string = queryString ? `${url}&${queryString}` : url;
+      let endpoint: string = queryString ? `${url}&${queryString}` : url;
+      if(!this.showExpired) {
+        endpoint += '&active=true';
+      }
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => (this.cpOutputs = response));
     }, 100);
     this.loadingCpOutputs();
@@ -57,6 +63,14 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
 
   onClose(): void {
     fireEvent(this, 'dialog-closed', {confirmed: false});
+  }
+
+  onShowExpiredChanged(e: CustomEvent): void {
+    if (!e.target) {
+      return;
+    }
+    this.showExpired = (e.target as SlSwitch).checked;
+    this.loadingCpOutputs();
   }
 
   // language=HTML
@@ -91,7 +105,14 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
           </div>
           <div class="filter-result">
             ${translate('ACTIVITY_DETAILS.CP_OUTPUTS_FOUND', {count: this.cpOutputs.length})}
+
+            <sl-switch
+              .checked="${this.showExpired}"
+              @sl-change="${this.onShowExpiredChanged}">
+              ${translate('ACTIVITY_DETAILS.SHOW_EXPIRED')}
+            </sl-switch>
           </div>
+      
           <etools-dropdown
             label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
             .options="${this.cpOutputs}"
@@ -125,6 +146,9 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
         }
         .filter-result {
           padding: 24px 12px 12px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
         .filter-name:after {
           content: '';
