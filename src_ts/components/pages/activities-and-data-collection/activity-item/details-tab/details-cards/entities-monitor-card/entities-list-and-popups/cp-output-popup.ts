@@ -70,6 +70,9 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       return;
     }
     this.showExpired = (e.target as SlSwitch).checked;
+    if (!this.showExpired) {
+      this.selectedCpOutput = undefined;
+    }
     this.loadingCpOutputs();
   }
 
