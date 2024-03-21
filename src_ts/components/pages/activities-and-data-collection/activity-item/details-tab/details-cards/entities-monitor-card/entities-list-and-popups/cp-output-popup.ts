@@ -35,7 +35,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       const {url} = getEndpoint(CP_OUTPUTS);
       const queryString: string = EtoolsRouter.encodeQueryParams({partners__in: ids});
       let endpoint: string = queryString ? `${url}&${queryString}` : url;
-      if(!this.showExpired) {
+      if (!this.showExpired) {
         endpoint += '&active=true';
       }
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => (this.cpOutputs = response));
@@ -106,13 +106,11 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
           <div class="filter-result">
             ${translate('ACTIVITY_DETAILS.CP_OUTPUTS_FOUND', {count: this.cpOutputs.length})}
 
-            <sl-switch
-              .checked="${this.showExpired}"
-              @sl-change="${this.onShowExpiredChanged}">
+            <sl-switch .checked="${this.showExpired}" @sl-change="${this.onShowExpiredChanged}">
               ${translate('ACTIVITY_DETAILS.SHOW_EXPIRED')}
             </sl-switch>
           </div>
-      
+
           <etools-dropdown
             label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
             .options="${this.cpOutputs}"
