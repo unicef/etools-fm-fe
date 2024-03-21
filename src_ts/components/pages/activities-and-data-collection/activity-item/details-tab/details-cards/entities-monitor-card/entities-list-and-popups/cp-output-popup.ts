@@ -38,7 +38,14 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       if (!this.showExpired) {
         endpoint += '&active=true';
       }
-      request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => (this.cpOutputs = response));
+      request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => {
+        this.cpOutputs = response;
+        if (!this.showExpired && this.selectedCpOutput) {
+          if (!this.cpOutputs.find((x) => x.id === this.selectedCpOutput!.id)) {
+            this.selectedCpOutput = undefined;
+          }
+        }
+      });
     }, 100);
     this.loadingCpOutputs();
   }
@@ -69,10 +76,8 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
     if (!e.target) {
       return;
     }
+
     this.showExpired = (e.target as SlSwitch).checked;
-    if (!this.showExpired) {
-      this.selectedCpOutput = undefined;
-    }
     this.loadingCpOutputs();
   }
 
