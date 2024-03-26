@@ -35,7 +35,7 @@
   },
   "ACTIVITY_ADDITIONAL_INFO": {
     "ISSUE_TRACKER": "Puntos a destacar",
-    "PD_SSFA_DETAILS": {
+    "PD_SPD_DETAILS": {
       "DOCUMENT_TYTLE": "Título del documento",
       "PROGRESS_REPORTS": "Informes de Progreso",
       "REFERENCE_NUMBER": "N.° de referencia",
@@ -554,7 +554,7 @@
           "MINIMUM_REQUIRED_VISITS": "Mínimo requerido ",
           "SORT_BY": "Ordenar por"
         },
-        "PD_SSFA": {
+        "PD_SPD": {
           "LABEL": "Muestra PD/SPD activos que entregan productos del CP que se pueden monitorear a nivel comunitario. (Si no ha habido ninguna visita para un PD/SPD, los «días transcurridos desde la última visita» son los días transcurridos desde el inicio del PD/SPD)"
         },
         "SHARED_TAB": {
@@ -572,7 +572,7 @@
         "BY_CP_OUTPUT": "Por Producto del CP",
         "BY_LOCATION": "Por Ubicación",
         "BY_PARTNER": "Por socio",
-        "BY_PD_SSFA": "Por PD/SPD"
+        "BY_PD_SPD": "Por PD/SPD"
       },
       "VISITS_ELIGIBLE_FOR_HACT": {
         "CP_OUTPUT": "Producto del CP",

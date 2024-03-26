@@ -33,7 +33,7 @@
   },
   "ACTIVITY_ADDITIONAL_INFO": {
     "ISSUE_TRACKER": "نقاط ملاحظة",
-    "PD_SSFA_DETAILS": {
+    "PD_SPD_DETAILS": {
       "DOCUMENT_TYTLE": "عنوان المستند",
       "PROGRESS_REPORTS": "تقارير مرحلية",
       "REFERENCE_NUMBER": "رقم المرجع",
@@ -552,7 +552,7 @@
           "MINIMUM_REQUIRED_VISITS": "الحد الأدنى المطلوب:",
           "SORT_BY": "فرز حسب"
         },
-        "PD_SSFA": {
+        "PD_SPD": {
           "LABEL": "عرض وثائق   البرامج النشطة التي تقدم مخرجات البرامج القطرية التي يمكن مراقبتها على مستوى المجتمع. (إذا لم تكن هناك أي زيارات سابقة للبرامج ، فإن \"الأيام المنقضية منذ آخر زيارة\"  هي عدد الأيام منذ بداية وثيقة البرامج)"
         },
         "SHARED_TAB": {
@@ -570,7 +570,7 @@
         "BY_CP_OUTPUT": "حسب مخرجات البرنامج  القطري",
         "BY_LOCATION": "حسب الموقع",
         "BY_PARTNER": "حسب الشريك",
-        "BY_PD_SSFA": "حسب وثيقة البرامج"
+        "BY_PD_SPD": "حسب وثيقة البرامج"
       },
       "VISITS_ELIGIBLE_FOR_HACT": {
         "CP_OUTPUT": "مخرجات البرنامج القطري",
