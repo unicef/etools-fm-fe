@@ -492,7 +492,9 @@
     "SUPPORT": "Apoyo",
     "TEMPLATES": "Plantillas",
     "TITLE": "Monitoreo de campo",
-    "VISITS": "Visitas"
+    "VISITS": "Visitas",
+    "TPM": "Monitores de terceros",
+    "DASHBOARD": "Panel"
   },
   "FILTERS_ELEMENT": {
     "CLEAR_ALL": "Eliminar todo",
