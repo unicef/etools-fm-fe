@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Localized Partner Organization",
     "CP_OUTPUTS": "Localized CP Outputs",
     "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "SHOW_EXPIRED": "Показать истекшее",
     "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
     "INTERVENTIONS": "Localized PD/SPDs",

@@ -97,6 +97,7 @@
   "PARTNER_ORGANIZATION": "Organización asociada",
   "CP_OUTPUTS": "Salidas CP",
   "CP_OUTPUTS_FOUND": "{{ count }} Se encontraron resultados del PP:",
+  "SHOW_EXPIRED": "Mostrar caducado",
   "PD_STATUS": "Estado de PD",
   "INTERVENTIONS_FOUND": "{{ count }} Se encontraron PD/SPD:",
   "INTERVENTIONS": "PD/SPD",
