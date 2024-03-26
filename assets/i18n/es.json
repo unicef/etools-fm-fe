@@ -8,7 +8,8 @@
       "START_DATE": "Fecha de inicio",
       "STATUS": "Estado",
       "TEAM_MEMBERS": "Miembros del equipo",
-      "VISIT_LEAD": "Líder de visita"
+      "VISIT_LEAD": "Líder de visita",
+      "SECTIONS": "Secciones"
     },
     "CREATE_NEW_BUTTON": "Crear nuevo",
     "FILTERS": {
@@ -24,7 +25,10 @@
       "STATUS": "Estado",
       "TEAM_MEMBERS": "Miembros del equipo",
       "TPM_PARTNERS": "Socios de TPM",
-      "VISIT_LEAD": "Líder de visita"
+      "VISIT_LEAD": "Líder de visita",
+      "SECTIONS": "Secciones",
+      "STARTS_AFTER": "Comienza después de",
+      "END_BEFORE": "Termina antes"
     },
     "REFERENCE_NO": "Referencia",
     "TITLE": "Actividades"

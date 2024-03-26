@@ -638,7 +638,7 @@
     "BLOCKED_IN_VISION": "محظور في VISION",
     "SYNCED_FROM_VISION": "تمت مزامنتها من VISION",
     "FILTERS": {
-      "SEARCH": "ابحث عن رقم المورد أو المراقب المستقل",
+      "SEARCH": "ابحث عن رقم المورد أو المراقب المستقل"
     },
     "COLUMNS": {
       "VENDOR_NUMBER": "رقم المورد",
