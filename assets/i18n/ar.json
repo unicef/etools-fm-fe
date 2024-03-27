@@ -283,7 +283,7 @@
       "NEW": "جديد",
       "PAST": "سابق"
     },
-    "TABLE_CAPTION": "عرض ملاحظات (بدء) (نهاية) (عدد)",
+    "TABLE_CAPTION": "{{ count }} - {{ end }} من {{ start }} ملاحظات للعرض",
     "UPLOAD_LABEL": "إرفاق ملف"
   },
   "RATIONALE": {
@@ -382,7 +382,7 @@
       "SCALE_SIZE": "حدد حجم المقياس",
       "SECTIONS": "حدد الأقسام"
     },
-    "TABLE_CAPTION": "(عدد) الأسئلة المراد عرضها (بدء) (نهاية)"
+    "TABLE_CAPTION": "{{ count }} - {{ end }} من {{ start }} الأسئلة المراد عرضها"
   },
   "SITES": {
     "ADD_SL": "إضافة موقع محدد",
