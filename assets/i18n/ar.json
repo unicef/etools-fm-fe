@@ -160,8 +160,8 @@
     "DATA_COLLECTION": {
       "ATTACHMENTS_BUTTON_TEXT": {
         "DEFAULT": "تحميل الملفات",
-        "MULTIPLE": "{{عدد}} الملفات",
-        "SINGLE": "{{عدد}} ملف"
+        "MULTIPLE": "{{ count }} الملفات",
+        "SINGLE": "{{ count }} ملف"
       },
       "ATTACHMENTS_POPUP_TITLE": "مرفقات لـ",
       "DELETE_ITEM": "حذف العنصر؟"
@@ -288,7 +288,7 @@
   },
   "RATIONALE": {
     "ANNUAL_FM_RATIONALE": {
-      "LAST_EDITED": "التعديل الأخير تم بواسطة {{المستخدم}} في {{تاريخ}}"
+      "LAST_EDITED": "التعديل الأخير تم بواسطة {{ user }} في {{ date}}"
     },
     "HELPER_TEXTS": {
       "METHODOLOGY": "على سبيل المثال الاختلافات في المنهجية المعيارية والأساس المنطقي ، والمواصفات الخاصة بالحد الأدنى لعدد ونوع النقاشات الجماعية المركزة",
