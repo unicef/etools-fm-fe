@@ -239,7 +239,7 @@
     },
     "PROG_VISITS": "M.R. Visitas Progr.",
     "SINCE_LAST_VISIT": "Días transcurridos desde la última visita al sitio",
-    "SSFA_EXPECTED_RESULT": "Resultado esperado de PD",
+    "SPD_EXPECTED_RESULT": "Resultado esperado de PD",
     "TARGET": "Meta"
   },
   "ISSUE_TRACKER": {
@@ -580,7 +580,7 @@
         "CP_OUTPUT": "Producto del CP",
         "HACT_ELIGIBLE_VISITS": "Visitas elegibles para HACT",
         "PARTNER": "Socio",
-        "PD_SSFA": "PD/SPD",
+        "PD_SPD": "PD/SPD",
         "TITLE": "Visitas elegibles para visita programática de HACT",
         "VISIT": "Visita",
         "VISIT_END_DATE": "Fecha de finalización de visita"
