@@ -156,6 +156,7 @@ export class EtoolsCard extends LitElement {
 
   // language=HTML
   protected render(): TemplateResult {
+    const actionsSlotAssigned = this.querySelector('[slot="actions"]');
     return html`
       <div class="elevation card-container" elevation="1">
         <header class="card-title-box with-bottom-line flex-header" ?is-collapsible="${this.isCollapsible}">
@@ -184,7 +185,7 @@ export class EtoolsCard extends LitElement {
                 `
               : ''}
           </div>
-          <div class="flex-header__actions"><slot name="actions"></slot></div>
+          <div class="${actionsSlotAssigned ? 'flex-header__actions' : ''}"><slot name="actions"></slot></div>
         </header>
         <etools-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">

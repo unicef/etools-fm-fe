@@ -4,7 +4,9 @@ import {css, CSSResult} from 'lit';
 export const pageHeaderStyles: CSSResult = css`
   app-toolbar {
     padding: 0;
-    height: var(--toolbar-height);
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: space-between;
   }
 
   .titlebar {
@@ -20,13 +22,10 @@ export const pageHeaderStyles: CSSResult = css`
     color: var(--header-color);
     margin-left: auto;
   }
-
-  etools-profile-dropdown {
-  }
+  
 
   .titlebar {
     display: flex;
-    flex: 1;
     font-size: var(--etools-font-size-28, 28px);
     font-weight: 300;
   }
@@ -64,11 +63,8 @@ export const pageHeaderStyles: CSSResult = css`
       margin: 0 8px 0 12px;
     }
     etools-profile-dropdown {
-      margin-left: 12px;
       width: 40px;
     }
-  }
-  @media (max-width: 820px) {
     .dropdown {
       order: 1;
       margin-top: 0;

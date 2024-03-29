@@ -136,7 +136,6 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           margin-inline-end: 10px;
         }
         .titlebar {
-          flex: 1;
           font-size: 28px;
           font-weight: 300;
         .dropdowns {
@@ -181,8 +180,8 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         }
       </style>
 
-      <app-toolbar sticky class="layout-horizontal align-items-center row">
-        <div class="titlebar layout-horizontal align-items-center col-lg-4 col-4">
+      <app-toolbar sticky class="layout-horizontal align-items-center">
+        <div class="titlebar layout-horizontal align-items-center">
           <etools-icon-button
             id="menuButton"
             class="nav-menu-button"
@@ -206,7 +205,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               : html`<div class="envWarning" title="${this.environment} TESTING ENVIRONMENT">${this.environment}</div>`}
           </div>
         </div>
-        <div class="dropdown layout-horizontal align-items-center col-lg-6 col-12">
+        <div class="dropdown layout-horizontal align-items-center">
           <etools-dropdown
             transparent
             id="languageSelector"
@@ -232,7 +231,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
           <countries-dropdown></countries-dropdown>
           <organizations-dropdown></organizations-dropdown>
         </div>
-        <div class="layout-horizontal align-items-center col-lg-2 col-8">
+        <div class="layout-horizontal align-items-center">
           <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
 
           <etools-profile-dropdown

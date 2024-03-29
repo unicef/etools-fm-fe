@@ -102,13 +102,13 @@ export function template(this: SitesTabComponent): TemplateResult {
                       <div class=" col-12 site-row align-items-center no-pr">
                         <div class="row editable-row">
                           <div
-                            class="col-data col-md-1 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
+                            class="col-data col-md-2 col-lg-1 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
                             data-col-header-label="${translate('SITES.COLUMNS.STATUS')}"
                           >
                             <div class="active-marker ${this.getActiveClass(site.is_active)}"></div>
                           </div>
                           <div
-                            class="col-data col-md-11 col-12"
+                            class="col-data col-md-10 col-lg-11 col-12"
                             data-col-header-label="${translate('SITES.COLUMNS.NAME')}"
                           >
                             ${site.name}
