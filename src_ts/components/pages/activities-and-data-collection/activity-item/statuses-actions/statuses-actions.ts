@@ -238,6 +238,7 @@ export class StatusesActionsComponent extends LitElement {
 
         etools-button-group {
           --etools-button-group-color: var(--green-color);
+          height: fit-content;
         }
 
         etools-button.sl-button-group__button {

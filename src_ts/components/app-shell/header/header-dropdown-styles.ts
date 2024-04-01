@@ -26,11 +26,13 @@ export const headerDropdownStyles: TemplateResult = html`
 
     organizations-dropdown {
       max-width: 180px;
+      width: auto;
       margin-inline-start: 10px;
     }
 
     countries-dropdown {
       max-width: 160px;
+      width: auto;
       margin-inline-start: 10px;
     }
 
@@ -45,6 +47,12 @@ export const headerDropdownStyles: TemplateResult = html`
 
     .w100 {
       width: 100%;
+    }
+    .dropdown {
+      padding-block-start: 6px;
+      margin-inline-start: auto;
+      display: flex;
+      margin-inline-end: 20px;
     }
 
     etools-dropdown.warning::part(combobox) {
@@ -63,11 +71,11 @@ export const headerDropdownStyles: TemplateResult = html`
         width: 130px;
       }
       organizations-dropdown {
-        width: 130px;
+        width: auto;
       }
 
       countries-dropdown {
-        width: 130px;
+        width: auto;
       }
     }
 
