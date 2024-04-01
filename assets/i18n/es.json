@@ -113,7 +113,8 @@
       "TPM": "Monitores de terceros"
     },
     "VISIT_LEAD": "Líder de Visita",
-    "VISIT_LETTER": "Carta de visita"
+    "VISIT_LETTER": "Carta de visita",
+    "REPORT_REVIEWER": "Revisor de informes"
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

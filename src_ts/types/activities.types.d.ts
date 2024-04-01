@@ -14,6 +14,7 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
+  report_reviewer: string;
   sections: {id: number; name: string}[];
 }
 

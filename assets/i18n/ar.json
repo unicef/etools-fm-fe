@@ -111,7 +111,8 @@
       "TPM": "مراقب الطرف الثالث"
     },
     "VISIT_LEAD": "قائد الزيارة",
-    "VISIT_LETTER": "خطاب الزيارة"
+    "VISIT_LETTER": "خطاب الزيارة",
+    "REPORT_REVIEWER": "تقرير المراجع"
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

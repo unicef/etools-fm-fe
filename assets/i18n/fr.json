@@ -111,7 +111,8 @@
     "CANCELLATION_NOTE": "Note d'annulation",
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
-    "EXPORT": "EXPORT"
+    "EXPORT": "EXPORT",
+    "REPORT_REVIEWER": "Réviseur de rapport"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",

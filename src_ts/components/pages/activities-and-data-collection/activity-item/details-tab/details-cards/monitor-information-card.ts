@@ -41,6 +41,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
   teamMembersDd!: EtoolsDropdownMultiEl;
@@ -178,7 +179,28 @@ export class MonitorInformationCard extends BaseDetailsCard {
               @click="${() => this.resetFieldError('visit_lead')}"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>
+            ></etools-dropdown>        
+          </div>
+          <div class="layout horizontal">
+            <etools-dropdown
+              class="flex"
+              id="visitLead"
+              .selected="${this.editedData.report_reviewer}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                this.updateModelValue('report_reviewer', detail.selectedItem?.id)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+              .options="${this.membersOptions}"
+              option-label="name"
+              option-value="id"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
+              ?invalid="${this.errors && this.errors.report_reviewer}"
+              .errorMessage="${this.errors && this.errors.report_reviewer}"
+              @focus="${() => this.resetFieldError('report_reviewer')}"
+              @click="${() => this.resetFieldError('report_reviewer')}"
+              allow-outside-scroll
+              dynamic-align
+          ></etools-dropdown>
           </div>
         </div>
       </etools-card>
