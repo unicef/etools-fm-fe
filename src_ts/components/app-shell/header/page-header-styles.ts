@@ -22,7 +22,6 @@ export const pageHeaderStyles: CSSResult = css`
     color: var(--header-color);
     margin-left: auto;
   }
-  
 
   .titlebar {
     display: flex;
