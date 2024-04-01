@@ -40,6 +40,10 @@ export const SitesTabStyles: CSSResult = css`
     align-items: center;
   }
 
+  .location {
+    align-items: flex-start !important;
+  }
+
   .admin-level-text {
     color: #a4a4a4;
   }
@@ -81,14 +85,6 @@ export const SitesTabStyles: CSSResult = css`
     color: #858585;
     white-space: pre;
     font-size: var(--etools-font-size-16, 16px);
-  }
-
-  etools-data-table-row::part(edt-list-row-wrapper) {
-    padding: 0 0 0 24px;
-  }
-
-  etools-data-table-header::part(edt-data-table-header) {
-    padding: 0 0 0 24px;
   }
 
   .row .hover-block {

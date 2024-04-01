@@ -35,19 +35,19 @@ export function template(this: ChecklistAttachments): TemplateResult {
           ?no-collapse="${!this.items.length}"
           .lowResolutionLayout="${this.lowResolutionLayout}"
         >
-          <etools-data-table-column class="col-data table-header-padding col-md-2"
+          <etools-data-table-column class="col-data col-md-2"
             >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.METHOD')}</etools-data-table-column
           >
-          <etools-data-table-column class="col-data table-header-padding col-md-2"
+          <etools-data-table-column class="col-data col-md-2"
             >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.DATA_COLLECTOR')}</etools-data-table-column
           >
-          <etools-data-table-column class="col-data table-header-padding col-md-2"
+          <etools-data-table-column class="col-data col-md-2"
             >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.METHOD_TYPE')}</etools-data-table-column
           >
-          <etools-data-table-column class="col-data table-header-padding col-md-2"
+          <etools-data-table-column class="col-data col-md-2"
             >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.RELATED_TO')}</etools-data-table-column
           >
-          <etools-data-table-column class="col-data table-header-padding col-md-4"
+          <etools-data-table-column class="col-data col-md-4"
             >${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.RELATED_NAME')}</etools-data-table-column
           >
         </etools-data-table-header>

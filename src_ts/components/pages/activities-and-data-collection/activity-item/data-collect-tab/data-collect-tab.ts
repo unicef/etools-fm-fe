@@ -169,15 +169,15 @@ export class DataCollectTab extends LitElement {
   renderTable(collect: DataCollectionChecklist[] = [], method: EtoolsMethod): TemplateResult {
     return html`
       <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="col-data table-header-padding col-md-4" field="text">
+        <etools-data-table-column class="col-data col-md-4" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}
         </etools-data-table-column>
 
-        <etools-data-table-column class="col-data table-header-padding col-md-4" field="text">
+        <etools-data-table-column class="col-data col-md-4" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
 
-        <etools-data-table-column class="col-data table-header-padding col-md-4" field="text">
+        <etools-data-table-column class="col-data col-md-4" field="text">
           ${method.use_information_source ? translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE') : ''}
         </etools-data-table-column>
       </etools-data-table-header>

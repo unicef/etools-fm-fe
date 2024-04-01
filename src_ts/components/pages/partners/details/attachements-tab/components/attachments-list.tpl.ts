@@ -46,13 +46,13 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
 
       <!-- Table Header -->
       <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="table-header-padding col-data col-2" field="created">
+        <etools-data-table-column class="col-data col-3" field="created">
           ${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-data col-2" field="file_type">
+        <etools-data-table-column class="col-data col-3" field="file_type">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-data col-8" field="file">
+        <etools-data-table-column class="col-data col-6" field="file">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -78,17 +78,17 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
                 .lowResolutionLayout="${this.lowResolutionLayout}"
               >
                 <div slot="row-data" class="editable-row row">
-                  <div class="col-data col-2" data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}">
+                  <div class="col-data col-3" data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}">
                     ${this.formatDate(attachment.created)}
                   </div>
                   <div
-                    class="col-data col-2"
+                    class="col-data col-3"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
                   >
                     ${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}
                   </div>
                   <div
-                    class="col-data col-8 file-link"
+                    class="col-data col-6 file-link"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE')}"
                   >
                     <etools-icon name="attachment"></etools-icon>

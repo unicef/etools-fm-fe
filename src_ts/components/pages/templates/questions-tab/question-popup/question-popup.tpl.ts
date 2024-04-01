@@ -148,7 +148,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           dynamic-align
         ></etools-dropdown>
 
-        <div class="col-md-6 col-12 layout-horizontal">
+        <div class="col-md-6 col-12 layout-horizontal align-items-center mt-8">
           <etools-checkbox
             ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_hact}"
@@ -157,29 +157,31 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             ${translate('QUESTIONS.LABELS.IS_HACT')}
           </etools-checkbox>
           <etools-checkbox
+            class="ml-20"
             ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
             ?checked="${this.editedData.is_active}"
             @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
-          </etools-checkbox>
-          <div>
-            <etools-input
-              id="orderInput"
-              class="w25"
-              label=${translate('QUESTIONS.LABELS.ORDER')}
-              .value="${this.editedData.order || 1}"
-              allowed-pattern="[0-9]"
-              maxlength="4"
-              ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
-              required
-              @focus="${() => {
-                this.orderInput.invalid = false;
-              }}"
-              @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
-            >
-            </etools-input>
-          </div>
+          </etools-checkbox>       
+        </div>
+
+        <div class="col-md-6 col-12 align-items-center mt-8">
+          <etools-input
+            id="orderInput"
+            class="w25"
+            label=${translate('QUESTIONS.LABELS.ORDER')}
+            .value="${this.editedData.order || 1}"
+            allowed-pattern="[0-9]"
+            maxlength="4"
+            ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+            required
+            @focus="${() => {
+              this.orderInput.invalid = false;
+            }}"
+            @value-changed="${({detail}: CustomEvent) => this.updateModelValue('order', detail.value)}"
+          >
+          </etools-input>
         </div>
 
         <etools-dropdown

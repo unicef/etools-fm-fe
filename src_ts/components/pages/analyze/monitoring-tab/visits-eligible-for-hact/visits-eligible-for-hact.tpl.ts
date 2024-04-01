@@ -18,11 +18,11 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
       </div>
       <div class="hact-visits">
         <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-          <etools-data-table-column class="col-data table-header-padding col-md-10" field="name" sortable>
+          <etools-data-table-column class="col-data col-md-10" field="name" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}
           </etools-data-table-column>
           <etools-data-table-column
-            class="col-data table-header-padding col-md-2 hact-visits-label"
+            class="col-data col-md-2 hact-visits-label"
             field="visits_count"
             sortable
           >

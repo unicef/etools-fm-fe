@@ -27,16 +27,16 @@ export function template(this: PdSsfaDetails): TemplateResult {
       </div>
 
       <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="table-header-padding col-3 col-data"
+        <etools-data-table-column class="col-3 col-data"
           >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.REFERENCE_NUMBER')}</etools-data-table-column
         >
-        <etools-data-table-column class="table-header-padding col-3 col-data"
+        <etools-data-table-column class="col-3 col-data"
           >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.DOCUMENT_TYTLE')}</etools-data-table-column
         >
-        <etools-data-table-column class="table-header-padding col-3 col-data"
+        <etools-data-table-column class="col-3 col-data"
           >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.TYPE')}</etools-data-table-column
         >
-        <etools-data-table-column class="table-header-padding col-3 col-data"
+        <etools-data-table-column class="col-3 col-data"
           >${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.PROGRESS_REPORTS')}</etools-data-table-column
         >
       </etools-data-table-header>

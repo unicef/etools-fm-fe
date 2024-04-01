@@ -21,10 +21,6 @@ export const IssueTrackerTabStyles: CSSResult = css`
   }
   .filter {
     width: auto;
-    min-width: 160px;
-  }
-  .filter:not(:last-of-type) {
-    margin-right: 16px;
   }
   .files-column {
     color: var(--module-primary);

@@ -173,24 +173,26 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           ?no-collapse="${!this.items.length}"
           .lowResolutionLayout="${this.lowResolutionLayout}"
         >
-          <etools-data-table-column class="col-data table-header-padding  col-md-4" field="text" sortable>
-            ${translate('QUESTIONS.COLUMNS.TEXT')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding  col-md-2" field="level" sortable>
-            ${translate('QUESTIONS.COLUMNS.LEVEL')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding  col-md-2">
-            ${translate('QUESTIONS.COLUMNS.METHODS')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding  col-md-1" field="answer_type" sortable>
-            ${translate('QUESTIONS.COLUMNS.ANSWER_TYPE')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding  col-md-2" field="category__name" sortable>
-            ${translate('QUESTIONS.COLUMNS.CATEGORY')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding  col-md-1" field="is_active" sortable>
-            ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
-          </etools-data-table-column>
+          <div class="row">
+            <etools-data-table-column class="col-data col-md-4" field="text" sortable>
+              ${translate('QUESTIONS.COLUMNS.TEXT')}
+            </etools-data-table-column>
+            <etools-data-table-column class="col-data col-md-2" field="level" sortable>
+              ${translate('QUESTIONS.COLUMNS.LEVEL')}
+            </etools-data-table-column>
+            <etools-data-table-column class="col-data col-md-2">
+              ${translate('QUESTIONS.COLUMNS.METHODS')}
+            </etools-data-table-column>
+            <etools-data-table-column class="col-data col-md-1" field="answer_type" sortable>
+              ${translate('QUESTIONS.COLUMNS.ANSWER_TYPE')}
+            </etools-data-table-column>
+            <etools-data-table-column class="col-data col-md-2" field="category__name" sortable>
+              ${translate('QUESTIONS.COLUMNS.CATEGORY')}
+            </etools-data-table-column>
+            <etools-data-table-column class="col-data col-md-1" field="is_active" sortable>
+              ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
+            </etools-data-table-column>
+          </div>  
         </etools-data-table-header>
 
         ${!this.items.length
@@ -205,7 +207,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         ${this.items.map(
           (question: IQuestion) => html`
             <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="editable-row row no-rm no-lm">
+              <div slot="row-data" class="editable-row row">
                 <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
                   ${question.text || '-'}
                 </div>

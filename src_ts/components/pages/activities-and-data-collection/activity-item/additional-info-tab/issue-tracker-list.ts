@@ -103,16 +103,16 @@ export class IssueTrackerList extends LitElement {
           <div class="card-title counter">${translate('ACTIVITY_ADDITIONAL_INFO.ISSUE_TRACKER')}</div>
         </div>
         <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-          <etools-data-table-column class="col-data table-header-padding col-md-1" field="related_to_type">
+          <etools-data-table-column class="col-data col-md-1" field="related_to_type">
             ${translate('ISSUE_TRACKER.RELATED_TO')}
           </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding col-md-4" field="name" sortable>
+          <etools-data-table-column class="col-data col-md-4" field="name" sortable>
             ${translate('ISSUE_TRACKER.NAME')}
           </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding col-md-6" field="issue">
+          <etools-data-table-column class="col-data col-md-6" field="issue">
             ${translate('ISSUE_TRACKER.ISSUE')}
           </etools-data-table-column>
-          <etools-data-table-column class="col-data table-header-padding col-md-1" field="attachments">
+          <etools-data-table-column class="col-data col-md-1" field="attachments">
             ${translate('ISSUE_TRACKER.ATTACHMENTS')}
           </etools-data-table-column>
         </etools-data-table-header>

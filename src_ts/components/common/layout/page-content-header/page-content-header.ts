@@ -67,7 +67,7 @@ export class PageContentHeader extends LitElement {
         .title-row > .title-row-actions {
           display: flex;
           flex: none;
-          margin-left: auto;
+          margin-left: auto;          
         }
 
         .tabs {
@@ -97,6 +97,9 @@ export class PageContentHeader extends LitElement {
             font-size: var(--etools-font-size-18, 18px);
             width: 100%;
           }
+          .title-row-actions {
+            margin-right: 25px;
+          }
         }
 
         @media print {
@@ -111,11 +114,11 @@ export class PageContentHeader extends LitElement {
   render(): TemplateResult {
     // language=HTML
     return html`
-      <div class="content-header-row title-row row">
-        <h1 class="col-md-6 col-12">
+      <div class="content-header-row title-row">
+        <h1>
           <slot name="page-title"></slot>
         </h1>
-        <div class="title-row-actions col-md-6 col-12">
+        <div class="title-row-actions">
           <slot name="title-row-actions"></slot>
         </div>
       </div>

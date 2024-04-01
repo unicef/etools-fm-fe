@@ -72,15 +72,17 @@ export function template(this: SitesTabComponent): TemplateResult {
       </div>
 
       <etools-data-table-header id="listHeader" no-collapse no-title .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="col-4 table-header-padding col-data">
-          ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-1 table-header-padding col-data">
-          ${translate('SITES.COLUMNS.STATUS')}
-        </etools-data-table-column>
-        <etools-data-table-column class="col-7 table-header-padding col-data">
-          ${translate('SITES.COLUMNS.NAME')}
-        </etools-data-table-column>
+        <div class="row">
+          <etools-data-table-column class="col-4 col-data">
+            ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-1 col-data">
+            ${translate('SITES.COLUMNS.STATUS')}
+          </etools-data-table-column>
+          <etools-data-table-column class="col-7 col-data">
+            ${translate('SITES.COLUMNS.NAME')}
+          </etools-data-table-column>
+        </div>  
       </etools-data-table-header>
 
       ${this.items.map(
@@ -88,7 +90,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
             <div slot="row-data" class="row editable-row parent-row">
               <div
-                class="col-data col-md-4 col-12 layout-vertical start center-justified"
+                class="col-data col-md-4 col-12 layout-vertical location"
                 data-col-header-label="${translate('SITES.COLUMNS.ADMIN_LEVEL')}"
               >
                 <span class="admin-level-text">${this.getAdminLevel(parentLocation.admin_level)}</span>
@@ -102,13 +104,13 @@ export function template(this: SitesTabComponent): TemplateResult {
                       <div class=" col-12 site-row align-items-center no-pr">
                         <div class="row editable-row">
                           <div
-                            class="col-data col-md-2 col-lg-1 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
+                            class="col-data col-md-1 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
                             data-col-header-label="${translate('SITES.COLUMNS.STATUS')}"
                           >
                             <div class="active-marker ${this.getActiveClass(site.is_active)}"></div>
                           </div>
                           <div
-                            class="col-data col-md-10 col-lg-11 col-12"
+                            class="col-data col-md-11 col-12"
                             data-col-header-label="${translate('SITES.COLUMNS.NAME')}"
                           >
                             ${site.name}

@@ -43,14 +43,13 @@ export const SharedStyles: CSSResult = css`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 16px;
     align-self: center;
-    padding: 18px 0 18px 10px;
+    padding: 18px 0 18px 0px;
   }
 
   .toggle-button-control span {
-    padding: 0 12px;
     font-size: var(--etools-font-size-16, 16px);
+    line-height: 18px;
   }
 
   .readonly {
@@ -77,5 +76,14 @@ export const SharedStyles: CSSResult = css`
 
   .horizontal .validate-input:not(:last-child) {
     padding-right: 15px;
+  }
+  .w-100 {
+    width: 100%;
+  }
+  @media (max-width: 576px) {
+    h1 {
+      font-size: var(--etools-font-size-18, 18px);
+      width: 100%;
+    }
   }
 `;

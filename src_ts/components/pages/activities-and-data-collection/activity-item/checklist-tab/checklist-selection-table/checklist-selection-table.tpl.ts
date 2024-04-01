@@ -19,6 +19,15 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
     <style>
       ${FormBuilderCardStyles}
       ${dataTableStylesLit}
+      .sm-header {
+        margin-top: 4px;
+        margin-left: 24px;
+        font-weight: 700;
+        color: var(--secondary-text-color);
+      }
+      .sm-header etools-checkbox {
+        margin-right: 6px;
+      }
     </style>
     <etools-media-query
       query="(max-width: 767px)"
@@ -65,24 +74,34 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
 
         <!-- Table Header -->
         <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-          <etools-data-table-column class="table-header-padding col-data col-4" field="text">
+          <etools-data-table-column class="col-data col-4" field="text">
             <div class="checkbox-container layout-horizontal center-align">
               <etools-checkbox
                 ?checked="${this.allQuestionsEnabled}"
-                class="nolabel"
+                class="nolabel ${this.lowResolutionLayout ? '' : 'mt-4'}"
                 ?hidden="${!this.isEditMode}"
                 @sl-change="${(e: any) => this.toggleAll(e.target.checked as boolean)}"
               ></etools-checkbox>
             </div>
             ${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}
           </etools-data-table-column>
-          <etools-data-table-column class="table-header-padding col-data col-6" field="level">
+          <etools-data-table-column class="col-data col-6" field="level">
             ${translate('ACTIVITY_CHECKLIST.COLUMNS.DETAILS')}
           </etools-data-table-column>
-          <etools-data-table-column class="table-header-padding col-data col-2">
+          <etools-data-table-column class="col-data col-2">
             ${translate('ACTIVITY_CHECKLIST.COLUMNS.METHODS')}
           </etools-data-table-column>
         </etools-data-table-header>
+
+        ${this.lowResolutionLayout ? html`
+        <div class="layout-horizontal sm-header">
+          <etools-checkbox
+            ?checked="${this.allQuestionsEnabled}"
+            ?hidden="${!this.isEditMode}"
+            @sl-change="${(e: any) => this.toggleAll(e.target.checked as boolean)}"
+          ></etools-checkbox>
+          <span>${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}</span>
+        </div>` : ``}      
 
         <!-- Table Row item -->
         ${this.questionsList.map(
@@ -91,14 +110,14 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
               <div slot="row-data" class="editable-row row">
                 <!-- Question item Text -->
                 <div
-                  class="col-data col-4 truncate"
+                  class="col-data col-4"
                   data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}"
                 >
                   <!-- Checkbox to mark question  as enabled -->
                   <div class="checkbox-container layout-horizontal center-align">
                     <etools-checkbox
                       ?checked="${question.is_enabled}"
-                      class="nolabel"
+                      class="nolabel ${this.lowResolutionLayout ? '' : 'mt-4'}"
                       ?hidden="${!this.isEditMode}"
                       @sl-change="${(e: any) => {
                         question.is_enabled = e.target.checked as boolean;
@@ -106,6 +125,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                       }}"
                     ></etools-checkbox>
                     <img
+                      class="${this.lowResolutionLayout ? '' : 'mt-4'}"
                       src="${ROOT_PATH}assets/images/icon-check.svg"
                       ?hidden="${this.isEditMode || !question.is_enabled}"
                     />
@@ -115,7 +135,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
 
                 <!-- Editable Question Specific Details -->
                 <div
-                  class="col-data col-6 truncate ${this.isEditMode ? 'edited-col' : ''}"
+                  class="col-data col-6 ${this.isEditMode ? 'edited-col' : ''}"
                   @click="${({currentTarget}: CustomEvent) =>
                     this.showDetailsInput(currentTarget as HTMLElement, question.id, question.specific_details)}"
                   data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.DETAILS')}"
@@ -128,7 +148,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
 
                 <!-- Question Methods -->
                 <div
-                  class="col-data col-2 truncate methods"
+                  class="col-data col-2 methods"
                   data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}"
                 >
                   ${this.serializeMethods(question.question.methods)}

@@ -104,5 +104,8 @@
     "ua-parser-js": ">=1.0.33",
     "urijs": ">=1.19.11",
     "wd": ">=1.14.0"
+  },
+  "relativeDependencies": {
+    "@unicef-polymer/etools-unicef": "../../etools-polymer/etools-unicef"
   }
 }

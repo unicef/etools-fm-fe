@@ -46,7 +46,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addPartner()}"
         @close="${this.onClose}"
       >
-        <div class="container layout-vertical">
+        <div class="container-dialog">
           <etools-dropdown
             .selected="${simplifyValue(this.partner)}"
             .options="${this.partners}"

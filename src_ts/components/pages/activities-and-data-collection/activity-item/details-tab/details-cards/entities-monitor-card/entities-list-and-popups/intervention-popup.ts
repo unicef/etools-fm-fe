@@ -52,44 +52,50 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addIntervention()}"
         @close="${this.onClose}"
       >
-        <div class="container layout-vertical">
+        <div class="container-dialog">
           <div class="elevation card-container layout-horizontal align-items-center filters" elevation="2">
-            <div class="filter-name">${translate('MAIN.FILTER')}</div>
-            <div class="layout-vertical flex-1">
-              <etools-dropdown-multi
-                label="${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}"
-                .options="${this.partners}"
-                option-label="name"
-                option-value="id"
-                .selectedValues="${simplifyValue(this.selectedPartners)}"
-                trigger-value-change-event
-                @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPartners(detail.selectedItems)}"
-                horizontal-align="left"
-                no-dynamic-align
-              ></etools-dropdown-multi>
-              <etools-dropdown-multi
-                label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
-                .options="${this.outputs}"
-                option-label="name"
-                option-value="id"
-                .selectedValues="${simplifyValue(this.selectedCpOutputs)}"
-                trigger-value-change-event
-                @etools-selected-items-changed="${({detail}: CustomEvent) =>
-                  this.selectCpOutputs(detail.selectedItems)}"
-                horizontal-align="left"
-                no-dynamic-align
-              ></etools-dropdown-multi>
-              <etools-dropdown-multi
-                label="${translate('ACTIVITY_DETAILS.PD_STATUS')}"
-                .options="${this.pdStatuses}"
-                option-label="name"
-                option-value="id"
-                .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
-                trigger-value-change-event
-                @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPdStatus(detail.selectedItems)}"
-                horizontal-align="left"
-                no-dynamic-align
-              ></etools-dropdown-multi>
+            <div class="filter-name"><span>${translate('MAIN.FILTER')}<span></div>
+            <div class="row w-100">
+              <div class="col-12">
+                <etools-dropdown-multi
+                  label="${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}"
+                  .options="${this.partners}"
+                  option-label="name"
+                  option-value="id"
+                  .selectedValues="${simplifyValue(this.selectedPartners)}"
+                  trigger-value-change-event
+                  @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPartners(detail.selectedItems)}"
+                  horizontal-align="left"
+                  no-dynamic-align
+                ></etools-dropdown-multi>
+              </div>
+              <div class="col-12">
+                <etools-dropdown-multi
+                  label="${translate('ACTIVITY_DETAILS.CP_OUTPUT')}"
+                  .options="${this.outputs}"
+                  option-label="name"
+                  option-value="id"
+                  .selectedValues="${simplifyValue(this.selectedCpOutputs)}"
+                  trigger-value-change-event
+                  @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                    this.selectCpOutputs(detail.selectedItems)}"
+                  horizontal-align="left"
+                  no-dynamic-align
+                ></etools-dropdown-multi>
+              </div>
+              <div class="col-12">
+                <etools-dropdown-multi
+                  label="${translate('ACTIVITY_DETAILS.PD_STATUS')}"
+                  .options="${this.pdStatuses}"
+                  option-label="name"
+                  option-value="id"
+                  .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
+                  trigger-value-change-event
+                  @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPdStatus(detail.selectedItems)}"
+                  horizontal-align="left"
+                  no-dynamic-align
+                ></etools-dropdown-multi>
+              </div>    
             </div>
           </div>
           <div class="filter-result">
@@ -108,22 +114,24 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
           ></etools-dropdown>
           ${this.selectedIntervention
             ? html`
-                <div class="layout-vertical connected-entries">
-                  <span class="connected-entries__title">${translate('ACTIVITY_DETAILS.CONNECTED_ENTRIES')}</span>
-                  <div class="layout-horizontal">
-                    <div class="layout-vertical flex-1 text-control">
+                <div class="row connected-entries">
+                    <div class="col-12">
+                      <span class="connected-entries__title">${translate('ACTIVITY_DETAILS.CONNECTED_ENTRIES')}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 text-control">
                       <label>${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}</label>
                       <div class="value">${this.getPartnerName(this.selectedIntervention.partner)}</div>
                     </div>
-                    <div class="layout-vertical flex-1 text-control">
+                    <div class="col-6 text-control">
                       <label>${translate('ACTIVITY_DETAILS.CP_OUTPUT')}</label>
                       ${repeat(
                         this.getOutputs(this.selectedIntervention.cp_outputs),
                         (output: EtoolsCpOutputShort) => html` <div class="value">${output.name}</div> `
                       )}
                     </div>
-                  </div>
-                </div>
+                  </div>                
               `
             : ''}
         </div>
@@ -228,7 +236,12 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
 
         .filter-name {
           padding: 0 30px 0 15px;
+          margin: 15px 0px;
           position: relative;
+          align-self: stretch;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
         }
 
         .filter-result {
@@ -251,6 +264,14 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
         .connected-entries__title {
           padding: 20px 14px 0;
           font-weight: bold;
+        }
+        @media (max-width: 576px) {
+          .filters {
+            flex-direction: column !important;
+          }
+          .filter-name:after {
+            border-right: none;
+          }
         }
       `
     ];

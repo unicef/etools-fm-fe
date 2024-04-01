@@ -109,7 +109,8 @@ export const InputStyles: TemplateResult = html`
     }
 
     .text-control {
-      padding: 14px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
 
     .text-control label {
@@ -121,3 +122,4 @@ export const InputStyles: TemplateResult = html`
     }
   </style>
 `;
+

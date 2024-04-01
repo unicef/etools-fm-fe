@@ -94,7 +94,7 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
       QuestionPopupStyles,
       css`
         .question-textarea {
-          padding-bottom: 1%;
+          padding-bottom: 6px;
         }
       `
     ];

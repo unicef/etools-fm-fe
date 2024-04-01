@@ -13,7 +13,13 @@ export const QuestionPopupStyles: CSSResult = css`
     padding-right: 15px;
   }
 
-  etools-checkbox {
-    margin-right: 30px;
+ .ml-20 {
+    margin-left: 20px;
+  }
+  .mt-8 {
+    margin-top: 8px;
+  }
+  #orderInput {
+    width: 140px
   }
 `;

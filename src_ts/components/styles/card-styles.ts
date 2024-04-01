@@ -74,11 +74,14 @@ export const CardStyles: CSSResult = css`
 
   .col-data {
     height: auto;
-    min-height: 47px;
     display: flex;
-    align-items: center;
+    min-height: 46px;
     min-width: 0;
     overflow: hidden;
+  }
+
+  etools-data-table-row[low-resolution-layout] *[slot="row-data"] .col-data {
+    min-height: auto;
   }
 
   .col-data:last-child {
@@ -113,7 +116,7 @@ export const CardStyles: CSSResult = css`
 
   .row-details-content {
     font-size: var(--etools-font-size-12, 12px);
-    padding-right: 100px;
+    margin-right: 15px;
   }
 
   .row-details-content .rdc-title {
