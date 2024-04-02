@@ -17,9 +17,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
   return html`
     ${InputStyles}
     <style>
-      ${FormBuilderCardStyles}
-      ${dataTableStylesLit}
-      .sm-header {
+      ${FormBuilderCardStyles} ${dataTableStylesLit} .sm-header {
         margin-top: 4px;
         margin-left: 24px;
         font-weight: 700;
@@ -93,15 +91,16 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
           </etools-data-table-column>
         </etools-data-table-header>
 
-        ${this.lowResolutionLayout ? html`
-        <div class="layout-horizontal sm-header">
-          <etools-checkbox
-            ?checked="${this.allQuestionsEnabled}"
-            ?hidden="${!this.isEditMode}"
-            @sl-change="${(e: any) => this.toggleAll(e.target.checked as boolean)}"
-          ></etools-checkbox>
-          <span>${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}</span>
-        </div>` : ``}      
+        ${this.lowResolutionLayout
+          ? html` <div class="layout-horizontal sm-header">
+              <etools-checkbox
+                ?checked="${this.allQuestionsEnabled}"
+                ?hidden="${!this.isEditMode}"
+                @sl-change="${(e: any) => this.toggleAll(e.target.checked as boolean)}"
+              ></etools-checkbox>
+              <span>${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}</span>
+            </div>`
+          : ``}
 
         <!-- Table Row item -->
         ${this.questionsList.map(
@@ -109,10 +108,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
             <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
               <div slot="row-data" class="editable-row">
                 <!-- Question item Text -->
-                <div
-                  class="col-data col-4"
-                  data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}"
-                >
+                <div class="col-data col-4" data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}">
                   <!-- Checkbox to mark question  as enabled -->
                   <div class="checkbox-container layout-horizontal center-align">
                     <etools-checkbox

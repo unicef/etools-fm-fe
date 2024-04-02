@@ -80,7 +80,7 @@ export const CardStyles: CSSResult = css`
     overflow: hidden;
   }
 
-  etools-data-table-row[low-resolution-layout] *[slot="row-data"] .col-data {
+  etools-data-table-row[low-resolution-layout] *[slot='row-data'] .col-data {
     min-height: auto;
   }
 

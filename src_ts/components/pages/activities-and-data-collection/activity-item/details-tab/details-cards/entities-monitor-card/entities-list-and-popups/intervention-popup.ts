@@ -64,7 +64,8 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                   option-value="id"
                   .selectedValues="${simplifyValue(this.selectedPartners)}"
                   trigger-value-change-event
-                  @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPartners(detail.selectedItems)}"
+                  @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                    this.selectPartners(detail.selectedItems)}"
                   horizontal-align="left"
                   no-dynamic-align
                 ></etools-dropdown-multi>
@@ -91,7 +92,8 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                   option-value="id"
                   .selectedValues="${simplifyValue(this.selectedPdStatuses)}"
                   trigger-value-change-event
-                  @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectPdStatus(detail.selectedItems)}"
+                  @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                    this.selectPdStatus(detail.selectedItems)}"
                   horizontal-align="left"
                   no-dynamic-align
                 ></etools-dropdown-multi>
@@ -112,9 +114,10 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
             horizontal-align="left"
             no-dynamic-align
           ></etools-dropdown>
-          ${this.selectedIntervention
-            ? html`
-                <div class="row connected-entries">
+          ${
+            this.selectedIntervention
+              ? html`
+                  <div class="row connected-entries">
                     <div class="col-12">
                       <span class="connected-entries__title">${translate('ACTIVITY_DETAILS.CONNECTED_ENTRIES')}</span>
                     </div>
@@ -131,9 +134,10 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
                         (output: EtoolsCpOutputShort) => html` <div class="value">${output.name}</div> `
                       )}
                     </div>
-                  </div>                
-              `
-            : ''}
+                  </div>
+                `
+              : ''
+          }
         </div>
       </etools-dialog>
     `;

@@ -13,13 +13,13 @@ export const QuestionPopupStyles: CSSResult = css`
     padding-right: 15px;
   }
 
- .ml-20 {
+  .ml-20 {
     margin-left: 20px;
   }
   .mt-8 {
     margin-top: 8px;
   }
   #orderInput {
-    width: 140px
+    width: 140px;
   }
 `;

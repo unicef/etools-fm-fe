@@ -26,62 +26,62 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
     ></etools-media-query>
     <section class="elevation page-content filters" elevation="1">
       <div class="row">
-          <div class="filter col-md-3 col-12">
-            <etools-dropdown-multi
-              label="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
-              placeholder="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
-              .options="${this.outputs}"
-              option-label="name"
-              option-value="id"
-              .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.cp_output__in)) || []}"
-              trigger-value-change-event
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.onOutputsChanged(detail.selectedItems)}"
-              .minWidth="160px"
-              .autoWidth="${true}"
-              horizontal-align="left"
-              no-dynamic-align
-            ></etools-dropdown-multi>
-          </div>
-          <div class="filter col-md-3 col-12">
-            <etools-dropdown-multi
-              label="${translate('ISSUE_TRACKER.PARTNER')}"
-              placeholder="${translate('ISSUE_TRACKER.PARTNER')}"
-              .options="${this.partners}"
-              option-label="name"
-              option-value="id"
-              .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.partner__in)) || []}"
-              trigger-value-change-event
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.onPartnersChanged(detail.selectedItems)}"
-              min-width="160px"
-              .autoWidth="${true}"
-              horizontal-align="left"
-              no-dynamic-align
-            ></etools-dropdown-multi>
-          </div>
-          <div class="col-md-3 col-12">
-            <etools-dropdown-multi
-              label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
-              placeholder="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
-              .options="${this.locations}"
-              option-label="name"
-              option-value="id"
-              .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.location__in)) || []}"
-              trigger-value-change-event
-              @etools-selected-items-changed="${({detail}: CustomEvent) => this.onLocationsChanged(detail.selectedItems)}"
-              .minWidth="160px"
-              .autoWidth="${true}"
-              horizontal-align="left"
-              no-dynamic-align
-            ></etools-dropdown-multi>
-          </div>
-          <div class="toggle-button-control filter col-md-3 col-12">
-            <sl-switch
-              .checked="${this.queryParams && this.queryParams.status}"
-              @sl-change="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
-            ></sl-switch>
-            <span>${translate('ISSUE_TRACKER.IS_NEW')}</span>
-          </div>
-        </div>  
+        <div class="filter col-md-3 col-12">
+          <etools-dropdown-multi
+            label="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
+            placeholder="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
+            .options="${this.outputs}"
+            option-label="name"
+            option-value="id"
+            .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.cp_output__in)) || []}"
+            trigger-value-change-event
+            @etools-selected-items-changed="${({detail}: CustomEvent) => this.onOutputsChanged(detail.selectedItems)}"
+            .minWidth="160px"
+            .autoWidth="${true}"
+            horizontal-align="left"
+            no-dynamic-align
+          ></etools-dropdown-multi>
+        </div>
+        <div class="filter col-md-3 col-12">
+          <etools-dropdown-multi
+            label="${translate('ISSUE_TRACKER.PARTNER')}"
+            placeholder="${translate('ISSUE_TRACKER.PARTNER')}"
+            .options="${this.partners}"
+            option-label="name"
+            option-value="id"
+            .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.partner__in)) || []}"
+            trigger-value-change-event
+            @etools-selected-items-changed="${({detail}: CustomEvent) => this.onPartnersChanged(detail.selectedItems)}"
+            min-width="160px"
+            .autoWidth="${true}"
+            horizontal-align="left"
+            no-dynamic-align
+          ></etools-dropdown-multi>
+        </div>
+        <div class="col-md-3 col-12">
+          <etools-dropdown-multi
+            label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
+            placeholder="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
+            .options="${this.locations}"
+            option-label="name"
+            option-value="id"
+            .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.location__in)) || []}"
+            trigger-value-change-event
+            @etools-selected-items-changed="${({detail}: CustomEvent) => this.onLocationsChanged(detail.selectedItems)}"
+            .minWidth="160px"
+            .autoWidth="${true}"
+            horizontal-align="left"
+            no-dynamic-align
+          ></etools-dropdown-multi>
+        </div>
+        <div class="toggle-button-control filter col-md-3 col-12">
+          <sl-switch
+            .checked="${this.queryParams && this.queryParams.status}"
+            @sl-change="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"
+          ></sl-switch>
+          <span>${translate('ISSUE_TRACKER.IS_NEW')}</span>
+        </div>
+      </div>
     </section>
     <section class="elevation page-content card-container issue-tracker-table-section" elevation="1">
       <etools-loading

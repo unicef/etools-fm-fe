@@ -163,7 +163,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             @sl-change="${(e: any) => this.updateModelValue('is_active', e.target.checked)}"
           >
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
-          </etools-checkbox>       
+          </etools-checkbox>
         </div>
 
         <div class="col-md-6 col-12 align-items-center mt-8">

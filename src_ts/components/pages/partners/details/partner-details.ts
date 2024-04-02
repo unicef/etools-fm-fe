@@ -106,7 +106,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           color: var(--module-error);
           display: inline-block;
         }
-        
+
         @media (max-width: 576px) {
           h1 {
             font-size: var(--etools-font-size-18, 18px);
@@ -156,7 +156,7 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
                 <span class="status-header">${this.getVisionStatusClassOrText(this.partnerDetails, true)}</span>
               </div>
             </div>
-          </div>  
+          </div>
         </div>
 
         <etools-tabs-lit

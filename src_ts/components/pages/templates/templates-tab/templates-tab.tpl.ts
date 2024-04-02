@@ -30,7 +30,8 @@ export function template(this: TemplatesTabComponent): TemplateResult {
           <etools-dropdown
             .options="${this.levels}"
             .selected="${(this.queryParams && this.queryParams.level) || undefined}"
-            @etools-selected-item-changed="${({detail}: CustomEvent) => this.onLevelChanged(detail.selectedItem?.value)}"
+            @etools-selected-item-changed="${({detail}: CustomEvent) =>
+              this.onLevelChanged(detail.selectedItem?.value)}"
             trigger-value-change-event
             hide-search
             label="${translate('TEMPLATES.FILTERS.LEVEL_LABEL')}"
@@ -42,7 +43,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             option-value="value"
           ></etools-dropdown>
         </div>
-       <div class="filter col-md-4 col-12">
+        <div class="filter col-md-4 col-12">
           <etools-dropdown
             ?hidden="${!this.queryParams || this.queryParams.level !== PARTNER}"
             .options="${this.partners}"
@@ -94,7 +95,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             option-value="id"
           ></etools-dropdown>
         </div>
-      </div>  
+      </div>
     </section>
 
     <!-- Table -->
@@ -129,7 +130,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">        
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
         <etools-data-table-column class="col-data col-md-4" field="text">
           <div class="checkbox-container"></div>
           ${translate('TEMPLATES.COLUMNS.TEXT')}

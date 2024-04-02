@@ -56,30 +56,30 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         ?no-collapse="${!this.items.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
-          <etools-data-table-column class="col-data col-md-2">
-            ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-1">
-            ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-2">
-            ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-2">
-            ${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-1">
-            ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-2">
-            ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-1">
-            ${translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-1">
-            ${translate('ACTIVITIES_LIST.COLUMNS.STATUS')}
-          </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-2">
+          ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-2">
+          ${translate('ACTIVITIES_LIST.COLUMNS.LOCATION_AND_SITE')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-2">
+          ${translate('ACTIVITIES_LIST.COLUMNS.SECTIONS')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.MONITOR_TYPE')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-2">
+          ${translate('ACTIVITIES_LIST.COLUMNS.TEAM_MEMBERS')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.CHECKLISTS_COUNT')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.STATUS')}
+        </etools-data-table-column>
       </etools-data-table-header>
 
       <!-- Table Empty Row -->

@@ -21,11 +21,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           <etools-data-table-column class="col-data col-md-10" field="name" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}
           </etools-data-table-column>
-          <etools-data-table-column
-            class="col-data col-md-2 hact-visits-label"
-            field="visits_count"
-            sortable
-          >
+          <etools-data-table-column class="col-data col-md-2 hact-visits-label" field="visits_count" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.HACT_ELIGIBLE_VISITS')}
           </etools-data-table-column>
         </etools-data-table-header>

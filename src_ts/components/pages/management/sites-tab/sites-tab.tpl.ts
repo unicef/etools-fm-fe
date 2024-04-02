@@ -72,15 +72,13 @@ export function template(this: SitesTabComponent): TemplateResult {
       </div>
 
       <etools-data-table-header id="listHeader" no-collapse no-title .lowResolutionLayout="${this.lowResolutionLayout}">
-          <etools-data-table-column class="col-4 col-data">
-            ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-2 col-data">
-            ${translate('SITES.COLUMNS.STATUS')}
-          </etools-data-table-column>
-          <etools-data-table-column class="col-6 col-data">
-            ${translate('SITES.COLUMNS.NAME')}
-          </etools-data-table-column>
+        <etools-data-table-column class="col-4 col-data">
+          ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-2 col-data">
+          ${translate('SITES.COLUMNS.STATUS')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-6 col-data"> ${translate('SITES.COLUMNS.NAME')} </etools-data-table-column>
       </etools-data-table-header>
 
       ${this.items.map(
