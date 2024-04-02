@@ -49,25 +49,25 @@ export function template(this: ActionPointsTab): TemplateResult {
         ?no-collapse="${!this.items.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
-        <etools-data-table-column class="table-header-padding col-md-3 col-data">
+        <etools-data-table-column class="col-md-3 col-data">
           ${translate('ACTIVITY_ITEM.ACTION_POINTS.REFERENCE')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-md-3 col-data">
+        <etools-data-table-column class="col-md-3 col-data">
           ${translate('ACTIVITY_ITEM.ACTION_POINTS.DESCRIPTION')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-md-3 col-data">
+        <etools-data-table-column class="col-md-3 col-data">
           <div class="assignee">
             <label>${translate('ACTIVITY_ITEM.ACTION_POINTS.ASSIGNEE')}</label>
             <label>(${translate('ACTIVITY_ITEM.ACTION_POINTS.SECTION_OFFICE')})</label>
           </div>
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-md-1 col-data">
+        <etools-data-table-column class="col-md-1 col-data">
           ${translate('ACTIVITY_ITEM.ACTION_POINTS.STATUS')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-md-1 col-data">
+        <etools-data-table-column class="col-md-1 col-data">
           ${translate('ACTIVITY_ITEM.ACTION_POINTS.DUE_ON')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-md-1 col-data">
+        <etools-data-table-column class="col-md-1 col-data">
           ${translate('ACTIVITY_ITEM.ACTION_POINTS.PRIORITY')}
         </etools-data-table-column>
         <etools-data-table-column></etools-data-table-column>

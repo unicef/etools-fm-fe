@@ -18,21 +18,17 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
       </div>
       <div class="hact-visits">
         <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-          <etools-data-table-column class="col-data table-header-padding col-md-10" field="name" sortable>
+          <etools-data-table-column class="col-data col-md-10" field="name" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}
           </etools-data-table-column>
-          <etools-data-table-column
-            class="col-data table-header-padding col-md-2 hact-visits-label"
-            field="visits_count"
-            sortable
-          >
+          <etools-data-table-column class="col-data col-md-2 hact-visits-label" field="visits_count" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.HACT_ELIGIBLE_VISITS')}
           </etools-data-table-column>
         </etools-data-table-header>
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse>
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-12 no-data">No records found.</div>
                 </div>
               </etools-data-table-row>
@@ -43,7 +39,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
             <etools-data-table-row id="hactVisits" secondary-bg-on-hover @click="${() => this._resizeMap()}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-md-10">
                   <span class="truncate">${hactVisit.name}</span>
                 </div>

@@ -74,7 +74,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addCpOutput()}"
         @close="${this.onClose}"
       >
-        <div class="container layout-vertical">
+        <div class="container-dialog">
           <div class="elevation card-container layout-horizontal align-items-center filters" elevation="2">
             <div class="filter-name">${translate('MAIN.FILTER')}</div>
             <etools-dropdown-multi
@@ -133,6 +133,14 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
           bottom: -10px;
           right: 15px;
           border-right: 1px solid var(--dark-divider-color);
+        }
+        @media (max-width: 576px) {
+          .filters {
+            flex-direction: column !important;
+          }
+          .filter-name:after {
+            border-right: none;
+          }
         }
       `
     ];

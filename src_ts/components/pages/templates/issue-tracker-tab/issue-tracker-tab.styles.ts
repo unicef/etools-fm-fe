@@ -4,7 +4,6 @@ export const IssueTrackerTabStyles: CSSResult = css`
   :host {
     position: relative;
     display: block;
-    --list-row-wrapper-padding-inline: 0;
   }
   .no-rm {
     margin-right: 0;
@@ -21,10 +20,6 @@ export const IssueTrackerTabStyles: CSSResult = css`
   }
   .filter {
     width: auto;
-    min-width: 160px;
-  }
-  .filter:not(:last-of-type) {
-    margin-right: 16px;
   }
   .files-column {
     color: var(--module-primary);

@@ -30,7 +30,7 @@ export function template(this: SitesTabComponent): TemplateResult {
     <section class="elevation page-content filters" elevation="1">
       <div class="row">
         <etools-input
-          class="search-input col-md-2 col-12"
+          class="search-input col-lg-4 col-md-5 col-12"
           type="search"
           clearable
           always-float-label
@@ -42,7 +42,7 @@ export function template(this: SitesTabComponent): TemplateResult {
           <etools-icon name="search" slot="prefix"></etools-icon>
         </etools-input>
 
-        <div class="toggle-button-control col-md-2 col-12">
+        <div class="toggle-button-control col-lg-4 col-md-5 col-12">
           <sl-switch
             .checked="${this.queryParams && this.queryParams.show_inactive}"
             @sl-change="${(event: CustomEvent) => this.changeShowInactive(event)}"
@@ -72,43 +72,41 @@ export function template(this: SitesTabComponent): TemplateResult {
       </div>
 
       <etools-data-table-header id="listHeader" no-collapse no-title .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="col-4 table-header-padding col-data">
+        <etools-data-table-column class="col-4 col-data">
           ${translate('SITES.COLUMNS.ADMIN_LEVEL')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-1 table-header-padding col-data">
+        <etools-data-table-column class="col-2 col-data">
           ${translate('SITES.COLUMNS.STATUS')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-7 table-header-padding col-data">
-          ${translate('SITES.COLUMNS.NAME')}
-        </etools-data-table-column>
+        <etools-data-table-column class="col-6 col-data"> ${translate('SITES.COLUMNS.NAME')} </etools-data-table-column>
       </etools-data-table-header>
 
       ${this.items.map(
         (parentLocation: IGroupedSites) => html`
-          <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-            <div slot="row-data" class="row editable-row parent-row">
+          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="editable-row">
               <div
-                class="col-data col-md-4 col-12 layout-vertical start center-justified"
+                class="col-data col-md-4 col-12 layout-vertical location"
                 data-col-header-label="${translate('SITES.COLUMNS.ADMIN_LEVEL')}"
               >
                 <span class="admin-level-text">${this.getAdminLevel(parentLocation.admin_level)}</span>
                 <span>${parentLocation.name}</span>
               </div>
 
-              <div class="${this.lowResolutionLayout ? '' : 'sites-list'} col-md-8 col-12 no-pr">
+              <div class="${this.lowResolutionLayout ? '' : 'sites-list'} col-md-8 col-12">
                 <div class="row">
                   ${parentLocation.sites.map(
                     (site: Site) => html`
-                      <div class=" col-12 site-row align-items-center no-pr">
+                      <div class=" col-12 site-row align-items-center">
                         <div class="row editable-row">
                           <div
-                            class="col-data col-md-2 col-lg-1 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
+                            class="col-data col-md-3 col-12 ${this.lowResolutionLayout ? '' : 'center-align'}"
                             data-col-header-label="${translate('SITES.COLUMNS.STATUS')}"
                           >
                             <div class="active-marker ${this.getActiveClass(site.is_active)}"></div>
                           </div>
                           <div
-                            class="col-data col-md-10 col-lg-11 col-12"
+                            class="col-data col-md-9 col-12"
                             data-col-header-label="${translate('SITES.COLUMNS.NAME')}"
                           >
                             ${site.name}

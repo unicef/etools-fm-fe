@@ -46,22 +46,22 @@ export function template(this: PartnerContacts): TemplateResult {
 
       <!-- Table Header -->
       <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="col-data table-header-padding  col-2" field="job_title">
+        <etools-data-table-column class="col-data col-2" field="job_title">
           ${translate('TPM_CONTACTS.COLUMNS.POSITION')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data table-header-padding  col-2" field="first_name">
+        <etools-data-table-column class="col-data col-2" field="first_name">
           ${translate('TPM_CONTACTS.COLUMNS.FIRST_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data table-header-padding  col-2" field="last_name">
+        <etools-data-table-column class="col-data col-2" field="last_name">
           ${translate('TPM_CONTACTS.COLUMNS.LAST_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data table-header-padding  col-2" field="phone_number">
+        <etools-data-table-column class="col-data col-2" field="phone_number">
           ${translate('TPM_CONTACTS.COLUMNS.PHONE_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data table-header-padding  col-3" field="email">
+        <etools-data-table-column class="col-data col-3" field="email">
           ${translate('TPM_CONTACTS.COLUMNS.EMAIL')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data table-header-padding  col-1" field="is_active">
+        <etools-data-table-column class="col-data col-1" field="is_active">
           ${translate('TPM_CONTACTS.COLUMNS.ACTIVE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -70,7 +70,7 @@ export function template(this: PartnerContacts): TemplateResult {
       ${this.loadingInProcess || !this.staffMembersList || !this.staffMembersList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -86,7 +86,7 @@ export function template(this: PartnerContacts): TemplateResult {
                 secondary-bg-on-hover
                 .lowResolutionLayout="${this.lowResolutionLayout}"
               >
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.POSITION')}">
                     ${staffMember.profile.job_title}
                   </div>

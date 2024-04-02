@@ -46,13 +46,13 @@ export function template(this: AttachmentsListComponent): TemplateResult {
 
       <!-- Table Header -->
       <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-        <etools-data-table-column class="table-header-padding col-data col-3" field="created">
+        <etools-data-table-column class="col-data col-3" field="created">
           ${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-data col-3" field="file_type">
+        <etools-data-table-column class="col-data col-3" field="file_type">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="table-header-padding col-data col-6" field="file">
+        <etools-data-table-column class="col-data col-6" field="file">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -61,7 +61,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
       ${this.loadingInProcess || !this.attachmentsList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -77,7 +77,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                 secondary-bg-on-hover
                 .lowResolutionLayout="${this.lowResolutionLayout}"
               >
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-3" data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}">
                     ${formatDate(attachment.created) || '-'}
                   </div>

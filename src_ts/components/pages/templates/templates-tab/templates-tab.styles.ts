@@ -28,6 +28,10 @@ export const TemplatesStyles: CSSResult = css`
     display: inline-flex;
   }
 
+  .mt-4 {
+    margin-top: 4px;
+  }
+
   .detail-placeholder {
     color: rgba(0, 0, 0, 0.38);
   }
