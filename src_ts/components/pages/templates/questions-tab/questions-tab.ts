@@ -173,7 +173,6 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           ?no-collapse="${!this.items.length}"
           .lowResolutionLayout="${this.lowResolutionLayout}"
         >
-          <div class="row">
             <etools-data-table-column class="col-data col-md-4" field="text" sortable>
               ${translate('QUESTIONS.COLUMNS.TEXT')}
             </etools-data-table-column>
@@ -192,13 +191,12 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
             <etools-data-table-column class="col-data col-md-1" field="is_active" sortable>
               ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
             </etools-data-table-column>
-          </div>  
         </etools-data-table-header>
 
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse>
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
@@ -207,7 +205,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         ${this.items.map(
           (question: IQuestion) => html`
             <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
                   ${question.text || '-'}
                 </div>
@@ -227,7 +225,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                   <div class="truncate">${this.serializeName(question.category, this.categories) || '-'}</div>
                 </div>
                 <div
-                  class="col-data col-md-1 truncate"
+                  class="col-data col-md-1"
                   data-col-header-label="${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}"
                 >
                   <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />

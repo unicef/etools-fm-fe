@@ -146,7 +146,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
       ${this.loadingInProcess || !this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -158,7 +158,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
         ? this.items.map(
             (questionTemplate: IQuestionTemplate) => html`
               <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <!-- Question item Text -->
                   <div class="col-data col-md-4" data-col-header-label="${translate('TEMPLATES.COLUMNS.TEXT')}">
                     <!-- Checkbox to mark template as active -->

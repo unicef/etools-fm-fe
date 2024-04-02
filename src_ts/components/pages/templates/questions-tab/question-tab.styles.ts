@@ -4,7 +4,6 @@ export const QuestionsTabStyles: CSSResult = css`
   :host {
     position: relative;
     display: block;
-    --list-row-wrapper-padding-inline: 0;
   }
 
   .question-table-section {

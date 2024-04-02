@@ -32,7 +32,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse>
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-12 no-data">No records found.</div>
                 </div>
               </etools-data-table-row>
@@ -43,7 +43,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
             <etools-data-table-row id="hactVisits" secondary-bg-on-hover @click="${() => this._resizeMap()}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-md-10">
                   <span class="truncate">${hactVisit.name}</span>
                 </div>

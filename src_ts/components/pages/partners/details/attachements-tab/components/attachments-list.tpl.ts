@@ -61,7 +61,7 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
       ${this.loadingInProcess || !this.attachmentsList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -77,7 +77,7 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
                 secondary-bg-on-hover
                 .lowResolutionLayout="${this.lowResolutionLayout}"
               >
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-3" data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}">
                     ${this.formatDate(attachment.created)}
                   </div>

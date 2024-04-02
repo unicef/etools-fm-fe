@@ -4,7 +4,6 @@ export const IssueTrackerTabStyles: CSSResult = css`
   :host {
     position: relative;
     display: block;
-    --list-row-wrapper-padding-inline: 0;
   }
   .no-rm {
     margin-right: 0;

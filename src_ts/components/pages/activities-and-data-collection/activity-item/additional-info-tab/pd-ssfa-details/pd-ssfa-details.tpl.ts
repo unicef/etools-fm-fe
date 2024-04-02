@@ -44,7 +44,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
       ${!this.interventions || !this.interventions.length
         ? html`
             <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -53,7 +53,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
       ${this.getTargetInterventions().map(
         (intervention: IActivityIntervention) => html`
           <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-            <div slot="row-data" class="editable-row row">
+            <div slot="row-data" class="editable-row">
               <div
                 class="col-data col-3"
                 data-col-header-label="${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.REFERENCE_NUMBER')}"

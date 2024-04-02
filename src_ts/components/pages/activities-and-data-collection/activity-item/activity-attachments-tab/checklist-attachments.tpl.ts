@@ -54,7 +54,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
@@ -64,7 +64,7 @@ export function template(this: ChecklistAttachments): TemplateResult {
           this.items,
           (item: IChecklistAttachment) => html`
             <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div
                   class="col-data col-md-2"
                   data-col-header-label="${translate('ACTIVITY_ITEM.ACTIVITY_ATTACHMENTS.METHOD')}"

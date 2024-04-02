@@ -125,7 +125,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -135,7 +135,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
         this.items,
         (logIssue: LogIssue) => html`
           <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-            <div slot="row-data" class="editable-row row">
+            <div slot="row-data" class="editable-row">
               <div class="col-data col-md-2" data-col-header-label="${translate('ISSUE_TRACKER.RELATED_TO')}">
                 <span class="truncate">
                   ${translate(`ISSUE_TRACKER.RELATED_TYPE.${(logIssue.related_to_type as string).toUpperCase()}`)}

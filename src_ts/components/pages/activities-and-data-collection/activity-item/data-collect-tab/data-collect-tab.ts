@@ -186,7 +186,7 @@ export class DataCollectTab extends LitElement {
         collect,
         (item: DataCollectionChecklist) => html`
           <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-            <div slot="row-data" class="editable-row row">
+            <div slot="row-data" class="editable-row">
               <!--  Author  -->
               <div
                 class="col-data col-md-4 truncate"
@@ -234,7 +234,7 @@ export class DataCollectTab extends LitElement {
       ${!collect.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">No records found.</div>
               </div>
             </etools-data-table-row>

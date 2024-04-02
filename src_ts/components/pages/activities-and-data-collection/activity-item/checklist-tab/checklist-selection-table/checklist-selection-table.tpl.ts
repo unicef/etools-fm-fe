@@ -107,7 +107,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
         ${this.questionsList.map(
           (question: IChecklistItem) => html`
             <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <!-- Question item Text -->
                 <div
                   class="col-data col-4"

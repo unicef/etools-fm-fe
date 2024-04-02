@@ -103,6 +103,7 @@ export const CardStyles: CSSResult = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1;
   }
 
   .col-data .flexible-text {
@@ -116,7 +117,6 @@ export const CardStyles: CSSResult = css`
 
   .row-details-content {
     font-size: var(--etools-font-size-12, 12px);
-    margin-right: 15px;
   }
 
   .row-details-content .rdc-title {

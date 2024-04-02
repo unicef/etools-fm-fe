@@ -70,7 +70,7 @@ export function template(this: PartnerContacts): TemplateResult {
       ${this.loadingInProcess || !this.staffMembersList || !this.staffMembersList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="editable-row row">
+              <div slot="row-data" class="editable-row">
                 <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
@@ -86,7 +86,7 @@ export function template(this: PartnerContacts): TemplateResult {
                 secondary-bg-on-hover
                 .lowResolutionLayout="${this.lowResolutionLayout}"
               >
-                <div slot="row-data" class="editable-row row">
+                <div slot="row-data" class="editable-row">
                   <div class="col-data col-2" data-col-header-label="${translate('TPM_CONTACTS.COLUMNS.POSITION')}">
                     ${staffMember.profile.job_title}
                   </div>

@@ -8,9 +8,6 @@ export const SitesTabStyles: CSSResult = css`
   .start {
     align-items: flex-start;
   }
-  .no-pr {
-    padding-right: 0;
-  }
   .sites-table-section {
     padding: 0;
   }
