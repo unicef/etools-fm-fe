@@ -29,7 +29,7 @@
     "@types/leaflet": "^1.9.3",
     "@types/lodash-es": "^4.17.7",
     "@types/ramda": "0.27.37",
-    "@unicef-polymer/etools-form-builder": "^3.0.0-rc.20",
+    "@unicef-polymer/etools-form-builder": "^3.0.0-rc.21",
     "@unicef-polymer/etools-modules-common": "^5.0.0-rc.48",
     "@unicef-polymer/etools-piwik-analytics": "^4.0.1-rc.3",
     "@unicef-polymer/etools-types": "^1.11.17",
