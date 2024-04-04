@@ -112,7 +112,9 @@
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
     "EXPORT": "EXPORT",
-    "REPORT_REVIEWER": "Réviseur de rapport"
+    "REPORT_REVIEWER": "Réviseur de rapport",
+    "REPORT_REVIEWER_SELECT": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez sélectionner l'utilisateur et continuer.",
+    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer."
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",

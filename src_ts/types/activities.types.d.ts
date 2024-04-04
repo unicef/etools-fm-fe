@@ -15,6 +15,7 @@ interface IListActivity {
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
   report_reviewer: string;
+  report_reviewer_preliminary: any;
   sections: {id: number; name: string}[];
 }
 
@@ -26,6 +27,7 @@ interface IActivityDetails extends IListActivity {
   cancel_reason: string;
   report_reject_reason: string;
   offices: Office[];
+  report_reviewer: string;
 }
 
 type ActivityStatus =
@@ -193,6 +195,14 @@ type ReasonPopupData = {
 
 type ReasonPopupResponse = {
   comment: string;
+};
+
+type ReportReviewerPopupData = {
+  activity: IActivityDetails;
+};
+
+type ReportReviewerPopupResponse = {
+  reviewer: string;
 };
 
 type NoteInfo = {

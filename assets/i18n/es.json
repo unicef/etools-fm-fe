@@ -114,7 +114,9 @@
     },
     "VISIT_LEAD": "Líder de Visita",
     "VISIT_LETTER": "Carta de visita",
-    "REPORT_REVIEWER": "Revisor de informes"
+    "REPORT_REVIEWER": "Revisor de informes",
+    "REPORT_REVIEWER_SELECT": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor seleccione el usuario y continúe.",
+    "REPORT_REVIEWER_CONFIRM": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor confirme el usuario y continúe."
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

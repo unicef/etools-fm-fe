@@ -183,24 +183,25 @@ export class MonitorInformationCard extends BaseDetailsCard {
           </div>
           <div class="layout horizontal">
             <etools-dropdown
-              class="flex"
-              id="visitLead"
-              .selected="${this.editedData.report_reviewer}"
+              class="flex-6"
+              id="reportReviewerPreliminary"
+              .selected="${simplifyValue(this.getReviewer(this.editedData))}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('report_reviewer', detail.selectedItem?.id)}"
+                this.updateModelValue('report_reviewer_preliminary', detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
-              ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
-              ?invalid="${this.errors && this.errors.report_reviewer}"
-              .errorMessage="${this.errors && this.errors.report_reviewer}"
-              @focus="${() => this.resetFieldError('report_reviewer')}"
-              @click="${() => this.resetFieldError('report_reviewer')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer_preliminary')}"
+              ?invalid="${this.errors && this.errors.report_reviewer_preliminary}"
+              .errorMessage="${this.errors && this.errors.report_reviewer_preliminary}"
+              @focus="${() => this.resetFieldError('report_reviewer_preliminary')}"
+              @click="${() => this.resetFieldError('report_reviewer_preliminary')}"
               allow-outside-scroll
               dynamic-align
           ></etools-dropdown>
+          <div class="flex-6"></div>
           </div>
         </div>
       </etools-card>
@@ -290,6 +291,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
     }
   }
 
+  getReviewer(editedData: Partial<IActivityDetails>) {
+    return editedData.report_reviewer ? editedData.report_reviewer : editedData.report_reviewer_preliminary;
+  }
+
   setTeamMembers(members: User[]): void {
     if (JSON.stringify(members) !== JSON.stringify(this.teamMembers)) {
       this.updateModelValue('team_members', members);
@@ -353,7 +358,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
           padding: 12px 18px;
         }
         #teamMembers,
-        #tpmPartner {
+        #tpmPartner,
+        #reportReviewerPreliminary {
           padding-inline-end: 12px;
         }
         .user-types {

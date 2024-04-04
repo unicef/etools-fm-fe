@@ -111,7 +111,9 @@
     "CANCELLATION_NOTE": "Localized Cancellation Note",
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
-    "REPORT_REVIEWER": "Рецензент отчетаr"
+    "REPORT_REVIEWER": "Рецензент отчетаr",
+    "REPORT_REVIEWER_SELECT": "Следующий пользователь будет уведомлен об этом представлении для рассмотрения. Пожалуйста, выберите пользователя и продолжайте.",
+    "REPORT_REVIEWER_CONFIRM": "Следующий пользователь будет уведомлен об этом представлении для рассмотрения. Пожалуйста, подтвердите пользователя и продолжайте."
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Localized New Activity",

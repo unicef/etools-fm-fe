@@ -4,6 +4,7 @@ import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
+import './report-reviewer-popup';
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {
@@ -150,12 +151,11 @@ export class StatusesActionsComponent extends LitElement {
     }
 
     const storeState = store.getState();
+    const activityDetails = storeState.activityDetails.data;
 
     // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
-    if (
-      newStatusData.status === COMPLETED ||
-      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)
-    ) {
+    const isReportFinalization = newStatusData.status === SUBMITTED && activityDetails.status === REPORT_FINALIZATION;
+    if (newStatusData.status === COMPLETED || isReportFinalization) {
       const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some(
         (x: SummaryOverall) => x.on_track === null
       );
@@ -171,7 +171,7 @@ export class StatusesActionsComponent extends LitElement {
         );
       }
       if (
-        storeState.activityDetails.data.permissions.edit.action_points &&
+        activityDetails.permissions.edit.action_points &&
         !(storeState.actionPointsList?.data || []).length
       ) {
         // if can add Action Point and doesn't have any, display reminder
@@ -180,6 +180,14 @@ export class StatusesActionsComponent extends LitElement {
 
       if (confirmText.length && !(await this.confirmSubmitSummaryNotCompleted(confirmText.join('<br/><br/>')))) {
         return;
+      }
+
+      if (isReportFinalization && storeState.user.data?.is_unicef_user) {
+         const reviewResponse = await this.getReportReviewer(activityDetails);
+         if (!reviewResponse) {
+          return;
+         }
+         newStatusData.report_reviewer = reviewResponse.reviewer;
       }
     }
 
@@ -223,6 +231,18 @@ export class StatusesActionsComponent extends LitElement {
         [field]: response.comment
       };
     });
+  }
+
+  private getReportReviewer(activity: IActivityDetails): Promise<ReportReviewerPopupResponse | null> {
+    return openDialog<ReportReviewerPopupData, ReportReviewerPopupResponse>({
+      dialog: 'report-reviewer-popup',
+      dialogData: {activity: activity}
+    }).then(({confirmed, response}: IDialogResponse<ReportReviewerPopupResponse>) => {
+      if (!confirmed || !response) {
+        return null;
+      }
+        return response;
+      });
   }
 
   static get styles(): CSSResult[] {
