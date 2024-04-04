@@ -170,10 +170,7 @@ export class StatusesActionsComponent extends LitElement {
           )
         );
       }
-      if (
-        activityDetails.permissions.edit.action_points &&
-        !(storeState.actionPointsList?.data || []).length
-      ) {
+      if (activityDetails.permissions.edit.action_points && !(storeState.actionPointsList?.data || []).length) {
         // if can add Action Point and doesn't have any, display reminder
         confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
       }
@@ -183,11 +180,11 @@ export class StatusesActionsComponent extends LitElement {
       }
 
       if (isReportFinalization && storeState.user.data?.is_unicef_user) {
-         const reviewResponse = await this.getReportReviewer(activityDetails);
-         if (!reviewResponse) {
+        const reviewResponse = await this.getReportReviewer(activityDetails);
+        if (!reviewResponse) {
           return;
-         }
-         newStatusData.report_reviewer = reviewResponse.reviewer;
+        }
+        newStatusData.report_reviewer = reviewResponse.reviewer;
       }
     }
 
@@ -241,8 +238,8 @@ export class StatusesActionsComponent extends LitElement {
       if (!confirmed || !response) {
         return null;
       }
-        return response;
-      });
+      return response;
+    });
   }
 
   static get styles(): CSSResult[] {

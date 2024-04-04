@@ -179,7 +179,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               @click="${() => this.resetFieldError('visit_lead')}"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>        
+            ></etools-dropdown>
           </div>
           <div class="layout horizontal">
             <etools-dropdown
@@ -200,8 +200,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
               @click="${() => this.resetFieldError('report_reviewer_preliminary')}"
               allow-outside-scroll
               dynamic-align
-          ></etools-dropdown>
-          <div class="flex-6"></div>
+            ></etools-dropdown>
+            <div class="flex-6"></div>
           </div>
         </div>
       </etools-card>
