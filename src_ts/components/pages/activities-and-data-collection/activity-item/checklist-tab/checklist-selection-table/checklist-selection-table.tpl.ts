@@ -138,7 +138,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                 >
                   ${question.specific_details ||
                   (this.isEditMode
-                    ? html` <span class="detail-placeholder">${translate('ACTIVITY_CHECKLIST.COLUMNS.METHODS')}</span> `
+                    ? html` <span class="detail-placeholder">${translate('ACTIVITY_CHECKLIST.ADD_DETAIL')}</span> `
                     : '-')}
                 </div>
 
