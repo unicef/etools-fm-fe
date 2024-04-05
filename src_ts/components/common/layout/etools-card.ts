@@ -126,7 +126,7 @@ export class EtoolsCard extends LitElement {
           }
           .flex-header__edit {
             order: 1;
-            flex-basis: 20%;
+            flex-basis: 12%;
           }
         }
       `
@@ -185,7 +185,9 @@ export class EtoolsCard extends LitElement {
                 `
               : ''}
           </div>
-          <div class="${actionsSlotAssigned ? 'flex-header__actions' : ''}"><slot name="actions"></slot></div>
+          <div class="${actionsSlotAssigned && this.isEditable ? 'flex-header__actions' : ''}">
+            <slot name="actions"></slot>
+          </div>
         </header>
         <etools-collapse ?opened="${!this.collapsed}">
           <section class="card-content-block">

@@ -43,6 +43,7 @@ export class PageContentHeader extends LitElement {
         .content-header-row {
           display: flex;
           justify-content: flex-start;
+          flex-wrap: wrap;
         }
 
         .title-row {
@@ -67,6 +68,7 @@ export class PageContentHeader extends LitElement {
         .title-row > .title-row-actions {
           display: flex;
           flex: none;
+          flex-wrap: wrap;
           margin-left: auto;
         }
 
@@ -95,7 +97,6 @@ export class PageContentHeader extends LitElement {
           }
           .title-row h1 {
             font-size: var(--etools-font-size-18, 18px);
-            width: 100%;
           }
           .title-row-actions {
             margin-right: 25px;

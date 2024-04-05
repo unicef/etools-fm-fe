@@ -10,5 +10,7 @@ export const pageContentHeaderSlottedStyles: CSSResult = css`
   .content-header-actions {
     display: flex;
     margin-left: auto;
+    align-items: center;
+    flex-wrap: wrap;
   }
 `;

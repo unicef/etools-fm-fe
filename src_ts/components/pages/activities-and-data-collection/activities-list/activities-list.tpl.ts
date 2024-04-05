@@ -179,6 +179,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <!-- Table Paginator -->
       <etools-data-table-footer
         id="footer"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
         .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
         .pageNumber="${(this.queryParams && this.queryParams.page) || undefined}"

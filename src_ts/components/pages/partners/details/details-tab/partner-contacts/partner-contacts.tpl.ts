@@ -119,6 +119,7 @@ export function template(this: PartnerContacts): TemplateResult {
         : ''}
       <etools-data-table-footer
         id="footer"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
         .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${this.pageSize || undefined}"
         .pageNumber="${this.pageNumber || undefined}"

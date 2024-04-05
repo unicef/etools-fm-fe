@@ -482,6 +482,12 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         statuses-actions {
           margin-left: 10px;
         }
+
+        @media (max-width: 576px) {
+          statuses-actions {
+            margin-left: 0px;
+          }
+        }
       `
     ];
   }
