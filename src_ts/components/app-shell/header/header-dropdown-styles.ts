@@ -62,7 +62,7 @@ export const headerDropdownStyles: TemplateResult = html`
       opacity: 1;
     }
 
-    @media (max-width: 1024px) {     
+    @media (max-width: 1024px) {
       #languageSelector,
       organizations-dropdown,
       countries-dropdown {
