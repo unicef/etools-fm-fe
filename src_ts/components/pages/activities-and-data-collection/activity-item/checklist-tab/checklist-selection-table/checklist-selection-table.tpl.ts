@@ -145,7 +145,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                 <!-- Question Methods -->
                 <div
                   class="col-data col-2 methods"
-                  data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}"
+                  data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.METHODS')}"
                 >
                   ${this.serializeMethods(question.question.methods)}
                 </div>

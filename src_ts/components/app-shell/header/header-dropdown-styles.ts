@@ -26,19 +26,16 @@ export const headerDropdownStyles: TemplateResult = html`
 
     organizations-dropdown {
       max-width: 180px;
-      width: auto;
       margin-inline-start: 10px;
     }
 
     countries-dropdown {
       max-width: 160px;
-      width: auto;
       margin-inline-start: 10px;
     }
 
     #languageSelector {
-      max-width: 120px;
-      margin-inline-start: auto;
+      max-width: 160px;
     }
 
     etools-accesibility {
@@ -65,17 +62,11 @@ export const headerDropdownStyles: TemplateResult = html`
       opacity: 1;
     }
 
-    @media (max-width: 1024px) {
-      etools-dropdown {
-        min-width: 130px;
-        width: 130px;
-      }
-      organizations-dropdown {
-        width: auto;
-      }
-
+    @media (max-width: 1024px) {     
+      #languageSelector,
+      organizations-dropdown,
       countries-dropdown {
-        width: auto;
+        max-width: 150px !important;
       }
     }
 
@@ -88,12 +79,10 @@ export const headerDropdownStyles: TemplateResult = html`
       #app-logo {
         display: none;
       }
-
-      etools-dropdown {
-        min-width: auto;
-      }
-      #languageSelector {
-        width: 110px;
+      #languageSelector,
+      organizations-dropdown,
+      countries-dropdown {
+        max-width: 130px !important;
       }
     }
   </style>
