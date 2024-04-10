@@ -25,8 +25,7 @@ export class AttachmentsListComponent extends LitElement {
   tabTitleKey = 'ATTACHMENTS_LIST.TITLE';
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
   @property() attachmentsTypes: AttachmentType[] = [];
-  @property({type: Boolean})
-  lowResolutionLayout = false;
+  @property({type: Boolean}) lowResolutionLayout = false;
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
 

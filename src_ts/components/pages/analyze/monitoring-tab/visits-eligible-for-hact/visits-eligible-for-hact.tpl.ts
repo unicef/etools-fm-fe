@@ -4,10 +4,22 @@ import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
-import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: VisitsEligibleForHact): TemplateResult {
   return html`
+    <style>
+      ${dataTableStylesLit} etools-data-table-row::part(edt-list-row-collapse-wrapper) {
+        padding-inline: 40px 12px;
+      }
+    </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
     <section class="elevation page-content card-container" elevation="1">
       <etools-loading
         ?active="${this.loading}"
@@ -17,11 +29,15 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
         <div class="card-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.TITLE')}</div>
       </div>
       <div class="hact-visits">
-        <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-          <etools-data-table-column class="col-data col-md-10" field="name" sortable>
+        <etools-data-table-header
+          no-title
+          ?no-collapse="${!this.items.length}"
+          .lowResolutionLayout="${this.lowResolutionLayout}"
+        >
+          <etools-data-table-column class="col-data col-9" field="name" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}
           </etools-data-table-column>
-          <etools-data-table-column class="col-data col-md-2 hact-visits-label" field="visits_count" sortable>
+          <etools-data-table-column class="col-data col-3 hact-visits-label" field="visits_count" sortable>
             ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.HACT_ELIGIBLE_VISITS')}
           </etools-data-table-column>
         </etools-data-table-header>
@@ -38,12 +54,25 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           this.items,
           (hactVisit: HactVisits) => hactVisit.id,
           (hactVisit: HactVisits) => html`
-            <etools-data-table-row id="hactVisits" secondary-bg-on-hover @click="${() => this._resizeMap()}">
+            <etools-data-table-row
+              id="hactVisits"
+              secondary-bg-on-hover
+              @click="${() => this._resizeMap()}"
+              .lowResolutionLayout="${this.lowResolutionLayout}"
+            >
               <div slot="row-data" class="editable-row">
-                <div class="col-data col-md-10">
+                <div
+                  class="col-data col-md-9 col-12"
+                  data-col-header-label="${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PARTNER')}"
+                >
                   <span class="truncate">${hactVisit.name}</span>
                 </div>
-                <div class="col-data col-md-2 hact-visits-label">
+                <div
+                  class="col-data col-md-3 col-12 hact-visits-label"
+                  data-col-header-label="${translate(
+                    'ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.HACT_ELIGIBLE_VISITS'
+                  )}"
+                >
                   <span class="flexible-text">${hactVisit.visits_count}</span>
                 </div>
               </div>
@@ -51,52 +80,25 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
               <div slot="row-data-details" class="row">
                 <div class="custom-row-details-content col-md-2 col-12">
                   <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.VISIT')}</div>
+                  ${this.getDetailsRefNumber(hactVisit.visits)}
                 </div>
                 <div class="custom-row-details-content col-md-4 col-12">
                   <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.CP_OUTPUT')}</div>
+                  ${this.getDetailsCpOutput(hactVisit.visits)}
                 </div>
                 <div class="custom-row-details-content col-md-4 col-12">
                   <div class="rdc-title">${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.PD_SPD')}</div>
+                  ${this.getDetailsInterventionTitle(hactVisit.visits)}
                 </div>
                 <div class="custom-row-details-content col-md-2 col-12">
                   <div class="rdc-title">
                     ${translate('ANALYZE.MONITORING_TAB.VISITS_ELIGIBLE_FOR_HACT.VISIT_END_DATE')}
+                    ${this.getDetailsEndDate(hactVisit.visits)}
                   </div>
                 </div>
               </div>
               ${hactVisit.visits.length
-                ? repeat(
-                    hactVisit.visits,
-                    (activity: HactVisitsActivity) => activity.id,
-                    (activity: HactVisitsActivity) => html`
-                      <div slot="row-data-details" class="row">
-                        <div class="custom-row-details-content custom-row-details-nowrap col-md-2 col-12">
-                          ${activity.reference_number}
-                        </div>
-                        <div class="custom-row-details-content col-md-4 col-12">
-                          ${activity.cp_outputs.map(
-                            (item: IActivityCPOutput) =>
-                              html`
-                                <label class="custom-row-details-content custom-row-details-nowrap">${item.name}</label>
-                              `
-                          )}
-                        </div>
-                        <div class="custom-row-details-content col-md-4 col-12">
-                          ${activity.interventions.map(
-                            (item: IActivityIntervention) =>
-                              html`
-                                <label class="custom-row-details-content custom-row-details-nowrap"
-                                  >${item.title}</label
-                                >
-                              `
-                          )}
-                        </div>
-                        <div class="custom-row-details-content custom-row-details-nowrap col-md-2 col-12">
-                          ${formatDate(activity.end_date) || '-'}
-                        </div>
-                      </div>
-                    `
-                  )
+                ? ``
                 : html`
                     <div slot="row-data-details" class="row">
                       <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>

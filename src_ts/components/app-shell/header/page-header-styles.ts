@@ -63,15 +63,8 @@ export const pageHeaderStyles: CSSResult = css`
     }
     etools-profile-dropdown {
       width: 40px;
-    }
-    .dropdown {
-      order: 1;
-      margin-top: 0;
-    }
-    app-toolbar {
-      --toolbar-height: auto;
-      padding-inline-end: 0px;
-      margin: 0 !important;
+      margin-inline-end: 10px;
+      margin-inline-start: -5px;
     }
   }
   @media (max-width: 576px) {
@@ -91,11 +84,20 @@ export const pageHeaderStyles: CSSResult = css`
       white-space: nowrap;
       margin-left: 2px;
     }
+    .dropdown {
+      order: 1;
+    }
   }
-
   @media (min-width: 850px) {
     #menuButton {
       display: none;
+    }
+  }
+  @media (max-width: 490px) {
+    app-toolbar {
+      height: auto;
+      padding-inline-end: 0px;
+      margin: 0 !important;
     }
   }
 `;

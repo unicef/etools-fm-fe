@@ -1,4 +1,4 @@
-import {css, CSSResult, LitElement, TemplateResult} from 'lit';
+import {css, html, CSSResult, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
 import '../coverage/shared-tab-template';
@@ -13,6 +13,7 @@ import {store} from '../../../../../redux/store';
 import {template} from './visits-eligible-for-hact.tpl';
 import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 @customElement('visits-eligible-for-hact')
@@ -20,6 +21,7 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
   @property() items!: HactVisits[];
   @property() paginatedItems!: HactVisits[];
   @property() loading = false;
+  @property({type: Boolean}) lowResolutionLayout = false;
   private hactVisitsUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
@@ -76,6 +78,34 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
     fireEvent(this, 'resize-map');
   }
 
+  getDetailsRefNumber(activities: HactVisitsActivity[]) {
+    return (activities || []).map(
+      (activity) => html`<div class="custom-row-details-content">${activity.reference_number}</div>`
+    );
+  }
+
+  getDetailsCpOutput(activities: HactVisitsActivity[]) {
+    return (activities || []).map((activity) =>
+      activity.cp_outputs.map(
+        (item: IActivityCPOutput) => html` <label class="custom-row-details-content">${item.name}</label> `
+      )
+    );
+  }
+
+  getDetailsInterventionTitle(activities: HactVisitsActivity[]) {
+    return (activities || []).map((activity) =>
+      activity.interventions.map(
+        (item: IActivityIntervention) => html` <label class="custom-row-details-content">${item.title}</label> `
+      )
+    );
+  }
+
+  getDetailsEndDate(activities: HactVisitsActivity[]) {
+    return (activities || []).map(
+      (activity) => html`<div class="custom-row-details-content">${formatDate(activity.end_date) || '-'}</div>`
+    );
+  }
+
   static get styles(): CSSResult[] {
     return [
       elevationStyles,
@@ -89,14 +119,14 @@ export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
           flex-direction: column;
         }
         .hact-visits-label {
-          justify-content: flex-end;
+          justify-content: flex-end !important;
         }
         .custom-row-data {
           display: flex;
           justify-content: space-between;
         }
         .custom-row-details-content {
-          font-size: var(--etools-font-size-12, 12px);
+          font-size: var(--etools-font-size-11, 11px);
           overflow: hidden;
           text-overflow: ellipsis;
         }
