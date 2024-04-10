@@ -178,6 +178,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         app-toolbar {
           background-color: ${this.headerColor};
         }
+        etools-accesibility {
+          display: none;
+        }
       </style>
 
       <app-toolbar sticky class="layout-horizontal align-items-center">
