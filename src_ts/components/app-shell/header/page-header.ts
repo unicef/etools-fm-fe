@@ -138,6 +138,7 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         .titlebar {
           font-size: 28px;
           font-weight: 300;
+        }
         .dropdowns {
           display: flex;
           padding-block-start: 6px;
