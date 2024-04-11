@@ -108,6 +108,7 @@ export function template(this: VisitsEligibleForHact): TemplateResult {
           `
         )}
         <etools-data-table-footer
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
           .pageSize="${this.paginator.page_size}"
           .pageNumber="${this.paginator.page}"

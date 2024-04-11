@@ -16,6 +16,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
   @property() paginatedData!: (InterventionsCoverage | CpOutputCoverage)[];
   @property() loading = false;
   @property() label!: string;
+  @property({type: Boolean}) lowResolutionLayout = false;
   private _data!: (InterventionsCoverage | CpOutputCoverage)[];
 
   @property()
@@ -30,6 +31,12 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
 
   render(): TemplateResult {
     return html`
+      <etools-media-query
+        query="(max-width: 768px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
       <div class="coverage-content">
         <etools-loading
           ?active="${this.loading}"
@@ -68,6 +75,7 @@ export class SharedTabTemplate extends PaginationMixin(LitElement) {
           `
         )}
         <etools-data-table-footer
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
           .pageSize="${this.paginator.page_size}"
           .pageNumber="${this.paginator.page}"
