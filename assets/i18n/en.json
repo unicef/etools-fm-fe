@@ -114,7 +114,8 @@
     "EXPORT": "EXPORT",
     "REPORT_REVIEWER": "Report Reviewer",
     "REPORT_REVIEWER_SELECT": "The following user will be notified of this submission in order to review. Please select the user and proceed.",
-    "REPORT_REVIEWER_CONFIRM": "The following user will be notified of this submission in order to review. Please confirm the user and proceed."
+    "REPORT_REVIEWER_CONFIRM": "The following user will be notified of this submission in order to review. Please confirm the user and proceed.",
+    "REVIEWED_BY": "Reviewed by"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",

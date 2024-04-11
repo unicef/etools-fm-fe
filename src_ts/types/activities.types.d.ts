@@ -14,8 +14,8 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
-  report_reviewer: string;
-  report_reviewer_preliminary: any;
+  report_reviewer: ActivityTeamMember;
+  reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
 }
 
@@ -27,7 +27,7 @@ interface IActivityDetails extends IListActivity {
   cancel_reason: string;
   report_reject_reason: string;
   offices: Office[];
-  report_reviewer: string;
+  report_reviewer: ActivityTeamMember;  
 }
 
 type ActivityStatus =

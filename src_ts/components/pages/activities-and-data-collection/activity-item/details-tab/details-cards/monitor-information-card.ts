@@ -185,23 +185,32 @@ export class MonitorInformationCard extends BaseDetailsCard {
             <etools-dropdown
               class="flex-6"
               id="reportReviewerPreliminary"
-              .selected="${simplifyValue(this.getReviewer(this.editedData))}"
+              .selected="${simplifyValue(this.editedData.report_reviewer)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('report_reviewer_preliminary', detail.selectedItem)}"
+                this.updateModelValue('report_reviewer', detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
               .options="${this.membersOptions}"
               option-label="name"
               option-value="id"
-              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer_preliminary')}"
-              ?invalid="${this.errors && this.errors.report_reviewer_preliminary}"
-              .errorMessage="${this.errors && this.errors.report_reviewer_preliminary}"
-              @focus="${() => this.resetFieldError('report_reviewer_preliminary')}"
-              @click="${() => this.resetFieldError('report_reviewer_preliminary')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
+              ?invalid="${this.errors && this.errors.report_reviewer}"
+              .errorMessage="${this.errors && this.errors.report_reviewer}"
+              @focus="${() => this.resetFieldError('report_reviewer')}"
+              @click="${() => this.resetFieldError('report_reviewer')}"
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
-            <div class="flex-6"></div>
+            <div class="flex-6">
+              <etools-input
+                label="${translate('ACTIVITY_DETAILS.REVIEWED_BY')}"
+                .value="${this.editedData.reviewed_by?.name}"
+                disabled
+                readonly
+                ?hidden="${!this.editedData.reviewed_by?.id}"               
+              >
+              </etools-input>
+            </div>
           </div>
         </div>
       </etools-card>
@@ -289,10 +298,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
       this.updateModelValue('tpm_partner', id);
       this.getMembersOptions({userType: USER_TPM, tpmPartner});
     }
-  }
-
-  getReviewer(editedData: Partial<IActivityDetails>) {
-    return editedData.report_reviewer ? editedData.report_reviewer : editedData.report_reviewer_preliminary;
   }
 
   setTeamMembers(members: User[]): void {

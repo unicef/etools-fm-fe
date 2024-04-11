@@ -25,7 +25,7 @@ export class ReportReviewerPopup extends LitElement {
 
   set dialogData({activity}: ReportReviewerPopupData) {
     this.activity = activity;
-    this.reviewerInfoText = this.activity.report_reviewer_preliminary
+    this.reviewerInfoText = this.activity.report_reviewer
       ? getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_CONFIRM')
       : getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_SELECT');
   }
@@ -77,9 +77,9 @@ export class ReportReviewerPopup extends LitElement {
             <etools-dropdown
               class="flex-6"
               id="reportReviewerPreliminary"
-              .selected="${this.activity?.report_reviewer_preliminary?.id}"
+              .selected="${this.activity?.report_reviewer?.id}"
               @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                this.activity.report_reviewer_preliminary = detail.selectedItem;
+                this.activity.report_reviewer = detail.selectedItem;
                 this.requestUpdate();
               }}"
               trigger-value-change-event
@@ -104,13 +104,13 @@ export class ReportReviewerPopup extends LitElement {
   }
 
   confirmReviewer(): void {
-    if (!this.activity.report_reviewer_preliminary?.id) {
+    if (!this.activity.report_reviewer?.id) {
       this.error = getTranslation('THIS_FIELD_IS_REQUIRED');
       return;
     }
     fireEvent(this, 'dialog-closed', {
       confirmed: true,
-      response: {reviewer: this.activity.report_reviewer_preliminary.id}
+      response: {reviewer: this.activity.report_reviewer.id}
     });
   }
 

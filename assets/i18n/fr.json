@@ -114,7 +114,8 @@
     "EXPORT": "EXPORT",
     "REPORT_REVIEWER": "Réviseur de rapport",
     "REPORT_REVIEWER_SELECT": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez sélectionner l'utilisateur et continuer.",
-    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer."
+    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer.",
+    "REVIEWED_BY": "Revu par"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",
