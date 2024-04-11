@@ -27,7 +27,7 @@ interface IActivityDetails extends IListActivity {
   cancel_reason: string;
   report_reject_reason: string;
   offices: Office[];
-  report_reviewer: ActivityTeamMember;  
+  report_reviewer: ActivityTeamMember;
 }
 
 type ActivityStatus =

@@ -207,7 +207,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 .value="${this.editedData.reviewed_by?.name}"
                 disabled
                 readonly
-                ?hidden="${!this.editedData.reviewed_by?.id}"               
+                ?hidden="${!this.editedData.reviewed_by?.id}"
               >
               </etools-input>
             </div>
