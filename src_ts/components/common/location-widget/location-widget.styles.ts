@@ -56,7 +56,6 @@ export const LocationWidgetStyles: CSSResult = css`
 
   .widget-container .map-and-list #map {
     height: 300px;
-    margin-inline-end: 25px;
   }
 
   .widget-container .map-and-list .list {
