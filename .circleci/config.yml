@@ -74,5 +74,3 @@ workflows:
                 - master
                 - staging
                 - develop
-                - shoelace-migration
-                - 36245-mobile-layout
