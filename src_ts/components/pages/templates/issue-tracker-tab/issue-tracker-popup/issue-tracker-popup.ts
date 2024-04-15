@@ -151,7 +151,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
           loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
         ></etools-loading>
 
-        <div class="container row">
+        <div class="container-dialog row">
           <div class="col-md-8 col-12 align-items-center">
             <div class="layout-vertical related-to-type">
               <label id="related-to-type">${translate('ISSUE_TRACKER.RELATED_TO_TYPE')}</label>

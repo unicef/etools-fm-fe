@@ -45,7 +45,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
         @confirm-btn-clicked="${() => this.createChecklist()}"
         @close="${() => this.onClose()}"
       >
-        <div class="container layout-vertical">
+        <div class="container-dialog layout-vertical">
           <etools-textarea
             required
             maxlength="100"

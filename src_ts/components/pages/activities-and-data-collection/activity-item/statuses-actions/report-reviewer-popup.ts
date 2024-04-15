@@ -69,7 +69,7 @@ export class ReportReviewerPopup extends LitElement {
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReviewer()}"
       >
-        <div class="container">
+        <div class="container-dialog">
           <div class="layout horizontal confirm-panel">
             <span>${this.reviewerInfoText}</span>
           </div>

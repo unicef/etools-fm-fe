@@ -23,7 +23,7 @@ export function template(this: SitesPopupComponent): TemplateResult {
       .okBtnText="${translate(this.editedData.id ? 'MAIN.BUTTONS.SAVE' : 'MAIN.BUTTONS.ADD')}"
       .cancelBtnText="${translate('CANCEL')}"
     >
-      <div class="container">
+      <div class="container-dialog">
         <div class="row">
           <etools-input
             class="validate-input col-md-9 col-12"

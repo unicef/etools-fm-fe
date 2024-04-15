@@ -43,7 +43,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
       ?disableDismissBtn="${this.vendorRequestInProcess}"
       ?show-spinner="${this.savingInProcess}"
     >
-          <div class="row">
+        <div class="container-dialog row">
           <div class="col-data col-md-6 col-12">
             <etools-input
               id="inputVendorNumber"
@@ -73,7 +73,6 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
             ></etools-input>
           </div>
        
-
           <div class="col-data col-12">
             <etools-input
               always-float-label
@@ -83,7 +82,6 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               readonly
             ></etools-input>
           </div>
-
 
           <div class="col-data col-md-6 col-12">
             <etools-input
@@ -117,9 +115,7 @@ export function template(this: AddNewVendorPopupComponent): TemplateResult {
               <etools-icon slot="prefix" name="communication:email"> </etools-icon>
             </etools-input>
           </div>
-          </div>
       </div>
-
 
     </etools-dialog>
   `;

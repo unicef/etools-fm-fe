@@ -181,9 +181,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
               dynamic-align
             ></etools-dropdown>
           </div>
-          <div class="layout horizontal">
+          <div class="row">
             <etools-dropdown
-              class="flex-6"
+              class="col-md-6 col-12"
               id="reportReviewerPreliminary"
               .selected="${simplifyValue(this.editedData.report_reviewer)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -201,7 +201,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
-            <div class="flex-6">
+            <div class="col-md-6 col-12">
               <etools-input
                 label="${translate('ACTIVITY_DETAILS.REVIEWED_BY')}"
                 .value="${this.editedData.reviewed_by?.name}"

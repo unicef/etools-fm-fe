@@ -401,6 +401,16 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         .ontrack-container {
           margin-inline-end: 40px;
         }
+        .flex-2 {
+          -ms-flex: 2;
+          -webkit-flex: 2;
+          flex: 2;
+        }
+        .flex-3 {
+          -ms-flex: 3;
+          -webkit-flex: 3;
+          flex: 3;
+        }
       `
     ];
   }

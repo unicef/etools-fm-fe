@@ -38,7 +38,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
 
-      <div class="row">
+      <div class="container-dialog row">
         <etools-textarea
           class="validate-input col-md-12 col-12 question-textarea"
           .value="${this.editedData.text}"
