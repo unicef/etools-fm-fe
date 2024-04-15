@@ -1,5 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
@@ -128,41 +129,26 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   static get styles(): CSSResultArray {
     return [
       pageHeaderStyles,
+      layoutStyles,
       css`
         .refresh-button {
           color: var(--header-color);
           margin-inline-end: 10px;
         }
+        .titlebar {
+          font-size: 28px;
+          font-weight: 300;
         .dropdowns {
           display: flex;
           padding-block-start: 6px;
           margin-inline-end: 20px;
         }
-        .header {
-          flex-wrap: wrap;
-          height: 100%;
-          justify-content: space-between;
-        }
+
         .nav-menu-button {
           min-width: 70px;
         }
-        .header__item {
-          display: flex;
-          align-items: center;
-        }
-        .header__left-group {
-        }
-        .header__right-group {
-          justify-content: space-evenly;
-          margin-inline-start: auto;
-        }
         .logo {
           margin: 0 10px 0 20px;
-        }
-        @media (max-width: 380px) {
-          .header__item {
-            flex-grow: 1;
-          }
         }
 
         .logo-wrapper {
@@ -192,10 +178,13 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         app-toolbar {
           background-color: ${this.headerColor};
         }
+        etools-accesibility {
+          display: none;
+        }
       </style>
 
-      <app-toolbar sticky class="content-align header">
-        <div class="header__item header__left-group">
+      <app-toolbar sticky class="layout-horizontal align-items-center">
+        <div class="titlebar layout-horizontal align-items-center">
           <etools-icon-button
             id="menuButton"
             class="nav-menu-button"
@@ -219,34 +208,35 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
               : html`<div class="envWarning" title="${this.environment} TESTING ENVIRONMENT">${this.environment}</div>`}
           </div>
         </div>
-        <div class="header__item header__right-group">
-          <div class="dropdowns">
-            <div id="languageSelector">
-              <etools-dropdown
-                transparent
-                .selected="${this.selectedLanguage}"
-                .options="${appLanguages}"
-                option-label="display_name"
-                option-value="value"
-                @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                  if (detail.selectedItem) {
-                    this.languageChanged(detail.selectedItem.value);
-                  }
-                }}"
-                trigger-value-change-event
-                hide-search
-                allow-outside-scroll
-                no-label-float
-                .disabled="${this.langUpdateInProgress}"
-                min-width="120px"
-                placement="bottom-end"
-                .syncWidth="${false}"
-              ></etools-dropdown>
-            </div>
-            <countries-dropdown></countries-dropdown>
-            <organizations-dropdown></organizations-dropdown>
+        <div class="dropdown layout-horizontal align-items-center">
+          <div>
+            <etools-dropdown
+              transparent
+              id="languageSelector"
+              .selected="${this.selectedLanguage}"
+              .options="${appLanguages}"
+              option-label="display_name"
+              option-value="value"
+              @etools-selected-item-changed="${({detail}: CustomEvent) => {
+                if (detail.selectedItem) {
+                  this.languageChanged(detail.selectedItem.value);
+                }
+              }}"
+              trigger-value-change-event
+              hide-search
+              allow-outside-scroll
+              no-label-float
+              .disabled="${this.langUpdateInProgress}"
+              min-width="120px"
+              placement="bottom-end"
+              .syncWidth="${false}"
+            ></etools-dropdown>
           </div>
 
+          <countries-dropdown></countries-dropdown>
+          <organizations-dropdown></organizations-dropdown>
+        </div>
+        <div class="layout-horizontal align-items-center">
           <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
 
           <etools-profile-dropdown

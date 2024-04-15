@@ -32,7 +32,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
         ?active="${this.savingInProcess}"
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <div class="container layout vertical">
+      <div class="container layout-vertical">
         <etools-dropdown
           class="validate-input flex-1"
           .selected="${this.editedData.file_type}"

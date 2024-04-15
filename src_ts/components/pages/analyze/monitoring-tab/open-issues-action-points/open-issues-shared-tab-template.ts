@@ -10,6 +10,7 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-fo
 export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {
   @property() paginatedData!: OpenIssuesActionPoints[];
   @property() loading = false;
+  @property({type: Boolean}) lowResolutionLayout = false;
   private _data!: OpenIssuesActionPoints[];
 
   @property()
@@ -28,6 +29,12 @@ export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {
 
   render(): TemplateResult {
     return html`
+      <etools-media-query
+        query="(max-width: 768px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
       <div class="open-issues">
         <etools-loading
           ?active="${this.loading}"
@@ -76,7 +83,7 @@ export class OpenIssuesSharedTabTemplate extends PaginationMixin(LitElement) {
           `
         )}
         <etools-data-table-footer
-          .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           .pageSize="${this.paginator.page_size}"
           .pageNumber="${this.paginator.page}"
           .totalResults="${this.paginator.count}"

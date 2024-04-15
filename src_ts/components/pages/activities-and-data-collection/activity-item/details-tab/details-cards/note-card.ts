@@ -1,6 +1,6 @@
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';
@@ -49,7 +49,9 @@ export class DetailsNoteCard extends LitElement {
     return this.noteInfo
       ? html`
           <section class="elevation note-container" elevation="1">
-            <img class="flag-icon" src="${ROOT_PATH}/assets/images/flag-icon.svg" />
+            <div class="flag-icon-container">
+              <img class="flag-icon" src="${ROOT_PATH}/assets/images/flag-icon.svg" />
+            </div>
 
             <div class="title">${translate(this.noteInfo.titleKey)}</div>
             <div>${this.noteInfo.text}</div>
@@ -113,9 +115,12 @@ export class DetailsNoteCard extends LitElement {
 
         .flag-icon {
           position: absolute;
-          top: -5px;
-          left: 16px;
+          left: -50px;
+          top: -25px;
           width: 24px;
+        }
+        .flag-icon-container {
+          position: relative;
         }
 
         .title {

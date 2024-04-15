@@ -9,8 +9,8 @@ import {request} from '../../../../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
-import {elevationStyles} from '../../../../../../../styles/elevation-styles';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
@@ -97,8 +97,8 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addCpOutput()}"
         @close="${this.onClose}"
       >
-        <div class="container layout vertical">
-          <div class="elevation card-container layout horizontal center filters" elevation="2">
+        <div class="container-dialog">
+          <div class="elevation card-container layout-horizontal align-items-center filters" elevation="2">
             <div class="filter-name">${translate('MAIN.FILTER')}</div>
             <etools-dropdown-multi
               label="${translate('ACTIVITY_DETAILS.PARTNER_ORGANIZATION')}"
@@ -141,7 +141,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
       elevationStyles,
       CardStyles,
       SharedStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .filters {
           padding: 8px 12px;
@@ -164,6 +164,14 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
           bottom: -10px;
           right: 15px;
           border-right: 1px solid var(--dark-divider-color);
+        }
+        @media (max-width: 576px) {
+          .filters {
+            flex-direction: column !important;
+          }
+          .filter-name:after {
+            border-right: none;
+          }
         }
       `
     ];

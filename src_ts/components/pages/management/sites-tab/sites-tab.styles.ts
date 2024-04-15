@@ -5,7 +5,9 @@ export const SitesTabStyles: CSSResult = css`
     position: relative;
     display: block;
   }
-
+  .start {
+    align-items: flex-start;
+  }
   .sites-table-section {
     padding: 0;
   }
@@ -35,6 +37,10 @@ export const SitesTabStyles: CSSResult = css`
     align-items: center;
   }
 
+  .location {
+    align-items: flex-start !important;
+  }
+
   .admin-level-text {
     color: #a4a4a4;
   }
@@ -50,7 +56,7 @@ export const SitesTabStyles: CSSResult = css`
   .site-row:first-child {
     border-top: none;
   }
-  .site-row .hover-block {
+  .row .hover-block {
     right: 24px;
   }
   .site-row .active-marker {
@@ -77,23 +83,8 @@ export const SitesTabStyles: CSSResult = css`
     white-space: pre;
     font-size: var(--etools-font-size-16, 16px);
   }
-  paper-card {
-    padding: 8px 0;
-    display: block;
-    margin-top: 25px;
-    --paper-card_-_background-color: white;
-    --paper-card_-_margin: 0 24px;
-  }
 
-  etools-data-table-row::part(edt-list-row-wrapper) {
-    padding: 0 0 0 24px;
-  }
-
-  etools-data-table-header::part(edt-data-table-header) {
-    padding: 0 0 0 24px;
-  }
-
-  .editable-row .hover-block {
+  .row .hover-block {
     padding: 0 20px;
   }
 `;

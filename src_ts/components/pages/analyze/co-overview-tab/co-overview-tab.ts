@@ -17,9 +17,9 @@ import {Unsubscribe} from 'redux';
 import {CoOverviewTabStyles} from './co-overview-tab.styles';
 import {template} from './co-overview-tab.tpl';
 
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
@@ -56,7 +56,7 @@ export class CoOverviewTabComponent extends CpOutcomesMixin(LitElement) {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       leafletStyles
     ];

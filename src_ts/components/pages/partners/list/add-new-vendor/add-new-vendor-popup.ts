@@ -4,7 +4,7 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './add-new-vendor-popup.tpl';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {get as getTranslation} from 'lit-translate';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
@@ -32,7 +32,7 @@ export class AddNewVendorPopupComponent extends DataMixin()<IActivityTpmPartnerE
   @query('#inputVendorNumber') private inputVendorEl!: EtoolsInput;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses];
+    return [SharedStyles, pageLayoutStyles, layoutStyles];
   }
 
   set dialogData(data: GenericObject) {

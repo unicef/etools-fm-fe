@@ -42,11 +42,6 @@ export const AttachmentsStyles: CSSResult = css`
   etools-icon {
     margin-right: 8px;
   }
-  paper-button {
-    font-weight: 700;
-    margin: 0 0;
-    padding: 0 0;
-  }
   .file-selector-container.with-type-dropdown {
     padding: 0;
   }
@@ -57,7 +52,7 @@ export const AttachmentsStyles: CSSResult = css`
   .file-selector-container.with-type-dropdown .filename-container {
     height: 32px;
     box-sizing: border-box;
-    margin: 22px 0 8px;
+    margin: 22px 8px;
     border-bottom: 1px solid var(--gray-20);
   }
   .file-selector-container.with-type-dropdown .delete-button,

@@ -685,6 +685,7 @@
   "DUPLICATE": "DUPLIQUER",
   "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
+  "NO_RECORDS": "Aucun enregistrement trouvé.",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

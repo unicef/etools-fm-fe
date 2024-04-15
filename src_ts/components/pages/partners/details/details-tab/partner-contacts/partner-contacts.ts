@@ -2,11 +2,11 @@ import {CSSResult, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './partner-contacts.tpl';
 import {store} from '../../../../../../redux/store';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 // import {fireEvent} from '../../utils/fire-custom-event';
 import {get as getTranslation} from 'lit-translate';
@@ -26,9 +26,11 @@ export class PartnerContacts extends connect(store)(LitElement) {
   @property() staffMembersListAll!: ITpmPartnerStaffMemberUser[];
   @property() staffMembersList!: ITpmPartnerStaffMemberUser[];
   @property({type: Boolean}) showInactive = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
   }
 
   render(): TemplateResult {

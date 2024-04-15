@@ -84,9 +84,6 @@ export class EtoolsErrorWarnBox extends LitElement {
           display: flex;
           justify-content: flex-end;
         }
-        paper-button {
-          margin: 0;
-        }
         .cancel-li-display {
           display: block;
         }

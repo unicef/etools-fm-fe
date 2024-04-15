@@ -110,6 +110,13 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
           color: var(--module-error);
           display: inline-block;
         }
+
+        @media (max-width: 576px) {
+          h1 {
+            font-size: var(--etools-font-size-18, 18px);
+            width: 100%;
+          }
+        }
       `
     ];
   }
@@ -126,30 +133,32 @@ export class PartnerDetailsComponent extends MatomoMixin(LitElement) {
         <h1 slot="page-title">${this.partnerDetails && this.partnerDetails.name}</h1>
 
         <div slot="title-row-actions" class="content-header-actions">
-          <etools-button
-            class="neutral"
-            variant="text"
-            target="_blank"
-            id="export"
-            @click="${this.export}"
-            tracker="Export PDF"
-            ?hidden="${this.hideExportButton(this.partnerDetails)}"
-          >
-            <etools-icon name="file-download" slot="prefix"></etools-icon>
-            ${translate('ACTIVITY_DETAILS.EXPORT')}
-          </etools-button>
-          <div class="status-container">
-            <div class="status-icon">
-              <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">
-                <etools-icon name="info"></etools-icon>
-                <etools-icon name="autorenew"></etools-icon>
-                <etools-icon name="block"></etools-icon>
-                <etools-icon name="delete-forever"></etools-icon>
-              </span>
-            </div>
+          <div class="layout-horizontal layout-wrap">
+            <etools-button
+              class="neutral"
+              variant="text"
+              target="_blank"
+              id="export"
+              @click="${this.export}"
+              tracker="Export PDF"
+              ?hidden="${this.hideExportButton(this.partnerDetails)}"
+            >
+              <etools-icon name="file-download" slot="prefix"></etools-icon>
+              ${translate('ACTIVITY_DETAILS.EXPORT')}
+            </etools-button>
+            <div class="status-container">
+              <div class="status-icon">
+                <span class="icon-wrapper ${this.getVisionStatusClassOrText(this.partnerDetails, false)}">
+                  <etools-icon name="info"></etools-icon>
+                  <etools-icon name="autorenew"></etools-icon>
+                  <etools-icon name="block"></etools-icon>
+                  <etools-icon name="delete-forever"></etools-icon>
+                </span>
+              </div>
 
-            <div class="status">
-              <span class="status-header">${this.getVisionStatusClassOrText(this.partnerDetails, true)}</span>
+              <div class="status">
+                <span class="status-header">${this.getVisionStatusClassOrText(this.partnerDetails, true)}</span>
+              </div>
             </div>
           </div>
         </div>

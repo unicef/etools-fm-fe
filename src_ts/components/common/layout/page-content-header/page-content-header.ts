@@ -1,5 +1,6 @@
-import {css, CSSResult, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultArray, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 /**
  * @LitElement
@@ -14,12 +15,14 @@ export class PageContentHeader extends LitElement {
     return 'page-content-header';
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultArray {
     // language=CSS
-    return css`
-      *[hidden] {
-        display: none !important;
-      }
+    return [
+      layoutStyles,
+      css`
+        *[hidden] {
+          display: none !important;
+        }
 
       :host {
         display: flex;
@@ -73,37 +76,91 @@ export class PageContentHeader extends LitElement {
 
       @media print {
         :host {
-          padding: 0;
-          border-bottom: none;
-          min-height: 0 !important;
-          margin-bottom: 16px;
-        }
-
-        .title-row h1 {
-          font-size: var(--etools-font-size-18, 18px);
-        }
-      }
-
-      @media (max-width: 380px) {
-        .title-row {
-          padding: 0;
           display: flex;
           flex-direction: column;
-          align-items: flex-end;
-          margin-bottom: 3%;
-        }
-        .title-row h1 {
-          font-size: var(--etools-font-size-18, 18px);
-          width: 100%;
-        }
-      }
+          justify-content: flex-start;
+          flex: 1;
 
-      @media print {
-        slot[name='title-row-actions'] {
-          display: none;
+          background-color: var(--primary-background-color);
+          padding: 0 24px;
+          min-height: 85px;
+          border-bottom: 1px solid var(--dark-divider-color);
         }
-      }
-    `;
+
+        :host([with-tabs-visible]) {
+          min-height: 114px;
+        }
+
+        .content-header-row {
+          display: flex;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+        }
+
+        .title-row {
+          display: flex;
+          align-items: center;
+          margin: var(--table-row-margin, 30px 0 0);
+          padding: 0 24px;
+          min-height: var(--table-row-height, 36px);
+        }
+
+        .title-row h1 {
+          display: flex;
+          margin: var(--title-margin);
+          margin: 0;
+          font-weight: normal;
+          text-transform: capitalize;
+          font-size: var(--etools-font-size-24, 24px);
+          line-height: 1.3;
+          min-height: 31px;
+        }
+
+        .title-row > .title-row-actions {
+          display: flex;
+          flex: none;
+          flex-wrap: wrap;
+          margin-left: auto;
+        }
+
+        .tabs {
+          margin-top: 5px;
+        }
+
+        @media print {
+          :host {
+            padding: 0;
+            border-bottom: none;
+            min-height: 0 !important;
+            margin-bottom: 16px;
+          }
+
+          .title-row h1 {
+            font-size: var(--etools-font-size-18, 18px);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .title-row {
+            display: flex;
+            margin-bottom: 3%;
+            padding: 0;
+          }
+          .title-row h1 {
+            font-size: var(--etools-font-size-18, 18px);
+          }
+          .title-row-actions {
+            margin-right: 25px;
+          }
+        }
+
+        @media print {
+          slot[name='title-row-actions'] {
+            display: none;
+          }
+        }
+      `
+    ];
   }
 
   render(): TemplateResult {

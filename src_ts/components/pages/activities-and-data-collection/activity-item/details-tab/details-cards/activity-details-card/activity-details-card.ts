@@ -6,9 +6,9 @@ import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-
 import {staticDataDynamic} from '../../../../../../../redux/selectors/static-data.selectors';
 import {LOCATIONS_ENDPOINT} from '../../../../../../../endpoints/endpoints-list';
 import {Unsubscribe} from 'redux';
-import {elevationStyles} from '../../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
@@ -78,12 +78,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     return [
       elevationStyles,
       SharedStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       css`
-        .datepicker-width {
-          flex-basis: 30%;
-        }
         .card-content {
           padding-bottom: 10px;
         }
@@ -116,9 +113,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
         datepicker-lite {
           white-space: nowrap;
           --etools-icon-fill-color: var(--secondary-text-color);
-        }
-        .field-office {
-          width: 30%;
         }
       `
     ];
@@ -172,9 +166,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
             : ''}
 
           <!--    Inputs for displaying Location and Site fields    -->
-          <div class="layout horizontal location-inputs">
+          <div class="row">
             <etools-dropdown
-              class="readonly-required"
+              class="readonly-required col-md-6 col-12"
               .selected="${simplifyValue(this.editedData.location)}"
               label="${translate('LOCATION_TO_BE_VISITED')}"
               .options="${this.locations}"
@@ -187,7 +181,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
             </etools-dropdown>
 
             <etools-dropdown
-              class="readonly-required"
+              class="readonly-required col-md-6 col-12"
               .selected="${simplifyValue(this.editedData.location_site)}"
               label="${translate('SITE_TO_BE_VISITED')}"
               .options="${this.sitesList}"
@@ -197,11 +191,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
               min-width="470px"
             >
             </etools-dropdown>
-          </div>
 
-          <!--     Start Date and End Date inputs     -->
-          <div class="layout horizontal">
-            <div class="layout horizontal flex">
+            <!--     Start Date and End Date inputs     -->
+            <div class="col-md-3 col-12">
               <datepicker-lite
                 class="validate-input datepicker-width"
                 value="${this.editedData.start_date || ''}"
@@ -213,6 +205,8 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 ?readonly="${!this.isEditMode || this.isFieldReadonly('start_date')}"
                 selected-date-display-format="D MMM YYYY"
               ></datepicker-lite>
+            </div>
+            <div class="col-md-3 col-12">
               <datepicker-lite
                 class="validate-input datepicker-width"
                 value="${this.editedData.end_date || ''}"
@@ -227,7 +221,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
             </div>
 
             <!--     Sections dropdown     -->
-            <div class="layout horizontal flex">
+            <div class="col-md-6 col-12">
               <etools-dropdown-multi
                 .selectedValues="${simplifyValue(this.activitySections)}"
                 @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectSections(detail.selectedItems)}"
@@ -245,11 +239,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 dynamic-align
               ></etools-dropdown-multi>
             </div>
-          </div>
 
-          <div class="layout horizontal">
             <!--     Offices dropdown     -->
-            <div class="layout horizontal flex">
+            <div class="col-md-6 col-12">
               <etools-dropdown-multi
                 class="field-office"
                 .selectedValues="${simplifyValue(this.activityOffices)}"

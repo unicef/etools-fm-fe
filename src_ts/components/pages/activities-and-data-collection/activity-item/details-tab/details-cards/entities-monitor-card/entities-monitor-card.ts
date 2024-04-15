@@ -1,6 +1,6 @@
 import {css, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {store} from '../../../../../../../redux/store';
@@ -12,7 +12,7 @@ import clone from 'ramda/es/clone';
 import './entities-list-and-popups/partner-popup';
 import './entities-list-and-popups/cp-output-popup';
 import './entities-list-and-popups/intervention-popup';
-import {FlexLayoutClasses} from '../../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
@@ -61,10 +61,10 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
             loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
           ></etools-loading>
 
-          <div class="layout horizontal">
+          <div class="row">
             <!--    Partners List    -->
             <entries-list
-              class="entries-list"
+              class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"
               .items="${this.activityPartners}"
@@ -77,7 +77,7 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
 
             <!--    CP Outputs List    -->
             <entries-list
-              class="entries-list"
+              class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.CP_OUTPUTS')}"
               .formatItem="${(item: EtoolsCpOutput) => item.name}"
               .items="${this.activityCpOutputs}"
@@ -90,7 +90,7 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
 
             <!--    Interventions List    -->
             <entries-list
-              class="entries-list"
+              class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.INTERVENTIONS')}"
               .formatItem="${(item: EtoolsIntervention) => item.title}"
               .items="${this.activityInterventions}"
@@ -190,13 +190,10 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
     return [
       elevationStyles,
       SharedStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .card-content {
           padding: 25px 18px;
-        }
-        .entries-list {
-          margin: 0 7px;
         }
       `
     ];

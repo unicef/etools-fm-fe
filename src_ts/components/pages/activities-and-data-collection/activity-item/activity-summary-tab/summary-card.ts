@@ -6,7 +6,7 @@ import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 // import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
@@ -115,10 +115,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   protected getFindingQuestion(finding: SummaryFinding): TemplateResult {
     return html`
-      <div class="layout vertical question-container">
+      <div class="layout-vertical question-container">
         <div class="question-text">${finding.activity_question.text}</div>
         <div class="question-details">${finding.activity_question.specific_details}</div>
-        <div class="flex-2 layout horizontal wrap">
+        <div class="flex-2 layout-horizontal layout-wrap">
           ${finding.activity_question.findings.map(
             (completedFinding: CompletedFinding) => html`
               <completed-finding
@@ -145,8 +145,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected getOverallFindingTemplate(): TemplateResult {
     return this.overallInfo
       ? html`
-          <div class="overall-finding layout horizontal">
-            <div class="flex-2 layout horizontal wrap" ?hidden="${!this.filteredOverallFindings.length}">
+          <div class="overall-finding layout-horizontal">
+            <div class="flex-2 layout-horizontal layout-wrap" ?hidden="${!this.filteredOverallFindings.length}">
               ${this.filteredOverallFindings.map(
                 (finding: CompletedOverallFinding) => html`
                   <completed-finding
@@ -370,7 +370,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   private findingsStatusButton(): TemplateResult {
     return html`
-      <div class="ontrack-container layout horizontal">
+      <div class="ontrack-container layout-horizontal">
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
         <sl-switch
           ?readonly="${this.readonly}"
@@ -386,7 +386,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     // language=CSS
     return [
       // FormBuilderCardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       RadioButtonStyles,
       css`
         .completed-finding {
@@ -394,8 +394,6 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
         sl-switch {
           margin: 0 4px 0 15px;
-          --paper-toggle-button-unchecked-button-color: var(--error-color);
-          --paper-toggle-button-unchecked-bar-color: var(--error-color);
         }
         sl-switch[readonly] {
           pointer-events: none;

@@ -9,6 +9,8 @@ import {css, CSSResult} from 'lit';
 export const pageContentHeaderSlottedStyles: CSSResult = css`
   .content-header-actions {
     display: flex;
-    align-items: flex-end;
+    margin-left: auto;
+    align-items: center;
+    flex-wrap: wrap;
   }
 `;

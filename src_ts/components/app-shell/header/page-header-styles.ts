@@ -4,6 +4,9 @@ import {css, CSSResult} from 'lit';
 export const pageHeaderStyles: CSSResult = css`
   app-toolbar {
     padding: 0;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: space-between;
   }
 
   .titlebar {
@@ -17,14 +20,11 @@ export const pageHeaderStyles: CSSResult = css`
 
   support-btn {
     color: var(--header-color);
-  }
-
-  etools-profile-dropdown {
+    margin-left: auto;
   }
 
   .titlebar {
     display: flex;
-    flex: 1;
     font-size: var(--etools-font-size-28, 28px);
     font-weight: 300;
   }
@@ -51,10 +51,53 @@ export const pageHeaderStyles: CSSResult = css`
     font-size: var(--etools-font-size-18, 18px);
     line-height: 20px;
   }
+  @media (max-width: 1024px) {
+    .envWarning {
+      display: none;
+    }
+    .envLong {
+      display: none;
+    }
+    .titlebar img {
+      margin: 0 8px 0 12px;
+    }
+    etools-profile-dropdown {
+      width: 40px;
+      margin-inline-end: 10px;
+      margin-inline-start: -5px;
+    }
+  }
+  @media (max-width: 576px) {
+    #app-logo {
+      display: none;
+    }
+    .titlebar img {
+      margin: 0 8px 0 4px;
+    }
 
+    .refresh-button {
+      margin-right: 0;
+    }
+    .envWarning {
+      font-size: 10px;
+      line-height: 12px;
+      white-space: nowrap;
+      margin-left: 2px;
+    }
+    .dropdown {
+      order: 1;
+    }
+  }
   @media (min-width: 850px) {
     #menuButton {
       display: none;
+    }
+  }
+  @media (max-width: 490px) {
+    app-toolbar {
+      height: auto;
+      padding-inline-end: 0px;
+      margin: 0 !important;
     }
   }
 `;
