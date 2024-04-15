@@ -45,8 +45,8 @@ export class EtoolsCard extends LitElement {
         }
 
         .card-title-box[is-collapsible] {
-          padding-left: 17px;
-          padding-right: 25px;
+          padding-inline-start: 17px;
+          padding-inline-end: 25px;
         }
 
         .card-content {

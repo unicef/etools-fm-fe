@@ -10,7 +10,7 @@ export const QuestionPopupStyles: CSSResult = css`
   }
 
   .horizontal .validate-input:not(:last-child) {
-    padding-right: 15px;
+    padding-inline-end: 15px;
   }
 
   .ml-20 {

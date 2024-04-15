@@ -37,7 +37,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected isEditMode = false;
   @property() protected blockEdit = false;
   @property() protected updateInProcess = false;
-  @property() protected onTrackValue: boolean | null = null;
+  @property() protected onTrackValue: boolean | null | undefined = null;
   @property() protected trackStatusText = '';
   @property() protected trackStatusColor = '';
   @property() protected orginalTrackStatus: boolean | null = null;
@@ -57,6 +57,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.originalFindings = clone(this.findings);
     this.originalOverallInfo = clone(this.overallInfo);
+    this.onTrackValue = this.originalOverallInfo?.on_track;
     this._attachTypesEndpointName = ACTIVITY_REPORT_ATTACHMENTS;
     this.attachmentTypes = store.getState().attachmentsList.attachmentsTypes[this._attachTypesEndpointName];
     if (!this.attachmentTypes || !this.attachmentTypes.length) {
@@ -328,8 +329,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding) {
       changes.narrative_finding = this.overallInfo.narrative_finding;
     }
-    if (this.onTrackValue !== this.originalOverallInfo.on_track) {
-      changes.on_track = this.onTrackValue;
+    if (Boolean(this.onTrackValue) !== this.originalOverallInfo.on_track) {
+      changes.on_track = Boolean(this.onTrackValue);
     }
     if (Object.keys(changes).length) {
       changes.id = this.overallInfo.id;
@@ -398,7 +399,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
           pointer-events: none;
         }
         .ontrack-container {
-          margin-right: 40px;
+          margin-inline-end: 40px;
         }
       `
     ];

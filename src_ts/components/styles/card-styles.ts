@@ -112,7 +112,7 @@ export const CardStyles: CSSResult = css`
   }
 
   .pr-15 {
-    padding-right: 15px;
+    padding-inline-end: 15px;
   }
 
   .row-details-content {

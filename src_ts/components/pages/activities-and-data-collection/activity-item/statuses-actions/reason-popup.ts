@@ -5,7 +5,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
-import {get, translate} from 'lit-translate';
+import {get as getTranslation, translate} from 'lit-translate';
 import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
@@ -42,7 +42,7 @@ export class ChecklistAttachments extends LitElement {
             .value="${this.reason}"
             required
             label="${translate(this.label as string)}"
-            placeholder="${get('MAIN.ENTER') + ` ${get(this.label as string)}`}"
+            placeholder="${getTranslation('MAIN.ENTER') + ` ${getTranslation(this.label as string)}`}"
             @value-changed="${({detail}: CustomEvent) => (this.reason = detail.value)}"
             @focus="${() => (this.error = '')}"
             ?invalid="${Boolean(this.error)}"
@@ -60,7 +60,7 @@ export class ChecklistAttachments extends LitElement {
 
   confirmReason(): void {
     if (!this.reason.trim()) {
-      this.error = 'Field is required';
+      this.error = getTranslation('THIS_FIELD_IS_REQUIRED');
       return;
     }
     fireEvent(this, 'dialog-closed', {confirmed: true, response: {comment: this.reason}});

@@ -26,8 +26,13 @@ export const LocationWidgetStyles: CSSResult = css`
     cursor: pointer;
   }
 
+  .widget-container .history etools-input {
+    margin-inline-end: 22px;
+    max-width: 200px;
+  }
+
   .widget-container .history etools-input div[slot] {
-    margin-left: 5px;
+    margin-inline-start: 5px;
     color: #dd0000;
   }
 
@@ -51,6 +56,7 @@ export const LocationWidgetStyles: CSSResult = css`
 
   .widget-container .map-and-list #map {
     height: 300px;
+    margin-inline-end: 25px;
   }
 
   .widget-container .map-and-list .list {
@@ -100,7 +106,7 @@ export const LocationWidgetStyles: CSSResult = css`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-right: 5px;
+    margin-inline-end: 5px;
   }
 
   .site-line .deselect-btn,

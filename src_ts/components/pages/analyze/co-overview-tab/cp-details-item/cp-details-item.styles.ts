@@ -36,6 +36,10 @@ export const CpDetailsItemStyles: CSSResult = css`
     width: 210px;
   }
 
+  .partners-data {
+    padding-inline-end: 25px;
+  }
+
   .partners-data .prog-visits {
     text-align: right;
   }

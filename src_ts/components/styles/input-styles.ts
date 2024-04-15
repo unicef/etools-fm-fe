@@ -55,7 +55,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-dropdown.no-data-fetched,
     etools-dropdown-multi.no-data-fetched,
-    etools-Input.no-data-fetched {
+    etools-input.no-data-fetched {
       --esmm-placeholder-color: var(--gray-dark);
     }
 
@@ -99,7 +99,7 @@ export const InputStyles: TemplateResult = html`
 
     etools-content-panel:not([list])::part(ecp-content) {
       padding: 8px 12px;
-      padding-left: 12px;
+      padding-inline-start: 12px;
     }
 
     etools-currency-amount-input {

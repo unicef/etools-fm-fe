@@ -27,6 +27,8 @@ import {translate} from 'lit-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
+import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';
+import {applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
 dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
@@ -42,6 +44,19 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'offices'
 ];
 
+const ACTIVITY_DETAILS_TABS: PageTab[] = [
+  {
+    tab: SITE_TAB,
+    tabLabel: 'ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_SITE',
+    hidden: false
+  },
+  {
+    tab: AREA_TAB,
+    tabLabel: 'ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_ADMIN_LEVEL',
+    hidden: false
+  }
+];
+
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsCard)) {
   @property() widgetOpened = false;
@@ -52,9 +67,11 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
 
   @property() activityOffices: Office[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
+  @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
   private sitesUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResult[] {
     // language=CSS
@@ -140,7 +157,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 <etools-tabs-lit
                   id="tabs"
                   slot="tabs"
-                  .tabs="${this.getTabList()}"
+                  .tabs="${this.pageTabs}"
                   @sl-tab-show="${({detail}: any) => this.onChangeMapTab(detail.name)}"
                   .activeTab="${this.activeTab}"
                 ></etools-tabs-lit>
@@ -269,21 +286,6 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     this.activeTab = tabName;
   }
 
-  getTabList(): PageTab[] {
-    return [
-      {
-        tab: SITE_TAB,
-        tabLabel: getTranslation('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_SITE'),
-        hidden: false
-      },
-      {
-        tab: AREA_TAB,
-        tabLabel: getTranslation('ACTIVITY_DETAILS.MAP_SELECT_LOCATION_BY_ADMIN_LEVEL'),
-        hidden: false
-      }
-    ];
-  }
-
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case SITE_TAB:
@@ -353,12 +355,17 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
     if (!state.specificLocations.data) {
       store.dispatch<AsyncEffect>(loadSiteLocations());
     }
+
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS)))
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.sitesUnsubscribe();
     this.locationsUnsubscribe();
+    this.activeLanguageUnsubscribe();
   }
 
   isStartDateAfterEndDate(): boolean {

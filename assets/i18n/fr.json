@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Organisation Partenaire",
     "CP_OUTPUTS": "Extrant PP",
     "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
+    "SHOW_EXPIRED": "Afficher expiré",
     "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
     "INTERVENTIONS": "PD/SPDs",
@@ -110,7 +111,11 @@
     "CANCELLATION_NOTE": "Note d'annulation",
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
-    "EXPORT": "EXPORT"
+    "EXPORT": "EXPORT",
+    "REPORT_REVIEWER": "Réviseur de rapport",
+    "REPORT_REVIEWER_SELECT": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez sélectionner l'utilisateur et continuer.",
+    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer.",
+    "REVIEWED_BY": "Revu par"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",
@@ -672,7 +677,7 @@
   },
   "INACTIVE": "Inactif",
   "NO_ACCESS": "Pas d'accès",
-  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Attention ! Vous êtes sur le point de soumettre cette visite à l'examen du rapport et certains (ou tous) des éléments connexes contrôlés sont marqués comme “non contrôlés”. Vous pouvez revenir à l'onglet “révision” pour apporter des modifications si vous le souhaitez. Sinon, êtes-vous sûr de vouloir continuer sans marquer les éléments comme surveillés ?",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "Attention ! Vous êtes sur le point de soumettre cette visite à l'examen du rapport et certains (ou tous) des éléments connexes contrôlés sont marqués comme “non contrôlés”. Vous pouvez revenir à l'onglet “Résumé” pour apporter des modifications si vous le souhaitez. Sinon, êtes-vous sûr de vouloir continuer sans marquer les éléments comme surveillés ?",
   "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Vous êtes sur le point de terminer une visite qui comporte des éléments “non contrôlés”. Vous pouvez les rejeter si nécessaire. Sinon, êtes-vous sûr de vouloir poursuivre avec les éléments marqués comme “Non contrôlés” ?",
   "ACTION_POINT_REMINDER": "Notant qu'il n'y a pas de points d'action soulevés, n'oubliez pas d'en ajouter avant de continuer si nécessaire.",
   "CONTINUE": "Continuer",

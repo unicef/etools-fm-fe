@@ -49,14 +49,15 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
 
   @property() activeTab: string = RATIONALE_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
+  @property()
+  allowView = false;
 
   static get styles(): CSSResultArray {
     return [SharedStyles, pageContentHeaderSlottedStyles, pageLayoutStyles];
   }
 
   render(): TemplateResult | void {
-    const canView: boolean = this.canView();
-    return canView
+    return this.allowView
       ? html`
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('MANAGEMENT.TITLE')}</h1>
@@ -90,6 +91,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
           return;
         }
         this.activeTab = subRouteName as string;
+        this.allowView = this.canView();
       })
     );
     this.activeLanguageUnsubscribe = store.subscribe(

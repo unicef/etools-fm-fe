@@ -41,6 +41,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
   teamMembersDd!: EtoolsDropdownMultiEl;
@@ -179,6 +180,37 @@ export class MonitorInformationCard extends BaseDetailsCard {
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
+          </div>
+          <div class="layout horizontal">
+            <etools-dropdown
+              class="flex-6"
+              id="reportReviewerPreliminary"
+              .selected="${simplifyValue(this.editedData.report_reviewer)}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                this.updateModelValue('report_reviewer', detail.selectedItem)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+              .options="${this.membersOptions}"
+              option-label="name"
+              option-value="id"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
+              ?invalid="${this.errors && this.errors.report_reviewer}"
+              .errorMessage="${this.errors && this.errors.report_reviewer}"
+              @focus="${() => this.resetFieldError('report_reviewer')}"
+              @click="${() => this.resetFieldError('report_reviewer')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown>
+            <div class="flex-6">
+              <etools-input
+                label="${translate('ACTIVITY_DETAILS.REVIEWED_BY')}"
+                .value="${this.editedData.reviewed_by?.name}"
+                disabled
+                readonly
+                ?hidden="${!this.editedData.reviewed_by?.id}"
+              >
+              </etools-input>
+            </div>
           </div>
         </div>
       </etools-card>
@@ -328,11 +360,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
       layoutStyles,
       css`
         .card-content {
-          padding: 12px;
+          padding: 12px 18px;
         }
         #teamMembers,
-        #tpmPartner {
-          padding-right: 12px;
+        #tpmPartner,
+        #reportReviewerPreliminary {
+          padding-inline-end: 12px;
         }
         .user-types {
           align-items: center;

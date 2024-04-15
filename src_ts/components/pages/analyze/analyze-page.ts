@@ -40,10 +40,11 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   @property() activeTab: string = MONITORING_ACTIVITY;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
   private activeLanguageUnsubscribe!: Unsubscribe;
+  @property()
+  allowView = false;
 
   render(): TemplateResult {
-    const canView: boolean = this.canView();
-    return canView
+    return this.allowView
       ? html`
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('ANALYZE.TITLE')}</h1>
@@ -70,6 +71,7 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
           return;
         }
         this.activeTab = subRouteName as string;
+        this.allowView = this.canView();
       })
     );
 

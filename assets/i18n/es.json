@@ -1,0 +1,711 @@
+{
+  "ACTIVITIES_LIST": {
+    "COLUMNS": {
+      "CHECKLISTS_COUNT": "Listas de verificación",
+      "LOCATION_AND_SITE": "Ubicación y sitio",
+      "MONITOR_TYPE": "FM primario",
+      "REFERENCE_NUMBER": "Referencia",
+      "START_DATE": "Fecha de inicio",
+      "STATUS": "Estado",
+      "TEAM_MEMBERS": "Miembros del equipo",
+      "VISIT_LEAD": "Líder de visita",
+      "SECTIONS": "Secciones"
+    },
+    "CREATE_NEW_BUTTON": "Crear nuevo",
+    "FILTERS": {
+      "CP_OUTPUTS": "Productos del CP",
+      "END_DATE": "Fecha de finalización",
+      "INTERVENTIONS": "PD/SPD",
+      "LOCATION": "Ubicación",
+      "MONITOR_TYPE": "FM primario",
+      "OFFICE": "Oficina de terreno",
+      "PARTNERS": "Socios",
+      "SITE": "Sitio",
+      "START_DATE": "Fecha de inicio",
+      "STATUS": "Estado",
+      "TEAM_MEMBERS": "Miembros del equipo",
+      "TPM_PARTNERS": "Socios de TPM",
+      "VISIT_LEAD": "Líder de visita",
+      "SECTIONS": "Secciones",
+      "STARTS_AFTER": "Comienza después de",
+      "END_BEFORE": "Termina antes"
+    },
+    "REFERENCE_NO": "Referencia",
+    "TITLE": "Actividades"
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "Puntos a destacar",
+    "PD_SPD_DETAILS": {
+      "DOCUMENT_TYTLE": "Título del documento",
+      "PROGRESS_REPORTS": "Informes de Progreso",
+      "REFERENCE_NUMBER": "N.° de referencia",
+      "TITLE": "Detalles de PD/SPD",
+      "TYPE": "Tipo"
+    },
+    "SUMMARY": {
+      "ADDITIONAL_BUTTONS": {
+        "NOT_MONITORED": "No monitoreado",
+        "OFF_TRACK": "Desfasado",
+        "ON_TRACK": "En camino"
+      },
+      "OVERALL_FINDING": "Conclusiones generales",
+      "OVERALL_FINDING_PLACEHOLDER": "Introduzca las conclusiones generales"
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "ADD_DETAIL": "Añadir detalle",
+    "COLUMNS": {
+      "DETAILS": "Detalles Específicos para Sondear",
+      "METHODS": "Métodos",
+      "TEXT": "Item de la lista de verificación"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "Introduzca detalles específicos para sondear",
+    "NO_QUESTIONS_FOUND": "No se han encontrado preguntas aplicables a esta sección. Añádelas en las plantillas o selecciona otra sección en los detalles de la actividad"
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "Agregar lista de verificación",
+    "COLUMNS": {
+      "INFO_SOURCE": "Fuente de información",
+      "METHOD_TYPE": "Método",
+      "TEAM_MEMBER": "Miembro del equipo"
+    },
+    "EDIT_CHECKLIST": "Editar lista de verificación",
+    "LABELS": {
+      "INFO_SOURCE": "Fuente de información",
+      "METHOD": "Método"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "Detalles de actividad",
+    "ADD_CP_OUTPUT": "Agregar producto del CP",
+    "ADD_ENTRY": "Agregar ítem nuevo",
+    "ADD_INTERVENTION": "Agregar PD/SPD",
+    "ADD_PARTNER": "Agregar socio",
+    "CANCELLATION_NOTE": "Nota de cancelación",
+    "CONNECTED_ENTRIES": "Las entradas conectadas se agregarán con el PD/SPD seleccionado:",
+    "CP_OUTPUT": "Producto del CP",
+    "CP_OUTPUTS": "Productos del CP",
+    "CP_OUTPUTS_FOUND": "{{ count }}Se encontraron productos del CP:",
+    "END_DATE": "Fecha de finalización",
+    "ENTRIES_TO_MONITOR": "Entidades a monitorear",
+    "EXPORT": "Exportar",
+    "INTERVENTION": "Intervención",
+    "INTERVENTIONS": "PD/SPD",
+    "INTERVENTIONS_FOUND": "{{ count }}Se encontraron PD/SPD:",
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Seleccionar Ubicación por nivel administrativo",
+    "MAP_SELECT_LOCATION_BY_SITE": "Seleccionar Ubicación por sitio",
+    "MONITOR_INFO": "Información a monitorear",
+    "OFFICE": "Oficinas de terreno",
+    "PARTNER": "Socio",
+    "PARTNERS": "Socios",
+    "PARTNER_ORGANIZATION": "Socio Implementador",
+    "PD_STATUS": "Estado PD",
+    "REJECTION_NOTE": "Nota de rechazo",
+    "REPORT_REJECTION_REASON": "Motivo de rechazo del informe",
+    "SECTIONS": "Secciones",
+    "SHOW_EXPIRED": "Mostrar caducado",
+    "START_DATE": "Fecha de inicio",
+    "TEAM_MEMBERS": "Miembros del equipo",
+    "TPM_PARTNER": "Socio de TPM",
+    "USER_TYPE": "El monitor de campo principal es",
+    "USER_TYPES": {
+      "STAFF": "Personal",
+      "TPM": "Monitores de terceros"
+    },
+    "VISIT_LEAD": "Líder de Visita",
+    "VISIT_LETTER": "Carta de visita",
+    "REPORT_REVIEWER": "Revisor de informes",
+    "REPORT_REVIEWER_SELECT": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor seleccione el usuario y continúe.",
+    "REPORT_REVIEWER_CONFIRM": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor confirme el usuario y continúe.",
+    "REVIEWED_BY": "Revisado por"
+  },
+  "ACTIVITY_ITEM": {
+    "ACTION_POINTS": {
+      "ASSIGNEE": "Cesionario",
+      "CONTENT": "Contenido",
+      "DESCRIPTION": "Descripción",
+      "DUE_ON": "Vence el",
+      "POPUP": {
+        "ADD_AP": "Crear punto de acción",
+        "ASSIGNEE": "Cesionario",
+        "ASSIGN_TO": "Asignar a",
+        "CATEGORIES": "Categorías",
+        "DESCRIPTION": "Descripción",
+        "DUE_ON": "Vence el",
+        "EDIT_AP": "Editar punto de acción",
+        "ENTER_DESCRIPTION": "Introducir descripción",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "Ir a puntos de acción para completar",
+        "HIGH_PRIORITY": "Prioridad Alta",
+        "OFFICES": "Oficinas",
+        "RELATED_NAME": "Nombre relacionado",
+        "RELATED_TO": "Relacionado con",
+        "SECTION": "Sección",
+        "SELECT_CATEGORY": "Seleccionar Categoría",
+        "SELECT_OFFICE": "Seleccionar Oficina",
+        "SELECT_RELATED_NAME": "Seleccionar Nombre relacionado",
+        "SELECT_RELATED_TO": "Seleccione Relacionado con",
+        "SELECT_SECTION": "Seleccionar Sección"
+      },
+      "PRIORITY": "Prioridad",
+      "REFERENCE": "No de referencia",
+      "RELATED_TO": "Relacionado con",
+      "SECTION_OFFICE": "Sección/ Oficina",
+      "STATUS": "Estado",
+      "TITLE": "Puntos de acción"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "DATA_COLLECTOR": "Recolector de datos",
+      "DATE_UPLOADED": "Fecha de subida",
+      "DOCUMENT_TYPE": "Tipo de documento",
+      "FILE_ATTACHMENT": "Archivo adjunto",
+      "METHOD": "Método",
+      "METHOD_TYPE": "Tipo de método",
+      "RELATED_NAME": "Nombre relacionado",
+      "RELATED_TO": "Relacionado con",
+      "TITLE": "Adjuntos de la lista de verificación"
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "DEFAULT": "Subir archivos",
+        "MULTIPLE": "{{ count }} Archivos",
+        "SINGLE": "{{ count }} Archivo"
+      },
+      "ATTACHMENTS_POPUP_TITLE": "Adjuntos para",
+      "DELETE_ITEM": "Eliminar ítem?"
+    },
+    "NEW_ACTIVITY": "Nueva actividad",
+    "REASON_FOR_TRANSITION": {
+      "cancel": {
+        "LABEL": "Comentario de cancelación",
+        "TITLE": "Motivo de cancelación"
+      },
+      "reject": {
+        "LABEL": "Comentario de rechazo",
+        "TITLE": "Motivo de rechazo"
+      },
+      "reject_report": {
+        "LABEL": "Comentario de rechazo del informe",
+        "TITLE": "Motivo de rechazo del informe"
+      }
+    },
+    "STATUSES": {
+      "assigned": "Asignado",
+      "cancelled": "Cancelado",
+      "checklist": "Lista de Verificación",
+      "completed": "Completado",
+      "data_collection": "Recolección de datos",
+      "draft": "Borrador",
+      "report_finalization": "Finalización del informe",
+      "review": "Revisar",
+      "submitted": "Revisión del informe"
+    },
+    "STATUS_CHANGE": "Cambio de estado",
+    "TABS": {
+      "action-points": "Puntos de acción",
+      "additional-info": "Información adicional",
+      "attachments": "Archivos adjuntos",
+      "checklist": "Lista de Verificación",
+      "collect": "Recopilar datos",
+      "details": "Detalles",
+      "review": "Revisar",
+      "summary": "Resumen"
+    },
+    "TRANSITIONS": {
+      "ASSIGN_AND_ACCEPT": "Asignar y aceptar",
+      "accept": "Aceptar",
+      "assign": "Asignar",
+      "cancel": "Cancelar",
+      "complete": "Completar",
+      "mark_checklist_configured": "Revisar",
+      "mark_data_collected": "Finalizar",
+      "mark_details_configured": "Siguiente",
+      "reject": "Rechazar",
+      "reject_report": "Rechazar informe",
+      "submit_report": "Enviar"
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "DETAILS": "Detalles específicos para sondear",
+      "TEXT": "Ítem de lista de verificación"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "Fuente de información"
+  },
+  "CO_OVERVIEW": {
+    "CP_INDICATORS": "Indicadores del CP",
+    "CP_OUTCOME": "Resultado del CP",
+    "PARTNERS": "Socios",
+    "PARTNERSHIPS": "Alianzas",
+    "PD_OUTPUT": "Producto del PD",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "Seleccione Resultado del CP"
+    },
+    "PROG_VISITS": "M.R. Visitas Progr.",
+    "SINCE_LAST_VISIT": "Días transcurridos desde la última visita al sitio",
+    "SPD_EXPECTED_RESULT": "Resultado esperado de PD",
+    "TARGET": "Meta"
+  },
+  "ISSUE_TRACKER": {
+    "ADD_POPUP_TITLE": "Agregar puntos a destacar",
+    "ATTACHMENT": "Archivo adjunto",
+    "ATTACHMENTS": "Archivos adjuntos",
+    "ATTACHMENTS_FILES": {
+      "MULTIPLE": "Archivos",
+      "SINGLE": "Archivo"
+    },
+    "AUTHOR": "Puntos a destacar planteados por",
+    "CLOSED_BY": "Notas cerrado por",
+    "CP_OUTPUT": "Producto del CP",
+    "EDIT_POPUP_TITLE": "Editar puntos a destacar",
+    "ISSUE": "Puntos a destacar",
+    "IS_NEW": "Mostrar solo Nuevo",
+    "LAST_MODIFIED_BY": "Última modificación realizada por",
+    "LOCATION": "Ubicación",
+    "LOCATION_SITE": "Ubicación y sitio",
+    "NAME": "Nombre",
+    "PARTNER": "Socio",
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "Seleccionar Producto del CP",
+      "ISSUE": "Introducir puntos a destacar",
+      "LOCATION": "Seleccionar Ubicación",
+      "PARTNER": "Seleccionar Socio",
+      "SITE": "Seleccionar Sitio",
+      "STATUS": "Seleccionar Estado"
+    },
+    "POPUP_ERROR_CP_OUTPUT": "No se proporciona un producto del CP",
+    "POPUP_ERROR_LOCATION": "No se proporciona una ubicación",
+    "POPUP_ERROR_PARTNER": "No se proporciona un socio",
+    "RELATED_TO": "Relacionado con",
+    "RELATED_TO_TYPE": "Puntos a destacar relacionados con",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "Producto del CP",
+      "LOCATION": "Ubicación/sitio",
+      "PARTNER": "Socio"
+    },
+    "SITE": "Sitio",
+    "STATUS": "Estado",
+    "STATUSES": {
+      "NEW": "Nuevo",
+      "PAST": "Pasado"
+    },
+    "TABLE_CAPTION": "{{ start }}- {{ end }} de {{ count }} notas a mostrar",
+    "UPLOAD_LABEL": "Adjuntar archivo"
+  },
+  "RATIONALE": {
+    "ANNUAL_FM_RATIONALE": {
+      "LAST_EDITED": "Editado por última vez por {{ user }} on {{ date }}"
+    },
+    "HELPER_TEXTS": {
+      "METHODOLOGY": "p. ej., variaciones en la metodología estándar y la lógica, especificaciones sobre el número mínimo y el tipo de DGF",
+      "MODALITIES": "p. ej., personal, UNV, SSA, TPM para llevar a cabo el monitoreo de terreno",
+      "PARTNER_ENGAGEMENT": "p. ej., cualquier acuerdo establecido para visitas conjuntas",
+      "PRIORITIZATION": "p. ej., las áreas geográficas en las que los resultados son más impugnado, los productos asociados a una respuesta humanitaria"
+    },
+    "LABELS": {
+      "METHODOLOGY": "Notas metodológicas y estándares",
+      "MODALITIES": "Modalidades",
+      "OTHER": "Otros comentarios",
+      "PARTNER_ENGAGEMENT": "Participación des socio",
+      "PRIORITIZATION": "Criterios de priorización",
+      "VISITS": "Meta para visitas para el año"
+    },
+    "PLACEHOLDERS": {
+      "METHODOLOGY": "Introducir notas metodológicas y estándares",
+      "MODALITIES": "Introducir modalidades",
+      "OTHER": "Introducir otros comentarios",
+      "PARTNER_ENGAGEMENT": "Introducir participación des socio",
+      "PRIORITIZATION": "Introducir los criterios de priorización",
+      "VISITS": "Introducir meta para visitas para el año"
+    },
+    "POPUP_TITLE": "Lógica",
+    "TITLE": "Lógica anual de monitoreo de terreno",
+    "YEAR_DRD_LABEL": "Año",
+    "YEAR_DRD_PLACEHOLDER": "Seleccionar Año"
+  },
+  "TEMPLATES": {
+    "ADD_DETAIL": "Agregar detalle",
+    "COLUMNS": {
+      "DETAILS": "Detalles específicos a sondear",
+      "METHODS": "Métodos",
+      "TEXT": "Ítem de lista de verificación"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "Introducir detalles específicos a sondear",
+    "FILTERS": {
+      "INTERVENTION_LABEL": "Seleccionar PD/SPD",
+      "INTERVENTION_PLACEHOLDER": "Seleccionar PD/SPD",
+      "LEVEL_LABEL": "Seleccionar Nivel",
+      "LEVEL_PLACEHOLDER": "Seleccionar Nivel",
+      "OUTPUT_LABEL": "Seleccionar Producto del CP",
+      "OUTPUT_PLACEHOLDER": "Seleccionar Producto del CP",
+      "PARTNER_LABEL": "Seleccionar Socio",
+      "PARTNER_PLACEHOLDER": "Seleccionar Socio"
+    }
+  },
+  "QUESTIONS": {
+    "ADD_POPUP_TITLE": "Agregar pregunta",
+    "COLUMNS": {
+      "ANSWER_OPTIONS": "Detalles del reporte",
+      "ANSWER_TYPE": "Tipo de respuesta",
+      "CATEGORY": "Grupo",
+      "IS_ACTIVE": "Está Activo",
+      "IS_HACT": "Cuenta para HACT",
+      "LEVEL": "Nivel objetivo de la pregunta",
+      "METHODS": "Métodos de recolección",
+      "SECTIONS": "Secciones",
+      "TEXT": "Pregunta"
+    },
+    "DETAILS": {
+      "1": "Secciones",
+      "2": "Cuenta para HACT",
+      "3": "Detalles del informe"
+    },
+    "EDIT_POPUP_TITLE": "Editar pregunta",
+    "LABELS": {
+      "ANSWER_TYPE": "Tipo de respuesta",
+      "GROUP": "Grupo",
+      "IS_ACTIVE": "Está Activo",
+      "IS_HACT": "Cuenta para HACT",
+      "LEVEL": "Nivel objetivo de la pregunta",
+      "METHODS": "Métodos de recolección",
+      "QUESTION": "Pregunta",
+      "SCALE_SIZE": "Tamaño de escala",
+      "SECTIONS": "Secciones",
+      "ORDER": "Pedir"
+    },
+    "LEVEL": {
+      "INTERVENTION": "PD/SPD",
+      "OUTPUT": "Producto del CP",
+      "PARTNER": "Socio"
+    },
+    "PLACEHOLDERS": {
+      "ANSWER_TYPE": "Seleccionar Tipo de respuesta",
+      "CATEGORY": "Seleccionar Grupo",
+      "GROUP": "Seleccionar Grupo",
+      "LEVEL": "Seleccionar Nivel objetivo de la pregunta",
+      "METHODS": "Seleccionar Métodos de recolección",
+      "QUESTION": "Ingresar el texto de la pregunta",
+      "SCALE_SIZE": "Seleccionar Tamaño de escala",
+      "SECTIONS": "Seleccionar Secciones"
+    },
+    "TABLE_CAPTION": "{{ start }}- {{ end }} de {{ count }} preguntas para mostrar"
+  },
+  "SITES": {
+    "ADD_SL": "Agregar ubicación específica del sitio",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "Ubicación administrativa de origen",
+      "NAME": "Nombre del sitio",
+      "STATUS": "Está en estado activo"
+    },
+    "EDIT_SL": "Editar ubicación específica del sitio",
+    "LABELS": {
+      "ADMIN_LOCATION": "Ubicación administrativa de origen",
+      "NAME": "Nombre del Sitio",
+      "STATUS": "Está en estado activo"
+    },
+    "PLACEHOLDERS": {
+      "ADMIN_LOCATION": "Campo vacío",
+      "NAME": "Introducir nombre del sitio",
+      "SEARCH": "Buscar ubicación o sitio",
+      "STATUS": "Seleccionar Estado del sitio"
+    },
+    "REMOVE_CONFIRMATION": "¿Está seguro/a de eliminar esta ubicación específica del sitio?",
+    "SELECTED_SITE": "Sitio seleccionado",
+    "SHOW_INACTIVE": "Mostrar sitios inactivos",
+    "STATUS": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "No activo"
+    },
+    "TABLE_CAPTION": "Ubicaciones de sitios"
+  },
+  "MAIN": {
+    "BACK": "Atrás",
+    "BUTTONS": {
+      "ADD": "Agregar",
+      "CANCEL": "Cancelar",
+      "CONFIRM": "Confirmar",
+      "DELETE": "Eliminar",
+      "OK": "Aceptar",
+      "SAVE": "Guardar"
+    },
+    "DOWNLOAD": "Descargar",
+    "EMPTY_FIELD": "Campo vacío",
+    "ENTER": "Ingresar",
+    "FILTER": "Filtrar",
+    "LATITUDE": "Latitud",
+    "LOADING_DATA_IN_PROCESS": "Cargando datos",
+    "LOADING_FILTERS_DATA": "Cargando filtros",
+    "LONGITUDE": "Longitud",
+    "REMOVING_DATA_IN_PROCESS": "Borrando datos",
+    "SAVING_DATA_IN_PROCESS": "Guardando datos",
+    "SEARCH": "Buscar",
+    "UPLOAD": "Subir archivo"
+  },
+  "LEVELS_OPTIONS": {
+    "PARTNER": "Pareja",
+    "OUTPUT": "Salida CP",
+    "INTERVENTION": "PD/SPD"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "BOOL": "Booleano",
+    "LIKERT_SCALE": "Escala Likert",
+    "NUMBER": "Número",
+    "NUMBER_FLOAT_TYPE": "Número flotante",
+    "NUMBER_INTEGER_TYPE": "Número entero",
+    "TEXT": "Texto"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "Personal",
+    "TPM": "Monitores de terceros"
+  },
+  "ACTIVITY_STATUSES": {
+    "ASSIGNED": "Asignado",
+    "CANCELLED": "Cancelado",
+    "CHECKLIST": "Lista de Verificación",
+    "COMPLETED": "Completado",
+    "DATA_COLLECTION": "Recolección de datos",
+    "DRAFT": "Borrador",
+    "REPORT_FINALIZATION": "Finalización del informe",
+    "REVIEW": "Revisar",
+    "SUBMITTED": "Revisión del informe"
+  },
+  "ATTACHMENTS_LIST": {
+    "ADD_POPUP_TITLE": "Agregar Adjunto",
+    "COLUMNS": {
+      "CREATED": "Fecha de subida",
+      "FILE": "Archivo adjunto",
+      "FILE_TYPE": "Tipo de documento"
+    },
+    "DELETE_POPUP_TITLE": "¿Eliminar documento adjunto?",
+    "EDIT_POPUP_TITLE": "Editar archivo adjunto",
+    "FILE_TYPE_LABEL": "Tipo de documento",
+    "FILE_TYPE_PLACEHOLDER": "Seleccionar Tipo de documento",
+    "RELATED_DOCUMENTS": "Documentos relacionados",
+    "REPORT_ATTACHMENTS": "Anexos del informe",
+    "TITLE": "Archivos adjuntos"
+  },
+  "NAVIGATION_MENU": {
+    "ANALYSIS": "Análisis",
+    "APPSELECTOR": "Selector de aplicaciones",
+    "COMMUNITY_CHANNELS": "Canales de comunidad de eTools",
+    "DISCUSSION": "Discusión",
+    "IMPLEMENTATION_INTELLIGENCE": "Inteligencia de implementación",
+    "INFORMATION": "Información",
+    "KNOWLEDGE_BASE": "Base de Conocimientos",
+    "MANAGEMENT": "Gestión",
+    "PROFILEANDSIGNOUT": "Perfil y cierre de sesión",
+    "REFRESH": "Actualizar",
+    "SUPPORT": "Apoyo",
+    "TEMPLATES": "Plantillas",
+    "TITLE": "Monitoreo de campo",
+    "VISITS": "Visitas",
+    "TPM": "Monitores de terceros",
+    "DASHBOARD": "Panel"
+  },
+  "FILTERS_ELEMENT": {
+    "CLEAR_ALL": "Eliminar todo",
+    "TITLE": "Filtros"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "Sitio",
+    "MISSING_SITES": {
+      "NO_SITES": "No hay sitios para esta ubicación..",
+      "ADD_MISSING": "Puede agregar sitios faltantes en "
+    },
+    "NO_SEARCH_RESULTS": {
+      "NO_LOCATIONS": "No se encontraron ubicaciones ni sitios. ",
+      "CHANGE_REQUEST": "Por favor, cambie su solicitud de búsqueda."
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "CONTENT_DOESNT_EXIST": "Parece que la página que estás buscando no existe. Regresa ",
+    "HEADER": "¡Uy! ¡Alcanzaste un 404!",
+    "HOME": "Inicio",
+    "TRY_AGAIN": " ¿y volver a intentarlo?"
+  },
+  "MANAGEMENT": {
+    "TITLE": "Gestión",
+    "EXPORT": "Exportar",
+    "NAVIGATION_TABS": {
+      "SITES": "Sitios",
+      "RATIONALE": "Razón fundamental"
+    }
+  },
+  "TEMPLATES_NAV": {
+    "NAVIGATION_TABS": {
+      "ISSUE_TRACKER": "Puntos a destacar",
+      "QUESTIONS": "Preguntas",
+      "TEMPLATE": "Plantillas"
+    },
+    "TITLE": "Plantillas"
+  },
+  "ANALYZE": {
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": " de las visitas son completadas",
+      "COVERAGE": {
+        "CP_OUTPUT": {
+          "LABEL": "Mostrando los productos del CP que se pueden monitorear a nivel comunitario."
+        },
+        "OPEN_ISSUES": {
+          "ACTION_POINTS": "Puntos de acción",
+          "ISSUES": "Puntos a destacar",
+          "TITLE": "Notas abiertas y puntos de acción"
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "% de finalizados ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "% de finalizados ↓",
+          "COMPLETED_TASKS": "Tareas Completadas",
+          "DAYS_SINCE_LAST_VISIT": "Días transcurridos desde la última visita ",
+          "MINIMUM_REQUIRED": "Visitas programáticas mínimas requeridas",
+          "MINIMUM_REQUIRED_VISITS": "Mínimo requerido ",
+          "SORT_BY": "Ordenar por"
+        },
+        "PD_SPD": {
+          "LABEL": "Muestra PD/SPD activos que entregan productos del CP que se pueden monitorear a nivel comunitario. (Si no ha habido ninguna visita para un PD/SPD, los «días transcurridos desde la última visita» son los días transcurridos desde el inicio del PD/SPD)"
+        },
+        "SHARED_TAB": {
+          "AVERAGE_DAYS_SINCE": "Promedio de días entre visitas",
+          "DAYS_SINCE_LAST_VISIT": "Días transcurridos desde la última visita"
+        },
+        "TITLE": "Cobertura de socios activos"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "COMPLETED_VISITS": "Visitas finalizadas",
+        "NO_VISITS": "Sin visitas",
+        "TITLE": "Cobertura geográfica"
+      },
+      "NAVIGATION_TABS": {
+        "BY_CP_OUTPUT": "Por Producto del CP",
+        "BY_LOCATION": "Por Ubicación",
+        "BY_PARTNER": "Por socio",
+        "BY_PD_SPD": "Por PD/SPD"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "CP_OUTPUT": "Producto del CP",
+        "HACT_ELIGIBLE_VISITS": "Visitas elegibles para HACT",
+        "PARTNER": "Socio",
+        "PD_SPD": "PD/SPD",
+        "TITLE": "Visitas elegibles para visita programática de HACT",
+        "VISIT": "Visita",
+        "VISIT_END_DATE": "Fecha de finalización de visita"
+      }
+    },
+    "NAVIGATION_TABS": {
+      "COUNTRY_OVERVIEW": "Resumen del país",
+      "MONITORING_ACTIVITY": "Actividad de monitoreo"
+    },
+    "TITLE": "Analizar"
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "Completado",
+    "COMPLETED_VISITS": "Visitas completadas",
+    "PLANNED": "Planificado",
+    "PLANNED_VISITS": "Visitas planificadas (hasta diciembre)"
+  },
+  "THIS_FIELD_IS_REQUIRED": "Este campo es obligatorio",
+  "LOCATION_TO_BE_VISITED": "Lugar a visitar",
+  "SITE_TO_BE_VISITED": "Sitio a visitar",
+  "ROWS_PER_PAGE": "Líneas por página",
+  "UPLOAD_FILE": "Subir archivo",
+  "SELECT": "Seleccionar",
+  "CANCEL": "Cancelar",
+  "TRUE": "Verdadero",
+  "FALSE": "FALSO",
+  "VIEW": "Ver",
+  "FILTER_BY_SECTION": "Filtrar por sección",
+  "SUPPORT": "Apoyo",
+  "ERROR_CHANGING_WORKSPACE": "Algo salió mal al cambiar tu espacio de trabajo",
+  "ERROR_CHANGING_ORGANIZATION": "Algo salió mal al cambiar tu organización",
+  "SELECT_ORGANIZATION": "Seleccionar organización",
+  "CHANGES_SAVED": "Todos los cambios se guardan.",
+  "ERROR_ATTACHEMENT_LOAD": "No se pueden cargar archivos adjuntos",
+  "ERROR_CHANGES_SAVE": "No se pueden guardar los cambios. ",
+  "SELECT_CORRECT_FILE": "Por favor, seleccionar el archivo correcto",
+  "ERROR_LOAD_LOCATIONS": "No se pueden cargar ubicaciones para el widget",
+  "ERROR_LOAD_ACTIVITIES_LIST": "No se puede cargar la lista de actividades",
+  "ERROR_CREATE_ACTIVITY": "No se puede crear actividad",
+  "ERROR_UPLOAD": "No se pueden cargar archivos adjuntos. ",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "Error al subir el archivo: el archivo es demasiado grande",
+  "ERROR_UPDATE_CHECKLIST": "No se puede actualizar la lista de verificación, inténtelo de nuevo",
+  "START_DATE_BEFORE_END_DATE": "La fecha de inicio debe ser anterior a la fecha final",
+  "ERROR_LOAD_REPORT": "No se pueden cargar datos de FullReport",
+  "ERROR_PLAN_YEAR": "No se puede planificar para el año seleccionado",
+  "SELECT_CORRECT_LOCATION": "Por favor, seleccionar la ubicación correcta en el mapa",
+  "ERROR_LOAD_QUESTIONS": "No se puede cargar la lista de preguntas",
+  "ERROR_LOAD_TEMPLATES": "No se puede cargar la lista de plantillas de preguntas",
+  "ERROR_UPDATE_QUESTION_TEMPLATE": "No se pueden actualizar las plantillas de preguntas con ID",
+  "ERROR_CHANGE_ACTIVITY_STATUS": "No se puede cambiar el estado de la actividad",
+  "PLEASE_TRY_AGAIN": "Por favor, inténtelo de nuevo más tarde",
+  "PLEASE_WAIT_COUNTRY_CHANGE": "Espere mientras los datos del país cambian...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "Espere mientras los datos de la organización cambian...",
+  "ERROR_SAVE_PROFILE": "Datos de perfil no guardados. ",
+  "TPM": {
+    "TITLE": "Monitores de terceros",
+    "ADD_NEW_VENDOR": "Agregar nuevo proveedor",
+    "VENDOR_NUMBER_NOT_FOUND": "No se encontró el número de proveedor",
+    "NOT_SYNCED": "No sincronizado",
+    "MARKED_FOR_DELETION_IN_VISION": "Marcado para su eliminación en VISION",
+    "BLOCKED_IN_VISION": "Bloqueado en VISION",
+    "SYNCED_FROM_VISION": "Sincronizado desde VISION",
+    "FILTERS": {
+      "SEARCH": "Buscar # de proveedor o TPM"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "Número del proveedor",
+      "TPM_NAME": "Nombre del TPM",
+      "PHONE_NUMBER": "Número de teléfono",
+      "EMAIL": "Correo electrónico"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "Contactos TPM",
+    "ATTACH_FILE_FOR_VISIT": "Adjuntar archivo para una visita general",
+    "ACCESS_MANAGEMENT_PORTAL": "Acceder portal de administración",
+    "SHOW_INACTIVE": "Mostrar inactivo",
+    "TABS": {
+      "details": "Detalles del socio",
+      "attachments": "Archivos adjuntos"
+    },
+    "TPM_PARTNER_DETAILS": "Detalles del socio TPM",
+    "VENDOR_NUMBER": "Número del proveedor",
+    "TPM_NAME": "Nombre del TPM",
+    "PHONE_NUMBER": "Número de teléfono",
+    "EMAIL": "Correo electrónico",
+    "ADDRESS": "DIRECCIÓN",
+    "VALID_EMAIL_REQUIRED": "Se requiere un correo electrónico válido"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "Posición",
+      "FIRST_NAME": "Nombre",
+      "LAST_NAME": "Apellido",
+      "PHONE_NUMBER": "Número de teléfono",
+      "EMAIL": "Correo electrónico",
+      "ACTIVE": "Activo"
+    }
+  },
+  "INACTIVE": "Inactivo",
+  "NO_ACCESS": "Sin acceso",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "¡Advertencia! Está a punto de enviar esta visita para revisión del informe y algunos (o todos) los elementos relacionados monitoreados están marcados como “No monitoreados”. Puede volver a visitar la pestaña “Resumen” para realizar modificaciones si lo desea; de lo contrario, ¿está seguro de que desea continuar sin marcar los elementos como monitoreados?",
+  "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "Está a punto de completar una visita que tiene elementos “No monitoreados”. Puede rechazarlos si es necesario; de lo contrario, ¿está seguro de que desea continuar con los elementos marcados como “No supervisados”?",
+  "ACTION_POINT_REMINDER": "Teniendo en cuenta que no se plantearon puntos de acción, recuerde agregar ninguno antes de continuar si es necesario.",
+  "CONTINUE": "Continuar",
+  "INVALID_NUMBER": "Número invalido",
+  "DUPLICATE": "DUPLICAR",
+  "ERROR_AT_SAVING_DUPLICATE": "Error al guardar duplicado",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "No hay datos de actividad para duplicar",
+  "PD_STATUS": {
+    "DRAFT": "Desarrollo",
+    "REVIEW": "Revisar",
+    "SIGNATURE": "Firma",
+    "SIGNED": "Firmado",
+    "ACTIVE": "Activo",
+    "CANCELLED": "Cancelado",
+    "ENDED": "Terminado",
+    "CLOSED": "Cerrado",
+    "SUSPENDED": "Suspendido",
+    "TERMINATED": "Terminado",
+    "EXPIRED": "Venció"
+  }
+}

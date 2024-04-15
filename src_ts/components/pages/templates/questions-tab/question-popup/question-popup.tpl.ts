@@ -165,7 +165,6 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             ${translate('QUESTIONS.LABELS.IS_ACTIVE')}
           </etools-checkbox>
         </div>
-
         <div class="col-md-6 col-12 align-items-center mt-8">
           <etools-input
             id="orderInput"

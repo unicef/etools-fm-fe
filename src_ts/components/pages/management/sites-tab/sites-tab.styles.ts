@@ -46,7 +46,7 @@ export const SitesTabStyles: CSSResult = css`
   }
 
   .site-row {
-    padding-right: 24px;
+    padding-inline-end: 24px;
     border-top: 1px solid #e0e0e0;
   }
 

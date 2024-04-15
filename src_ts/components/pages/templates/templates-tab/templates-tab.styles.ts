@@ -23,7 +23,7 @@ export const TemplatesStyles: CSSResult = css`
   }
 
   .checkbox-container {
-    margin-right: 24px;
+    margin-inline-end: 24px;
     width: 18px;
     display: inline-flex;
   }
@@ -34,6 +34,11 @@ export const TemplatesStyles: CSSResult = css`
 
   .detail-placeholder {
     color: rgba(0, 0, 0, 0.38);
+  }
+
+  .filter {
+    width: 40%;
+    max-width: 300px;
   }
 
   .methods {

@@ -107,7 +107,8 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
 
   filtersChange(e: CustomEvent): void {
     if (this.filtersInitialized) {
-      this.updateQueryParamsIfPageIsActive({...e.detail, page: 1}, 'questions');
+      const reset = !e.detail || !Object.keys(e.detail).length;
+      this.updateQueryParamsIfPageIsActive({...e.detail, page: 1}, 'questions', reset);
     }
   }
 

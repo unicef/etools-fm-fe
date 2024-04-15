@@ -96,7 +96,7 @@ export function template(this: CpDetailsItem): TemplateResult {
                                 >
                                   <etools-icon name="flag" class="grey"></etools-icon>
                                 </a>
-                                <a href="${`/pmp/interventions/${intervention.pk}/progress/reports`}" target="_blank">
+                                <a href="${`/pmp/interventions/${intervention.pk}/reports`}" target="_blank">
                                   <etools-icon name="trending-up" class="grey"></etools-icon>
                                 </a>
                               </div>

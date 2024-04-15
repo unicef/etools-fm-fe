@@ -55,9 +55,11 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
   @property() activeTab: string = QUESTIONS_TAB;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
+  @property()
+  allowView = false;
+
   render(): TemplateResult {
-    const canView: boolean = this.canView();
-    return canView
+    return this.allowView
       ? html`
           <page-content-header with-tabs-visible>
             <h1 slot="page-title">${translate('TEMPLATES_NAV.TITLE')}</h1>
@@ -84,6 +86,7 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
           return;
         }
         this.activeTab = subRouteName as string;
+        this.allowView = this.canView();
       })
     );
     this.activeLanguageUnsubscribe = store.subscribe(

@@ -17,6 +17,7 @@ import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
+import {get as getTranslation} from 'lit-translate';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import {CardStyles} from '../../../../../styles/card-styles';
 
@@ -222,7 +223,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   }
 
   private checkRequiredFields(): void {
-    const errorMessage = 'This field is required';
+    const errorMessage = getTranslation('THIS_FIELD_IS_REQUIRED');
     if (!this.editedData.description) {
       this.errors.description = errorMessage;
     }

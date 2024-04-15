@@ -1,0 +1,709 @@
+{
+  "ACTIVITIES_LIST": {
+    "TITLE": "أنشطة",
+    "CREATE_NEW_BUTTON": "خلق جديد إبداع جديد",
+    "COLUMNS": {
+      "REFERENCE_NUMBER": "مرجع #",
+      "START_DATE": "تاريخ البدء",
+      "LOCATION_AND_SITE": "الموقع والموقع",
+      "MONITOR_TYPE": "FM الابتدائية",
+      "VISIT_LEAD": "زيارة الرصاص",
+      "TEAM_MEMBERS": "أعضاء الفريق",
+      "CHECKLISTS_COUNT": "قوائم المراجعة",
+      "STATUS": "حالة",
+      "SECTIONS": "الأقسام"
+    },
+    "REFERENCE_NO": "مرجع #",
+    "FILTERS": {
+      "MONITOR_TYPE": "FM الابتدائية",
+      "TEAM_MEMBERS": "أعضاء الفريق",
+      "VISIT_LEAD": "زيارة الرصاص",
+      "LOCATION": "موقع",
+      "SITE": "موقع",
+      "PARTNERS": "الشركاء",
+      "TPM_PARTNERS": "شركاء TPM",
+      "INTERVENTIONS": "بي دي/SPD",
+      "CP_OUTPUTS": "مخرجات حزب المحافظين",
+      "STATUS": "حالة",
+      "STARTS_AFTER": "يبدأ بعد",
+      "END_BEFORE": "نهاية قبل",
+      "OFFICE": "المكتب الميداني",
+      "SECTIONS": "الأقسام"
+    }
+  },
+  "ACTIVITY_ADDITIONAL_INFO": {
+    "ISSUE_TRACKER": "نقاط ملاحظة",
+    "PD_SPD_DETAILS": {
+      "DOCUMENT_TYTLE": "عنوان المستند",
+      "PROGRESS_REPORTS": "تقارير مرحلية",
+      "REFERENCE_NUMBER": "رقم المرجع",
+      "TITLE": "تفاصيل وثيقة البرامج / اتفاقية التمويل الصغير",
+      "TYPE": "النوع"
+    },
+    "SUMMARY": {
+      "ADDITIONAL_BUTTONS": {
+        "NOT_MONITORED": "غير مراقب",
+        "OFF_TRACK": "خارج المسار",
+        "ON_TRACK": "وفقاً للخطة"
+      },
+      "OVERALL_FINDING": "النتيجة الإجمالية",
+      "OVERALL_FINDING_PLACEHOLDER": "أدخل النتيجة الإجمالية"
+    }
+  },
+  "ACTIVITY_CHECKLIST": {
+    "ADD_DETAIL": "أضف التفاصيل",
+    "COLUMNS": {
+      "DETAILS": "تفاصيل محددة للتنفيذ",
+      "METHODS": "الأساليب",
+      "TEXT": "عنصر قائمة التحقق"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "أدخل تفاصيل محددة للتنفيذ",
+    "NO_QUESTIONS_FOUND": "لم يتم العثور على أسئلة قابلة للتطبيق لهذا القسم. يرجى إضافتها في النموذد أو إضافة قسم آخر في تفاصيل النشاط"
+  },
+  "ACTIVITY_COLLECT": {
+    "ADD_CHECKLIST": "أضف قائمة تحقق",
+    "COLUMNS": {
+      "INFO_SOURCE": "مصدر المعلومات",
+      "METHOD_TYPE": "الطريقة",
+      "TEAM_MEMBER": "أعضاء الفريق"
+    },
+    "EDIT_CHECKLIST": "تحرير قائمة التحقق",
+    "LABELS": {
+      "INFO_SOURCE": "مصدر المعلومات",
+      "METHOD": "الطريقة"
+    }
+  },
+  "ACTIVITY_DETAILS": {
+    "ACTIVITY_DETAILS": "تفاصيل النشاط",
+    "ADD_CP_OUTPUT": "أضف مخرجات البرنامج القطري",
+    "ADD_ENTRY": "أضف بند جديد",
+    "ADD_INTERVENTION": "أضف وثيقة برامج / اتفاقية التمويل الصغير",
+    "ADD_PARTNER": "إضافة شريك",
+    "CANCELLATION_NOTE": "ملاحظة الإلغاء",
+    "CONNECTED_ENTRIES": "الإدخالات المتصلة التي سيتم إضافتها مع وثيقة برامج / اتفاقية التمويل الصغير محدد:",
+    "CP_OUTPUT": "مخرج البرنامج القطري",
+    "CP_OUTPUTS": "مخرجات البرنامج القطري",
+    "CP_OUTPUTS_FOUND": "تم العثور على {{عدد}} مخرجات البرنامج القطري:",
+    "END_DATE": "تاريخ الانتهاء",
+    "ENTRIES_TO_MONITOR": "الجهات التي يجب مراقبتها",
+    "EXPORT": "تصدير",
+    "INTERVENTION": "التدخل",
+    "INTERVENTIONS": "وثيقة البرامج / اتفاقية تمويل صغير",
+    "INTERVENTIONS_FOUND": "تم العثور على {{count}} وثيقة برامج / اتفاقية تمويل صغير",
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "حدد الموقع حسب المستوى الإداري",
+    "MAP_SELECT_LOCATION_BY_SITE": "حدد الموقع حسب المكان",
+    "MONITOR_INFO": "معلومات المراقبة",
+    "OFFICE": "المكاتب الميدانية",
+    "PARTNER": "الشريك",
+    "PARTNERS": "‏الشركاء",
+    "PARTNER_ORGANIZATION": "المنظمة الشريك",
+    "PD_STATUS": "حالة PD",
+    "REJECTION_NOTE": "ملاحظة الرفض",
+    "REPORT_REJECTION_REASON": "سبب رفض التقرير",
+    "SECTIONS": "الأقسام",
+    "SHOW_EXPIRED": "عرض منتهية الصلاحية",
+    "START_DATE": "تاريخ البدء",
+    "TEAM_MEMBERS": "أعضاء الفريق",
+    "TPM_PARTNER": "شريك مراقبة الطرف الثالث",
+    "USER_TYPE": "مراقب الميدان الأساسي هو",
+    "USER_TYPES": {
+      "STAFF": "الموظّفين",
+      "TPM": "مراقب الطرف الثالث"
+    },
+    "VISIT_LEAD": "قائد الزيارة",
+    "VISIT_LETTER": "خطاب الزيارة",
+    "REPORT_REVIEWER": "تقرير المراجع",
+    "REPORT_REVIEWER_SELECT": "سيتم إخطار المستخدم التالي بهذا الإرسال من أجل المراجعة. الرجاء تحديد المستخدم والمتابعة",
+    "REPORT_REVIEWER_CONFIRM": "سيتم إخطار المستخدم التالي بهذا الإرسال من أجل المراجعة. يرجى تأكيد المستخدم والمتابعة",
+    "REVIEWED_BY": "تمت مراجعته من قبل"
+  },
+  "ACTIVITY_ITEM": {
+    "ACTION_POINTS": {
+      "ASSIGNEE": "الوكيل",
+      "CONTENT": "المحتوى",
+      "DESCRIPTION": "الوصف",
+      "DUE_ON": "تاريخ الاستحقاق",
+      "POPUP": {
+        "ADD_AP": "إنشاء نقطة عمل",
+        "ASSIGNEE": "الوكيل",
+        "ASSIGN_TO": "تعيين إلى",
+        "CATEGORIES": "الفئات",
+        "DESCRIPTION": "الوصف",
+        "DUE_ON": "تاريخ الاستحقاق",
+        "EDIT_AP": "تحرير نقطة العمل",
+        "ENTER_DESCRIPTION": "أدخل الوصف",
+        "GO_TO_ACTION_POINTS_TO_COMPLETE": "انتقل إلى نقاط العمل لإكمالها",
+        "HIGH_PRIORITY": "أولوية عالية",
+        "OFFICES": "المكاتب",
+        "RELATED_NAME": "الاسم المرتبط",
+        "RELATED_TO": "متعلق بـ %s",
+        "SECTION": "القسم",
+        "SELECT_CATEGORY": "اختر الفئة",
+        "SELECT_OFFICE": "حدد المكتب",
+        "SELECT_RELATED_NAME": "حدد الاسم ذي الصلة",
+        "SELECT_RELATED_TO": "حدد ذات صلة بـ",
+        "SELECT_SECTION": "حدد القسم"
+      },
+      "PRIORITY": "الأولوية",
+      "REFERENCE": "رقم المرجع:",
+      "RELATED_TO": "ذات صلة بـ",
+      "SECTION_OFFICE": "القسم/ المكتب",
+      "STATUS": "الحالة",
+      "TITLE": "نقاط العمل"
+    },
+    "ACTIVITY_ATTACHMENTS": {
+      "DATA_COLLECTOR": "جامع البيانات",
+      "DATE_UPLOADED": "تاريخ الرفع",
+      "DOCUMENT_TYPE": "نوع الوثيقة",
+      "FILE_ATTACHMENT": "ملف مرفق",
+      "METHOD": "الطريقة",
+      "METHOD_TYPE": "نوع الطريقة",
+      "RELATED_NAME": "الاسم المرتبط",
+      "RELATED_TO": "ذات صلة بـ",
+      "TITLE": "مرفقات قائمة التحقق"
+    },
+    "DATA_COLLECTION": {
+      "ATTACHMENTS_BUTTON_TEXT": {
+        "DEFAULT": "تحميل الملفات",
+        "MULTIPLE": "{{ count }} الملفات",
+        "SINGLE": "{{ count }} ملف"
+      },
+      "ATTACHMENTS_POPUP_TITLE": "مرفقات لـ",
+      "DELETE_ITEM": "حذف العنصر؟"
+    },
+    "NEW_ACTIVITY": "نشاط جديد",
+    "REASON_FOR_TRANSITION": {
+      "cancel": {
+        "LABEL": "تعليق الإلغاء",
+        "TITLE": "سبب الإلغاء"
+      },
+      "reject": {
+        "LABEL": "تعليق الرفض",
+        "TITLE": "سبب الرفض"
+      },
+      "reject_report": {
+        "LABEL": "الإبلاغ عن رفض التقرير",
+        "TITLE": "سبب رفض التقرير"
+      }
+    },
+    "STATUSES": {
+      "assigned": "تم تعيينه",
+      "cancelled": "ملغي",
+      "checklist": "قائمة التحقق",
+      "completed": "مكتمل",
+      "data_collection": "جمع البيانات",
+      "draft": "مسودة",
+      "report_finalization": "انهاء التقرير",
+      "review": "مراجعة",
+      "submitted": "مراجعة التقرير"
+    },
+    "STATUS_CHANGE": "تغيير الحالة",
+    "TABS": {
+      "action-points": "نقاط العمل",
+      "additional-info": "معلومات اضافية",
+      "attachments": "مرفقات",
+      "checklist": "قائمة التحقق",
+      "collect": "جمع البيانات",
+      "details": "التفاصيل",
+      "review": "مراجعة",
+      "summary": "ملخص"
+    },
+    "TRANSITIONS": {
+      "ASSIGN_AND_ACCEPT": "التعيين والقبول",
+      "accept": "قبول",
+      "assign": "تعيين",
+      "cancel": "إلغاء",
+      "complete": "إكمال",
+      "mark_checklist_configured": "مراجعة",
+      "mark_data_collected": "إنهاء",
+      "mark_details_configured": "التالي",
+      "reject": "رفض",
+      "reject_report": "رفض التقرير",
+      "submit_report": "إرسال"
+    }
+  },
+  "ACTIVITY_REVIEW": {
+    "COLUMNS": {
+      "DETAILS": "تفاصيل محددة للتنفيذ",
+      "TEXT": "عنصر قائمة التحقق"
+    }
+  },
+  "SOURCE_OF_INFORMATION": {
+    "INPUT_LABEL": "مصدر المعلومات"
+  },
+  "CO_OVERVIEW": {
+    "CP_INDICATORS": "مؤشرات البرنامج القطري",
+    "CP_OUTCOME": "نتائج البرنامج القطري",
+    "PARTNERS": "‏الشركاء",
+    "PARTNERSHIPS": "الشراكات",
+    "PD_OUTPUT": "مخرجات وثيقة البرنامج",
+    "PLACEHOLDER": {
+      "CP_OUTCOME": "حدد نتيجة البرنامج القطري"
+    },
+    "PROG_VISITS": "الحد الأدنى من زيارات البرنامج",
+    "SINCE_LAST_VISIT": "الأيام منذ آخر زيارة للموقع",
+    "SPD_EXPECTED_RESULT": "النتيجة المتوقعة لاتفاقية التمويل الصغير",
+    "TARGET": "الهدف"
+  },
+  "ISSUE_TRACKER": {
+    "ADD_POPUP_TITLE": "أضف نقاط ملاحظة",
+    "ATTACHMENT": "المرفق",
+    "ATTACHMENTS": "المرفقات",
+    "ATTACHMENTS_FILES": {
+      "MULTIPLE": "الملفات",
+      "SINGLE": "ملف"
+    },
+    "AUTHOR": "نقاط الملاحظة التي أثيرت بواسطة",
+    "CLOSED_BY": "ملاحظات مغلقة من قبل",
+    "CP_OUTPUT": "مخرج البرنامج القطري",
+    "EDIT_POPUP_TITLE": "تحرير نقاط الملاحظة",
+    "ISSUE": "نقاط ملاحظة",
+    "IS_NEW": "إظهار الجديد فقط",
+    "LAST_MODIFIED_BY": "قام بآخر تعديل",
+    "LOCATION": "الموقع",
+    "LOCATION_SITE": "الموقع و المكان",
+    "NAME": "الإسم",
+    "PARTNER": "الشريك",
+    "PLACEHOLDER": {
+      "CP_OUTPUT": "حدد مخرج البرنامج القطري",
+      "ISSUE": "أدخل نقاط الملاحظة",
+      "LOCATION": "حدد الموقع",
+      "PARTNER": "حدد الشريك",
+      "SITE": "حدد الموقع",
+      "STATUS": "حدد الحالة"
+    },
+    "POPUP_ERROR_CP_OUTPUT": "لم يتم توفير مخرجات البرنامج القطري",
+    "POPUP_ERROR_LOCATION": "لم يتم توفير الموقع",
+    "POPUP_ERROR_PARTNER": "لم يتم توفير الشريك",
+    "RELATED_TO": "متعلق بـ %s",
+    "RELATED_TO_TYPE": "نقاط الملاحظة المتعلقة بـ",
+    "RELATED_TYPE": {
+      "CP_OUTPUT": "مخرج البرنامج القطري",
+      "LOCATION": "الموقع/المكان",
+      "PARTNER": "الشريك"
+    },
+    "SITE": "الموقع",
+    "STATUS": "الحالة",
+    "STATUSES": {
+      "NEW": "جديد",
+      "PAST": "سابق"
+    },
+    "TABLE_CAPTION": "{{ count }} - {{ end }} من {{ start }} ملاحظات للعرض",
+    "UPLOAD_LABEL": "إرفاق ملف"
+  },
+  "RATIONALE": {
+    "ANNUAL_FM_RATIONALE": {
+      "LAST_EDITED": "التعديل الأخير تم بواسطة {{ user }} في {{ date}}"
+    },
+    "HELPER_TEXTS": {
+      "METHODOLOGY": "على سبيل المثال الاختلافات في المنهجية المعيارية والأساس المنطقي ، والمواصفات الخاصة بالحد الأدنى لعدد ونوع النقاشات الجماعية المركزة",
+      "MODALITIES": "مثل الموظفين و متطوعي الأمم المتحدة و اتفاقات الخدمة الخاصة و طرف ثالث لإجراء الرصد الميداني",
+      "PARTNER_ENGAGEMENT": "على سبيل المثال أي ترتيبات تم وضعها للزيارات المشتركة",
+      "PRIORITIZATION": "على سبيل المثال ، المناطق الجغرافية حيث تكون النتائج هي الأكثر تحديًا ، والمخرجات المرتبطة بالاستجابة الإنسانية"
+    },
+    "LABELS": {
+      "METHODOLOGY": "ملاحظات المنهجية والمعايير",
+      "MODALITIES": "الطرائق",
+      "OTHER": "تعليقات أخرى",
+      "PARTNER_ENGAGEMENT": "مشاركة الشريك",
+      "PRIORITIZATION": "معايير تحديد الأولويات",
+      "VISITS": "الزيارات المستهدفة لهذا العام"
+    },
+    "PLACEHOLDERS": {
+      "METHODOLOGY": "أدخل ملاحظات المنهجية والمعايير",
+      "MODALITIES": "أدخل الطرائق",
+      "OTHER": "أدخل تعليقات أخرى",
+      "PARTNER_ENGAGEMENT": "أدخل مشاركة الشريك",
+      "PRIORITIZATION": "أدخل معايير تحديد الأولويات",
+      "VISITS": "أدخل الزيارات المستهدفة لهذا العام"
+    },
+    "POPUP_TITLE": "الأساس المنطقي",
+    "TITLE": "الأساس المنطقي للرصد الميداني السنوي",
+    "YEAR_DRD_LABEL": "عام",
+    "YEAR_DRD_PLACEHOLDER": "تحديد العام"
+  },
+  "TEMPLATES": {
+    "ADD_DETAIL": "أضف التفاصيل",
+    "COLUMNS": {
+      "DETAILS": "تفاصيل محددة للتنفيذ",
+      "METHODS": "الأساليب",
+      "TEXT": "عنصر قائمة التحقق"
+    },
+    "DETAIL_INPUT_PLACEHOLDER": "أدخل تفاصيل محددة للتنفيذ",
+    "FILTERS": {
+      "INTERVENTION_LABEL": "حدد وثيقة البرامج/اتفاقية التمويل الصغير",
+      "INTERVENTION_PLACEHOLDER": "\nحدد وثيقة البرامج/اتفاقية التمويل الصغير\n",
+      "LEVEL_LABEL": "إختر المستوى",
+      "LEVEL_PLACEHOLDER": "إختر المستوى",
+      "OUTPUT_LABEL": "حدد مخرجات البرنامج القطري",
+      "OUTPUT_PLACEHOLDER": "حدد مخرجات البرنامج القطري",
+      "PARTNER_LABEL": "حدد الشريك",
+      "PARTNER_PLACEHOLDER": "حدد الشريك"
+    }
+  },
+  "QUESTIONS": {
+    "ADD_POPUP_TITLE": "إضافة سؤال",
+    "COLUMNS": {
+      "ANSWER_OPTIONS": "تفاصيل التقارير",
+      "ANSWER_TYPE": "نوع الإجابة",
+      "CATEGORY": "مجموعة",
+      "IS_ACTIVE": "نشط",
+      "IS_HACT": "يحتسب وفق إطار النهج المنسق للتحويلات النقدية (HACT)",
+      "LEVEL": "المستوى المستهدف للسؤال",
+      "METHODS": "طرق جمع البيانات",
+      "SECTIONS": "الأقسام",
+      "TEXT": "سؤال"
+    },
+    "DETAILS": {
+      "1": "الأقسام",
+      "2": "يحتسب وفق إطار النهج المنسق للتحويلات النقدية (HACT)",
+      "3": "تفاصيل التقارير"
+    },
+    "EDIT_POPUP_TITLE": "تعديل السؤال",
+    "LABELS": {
+      "ANSWER_TYPE": "نوع الإجابة",
+      "GROUP": "المجموعة",
+      "IS_ACTIVE": "هل نشط",
+      "IS_HACT": "يحتسب وفق إطار النهج المنسق للتحويلات النقدية (HACT)",
+      "LEVEL": "المستوى المستهدف للسؤال",
+      "METHODS": "طرق جمع البيانات",
+      "QUESTION": "سؤال",
+      "SCALE_SIZE": "حجم المقياس",
+      "SECTIONS": "الأقسام",
+      "ORDER": "طلب"
+    },
+    "LEVEL": {
+      "INTERVENTION": "وثيقة البرامج/اتفاقية التمويل الصغير",
+      "OUTPUT": "مخرج البرنامج القطري",
+      "PARTNER": "الشريك"
+    },
+    "PLACEHOLDERS": {
+      "ANSWER_TYPE": "حدد نوع الإجابة",
+      "CATEGORY": "اختر مجموعة",
+      "GROUP": "اختر مجموعة",
+      "LEVEL": "حدد المستوى المستهدف للسؤال",
+      "METHODS": "حدد طرق جمع البيانات",
+      "QUESTION": "أدخل نص السؤال",
+      "SCALE_SIZE": "حدد حجم المقياس",
+      "SECTIONS": "حدد الأقسام"
+    },
+    "TABLE_CAPTION": "{{ count }} - {{ end }} من {{ start }} الأسئلة المراد عرضها"
+  },
+  "SITES": {
+    "ADD_SL": "إضافة موقع محدد",
+    "COLUMNS": {
+      "ADMIN_LEVEL": "الموقع الإداري الأصل",
+      "NAME": "اسم الموقع",
+      "STATUS": "هل الحالة نشطة"
+    },
+    "EDIT_SL": "تحرير المكان المحدد للموقع",
+    "LABELS": {
+      "ADMIN_LOCATION": "الموقع الإداري الأصل",
+      "NAME": "اسم الموقع",
+      "STATUS": "هل الحالة نشطة"
+    },
+    "PLACEHOLDERS": {
+      "ADMIN_LOCATION": "حقل فارغ",
+      "NAME": "أدخل اسم الموقع",
+      "SEARCH": "ابحث عن الموقع أو المكان",
+      "STATUS": "حدد حالة الموقع"
+    },
+    "REMOVE_CONFIRMATION": "هل تريد بالتأكيد حذف هذا الموقع المحدد؟",
+    "SELECTED_SITE": "الموقع المحدد",
+    "SHOW_INACTIVE": "عرض المواقع غير النشطة",
+    "STATUS": {
+      "ACTIVE": "نشط",
+      "INACTIVE": "غير نشط"
+    },
+    "TABLE_CAPTION": "مواقع الاماكن"
+  },
+  "MAIN": {
+    "BACK": "عودة",
+    "BUTTONS": {
+      "ADD": "إضافة",
+      "CANCEL": "إلغاء",
+      "CONFIRM": "تأكيد",
+      "DELETE": "حذف",
+      "OK": "موافق",
+      "SAVE": "حفظ"
+    },
+    "DOWNLOAD": "تنزيل",
+    "EMPTY_FIELD": "حقل فارغ",
+    "ENTER": "إدخال",
+    "FILTER": "تصفية",
+    "LATITUDE": "خط العرض",
+    "LOADING_DATA_IN_PROCESS": "جاري تحميل البيانات",
+    "LOADING_FILTERS_DATA": "تحميل المرشحات",
+    "LONGITUDE": "خط الطول",
+    "REMOVING_DATA_IN_PROCESS": "جارٍ حذف البيانات ...",
+    "SAVING_DATA_IN_PROCESS": "جارِ حفظ البيانات",
+    "SEARCH": "بحث…",
+    "UPLOAD": "تحميل الملف"
+  },
+  "LEVELS_OPTIONS": {
+    "INTERVENTION": "وثيقة البرامج/وثيقة البرامج المبسطة",
+    "OUTPUT": "مخرج البرنامج القطري",
+    "PARTNER": "الشريك"
+  },
+  "ANSWER_TYPE_OPTIONS": {
+    "BOOL": "قيمة منطقية",
+    "LIKERT_SCALE": "مقياس ليكرت",
+    "NUMBER": "رقم",
+    "NUMBER_FLOAT_TYPE": "عدد تعويم",
+    "NUMBER_INTEGER_TYPE": "رقم صحيح",
+    "TEXT": "نص"
+  },
+  "MONITOR_TYPES": {
+    "STAFF": "الموظّفين",
+    "TPM": "مراقب الطرف الثالث"
+  },
+  "ACTIVITY_STATUSES": {
+    "ASSIGNED": "تم تعيينه",
+    "CANCELLED": "ملغي",
+    "CHECKLIST": "قائمة التحقق",
+    "COMPLETED": "مكتمل",
+    "DATA_COLLECTION": "جمع البيانات",
+    "DRAFT": "مسودة",
+    "REPORT_FINALIZATION": "انهاء التقرير",
+    "REVIEW": "مراجعة",
+    "SUBMITTED": "مراجعة التقرير"
+  },
+  "ATTACHMENTS_LIST": {
+    "ADD_POPUP_TITLE": "إضافة مرفق",
+    "COLUMNS": {
+      "CREATED": "تاريخ الرفع",
+      "FILE": "ملف مرفق",
+      "FILE_TYPE": "نوع الوثيقة"
+    },
+    "DELETE_POPUP_TITLE": "هل تريد حذف المرفق؟",
+    "EDIT_POPUP_TITLE": "تحرير المرفق",
+    "FILE_TYPE_LABEL": "نوع المستند",
+    "FILE_TYPE_PLACEHOLDER": "حدد نوع المستند",
+    "RELATED_DOCUMENTS": "الوثائق ذات الصلة",
+    "REPORT_ATTACHMENTS": "مرفقات التقرير",
+    "TITLE": "المرفقات"
+  },
+  "NAVIGATION_MENU": {
+    "ANALYSIS": "التحليل",
+    "APPSELECTOR": "محدد التطبيق",
+    "COMMUNITY_CHANNELS": "قنوات مجتمع eTools",
+    "DISCUSSION": "مناقشة",
+    "IMPLEMENTATION_INTELLIGENCE": "تطبيق المعلومات",
+    "INFORMATION": "معلومات",
+    "KNOWLEDGE_BASE": "قاعدة المعرفة",
+    "MANAGEMENT": "الإدارة",
+    "PROFILEANDSIGNOUT": "الملف الشخصي وتسجيل الخروج",
+    "REFRESH": "تحديث",
+    "SUPPORT": "الدعم",
+    "TEMPLATES": "النماذج",
+    "TITLE": "المراقبة الميدانية",
+    "VISITS": "الزيارات",
+    "TPM": "مراقبو الطرف الثالث",
+    "DASHBOARD": "لوحة القيادة"
+  },
+  "FILTERS_ELEMENT": {
+    "TITLE": "المرشحات",
+    "CLEAR_ALL": "امسح الكل"
+  },
+  "LOCATION_WIDGET": {
+    "GATEWAY_NAME": "المكان",
+    "MISSING_SITES": {
+      "ADD_MISSING": "يمكنك إضافة المواقع المفقودة في",
+      "NO_SITES": "لا توجد اماكن في هذا الموقع"
+    },
+    "NO_SEARCH_RESULTS": {
+      "CHANGE_REQUEST": "رجاءأ، قم بتغيير طلب البحث الخاص بك",
+      "NO_LOCATIONS": "تعذر العثور على أماكن أو مواقع"
+    }
+  },
+  "PAGE_NOT_FOUND": {
+    "CONTENT_DOESNT_EXIST": "يبدو أن الصفحة التي تبحث عنها غير موجودة. ارجع للخلف",
+    "HEADER": "أُووبس! لقد أصبت 404",
+    "HOME": "الصفحة الرئيسية",
+    "TRY_AGAIN": " وحاول مرة أخرى؟"
+  },
+  "MANAGEMENT": {
+    "EXPORT": "تصدير",
+    "NAVIGATION_TABS": {
+      "RATIONALE": "التفسير المنطقي",
+      "SITES": "الاماكن"
+    },
+    "TITLE": "إدارة"
+  },
+  "TEMPLATES_NAV": {
+    "NAVIGATION_TABS": {
+      "ISSUE_TRACKER": "نقاط ملاحظة",
+      "QUESTIONS": "أسئلة",
+      "TEMPLATE": "النماذج"
+    },
+    "TITLE": "النماذج"
+  },
+  "ANALYZE": {
+    "MONITORING_TAB": {
+      "COMPLETED_VISITS": "الزيارات المكتملة",
+      "COVERAGE": {
+        "CP_OUTPUT": {
+          "LABEL": "عرض مخرجات البرنامج القطري التي يمكن مراقبتها على مستوى المجتمع."
+        },
+        "OPEN_ISSUES": {
+          "ACTION_POINTS": "نقاط العمل",
+          "ISSUES": "نقاط ملاحظة",
+          "TITLE": "افتح الملاحظات ونقاط العمل"
+        },
+        "PARTNERSHIP": {
+          "COMPLETED_ASCEND_SORTING_TYPE": "% الإنجاز ↑",
+          "COMPLETED_DESCEND_SORTING_TYPE": "% الإنجاز ↓",
+          "COMPLETED_TASKS": "المهام المكتملة",
+          "DAYS_SINCE_LAST_VISIT": "الأيام المنقضية منذ آخر زيارة",
+          "MINIMUM_REQUIRED": "الحد الأدنى المطلوب من الزيارات البرمجية",
+          "MINIMUM_REQUIRED_VISITS": "الحد الأدنى المطلوب:",
+          "SORT_BY": "فرز حسب"
+        },
+        "PD_SPD": {
+          "LABEL": "عرض وثائق   البرامج النشطة التي تقدم مخرجات البرامج القطرية التي يمكن مراقبتها على مستوى المجتمع. (إذا لم تكن هناك أي زيارات سابقة للبرامج ، فإن \"الأيام المنقضية منذ آخر زيارة\"  هي عدد الأيام منذ بداية وثيقة البرامج)"
+        },
+        "SHARED_TAB": {
+          "AVERAGE_DAYS_SINCE": "متوسط الأيام بين الزيارات",
+          "DAYS_SINCE_LAST_VISIT": "الأيام المنقضية منذ آخر زيارة"
+        },
+        "TITLE": "تغطية الشراكات النشطة"
+      },
+      "GEOGRAPHIC_COVERAGE": {
+        "COMPLETED_VISITS": "الزيارات المكتملة",
+        "NO_VISITS": "لا زيارات",
+        "TITLE": "التغطية الجغرافية"
+      },
+      "NAVIGATION_TABS": {
+        "BY_CP_OUTPUT": "حسب مخرجات البرنامج  القطري",
+        "BY_LOCATION": "حسب الموقع",
+        "BY_PARTNER": "حسب الشريك",
+        "BY_PD_SPD": "حسب وثيقة البرامج"
+      },
+      "VISITS_ELIGIBLE_FOR_HACT": {
+        "CP_OUTPUT": "مخرجات البرنامج القطري",
+        "HACT_ELIGIBLE_VISITS": "الزيارات الجدير اعتبارها وفق اطار النهج المنسق للتحويلات النقدية (HACT)",
+        "PARTNER": "الشريك",
+        "PD_SPD": "وثيقة البرامج/اتفاقية التمويل الصغير",
+        "TITLE": "الزيارات الجدير اعتبارها زيارة برنامج وفق اطار النهج المنسق للتحويلات النقدية (HACT)",
+        "VISIT": "زيارة",
+        "VISIT_END_DATE": "تاريخ انتهاء الزيارة"
+      }
+    },
+    "NAVIGATION_TABS": {
+      "COUNTRY_OVERVIEW": "نبذة عن الدولة",
+      "MONITORING_ACTIVITY": "أنشطة المراقبة"
+    },
+    "TITLE": "تحليل"
+  },
+  "PROGRESSBAR": {
+    "COMPLETED": "مكتمل",
+    "COMPLETED_VISITS": "الزيارات المنجزة",
+    "PLANNED": "مخطط",
+    "PLANNED_VISITS": "الزيارات المخطط لها (حتى ديسمبر)"
+  },  
+  "THIS_FIELD_IS_REQUIRED": "هذا الحقل مطلوب",
+  "LOCATION_TO_BE_VISITED": "الموقع المراد زيارته",
+  "SITE_TO_BE_VISITED": "الموقع الذي سيتم زيارته",
+  "ROWS_PER_PAGE": "عدد الصفوف لكل صفحة:",
+  "UPLOAD_FILE": "تحميل الملف",
+  "SELECT": "تحديد",
+  "CANCEL": "يلغي",
+  "TRUE": "صحيح",
+  "FALSE": "خطأ شنيع",  
+  "VIEW": "عرض",
+  "FILTER_BY_SECTION": "تصفية حسب القسم",
+  "SUPPORT": "الدعم",
+  "ERROR_CHANGING_WORKSPACE": "حدث خطأ أثناء تغيير مساحة العمل",
+  "ERROR_CHANGING_ORGANIZATION": "حدث خطأ أثناء تغيير مؤسستك",
+  "SELECT_ORGANIZATION": "حدد المنظمة",
+  "CHANGES_SAVED": "يتم حفظ كافة التغييرات",
+  "ERROR_ATTACHEMENT_LOAD": "لا يمكن تحميل المرفقات",
+  "ERROR_CHANGES_SAVE": "لا يمكن حفظ التغييرات. ",
+  "SELECT_CORRECT_FILE": "من فضلك، حدد الملف الصحيح",
+  "ERROR_LOAD_LOCATIONS": "لا يمكن تحميل المواقع للقطعة",
+  "ERROR_LOAD_ACTIVITIES_LIST": "لا يمكن تحميل قائمة الأنشطة",
+  "ERROR_CREATE_ACTIVITY": "لا يمكن إنشاء النشاط",
+  "ERROR_UPLOAD": "لا يمكن تحميل المرفقات. ",
+  "ERROR_UPLOAD_FILE_TOO_LARGE": "خطأ أثناء تحميل الملف: الملف كبير جدًا",
+  "ERROR_UPDATE_CHECKLIST": "لا يمكن تحديث قائمة التحقق، يرجى المحاولة مرة أخرى",  
+  "START_DATE_BEFORE_END_DATE": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
+  "ERROR_LOAD_REPORT": "لا يمكن تحميل بيانات FullReport",
+  "ERROR_PLAN_YEAR": "لا يمكن التخطيط للسنة المحددة",  
+  "SELECT_CORRECT_LOCATION": "يرجى تحديد الموقع الصحيح على الخريطة",
+  "ERROR_LOAD_QUESTIONS": "لا يمكن تحميل قائمة الأسئلة",
+  "ERROR_LOAD_TEMPLATES": "لا يمكن تحميل قائمة قوالب الأسئلة",
+  "ERROR_UPDATE_QUESTION_TEMPLATE": "لا يمكن تحديث قوالب الأسئلة بالمعرف",
+  "ERROR_CHANGE_ACTIVITY_STATUS": "لا يمكن تغيير حالة النشاط",
+  "PLEASE_TRY_AGAIN": "الرجاء معاودة المحاولة في وقت لاحق",
+  "PLEASE_WAIT_COUNTRY_CHANGE": "الرجاء الانتظار بينما تتغير بيانات الدولة...",
+  "PLEASE_WAIT_ORGANIZATION_CHANGE": "الرجاء الانتظار بينما تتغير بيانات المؤسسة...",
+  "ERROR_SAVE_PROFILE": "لم يتم حفظ بيانات الملف الشخصي. ",
+  "TPM": {
+    "TITLE": "المراقبين المستقلين",
+    "ADD_NEW_VENDOR": "إضافة مورد جديد",
+    "VENDOR_NUMBER_NOT_FOUND": "لم يتم العثور على رقم المورد",
+    "NOT_SYNCED": "لم تتم مزامنتها",
+    "MARKED_FOR_DELETION_IN_VISION": "تم وضع علامة للحذف في VISION",
+    "BLOCKED_IN_VISION": "محظور في VISION",
+    "SYNCED_FROM_VISION": "تمت مزامنتها من VISION",
+    "FILTERS": {
+      "SEARCH": "ابحث عن رقم المورد أو المراقب المستقل"
+    },
+    "COLUMNS": {
+      "VENDOR_NUMBER": "رقم المورد",
+      "TPM_NAME": "اسم المراقب المستقل",
+      "PHONE_NUMBER": "رقم التليفون",
+      "EMAIL": "بريد الكتروني"
+    }
+  },
+  "TPM_DETAILS": {
+    "TPM_CONTACTS": "جهات اتصال المراقب المستقل",
+    "ATTACH_FILE_FOR_VISIT": "أرفق ملف للزيارة الشاملة",
+    "ACCESS_MANAGEMENT_PORTAL": "بوابة إدارة الوصول",
+    "SHOW_INACTIVE": "إظهار غير نشط",
+    "TABS": {
+      "details": "تفاصيل الشريك",
+      "attachments": "المرفقات"
+    },
+  "TPM_PARTNER_DETAILS": "تفاصيل شريك المراقب المستقل",
+  "VENDOR_NUMBER": "رقم المورد",
+  "TPM_NAME": "اسم المراقب المستقل",
+  "PHONE_NUMBER": "رقم التليفون",
+  "EMAIL": "بريد الكتروني",
+  "ADDRESS": "العنوان",
+  "VALID_EMAIL_REQUIRED": "مطلوب بريد إلكتروني صحيح"
+  },
+  "TPM_CONTACTS": {
+    "COLUMNS": {
+      "POSITION": "المنصب",
+      "FIRST_NAME": "الاسم الاول",
+      "LAST_NAME": "إسم العائلة",
+      "PHONE_NUMBER": "رقم التليفون",
+      "EMAIL": "بريد الكتروني",
+      "ACTIVE": "فعال"
+    }
+  },
+  "INACTIVE": "غير نشط",
+  "NO_ACCESS": "ممنوع الدخول",
+  "CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE": "تحذير! أنت على وشك إرسال هذه الزيارة لمراجعة التقرير وتم وضع علامة ”غير مراقب” على بعض (أو كل) العناصر ذات الصلة التي تمت مراقبتها. يمكنك إعادة زيارة علامة التبويب “ملخص” لإجراء أي تعديلات إذا رغبت في ذلك، وإلا هل أنت متأكد من رغبتك في المتابعة دون وضع علامة على العناصر كمراقبة؟",
+  "CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE": "أنت على وشك إكمال زيارة تحتوي على عناصر “غير خاضعة للمراقبة”. يمكنك الرفض بدلاً من ذلك إذا لزم الأمر، وإلا، هل أنت متأكد من رغبتك في متابعة العناصر التي تم وضع علامة “غير خاضعة للمراقبة” عليها؟",
+  "ACTION_POINT_REMINDER": "مع ملاحظة أنه لم يتم طرح أي نقاط عمل، يرجى تذكر إضافة أي نقاط قبل المتابعة إذا لزم الأمر.",
+  "CONTINUE": "يكمل",
+  "INVALID_NUMBER": "رقم غير صالح",
+  "DUPLICATE": "ينسخ",
+  "ERROR_AT_SAVING_DUPLICATE": "حدث خطأ أثناء حفظ النسخة المكررة",
+  "NO_ACTIVITY_DATA_TO_DUPLICATE": "لا توجد بيانات نشاط لتكرارها",
+  "PD_STATUS": {
+    "DRAFT": "تطوير",
+    "REVIEW": "مراجعة",
+    "SIGNATURE": "إمضاء",
+    "SIGNED": "وقعت",
+    "ACTIVE": "نشيط",
+    "CANCELLED": "ألغيت",
+    "ENDED": "انتهى",
+    "CLOSED": "مغلق",
+    "SUSPENDED": "معلق",
+    "TERMINATED": "تم إنهاؤه",
+    "EXPIRED": "منتهي الصلاحية"
+  }
+}
