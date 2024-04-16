@@ -79,7 +79,8 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
     }
 
     this.showExpired = (e.target as SlSwitch).checked;
-    this.loadingCpOutputs();
+    const partnerIds = simplifyValue(this.selectedPartners || []);
+    this.loadingCpOutputs(partnerIds);
   }
 
   // language=HTML
