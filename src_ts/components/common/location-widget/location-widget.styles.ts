@@ -67,6 +67,7 @@ export const LocationWidgetStyles: CSSResult = css`
     height: calc(100% - 43px);
     position: relative;
     overflow-y: auto;
+    flex-flow: column;
   }
 
   .widget-container .map-and-list .list etools-input {

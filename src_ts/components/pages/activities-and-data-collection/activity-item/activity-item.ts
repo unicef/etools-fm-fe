@@ -332,7 +332,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
       }
     });
-    ['location', 'location_site', 'tpm_partner', 'visit_lead'].forEach((key) => {
+    ['location', 'location_site', 'tpm_partner', 'visit_lead', 'report_reviewer'].forEach((key) => {
       if (this.activityDetails![key as keyof IActivityDetails]) {
         // @ts-ignore: Object is possibly 'null'
         dataToDuplicate[key] = this.activityDetails[key].id;
