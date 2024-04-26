@@ -4,10 +4,10 @@ import {template} from './checklist-selection-table.tpl';
 import {clone} from 'ramda';
 import {store} from '../../../../../../redux/store';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {TemplatesStyles} from '../../../../templates/templates-tab/templates-tab.styles';
 import {ChecklistSelectionTableStyles} from './checklist-selection-table.styles';
@@ -30,7 +30,8 @@ export class ChecklistSelectionTable extends LitElement {
   @property() loadingInProcess = false;
   @property() activityDetails: IActivityDetails | null = null;
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   @property() protected blockEdit = false;
 
   @query('#details-input') private detailsInput!: HTMLInputElement;
@@ -47,7 +48,7 @@ export class ChecklistSelectionTable extends LitElement {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       TemplatesStyles,
       ChecklistSelectionTableStyles

@@ -22,6 +22,7 @@ export const geographicCoverageStyles: CSSResult = css`
     flex-wrap: wrap;
     padding: 2%;
     justify-content: space-between;
+    margin-block-end: 20px;
   }
   .geographic-coverage__header-item {
     display: flex;
@@ -64,5 +65,10 @@ export const geographicCoverageStyles: CSSResult = css`
     background-color: var(--mark-eleven);
   }
   .coverage-legend__label {
+  }
+  @media (max-width: 576px) {
+    .geographic-coverage__header-item {
+      flex-basis: 100%;
+    }
   }
 `;

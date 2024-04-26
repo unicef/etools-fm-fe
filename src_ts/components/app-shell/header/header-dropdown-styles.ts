@@ -16,10 +16,6 @@ export const headerDropdownStyles: TemplateResult = html`
       cursor: pointer;
     }
 
-    :host([dir='rtl']) etools-dropdown {
-      --paper-input-container-shared-input-style_-_max-width: 75px;
-    }
-
     etools-dropdown::part(display-input) {
       text-align: end;
     }
@@ -39,7 +35,7 @@ export const headerDropdownStyles: TemplateResult = html`
     }
 
     #languageSelector {
-      max-width: 120px;
+      max-width: 160px;
     }
 
     etools-accesibility {
@@ -49,6 +45,12 @@ export const headerDropdownStyles: TemplateResult = html`
 
     .w100 {
       width: 100%;
+    }
+    .dropdown {
+      padding-block-start: 6px;
+      margin-inline-start: auto;
+      display: flex;
+      margin-inline-end: 20px;
     }
 
     etools-dropdown.warning::part(combobox) {
@@ -61,9 +63,27 @@ export const headerDropdownStyles: TemplateResult = html`
       opacity: 1;
     }
 
+    @media (max-width: 1024px) {
+      #languageSelector,
+      organizations-dropdown,
+      countries-dropdown {
+        max-width: 150px !important;
+      }
+    }
+
     @media (max-width: 768px) {
       etools-dropdown {
         max-width: 130px;
+      }
+    }
+    @media (max-width: 576px) {
+      #app-logo {
+        display: none;
+      }
+      #languageSelector,
+      organizations-dropdown,
+      countries-dropdown {
+        max-width: 130px !important;
       }
     }
   </style>

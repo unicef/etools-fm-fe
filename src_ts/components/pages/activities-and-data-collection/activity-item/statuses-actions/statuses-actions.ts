@@ -4,6 +4,7 @@ import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
+import './report-reviewer-popup';
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {
@@ -18,7 +19,7 @@ import {
   REPORT_FINALIZATION,
   COMPLETED
 } from './activity-statuses';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -150,12 +151,11 @@ export class StatusesActionsComponent extends LitElement {
     }
 
     const storeState = store.getState();
+    const activityDetails = storeState.activityDetails.data;
 
     // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
-    if (
-      newStatusData.status === COMPLETED ||
-      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)
-    ) {
+    const isReportFinalization = newStatusData.status === SUBMITTED && activityDetails.status === REPORT_FINALIZATION;
+    if (newStatusData.status === COMPLETED || isReportFinalization) {
       const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some(
         (x: SummaryOverall) => x.on_track === null
       );
@@ -170,16 +170,21 @@ export class StatusesActionsComponent extends LitElement {
           )
         );
       }
-      if (
-        storeState.activityDetails.data.permissions.edit.action_points &&
-        !(storeState.actionPointsList?.data || []).length
-      ) {
+      if (activityDetails.permissions.edit.action_points && !(storeState.actionPointsList?.data || []).length) {
         // if can add Action Point and doesn't have any, display reminder
         confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
       }
 
       if (confirmText.length && !(await this.confirmSubmitSummaryNotCompleted(confirmText.join('<br/><br/>')))) {
         return;
+      }
+
+      if (isReportFinalization && storeState.user.data?.is_unicef_user) {
+        const reviewResponse = await this.getReportReviewer(activityDetails);
+        if (!reviewResponse) {
+          return;
+        }
+        newStatusData.report_reviewer = reviewResponse.reviewer;
       }
     }
 
@@ -225,10 +230,22 @@ export class StatusesActionsComponent extends LitElement {
     });
   }
 
+  private getReportReviewer(activity: IActivityDetails): Promise<ReportReviewerPopupResponse | null> {
+    return openDialog<ReportReviewerPopupData, ReportReviewerPopupResponse>({
+      dialog: 'report-reviewer-popup',
+      dialogData: {activity: activity}
+    }).then(({confirmed, response}: IDialogResponse<ReportReviewerPopupResponse>) => {
+      if (!confirmed || !response) {
+        return null;
+      }
+      return response;
+    });
+  }
+
   static get styles(): CSSResult[] {
     // language=CSS
     return [
-      FlexLayoutClasses,
+      layoutStyles,
       SharedStyles,
       css`
         :host {
@@ -238,6 +255,7 @@ export class StatusesActionsComponent extends LitElement {
 
         etools-button-group {
           --etools-button-group-color: var(--green-color);
+          height: fit-content;
         }
 
         etools-button.sl-button-group__button {

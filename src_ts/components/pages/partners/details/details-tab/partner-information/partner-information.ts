@@ -1,10 +1,10 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../../../../redux/store';
-import {connect} from 'pwa-helpers/connect-mixin.js';
+import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {template} from './partner-information.tpl';
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
@@ -33,7 +33,7 @@ export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmP
   permissions!: GenericObject;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
   }
 
   render(): TemplateResult {

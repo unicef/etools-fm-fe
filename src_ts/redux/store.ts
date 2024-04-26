@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, compose, createStore, Store, StoreEnhancer} from 'redux';
 import thunk from 'redux-thunk';
-import {lazyReducerEnhancer, LazyStore} from 'pwa-helpers/lazy-reducer-enhancer.js';
+import {lazyReducerEnhancer, LazyStore} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 
 import app from './reducers/app.js';
 import {actionsMiddleware, asyncActionMiddleware} from './middleware';

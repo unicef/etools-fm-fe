@@ -24,7 +24,7 @@ export function template(this: RemoveAttachmentPopupComponent): TemplateResult {
         ?active="${this.removeInProcess}"
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <div class="container layout horizontal">
+      <div class="container-dialog layout-horizontal">
         <div>${translate('ATTACHMENTS_LIST.DELETE_POPUP_TITLE')}</div>
       </div>
     </etools-dialog>

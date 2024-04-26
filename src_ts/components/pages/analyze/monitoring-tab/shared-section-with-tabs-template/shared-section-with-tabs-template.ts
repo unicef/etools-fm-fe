@@ -1,10 +1,10 @@
 import {css, CSSResult, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {store} from '../../../../../redux/store';
 import {SwitchTab} from '../../../../../redux/actions/monitoring-activity.actions';
@@ -32,7 +32,7 @@ export class SharedSectionWithTabsTemplate extends LitElement {
           @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
           .activeTab="${this.activeTab}"
         ></etools-tabs-lit>
-        <div class="layout vertical card-content">${this.tabElement}</div>
+        <div class="layout-vertical card-content">${this.tabElement}</div>
       </section>
     `;
   }
@@ -61,6 +61,6 @@ export class SharedSectionWithTabsTemplate extends LitElement {
         border-bottom: 1px solid lightgrey;
       }
     `;
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, monitoringTabStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, monitoringTabStyles];
   }
 }

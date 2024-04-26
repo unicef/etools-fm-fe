@@ -6,7 +6,7 @@ import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from 'lit-translate';
 import {template} from './summary-card.tpl';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 // import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
@@ -37,7 +37,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected isEditMode = false;
   @property() protected blockEdit = false;
   @property() protected updateInProcess = false;
-  @property() protected onTrackValue: boolean | null = null;
+  @property() protected onTrackValue: boolean | null | undefined = null;
   @property() protected trackStatusText = '';
   @property() protected trackStatusColor = '';
   @property() protected orginalTrackStatus: boolean | null = null;
@@ -57,6 +57,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.originalFindings = clone(this.findings);
     this.originalOverallInfo = clone(this.overallInfo);
+    this.onTrackValue = this.originalOverallInfo?.on_track;
     this._attachTypesEndpointName = ACTIVITY_REPORT_ATTACHMENTS;
     this.attachmentTypes = store.getState().attachmentsList.attachmentsTypes[this._attachTypesEndpointName];
     if (!this.attachmentTypes || !this.attachmentTypes.length) {
@@ -114,10 +115,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   protected getFindingQuestion(finding: SummaryFinding): TemplateResult {
     return html`
-      <div class="layout vertical question-container">
+      <div class="layout-vertical question-container">
         <div class="question-text">${finding.activity_question.text}</div>
         <div class="question-details">${finding.activity_question.specific_details}</div>
-        <div class="flex-2 layout horizontal wrap">
+        <div class="flex-2 layout-horizontal layout-wrap">
           ${finding.activity_question.findings.map(
             (completedFinding: CompletedFinding) => html`
               <completed-finding
@@ -144,8 +145,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected getOverallFindingTemplate(): TemplateResult {
     return this.overallInfo
       ? html`
-          <div class="overall-finding layout horizontal">
-            <div class="flex-2 layout horizontal wrap" ?hidden="${!this.filteredOverallFindings.length}">
+          <div class="overall-finding layout-horizontal">
+            <div class="flex-2 layout-horizontal layout-wrap" ?hidden="${!this.filteredOverallFindings.length}">
               ${this.filteredOverallFindings.map(
                 (finding: CompletedOverallFinding) => html`
                   <completed-finding
@@ -328,8 +329,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     if (this.originalOverallInfo.narrative_finding !== this.overallInfo.narrative_finding) {
       changes.narrative_finding = this.overallInfo.narrative_finding;
     }
-    if (this.onTrackValue !== this.originalOverallInfo.on_track) {
-      changes.on_track = this.onTrackValue;
+    if (Boolean(this.onTrackValue) !== this.originalOverallInfo.on_track) {
+      changes.on_track = Boolean(this.onTrackValue);
     }
     if (Object.keys(changes).length) {
       changes.id = this.overallInfo.id;
@@ -369,7 +370,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
 
   private findingsStatusButton(): TemplateResult {
     return html`
-      <div class="ontrack-container layout horizontal">
+      <div class="ontrack-container layout-horizontal">
         ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.OFF_TRACK')}
         <sl-switch
           ?readonly="${this.readonly}"
@@ -385,7 +386,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     // language=CSS
     return [
       // FormBuilderCardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       RadioButtonStyles,
       css`
         .completed-finding {
@@ -393,14 +394,22 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
         sl-switch {
           margin: 0 4px 0 15px;
-          --paper-toggle-button-unchecked-button-color: var(--error-color);
-          --paper-toggle-button-unchecked-bar-color: var(--error-color);
         }
         sl-switch[readonly] {
           pointer-events: none;
         }
         .ontrack-container {
           margin-inline-end: 40px;
+        }
+        .flex-2 {
+          -ms-flex: 2;
+          -webkit-flex: 2;
+          flex: 2;
+        }
+        .flex-3 {
+          -ms-flex: 3;
+          -webkit-flex: 3;
+          flex: 3;
         }
       `
     ];

@@ -1,4 +1,4 @@
-import {connect} from 'pwa-helpers/connect-mixin.js';
+import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {store} from '../../../redux/store';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown.js';
 import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
@@ -72,9 +72,10 @@ export class organizationsDropdown extends connect(store)(LitElement) {
         trigger-value-change-event
         @etools-selected-item-changed="${this.onOrganizationChange}"
         hide-search
-        min-width="180px"
+        min-width="160px"
         placement="bottom-end"
         .syncWidth="${false}"
+        auto-width
       ></etools-dropdown>
     `;
   }

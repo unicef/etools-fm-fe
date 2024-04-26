@@ -1,10 +1,10 @@
 import {css, CSSResult, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './pd-ssfa-details.tpl';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 
 @customElement('pd-ssfa-details')
@@ -14,7 +14,8 @@ export class PdSsfaDetails extends LitElement {
   @property() pageSize = 5;
   @property() pageNumber = 1;
   @property() loading = false;
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   set interventionsData(interventions: IActivityIntervention[] | null) {
     this.loading = true;
     this.interventions = interventions;
@@ -51,7 +52,7 @@ export class PdSsfaDetails extends LitElement {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       css`
         .link-content {

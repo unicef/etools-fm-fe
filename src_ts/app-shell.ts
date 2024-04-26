@@ -2,9 +2,7 @@
  @license
  Copyright (c) 2019 The eTools Project Authors. All rights reserved.
  */
-import {connect} from 'pwa-helpers/connect-mixin';
-import {installMediaQueryWatcher} from 'pwa-helpers/media-query';
-import {installRouter} from 'pwa-helpers/router';
+import {connect, installMediaQueryWatcher, installRouter} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 // This element is connected to the Redux store.
 import {store} from './redux/store';
 // These are the elements needed by this element.

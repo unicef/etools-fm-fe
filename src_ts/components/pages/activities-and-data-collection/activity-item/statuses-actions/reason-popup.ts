@@ -36,7 +36,7 @@ export class ChecklistAttachments extends LitElement {
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
-        <div class="container">
+        <div class="container-dialog">
           <etools-textarea
             id="details-input"
             .value="${this.reason}"
