@@ -92,7 +92,7 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
             <entries-list
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.INTERVENTIONS')}"
-              .formatItem="${(item: EtoolsIntervention) => item.title}"
+              .formatItem="${(item: EtoolsIntervention) => this.getPDText(item)}"
               .items="${this.activityInterventions}"
               ?is-readonly="${!this.isEditMode}"
               @add-entry="${() => this.openAddIntervention()}"
@@ -183,6 +183,10 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
     items.splice(index, 1);
     (this[arrayName] as T[]) = items;
     this.editedData[field] = simplifyValue(items);
+  }
+
+  protected getPDText(item: EtoolsIntervention) {
+    return item.title.includes(item.number) ? item.title : `${item.number} ${item.title}`;
   }
 
   static get styles(): CSSResultArray {

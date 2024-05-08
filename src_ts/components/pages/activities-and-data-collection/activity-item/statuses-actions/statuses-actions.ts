@@ -150,7 +150,7 @@ export class StatusesActionsComponent extends LitElement {
       return;
     }
 
-    const storeState = store.getState();
+    let storeState = store.getState();
     const activityDetails = storeState.activityDetails.data;
 
     // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
@@ -187,8 +187,8 @@ export class StatusesActionsComponent extends LitElement {
         newStatusData.report_reviewer = reviewResponse.reviewer;
       }
     }
-
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
+      storeState = store.getState();
       const errors: any = storeState.activityDetails.error;
       if (errors) {
         const backendMessage = getErrorText(errors);

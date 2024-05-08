@@ -32,10 +32,12 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
   @property() outputs: EtoolsCpOutputShort[] = [];
   @property() pdStatuses: IOption[] = [];
   @property() interventions: EtoolsInterventionShort[] = [];
+  @property() loadingInterventions = false;
+  @property() loadingOutputs = false;
   private queryParams: QueryParams = {};
 
-  private loadingInterventions!: Callback;
-  private loadingOutputs!: Callback;
+  private loadInterventions!: Callback;
+  private loadOutputs!: Callback;
 
   // language=HTML
   render(): TemplateResult {
@@ -50,6 +52,8 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
         dialog-title="${translate('ACTIVITY_DETAILS.ADD_INTERVENTION')}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.addIntervention()}"
+        ?show-spinner="${this.loadingInterventions || this.loadingOutputs}"
+        spinner-text=${translate('MAIN.LOADING_DATA_IN_PROCESS')}
         @close="${this.onClose}"
       >
         <div class="container-dialog">
@@ -145,23 +149,27 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.loadingInterventions = debounce((params: QueryParams) => {
+    this.loadInterventions = debounce((params: QueryParams) => {
+      this.loadingInterventions = true;
       const {url}: IResultEndpoint = getEndpoint(INTERVENTIONS);
       this.queryParams = {...this.queryParams, ...params};
       const queryString: string = EtoolsRouter.encodeQueryParams(this.queryParams);
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
-      request<EtoolsInterventionShort[]>(endpoint).then(
-        (response: EtoolsInterventionShort[]) => (this.interventions = response)
-      );
+      request<EtoolsInterventionShort[]>(endpoint)
+        .then((response: EtoolsInterventionShort[]) => (this.interventions = response))
+        .finally(() => (this.loadingInterventions = false));
     }, 100);
-    this.loadingOutputs = debounce((ids: number[] = []) => {
+    this.loadOutputs = debounce((ids: number[] = []) => {
+      this.loadingOutputs = true;
       const {url} = getEndpoint(CP_OUTPUTS);
       const queryString: string = EtoolsRouter.encodeQueryParams({partners__in: ids});
       const endpoint: string = queryString ? `${url}&${queryString}` : url;
-      request<EtoolsCpOutputShort[]>(endpoint).then((response: EtoolsCpOutputShort[]) => (this.outputs = response));
+      request<EtoolsCpOutputShort[]>(endpoint)
+        .then((response: EtoolsCpOutputShort[]) => (this.outputs = response))
+        .finally(() => (this.loadingOutputs = false));
     }, 100);
-    this.loadingInterventions();
-    this.loadingOutputs();
+    this.loadInterventions();
+    this.loadOutputs();
     this.setPDStatuses();
   }
 
@@ -174,8 +182,8 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     if (JSON.stringify(this.selectedPartners) !== JSON.stringify(partners)) {
       this.selectedPartners = [...partners];
       const ids: number[] = simplifyValue(partners);
-      this.loadingOutputs(ids);
-      this.loadingInterventions({partners__in: ids});
+      this.loadOutputs(ids);
+      this.loadInterventions({partners__in: ids});
     }
   }
 
@@ -183,7 +191,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     if (JSON.stringify(this.selectedCpOutputs) !== JSON.stringify(cpOutputs)) {
       this.selectedCpOutputs = [...cpOutputs];
       const ids: number[] = simplifyValue(cpOutputs);
-      this.loadingInterventions({cp_outputs__in: ids});
+      this.loadInterventions({cp_outputs__in: ids});
     }
   }
 
@@ -191,7 +199,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     if (JSON.stringify(this.selectedPdStatuses) !== JSON.stringify(pdStatuses)) {
       this.selectedPdStatuses = [...pdStatuses];
       const ids: number[] = simplifyValue(pdStatuses);
-      this.loadingInterventions({status__in: ids});
+      this.loadInterventions({status__in: ids});
     }
   }
 
