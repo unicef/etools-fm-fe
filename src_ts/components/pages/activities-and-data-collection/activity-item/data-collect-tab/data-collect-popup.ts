@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
@@ -16,7 +16,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
   @property({type: Boolean}) isNew = true;
 
   static get styles(): CSSResultArray {
-    return [FlexLayoutClasses];
+    return [layoutStyles];
   }
 
   set dialogData(data: DataCollectionChecklist) {
@@ -45,7 +45,7 @@ export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitEl
         @confirm-btn-clicked="${() => this.createChecklist()}"
         @close="${() => this.onClose()}"
       >
-        <div class="container layout vertical">
+        <div class="container-dialog layout-vertical">
           <etools-textarea
             required
             maxlength="100"

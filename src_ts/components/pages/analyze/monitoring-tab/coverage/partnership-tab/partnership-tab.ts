@@ -1,4 +1,4 @@
-import {CSSResult, LitElement, TemplateResult} from 'lit';
+import {CSSResultArray, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../../redux/store';
@@ -10,6 +10,7 @@ import {applyDropdownTranslation} from '../../../../../utils/translation-helper'
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 enum SortingTypes {
   COMPLETED_ASCEND_SORTING_TYPE = 'COMPLETED_ASCEND_SORTING_TYPE',
@@ -34,6 +35,8 @@ export class PartnershipTab extends PaginationMixin(LitElement) {
   @property() sortingOptions: DefaultDropdownOption<SortingTypes>[] = applyDropdownTranslation(RAW_SORTING_OPTIONS);
   @property() selectedSortingOption: SortingTypes = SortingTypes.COMPLETED_ASCEND_SORTING_TYPE;
   @property() loading = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
 
   private readonly partnersCoverageUnsubscribe: Unsubscribe;
   private readonly activeLanguageUnsubscribe: Unsubscribe;
@@ -53,8 +56,8 @@ export class PartnershipTab extends PaginationMixin(LitElement) {
       activeLanguageSelector(() => (this.sortingOptions = applyDropdownTranslation(RAW_SORTING_OPTIONS)))
     );
   }
-  static get styles(): CSSResult {
-    return partnershipTabStyles;
+  static get styles(): CSSResultArray {
+    return [partnershipTabStyles, layoutStyles];
   }
 
   render(): TemplateResult {

@@ -20,13 +20,6 @@ export class FilesPopup extends LitElement {
   render(): TemplateResult {
     return html`
       ${InputStyles} ${DialogStyles}
-      <style>
-        etools-upload {
-          --paper-input-container: {
-            padding: 0;
-          }
-        }
-      </style>
       <etools-dialog
         id="dialog"
         size="md"
@@ -37,7 +30,7 @@ export class FilesPopup extends LitElement {
         dialog-title="${translate('ATTACHMENTS_LIST.TITLE')}"
         @close="${this.onClose}"
       >
-        <div class="layout vertical files">
+        <div class="layout-vertical files">
           ${repeat(
             this.attachments,
             (attachment: IAttachment) =>

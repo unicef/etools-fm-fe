@@ -5,7 +5,12 @@ export const IssueTrackerTabStyles: CSSResult = css`
     position: relative;
     display: block;
   }
-
+  .no-rm {
+    margin-right: 0;
+  }
+  .no-lm {
+    margin-left: 0;
+  }
   .issue-tracker-table-section {
     padding: 0;
   }
@@ -15,10 +20,6 @@ export const IssueTrackerTabStyles: CSSResult = css`
   }
   .filter {
     width: auto;
-    min-width: 200px;
-  }
-  .filter:not(:last-of-type) {
-    margin-inline-end: 16px;
   }
   .files-column {
     color: var(--module-primary);

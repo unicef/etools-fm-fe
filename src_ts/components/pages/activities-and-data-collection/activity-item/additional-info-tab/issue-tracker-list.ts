@@ -2,9 +2,11 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {request} from '../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {LOG_ISSUES} from '../../../../../endpoints/endpoints-list';
@@ -24,6 +26,8 @@ export class IssueTrackerList extends LitElement {
     page: 1,
     page_size: 5
   };
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   @property() count = 0;
   _activityId: string | null = null;
   @property() set activityId(activityId: string) {
@@ -81,6 +85,15 @@ export class IssueTrackerList extends LitElement {
 
   render(): TemplateResult {
     return html`
+      <style>
+        ${dataTableStylesLit}
+      </style>
+      <etools-media-query
+        query="(max-width: 767px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
       <section class="elevation page-content card-container" elevation="1">
         <etools-loading
           ?active="${this.loading}"
@@ -89,28 +102,25 @@ export class IssueTrackerList extends LitElement {
         <div class="card-title-box with-bottom-line">
           <div class="card-title counter">${translate('ACTIVITY_ADDITIONAL_INFO.ISSUE_TRACKER')}</div>
         </div>
-        <etools-data-table-header no-title no-collapse>
-          <etools-data-table-column class="flex-1" field="related_to_type">
+        <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+          <etools-data-table-column class="col-data col-md-1" field="related_to_type">
             ${translate('ISSUE_TRACKER.RELATED_TO')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-2" field="name" sortable>
+          <etools-data-table-column class="col-data col-md-4" field="name" sortable>
             ${translate('ISSUE_TRACKER.NAME')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-3" field="issue">
+          <etools-data-table-column class="col-data col-md-6" field="issue">
             ${translate('ISSUE_TRACKER.ISSUE')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-1" field="attachments">
+          <etools-data-table-column class="col-data col-md-1" field="attachments">
             ${translate('ISSUE_TRACKER.ATTACHMENTS')}
           </etools-data-table-column>
         </etools-data-table-header>
         ${!this.items.length
           ? html`
-              <etools-data-table-row no-collapse>
-                <div slot="row-data" class="layout horizontal flex">
-                  <div class="col-data flex-1 truncate">-</div>
-                  <div class="col-data flex-2 truncate">-</div>
-                  <div class="col-data flex-3 truncate">-</div>
-                  <div class="col-data flex-1 truncate">-</div>
+              <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+                <div slot="row-data" class="row">
+                  <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
             `
@@ -118,18 +128,23 @@ export class IssueTrackerList extends LitElement {
         ${repeat(
           this.items,
           (logIssue: LogIssue) => html`
-            <etools-data-table-row secondary-bg-on-hover no-collapse>
-              <div slot="row-data" class="layout horizontal flex">
-                <div class="col-data flex-1">
+            <etools-data-table-row secondary-bg-on-hover no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+              <div slot="row-data" class="row">
+                <div class="col-data col-md-1" data-col-header-label="${translate('ISSUE_TRACKER.RELATED_TO')}">
                   <span class="truncate">
                     ${translate(`ISSUE_TRACKER.RELATED_TYPE.${(logIssue.related_to_type as string).toUpperCase()}`)}
                   </span>
                 </div>
-                <div class="col-data flex-2">${this.getRelatedName(logIssue)}</div>
-                <div class="col-data layout center flex-3">
+                <div class="col-data col-md-4" data-col-header-label="${translate('ISSUE_TRACKER.NAME')}">
+                  ${this.getRelatedName(logIssue)}
+                </div>
+                <div
+                  class="col-data layout align-items-center col-md-6"
+                  data-col-header-label="${translate('ISSUE_TRACKER.ISSUE')}"
+                >
                   <span class="flexible-text">${logIssue.issue}</span>
                 </div>
-                <div class="col-data flex-1">
+                <div class="col-data col-md-1" data-col-header-label="${translate('ISSUE_TRACKER.ATTACHMENTS')}">
                   ${logIssue.attachments.length
                     ? html`
                         <div class="files-column" @click="${() => this.viewFiles(logIssue)}">
@@ -145,6 +160,7 @@ export class IssueTrackerList extends LitElement {
 
         <etools-data-table-footer
           id="footer"
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
           .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
           .pageNumber="${(this.queryParams && this.queryParams.page) || undefined}"
@@ -173,7 +189,7 @@ export class IssueTrackerList extends LitElement {
     return [
       pageLayoutStyles,
       SharedStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       elevationStyles,
       css`

@@ -7,7 +7,7 @@ import {simplifyValue} from '../../../../../../../utils/objects-diff';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
-import {FlexLayoutClasses} from '../../../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {translate} from 'lit-translate';
 
 @customElement('partner-popup')
@@ -16,7 +16,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
   @property() partner: EtoolsPartner | null = null;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, FlexLayoutClasses];
+    return [SharedStyles, layoutStyles];
   }
 
   selectPartner(item: EtoolsPartner): void {
@@ -46,7 +46,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         @confirm-btn-clicked="${() => this.addPartner()}"
         @close="${this.onClose}"
       >
-        <div class="container layout vertical">
+        <div class="container-dialog">
           <etools-dropdown
             .selected="${simplifyValue(this.partner)}"
             .options="${this.partners}"

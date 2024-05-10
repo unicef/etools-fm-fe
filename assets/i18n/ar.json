@@ -101,6 +101,7 @@
     "REJECTION_NOTE": "ملاحظة الرفض",
     "REPORT_REJECTION_REASON": "سبب رفض التقرير",
     "SECTIONS": "الأقسام",
+    "SHOW_EXPIRED": "عرض منتهية الصلاحية",
     "START_DATE": "تاريخ البدء",
     "TEAM_MEMBERS": "أعضاء الفريق",
     "TPM_PARTNER": "شريك مراقبة الطرف الثالث",
@@ -110,7 +111,11 @@
       "TPM": "مراقب الطرف الثالث"
     },
     "VISIT_LEAD": "قائد الزيارة",
-    "VISIT_LETTER": "خطاب الزيارة"
+    "VISIT_LETTER": "خطاب الزيارة",
+    "REPORT_REVIEWER": "تقرير المراجع",
+    "REPORT_REVIEWER_SELECT": "سيتم إخطار المستخدم التالي بهذا الإرسال من أجل المراجعة. الرجاء تحديد المستخدم والمتابعة",
+    "REPORT_REVIEWER_CONFIRM": "سيتم إخطار المستخدم التالي بهذا الإرسال من أجل المراجعة. يرجى تأكيد المستخدم والمتابعة",
+    "REVIEWED_BY": "تمت مراجعته من قبل"
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

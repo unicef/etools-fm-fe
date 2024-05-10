@@ -59,7 +59,7 @@ export class RemoveDataCollectPopup extends LitElement {
         @confirm-btn-clicked="${() => this.processRequest()}"
         @close="${this.onClose}"
       >
-        <div class="container layout horizontal">
+        <div class="container-dialog layout-horizontal">
           <div>${translate('ACTIVITY_ITEM.DATA_COLLECTION.DELETE_ITEM')}</div>
         </div>
       </etools-dialog>

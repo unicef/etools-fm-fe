@@ -23,6 +23,7 @@ export class EntriesList extends LitElement {
         .entries-container {
           border: 1px solid #e0e0e0;
           overflow: hidden;
+          margin-bottom: 8px;
         }
         .entries-header,
         .entries-item,

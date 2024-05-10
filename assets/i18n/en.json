@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Partner Organization",
     "CP_OUTPUTS": "CP Outputs",
     "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
+    "SHOW_EXPIRED": "Show Expired",
     "PD_STATUS": "PD Status",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
     "INTERVENTIONS": "PD/SPDs",
@@ -110,7 +111,11 @@
     "CANCELLATION_NOTE": "Cancellation Note",
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
-    "EXPORT": "EXPORT"
+    "EXPORT": "EXPORT",
+    "REPORT_REVIEWER": "Report Reviewer",
+    "REPORT_REVIEWER_SELECT": "The following user will be notified of this submission in order to review. Please select the user and proceed.",
+    "REPORT_REVIEWER_CONFIRM": "The following user will be notified of this submission in order to review. Please confirm the user and proceed.",
+    "REVIEWED_BY": "Reviewed by"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",
@@ -680,6 +685,7 @@
   "DUPLICATE": "DUPLICATE",
   "ERROR_AT_SAVING_DUPLICATE": "Error at saving duplicate",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
+  "NO_RECORDS": "No records found.",
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",

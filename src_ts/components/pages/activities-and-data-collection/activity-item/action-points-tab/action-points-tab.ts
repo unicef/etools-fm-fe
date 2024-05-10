@@ -1,10 +1,10 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './action-points-tab.tpl';
-import {elevationStyles} from '../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {store} from '../../../../../redux/store';
 import {actionPointsList} from '../../../../../redux/reducers/action-points.reducer';
@@ -19,7 +19,8 @@ export class ActionPointsTab extends LitElement {
   @property() items: ActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
   @property() loading = false;
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   statusMap: Map<string, string> = new Map([
     ['open', 'Open'],
     ['completed', 'Completed']
@@ -75,7 +76,7 @@ export class ActionPointsTab extends LitElement {
       elevationStyles,
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       css`
         .assignee {

@@ -103,6 +103,7 @@
     "REJECTION_NOTE": "Nota de rechazo",
     "REPORT_REJECTION_REASON": "Motivo de rechazo del informe",
     "SECTIONS": "Secciones",
+    "SHOW_EXPIRED": "Mostrar caducado",
     "START_DATE": "Fecha de inicio",
     "TEAM_MEMBERS": "Miembros del equipo",
     "TPM_PARTNER": "Socio de TPM",
@@ -112,7 +113,11 @@
       "TPM": "Monitores de terceros"
     },
     "VISIT_LEAD": "Líder de Visita",
-    "VISIT_LETTER": "Carta de visita"
+    "VISIT_LETTER": "Carta de visita",
+    "REPORT_REVIEWER": "Revisor de informes",
+    "REPORT_REVIEWER_SELECT": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor seleccione el usuario y continúe.",
+    "REPORT_REVIEWER_CONFIRM": "El siguiente usuario será notificado de este envío para poder revisarlo. Por favor confirme el usuario y continúe.",
+    "REVIEWED_BY": "Revisado por"
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

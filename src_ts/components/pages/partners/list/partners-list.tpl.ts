@@ -2,10 +2,21 @@ import {PartnersListComponent} from './partners-list';
 import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {translate} from 'lit-translate';
 
 export function template(this: PartnersListComponent): TemplateResult {
   return html`
+    <style>
+      ${dataTableStylesLit}
+    </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
     <page-content-header>
       <h1 slot="page-title">${translate('TPM.TITLE')}</h1>
 
@@ -30,8 +41,9 @@ export function template(this: PartnersListComponent): TemplateResult {
     </page-content-header>
 
     <section class="elevation page-content card-container filters-section search-container" elevation="1">
-      <div class="search-input">
+      <div class="search-input row">
         <etools-input
+          class="col-md-3 col-12"
           type="search"
           clearable
           always-float-label
@@ -54,17 +66,17 @@ export function template(this: PartnersListComponent): TemplateResult {
       ></etools-loading>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="col-data flex-2" field="vendor_number" sortable>
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+        <etools-data-table-column class="col-data col-3" field="vendor_number" sortable>
           ${translate('TPM.COLUMNS.VENDOR_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-3" field="name" sortable>
+        <etools-data-table-column class="col-data col-4" field="name" sortable>
           ${translate('TPM.COLUMNS.TPM_NAME')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2" field="phone_number" sortable>
+        <etools-data-table-column class="col-data col-2" field="phone_number" sortable>
           ${translate('TPM.COLUMNS.PHONE_NUMBER')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-2" field="email" sortable>
+        <etools-data-table-column class="col-data col-3" field="email" sortable>
           ${translate('TPM.COLUMNS.EMAIL')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -73,11 +85,8 @@ export function template(this: PartnersListComponent): TemplateResult {
       ${!this.items.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal flex">
-                <div class="col-data flex-2">-</div>
-                <div class="col-data flex-3">-</div>
-                <div class="col-data flex-2">-</div>
-                <div class="col-data flex-2">-</div>
+              <div slot="row-data" class="row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `
@@ -86,16 +95,22 @@ export function template(this: PartnersListComponent): TemplateResult {
       <!-- Table Row items -->
       ${this.items.map(
         (partner: IActivityTpmPartner) => html`
-          <etools-data-table-row secondary-bg-on-hover no-collapse>
-            <div slot="row-data" class="layout horizontal flex">
-              <div class="col-data flex-2">
+          <etools-data-table-row secondary-bg-on-hover no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="row">
+              <div class="col-data col-3" data-col-header-label="${translate('TPM.COLUMNS.VENDOR_NUMBER')}">
                 <a class="link-cell" href="${`${this.rootPath}partners/${partner.id}/details/`}"
                   >${partner.vendor_number}</a
                 >
               </div>
-              <div class="col-data flex-3">${partner.name}</div>
-              <div class="col-data flex-2">${partner.phone_number}</div>
-              <div class="col-data flex-2">${partner.email}</div>
+              <div class="col-data col-4" data-col-header-label="${translate('TPM.COLUMNS.TPM_NAME')}">
+                ${partner.name}
+              </div>
+              <div class="col-data col-2" data-col-header-label="${translate('TPM.COLUMNS.PHONE_NUMBER')}">
+                ${partner.phone_number}
+              </div>
+              <div class="col-data col-3" data-col-header-label="${translate('TPM.COLUMNS.EMAIL')}">
+                ${partner.email}
+              </div>
             </div>
           </etools-data-table-row>
         `
@@ -104,6 +119,7 @@ export function template(this: PartnersListComponent): TemplateResult {
       <!-- Table Paginator -->
       <etools-data-table-footer
         id="footer"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
         .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
         .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
         .pageNumber="${(this.queryParams && this.queryParams.page) || undefined}"

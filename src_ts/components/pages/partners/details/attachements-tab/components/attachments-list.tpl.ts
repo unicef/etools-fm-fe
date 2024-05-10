@@ -6,16 +6,24 @@ import {PartnerAttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit';
 import {translate} from 'lit-translate';
 import {getTypeDisplayName} from '../../../../../utils/attachments-helper';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: PartnerAttachmentsListComponent): TemplateResult {
   // language=HTML
   return html`
     <style>
-      .attachments-list-table-section {
+      ${dataTableStylesLit} .attachments-list-table-section {
         position: relative;
         padding: 0;
       }
     </style>
+    <etools-media-query
+      query="(max-width: 767px)"
+      @query-matches-changed="${(e: CustomEvent) => {
+        this.lowResolutionLayout = e.detail.value;
+      }}"
+    ></etools-media-query>
 
     <section class="elevation page-content card-container attachments-list-table-section" elevation="1">
       <etools-loading
@@ -37,14 +45,14 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
       </div>
 
       <!-- Table Header -->
-      <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="col-data flex-1" field="created">
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+        <etools-data-table-column class="col-data col-3" field="created">
           ${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-1" field="file_type">
+        <etools-data-table-column class="col-data col-3" field="file_type">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data flex-4" field="file">
+        <etools-data-table-column class="col-data col-6" field="file">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE')}
         </etools-data-table-column>
       </etools-data-table-header>
@@ -53,10 +61,8 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
       ${this.loadingInProcess || !this.attachmentsList.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-1">-</div>
-                <div class="col-data flex-4 ">-</div>
+              <div slot="row-data" class="editable-row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
               </div>
             </etools-data-table-row>
           `
@@ -66,11 +72,25 @@ export function template(this: PartnerAttachmentsListComponent): TemplateResult 
       ${!this.loadingInProcess
         ? this.attachmentsList.map(
             (attachment: IAttachment) => html`
-              <etools-data-table-row no-collapse secondary-bg-on-hover>
-                <div slot="row-data" class="layout horizontal editable-row flex">
-                  <div class="col-data flex-1">${this.formatDate(attachment.created)}</div>
-                  <div class="col-data flex-1">${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}</div>
-                  <div class="col-data flex-4 file-link">
+              <etools-data-table-row
+                no-collapse
+                secondary-bg-on-hover
+                .lowResolutionLayout="${this.lowResolutionLayout}"
+              >
+                <div slot="row-data" class="editable-row">
+                  <div class="col-data col-3" data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}">
+                    ${this.formatDate(attachment.created)}
+                  </div>
+                  <div
+                    class="col-data col-3"
+                    data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
+                  >
+                    ${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}
+                  </div>
+                  <div
+                    class="col-data col-6 file-link"
+                    data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE')}"
+                  >
                     <etools-icon name="attachment"></etools-icon>
                     <a class="file-link" target="_blank" href="${attachment.file}">${attachment.filename}</a>
                   </div>

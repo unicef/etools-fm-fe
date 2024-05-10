@@ -25,6 +25,11 @@ export const TemplatesStyles: CSSResult = css`
   .checkbox-container {
     margin-inline-end: 24px;
     width: 18px;
+    display: inline-flex;
+  }
+
+  .mt-4 {
+    margin-top: 4px;
   }
 
   .detail-placeholder {

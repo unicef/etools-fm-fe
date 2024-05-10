@@ -44,7 +44,7 @@ export const CardStyles: CSSResult = css`
   }
 
   .card-content {
-    padding: 0 18px;
+    padding: 0 12px;
   }
 
   .editable-row {
@@ -74,12 +74,14 @@ export const CardStyles: CSSResult = css`
 
   .col-data {
     height: auto;
-    min-height: 47px;
     display: flex;
-    align-items: center;
+    min-height: 46px;
     min-width: 0;
     overflow: hidden;
-    margin-right: 5px;
+  }
+
+  etools-data-table-row[low-resolution-layout] *[slot='row-data'] .col-data {
+    min-height: auto;
   }
 
   .col-data:last-child {
@@ -101,6 +103,7 @@ export const CardStyles: CSSResult = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1;
   }
 
   .col-data .flexible-text {
@@ -114,7 +117,6 @@ export const CardStyles: CSSResult = css`
 
   .row-details-content {
     font-size: var(--etools-font-size-12, 12px);
-    padding-inline-end: 100px;
   }
 
   .row-details-content .rdc-title {
@@ -137,6 +139,7 @@ export const CardStyles: CSSResult = css`
 
   .card-container {
     padding: 0;
+    position: relative;
   }
 
   .remove-title {

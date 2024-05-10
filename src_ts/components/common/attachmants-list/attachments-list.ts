@@ -4,13 +4,13 @@ import {template} from './attachments-list.tpl';
 import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
 import {store} from '../../../redux/store';
 import {attachmentsListSelector, attachmentsTypesSelector} from '../../../redux/selectors/attachments-list.selectors';
-import {elevationStyles} from '../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {Unsubscribe} from 'redux';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {SharedStyles} from '../../styles/shared-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../styles/card-styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -25,6 +25,7 @@ export class AttachmentsListComponent extends LitElement {
   tabTitleKey = 'ATTACHMENTS_LIST.TITLE';
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
   @property() attachmentsTypes: AttachmentType[] = [];
+  @property({type: Boolean}) lowResolutionLayout = false;
   attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
 
@@ -130,6 +131,6 @@ export class AttachmentsListComponent extends LitElement {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
   }
 }

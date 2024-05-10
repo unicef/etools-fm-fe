@@ -1,6 +1,6 @@
 import {CSSResult, LitElement, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {store} from '../../../../redux/store';
 import {loadQuestions} from '../../../../redux/effects/questions.effects';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -17,7 +17,7 @@ import {ANSWER_TYPES, LEVELS} from '../../../common/dropdown-options';
 import {questionsFilters} from './questions-tab.filters';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {QuestionsTabStyles} from './question-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
@@ -42,12 +42,16 @@ import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
   @property() filtersInitialized = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
   methods: EtoolsMethod[] = [];
@@ -91,7 +95,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, QuestionsTabStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, QuestionsTabStyles];
   }
 
   disconnectedCallback(): void {
@@ -124,6 +128,15 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   render(): TemplateResult {
     return html`
       ${InputStyles}
+      <style>
+        ${dataTableStylesLit}
+      </style>
+      <etools-media-query
+        query="(max-width: 767px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
       <section class="elevation page-content card-container question-filters-section" elevation="1">
         <etools-filters
           .filters="${this.filters}"
@@ -156,23 +169,27 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           </div>
         </div>
 
-        <etools-data-table-header no-title ?no-collapse="${!this.items.length}">
-          <etools-data-table-column class="flex-2 col-data" field="text" sortable>
+        <etools-data-table-header
+          no-title
+          ?no-collapse="${!this.items.length}"
+          .lowResolutionLayout="${this.lowResolutionLayout}"
+        >
+          <etools-data-table-column class="col-data col-md-4" field="text" sortable>
             ${translate('QUESTIONS.COLUMNS.TEXT')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-1 col-data" field="level" sortable>
+          <etools-data-table-column class="col-data col-md-2" field="level" sortable>
             ${translate('QUESTIONS.COLUMNS.LEVEL')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-1 col-data">
+          <etools-data-table-column class="col-data col-md-2">
             ${translate('QUESTIONS.COLUMNS.METHODS')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-1 col-data" field="answer_type" sortable>
+          <etools-data-table-column class="col-data col-md-1" field="answer_type" sortable>
             ${translate('QUESTIONS.COLUMNS.ANSWER_TYPE')}
           </etools-data-table-column>
-          <etools-data-table-column class="flex-1 col-data" field="category__name" sortable>
+          <etools-data-table-column class="col-data col-md-2" field="category__name" sortable>
             ${translate('QUESTIONS.COLUMNS.CATEGORY')}
           </etools-data-table-column>
-          <etools-data-table-column class="w60px flex-none col-data" field="is_active" sortable>
+          <etools-data-table-column class="col-data col-md-1" field="is_active" sortable>
             ${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}
           </etools-data-table-column>
         </etools-data-table-header>
@@ -180,38 +197,35 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         ${!this.items.length
           ? html`
               <etools-data-table-row no-collapse>
-                <div slot="row-data" class="layout horizontal editable-row flex">
-                  <div class="col-data flex-2">-</div>
-                  <div class="col-data flex-1">-</div>
-                  <div class="col-data flex-1">-</div>
-                  <div class="col-data flex-1">-</div>
-                  <div class="col-data flex-1">-</div>
-                  <div class="col-data w45px flex-none">-</div>
+                <div slot="row-data" class="editable-row">
+                  <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
                 </div>
               </etools-data-table-row>
             `
           : ''}
         ${this.items.map(
           (question: IQuestion) => html`
-            <etools-data-table-row secondary-bg-on-hover>
-              <div slot="row-data" class="layout horizontal editable-row flex">
-                <div class="col-data flex-2">${question.text || '-'}</div>
-                <div class="col-data flex-1">
+            <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+              <div slot="row-data" class="editable-row">
+                <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
+                  ${question.text || '-'}
+                </div>
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.LEVEL')}">
                   ${translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-'}
                 </div>
-                <div class="col-data flex-1">
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.METHODS')}">
                   <div class="truncate">
                     ${question.methods.map((method: number) => this.serializeName(method, this.methods)).join(', ') ||
                     '-'}
                   </div>
                 </div>
-                <div class="col-data flex-1">
+                <div class="col-data col-md-1" data-col-header-label="${translate('QUESTIONS.COLUMNS.ANSWER_TYPE')}">
                   ${translate(`ANSWER_TYPE_OPTIONS.${question.answer_type.toUpperCase()}`) || '-'}
                 </div>
-                <div class="col-data flex-1">
+                <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.CATEGORY')}">
                   <div class="truncate">${this.serializeName(question.category, this.categories) || '-'}</div>
                 </div>
-                <div class="col-data w45px flex-none truncate">
+                <div class="col-data col-md-1" data-col-header-label="${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}">
                   <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
                 </div>
                 <div class="hover-block">
@@ -221,7 +235,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                   ></etools-icon>
                 </div>
               </div>
-              <div slot="row-data-details" class="layout horizontal">
+              <div slot="row-data-details" class="layout-horizontal">
                 <div class="row-details-content w160px">
                   <div class="rdc-title">${translate('QUESTIONS.COLUMNS.SECTIONS')}</div>
                   <div class="truncate">
@@ -248,6 +262,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         )}
 
         <etools-data-table-footer
+          .lowResolutionLayout="${this.lowResolutionLayout}"
           id="footer"
           .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
           .pageSize="${(this.queryParams && this.queryParams.page_size) || undefined}"
