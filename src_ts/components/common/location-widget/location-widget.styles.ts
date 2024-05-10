@@ -58,6 +58,11 @@ export const LocationWidgetStyles: CSSResult = css`
     height: 300px;
   }
 
+  .sites-panel {
+    height: 300px;
+    overflow-y: auto;
+  }
+  
   .widget-container .map-and-list .list {
     overflow: hidden;
   }
