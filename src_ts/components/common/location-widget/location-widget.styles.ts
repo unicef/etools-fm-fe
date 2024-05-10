@@ -60,7 +60,6 @@ export const LocationWidgetStyles: CSSResult = css`
 
   .sites-panel {
     height: 300px;
-    overflow-y: auto;
   }
 
   .widget-container .map-and-list .list {
@@ -73,6 +72,7 @@ export const LocationWidgetStyles: CSSResult = css`
     position: relative;
     overflow-y: auto;
     flex-flow: column;
+    padding-block-end: 16px;
   }
 
   .widget-container .map-and-list .list etools-input {

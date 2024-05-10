@@ -28,7 +28,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
 
       <div class="map-and-list row">
         <div id="map" class="col-md-6 col-12"></div>
-        <div class="list col-md-6 col-12">
+        <div class="list col-md-6 col-12 sites-panel">
           <etools-input
             class="search-input"
             type="search"
