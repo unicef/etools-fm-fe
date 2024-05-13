@@ -35,6 +35,7 @@ type MemberOptions = {
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
+  @property() staffOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
@@ -190,7 +191,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.updateModelValue('report_reviewer', detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
-              .options="${this.membersOptions}"
+              .options="${this.staffOptions}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
@@ -231,6 +232,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
+          this.getStaffOptions();
           // Waited for dropdown options
           this.personResponsible = this.editedData.visit_lead;
           if (this.personResponsible) {
@@ -289,6 +291,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
       }
       return isValid;
     });
+  }
+
+  getStaffOptions(): void {
+    this.staffOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
