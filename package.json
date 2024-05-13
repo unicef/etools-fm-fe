@@ -30,7 +30,7 @@
     "@types/lodash-es": "^4.17.7",
     "@types/ramda": "0.27.37",
     "@unicef-polymer/etools-form-builder": "^3.0.0-rc.22",
-    "@unicef-polymer/etools-modules-common": "^5.0.0-rc.49",
+    "@unicef-polymer/etools-modules-common": "^5.0.0-rc.50",
     "@unicef-polymer/etools-piwik-analytics": "^4.0.1-rc.3",
     "@unicef-polymer/etools-types": "^1.11.17",
     "@unicef-polymer/etools-unicef": "^1.0.0-rc.86",
