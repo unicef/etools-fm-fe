@@ -170,7 +170,7 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
     }, 100);
     this.setPDStatuses();
     // set by default PD Active status filter checked
-    this.selectPdStatus(this.pdStatuses.filter(x => x.id === 'active'));
+    this.selectPdStatus(this.pdStatuses.filter((x) => x.id === 'active'));
     this.loadOutputs();
   }
 
