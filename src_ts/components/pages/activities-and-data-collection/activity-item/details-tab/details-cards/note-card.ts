@@ -1,11 +1,11 @@
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
-import {ROOT_PATH} from '../../../../../../config/config';
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from 'lit-translate';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('details-note-card')
 export class DetailsNoteCard extends LitElement {
@@ -50,7 +50,7 @@ export class DetailsNoteCard extends LitElement {
       ? html`
           <section class="elevation note-container" elevation="1">
             <div class="flag-icon-container">
-              <img class="flag-icon" src="${ROOT_PATH}/assets/images/flag-icon.svg" />
+              <img class="flag-icon" src="${Environment.basePath}/assets/images/flag-icon.svg" />
             </div>
 
             <div class="title">${translate(this.noteInfo.titleKey)}</div>

@@ -11,7 +11,6 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
-import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
@@ -52,13 +51,13 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
 export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
-  @property() rootPath: string = ROOT_PATH;
   @property() filters: EtoolsFilter[] | null = null;
   @property() activitiesListFilters: ActivityFilter[] = [];
   @property({type: Object}) user!: IEtoolsUserModel;
@@ -327,7 +326,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     } else if (activity.status === REPORT_FINALIZATION) {
       tab = SUMMARY_TAB;
     }
-    return `${this.rootPath}activities/${activity.id}/${tab}/`;
+    return `${Environment.basePath}activities/${activity.id}/${tab}/`;
   }
 
   private loadDataForFilters(): void {

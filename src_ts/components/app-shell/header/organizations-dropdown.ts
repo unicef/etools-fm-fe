@@ -8,10 +8,8 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {headerDropdownStyles} from './header-dropdown-styles';
 import {get as getTranslation, translate} from 'lit-translate';
 import {updateAppLocation} from '../../../routing/routes';
-import {ROOT_PATH} from '../../../config/config';
 import {changeCurrentUserOrganization} from '../../../redux/effects/organization.effects';
 import {organizationSelector} from '../../../redux/selectors/organization.selectors';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
@@ -19,6 +17,8 @@ import {isEmpty} from 'ramda';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import {toolbarDropdownStyles} from '@unicef-polymer/etools-unicef/src/styles/toolbar-dropdown-styles';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**
  * @LitElement
@@ -57,7 +57,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
 
   render(): TemplateResult {
     return html`
-      ${headerDropdownStyles}
+      ${toolbarDropdownStyles}
       <etools-dropdown
         transparent
         id="organizationSelector"
@@ -124,7 +124,7 @@ export class organizationsDropdown extends connect(store)(LitElement) {
 
   protected handleChangedOrganization(): void {
     updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
-    document.location.assign(window.location.origin + ROOT_PATH);
+    document.location.assign(Environment.baseUrl);
   }
 
   protected handleOrganizationChangeError(error: any): void {
