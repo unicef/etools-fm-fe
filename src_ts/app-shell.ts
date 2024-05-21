@@ -47,7 +47,7 @@ import {globalLoading} from './redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from './components/utils/check-flags';
-import {ROOT_PATH, BASE_URL} from './config/config';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from './components/utils/utils';
 import {MapHelper} from './components/common/map-mixin';
@@ -60,7 +60,7 @@ registerTranslateConfig({
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
 
-setBasePath(BASE_URL);
+setBasePath(Environment.basePath);
 initializeIcons();
 
 // These are the actions needed by this element.
@@ -244,7 +244,7 @@ export class AppShell extends connect(store)(LitElement) {
     // language=HTML
     return html`
       <etools-piwik-analytics
-        .page="${ROOT_PATH}${this.mainPage}"
+        .page="${Environment.basePath}${this.mainPage}"
         .user="${this.user}"
         .toast="${this.currentToastMessage}"
       >

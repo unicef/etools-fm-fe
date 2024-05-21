@@ -4,7 +4,7 @@ import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {ROOT_PATH, SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
+import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
 
 import {CSSResult, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
@@ -17,6 +17,7 @@ import {translate} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {get as getTranslation} from 'lit-translate';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**
  * main menu
@@ -27,9 +28,6 @@ import {get as getTranslation} from 'lit-translate';
 export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
   @property({type: String, attribute: 'selected-option'})
   selectedOption = '';
-
-  @property({type: String})
-  rootPath: string = ROOT_PATH;
 
   @property({type: Boolean, attribute: 'small-menu'})
   smallMenu = false;
@@ -84,7 +82,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities')}"
             menu-name="activities"
-            href="${this.rootPath + 'activities'}"
+            href="${Environment.basePath + 'activities'}"
             @click="${this.trackAnalytics}"
             tracker="Visits"
           >
@@ -103,7 +101,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'analyze')}"
             menu-name="analyze"
-            href="${this.rootPath + 'analyze/monitoring-activity'}"
+            href="${Environment.basePath + 'analyze/monitoring-activity'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
             @click="${this.trackAnalytics}"
             tracker="Analysis"
@@ -123,7 +121,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'templates')}"
             menu-name="templates"
-            href="${this.rootPath + 'templates/questions'}"
+            href="${Environment.basePath + 'templates/questions'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_SETTINGS)}"
             @click="${this.trackAnalytics}"
             tracker="Templates"
@@ -145,7 +143,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'management')}"
             menu-name="management"
-            href="${this.rootPath + 'management/rationale?year=' + new Date().getFullYear()}"
+            href="${Environment.basePath + 'management/rationale?year=' + new Date().getFullYear()}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_PLANING)}"
             @click="${this.trackAnalytics}"
             tracker="Management"
@@ -167,7 +165,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item ${this.getItemClass(this.selectedOption, 'partners')}"
             menu-name="partners"
-            href="${this.rootPath + 'partners'}"
+            href="${Environment.basePath + 'partners'}"
             @click="${this.trackAnalytics}"
             tracker="TPM"
           >

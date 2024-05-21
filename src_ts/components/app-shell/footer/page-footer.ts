@@ -1,6 +1,6 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {ROOT_PATH} from '../../../config/config';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**
  * page footer element
@@ -9,8 +9,6 @@ import {ROOT_PATH} from '../../../config/config';
  */
 @customElement('page-footer')
 export class PageFooter extends LitElement {
-  rootPath: string = ROOT_PATH;
-
   render(): TemplateResult {
     // main template
     // language=HTML
@@ -60,7 +58,7 @@ export class PageFooter extends LitElement {
       <footer>
         <div id="footer-content">
           <span id="unicef-logo">
-            <img src="${this.rootPath}assets/images/UNICEF_logo.webp" alt="UNICEF logo" />
+            <img src="${Environment.basePath}assets/images/UNICEF_logo.webp" alt="UNICEF logo" />
           </span>
           <!-- TODO: modify span to a with proper href values after footer pages are ready -->
           <!--   <span class="footer-link">Contact</span>

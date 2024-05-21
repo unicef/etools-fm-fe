@@ -12,13 +12,13 @@ import {changeCurrentUserCountry} from '../../../redux/effects/country.effects';
 import {countrySelector} from '../../../redux/selectors/country.selectors';
 import {updateAppLocation} from '../../../routing/routes';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {ROOT_PATH} from '../../../config/config';
 import {isEmpty} from 'ramda';
-import {headerDropdownStyles} from './header-dropdown-styles';
+import {toolbarDropdownStyles} from '@unicef-polymer/etools-unicef/src/styles/toolbar-dropdown-styles';
 import {GlobalLoadingUpdate} from '../../../redux/actions/global-loading.actions';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {get as getTranslation} from 'lit-translate';
 import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**
  * @LitElement
@@ -59,7 +59,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
     // main template
     // language=HTML
     return html`
-      ${headerDropdownStyles}
+      ${toolbarDropdownStyles}
       <!-- shown options limit set to 250 as there are currently 195 countries in the UN council and about 230 total -->
       <etools-dropdown
         transparent
@@ -142,7 +142,7 @@ export class CountriesDropdown extends connect(store)(LitElement) {
 
   protected handleChangedCountry(): void {
     updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
-    document.location.assign(window.location.origin + ROOT_PATH);
+    document.location.assign(Environment.baseUrl);
   }
 
   protected handleCountryChangeError(error: any): void {

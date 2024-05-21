@@ -1,5 +1,5 @@
 // define here main routes that need redirect to list subRoute
-import {ROOT_PATH} from '../config/config';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {Router} from './router';
 
 const redirectsList: GenericObject = {
@@ -9,8 +9,8 @@ const redirectsList: GenericObject = {
 };
 
 export function getRedirectToListPath(path: string): undefined | string {
-  path = path.replace(ROOT_PATH, '');
+  path = path.replace(Environment.basePath, '');
   const route: string = Router.clearSlashes(path);
   const redirectTo: string | undefined = redirectsList[route];
-  return redirectTo ? `${ROOT_PATH}${redirectTo}` : undefined;
+  return redirectTo ? `${Environment.basePath}${redirectTo}` : undefined;
 }
