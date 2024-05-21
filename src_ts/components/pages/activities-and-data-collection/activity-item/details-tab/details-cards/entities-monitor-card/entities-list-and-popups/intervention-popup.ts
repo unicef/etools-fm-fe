@@ -168,9 +168,10 @@ export class InterventionPopup extends PartnersMixin(LitElement) {
         .then((response: EtoolsCpOutputShort[]) => (this.outputs = response))
         .finally(() => (this.loadingOutputs = false));
     }, 100);
-    this.loadInterventions();
-    this.loadOutputs();
     this.setPDStatuses();
+    // set by default PD Active status filter checked
+    this.selectPdStatus(this.pdStatuses.filter((x) => x.id === 'active'));
+    this.loadOutputs();
   }
 
   setPDStatuses() {
