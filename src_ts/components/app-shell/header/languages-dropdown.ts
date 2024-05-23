@@ -70,7 +70,6 @@ export class LanguagesDropdown extends connect(store)(LitElement) {
   }
 
   stateChanged(state: IRootState): void {
-    console.log(state, this.selectedLanguage);
     if (state.activeLanguage.activeLanguage && state.activeLanguage.activeLanguage !== this.selectedLanguage) {
       this.selectedLanguage = state.activeLanguage.activeLanguage;
       window.EtoolsLanguage = this.selectedLanguage;
