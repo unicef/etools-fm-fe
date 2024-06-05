@@ -5,7 +5,7 @@ import {Router} from './router';
 const redirectsList: GenericObject = {
   templates: 'templates/questions',
   management: 'management/rationale',
-  analyze: 'analyze/monitoring-activity'
+  analyze: 'analyze/country-overview'
 };
 
 export function getRedirectToListPath(path: string): undefined | string {
