@@ -128,15 +128,15 @@
       "accept": "Accept",
       "mark_data_collected": "Finalize",
       "submit_report": "Submit",
-      "complete": "Complete",
+      "complete": "Approve",
       "reject": "Reject",
       "cancel": "Cancel",
-      "reject_report": "Reject Report"
+      "reject_report": "Send Back Report"
     },
     "REASON_FOR_TRANSITION": {
       "cancel": {"LABEL": "Cancellation comment", "TITLE": "Cancellation reason"},
       "reject": {"LABEL": "Rejection comment", "TITLE": "Rejection reason"},
-      "reject_report": {"LABEL": "Report rejection comment", "TITLE": "Report rejection reason"}
+      "reject_report": {"LABEL": "Send back report comment", "TITLE": "Send back report reason"}
     },
     "STATUSES": {
       "draft": "Draft",
