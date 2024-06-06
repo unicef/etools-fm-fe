@@ -11,6 +11,7 @@ import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-footer';
 import '@unicef-polymer/etools-form-builder';
 import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
@@ -21,7 +22,6 @@ import {RouterStyles} from './components/app-shell/router-style';
 
 import './components/app-shell/menu/app-menu.js';
 import './components/app-shell/header/page-header.js';
-import './components/app-shell/footer/page-footer.js';
 
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from './config/config';
 import {getCurrentUserData} from './redux/effects/user.effects';
@@ -320,7 +320,7 @@ export class AppShell extends connect(store)(LitElement) {
             ></page-not-found>
           </main>
 
-          <page-footer></page-footer>
+          <app-footer></app-footer>
         </app-header-layout>
       </app-drawer-layout>
     `;

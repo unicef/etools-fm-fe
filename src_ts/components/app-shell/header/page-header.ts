@@ -4,10 +4,11 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selector';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
-import '../../common/layout/support-btn';
-import './countries-dropdown';
-import './organizations-dropdown';
-import './languages-dropdown';
+
+import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/languages-dropdown';
+import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/countries-dropdown';
+import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/organizations-dropdown';
+import '@unicef-polymer/etools-modules-common/dist/components/buttons/support-button';
 
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {store} from '../../../redux/store';
@@ -25,6 +26,13 @@ import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate, get as getTranslation} from 'lit-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import {appLanguages} from '../../../config/app-constants';
+import {etoolsEndpoints} from '../../../endpoints/endpoints-list';
+import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {updateAppLocation} from '../../../routing/routes';
 
 store.addReducers({
   activeLanguage
@@ -65,6 +73,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
 
   @property() refreshInProgress = false;
 
+  @property({type: String})
+  activeLanguage?: string;
+
   constructor() {
     super();
     store.subscribe(
@@ -102,12 +113,28 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
         class="content-align header"
       >
         <div slot="dropdowns">
-          <languages-dropdown .profile="${this.profile}"></languages-dropdown>
-          <countries-dropdown></countries-dropdown>
-          <organizations-dropdown></organizations-dropdown>
+          <languages-dropdown
+            .profile="${this.profile}"
+            .availableLanguages="${appLanguages}"
+            .activeLanguage="${this.activeLanguage}"
+            .changeLanguageEndpoint="${etoolsEndpoints.userProfile}"
+            @user-language-changed="${this.languageChanged}"
+          ></languages-dropdown>
+          <countries-dropdown
+            id="countries"
+            .profile="${this.profile}"
+            .changeCountryEndpoint="${etoolsEndpoints.changeCountry}"
+            @country-changed="${this.countryOrOrganizationChanged}"
+          >
+          </countries-dropdown>
+          <organizations-dropdown
+            .profile="${this.profile}"
+            .changeOrganizationEndpoint="${etoolsEndpoints.changeOrganization}"
+            @organization-changed="${this.countryOrOrganizationChanged}"
+          ></organizations-dropdown>
         </div>
         <div slot="icons">
-          <support-btn title="${translate('NAVIGATION_MENU.SUPPORT')}"></support-btn>
+          <support-btn></support-btn>
 
           <etools-profile-dropdown
             title="${translate('NAVIGATION_MENU.PROFILEANDSIGNOUT')}"
@@ -143,6 +170,19 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
     if (state && state.user && state.user.data) {
       this.profile = state.user.data;
     }
+
+    if (this.activeLanguage !== state.activeLanguage?.activeLanguage) {
+      this.activeLanguage = state.activeLanguage?.activeLanguage;
+    }
+  }
+
+  public languageChanged(e: any) {
+    store.dispatch(new ActiveLanguageSwitched(e.detail.language));
+  }
+
+  public countryOrOrganizationChanged() {
+    updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
+    document.location.assign(Environment.baseUrl);
   }
 
   handleSaveProfile(e: any): void {
