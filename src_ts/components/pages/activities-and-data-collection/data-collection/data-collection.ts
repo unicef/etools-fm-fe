@@ -36,6 +36,7 @@ import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -94,6 +95,10 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
+          </etools-button>
+          <etools-button class="neutral" variant="text" @click="${this.browserPrint}">
+            <etools-icon name="file-download" slot="prefix"></etools-icon>
+            ${translate('MANAGEMENT.EXPORT')}
           </etools-button>
         </div>
       </page-content-header>
@@ -214,6 +219,23 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.activityId && this.checklistId) {
       store.dispatch<AsyncEffect>(loadBlueprint(this.activityId, this.checklistId));
     }
+  }
+
+  browserPrint(): void {
+    this.shadowRoot
+      ?.querySelector('form-abstract-group')
+      ?.shadowRoot?.querySelectorAll('form-abstract-group')
+      .forEach((group) => {
+        (group as FormAbstractGroup).collapsed = false;
+        this.requestUpdate();
+      });
+
+    // this.performUpdate();
+    this.updateComplete.then(() => {
+      setTimeout(() => {
+        print();
+      }, 500);
+    });
   }
 
   /**
