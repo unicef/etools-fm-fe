@@ -101,7 +101,7 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'analyze')}"
             menu-name="analyze"
-            href="${Environment.basePath + 'analyze/monitoring-activity'}"
+            href="${Environment.basePath + 'analyze/country-overview'}"
             ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
             @click="${this.trackAnalytics}"
             tracker="Analysis"

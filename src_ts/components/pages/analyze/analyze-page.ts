@@ -23,11 +23,12 @@ const PAGE = 'analyze';
 const MONITORING_ACTIVITY = 'monitoring-activity';
 const COUNTRY_OVERVIEW = 'country-overview';
 const NAVIGATION_TABS: PageTab[] = [
-  {
-    tab: MONITORING_ACTIVITY,
-    tabLabel: 'ANALYZE.NAVIGATION_TABS.MONITORING_ACTIVITY',
-    hidden: false
-  },
+  // hidden for now ch35939
+  // {
+  //   tab: MONITORING_ACTIVITY,
+  //   tabLabel: 'ANALYZE.NAVIGATION_TABS.MONITORING_ACTIVITY',
+  //   hidden: false
+  // },
   {
     tab: COUNTRY_OVERVIEW,
     tabLabel: 'ANALYZE.NAVIGATION_TABS.COUNTRY_OVERVIEW',
@@ -37,7 +38,7 @@ const NAVIGATION_TABS: PageTab[] = [
 
 @customElement('analyze-page')
 export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEtoolsPage {
-  @property() activeTab: string = MONITORING_ACTIVITY;
+  @property() activeTab: string = COUNTRY_OVERVIEW;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(NAVIGATION_TABS);
   private activeLanguageUnsubscribe!: Unsubscribe;
   @property()
