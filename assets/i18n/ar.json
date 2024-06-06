@@ -182,8 +182,8 @@
         "TITLE": "سبب الرفض"
       },
       "reject_report": {
-        "LABEL": "الإبلاغ عن رفض التقرير",
-        "TITLE": "سبب رفض التقرير"
+        "LABEL": "تم إرسال التعليق على التقرير",
+        "TITLE": "سبب إرسال التقرير مرة أخرى"
       }
     },
     "STATUSES": {
@@ -218,7 +218,7 @@
       "mark_data_collected": "إنهاء",
       "mark_details_configured": "التالي",
       "reject": "رفض",
-      "reject_report": "رفض التقرير",
+      "reject_report": "إرسال التقرير مرة أخرى",
       "submit_report": "إرسال"
     }
   },
