@@ -184,8 +184,8 @@
         "TITLE": "Motivo de rechazo"
       },
       "reject_report": {
-        "LABEL": "Comentario de rechazo del informe",
-        "TITLE": "Motivo de rechazo del informe"
+        "LABEL": "Enviar comentario del informe",
+        "TITLE": "Devolver el motivo del informe"
       }
     },
     "STATUSES": {
@@ -220,7 +220,7 @@
       "mark_data_collected": "Finalizar",
       "mark_details_configured": "Siguiente",
       "reject": "Rechazar",
-      "reject_report": "Rechazar informe",
+      "reject_report": "Enviar informe",
       "submit_report": "Enviar"
     }
   },

@@ -23,7 +23,6 @@ import {updateAppLocation} from '../../../../../routing/routes';
 import {IAsyncAction} from '../../../../../redux/middleware';
 import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
-import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from 'lit-translate';
@@ -34,6 +33,7 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 store.addReducers({dataCollection});
 
@@ -216,7 +216,10 @@ export class DataCollectTab extends LitElement {
                 : ''}
 
               <div class="hover-block">
-                <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
+                <a
+                  href="${Environment.basePath}${ACTIVITIES_PAGE}/${this
+                    .activityId}/${DATA_COLLECTION_PAGE}/${item.id}/"
+                >
                   <etools-icon name="${this.isReadonly ? 'visibility' : 'create'}"></etools-icon>
                 </a>
                 <etools-icon-button

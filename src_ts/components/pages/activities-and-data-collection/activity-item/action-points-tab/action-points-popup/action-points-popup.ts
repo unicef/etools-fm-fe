@@ -20,6 +20,7 @@ import {applyDropdownTranslation} from '../../../../../utils/translation-helper'
 import {get as getTranslation} from 'lit-translate';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import {CardStyles} from '../../../../../styles/card-styles';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -287,18 +288,17 @@ export class ActionPointsPopup extends InterventionsMixin(
   static get styles(): CSSResult[] {
     return [
       CardStyles,
+      layoutStyles,
       css`
-        .grid-container {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-
         .priority-container {
           display: flex;
           height: 62px;
         }
 
-        .priority,
+        .priority {
+          display: flex;
+          align-items: flex-end;
+        }
         .action-point-link {
           display: flex;
           align-items: center;

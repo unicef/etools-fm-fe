@@ -22,7 +22,6 @@ import {activityDetails} from '../../../../redux/reducers/activity-details.reduc
 import {activityDetailsData} from '../../../../redux/selectors/activity-details.selectors';
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
-import {ROOT_PATH} from '../../../../config/config';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
 import {ACTIVITIES_PAGE} from '../activities-page';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
@@ -36,6 +35,8 @@ import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
@@ -77,7 +78,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
           <div class="method-name">${this.checklistFormJson?.blueprint.title}</div>
 
           <div class="title-description">
-            <a href="${ROOT_PATH}${PAGE}/${this.activityId}/${DETAILS_TAB}">
+            <a href="${Environment.basePath}${PAGE}/${this.activityId}/${DETAILS_TAB}">
               ${(this.activityDetails && this.activityDetails.reference_number) || ''}
             </a>
             | ${this.checklist && this.checklist.id} | ${this.checklist && this.checklist.author.name}
@@ -89,10 +90,15 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             variant="success"
             class="back-button"
             target="_self"
-            href="${this.previousRoute || `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+            href="${this.previousRoute ||
+            `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
           >
             <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
+          </etools-button>
+          <etools-button class="neutral" variant="text" @click="${this.browserPrint}">
+            <etools-icon name="file-download" slot="prefix"></etools-icon>
+            ${translate('MANAGEMENT.EXPORT')}
           </etools-button>
         </div>
       </page-content-header>
@@ -213,6 +219,23 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
     if (this.activityId && this.checklistId) {
       store.dispatch<AsyncEffect>(loadBlueprint(this.activityId, this.checklistId));
     }
+  }
+
+  browserPrint(): void {
+    this.shadowRoot
+      ?.querySelector('form-abstract-group')
+      ?.shadowRoot?.querySelectorAll('form-abstract-group')
+      .forEach((group) => {
+        (group as FormAbstractGroup).collapsed = false;
+        this.requestUpdate();
+      });
+
+    // this.performUpdate();
+    this.updateComplete.then(() => {
+      setTimeout(() => {
+        print();
+      }, 500);
+    });
   }
 
   /**

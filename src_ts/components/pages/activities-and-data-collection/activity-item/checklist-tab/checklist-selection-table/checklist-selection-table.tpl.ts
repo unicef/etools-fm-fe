@@ -8,10 +8,10 @@ import {html, TemplateResult} from 'lit';
 import {ChecklistSelectionTable} from './checklist-selection-table';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
-import {ROOT_PATH} from '../../../../../../config/config';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {translate} from 'lit-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 export function template(this: ChecklistSelectionTable): TemplateResult {
   return html`
@@ -122,7 +122,7 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                     ></etools-checkbox>
                     <img
                       class="${this.lowResolutionLayout ? '' : 'mt-4'}"
-                      src="${ROOT_PATH}assets/images/icon-check.svg"
+                      src="${Environment.basePath}assets/images/icon-check.svg"
                       ?hidden="${this.isEditMode || !question.is_enabled}"
                     />
                   </div>

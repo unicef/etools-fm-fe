@@ -130,12 +130,12 @@
       "complete": "Localized Complete",
       "reject": "Localized Reject",
       "cancel": "Localized Cancel",
-      "reject_report": "Localized Reject Report"
+      "reject_report": "Отправить обратно отчет"
     },
     "REASON_FOR_TRANSITION": {
       "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
       "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
-      "reject_report": {"LABEL": "Localized Report rejection comment", "TITLE": "Localized Report rejection reason"}
+      "reject_report": {"LABEL": "Комментарий к отчету о возврате", "TITLE": "Причина возврата отчета"}
     },
     "STATUSES": {
       "draft": "Localized Draft",
