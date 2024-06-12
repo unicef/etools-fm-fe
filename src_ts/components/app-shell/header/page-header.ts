@@ -10,6 +10,7 @@ import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/countrie
 import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/organizations-dropdown';
 import '@unicef-polymer/etools-modules-common/dist/components/buttons/support-button';
 
+import {DexieRefresh} from '@unicef-polymer/etools-utils/dist/singleton/dexie-refresh';
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 import {store} from '../../../redux/store';
 
@@ -181,6 +182,9 @@ export class PageHeader extends connect(store)(MatomoMixin(LitElement)) {
   }
 
   public countryOrOrganizationChanged() {
+    DexieRefresh.refresh();
+    DexieRefresh.clearLocalStorage();
+
     updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
     document.location.assign(Environment.baseUrl);
   }
