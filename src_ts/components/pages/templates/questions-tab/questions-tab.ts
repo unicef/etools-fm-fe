@@ -37,13 +37,13 @@ import {
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import './question-popup/question-popup';
-import {ROOT_PATH} from '../../../../config/config';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from 'lit-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -226,7 +226,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                   <div class="truncate">${this.serializeName(question.category, this.categories) || '-'}</div>
                 </div>
                 <div class="col-data col-md-1" data-col-header-label="${translate('QUESTIONS.COLUMNS.IS_ACTIVE')}">
-                  <img src="${ROOT_PATH}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg" />
+                  <img
+                    src="${Environment.basePath}assets/images/${question.is_active ? 'icon-check' : 'red-close'}.svg"
+                  />
                 </div>
                 <div class="hover-block">
                   <etools-icon
@@ -247,7 +249,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                 <div class="row-details-content w160px">
                   <div class="rdc-title">${translate('QUESTIONS.COLUMNS.IS_HACT')}</div>
                   <div class="image">
-                    ${question.is_hact ? html` <img src="${ROOT_PATH}assets/images/icon-check.svg" /> ` : '-'}
+                    ${question.is_hact
+                      ? html` <img src="${Environment.basePath}assets/images/icon-check.svg" /> `
+                      : '-'}
                   </div>
                 </div>
                 <div class="row-details-content" ?hidden="${question.answer_type !== 'likert_scale'}">

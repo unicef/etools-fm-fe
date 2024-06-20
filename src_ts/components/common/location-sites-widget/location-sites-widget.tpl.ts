@@ -43,7 +43,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
               ${translate('LOCATION_WIDGET.MISSING_SITES.NO_SITES')}<br />
               ${translate('LOCATION_WIDGET.MISSING_SITES.ADD_MISSING')}<a
                 class="link"
-                @click="${() => updateAppLocation('/management')}"
+                @click="${() => updateAppLocation('/management/sites')}"
                 >${translate('NAVIGATION_MENU.MANAGEMENT')}</a
               >
             </div>

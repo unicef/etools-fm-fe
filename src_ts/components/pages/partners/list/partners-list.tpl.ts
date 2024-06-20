@@ -5,6 +5,7 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {translate} from 'lit-translate';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 export function template(this: PartnersListComponent): TemplateResult {
   return html`
@@ -98,7 +99,7 @@ export function template(this: PartnersListComponent): TemplateResult {
           <etools-data-table-row secondary-bg-on-hover no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
             <div slot="row-data" class="row">
               <div class="col-data col-3" data-col-header-label="${translate('TPM.COLUMNS.VENDOR_NUMBER')}">
-                <a class="link-cell" href="${`${this.rootPath}partners/${partner.id}/details/`}"
+                <a class="link-cell" href="${`${Environment.basePath}partners/${partner.id}/details/`}"
                   >${partner.vendor_number}</a
                 >
               </div>

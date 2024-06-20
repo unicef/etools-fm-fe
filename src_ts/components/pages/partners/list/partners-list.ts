@@ -12,7 +12,6 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadPartnersList} from '../../../../redux/effects/tpm-partners.effects';
 import {tpmPartners} from '../../../../redux/reducers/tpm-partners.reducer';
 import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/selectors/tpm-partners.selectors';
-import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
 // eslint-disable-next-line
@@ -42,7 +41,6 @@ store.addReducers({tpmPartners});
 @customElement('partners-list')
 export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmPartner>(LitElement)) {
   @property() loadingInProcess = false;
-  @property() rootPath: string = ROOT_PATH;
   @property() showAddButton = false;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);

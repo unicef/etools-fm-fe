@@ -2,13 +2,13 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppAction, UpdateStoreRouteDetails} from '../actions/app.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {ROOT_PATH} from '../../config/config';
 import {ActionCreator, Dispatch} from 'redux';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
 import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
 import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 
@@ -171,7 +171,7 @@ export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch:
   // Check if path matches a valid app route, use route details to load required page components
 
   // if app route is accessed, redirect to default route (if not already on it)
-  if (path === ROOT_PATH) {
+  if (path === Environment.basePath) {
     EtoolsRouter.updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.DEFAULT));
     return;
   }

@@ -2,9 +2,9 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
-import {ROOT_PATH} from '../../../../../../config/config';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
@@ -40,9 +40,11 @@ export class CompletedFindingComponent extends LitElement {
   }
 
   goToDataCollection(): void {
+    /* eslint-disable max-len */
     updateAppLocation(
-      `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
+      `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
     );
+    /* eslint-enable max-len */
   }
 
   copyAnswer(event: MouseEvent): void {
