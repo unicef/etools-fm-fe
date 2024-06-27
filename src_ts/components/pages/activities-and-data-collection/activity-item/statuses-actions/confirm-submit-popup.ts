@@ -30,6 +30,9 @@ export class ConfirmSubmitPopup extends LitElement {
         .d-block {
           display: block;
         }
+        p {
+          margin-block-end: 8px;
+        }
       </style>
       <etools-dialog
         id="dialog"
