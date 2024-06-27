@@ -144,7 +144,7 @@ export class StatusesActionsComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-  
+
     // load activitySummary.findingsAndOverall.overall
     this.findingsOverallUnsubscribe = store.subscribe(
       summaryFindingsOverall((overall) => {
