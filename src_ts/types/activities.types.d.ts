@@ -193,6 +193,11 @@ type ReasonPopupData = {
   label: string | Callback;
 };
 
+type ConfirmSubmitPopupData = {
+  confirmText: string;
+  actionPointReminder: string;
+};
+
 type ReasonPopupResponse = {
   comment: string;
 };

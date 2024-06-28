@@ -695,6 +695,7 @@
   "DUPLICATE": "DUPLICAR",
   "ERROR_AT_SAVING_DUPLICATE": "Error al guardar duplicado",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No hay datos de actividad para duplicar",
+  "NO_ACTION_POINT": "Sin punto de acción",
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",
