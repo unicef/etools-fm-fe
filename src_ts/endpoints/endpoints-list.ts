@@ -33,7 +33,7 @@ export const RATIONALE = 'rationale';
 export const ACTIVITIES_LIST = 'activities_list';
 export const RATIONALE_ATTACHMENTS = 'rationale_attachments';
 export const USERS = 'users';
-export const USERS_ACTIVE = 'usersActive';
+export const REVIEWERS = 'reviewers';
 export const TEAM_MEMBERS = 'teamMembers';
 export const WIDGET_LOCATIONS_CHUNK = 'widgetLocationsChunk';
 export const WIDGET_LOCATION_PATH = 'widgetLocationPath';
@@ -81,11 +81,11 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     cacheTableName: USERS
   },
 
-  [USERS_ACTIVE]: {
-    url: '/api/v1/field-monitoring/planning/users/?page_size=all&active=true',
+  [REVIEWERS]: {
+    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all',
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
-    cacheTableName: USERS
+    cacheTableName: REVIEWERS
   },
 
   [TEAM_MEMBERS]: {

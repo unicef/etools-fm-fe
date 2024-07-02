@@ -28,8 +28,8 @@ export const currentWorkspaceSelector: Selector<Workspace | undefined> = select<
   (store: IRootState) => store.staticData.currentWorkspace
 );
 
-export const usersDataSelectors: Selector<User[] | undefined> = select<User[] | undefined>(
-  (store: IRootState) => store.staticData.users
+export const reviewersDataSelectors: Selector<User[] | undefined> = select<User[] | undefined>(
+  (store: IRootState) => store.staticData.reviewers
 );
 
 export const staticDataDynamic: DynamicSelector<any> = dynamicSelect<IStaticDataState, any>(

@@ -10,7 +10,7 @@ import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
-import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
+import {REVIEWERS, TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
@@ -35,7 +35,7 @@ type MemberOptions = {
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
-  @property() staffOptions: User[] = [];
+  @property() reviewerOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
@@ -52,6 +52,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   preserveSelectedLeadVisit = false;
 
   private userUnsubscribe!: Callback;
+  private reviewersUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;
 
   set data(data: IActivityDetails | null) {
@@ -191,7 +192,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.updateModelValue('report_reviewer', detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
-              .options="${this.staffOptions}"
+              .options="${this.reviewerOptions}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
@@ -232,7 +233,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
-          this.getStaffOptions();
           // Waited for dropdown options
           this.personResponsible = this.editedData.visit_lead;
           if (this.personResponsible) {
@@ -248,6 +248,19 @@ export class MonitorInformationCard extends BaseDetailsCard {
           });
         },
         [USERS]
+      )
+    );
+
+    const user: IUserState = (store.getState() as IRootState).user;
+    this.reviewersUnsubscribe = store.subscribe(
+      staticDataDynamic(
+        (reviewers: User[] | undefined) => {
+          if (!reviewers) {
+            return;
+          }
+          this.reviewerOptions = reviewers.filter((r: User) => r.id !== user.data?.user);
+        },
+        [REVIEWERS]
       )
     );
 
@@ -278,6 +291,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     super.disconnectedCallback();
     this.userUnsubscribe();
     this.tpmPartnerUnsubscribe();
+    this.reviewersUnsubscribe();
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
@@ -291,10 +305,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
       }
       return isValid;
     });
-  }
-
-  getStaffOptions(): void {
-    this.staffOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
