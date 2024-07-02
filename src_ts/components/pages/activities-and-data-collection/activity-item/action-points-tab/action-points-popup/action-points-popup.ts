@@ -1,4 +1,4 @@
-import {css, LitElement, TemplateResult, CSSResult, PropertyValues} from 'lit';
+import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './action-points-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -21,6 +21,7 @@ import {get as getTranslation} from 'lit-translate';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
+import {SlSwitch} from '@shoelace-style/shoelace';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends InterventionsMixin(
@@ -31,6 +32,7 @@ export class ActionPointsPopup extends InterventionsMixin(
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
   @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
   @property() selectedRelatedTo: string | null = null;
+  @property() showInactive = false;
 
   @property() savingInProcess: boolean | null = false;
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
@@ -177,14 +179,14 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  getRelatedNames(): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
+  getRelatedNames(showInactive: boolean): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
     switch (this.selectedRelatedTo) {
       case PARTNER:
         return this.partners;
       case OUTPUT:
-        return this.outputs;
+        return this.showInactive ? this.outputs : this.outputsActive;
       case INTERVENTION:
-        return this.getLiteInterventions();
+        return this.getLiteInterventions(showInactive);
       default:
         return [];
     }
@@ -219,8 +221,8 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  showInactiveRow(selectedRelatedTo: string | null) {
+    return selectedRelatedTo === OUTPUT || selectedRelatedTo == INTERVENTION;
   }
 
   private checkRequiredFields(): void {
@@ -248,12 +250,13 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  private getLiteInterventions(): LiteIntervention[] {
-    if (this.interventions.length && !this.liteInterventions.length) {
-      this.liteInterventions = this.interventions.map((item: EtoolsIntervention) => {
-        return {id: item.id, name: item.title};
-      });
-    }
+  private getLiteInterventions(showInactive: boolean): LiteIntervention[] {
+    const interventionToUse = showInactive
+      ? (this.interventions || []).slice()
+      : (this.interventionsActive || []).slice();
+    this.liteInterventions = interventionToUse.map((item: EtoolsIntervention) => {
+      return {id: item.id, name: item.title};
+    });
     return this.liteInterventions;
   }
 
@@ -283,6 +286,14 @@ export class ActionPointsPopup extends InterventionsMixin(
     } else {
       return null;
     }
+  }
+
+  onShowInactiveChange(e: CustomEvent): void {
+    if (!e.target) {
+      return;
+    }
+    this.showInactive = (e.target as SlSwitch).checked;
+    // this.requestUpdate();
   }
 
   static get styles(): CSSResult[] {

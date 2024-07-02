@@ -52,7 +52,9 @@ interface IStaticDataState {
   partners?: EtoolsPartner[];
   tpmPartners?: EtoolsTPMPartner[];
   interventions?: EtoolsIntervention[];
+  interventionsActive?: EtoolsIntervention[];
   outputs?: EtoolsCpOutput[];
+  outputsActive?: EtoolsCpOutput[];
   users?: User[];
   reviewers?: User[];
   teamMembers?: User[];
