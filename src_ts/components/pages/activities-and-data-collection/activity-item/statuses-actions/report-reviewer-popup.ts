@@ -9,9 +9,7 @@ import {get as getTranslation, translate} from 'lit-translate';
 import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';
-import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
-
-const USER_STAFF: UserType = 'staff';
+import {reviewersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
 
 @customElement('report-reviewer-popup')
 export class ReportReviewerPopup extends LitElement {
@@ -20,7 +18,7 @@ export class ReportReviewerPopup extends LitElement {
   @property() protected reason = '';
   @property() protected error = '';
   @property() activity!: IActivityDetails;
-  @property() users: User[] = [];
+  @property() reviewers: User[] = [];
   private userUnsubscribe!: Callback;
 
   set dialogData({activity}: ReportReviewerPopupData) {
@@ -33,14 +31,13 @@ export class ReportReviewerPopup extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
 
+    const user: IUserState = (store.getState() as IRootState).user;
     this.userUnsubscribe = store.subscribe(
-      usersDataSelectors((users: User[] | undefined) => {
-        if (!users) {
+      reviewersDataSelectors((reviewers: User[] | undefined) => {
+        if (!reviewers) {
           return;
         }
-        this.users = users.filter((user: User) => {
-          return user.user_type === USER_STAFF;
-        });
+        this.reviewers = reviewers.filter((r: User) => r.id !== user.data?.user);
       })
     );
   }
@@ -84,7 +81,7 @@ export class ReportReviewerPopup extends LitElement {
               }}"
               trigger-value-change-event
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
-              .options="${this.users}"
+              .options="${this.reviewers}"
               @focus="${() => (this.error = '')}"
               ?invalid="${Boolean(this.error)}"
               error-message="${this.error}"
