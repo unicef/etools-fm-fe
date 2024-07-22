@@ -5,6 +5,7 @@ export const LOCATIONS_ENDPOINT = 'locations';
 export const CHANGE_COUNTRY = 'changeCountry';
 export const CHANGE_ORGANIZATION = 'changeOrganization';
 export const SITES_EXPORT = 'unicefUsers';
+export const ACTIVITIES_EXPORT = 'activitiesExport';
 export const SITES_LIST = 'siteLocations';
 export const SITE_DETAILS = 'siteLocationsDetails';
 export const CURRENT_WORKSPACE = 'currentWorkspace';
@@ -179,6 +180,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [SITES_EXPORT]: {
     url: '/api/v1/field-monitoring/settings/sites/export/'
+  },
+
+  [ACTIVITIES_EXPORT]: {
+    url: '/api/v1/field-monitoring/planning/activities/export/'
   },
 
   [SITES_LIST]: {

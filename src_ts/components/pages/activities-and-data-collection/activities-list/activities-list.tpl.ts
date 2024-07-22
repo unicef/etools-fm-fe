@@ -21,12 +21,18 @@ export function template(this: ActivitiesListComponent): TemplateResult {
     ></etools-media-query>
     <page-content-header>
       <h1 slot="page-title">${translate('ACTIVITIES_LIST.TITLE')}</h1>
-      <div
-        slot="title-row-actions"
-        class="content-header-actions"
-        ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
-      >
-        <etools-button variant="success" class="create-new" @click="${this.goNew}" tracker="Create New Visit">
+      <div slot="title-row-actions" class="content-header-actions">
+        <etools-button class="neutral" variant="text" @click="${this.exportData}" tracker="Export">
+          <etools-icon name="file-download" slot="prefix"></etools-icon>
+          ${translate('MANAGEMENT.EXPORT')}
+        </etools-button>
+        <etools-button
+          variant="success"
+          class="create-new"
+          @click="${this.goNew}"
+          tracker="Create New Visit"
+          ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+        >
           ${translate('ACTIVITIES_LIST.CREATE_NEW_BUTTON')}</etools-button
         >
       </div>
