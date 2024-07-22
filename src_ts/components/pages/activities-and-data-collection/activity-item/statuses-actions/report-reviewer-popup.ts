@@ -31,13 +31,12 @@ export class ReportReviewerPopup extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
 
-    const user: IUserState = (store.getState() as IRootState).user;
     this.userUnsubscribe = store.subscribe(
       reviewersDataSelectors((reviewers: User[] | undefined) => {
         if (!reviewers) {
           return;
         }
-        this.reviewers = reviewers.filter((r: User) => r.id !== user.data?.user);
+        this.reviewers = reviewers;
       })
     );
   }
