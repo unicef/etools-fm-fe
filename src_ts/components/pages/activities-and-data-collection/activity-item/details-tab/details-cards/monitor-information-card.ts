@@ -251,14 +251,13 @@ export class MonitorInformationCard extends BaseDetailsCard {
       )
     );
 
-    const user: IUserState = (store.getState() as IRootState).user;
     this.reviewersUnsubscribe = store.subscribe(
       staticDataDynamic(
         (reviewers: User[] | undefined) => {
           if (!reviewers) {
             return;
           }
-          this.reviewerOptions = reviewers.filter((r: User) => r.id !== user.data?.user);
+          this.reviewerOptions = reviewers;
         },
         [REVIEWERS]
       )
