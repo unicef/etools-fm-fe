@@ -32,12 +32,14 @@ export const InputStyles: TemplateResult = html`
     etools-dropdown-multi,
     etools-input,
     etools-textarea,
-    paper-dropdown-menu,
     etools-currency-amount-input,
     datepicker-lite {
       outline: none !important;
       color: var(--gray-dark, rgba(0, 0, 0, 0.87));
       box-sizing: border-box;
+
+      --esmm-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
+      --esmm-multi-placeholder-color: var(--gray-dark, rgba(0, 0, 0, 0.87));
 
       --etools-currency-container-label-floating: {
         -webkit-transform: none;
@@ -51,6 +53,18 @@ export const InputStyles: TemplateResult = html`
       }
     }
 
+    etools-dropdown.no-data-fetched,
+    etools-dropdown-multi.no-data-fetched,
+    etools-input.no-data-fetched {
+      --esmm-placeholder-color: var(--gray-dark);
+    }
+
+    etools-currency-amount-input {
+      --etools-currency-container-label: {
+        color: var(--gray-50);
+      }
+    }
+
     etools-currency-amount-input.required:not([disabled]) {
       --etools-currency-container-label: {
         background: url('/fm/assets/images/required.svg') no-repeat 98% 14%/7px;
@@ -61,7 +75,6 @@ export const InputStyles: TemplateResult = html`
         color: var(--gray-50);
       }
     }
-
     etools-currency-amount-input[disabled] {
       --etools-currency-container-underline-disabled: {
         border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
@@ -96,13 +109,12 @@ export const InputStyles: TemplateResult = html`
     }
 
     .text-control {
-      padding: 14px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
 
     .text-control label {
       color: var(--gray-mid);
-      font-size: var(--paper-font-caption_-_font-size);
-      font-weight: var(--paper-font-caption_-_font-weight);
     }
 
     .text-control .value {

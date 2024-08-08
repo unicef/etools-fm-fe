@@ -10,7 +10,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('reason-popup')
-export class ChecklistAttachments extends LitElement {
+export class ReasonPopup extends LitElement {
   @property() protected dialogOpened = true;
   @property() protected popupTitle: string | Callback = '';
   @property() protected label: string | Callback = '';
@@ -36,7 +36,7 @@ export class ChecklistAttachments extends LitElement {
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReason()}"
       >
-        <div class="container">
+        <div class="container-dialog">
           <etools-textarea
             id="details-input"
             .value="${this.reason}"

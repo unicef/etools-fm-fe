@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Localized Partner Organization",
     "CP_OUTPUTS": "Localized CP Outputs",
     "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "SHOW_EXPIRED": "Показать истекшее",
     "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
     "INTERVENTIONS": "Localized PD/SPDs",
@@ -109,7 +110,11 @@
     "REPORT_REJECTION_REASON": "Localized Report Rejection Reason",
     "CANCELLATION_NOTE": "Localized Cancellation Note",
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
-    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level"
+    "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
+    "REPORT_REVIEWER": "Рецензент отчетаr",
+    "REPORT_REVIEWER_SELECT": "Следующий пользователь будет уведомлен об этом представлении для рассмотрения. Пожалуйста, выберите пользователя и продолжайте.",
+    "REPORT_REVIEWER_CONFIRM": "Следующий пользователь будет уведомлен об этом представлении для рассмотрения. Пожалуйста, подтвердите пользователя и продолжайте.",
+    "REVIEWED_BY": "Рассмотрено"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Localized New Activity",
@@ -125,12 +130,12 @@
       "complete": "Localized Complete",
       "reject": "Localized Reject",
       "cancel": "Localized Cancel",
-      "reject_report": "Localized Reject Report"
+      "reject_report": "Отправить обратно отчет"
     },
     "REASON_FOR_TRANSITION": {
       "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
       "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
-      "reject_report": {"LABEL": "Localized Report rejection comment", "TITLE": "Localized Report rejection reason"}
+      "reject_report": {"LABEL": "Комментарий к отчету о возврате", "TITLE": "Причина возврата отчета"}
     },
     "STATUSES": {
       "draft": "Localized Draft",
@@ -677,6 +682,8 @@
   "DUPLICATE": "ДУБЛИКАЦИЯ",
   "ERROR_AT_SAVING_DUPLICATE": "Ошибка при сохранении дубликата",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Нет данных о деятельности для дублирования",
+  "NO_ACTION_POINT": "Нет точки действия",
+  "NO_RECORDS": "Нет записей.",
   "PD_STATUS": {
       "DRAFT": "Развитие",
       "REVIEW": "Рассмотрение",

@@ -2,9 +2,9 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
-import {ROOT_PATH} from '../../../../../../config/config';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-page';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {
@@ -16,23 +16,6 @@ export class CompletedFindingComponent extends LitElement {
 
   render(): TemplateResult {
     return html`
-      <style>
-        paper-tooltip {
-          --paper-tooltip-background: white;
-          --paper-tooltip-text-color: black;
-          --paper-tooltip-opacity: 1;
-          --paper-tooltip-delay-in: 0ms;
-          --paper-tooltip-duration-in: 0ms;
-          --paper-tooltip: {
-            font-size: var(--etools-font-size-13, 13px);
-            box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px,
-              rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
-            width: max-content;
-            max-width: 600px;
-            text-align: left;
-          }
-        }
-      </style>
       <div class="completed-finding__content" @click="${() => this.goToDataCollection()}">
         <label class="method-name-label">${this.completedFindingMethod}</label>
         <label class="author-label">
@@ -57,9 +40,11 @@ export class CompletedFindingComponent extends LitElement {
   }
 
   goToDataCollection(): void {
+    /* eslint-disable max-len */
     updateAppLocation(
-      `${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
+      `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
     );
+    /* eslint-enable max-len */
   }
 
   copyAnswer(event: MouseEvent): void {

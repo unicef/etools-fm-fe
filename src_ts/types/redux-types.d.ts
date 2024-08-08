@@ -52,8 +52,11 @@ interface IStaticDataState {
   partners?: EtoolsPartner[];
   tpmPartners?: EtoolsTPMPartner[];
   interventions?: EtoolsIntervention[];
+  interventionsActive?: EtoolsIntervention[];
   outputs?: EtoolsCpOutput[];
+  outputsActive?: EtoolsCpOutput[];
   users?: User[];
+  reviewers?: User[];
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
   cpOutcomes?: EtoolsCpOutcome[];
@@ -214,7 +217,7 @@ interface IAdditionalInfoState {
 
 type FindingsAndOverall<T = DataCollectionFinding, U = DataCollectionOverall> = {
   findings: null | T[];
-  overall: null | U[];
+  overall: undefined | U[];
 };
 
 interface IActivitySummaryState {

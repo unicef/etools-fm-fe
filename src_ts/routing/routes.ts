@@ -1,5 +1,4 @@
 import {store} from '../redux/store';
-import {ROOT_PATH} from '../config/config';
 import {navigate} from '../redux/effects/app.effects';
 import {equals, pick} from 'ramda';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
@@ -8,10 +7,11 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter.init({
-  baseUrl: ROOT_PATH,
+  baseUrl: Environment.basePath,
   redirectPaths: {
     notFound: '/page-not-found',
     default: '/activities'

@@ -11,7 +11,7 @@ import {IMarker, MapHelper} from '../../../../common/map-mixin';
 import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
@@ -238,7 +238,7 @@ export class SitesPopupComponent extends DataMixin()<Site>(LitElement) {
     return [
       SharedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       leafletStyles,
       SitesTabStyles,

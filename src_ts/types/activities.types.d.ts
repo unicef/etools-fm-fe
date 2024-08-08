@@ -14,6 +14,8 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
+  report_reviewer: ActivityTeamMember;
+  reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
 }
 
@@ -25,6 +27,7 @@ interface IActivityDetails extends IListActivity {
   cancel_reason: string;
   report_reject_reason: string;
   offices: Office[];
+  report_reviewer: ActivityTeamMember;
 }
 
 type ActivityStatus =
@@ -190,8 +193,21 @@ type ReasonPopupData = {
   label: string | Callback;
 };
 
+type ConfirmSubmitPopupData = {
+  confirmText: string;
+  actionPointReminder: string;
+};
+
 type ReasonPopupResponse = {
   comment: string;
+};
+
+type ReportReviewerPopupData = {
+  activity: IActivityDetails;
+};
+
+type ReportReviewerPopupResponse = {
+  reviewer: string;
 };
 
 type NoteInfo = {

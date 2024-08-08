@@ -9,7 +9,12 @@ export const QuestionsTabStyles: CSSResult = css`
   .question-table-section {
     padding: 0;
   }
-
+  .no-rm {
+    margin-right: 0;
+  }
+  .no-lm {
+    margin-left: 0;
+  }
   .editable-row .hover-block {
     padding: 0 20px;
   }

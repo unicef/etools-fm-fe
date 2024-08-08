@@ -4,6 +4,8 @@ import '@unicef-polymer/etools-unicef/src/etools-button/etools-button-group';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import './reason-popup';
+import './report-reviewer-popup';
+import './confirm-submit-popup';
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {
@@ -18,7 +20,7 @@ import {
   REPORT_FINALIZATION,
   COMPLETED
 } from './activity-statuses';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -28,7 +30,10 @@ import {ACTIVITIES_PAGE} from '../../activities-page';
 import {translate, get as getTranslation} from 'lit-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {getErrorText} from '../../../../utils/utils';
+import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
+import {Unsubscribe} from 'redux';
+import {summaryFindingsOverall} from '../../../../../redux/selectors/activity-summary.selectors';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -36,6 +41,8 @@ export class StatusesActionsComponent extends LitElement {
   @property({type: String}) possibleTransitions: ActivityTransition[] = [];
   @property({type: Boolean, attribute: 'is-staff'}) isStaff = false;
   @property({type: Boolean}) disableBtns = false;
+  @property() protected findingsOverall: SummaryOverall[] | null | undefined = undefined;
+  private findingsOverallUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     // language=HTML
@@ -135,6 +142,22 @@ export class StatusesActionsComponent extends LitElement {
     `;
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    // load activitySummary.findingsAndOverall.overall
+    this.findingsOverallUnsubscribe = store.subscribe(
+      summaryFindingsOverall((overall) => {
+        this.findingsOverall = overall;
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.findingsOverallUnsubscribe();
+  }
+
   private async changeStatus(transition: ActivityTransition): Promise<void> {
     if (!this.activityId) {
       return;
@@ -149,41 +172,47 @@ export class StatusesActionsComponent extends LitElement {
       return;
     }
 
-    const storeState = store.getState();
+    let storeState = store.getState();
+    const activityDetails = storeState.activityDetails.data;
 
     // for these statuses must check findingsAndOverall and actionPoints data and show confirm if missing
-    if (
-      newStatusData.status === COMPLETED ||
-      (newStatusData.status === SUBMITTED && storeState.activityDetails.data.status === REPORT_FINALIZATION)
-    ) {
-      const summaryIsNotCompleted = (storeState.activitySummary.findingsAndOverall?.overall || []).some(
-        (x: SummaryOverall) => x.on_track === null
-      );
-      const confirmText = [];
+    const isReportFinalization = newStatusData.status === SUBMITTED && activityDetails.status === REPORT_FINALIZATION;
+    if (newStatusData.status === COMPLETED || isReportFinalization) {
+      // wait until  findingsOverall are loaded
+      await this.findingsOverallLoaded();
+      const summaryIsNotCompleted = (this.findingsOverall || []).some((x: SummaryOverall) => x.on_track === null);
+      let confirmText = '';
+      let actionPointReminder = '';
       if (summaryIsNotCompleted) {
         // must confirm if want to Complete OR Submit from REPORT_FINALIZATION status, if not all summary completed
-        confirmText.push(
-          getTranslation(
-            newStatusData.status === SUBMITTED
-              ? 'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE'
-              : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'
-          )
+        confirmText = getTranslation(
+          newStatusData.status === SUBMITTED
+            ? 'CONFIRM_SUBMIT_SUMMARY_NOT_COMPLETE'
+            : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'
         );
       }
-      if (
-        storeState.activityDetails.data.permissions.edit.action_points &&
-        !(storeState.actionPointsList?.data || []).length
-      ) {
+      if (activityDetails.permissions.edit.action_points && !(storeState.actionPointsList?.data || []).length) {
         // if can add Action Point and doesn't have any, display reminder
-        confirmText.push(getTranslation('ACTION_POINT_REMINDER'));
+        actionPointReminder = getTranslation('ACTION_POINT_REMINDER');
       }
 
-      if (confirmText.length && !(await this.confirmSubmitSummaryNotCompleted(confirmText.join('<br/><br/>')))) {
+      if (
+        (confirmText || actionPointReminder) &&
+        !(await this.confirmSubmitSummaryNotCompleted(confirmText, actionPointReminder))
+      ) {
         return;
       }
-    }
 
+      if (isReportFinalization && storeState.user.data?.is_unicef_user) {
+        const reviewResponse = await this.getReportReviewer(activityDetails);
+        if (!reviewResponse) {
+          return;
+        }
+        newStatusData.report_reviewer = reviewResponse.reviewer;
+      }
+    }
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
+      storeState = store.getState();
       const errors: any = storeState.activityDetails.error;
       if (errors) {
         const backendMessage = getErrorText(errors);
@@ -195,12 +224,16 @@ export class StatusesActionsComponent extends LitElement {
     });
   }
 
-  async confirmSubmitSummaryNotCompleted(confirmText: string): Promise<boolean> {
+  async findingsOverallLoaded() {
+    return await waitForCondition(() => this.findingsOverall !== undefined, 50).then(() => true);
+  }
+
+  async confirmSubmitSummaryNotCompleted(confirmText: string, actionPointReminder: string): Promise<boolean> {
     return await openDialog({
-      dialog: 'are-you-sure',
+      dialog: 'confirm-submit-popup',
       dialogData: {
-        content: confirmText,
-        confirmBtnText: getTranslation('CONTINUE')
+        confirmText: confirmText,
+        actionPointReminder: actionPointReminder
       }
     }).then(({confirmed}) => confirmed);
   }
@@ -225,10 +258,22 @@ export class StatusesActionsComponent extends LitElement {
     });
   }
 
+  private getReportReviewer(activity: IActivityDetails): Promise<ReportReviewerPopupResponse | null> {
+    return openDialog<ReportReviewerPopupData, ReportReviewerPopupResponse>({
+      dialog: 'report-reviewer-popup',
+      dialogData: {activity: activity}
+    }).then(({confirmed, response}: IDialogResponse<ReportReviewerPopupResponse>) => {
+      if (!confirmed || !response) {
+        return null;
+      }
+      return response;
+    });
+  }
+
   static get styles(): CSSResult[] {
     // language=CSS
     return [
-      FlexLayoutClasses,
+      layoutStyles,
       SharedStyles,
       css`
         :host {
@@ -238,6 +283,7 @@ export class StatusesActionsComponent extends LitElement {
 
         etools-button-group {
           --etools-button-group-color: var(--green-color);
+          height: fit-content;
         }
 
         etools-button.sl-button-group__button {

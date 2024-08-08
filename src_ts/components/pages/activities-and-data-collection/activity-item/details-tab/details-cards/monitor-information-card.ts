@@ -1,6 +1,6 @@
 import {css, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
-import {elevationStyles} from '../../../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {BaseDetailsCard} from './base-details-card';
 import {CardStyles} from '../../../../../styles/card-styles';
@@ -10,9 +10,9 @@ import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
-import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
+import {REVIEWERS, TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
-import {FlexLayoutClasses} from '../../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '../../../../../utils/objects-diff';
 import {translate} from 'lit-translate';
@@ -35,12 +35,14 @@ type MemberOptions = {
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
+  @property() reviewerOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
   teamMembersDd!: EtoolsDropdownMultiEl;
@@ -50,6 +52,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   preserveSelectedLeadVisit = false;
 
   private userUnsubscribe!: Callback;
+  private reviewersUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;
 
   set data(data: IActivityDetails | null) {
@@ -93,7 +96,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ?active="${this.isUpdate}"
             loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
           ></etools-loading>
-          <div class="layout horizontal user-types">
+          <div class="layout-horizontal user-types">
             <label>${translate('ACTIVITY_DETAILS.USER_TYPE')}</label>
             <etools-radio-group
               .value="${this.userType}"
@@ -110,11 +113,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
               )}
             </etools-radio-group>
           </div>
-          <div class="layout horizontal">
+          <div class="row">
             ${this.editedData.monitor_type === USER_TPM
               ? html`
                   <etools-dropdown
-                    class="flex"
+                    class="col-md-6 col-12"
                     id="tpmPartner"
                     .selected="${simplifyValue(this.tpmPartner)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) => {
@@ -139,7 +142,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
               : ''}
 
             <etools-dropdown-multi
-              class="flex"
+              class="col-md-6 col-12"
               id="teamMembers"
               .selectedValues="${simplifyValue(this.teamMembers)}"
               @etools-selected-items-changed="${({detail}: CustomEvent) => {
@@ -161,7 +164,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ></etools-dropdown-multi>
 
             <etools-dropdown
-              class="flex"
+              class="col-md-6 col-12"
               id="visitLead"
               .selected="${simplifyValue(this.personResponsible)}"
               @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -179,6 +182,37 @@ export class MonitorInformationCard extends BaseDetailsCard {
               allow-outside-scroll
               dynamic-align
             ></etools-dropdown>
+          </div>
+          <div class="row">
+            <etools-dropdown
+              class="col-md-6 col-12"
+              id="reportReviewerPreliminary"
+              .selected="${simplifyValue(this.editedData.report_reviewer)}"
+              @etools-selected-item-changed="${({detail}: CustomEvent) =>
+                this.updateModelValue('report_reviewer', detail.selectedItem)}"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+              .options="${this.reviewerOptions}"
+              option-label="name"
+              option-value="id"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
+              ?invalid="${this.errors && this.errors.report_reviewer}"
+              .errorMessage="${this.errors && this.errors.report_reviewer}"
+              @focus="${() => this.resetFieldError('report_reviewer')}"
+              @click="${() => this.resetFieldError('report_reviewer')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown>
+            <div class="col-md-6 col-12">
+              <etools-input
+                label="${translate('ACTIVITY_DETAILS.REVIEWED_BY')}"
+                .value="${this.editedData.reviewed_by?.name}"
+                disabled
+                readonly
+                ?hidden="${!this.editedData.reviewed_by?.id}"
+              >
+              </etools-input>
+            </div>
           </div>
         </div>
       </etools-card>
@@ -217,6 +251,18 @@ export class MonitorInformationCard extends BaseDetailsCard {
       )
     );
 
+    this.reviewersUnsubscribe = store.subscribe(
+      staticDataDynamic(
+        (reviewers: User[] | undefined) => {
+          if (!reviewers) {
+            return;
+          }
+          this.reviewerOptions = reviewers;
+        },
+        [REVIEWERS]
+      )
+    );
+
     this.tpmPartnerUnsubscribe = store.subscribe(
       staticDataDynamic(
         (tpmPartners: EtoolsTPMPartner[] | undefined) => {
@@ -244,6 +290,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     super.disconnectedCallback();
     this.userUnsubscribe();
     this.tpmPartnerUnsubscribe();
+    this.reviewersUnsubscribe();
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
@@ -325,13 +372,14 @@ export class MonitorInformationCard extends BaseDetailsCard {
       elevationStyles,
       SharedStyles,
       CardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       css`
         .card-content {
           padding: 12px 18px;
         }
         #teamMembers,
-        #tpmPartner {
+        #tpmPartner,
+        #reportReviewerPreliminary {
           padding-inline-end: 12px;
         }
         .user-types {

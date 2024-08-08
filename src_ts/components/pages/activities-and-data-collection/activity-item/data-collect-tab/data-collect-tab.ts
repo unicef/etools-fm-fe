@@ -17,21 +17,23 @@ import {
   dataCollectionLoading,
   dataCollectionMethods
 } from '../../../../../redux/selectors/data-collection.selectors';
-import {FlexLayoutClasses} from '../../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {activityDetailsData} from '../../../../../redux/selectors/activity-details.selectors';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {IAsyncAction} from '../../../../../redux/middleware';
 import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
-import {ROOT_PATH} from '../../../../../config/config';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {translate} from 'lit-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {SharedStyles} from '../../../../styles/shared-styles';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 store.addReducers({dataCollection});
 
@@ -46,6 +48,8 @@ export class DataCollectTab extends LitElement {
   @property() protected methodsLoading = false;
   @property() protected dataLoading = true;
   @property() protected createInProgress = false;
+  @property({type: Boolean})
+  lowResolutionLayout = false;
 
   private checklistUnsubscribe!: Unsubscribe;
   private activityUnsubscribe!: Unsubscribe;
@@ -119,12 +123,19 @@ export class DataCollectTab extends LitElement {
     return html`
       <style>
         ${FormBuilderCardStyles}
+        ${dataTableStylesLit}
       </style>
       <!--   Spinner for loading methods   -->
       <etools-loading
         ?active="${this.methodsLoading}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
       ></etools-loading>
+      <etools-media-query
+        query="(max-width: 767px)"
+        @query-matches-changed="${(e: CustomEvent) => {
+          this.lowResolutionLayout = e.detail.value;
+        }}"
+      ></etools-media-query>
 
       ${repeat(
         this.dataCollectionMethods,
@@ -140,7 +151,7 @@ export class DataCollectTab extends LitElement {
                   class="panel-button"
                 ></etools-icon-button>
               </div>
-              <div slot="content" class="layout vertical">
+              <div slot="content" class="layout-vertical">
                 <!--   Spinner for loading data   -->
                 <etools-loading
                   ?active="${this.dataLoading}"
@@ -157,52 +168,58 @@ export class DataCollectTab extends LitElement {
 
   renderTable(collect: DataCollectionChecklist[] = [], method: EtoolsMethod): TemplateResult {
     return html`
-      <etools-data-table-header no-title no-collapse>
-        <etools-data-table-column class="flex-1" field="text">
+      <etools-data-table-header no-title no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+        <etools-data-table-column class="col-data col-md-4" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}
         </etools-data-table-column>
 
-        <etools-data-table-column
-          class="${classMap({'flex-1': method.use_information_source, 'flex-2': !method.use_information_source})}"
-          field="text"
-        >
+        <etools-data-table-column class="col-data col-md-4" field="text">
           ${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}
         </etools-data-table-column>
 
-        ${method.use_information_source
-          ? html`
-              <etools-data-table-column class="flex-1" field="text">
-                ${translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE')}
-              </etools-data-table-column>
-            `
-          : ''}
+        <etools-data-table-column class="col-data col-md-4" field="text">
+          ${method.use_information_source ? translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE') : ''}
+        </etools-data-table-column>
       </etools-data-table-header>
 
       ${repeat(
         collect,
         (item: DataCollectionChecklist) => html`
-          <etools-data-table-row no-collapse secondary-bg-on-hover>
-            <div slot="row-data" class="layout horizontal editable-row flex">
+          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="editable-row">
               <!--  Author  -->
-              <div class="col-data flex-1 truncate">${item.author.name}</div>
+              <div
+                class="col-data col-md-4 truncate"
+                data-col-header-label="${translate('ACTIVITY_COLLECT.COLUMNS.METHOD_TYPE')}"
+              >
+                ${item.author.name}
+              </div>
 
               <!--  Method Name  -->
               <div
-                class="col-data truncate ${classMap({
-                  'flex-1': method.use_information_source,
-                  'flex-2': !method.use_information_source
-                })}"
+                class="col-data truncate col-md-4"
+                data-col-header-label="${translate('ACTIVITY_COLLECT.COLUMNS.TEAM_MEMBER')}"
               >
                 ${this.getMethodType(item.method)}
               </div>
 
               <!--  Information Source  -->
               ${method.use_information_source
-                ? html` <div class="col-data flex-1 truncate">${item.information_source}</div> `
+                ? html`
+                    <div
+                      class="col-data col-md-4 truncate"
+                      data-col-header-label="${translate('ACTIVITY_COLLECT.COLUMNS.INFO_SOURCE')}"
+                    >
+                      ${item.information_source}
+                    </div>
+                  `
                 : ''}
 
               <div class="hover-block">
-                <a href="${ROOT_PATH}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
+                <a
+                  href="${Environment.basePath}${ACTIVITIES_PAGE}/${this
+                    .activityId}/${DATA_COLLECTION_PAGE}/${item.id}/"
+                >
                   <etools-icon name="${this.isReadonly ? 'visibility' : 'create'}"></etools-icon>
                 </a>
                 <etools-icon-button
@@ -220,10 +237,8 @@ export class DataCollectTab extends LitElement {
       ${!collect.length
         ? html`
             <etools-data-table-row no-collapse>
-              <div slot="row-data" class="layout horizontal editable-row flex">
-                <div class="col-data flex-1 truncate">-</div>
-                <div class="col-data flex-1 truncate">-</div>
-                ${method.use_information_source ? html` <div class="col-data flex-1 truncate">-</div> ` : ''}
+              <div slot="row-data" class="editable-row">
+                <div class="col-data col-12 no-data">No records found.</div>
               </div>
             </etools-data-table-row>
           `
@@ -294,7 +309,8 @@ export class DataCollectTab extends LitElement {
     return [
       pageLayoutStyles,
       CardStyles,
-      FlexLayoutClasses,
+      layoutStyles,
+      SharedStyles,
       css`
         .hover-block a {
           color: var(--secondary-text-color);

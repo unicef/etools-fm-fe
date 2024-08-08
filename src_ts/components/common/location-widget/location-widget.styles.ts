@@ -32,7 +32,7 @@ export const LocationWidgetStyles: CSSResult = css`
   }
 
   .widget-container .history etools-input div[slot] {
-    margin-left: 5px;
+    margin-inline-start: 5px;
     color: #dd0000;
   }
 
@@ -51,28 +51,28 @@ export const LocationWidgetStyles: CSSResult = css`
     display: flex;
     width: 100%;
     padding: 10px;
-    max-height: 320px;
     box-sizing: border-box;
   }
 
   .widget-container .map-and-list #map {
-    flex: 1;
     height: 300px;
-    margin-inline-end: 25px;
+  }
+
+  .sites-panel {
+    height: 300px;
   }
 
   .widget-container .map-and-list .list {
-    flex: 1;
     overflow: hidden;
   }
 
   .locations-list {
     display: flex;
-    flex: 1;
-    flex-flow: column;
     height: calc(100% - 43px);
     position: relative;
     overflow-y: auto;
+    flex-flow: column;
+    padding-block-end: 16px;
   }
 
   .widget-container .map-and-list .list etools-input {
@@ -111,7 +111,7 @@ export const LocationWidgetStyles: CSSResult = css`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-right: 5px;
+    margin-inline-end: 5px;
   }
 
   .site-line .deselect-btn,

@@ -1,5 +1,4 @@
 import {css, CSSResult} from 'lit';
-import {elevation2} from './elevation-styles';
 // language=CSS
 export const SharedStyles: CSSResult = css`
   :host {
@@ -31,7 +30,10 @@ export const SharedStyles: CSSResult = css`
     color: var(--primary-color);
     text-underline: none;
   }
-
+  .col-data.table-header-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
   section {
     padding: 18px 24px;
     background-color: var(--primary-background-color);
@@ -41,20 +43,13 @@ export const SharedStyles: CSSResult = css`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 16px;
     align-self: center;
-    padding: 18px 0 18px 10px;
+    padding: 18px 0 18px 0px;
   }
 
   .toggle-button-control span {
-    padding: 0 12px;
     font-size: var(--etools-font-size-16, 16px);
-  }
-
-  .toggle-button-control etools-checkbox {
-    --paper-checkbox-label: {
-      padding-left: 0;
-    }
+    line-height: 18px;
   }
 
   .readonly {
@@ -72,17 +67,23 @@ export const SharedStyles: CSSResult = css`
   etools-content-panel::part(ecp-header) {
     background-color: var(--primary-background-color);
     border-bottom: 1px groove var(--dark-divider-color);
-    -color: var(--primary-text-color);
+    color: var(--primary-text-color);
   }
   etools-content-panel::part(ecp-header-title) {
     padding: 0 0;
     text-align: left;
   }
-  paper-button:focus {
-    ${elevation2}
-  }
 
   .horizontal .validate-input:not(:last-child) {
     padding-inline-end: 15px;
+  }
+  .w-100 {
+    width: 100%;
+  }
+  @media (max-width: 576px) {
+    h1 {
+      font-size: var(--etools-font-size-18, 18px);
+      width: 100%;
+    }
   }
 `;

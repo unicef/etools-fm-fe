@@ -4,7 +4,7 @@ import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
-import {INTERVENTIONS} from '../../../endpoints/endpoints-list';
+import {INTERVENTIONS, INTERVENTIONS_ACTIVE} from '../../../endpoints/endpoints-list';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
@@ -12,8 +12,10 @@ export const InterventionsMixin = <T extends Constructor<LitElement>>(superclass
   class extends superclass {
     /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     interventions: EtoolsIntervention[] = [];
+    interventionsActive: EtoolsIntervention[] = [];
 
     private interventionsUnsubscribe!: Unsubscribe;
+    private interventionsActiveUnsubscribe!: Unsubscribe;
 
     static get properties(): PropertyDeclarations {
       // eslint-disable-next-line
@@ -21,7 +23,8 @@ export const InterventionsMixin = <T extends Constructor<LitElement>>(superclass
       const superProps: PropertyDeclarations = super.properties;
       return {
         ...superProps,
-        interventions: {type: Array}
+        interventions: {type: Array},
+        interventionsActive: {type: Array}
       };
     }
 
@@ -38,14 +41,29 @@ export const InterventionsMixin = <T extends Constructor<LitElement>>(superclass
           [INTERVENTIONS]
         )
       );
+      this.interventionsActiveUnsubscribe = store.subscribe(
+        staticDataDynamic(
+          (interventionsActive: EtoolsIntervention[] | undefined) => {
+            if (!interventionsActive) {
+              return;
+            }
+            this.interventionsActive = interventionsActive;
+          },
+          [INTERVENTIONS_ACTIVE]
+        )
+      );
       const data: IStaticDataState = (store.getState() as IRootState).staticData;
       if (!data.interventions) {
         store.dispatch<AsyncEffect>(loadStaticData(INTERVENTIONS));
+      }
+      if (!data.interventionsActive) {
+        store.dispatch<AsyncEffect>(loadStaticData(INTERVENTIONS_ACTIVE));
       }
     }
 
     disconnectedCallback(): void {
       super.disconnectedCallback();
       this.interventionsUnsubscribe();
+      this.interventionsActiveUnsubscribe();
     }
   };

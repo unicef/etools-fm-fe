@@ -97,6 +97,7 @@
     "PARTNER_ORGANIZATION": "Organisation Partenaire",
     "CP_OUTPUTS": "Extrant PP",
     "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
+    "SHOW_EXPIRED": "Afficher expiré",
     "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
     "INTERVENTIONS": "PD/SPDs",
@@ -110,7 +111,11 @@
     "CANCELLATION_NOTE": "Note d'annulation",
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
-    "EXPORT": "EXPORT"
+    "EXPORT": "EXPORT",
+    "REPORT_REVIEWER": "Réviseur de rapport",
+    "REPORT_REVIEWER_SELECT": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez sélectionner l'utilisateur et continuer.",
+    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer.",
+    "REVIEWED_BY": "Revu par"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",
@@ -126,12 +131,12 @@
       "complete": "Terminer",
       "reject": "Rejeter",
       "cancel": "Annuler",
-      "reject_report": "Rejeter le rapport"
+      "reject_report": "Renvoyer le rapport"
     },
     "REASON_FOR_TRANSITION": {
       "cancel": {"LABEL": "Commentaire d'annulation", "TITLE": "Motif d'annulation"},
       "reject": {"LABEL": "Commentaire de rejet", "TITLE": "Motif du rejet"},
-      "reject_report": {"LABEL": "Commentaire de rejet du rapport", "TITLE": "Motif de rejet du rapport"}
+      "reject_report": {"LABEL": "Commentaire sur le renvoi du rapport", "TITLE": "Raison du renvoi du rapport"}
     },
     "STATUSES": {
       "draft": "Draft",
@@ -680,6 +685,8 @@
   "DUPLICATE": "DUPLIQUER",
   "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
+  "NO_RECORDS": "Aucun enregistrement trouvé.",
+  "NO_ACTION_POINT": "Aucun point d'action",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

@@ -1,7 +1,7 @@
 import {css, CSSResult, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './partners-list.tpl';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -12,13 +12,12 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadPartnersList} from '../../../../redux/effects/tpm-partners.effects';
 import {tpmPartners} from '../../../../redux/reducers/tpm-partners.reducer';
 import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/selectors/tpm-partners.selectors';
-import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 
 import {ListMixin} from '../../../common/mixins/list-mixin';
@@ -42,11 +41,12 @@ store.addReducers({tpmPartners});
 @customElement('partners-list')
 export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmPartner>(LitElement)) {
   @property() loadingInProcess = false;
-  @property() rootPath: string = ROOT_PATH;
   @property() showAddButton = false;
 
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
+  @property({type: Boolean})
+  lowResolutionLayout = false;
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
   private readonly partnersDataUnsubscribe: Unsubscribe;
@@ -96,7 +96,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
       elevationStyles,
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       SharedStyles,
       css`
@@ -105,10 +105,7 @@ export class PartnersListComponent extends MatomoMixin(ListMixin()<IActivityTpmP
           min-height: 73px;
         }
         .search-input {
-          margin-inline-end: 16px;
-          display: flex;
-          min-width: 400px;
-          align-items: center;
+          width: 100%;
         }
         .search-filters {
           flex-grow: 1;

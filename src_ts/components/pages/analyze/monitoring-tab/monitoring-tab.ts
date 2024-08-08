@@ -3,9 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {template} from './monitoring-tab.tpl';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {store} from '../../../../redux/store';
 import {monitoringActivities} from '../../../../redux/reducers/monitoring-activity.reducer';
 import {loadOverallStatistics} from '../../../../redux/effects/monitoring-activity.effects';
@@ -123,6 +123,6 @@ export class MonitoringTabComponent extends LitElement {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, FlexLayoutClasses, CardStyles, monitoringActivityStyles];
+    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles, monitoringActivityStyles];
   }
 }

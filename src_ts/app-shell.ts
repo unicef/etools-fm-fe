@@ -2,9 +2,7 @@
  @license
  Copyright (c) 2019 The eTools Project Authors. All rights reserved.
  */
-import {connect} from 'pwa-helpers/connect-mixin';
-import {installMediaQueryWatcher} from 'pwa-helpers/media-query';
-import {installRouter} from 'pwa-helpers/router';
+import {connect, installMediaQueryWatcher, installRouter} from '@unicef-polymer/etools-utils/dist/pwa.utils';
 // This element is connected to the Redux store.
 import {store} from './redux/store';
 // These are the elements needed by this element.
@@ -13,6 +11,7 @@ import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-drawer';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
+import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-footer';
 import '@unicef-polymer/etools-form-builder';
 import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
@@ -23,7 +22,6 @@ import {RouterStyles} from './components/app-shell/router-style';
 
 import './components/app-shell/menu/app-menu.js';
 import './components/app-shell/header/page-header.js';
-import './components/app-shell/footer/page-footer.js';
 
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from './config/config';
 import {getCurrentUserData} from './redux/effects/user.effects';
@@ -49,7 +47,7 @@ import {globalLoading} from './redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from 'lit-translate';
 import {checkEnvFlags} from './components/utils/check-flags';
-import {ROOT_PATH, BASE_URL} from './config/config';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from './components/utils/utils';
 import {MapHelper} from './components/common/map-mixin';
@@ -62,7 +60,7 @@ registerTranslateConfig({
   loader: (lang: string) => fetch(`assets/i18n/${lang}.json`).then((res: any) => res.json())
 });
 
-setBasePath(BASE_URL);
+setBasePath(Environment.basePath);
 initializeIcons();
 
 // These are the actions needed by this element.
@@ -246,7 +244,7 @@ export class AppShell extends connect(store)(LitElement) {
     // language=HTML
     return html`
       <etools-piwik-analytics
-        .page="${ROOT_PATH}${this.mainPage}"
+        .page="${Environment.basePath}${this.mainPage}"
         .user="${this.user}"
         .toast="${this.currentToastMessage}"
       >
@@ -322,7 +320,7 @@ export class AppShell extends connect(store)(LitElement) {
             ></page-not-found>
           </main>
 
-          <page-footer></page-footer>
+          <app-footer></app-footer>
         </app-header-layout>
       </app-drawer-layout>
     `;

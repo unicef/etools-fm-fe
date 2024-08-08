@@ -30,10 +30,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
         ?active="${this.savingInProcess}"
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
-      <div class="grid-container">
+      <div class="row">
         <!--     Description   -->
         <etools-textarea
-          class="validate-input additional-padding"
+          class="col-12 validate-input additional-padding"
           .value="${this.editedData.description}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
           required
@@ -46,10 +46,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
           @click="${() => this.resetFieldError('description')}"
         ></etools-textarea>
       </div>
-      <div class="grid-container">
+      <div class="row">
         <!--    Assignee    -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.assigned_to}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('assigned_to', detail.selectedItem && detail.selectedItem.id)}"
@@ -70,7 +70,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Due on     -->
         <datepicker-lite
-          class="without-border"
+          class="col-md-6 col-12 without-border"
           value="${this.editedData.due_date || ''}"
           fire-date-has-changed
           label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.DUE_ON')}"
@@ -82,7 +82,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Section     -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.section}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('section', detail.selectedItem && detail.selectedItem.id)}"
@@ -103,7 +103,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Offices    -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.office}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateModelValue('office', detail.selectedItem && detail.selectedItem.id)}"
@@ -122,9 +122,15 @@ export function template(this: ActionPointsPopup): TemplateResult {
           @click="${() => this.resetFieldError('office')}"
         ></etools-dropdown>
 
+        <div class="col-6 offset-6 additional-padding" ?hidden="${!this.showInactiveRow(this.selectedRelatedTo)}">
+          <sl-switch ?checked="${this.showInactive}" @sl-change="${this.onShowInactiveChange}">
+            ${translate('TPM_DETAILS.SHOW_INACTIVE')}
+          </sl-switch>
+        </div>
+
         <!--    Related To    -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.selectedRelatedTo}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.setSelectedRelatedTo(detail.selectedItem && detail.selectedItem.value)}"
@@ -145,15 +151,15 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Related Name    -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
-          ?trigger-value-change-event="${this.getRelatedNames().length}"
+          ?trigger-value-change-event="${this.getRelatedNames(this.showInactive).length}"
           required
           label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.RELATED_NAME')}"
           placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_RELATED_NAME')}"
-          .options="${this.getRelatedNames()}"
+          .options="${this.getRelatedNames(this.showInactive)}"
           option-label="name"
           option-value="id"
           allow-outside-scroll
@@ -166,7 +172,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--   Categories   -->
         <etools-dropdown
-          class="without-border flex additional-padding"
+          class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.category}"
           @etools-selected-item-changed="${({detail}: CustomEvent) => {
             this.updateModelValue('category', detail.selectedItem && detail.selectedItem.id);
@@ -187,7 +193,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
         ></etools-dropdown>
 
         <!--    Priority    -->
-        <div class="without-border flex priority-container additional-padding">
+        <div class="col-md-6 col-12 without-border flex priority-container additional-padding">
           <etools-checkbox
             class="priority"
             ?checked="${this.editedData.high_priority}"

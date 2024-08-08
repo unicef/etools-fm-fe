@@ -1,7 +1,7 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
-import {elevationStyles} from '../../../styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
@@ -11,7 +11,6 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
-import {ROOT_PATH} from '../../../../config/config';
 import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
@@ -29,7 +28,7 @@ import {SharedStyles} from '../../../styles/shared-styles';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
-import {FlexLayoutClasses} from '../../../styles/flex-layout-classes';
+import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {ActivitiesListStyles} from './activities-list.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
@@ -52,17 +51,18 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
 @customElement('activities-list')
 export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivity>(LitElement)) {
   @property() loadingInProcess = false;
-  @property() rootPath: string = ROOT_PATH;
   @property() filters: EtoolsFilter[] | null = null;
   @property() activitiesListFilters: ActivityFilter[] = [];
   @property({type: Object}) user!: IEtoolsUserModel;
-
+  @property({type: Boolean})
+  lowResolutionLayout = false;
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
   @property() private filtersData: GenericObject = {
@@ -145,7 +145,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       elevationStyles,
       pageContentHeaderSlottedStyles,
       pageLayoutStyles,
-      FlexLayoutClasses,
+      layoutStyles,
       CardStyles,
       SharedStyles,
       ActivitiesListStyles,
@@ -164,6 +164,9 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         .search-filters {
           flex-grow: 1;
           margin-block: 5px;
+        }
+        .row {
+          width: 100%;
         }
       `
     ];
@@ -323,7 +326,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     } else if (activity.status === REPORT_FINALIZATION) {
       tab = SUMMARY_TAB;
     }
-    return `${this.rootPath}activities/${activity.id}/${tab}/`;
+    return `${Environment.basePath}activities/${activity.id}/${tab}/`;
   }
 
   private loadDataForFilters(): void {
