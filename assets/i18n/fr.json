@@ -101,6 +101,7 @@
     "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
     "INTERVENTIONS": "PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "Cette activité implique une surveillance à distance",
     "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SPD sélectionné:",
     "ADD_ENTRY": "Ajouter un nouvel élément",
     "ADD_PARTNER": "Ajouter un partenaire",

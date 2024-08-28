@@ -92,6 +92,7 @@
     "INTERVENTION": "Intervención",
     "INTERVENTIONS": "PD/SPD",
     "INTERVENTIONS_FOUND": "{{ count }}Se encontraron PD/SPD:",
+    "INVOLVES_REMOTE_MONITORING": "Esta actividad implica monitoreo remoto",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Seleccionar Ubicación por nivel administrativo",
     "MAP_SELECT_LOCATION_BY_SITE": "Seleccionar Ubicación por sitio",
     "MONITOR_INFO": "Información a monitorear",

@@ -90,6 +90,7 @@
     "INTERVENTION": "التدخل",
     "INTERVENTIONS": "وثيقة البرامج / اتفاقية تمويل صغير",
     "INTERVENTIONS_FOUND": "تم العثور على {{count}} وثيقة برامج / اتفاقية تمويل صغير",
+    "INVOLVES_REMOTE_MONITORING": "يتضمن هذا النشاط المراقبة عن بعد",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "حدد الموقع حسب المستوى الإداري",
     "MAP_SELECT_LOCATION_BY_SITE": "حدد الموقع حسب المكان",
     "MONITOR_INFO": "معلومات المراقبة",
