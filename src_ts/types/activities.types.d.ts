@@ -17,6 +17,7 @@ interface IListActivity {
   report_reviewer: ActivityTeamMember;
   reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
+  remote_monitoring: boolean;
 }
 
 interface IActivityDetails extends IListActivity {

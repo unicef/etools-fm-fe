@@ -101,6 +101,7 @@
     "PD_STATUS": "PD Status",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
     "INTERVENTIONS": "PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "This Activity Involves Remote Monitoring",
     "CONNECTED_ENTRIES": "Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Add New Item",
     "ADD_PARTNER": "Add Partner",

@@ -101,6 +101,7 @@
     "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
     "INTERVENTIONS": "Localized PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "Это занятие включает в себя удаленный мониторинг",
     "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Localized Add New Item",
     "ADD_PARTNER": "Localized Add Partner",
