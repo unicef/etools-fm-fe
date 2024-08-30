@@ -40,7 +40,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
-  @property() teamMembers?: ActivityTeamMember[] = [];  
+  @property() teamMembers?: ActivityTeamMember[] = [];
   @property() reviewerOptions: User[] = [];
   @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
