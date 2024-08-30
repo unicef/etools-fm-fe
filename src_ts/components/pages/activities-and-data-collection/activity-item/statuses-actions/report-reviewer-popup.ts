@@ -9,7 +9,8 @@ import {get as getTranslation, translate} from 'lit-translate';
 import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';
-import {reviewersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
+import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
+const USER_STAFF: UserType = 'staff';
 
 @customElement('report-reviewer-popup')
 export class ReportReviewerPopup extends LitElement {
@@ -18,7 +19,7 @@ export class ReportReviewerPopup extends LitElement {
   @property() protected reason = '';
   @property() protected error = '';
   @property() activity!: IActivityDetails;
-  @property() reviewers: User[] = [];
+  @property() users: User[] = [];
   private userUnsubscribe!: Callback;
 
   set dialogData({activity}: ReportReviewerPopupData) {
@@ -32,11 +33,13 @@ export class ReportReviewerPopup extends LitElement {
     super.connectedCallback();
 
     this.userUnsubscribe = store.subscribe(
-      reviewersDataSelectors((reviewers: User[] | undefined) => {
-        if (!reviewers) {
+      usersDataSelectors((users: User[] | undefined) => {
+        if (!users) {
           return;
         }
-        this.reviewers = reviewers;
+        this.users = users.filter((user: User) => {
+          return user.user_type === USER_STAFF;
+        });
       })
     );
   }
@@ -80,7 +83,7 @@ export class ReportReviewerPopup extends LitElement {
               }}"
               trigger-value-change-event
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
-              .options="${this.reviewers}"
+              .options="${this.users}"
               @focus="${() => (this.error = '')}"
               ?invalid="${Boolean(this.error)}"
               error-message="${this.error}"
