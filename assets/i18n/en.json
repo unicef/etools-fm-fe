@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Enter Overall finding",
-      "OVERALL_FINDING": "Overall finding",
+      "OVERALL_FINDING_PLACEHOLDER": "Enter General observations",
+      "OVERALL_FINDING": "General observations",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",

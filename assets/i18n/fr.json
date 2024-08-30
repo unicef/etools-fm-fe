@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Rapports d'avancement"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Entrez le résultat",
-      "OVERALL_FINDING": "Constat général",
+      "OVERALL_FINDING_PLACEHOLDER": "Entrez des observations générales",
+      "OVERALL_FINDING": "Observations générales",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
         "ON_TRACK": "En Bonne Voie",

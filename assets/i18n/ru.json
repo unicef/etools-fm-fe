@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Localized Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
-      "OVERALL_FINDING": "Overall finding",
+      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter General observations",
+      "OVERALL_FINDING": "General observations",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
