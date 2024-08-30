@@ -48,8 +48,8 @@
         "OFF_TRACK": "Desfasado",
         "ON_TRACK": "En camino"
       },
-      "OVERALL_FINDING": "Conclusiones generales",
-      "OVERALL_FINDING_PLACEHOLDER": "Introduzca las conclusiones generales"
+      "OVERALL_FINDING_PLACEHOLDER": "Ingrese observaciones generales",
+      "OVERALL_FINDING": "Observaciones generales"
     }
   },
   "ACTIVITY_CHECKLIST": {

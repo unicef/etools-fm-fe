@@ -46,8 +46,8 @@
         "OFF_TRACK": "خارج المسار",
         "ON_TRACK": "وفقاً للخطة"
       },
-      "OVERALL_FINDING": "النتيجة الإجمالية",
-      "OVERALL_FINDING_PLACEHOLDER": "أدخل النتيجة الإجمالية"
+      "OVERALL_FINDING_PLACEHOLDER": "أدخل الملاحظات العامة",
+      "OVERALL_FINDING": "الملاحظات العامة"
     }
   },
   "ACTIVITY_CHECKLIST": {
