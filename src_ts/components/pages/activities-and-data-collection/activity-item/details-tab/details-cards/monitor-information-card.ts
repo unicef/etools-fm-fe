@@ -10,7 +10,7 @@ import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {store} from '../../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../../redux/actions/activity-details.actions';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
-import {REVIEWERS, TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
+import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
@@ -35,13 +35,13 @@ type MemberOptions = {
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
-  @property() reviewerOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
-  @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() teamMembers?: ActivityTeamMember[] = [];  
+  @property() reviewerOptions: User[] = [];
   @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
@@ -52,7 +52,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
   preserveSelectedLeadVisit = false;
 
   private userUnsubscribe!: Callback;
-  private reviewersUnsubscribe!: Callback;
   private tpmPartnerUnsubscribe!: Callback;
 
   set data(data: IActivityDetails | null) {
@@ -234,6 +233,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
             tpmPartner: this.tpmPartner
           });
           // Waited for dropdown options
+          this.getReviewerOptions();
+
           this.personResponsible = this.editedData.visit_lead;
           if (this.personResponsible) {
             this.preserveSelectedLeadVisit = !(this.editedData.team_members || []).some(
@@ -248,18 +249,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
           });
         },
         [USERS]
-      )
-    );
-
-    this.reviewersUnsubscribe = store.subscribe(
-      staticDataDynamic(
-        (reviewers: User[] | undefined) => {
-          if (!reviewers) {
-            return;
-          }
-          this.reviewerOptions = reviewers;
-        },
-        [REVIEWERS]
       )
     );
 
@@ -290,7 +279,6 @@ export class MonitorInformationCard extends BaseDetailsCard {
     super.disconnectedCallback();
     this.userUnsubscribe();
     this.tpmPartnerUnsubscribe();
-    this.reviewersUnsubscribe();
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
@@ -304,6 +292,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
       }
       return isValid;
     });
+  }
+
+  getReviewerOptions(): void {
+    this.reviewerOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
