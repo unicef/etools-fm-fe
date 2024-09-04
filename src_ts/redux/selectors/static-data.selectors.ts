@@ -32,10 +32,6 @@ export const usersDataSelectors: Selector<User[] | undefined> = select<User[] | 
   (store: IRootState) => store.staticData.users
 );
 
-export const reviewersDataSelectors: Selector<User[] | undefined> = select<User[] | undefined>(
-  (store: IRootState) => store.staticData.reviewers
-);
-
 export const staticDataDynamic: DynamicSelector<any> = dynamicSelect<IStaticDataState, any>(
   (store: IRootState) => store.staticData
 );

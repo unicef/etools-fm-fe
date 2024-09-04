@@ -11,7 +11,7 @@ import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
-import {REVIEWERS, USERS} from '../../../endpoints/endpoints-list';
+import {USERS} from '../../../endpoints/endpoints-list';
 
 store.addReducers({activities});
 export const ACTIVITIES_PAGE = 'activities';
@@ -47,9 +47,6 @@ export class ActivitiesPageComponent extends LitElement {
     const data: IStaticDataState = (store.getState() as IRootState).staticData;
     if (!data.users) {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
-    }
-    if (!data.reviewers) {
-      store.dispatch<AsyncEffect>(loadStaticData(REVIEWERS));
     }
     store.subscribe(
       routeDetailsSelector(({routeName, subRouteName}: EtoolsRouteDetails) => {

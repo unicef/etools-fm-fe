@@ -56,7 +56,6 @@ interface IStaticDataState {
   outputs?: EtoolsCpOutput[];
   outputsActive?: EtoolsCpOutput[];
   users?: User[];
-  reviewers?: User[];
   teamMembers?: User[];
   planningOutputs?: EtoolsCpOutput[];
   cpOutcomes?: EtoolsCpOutcome[];
