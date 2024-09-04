@@ -52,6 +52,9 @@ import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-ac
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {getEndpoint} from '../../../../endpoints/endpoints';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {ACTIVITIES_EXPORT} from '../../../../endpoints/endpoints-list';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -249,6 +252,15 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       updateQueryParams({page, page_size});
     }
     return !invalid;
+  }
+
+  exportData(e: CustomEvent): void {
+    this.trackAnalytics(e);
+    const url: string = getEndpoint(ACTIVITIES_EXPORT).url;
+    const routeDetails: EtoolsRouteDetails | null = EtoolsRouter.getRouteDetails();
+    const params: string =
+      routeDetails && routeDetails.queryParams ? `?${EtoolsRouter.encodeQueryParams(routeDetails.queryParams)}` : '';
+    window.open(url + params, '_blank');
   }
 
   private initFilters(): void {

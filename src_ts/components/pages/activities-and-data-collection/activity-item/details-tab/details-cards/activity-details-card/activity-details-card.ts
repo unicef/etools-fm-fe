@@ -29,6 +29,8 @@ import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';
 import {applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
@@ -114,6 +116,9 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
           white-space: nowrap;
           --etools-icon-fill-color: var(--secondary-text-color);
         }
+        .pbs-30 {
+          padding-block-start: 30px;
+        }
       `
     ];
   }
@@ -196,7 +201,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
             <div class="col-md-3 col-12">
               <datepicker-lite
                 class="validate-input datepicker-width"
-                value="${this.editedData.start_date || ''}"
+                .value="${this.editedData.start_date || ''}"
                 label="${translate('ACTIVITY_DETAILS.START_DATE')}"
                 .autoValidate="${true}"
                 ?fire-date-has-changed="${this.isEditMode}"
@@ -209,7 +214,7 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
             <div class="col-md-3 col-12">
               <datepicker-lite
                 class="validate-input datepicker-width"
-                value="${this.editedData.end_date || ''}"
+                .value="${this.editedData.end_date || ''}"
                 .autoValidate="${true}"
                 ?fire-date-has-changed="${this.isEditMode}"
                 @date-has-changed="${({detail}: CustomEvent) =>
@@ -261,6 +266,15 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
                 allow-outside-scroll
                 dynamic-align
               ></etools-dropdown-multi>
+            </div>
+            <div class="col-md-6 col-12 pbs-30">
+              <sl-switch
+                .checked="${this.editedData.remote_monitoring}"
+                ?disabled="${!this.isEditMode || this.isFieldReadonly('remote_monitoring')}"
+                @sl-change="${(e: CustomEvent) => (this.editedData.remote_monitoring = (e.target as SlSwitch).checked)}"
+              >
+                ${translate('ACTIVITY_DETAILS.INVOLVES_REMOTE_MONITORING')}
+              </sl-switch>
             </div>
           </div>
         </div>

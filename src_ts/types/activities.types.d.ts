@@ -17,6 +17,7 @@ interface IListActivity {
   report_reviewer: ActivityTeamMember;
   reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
+  remote_monitoring: boolean;
 }
 
 interface IActivityDetails extends IListActivity {
@@ -191,6 +192,11 @@ type ActivityPermissionsObject = {
 type ReasonPopupData = {
   popupTitle: string | Callback;
   label: string | Callback;
+};
+
+type ConfirmSubmitPopupData = {
+  confirmText: string;
+  actionPointReminder: string;
 };
 
 type ReasonPopupResponse = {

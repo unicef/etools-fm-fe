@@ -48,8 +48,8 @@
         "OFF_TRACK": "Desfasado",
         "ON_TRACK": "En camino"
       },
-      "OVERALL_FINDING": "Conclusiones generales",
-      "OVERALL_FINDING_PLACEHOLDER": "Introduzca las conclusiones generales"
+      "OVERALL_FINDING_PLACEHOLDER": "Por favor ingrese aquí sus observaciones generales",
+      "OVERALL_FINDING": "Observaciones generales"
     }
   },
   "ACTIVITY_CHECKLIST": {
@@ -92,6 +92,7 @@
     "INTERVENTION": "Intervención",
     "INTERVENTIONS": "PD/SPD",
     "INTERVENTIONS_FOUND": "{{ count }}Se encontraron PD/SPD:",
+    "INVOLVES_REMOTE_MONITORING": "Esta actividad implica monitoreo remoto",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Seleccionar Ubicación por nivel administrativo",
     "MAP_SELECT_LOCATION_BY_SITE": "Seleccionar Ubicación por sitio",
     "MONITOR_INFO": "Información a monitorear",
@@ -695,6 +696,8 @@
   "DUPLICATE": "DUPLICAR",
   "ERROR_AT_SAVING_DUPLICATE": "Error al guardar duplicado",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No hay datos de actividad para duplicar",
+  "NO_ACTION_POINT": "Sin punto de acción",
+  "PLEASE_ANSWER": "Importante: proporcione la respuesta si está disponible.", 
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",
