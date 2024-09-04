@@ -41,7 +41,7 @@
       "PROGRESS_REPORTS": "Rapports d'avancement"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Entrez des observations générales",
+      "OVERALL_FINDING_PLACEHOLDER": "Veuillez saisir ici vos observations générales",
       "OVERALL_FINDING": "Observations générales",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
@@ -688,6 +688,7 @@
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
   "NO_RECORDS": "Aucun enregistrement trouvé.",
   "NO_ACTION_POINT": "Aucun point d'action",
+  "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

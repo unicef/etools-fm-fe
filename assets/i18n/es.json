@@ -48,7 +48,7 @@
         "OFF_TRACK": "Desfasado",
         "ON_TRACK": "En camino"
       },
-      "OVERALL_FINDING_PLACEHOLDER": "Ingrese observaciones generales",
+      "OVERALL_FINDING_PLACEHOLDER": "Por favor ingrese aquí sus observaciones generales",
       "OVERALL_FINDING": "Observaciones generales"
     }
   },
@@ -697,6 +697,7 @@
   "ERROR_AT_SAVING_DUPLICATE": "Error al guardar duplicado",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No hay datos de actividad para duplicar",
   "NO_ACTION_POINT": "Sin punto de acción",
+  "PLEASE_ANSWER": "Importante: proporcione la respuesta si está disponible.", 
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",

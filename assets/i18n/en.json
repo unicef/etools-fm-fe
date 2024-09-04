@@ -41,7 +41,7 @@
       "PROGRESS_REPORTS": "Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Enter General observations",
+      "OVERALL_FINDING_PLACEHOLDER": "Please enter general observations here",
       "OVERALL_FINDING": "General observations",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
@@ -688,6 +688,7 @@
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
   "NO_RECORDS": "No records found.",
   "NO_ACTION_POINT": "No Action Point",
+  "PLEASE_ANSWER": "Important: Please provide the answer if available",  
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",
