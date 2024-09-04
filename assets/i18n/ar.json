@@ -45,8 +45,8 @@
         "NOT_MONITORED": "غير مراقب",
         "OFF_TRACK": "خارج المسار",
         "ON_TRACK": "وفقاً للخطة"
-      },
-      "OVERALL_FINDING_PLACEHOLDER": "أدخل الملاحظات العامة",
+      },      
+      "OVERALL_FINDING_PLACEHOLDER": "الرجاء إدخال الملاحظات العامة هنا",  
       "OVERALL_FINDING": "الملاحظات العامة"
     }
   },
@@ -695,6 +695,7 @@
   "ERROR_AT_SAVING_DUPLICATE": "حدث خطأ أثناء حفظ النسخة المكررة",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "لا توجد بيانات نشاط لتكرارها",
   "NO_ACTION_POINT": "لا يوجد نقطة عمل",
+  "PLEASE_ANSWER": "هام: يرجى تقديم الإجابة إذا كانت متوفرة",  
   "PD_STATUS": {
     "DRAFT": "تطوير",
     "REVIEW": "مراجعة",

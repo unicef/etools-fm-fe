@@ -103,7 +103,6 @@
   --light-disabled-text-color: rgba(255, 255, 255, 0.5);
   --dark-disabled-icon-color: rgba(0, 0, 0, 0.38);
   --light-disabled-icon-color: rgba(255, 255, 255, 0.5);
-  --dark-divider-color: rgba(0, 0, 0, 0.12);
   --dark-hover-color: rgba(0, 0, 0, 0.01);
   --light-hover-color: rgba(255, 255, 255, 0.01);
   --dark-ink-color: rgba(0, 0, 0, 0.3);
@@ -111,7 +110,7 @@
   --light-theme-background-color: var(--paper-grey-50);
   --light-theme-content-color: #FFFFFF;
   --dark-theme-background-color: #233944;
-
+  --warning-color: #f59e0b;
 
   --partnership-management-color: var(--primary-background-color);
   --work-planning-color: var(--paper-light-green-500);
