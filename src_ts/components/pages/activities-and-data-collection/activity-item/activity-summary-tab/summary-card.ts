@@ -243,7 +243,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     switch (finding.activity_question.question.answer_type) {
       case TEXT_TYPE:
         return html`
-          ${this.getQuestionTooltip(finding.activity_question.is_hact)}
+          ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
           <div class="finding-container">
             <text-field
               ?is-readonly="${!this.isEditMode}"
@@ -257,7 +257,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       case NUMBER_TYPE:
         return html`
           <div class="finding-container">
-            ${this.getQuestionTooltip(finding.activity_question.is_hact)}
+            ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <number-field
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
@@ -271,7 +271,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       case SCALE_TYPE:
         return html`
           <div class="finding-container">
-            ${this.getQuestionTooltip(finding.activity_question.is_hact)}
+            ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <scale-field
               .options="${finding.activity_question.question.options}"
               ?is-readonly="${!this.isEditMode}"
@@ -287,8 +287,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     }
   }
 
-  getQuestionTooltip(is_hact: boolean) {
-    return is_hact
+  getQuestionTooltip(show_mandatory_warning: boolean) {
+    return show_mandatory_warning
       ? html`<sl-tooltip for="information-icon" placement="top" content="${translate('PLEASE_ANSWER')}">
           <etools-icon id="information-icon" name="info"></etools-icon>
         </sl-tooltip>`
