@@ -131,6 +131,7 @@ interface IChecklistQuestion {
   is_active: boolean;
   is_custom: boolean;
   options: QuestionOption[];
+  show_mandatory_warning: boolean;
 }
 
 interface IChecklistByMethods {
