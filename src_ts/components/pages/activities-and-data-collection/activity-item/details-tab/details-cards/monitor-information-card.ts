@@ -35,13 +35,13 @@ type MemberOptions = {
 @customElement('monitor-information-card')
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
-  @property() staffOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
   @property() visitLeadOptions: User[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
   @property() teamMembers?: ActivityTeamMember[] = [];
+  @property() reviewerOptions: User[] = [];
   @property() reportReviewer?: ActivityTeamMember;
   @property() personResponsible?: ActivityTeamMember | null;
   @query('#teamMembers')
@@ -191,7 +191,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.updateModelValue('report_reviewer', detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
-              .options="${this.staffOptions}"
+              .options="${this.reviewerOptions}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
@@ -232,8 +232,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
-          this.getStaffOptions();
           // Waited for dropdown options
+          this.getReviewerOptions();
+
           this.personResponsible = this.editedData.visit_lead;
           if (this.personResponsible) {
             this.preserveSelectedLeadVisit = !(this.editedData.team_members || []).some(
@@ -293,8 +294,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
     });
   }
 
-  getStaffOptions(): void {
-    this.staffOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
+  getReviewerOptions(): void {
+    this.reviewerOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {

@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Enter Overall finding",
-      "OVERALL_FINDING": "Overall finding",
+      "OVERALL_FINDING_PLACEHOLDER": "Please enter general observations here",
+      "OVERALL_FINDING": "General observations",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
@@ -101,6 +101,7 @@
     "PD_STATUS": "PD Status",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
     "INTERVENTIONS": "PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "This Activity Involves Remote Monitoring",
     "CONNECTED_ENTRIES": "Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Add New Item",
     "ADD_PARTNER": "Add Partner",
@@ -686,6 +687,8 @@
   "ERROR_AT_SAVING_DUPLICATE": "Error at saving duplicate",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
   "NO_RECORDS": "No records found.",
+  "NO_ACTION_POINT": "No Action Point",
+  "PLEASE_ANSWER": "Important: Please provide the answer if available",  
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",

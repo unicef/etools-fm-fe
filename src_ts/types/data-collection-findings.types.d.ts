@@ -13,6 +13,7 @@ type DataCollectionChecklist = {
 
 interface ISummaryChecklistItem extends IChecklistItem {
   findings: CompletedFinding[];
+  is_hact: boolean;
 }
 
 type DataCollectionFinding = {

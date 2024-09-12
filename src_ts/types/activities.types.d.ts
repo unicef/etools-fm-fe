@@ -17,6 +17,7 @@ interface IListActivity {
   report_reviewer: ActivityTeamMember;
   reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
+  remote_monitoring: boolean;
 }
 
 interface IActivityDetails extends IListActivity {
@@ -130,6 +131,7 @@ interface IChecklistQuestion {
   is_active: boolean;
   is_custom: boolean;
   options: QuestionOption[];
+  show_mandatory_warning: boolean;
 }
 
 interface IChecklistByMethods {
@@ -191,6 +193,11 @@ type ActivityPermissionsObject = {
 type ReasonPopupData = {
   popupTitle: string | Callback;
   label: string | Callback;
+};
+
+type ConfirmSubmitPopupData = {
+  confirmText: string;
+  actionPointReminder: string;
 };
 
 type ReasonPopupResponse = {

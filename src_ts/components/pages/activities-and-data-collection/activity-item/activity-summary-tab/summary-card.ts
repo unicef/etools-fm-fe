@@ -26,6 +26,7 @@ import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-li
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
@@ -145,7 +146,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected getOverallFindingTemplate(): TemplateResult {
     return this.overallInfo
       ? html`
-          <div class="overall-finding layout-horizontal">
+          <div class="overall-finding layout-horizontal ${this.isEditMode ? '' : 'readonly'}">
             <div class="flex-2 layout-horizontal layout-wrap" ?hidden="${!this.filteredOverallFindings.length}">
               ${this.filteredOverallFindings.map(
                 (finding: CompletedOverallFinding) => html`
@@ -242,6 +243,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     switch (finding.activity_question.question.answer_type) {
       case TEXT_TYPE:
         return html`
+          ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
           <div class="finding-container">
             <text-field
               ?is-readonly="${!this.isEditMode}"
@@ -255,6 +257,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       case NUMBER_TYPE:
         return html`
           <div class="finding-container">
+            ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <number-field
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
@@ -268,6 +271,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       case SCALE_TYPE:
         return html`
           <div class="finding-container">
+            ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <scale-field
               .options="${finding.activity_question.question.options}"
               ?is-readonly="${!this.isEditMode}"
@@ -281,6 +285,14 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       default:
         return html``;
     }
+  }
+
+  getQuestionTooltip(show_mandatory_warning: boolean) {
+    return show_mandatory_warning
+      ? html`<sl-tooltip for="information-icon" placement="top" content="${translate('PLEASE_ANSWER')}">
+          <etools-icon id="information-icon" name="info"></etools-icon>
+        </sl-tooltip>`
+      : ``;
   }
 
   /**
@@ -410,6 +422,17 @@ export class SummaryCard extends MethodsMixin(LitElement) {
           -ms-flex: 3;
           -webkit-flex: 3;
           flex: 3;
+        }
+        #information-icon {
+          color: var(--warning-color);
+          margin-bottom: -50px;
+          margin-left: 15px;
+        }
+        .overall-finding {
+          background-color: #ffffff;
+        }
+        .readonly {
+          background-color: var(--secondary-background-color);
         }
       `
     ];

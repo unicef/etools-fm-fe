@@ -5,6 +5,7 @@ export const LOCATIONS_ENDPOINT = 'locations';
 export const CHANGE_COUNTRY = 'changeCountry';
 export const CHANGE_ORGANIZATION = 'changeOrganization';
 export const SITES_EXPORT = 'unicefUsers';
+export const ACTIVITIES_EXPORT = 'activitiesExport';
 export const SITES_LIST = 'siteLocations';
 export const SITE_DETAILS = 'siteLocationsDetails';
 export const CURRENT_WORKSPACE = 'currentWorkspace';
@@ -21,7 +22,9 @@ export const TPM_PARTNER_EXPORT = 'tpmPartnerExport';
 export const TPM_PARTNER_ATTACHMENTS = 'tpmPartnerAttachments';
 export const TPM_PARTNER_STAFF = 'tpmPartnerStaff';
 export const INTERVENTIONS = 'interventions';
+export const INTERVENTIONS_ACTIVE = 'interventionsActive';
 export const CP_OUTPUTS = 'outputs';
+export const CP_OUTPUTS_ACTIVE = 'outputsActive';
 export const LOG_ISSUES = 'logIssues';
 export const LOG_ISSUES_DETAILS = 'logIssuesDetails';
 export const LOG_ISSUES_ATTACHMENTS = 'logIssuesAttachments';
@@ -31,6 +34,7 @@ export const RATIONALE = 'rationale';
 export const ACTIVITIES_LIST = 'activities_list';
 export const RATIONALE_ATTACHMENTS = 'rationale_attachments';
 export const USERS = 'users';
+export const REVIEWERS = 'reviewers';
 export const TEAM_MEMBERS = 'teamMembers';
 export const WIDGET_LOCATIONS_CHUNK = 'widgetLocationsChunk';
 export const WIDGET_LOCATION_PATH = 'widgetLocationPath';
@@ -76,6 +80,13 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
     cacheTableName: USERS
+  },
+
+  [REVIEWERS]: {
+    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all',
+    exp: 60 * 60 * 1000, // 1 hour
+    cachingKey: 'id',
+    cacheTableName: REVIEWERS
   },
 
   [TEAM_MEMBERS]: {
@@ -146,6 +157,13 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     cacheTableName: CP_OUTPUTS
   },
 
+  [CP_OUTPUTS_ACTIVE]: {
+    url: '/api/v1/field-monitoring/planning/cp-outputs/?page_size=all&active=True',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'id',
+    cacheTableName: CP_OUTPUTS_ACTIVE
+  },
+
   [INTERVENTIONS]: {
     url: '/api/v1/field-monitoring/planning/interventions/?page_size=all',
     exp: 60 * 60 * 1000, // 1h
@@ -153,8 +171,19 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     cacheTableName: INTERVENTIONS
   },
 
+  [INTERVENTIONS_ACTIVE]: {
+    url: '/api/v1/field-monitoring/planning/interventions/?page_size=all&status__in=active',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'id',
+    cacheTableName: INTERVENTIONS_ACTIVE
+  },
+
   [SITES_EXPORT]: {
     url: '/api/v1/field-monitoring/settings/sites/export/'
+  },
+
+  [ACTIVITIES_EXPORT]: {
+    url: '/api/v1/field-monitoring/planning/activities/export/'
   },
 
   [SITES_LIST]: {

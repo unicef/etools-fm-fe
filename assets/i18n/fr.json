@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Rapports d'avancement"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Entrez le résultat",
-      "OVERALL_FINDING": "Constat général",
+      "OVERALL_FINDING_PLACEHOLDER": "Veuillez saisir ici vos observations générales",
+      "OVERALL_FINDING": "Observations générales",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
         "ON_TRACK": "En Bonne Voie",
@@ -101,6 +101,7 @@
     "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
     "INTERVENTIONS": "PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "Cette activité implique une surveillance à distance",
     "CONNECTED_ENTRIES": "Entrées liées à ajouter avec le PD/SPD sélectionné:",
     "ADD_ENTRY": "Ajouter un nouvel élément",
     "ADD_PARTNER": "Ajouter un partenaire",
@@ -686,6 +687,8 @@
   "ERROR_AT_SAVING_DUPLICATE": "Erreur lors de l'enregistrement du duplicata",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Pas de données d'activité à dupliquer",
   "NO_RECORDS": "Aucun enregistrement trouvé.",
+  "NO_ACTION_POINT": "Aucun point d'action",
+  "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

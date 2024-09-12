@@ -41,8 +41,8 @@
       "PROGRESS_REPORTS": "Localized Progress Reports"
     },
     "SUMMARY": {
-      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter Overall finding",
-      "OVERALL_FINDING": "Overall finding",
+      "OVERALL_FINDING_PLACEHOLDER": "Localized Enter General observations",
+      "OVERALL_FINDING": "General observations",
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
@@ -101,6 +101,7 @@
     "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
     "INTERVENTIONS": "Localized PD/SPDs",
+    "INVOLVES_REMOTE_MONITORING": "Это занятие включает в себя удаленный мониторинг",
     "CONNECTED_ENTRIES": "Localized Connected entries to be added together with the selected PD/SPD:",
     "ADD_ENTRY": "Localized Add New Item",
     "ADD_PARTNER": "Localized Add Partner",
@@ -682,7 +683,9 @@
   "DUPLICATE": "ДУБЛИКАЦИЯ",
   "ERROR_AT_SAVING_DUPLICATE": "Ошибка при сохранении дубликата",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "Нет данных о деятельности для дублирования",
+  "NO_ACTION_POINT": "Нет точки действия",
   "NO_RECORDS": "Нет записей.",
+  "PLEASE_ANSWER": "Важно: Пожалуйста, предоставьте ответ, если он доступен.",  
   "PD_STATUS": {
       "DRAFT": "Развитие",
       "REVIEW": "Рассмотрение",
