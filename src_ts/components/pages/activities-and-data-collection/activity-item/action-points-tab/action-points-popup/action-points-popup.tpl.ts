@@ -78,6 +78,10 @@ export function template(this: ActionPointsPopup): TemplateResult {
             this.updateModelValue('due_date', detail.date ? formatDate(detail.date, 'YYYY-MM-DD') : null)}"
           dynamic-align
           selected-date-display-format="D MMM YYYY"
+          ?invalid="${this.errors && this.errors.due_date}"
+          .errorMessage="${this.errors && this.errors.due_date}"
+          @focus="${() => this.resetFieldError('due_date')}"
+          @click="${() => this.resetFieldError('due_date')}"
         ></datepicker-lite>
 
         <!--    Section     -->

@@ -688,7 +688,8 @@
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No Activity data to duplicate",
   "NO_RECORDS": "No records found.",
   "NO_ACTION_POINT": "No Action Point",
-  "PLEASE_ANSWER": "Important: Please provide the answer if available",  
+  "PLEASE_ANSWER": "Important: Please provide the answer if available",
+  "TPM_RAISED_ISSUES": "TPM Raised Issues",
   "PD_STATUS": {
       "DRAFT": "Development",
       "REVIEW": "Review",
