@@ -88,7 +88,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   constructor() {
     super();
     // List loading request
-    console.log(applyDropdownTranslation(ACTIVITY_STATUSES));
     this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.loadingInProcess = true;
       setDataOnSessionStorage(this.prevQueryParamsKey, params);
