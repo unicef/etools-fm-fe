@@ -48,7 +48,11 @@ import {
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
-import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
+import {
+  ACTIVE_STATUS_FILTER,
+  DATA_COLLECTION,
+  REPORT_FINALIZATION
+} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
@@ -246,10 +250,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
-    const invalid: boolean = !params || !params.page || !params.page_size;
+    const invalid: boolean = !params || !params.page || !params.page_size || !params.status__in;
     if (invalid) {
-      const {page = 1, page_size = 10} = params || {};
-      updateQueryParams({page, page_size});
+      const {page = 1, page_size = 10, status__in = ACTIVE_STATUS_FILTER} = params || {};
+      updateQueryParams({page, page_size, status__in});
     }
     return !invalid;
   }
