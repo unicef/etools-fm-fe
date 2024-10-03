@@ -697,7 +697,8 @@
   "ERROR_AT_SAVING_DUPLICATE": "Error al guardar duplicado",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "No hay datos de actividad para duplicar",
   "NO_ACTION_POINT": "Sin punto de acción",
-  "PLEASE_ANSWER": "Importante: proporcione la respuesta si está disponible.", 
+  "PLEASE_ANSWER": "Importante: proporcione la respuesta si está disponible.",
+  "TPM_RAISED_ISSUES": "Problemas planteados por TPM",
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",

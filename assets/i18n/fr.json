@@ -689,6 +689,7 @@
   "NO_RECORDS": "Aucun enregistrement trouvé.",
   "NO_ACTION_POINT": "Aucun point d'action",
   "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
+  "TPM_RAISED_ISSUES": "Problèmes soulevés par le TPM",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

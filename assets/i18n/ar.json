@@ -695,7 +695,8 @@
   "ERROR_AT_SAVING_DUPLICATE": "حدث خطأ أثناء حفظ النسخة المكررة",
   "NO_ACTIVITY_DATA_TO_DUPLICATE": "لا توجد بيانات نشاط لتكرارها",
   "NO_ACTION_POINT": "لا يوجد نقطة عمل",
-  "PLEASE_ANSWER": "هام: يرجى تقديم الإجابة إذا كانت متوفرة",  
+  "PLEASE_ANSWER": "هام: يرجى تقديم الإجابة إذا كانت متوفرة",
+  "TPM_RAISED_ISSUES": "القضايا التي أثيرت TPM",
   "PD_STATUS": {
     "DRAFT": "تطوير",
     "REVIEW": "مراجعة",

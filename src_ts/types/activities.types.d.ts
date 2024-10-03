@@ -188,6 +188,7 @@ type ActivityPermissionsObject = {
   activity_overall_finding: boolean;
   additional_info: boolean;
   action_points: boolean;
+  tpm_concerns: boolean;
 };
 
 type ReasonPopupData = {
@@ -274,6 +275,13 @@ type ActionPoint = {
   url: string;
 };
 
+type TPMActionPoint = {
+  id: number;
+  category: number;
+  high_priority: boolean;
+  description: string;
+};
+
 type EditableActionPoint = {
   id: number | null;
   category: number | null;
@@ -288,8 +296,20 @@ type EditableActionPoint = {
   cp_output: number | null;
 };
 
+type EditableTPMActionPoint = {
+  id: number | null;
+  category: number | null;
+  high_priority: boolean;
+  description: string;
+};
+
 type ActionPointPopupData = {
   action_point: ActionPoint | undefined;
+  activity_id: number;
+};
+
+type TPMActionPointPopupData = {
+  tpm_action_point: TPMActionPoint | undefined;
   activity_id: number;
 };
 

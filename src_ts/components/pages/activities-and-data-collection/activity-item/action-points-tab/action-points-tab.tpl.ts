@@ -5,7 +5,9 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 import './action-points-popup/action-points-popup';
+import './tpm-action-points-popup/tpm-action-points-popup';
 import {translate} from 'lit-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
@@ -24,7 +26,11 @@ export function template(this: ActionPointsTab): TemplateResult {
         this.lowResolutionLayout = e.detail.value;
       }}"
     ></etools-media-query>
-    <section class="elevation page-content card-container" elevation="1">
+    <section
+      class="elevation page-content card-container"
+      elevation="1"
+      ?hidden="${!this.activityDetails.permissions.view.action_points}"
+    >
       <etools-loading
         ?active="${this.loading}"
         loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
@@ -87,7 +93,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       ${this.items.map(
         (item: ActionPoint) => html`
           <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
-            <div slot="row-data" class="layout-horizontal editable-row flex">
+            <div slot="row-data" class="layout-horizontal editable-row">
               <div
                 class="col-data col-md-3"
                 data-col-header-label="${translate('ACTIVITY_ITEM.ACTION_POINTS.REFERENCE')}"
@@ -136,6 +142,104 @@ export function template(this: ActionPointsTab): TemplateResult {
               <div class="row-details-content">
                 <div class="rdc-title">${translate('ACTIVITY_ITEM.ACTION_POINTS.CONTENT')}</div>
                 <div>${this.getRelatedInfo(item).content}</div>
+              </div>
+            </div>
+          </etools-data-table-row>
+        `
+      )}
+    </section>
+
+    <section
+      class="elevation page-content card-container"
+      elevation="1"
+      ?hidden="${!this.activityDetails.permissions.view.tpm_concerns}"
+    >
+      <etools-loading
+        ?active="${this.loading}"
+        loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+      ></etools-loading>
+      <!--   Card Header   -->
+      <div class="card-title-box with-bottom-line">
+        <div class="card-title counter">
+          ${translate('TPM_RAISED_ISSUES')}
+          <info-icon-tooltip id="iit-geo" .tooltipText="${'Lorem ipsum'}"></info-icon-tooltip>
+        </div>
+        <div class="buttons-container">
+          <etools-icon-button
+            ?hidden="${!this.activityDetails.permissions.edit.tpm_concerns}"
+            @click="${() => this.openTPMPopup()}"
+            class="panel-button"
+            data-type="add"
+            name="add-box"
+          ></etools-icon-button>
+        </div>
+      </div>
+      <!--   Table header   -->
+      <etools-data-table-header
+        no-title
+        ?no-collapse="${!this.tpmItems.length}"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
+      >
+        <etools-data-table-column class="col-md-9 col-data">
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.DESCRIPTION')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-md-2 col-data">
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.CATEGORIES')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-md-1 col-data">
+          ${translate('ACTIVITY_ITEM.ACTION_POINTS.PRIORITY')}
+        </etools-data-table-column>
+        <etools-data-table-column></etools-data-table-column>
+      </etools-data-table-header>
+
+      ${!this.tpmItems.length
+        ? html`
+            <etools-data-table-row no-collapse>
+              <div slot="row-data" class="row">
+                <div class="col-data col-12 no-data">${translate('NO_RECORDS')}</div>
+              </div>
+            </etools-data-table-row>
+          `
+        : ''}
+
+      <!--   Table content   -->
+      ${this.tpmItems.map(
+        (item: TPMActionPoint) => html`
+          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <div slot="row-data" class="layout-horizontal editable-row">
+              <div
+                class="col-data col-md-9"
+                data-col-header-label="${translate('ACTIVITY_ITEM.ACTION_POINTS.DESCRIPTION')}"
+              >
+                ${item.description}
+              </div>
+              <div
+                class="col-data col-md-2"
+                data-col-header-label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.CATEGORIES')}"
+              >
+                ${this.getCategoryText(item.category, this.categories)}
+              </div>
+              <div
+                class="col-data col-md-1 editable-row"
+                data-col-header-label="${translate('ACTIVITY_ITEM.ACTION_POINTS.PRIORITY')}"
+              >
+                ${item.high_priority ? 'High' : ''}
+              </div>
+              <div
+                class="hover-block"
+                ?hidden="${!this.activityDetails.permissions.edit.tpm_concerns &&
+                !this.activityDetails.permissions.edit.action_points}"
+              >
+                <etools-icon
+                  name="create"
+                  @click="${() => this.openTPMPopup(item)}"
+                  ?hidden="${!this.activityDetails.permissions.edit.tpm_concerns}"
+                ></etools-icon>
+                <etools-icon
+                  name="autorenew"
+                  @click="${() => this.convertTPMActionPoint(item)}"
+                  ?hidden="${!this.activityDetails.permissions.edit.action_points}"
+                ></etools-icon>
               </div>
             </div>
           </etools-data-table-row>
