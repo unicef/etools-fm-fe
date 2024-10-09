@@ -690,6 +690,7 @@
   "NO_ACTION_POINT": "Aucun point d'action",
   "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
   "TPM_RAISED_ISSUES": "Problèmes soulevés par le TPM",
+  "TPM_RAISED_ISSUES_INFO": "Veuillez insérer des points d'action que le point focal du personnel de l'UNICEF considérera comme actions de suivi.",
   "PD_STATUS": {
       "DRAFT": "Développement",
       "REVIEW": "Consultez le site",

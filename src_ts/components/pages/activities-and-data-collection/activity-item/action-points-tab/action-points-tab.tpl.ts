@@ -162,7 +162,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       <div class="card-title-box with-bottom-line">
         <div class="card-title counter">
           ${translate('TPM_RAISED_ISSUES')}
-          <info-icon-tooltip id="iit-geo" .tooltipText="${'Lorem ipsum'}"></info-icon-tooltip>
+          <info-icon-tooltip id="iit-geo" .tooltipText="${translate('TPM_RAISED_ISSUES_INFO')}"></info-icon-tooltip>
         </div>
         <div class="buttons-container">
           <etools-icon-button
