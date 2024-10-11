@@ -33,6 +33,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       <div class="row">
         <!--     Description   -->
         <etools-textarea
+          id="txtDescription"
           class="col-12 validate-input additional-padding"
           .value="${this.editedData.description}"
           @value-changed="${({detail}: CustomEvent) => this.updateModelValue('description', detail.value)}"
@@ -49,6 +50,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
       <div class="row">
         <!--    Assignee    -->
         <etools-dropdown
+          id="dpdAssignTo"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.assigned_to}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -86,6 +88,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Section     -->
         <etools-dropdown
+          id="dpdSection"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.section}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -107,6 +110,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Offices    -->
         <etools-dropdown
+          id="dpdOffices"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.office}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -134,6 +138,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Related To    -->
         <etools-dropdown
+          id="dpdRelatedTo"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.selectedRelatedTo}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -155,6 +160,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--    Related Name    -->
         <etools-dropdown
+          id="dpdRelatedName"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -176,6 +182,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
 
         <!--   Categories   -->
         <etools-dropdown
+          id="dpdCategory"
           class="col-md-6 col-12 without-border flex additional-padding"
           .selected="${this.editedData.category}"
           @etools-selected-item-changed="${({detail}: CustomEvent) => {
@@ -199,6 +206,7 @@ export function template(this: ActionPointsPopup): TemplateResult {
         <!--    Priority    -->
         <div class="col-md-6 col-12 without-border flex priority-container additional-padding">
           <etools-checkbox
+            id="ckbPriority"
             class="priority"
             ?checked="${this.editedData.high_priority}"
             @sl-change="${(e: any) => this.updateModelValue('high_priority', e.target.checked)}"
