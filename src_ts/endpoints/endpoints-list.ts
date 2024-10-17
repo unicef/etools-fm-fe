@@ -64,6 +64,8 @@ export const HACT_VISITS = 'hactVisits';
 export const FULL_REPORT = 'fullReport';
 export const ACTION_POINTS_LIST = 'actionPointsList';
 export const ACTION_POINTS_DETAILS = 'actionPointsDetails';
+export const TPM_ACTION_POINTS_LIST = 'tpmActionPointsList';
+export const TPM_ACTION_POINTS_DETAILS = 'tpmActionPointsDetails';
 export const ACTION_POINTS_CATEGORIES = 'actionPointsCategories';
 export const ACTION_POINTS_OFFICES = 'offices';
 export const FEATURES_FLAGS = 'flags';
@@ -367,6 +369,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTION_POINTS_DETAILS]: {
     template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/action-points/<%=id%>'
+  },
+
+  [TPM_ACTION_POINTS_LIST]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/tpm-concerns/'
+  },
+
+  [TPM_ACTION_POINTS_DETAILS]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=activityId%>/tpm-concerns/<%=id%>'
   },
 
   [ACTION_POINTS_CATEGORIES]: {

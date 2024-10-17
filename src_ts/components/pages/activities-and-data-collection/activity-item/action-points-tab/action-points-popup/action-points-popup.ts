@@ -264,12 +264,12 @@ export class ActionPointsPopup extends InterventionsMixin(
     return {
       id: actionPoint.id,
       category: actionPoint.category,
-      assigned_to: actionPoint.assigned_to.id,
+      assigned_to: actionPoint.assigned_to?.id,
       high_priority: actionPoint.high_priority,
       due_date: actionPoint.due_date,
       description: actionPoint.description,
-      office: actionPoint.office.id,
-      section: actionPoint.section.id,
+      office: actionPoint.office?.id,
+      section: actionPoint.section?.id,
       partner: actionPoint.partner ? actionPoint.partner.id : null,
       cp_output: actionPoint.cp_output ? actionPoint.cp_output.id : null,
       intervention: actionPoint.intervention ? actionPoint.intervention.id : null

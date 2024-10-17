@@ -8,16 +8,24 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {CardStyles} from '../../../../styles/card-styles';
 import {store} from '../../../../../redux/store';
 import {actionPointsList} from '../../../../../redux/reducers/action-points.reducer';
+import {tpmActionPointsList} from '../../../../../redux/reducers/tpm-action-points.reducer';
 import {Unsubscribe} from 'redux';
 import {actionPointsListSelector} from '../../../../../redux/selectors/action-points.selectors';
+import {tpmActionPointsListSelector} from '../../../../../redux/selectors/tpm-action-points.selectors';
+import {ACTION_POINTS_CATEGORIES} from '../../../../../endpoints/endpoints-list';
+import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
+import {staticDataDynamic} from '../../../../../redux/selectors/static-data.selectors';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 
 store.addReducers({actionPointsList});
+store.addReducers({tpmActionPointsList});
 
 @customElement('action-points-tab')
 export class ActionPointsTab extends LitElement {
   @property() items: ActionPoint[] = [];
+  @property() tpmItems: TPMActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
+  @property() categories!: ActionPointsCategory[];
   @property() loading = false;
   @property({type: Boolean})
   lowResolutionLayout = false;
@@ -27,6 +35,8 @@ export class ActionPointsTab extends LitElement {
   ]);
 
   private actionPointsListUnsubscribe!: Unsubscribe;
+  private tpmActionPointsListUnsubscribe!: Unsubscribe;
+  private actionPointsCategoriesUnsubscribe!: Unsubscribe;
 
   render(): TemplateResult {
     return template.call(this);
@@ -35,6 +45,10 @@ export class ActionPointsTab extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.loading = true;
+    this.categories = store.getState().staticData.actionPointsCategories;
+    if (!this.categories) {
+      store.dispatch<AsyncEffect>(loadStaticData(ACTION_POINTS_CATEGORIES));
+    }
 
     this.actionPointsListUnsubscribe = store.subscribe(
       actionPointsListSelector((actionPointsList: ActionPoint[]) => {
@@ -42,11 +56,29 @@ export class ActionPointsTab extends LitElement {
         this.loading = false;
       })
     );
+    this.tpmActionPointsListUnsubscribe = store.subscribe(
+      tpmActionPointsListSelector((actionPointsList: TPMActionPoint[]) => {
+        this.tpmItems = actionPointsList;
+        this.loading = false;
+      })
+    );
+    this.actionPointsCategoriesUnsubscribe = store.subscribe(
+      staticDataDynamic(
+        (categories: ActionPointsCategory[] | undefined) => {
+          if (categories) {
+            this.categories = categories;
+          }
+        },
+        [ACTION_POINTS_CATEGORIES]
+      )
+    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.actionPointsListUnsubscribe();
+    this.tpmActionPointsListUnsubscribe();
+    this.actionPointsCategoriesUnsubscribe();
   }
 
   openPopup(actionPoint?: ActionPoint): void {
@@ -54,6 +86,21 @@ export class ActionPointsTab extends LitElement {
       dialog: 'action-points-popup',
       dialogData: {
         action_point: actionPoint,
+        activity_id: this.activityDetails.id
+      }
+    });
+  }
+
+  convertTPMActionPoint(tpmActionPoint: TPMActionPoint) {
+    tpmActionPoint.id = 0;
+    this.openPopup(tpmActionPoint as ActionPoint);
+  }
+
+  openTPMPopup(tpmActionPoint?: TPMActionPoint): void {
+    openDialog<TPMActionPointPopupData>({
+      dialog: 'tpm-action-points-popup',
+      dialogData: {
+        tpm_action_point: tpmActionPoint,
         activity_id: this.activityDetails.id
       }
     });
@@ -69,6 +116,10 @@ export class ActionPointsTab extends LitElement {
     } else {
       return {type: '-', content: '-'};
     }
+  }
+
+  getCategoryText(categoryId: number, categories: ActionPointsCategory[]) {
+    return (categories || []).find((x) => x.id === categoryId)?.description || '';
   }
 
   static get styles(): CSSResult[] {

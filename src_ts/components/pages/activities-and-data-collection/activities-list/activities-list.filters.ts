@@ -11,6 +11,7 @@ import {
 } from '../../../../endpoints/endpoints-list';
 import {translate} from 'lit-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
+import {ACTIVE_STATUS_FILTER} from '../activity-item/statuses-actions/activity-statuses';
 
 export interface ActivityFilter extends EtoolsFilter {
   selectionOptionsEndpoint?: string;
@@ -217,7 +218,7 @@ export function getAllAtivitiesFilters() {
       filterKey: ActivityFilterKeys.status__in,
       type: EtoolsFilterTypes.DropdownMulti,
       selectionOptions: [],
-      selectedValue: [],
+      selectedValue: ACTIVE_STATUS_FILTER,
       optionValue: 'value',
       optionLabel: 'display_name',
       selected: true,

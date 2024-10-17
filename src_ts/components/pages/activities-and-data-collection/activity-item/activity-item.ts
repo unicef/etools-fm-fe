@@ -50,7 +50,7 @@ import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/r
 import {ActivityDetailsActions, ActivityDetailsCreation} from '../../../../redux/actions/activity-details.actions';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
-import {loadActionPoints} from '../../../../redux/effects/action-points.effects';
+import {loadActionPoints, loadTPMActionPoints} from '../../../../redux/effects/action-points.effects';
 import {AnyObject} from '@unicef-polymer/etools-types';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 
@@ -270,7 +270,9 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             // loadSummaryFindingsAndOverall & loadActionPoints here because we need data loaded
             // for Action button click even if user doesn't open the tabs
             store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(Number(this.activityId)));
+
             store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityId)));
+            store.dispatch<AsyncEffect>(loadTPMActionPoints(Number(this.activityId)));
 
             store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
               if (store.getState().activityDetails.error) {
@@ -460,7 +462,14 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
   private checkActivityDetailsPermissions(activityDetails: IActivityDetails | null, property: string): boolean {
     if (activityDetails) {
-      return activityDetails.permissions.view[property as keyof ActivityPermissionsObject];
+      if (property === TABS_PROPERTIES[ACTION_POINTS]) {
+        return (
+          activityDetails.permissions.view[property as keyof ActivityPermissionsObject] ||
+          activityDetails.permissions.view['tpm_concerns']
+        );
+      } else {
+        return activityDetails.permissions.view[property as keyof ActivityPermissionsObject];
+      }
     } else return property === DETAILS_TAB;
   }
 

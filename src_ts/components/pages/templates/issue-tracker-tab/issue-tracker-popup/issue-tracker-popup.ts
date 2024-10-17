@@ -172,6 +172,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             </div>
           </div>
           <etools-dropdown
+            id="dpdStatus"
             class="validate-input col-md-4 col-12"
             .selected="${this.editedData.status}"
             label="${translate('ISSUE_TRACKER.STATUS')}"
@@ -196,6 +197,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             ? html`
                 <div class="col-12 preparation-input-container">
                   <etools-dropdown
+                    id="dpdPartner"
                     class="validate-input"
                     .selected="${simplifyValue(this.editedData.partner)}"
                     label="${translate('ISSUE_TRACKER.PARTNER')}"
@@ -222,6 +224,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             ? html`
                 <div class="col-12 preparation-input-container">
                   <etools-dropdown
+                    id="dpdCpOutput"
                     class="validate-input"
                     .selected="${simplifyValue(this.editedData.cp_output)}"
                     @etools-selected-item-changed="${({detail}: CustomEvent) =>
@@ -247,6 +250,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
           ${this.relatedToType === 'location'
             ? html`
                 <etools-dropdown
+                  id="dpdLocation"
                   class="validate-input col-md-6 col-12"
                   .selected="${simplifyValue(this.editedData.location)}"
                   label="${translate('ISSUE_TRACKER.LOCATION')}"
@@ -267,6 +271,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
                 >
                 </etools-dropdown>
                 <etools-dropdown
+                  id="dpdSite"
                   class="validate-input col-md-6 col-12"
                   .selected="${simplifyValue(this.editedData.location_site)}"
                   label="${translate('ISSUE_TRACKER.SITE')}"
@@ -289,6 +294,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
             : ''}
 
           <etools-textarea
+            id="txtIssue"
             class="validate-input col-md-12 col-12 issue-tracker-input"
             .value=${this.editedData.issue}
             max-rows="3"
