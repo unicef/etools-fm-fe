@@ -14,6 +14,7 @@ interface IRootState {
   activityChecklist: IActivityChecklistState;
   attachmentsList: IAttachmentsListState;
   actionPointsList: IActionPointsListState;
+  tpmActionPointsList: ITPMActionPointsListState;
   widgetLocations: IWidgetLocationsState;
   dataCollection: IDataCollectionState;
   monitoringActivities: IMonitoringActivityState;
@@ -97,6 +98,12 @@ type AttachmentsTypesState = {
 
 interface IActionPointsListState {
   data: ActionPoint[];
+  updateInProcess: null | boolean;
+  error: GenericObject;
+}
+
+interface ITPMActionPointsListState {
+  data: TPMActionPoint[];
   updateInProcess: null | boolean;
   error: GenericObject;
 }

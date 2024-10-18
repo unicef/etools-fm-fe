@@ -8,6 +8,17 @@ export const SUBMITTED = 'submitted';
 export const COMPLETED = 'completed';
 export const CANCELLED = 'cancelled';
 
+export const ACTIVE_STATUS_FILTER = [
+  DRAFT,
+  CHECKLIST,
+  REVIEW,
+  ASSIGNED,
+  DATA_COLLECTION,
+  REPORT_FINALIZATION,
+  SUBMITTED,
+  COMPLETED
+];
+
 export const MARK_DETAILS_CONFIGURED = 'mark_details_configured';
 export const BACK_TO_DRAFT = 'revert_details_configured';
 export const MARK_CHECKLIST_CONFIGURED = 'mark_checklist_configured';
