@@ -183,6 +183,11 @@ export class MonitorInformationCard extends BaseDetailsCard {
             ></etools-dropdown>
           </div>
           <div class="row">
+            <span
+              class="warning"
+              ?hidden=${!this.showReportReviewerWarning(this.editedData.team_members, this.editedData?.report_reviewer)}
+              >${translate('WARNING_REVIEWER_TEAM_MEMBER')}</span
+            >
             <etools-dropdown
               class="col-md-6 col-12"
               id="reportReviewerPreliminary"
@@ -358,6 +363,15 @@ export class MonitorInformationCard extends BaseDetailsCard {
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
   }
 
+  showReportReviewerWarning(teamMembers: any, reportReviewer: any) {
+    if (!teamMembers || !reportReviewer) {
+      return;
+    }
+    const members = simplifyValue(teamMembers);
+    const reviewer = simplifyValue(reportReviewer);
+    return (members || []).includes(reviewer);
+  }
+
   static get styles(): CSSResultArray {
     // language=CSS
     return [
@@ -376,6 +390,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
         }
         .user-types {
           align-items: center;
+        }
+        .warning {
+          padding-inline-start: 15px;
+          margin-block-end: -6px;
+          line-height: 16px;
+          color: var(--warning-color, #f59e0b);
         }
       `
     ];

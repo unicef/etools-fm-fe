@@ -700,6 +700,7 @@
   "PLEASE_ANSWER": "Importante: proporcione la respuesta si está disponible.",
   "TPM_RAISED_ISSUES": "Problemas planteados por TPM",
   "TPM_RAISED_ISSUES_INFO": "Insértese puntos de acción para que el punto focal del personal de UNICEF los considere como acciones de seguimiento.",
+  "WARNING_REVIEWER_TEAM_MEMBER": "Advertencia: el revisor seleccionado también es miembro del equipo. Para la separación de funciones, considere elegir un revisor que no participe en la visita.",
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",

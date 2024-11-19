@@ -45,8 +45,8 @@
         "NOT_MONITORED": "غير مراقب",
         "OFF_TRACK": "خارج المسار",
         "ON_TRACK": "وفقاً للخطة"
-      },      
-      "OVERALL_FINDING_PLACEHOLDER": "الرجاء إدخال الملاحظات العامة هنا",  
+      },
+      "OVERALL_FINDING_PLACEHOLDER": "الرجاء إدخال الملاحظات العامة هنا",
       "OVERALL_FINDING": "الملاحظات العامة"
     }
   },
@@ -601,7 +601,7 @@
     "COMPLETED_VISITS": "الزيارات المنجزة",
     "PLANNED": "مخطط",
     "PLANNED_VISITS": "الزيارات المخطط لها (حتى ديسمبر)"
-  },  
+  },
   "THIS_FIELD_IS_REQUIRED": "هذا الحقل مطلوب",
   "LOCATION_TO_BE_VISITED": "الموقع المراد زيارته",
   "SITE_TO_BE_VISITED": "الموقع الذي سيتم زيارته",
@@ -610,7 +610,7 @@
   "SELECT": "تحديد",
   "CANCEL": "يلغي",
   "TRUE": "صحيح",
-  "FALSE": "خطأ شنيع",  
+  "FALSE": "خطأ شنيع",
   "VIEW": "عرض",
   "FILTER_BY_SECTION": "تصفية حسب القسم",
   "SUPPORT": "الدعم",
@@ -626,10 +626,10 @@
   "ERROR_CREATE_ACTIVITY": "لا يمكن إنشاء النشاط",
   "ERROR_UPLOAD": "لا يمكن تحميل المرفقات. ",
   "ERROR_UPLOAD_FILE_TOO_LARGE": "خطأ أثناء تحميل الملف: الملف كبير جدًا",
-  "ERROR_UPDATE_CHECKLIST": "لا يمكن تحديث قائمة التحقق، يرجى المحاولة مرة أخرى",  
+  "ERROR_UPDATE_CHECKLIST": "لا يمكن تحديث قائمة التحقق، يرجى المحاولة مرة أخرى",
   "START_DATE_BEFORE_END_DATE": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
   "ERROR_LOAD_REPORT": "لا يمكن تحميل بيانات FullReport",
-  "ERROR_PLAN_YEAR": "لا يمكن التخطيط للسنة المحددة",  
+  "ERROR_PLAN_YEAR": "لا يمكن التخطيط للسنة المحددة",
   "SELECT_CORRECT_LOCATION": "يرجى تحديد الموقع الصحيح على الخريطة",
   "ERROR_LOAD_QUESTIONS": "لا يمكن تحميل قائمة الأسئلة",
   "ERROR_LOAD_TEMPLATES": "لا يمكن تحميل قائمة قوالب الأسئلة",
@@ -666,13 +666,13 @@
       "details": "تفاصيل الشريك",
       "attachments": "المرفقات"
     },
-  "TPM_PARTNER_DETAILS": "تفاصيل شريك المراقب المستقل",
-  "VENDOR_NUMBER": "رقم المورد",
-  "TPM_NAME": "اسم المراقب المستقل",
-  "PHONE_NUMBER": "رقم التليفون",
-  "EMAIL": "بريد الكتروني",
-  "ADDRESS": "العنوان",
-  "VALID_EMAIL_REQUIRED": "مطلوب بريد إلكتروني صحيح"
+    "TPM_PARTNER_DETAILS": "تفاصيل شريك المراقب المستقل",
+    "VENDOR_NUMBER": "رقم المورد",
+    "TPM_NAME": "اسم المراقب المستقل",
+    "PHONE_NUMBER": "رقم التليفون",
+    "EMAIL": "بريد الكتروني",
+    "ADDRESS": "العنوان",
+    "VALID_EMAIL_REQUIRED": "مطلوب بريد إلكتروني صحيح"
   },
   "TPM_CONTACTS": {
     "COLUMNS": {
@@ -698,6 +698,7 @@
   "PLEASE_ANSWER": "هام: يرجى تقديم الإجابة إذا كانت متوفرة",
   "TPM_RAISED_ISSUES": "القضايا التي أثيرت TPM",
   "TPM_RAISED_ISSUES_INFO": "يرجى إدراج نقاط العمل الخاصة بنقطة الاتصال الخاصة بموظفي اليونيسف للنظر فيها كإجراءات متابعة",
+  "WARNING_REVIEWER_TEAM_MEMBER": "تحذير: المحكم المختار هو أيضًا عضو في الفريق. للفصل بين الواجبات، فكر في اختيار محكم غير مشارك في الزيارة.",
   "PD_STATUS": {
     "DRAFT": "تطوير",
     "REVIEW": "مراجعة",
