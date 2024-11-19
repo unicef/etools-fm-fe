@@ -691,17 +691,18 @@
   "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
   "TPM_RAISED_ISSUES": "Problèmes soulevés par le TPM",
   "TPM_RAISED_ISSUES_INFO": "Veuillez insérer des points d'action que le point focal du personnel de l'UNICEF considérera comme actions de suivi.",
+  "WARNING_REVIEWER_TEAM_MEMBER": "Avertissement : Le réviseur sélectionné est également un membre de l'équipe. Pour la séparation des tâches, envisagez de choisir un évaluateur non impliqué dans la visite.",
   "PD_STATUS": {
-      "DRAFT": "Développement",
-      "REVIEW": "Consultez le site",
-      "SIGNATURE": "Signature",
-      "SIGNED": "Signé",
-      "ACTIVE": "Actif",
-      "CANCELLED": "Annulé",
-      "ENDED": "Fini",
-      "CLOSED": "Fermé",
-      "SUSPENDED": "Suspendu",
-      "TERMINATED": "Terminé",
-      "EXPIRED": "Expiré"
+    "DRAFT": "Développement",
+    "REVIEW": "Consultez le site",
+    "SIGNATURE": "Signature",
+    "SIGNED": "Signé",
+    "ACTIVE": "Actif",
+    "CANCELLED": "Annulé",
+    "ENDED": "Fini",
+    "CLOSED": "Fermé",
+    "SUSPENDED": "Suspendu",
+    "TERMINATED": "Terminé",
+    "EXPIRED": "Expiré"
   }
 }
