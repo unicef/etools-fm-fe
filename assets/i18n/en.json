@@ -113,9 +113,9 @@
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
     "EXPORT": "EXPORT",
-    "REPORT_REVIEWER": "Report Reviewer",
-    "REPORT_REVIEWER_SELECT": "The following user will be notified of this submission in order to review. Please select the user and proceed.",
-    "REPORT_REVIEWER_CONFIRM": "The following user will be notified of this submission in order to review. Please confirm the user and proceed.",
+    "REPORT_REVIEWERS": "Report Reviewers",
+    "REPORT_REVIEWER_SELECT": "The following users will be notified of this submission in order to review. Please select the users and proceed.",
+    "REPORT_REVIEWER_CONFIRM": "The following users will be notified of this submission in order to review. Please confirm the users and proceed.",
     "REVIEWED_BY": "Reviewed by"
   },
   "ACTIVITY_ITEM": {

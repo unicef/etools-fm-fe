@@ -10,6 +10,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';
 import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
+import {simplifyValue} from '../../../../utils/objects-diff';
 const USER_STAFF: UserType = 'staff';
 
 @customElement('report-reviewer-popup')
@@ -24,9 +25,10 @@ export class ReportReviewerPopup extends LitElement {
 
   set dialogData({activity}: ReportReviewerPopupData) {
     this.activity = activity;
-    this.reviewerInfoText = this.activity.report_reviewer
-      ? getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_CONFIRM')
-      : getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_SELECT');
+    this.reviewerInfoText =
+      this.activity.report_reviewers && this.activity.report_reviewers.length
+        ? getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_CONFIRM')
+        : getTranslation('ACTIVITY_DETAILS.REPORT_REVIEWER_SELECT');
   }
 
   connectedCallback(): void {
@@ -64,7 +66,7 @@ export class ReportReviewerPopup extends LitElement {
         ?opened="${this.dialogOpened}"
         .okBtnText="${translate('MAIN.BUTTONS.CONFIRM')}"
         .cancelBtnText="${translate('CANCEL')}"
-        dialog-title="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+        dialog-title="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.confirmReviewer()}"
       >
@@ -73,16 +75,16 @@ export class ReportReviewerPopup extends LitElement {
             <span>${this.reviewerInfoText}</span>
           </div>
           <div class="layout horizontal">
-            <etools-dropdown
+            <etools-dropdown-multi
               class="flex-6"
               id="reportReviewerPreliminary"
-              .selected="${this.activity?.report_reviewer?.id}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                this.activity.report_reviewer = detail.selectedItem;
+              .selectedValues="${simplifyValue(this.activity?.report_reviewers)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) => {
+                this.activity.report_reviewers = detail.selectedItems;
                 this.requestUpdate();
               }}"
               trigger-value-change-event
-              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
               .options="${this.users}"
               @focus="${() => (this.error = '')}"
               ?invalid="${Boolean(this.error)}"
@@ -91,7 +93,7 @@ export class ReportReviewerPopup extends LitElement {
               option-value="id"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>
+            ></etools-dropdown-multi>
           </div>
         </div>
       </etools-dialog>
@@ -103,13 +105,13 @@ export class ReportReviewerPopup extends LitElement {
   }
 
   confirmReviewer(): void {
-    if (!this.activity.report_reviewer?.id) {
+    if (!this.activity.report_reviewers || !this.activity.report_reviewers.length) {
       this.error = getTranslation('THIS_FIELD_IS_REQUIRED');
       return;
     }
     fireEvent(this, 'dialog-closed', {
       confirmed: true,
-      response: {reviewer: this.activity.report_reviewer.id}
+      response: {reviewers: simplifyValue(this.activity.report_reviewers)}
     });
   }
 
