@@ -1,7 +1,6 @@
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */

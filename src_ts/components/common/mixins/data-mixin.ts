@@ -1,7 +1,6 @@
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import clone from 'ramda/es/clone';
 import equals from 'ramda/es/equals';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
 /* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */

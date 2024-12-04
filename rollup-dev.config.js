@@ -42,7 +42,7 @@ const config = {
     serve({
       historyApiFallback: true,
       openPage: 'index.html',
-      port: appPort
+      port: appPort,
     }),
     livereload({
       port: liveReloadPort,

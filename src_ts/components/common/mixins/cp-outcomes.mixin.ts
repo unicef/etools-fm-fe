@@ -1,8 +1,7 @@
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {cpOutcomesDataSelector} from '../../../redux/selectors/static-data.selectors';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {CP_OUTCOMES} from '../../../endpoints/endpoints-list';
 

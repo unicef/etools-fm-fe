@@ -1,6 +1,5 @@
 import {updateQueryParams} from '../../../routing/routes';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {pageIsActive} from '../../utils/utils';
 
