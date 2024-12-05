@@ -28,7 +28,7 @@ import {
   updateFilterSelectionOptions,
   updateFiltersSelectedValues
 } from '@unicef-polymer/etools-unicef/src/etools-filters/filters';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
@@ -39,7 +39,7 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import './question-popup/question-popup';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';

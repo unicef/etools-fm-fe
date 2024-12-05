@@ -25,7 +25,7 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';

@@ -6,7 +6,7 @@ import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {CpDetailsItem} from './cp-details-item';
 import {InputStyles} from '../../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: CpDetailsItem): TemplateResult {
   return html`

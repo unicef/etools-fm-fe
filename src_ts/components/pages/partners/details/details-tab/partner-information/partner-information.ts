@@ -13,7 +13,7 @@ import {GenericObject} from '@unicef-polymer/etools-types';
 import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {
   resetRequiredFields,

@@ -4,7 +4,7 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
-import {get, translate} from 'lit-translate';
+import {get, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {template} from './summary-card.tpl';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 // import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';

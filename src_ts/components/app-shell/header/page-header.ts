@@ -25,7 +25,7 @@ import {currentUser, userSelector} from '../../../redux/selectors/user.selectors
 
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {appLanguages} from '../../../config/app-constants';
 import {etoolsEndpoints} from '../../../endpoints/endpoints-list';

@@ -2,7 +2,7 @@ import {LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
 import {deleteDataCollectionChecklistItem} from '../../../../../redux/effects/data-collection.effects';

@@ -9,7 +9,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
 

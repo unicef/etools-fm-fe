@@ -5,7 +5,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
-import {get as getTranslation, translate} from 'lit-translate';
+import {get as getTranslation, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';

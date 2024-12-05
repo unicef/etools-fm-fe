@@ -4,7 +4,7 @@ import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('details-note-card')

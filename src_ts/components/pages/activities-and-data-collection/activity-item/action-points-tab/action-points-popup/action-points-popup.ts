@@ -17,7 +17,7 @@ import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';

@@ -1,6 +1,6 @@
 import {AddNewVendorPopupComponent} from './add-new-vendor-popup';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {isRequired} from '../../../../utils/utils';

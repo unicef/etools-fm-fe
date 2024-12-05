@@ -19,7 +19,7 @@ import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 store.addReducers({questions, questionTemplates, issueTracker, specificLocations});

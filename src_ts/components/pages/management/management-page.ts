@@ -16,7 +16,7 @@ import {rationale} from '../../../redux/reducers/rationale.reducer';
 import {hasPermission, Permissions} from '../../../config/permissions';
 import {ACTIVITIES_PAGE} from '../activities-and-data-collection/activities-page';
 import {PagePermissionsMixin} from '../../common/mixins/page-permissions-mixin';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';

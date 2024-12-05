@@ -8,7 +8,7 @@ import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('partner-popup')
 export class PartnerPopup extends PartnersMixin(LitElement) {

@@ -9,7 +9,7 @@ import {Unsubscribe} from 'redux';
 import {loadActivityChecklist} from '../../../../../redux/effects/activity-checklist.effects';
 import {activityChecklistData} from '../../../../../redux/selectors/activity-checklist.selectors';
 import './checklist-selection-table/checklist-selection-table';
-import {get, translate} from 'lit-translate';
+import {get, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 store.addReducers({activityChecklist});

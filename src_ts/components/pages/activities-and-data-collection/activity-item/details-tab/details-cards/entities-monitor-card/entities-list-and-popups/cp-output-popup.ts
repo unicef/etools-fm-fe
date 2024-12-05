@@ -15,7 +15,7 @@ import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 

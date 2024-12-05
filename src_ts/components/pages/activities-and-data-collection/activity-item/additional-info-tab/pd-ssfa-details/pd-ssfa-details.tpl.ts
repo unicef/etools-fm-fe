@@ -4,7 +4,7 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: PdSsfaDetails): TemplateResult {
   return html`

@@ -8,7 +8,7 @@ import {
   COVERAGE_OF_ACTIVE_PARTNERSHIPS_CONTENT_MAP,
   OPEN_ISSUES_CONTENT_MAP
 } from './monitoring-tab.navigation.constants';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: MonitoringTabComponent): TemplateResult {
   return html`

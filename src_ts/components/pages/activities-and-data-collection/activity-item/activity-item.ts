@@ -42,7 +42,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';

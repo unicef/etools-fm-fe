@@ -15,7 +15,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import '../../../../common/file-components/files-popup';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 @customElement('issue-tracker-list')
