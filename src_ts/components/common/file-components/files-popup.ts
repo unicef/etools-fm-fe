@@ -33,14 +33,13 @@ export class FilesPopup extends LitElement {
         <div class="layout-vertical files">
           ${repeat(
             this.attachments,
-            (attachment: IAttachment) =>
-              html`
-                <etools-upload
-                  .uploadBtnLabel="${translate('UPLOAD_FILE')}"
-                  readonly
-                  .fileUrl="${attachment.file}"
-                ></etools-upload>
-              `
+            (attachment: IAttachment) => html`
+              <etools-upload
+                .uploadBtnLabel="${translate('UPLOAD_FILE')}"
+                readonly
+                .fileUrl="${attachment.file}"
+              ></etools-upload>
+            `
           )}
         </div>
       </etools-dialog>

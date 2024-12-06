@@ -107,8 +107,8 @@ export function template(this: PartnerContacts): TemplateResult {
                       >${!staffMember.is_active
                         ? translate('INACTIVE')
                         : !staffMember.has_active_realm
-                        ? translate('NO_ACCESS')
-                        : ''}</span
+                          ? translate('NO_ACCESS')
+                          : ''}</span
                     >
                     <etools-icon name="check" ?hidden="${!staffMember.has_active_realm}"></etools-icon>
                   </div>

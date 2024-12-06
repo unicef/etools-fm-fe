@@ -50,7 +50,7 @@ export class FileSelectInput extends LitElement {
     return html`
       <div class="file-selector-container">
         <input id="file" hidden type="file" />
-        <a id="link" target="_blank" hidden></a>
+        <a id="link" target="_blank" hidden aria-label="link"></a>
         ${this.hasFileName
           ? html`
               <div class="filename-container">

@@ -20,13 +20,12 @@ export function template(this: CpDetailsItem): TemplateResult {
 
         ${this.fullReport && this.fullReport.ram_indicators && this.fullReport.ram_indicators.length
           ? this.fullReport.ram_indicators.map(
-              (item: RamIndicator) =>
-                html`
-                  <div class="line ram-indicator row">
-                    <div class="col-md-10 col-12">${item.name}</div>
-                    <div class="target col-md-2 col-12">${item.target}</div>
-                  </div>
-                `
+              (item: RamIndicator) => html`
+                <div class="line ram-indicator row">
+                  <div class="col-md-10 col-12">${item.name}</div>
+                  <div class="target col-md-2 col-12">${item.target}</div>
+                </div>
+              `
             )
           : html`
               <div class="line row empty">

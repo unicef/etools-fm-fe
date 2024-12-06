@@ -53,7 +53,6 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilterKey);
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function getAllAtivitiesFilters() {
   return [
     {
@@ -269,7 +268,6 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.sections__in
 ];
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getActivitiesFilters = (isUnicefUser: boolean) => {
   if (isUnicefUser) {
     return getAllAtivitiesFilters();

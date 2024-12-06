@@ -25,7 +25,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
       @close="${this.onClose}"
       @confirm-btn-clicked="${() => this.saveChanges()}"
     >
-      <a id="link" target="_blank" hidden></a>
+      <a id="link" target="_blank" hidden aria-label="link"></a>
 
       <!--    Spinner    -->
       <etools-loading

@@ -139,29 +139,28 @@ export class DataCollectTab extends LitElement {
 
       ${repeat(
         this.dataCollectionMethods,
-        (method: EtoolsMethod) =>
-          html`
-            <etools-card class="page-content" card-title="${method.name}" is-collapsible>
-              <div slot="actions">
-                <etools-icon-button
-                  @click="${() => this.onCreateChecklist(method)}"
-                  ?disabled="${this.createInProgress}"
-                  ?hidden="${this.isReadonly}"
-                  name="add-box"
-                  class="panel-button"
-                ></etools-icon-button>
-              </div>
-              <div slot="content" class="layout-vertical">
-                <!--   Spinner for loading data   -->
-                <etools-loading
-                  ?active="${this.dataLoading}"
-                  loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
-                ></etools-loading>
+        (method: EtoolsMethod) => html`
+          <etools-card class="page-content" card-title="${method.name}" is-collapsible>
+            <div slot="actions">
+              <etools-icon-button
+                @click="${() => this.onCreateChecklist(method)}"
+                ?disabled="${this.createInProgress}"
+                ?hidden="${this.isReadonly}"
+                name="add-box"
+                class="panel-button"
+              ></etools-icon-button>
+            </div>
+            <div slot="content" class="layout-vertical">
+              <!--   Spinner for loading data   -->
+              <etools-loading
+                ?active="${this.dataLoading}"
+                loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+              ></etools-loading>
 
-                ${this.renderTable(this.checklistByMethods[method.id], method)}
-              </div>
-            </etools-card>
-          `
+              ${this.renderTable(this.checklistByMethods[method.id], method)}
+            </div>
+          </etools-card>
+        `
       )}
     `;
   }

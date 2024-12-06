@@ -4,16 +4,13 @@ import {locationsInvert} from '../../pages/management/sites-tab/locations-invert
 import {Unsubscribe} from 'redux';
 import {LitElement, PropertyDeclarations} from 'lit';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const SiteMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     locations: IGroupedSites[] = [];
     private sitesUnsubscribe!: Unsubscribe;
 
     static get properties(): PropertyDeclarations {
-      // eslint-disable-next-line
       // @ts-ignore
       const superProps: PropertyDeclarations = super.properties;
       return {
@@ -35,7 +32,7 @@ export const SiteMixin = <T extends Constructor<LitElement>>(superclass: T) =>
     }
 
     disconnectedCallback(): void {
-      super.disconnectedCallback && super.disconnectedCallback();
+      super.disconnectedCallback();
       this.sitesUnsubscribe();
     }
   };

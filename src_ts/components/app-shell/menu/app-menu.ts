@@ -1,4 +1,3 @@
-/* eslint-disable lit/attribute-value-entities */
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 

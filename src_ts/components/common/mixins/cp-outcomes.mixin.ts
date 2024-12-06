@@ -5,17 +5,14 @@ import {LitElement, PropertyDeclarations} from 'lit';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {CP_OUTCOMES} from '../../../endpoints/endpoints-list';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const CpOutcomesMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     cpOutcomes: EtoolsCpOutcome[] = [];
 
     private cpOutcomesUnsubscribe!: Unsubscribe;
 
     static get properties(): PropertyDeclarations {
-      // eslint-disable-next-line
       // @ts-ignore
       const superProps: PropertyDeclarations = super.properties;
       return {

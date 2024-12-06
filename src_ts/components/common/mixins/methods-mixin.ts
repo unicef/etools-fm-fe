@@ -5,11 +5,9 @@ import {Unsubscribe} from 'redux';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {METHODS} from '../../../endpoints/endpoints-list';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const MethodsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     methods: EtoolsMethod[] = [];
 
     private methodsUnsubscribe!: Unsubscribe;
@@ -39,7 +37,6 @@ export const MethodsMixin = <T extends Constructor<LitElement>>(superclass: T) =
     }
 
     static get properties(): PropertyDeclarations {
-      // eslint-disable-next-line
       // @ts-ignore
       const superProps: PropertyDeclarations = super.properties;
       return {
