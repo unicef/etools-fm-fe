@@ -5,7 +5,7 @@
   "contributors": [
     "eTools Team"
   ],
-  "type":"module",
+  "type": "module",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/unicef-polymer/etools-frontend-template",
   "scripts": {
@@ -29,12 +29,12 @@
     "@types/leaflet": "^1.9.3",
     "@types/lodash-es": "^4.17.7",
     "@types/ramda": "0.30.2",
-    "@unicef-polymer/etools-form-builder": "^3.1.1",
-    "@unicef-polymer/etools-modules-common": "^5.1.2",
-    "@unicef-polymer/etools-piwik-analytics": "^4.1.0",
-    "@unicef-polymer/etools-types": "^1.11.17",
-    "@unicef-polymer/etools-unicef": "^1.1.1",
-    "@unicef-polymer/etools-utils": "^2.0.1",
+    "@unicef-polymer/etools-form-builder": "^3.1.2",
+    "@unicef-polymer/etools-modules-common": "^5.1.4",
+    "@unicef-polymer/etools-piwik-analytics": "^4.1.3",
+    "@unicef-polymer/etools-types": "^1.11.20",
+    "@unicef-polymer/etools-unicef": "^1.1.3",
+    "@unicef-polymer/etools-utils": "^2.0.3",
     "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "esri-leaflet": "^3.0.8",
