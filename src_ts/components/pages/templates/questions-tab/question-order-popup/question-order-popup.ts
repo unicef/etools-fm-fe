@@ -13,7 +13,6 @@ import {loadQuestionsAll, updateQuestionOrders} from '../../../../../redux/effec
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {repeat} from 'lit/directives/repeat.js';
 import Sortable from 'sortablejs';
-import {times} from 'ramda';
 
 @customElement('question-order-popup')
 export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {

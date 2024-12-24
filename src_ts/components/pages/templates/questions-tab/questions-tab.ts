@@ -1,4 +1,4 @@
-import {CSSResult, LitElement, html, TemplateResult, PropertyValues} from 'lit';
+import {CSSResult, LitElement, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {store} from '../../../../redux/store';
