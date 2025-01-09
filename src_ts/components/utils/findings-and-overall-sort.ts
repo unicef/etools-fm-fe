@@ -1,7 +1,7 @@
 /**
  * combines findings and overall finding in one object by Partner/Cp Output/PD SPD
  */
-import {get} from 'lit-translate';
+import {get} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function sortFindingsAndOverall(
   overallData: (DataCollectionOverall | SummaryOverall)[] | null,

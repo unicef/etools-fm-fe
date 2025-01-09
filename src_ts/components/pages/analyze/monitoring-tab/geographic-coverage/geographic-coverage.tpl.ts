@@ -1,7 +1,7 @@
 import {GeographicCoverageComponent} from './geographic-coverage';
 import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: GeographicCoverageComponent): TemplateResult {
   return html`

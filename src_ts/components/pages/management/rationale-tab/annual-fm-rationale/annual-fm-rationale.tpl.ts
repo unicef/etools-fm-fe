@@ -1,6 +1,6 @@
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {AnnualFmRationale} from './annual-fm-rationale';
 import '../../../../common/layout/etools-card';

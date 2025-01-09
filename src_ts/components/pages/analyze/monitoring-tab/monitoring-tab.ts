@@ -24,7 +24,7 @@ import {
   OPEN_ISSUES_CP_OUTPUT_TAB,
   OPEN_ISSUES_LOCATION_TAB
 } from './monitoring-tab.navigation.constants';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 store.addReducers({monitoringActivities});
 

@@ -9,7 +9,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
 
@@ -24,8 +24,8 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         !hasPermission(Permissions.EDIT_QUESTIONS)
           ? 'QUESTIONS.VIEW_POPUP_TITLE'
           : this.editedData.id
-          ? 'QUESTIONS.EDIT_POPUP_TITLE'
-          : 'QUESTIONS.ADD_POPUP_TITLE'
+            ? 'QUESTIONS.EDIT_POPUP_TITLE'
+            : 'QUESTIONS.ADD_POPUP_TITLE'
       )}"
       @confirm-btn-clicked="${() => this.processRequest()}"
       @close="${this.onClose}"
@@ -170,7 +170,7 @@ export function template(this: QuestionPopupComponent): TemplateResult {
             id="orderInput"
             class="w25"
             label=${translate('QUESTIONS.LABELS.ORDER')}
-            .value="${this.editedData.order || 1}"
+            .value="${this.getItemOrder(this.editedData.order)}"
             allowed-pattern="[0-9]"
             maxlength="4"
             ?disabled="${!hasPermission(Permissions.EDIT_QUESTIONS)}"

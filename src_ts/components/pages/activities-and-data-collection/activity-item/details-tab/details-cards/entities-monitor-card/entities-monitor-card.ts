@@ -16,7 +16,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '../../../../../../utils/objects-diff';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 
 export const CARD_NAME = 'entities-monitor';

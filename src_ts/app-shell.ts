@@ -45,7 +45,7 @@ import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import {globalLoadingSelector} from './redux/selectors/global-loading.selectors';
 import {globalLoading} from './redux/reducers/global-loading.reducer';
 
-import {registerTranslateConfig, use} from 'lit-translate';
+import {registerTranslateConfig, use} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {checkEnvFlags} from './components/utils/check-flags';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';

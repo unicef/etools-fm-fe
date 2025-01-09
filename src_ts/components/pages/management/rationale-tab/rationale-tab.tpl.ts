@@ -5,7 +5,7 @@ import {RationaleTabComponent} from './rationale-tab';
 import {RATIONALE_ATTACHMENTS} from '../../../../endpoints/endpoints-list';
 import {InputStyles} from '../../../styles/input-styles';
 import './annual-fm-rationale/annual-fm-rationale';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: RationaleTabComponent): TemplateResult {
   // language=HTML

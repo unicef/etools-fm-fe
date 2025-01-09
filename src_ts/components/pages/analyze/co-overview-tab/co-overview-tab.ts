@@ -23,7 +23,7 @@ import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles
 import {leafletStyles} from '../../../styles/leaflet-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {CardStyles} from '../../../styles/card-styles';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 

@@ -6,7 +6,7 @@ import {loadInterventionsCoverage} from '../../../../../../redux/effects/monitor
 import '../../../../../common/progressbar/column-item-progress-bar';
 import '../shared-tab-template';
 import {interventionsCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('pd-spd-tab')
 export class PdSsfaTab extends LitElement {

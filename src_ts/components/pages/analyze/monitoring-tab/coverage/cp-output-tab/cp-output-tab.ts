@@ -5,7 +5,7 @@ import {loadCpOutputCoverage} from '../../../../../../redux/effects/monitoring-a
 import {Unsubscribe} from 'redux';
 import {cpOutputCoverageSelector} from '../../../../../../redux/selectors/monitoring-activities.selectors';
 import '../shared-tab-template';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('cp-output-tab')
 export class CpOutputTab extends LitElement {

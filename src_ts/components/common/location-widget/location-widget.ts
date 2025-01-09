@@ -29,7 +29,7 @@ import {equals} from 'ramda';
 import clone from 'ramda/es/clone';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 store.addReducers({widgetLocations, specificLocations});
 

@@ -3,7 +3,7 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {PartnerContacts} from './partner-contacts';
 
 export function template(this: PartnerContacts): TemplateResult {
@@ -107,8 +107,8 @@ export function template(this: PartnerContacts): TemplateResult {
                       >${!staffMember.is_active
                         ? translate('INACTIVE')
                         : !staffMember.has_active_realm
-                        ? translate('NO_ACCESS')
-                        : ''}</span
+                          ? translate('NO_ACCESS')
+                          : ''}</span
                     >
                     <etools-icon name="check" ?hidden="${!staffMember.has_active_realm}"></etools-icon>
                   </div>

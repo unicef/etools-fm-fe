@@ -24,7 +24,7 @@ import {TemplatesStyles} from './templates-tab.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,

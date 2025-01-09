@@ -2,7 +2,7 @@ import {css, CSSResult, html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../styles/input-styles';
 import {DialogStyles} from '../../styles/dialog-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {repeat} from 'lit/directives/repeat.js';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
@@ -33,14 +33,13 @@ export class FilesPopup extends LitElement {
         <div class="layout-vertical files">
           ${repeat(
             this.attachments,
-            (attachment: IAttachment) =>
-              html`
-                <etools-upload
-                  .uploadBtnLabel="${translate('UPLOAD_FILE')}"
-                  readonly
-                  .fileUrl="${attachment.file}"
-                ></etools-upload>
-              `
+            (attachment: IAttachment) => html`
+              <etools-upload
+                .uploadBtnLabel="${translate('UPLOAD_FILE')}"
+                readonly
+                .fileUrl="${attachment.file}"
+              ></etools-upload>
+            `
           )}
         </div>
       </etools-dialog>

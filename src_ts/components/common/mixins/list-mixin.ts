@@ -1,22 +1,18 @@
 import {updateQueryParams} from '../../../routing/routes';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {pageIsActive} from '../../utils/utils';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const ListMixin =
   <T extends Constructor<LitElement>>() =>
   <L>(superclass: T) =>
     class extends superclass {
-      /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
       count = 0;
       queryParams: GenericObject | null = null;
       items: L[] = [];
 
       static get properties(): PropertyDeclarations {
-        // eslint-disable-next-line
         // @ts-ignore
         const superProps: PropertyDeclarations = super.properties;
         return {

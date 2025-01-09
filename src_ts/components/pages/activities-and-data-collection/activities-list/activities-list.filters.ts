@@ -9,7 +9,7 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 import {ACTIVE_STATUS_FILTER} from '../activity-item/statuses-actions/activity-statuses';
 
@@ -53,7 +53,6 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilterKey);
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function getAllAtivitiesFilters() {
   return [
     {
@@ -269,7 +268,6 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.sections__in
 ];
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getActivitiesFilters = (isUnicefUser: boolean) => {
   if (isUnicefUser) {
     return getAllAtivitiesFilters();

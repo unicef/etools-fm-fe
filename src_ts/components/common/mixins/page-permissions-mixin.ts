@@ -1,20 +1,16 @@
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const PagePermissionsMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
-    /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
     permissionsReady = false;
 
     private userUnsubscribe!: Unsubscribe;
 
     static get properties(): PropertyDeclarations {
-      // eslint-disable-next-line
       // @ts-ignore
       const superProps: PropertyDeclarations = super.properties;
       return {

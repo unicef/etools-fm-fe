@@ -25,7 +25,7 @@ import {Unsubscribe} from 'redux';
 import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-page';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import './remove-data-collect-popup';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
@@ -139,29 +139,28 @@ export class DataCollectTab extends LitElement {
 
       ${repeat(
         this.dataCollectionMethods,
-        (method: EtoolsMethod) =>
-          html`
-            <etools-card class="page-content" card-title="${method.name}" is-collapsible>
-              <div slot="actions">
-                <etools-icon-button
-                  @click="${() => this.onCreateChecklist(method)}"
-                  ?disabled="${this.createInProgress}"
-                  ?hidden="${this.isReadonly}"
-                  name="add-box"
-                  class="panel-button"
-                ></etools-icon-button>
-              </div>
-              <div slot="content" class="layout-vertical">
-                <!--   Spinner for loading data   -->
-                <etools-loading
-                  ?active="${this.dataLoading}"
-                  loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
-                ></etools-loading>
+        (method: EtoolsMethod) => html`
+          <etools-card class="page-content" card-title="${method.name}" is-collapsible>
+            <div slot="actions">
+              <etools-icon-button
+                @click="${() => this.onCreateChecklist(method)}"
+                ?disabled="${this.createInProgress}"
+                ?hidden="${this.isReadonly}"
+                name="add-box"
+                class="panel-button"
+              ></etools-icon-button>
+            </div>
+            <div slot="content" class="layout-vertical">
+              <!--   Spinner for loading data   -->
+              <etools-loading
+                ?active="${this.dataLoading}"
+                loading-text="${translate('MAIN.LOADING_DATA_IN_PROCESS')}"
+              ></etools-loading>
 
-                ${this.renderTable(this.checklistByMethods[method.id], method)}
-              </div>
-            </etools-card>
-          `
+              ${this.renderTable(this.checklistByMethods[method.id], method)}
+            </div>
+          </etools-card>
+        `
       )}
     `;
   }

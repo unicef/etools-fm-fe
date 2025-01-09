@@ -9,7 +9,7 @@ import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 // import {fireEvent} from '../../utils/fire-custom-event';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getEndpoint} from '../../../../../../endpoints/endpoints';
 import {TPM_PARTNER_STAFF} from '../../../../../../endpoints/endpoints-list';
 import {request} from '../../../../../../endpoints/request';

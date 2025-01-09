@@ -3,7 +3,7 @@ import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import './lazy-list';
 import {updateAppLocation} from '../../../routing/routes';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: LocationWidgetComponent): TemplateResult {
   return html`

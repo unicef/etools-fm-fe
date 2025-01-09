@@ -20,7 +20,7 @@ export const SitesTabStyles: CSSResult = css`
       margin-top: 0;
       padding-top: 12px;
       -ms-overflow-style: auto;
-    }
+    };
   }
 
   .search-input {

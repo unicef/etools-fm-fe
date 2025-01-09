@@ -5,7 +5,7 @@
 This an app shell for Unicef eTools apps, a starting point based on Polymer 3, Redux and Typescript. 
 
 ## Install
-* requirements: `node`, `npm`, `polymer-cli`, `typescript`, `gulp`
+* requirements: `node`, `npm`, `polymer-cli`, `typescript`
 * `npm install`
 * `npm run start`
 

@@ -1,4 +1,4 @@
-import {get} from 'lit-translate';
+import {get} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function applyDropdownTranslation(dropdown: DefaultDropdownOption<any>[]): DefaultDropdownOption<any>[] {
   return dropdown.map((item: DefaultDropdownOption<any>) => {

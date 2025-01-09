@@ -15,7 +15,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {RationaleStyles} from './rationale.styles';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
