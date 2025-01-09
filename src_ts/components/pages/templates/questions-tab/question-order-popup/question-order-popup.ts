@@ -14,9 +14,6 @@ import {loadQuestionsAll, updateQuestionOrders} from '../../../../../redux/effec
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {repeat} from 'lit/directives/repeat.js';
 import Sortable from 'sortablejs';
-import {AutoScroll} from 'sortablejs';
-
-Sortable.mount(new AutoScroll());
 
 @customElement('question-order-popup')
 export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
