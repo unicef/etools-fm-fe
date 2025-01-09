@@ -185,28 +185,31 @@ export class MonitorInformationCard extends BaseDetailsCard {
           <div class="row">
             <span
               class="warning"
-              ?hidden=${!this.showReportReviewerWarning(this.editedData.team_members, this.editedData?.report_reviewer)}
+              ?hidden=${!this.showReportReviewerWarning(
+                this.editedData.team_members,
+                this.editedData?.report_reviewers
+              )}
               >${translate('WARNING_REVIEWER_TEAM_MEMBER')}</span
             >
-            <etools-dropdown
+            <etools-dropdown-multi
               class="col-md-6 col-12"
               id="reportReviewerPreliminary"
-              .selected="${simplifyValue(this.editedData.report_reviewer)}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) =>
-                this.updateModelValue('report_reviewer', detail.selectedItem)}"
+              .selectedValues="${simplifyValue(this.editedData.report_reviewers)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                this.updateModelValue('report_reviewers', detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
-              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWER')}"
+              label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
               .options="${this.reviewerOptions}"
               option-label="name"
               option-value="id"
-              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewer')}"
-              ?invalid="${this.errors && this.errors.report_reviewer}"
-              .errorMessage="${this.errors && this.errors.report_reviewer}"
-              @focus="${() => this.resetFieldError('report_reviewer')}"
-              @click="${() => this.resetFieldError('report_reviewer')}"
+              ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewers')}"
+              ?invalid="${this.errors && this.errors.report_reviewers}"
+              .errorMessage="${this.errors && this.errors.report_reviewers}"
+              @focus="${() => this.resetFieldError('report_reviewers')}"
+              @click="${() => this.resetFieldError('report_reviewers')}"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>
+            ></etools-dropdown-multi>
             <div class="col-md-6 col-12">
               <etools-input
                 label="${translate('ACTIVITY_DETAILS.REVIEWED_BY')}"
@@ -363,13 +366,14 @@ export class MonitorInformationCard extends BaseDetailsCard {
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
   }
 
-  showReportReviewerWarning(teamMembers: any, reportReviewer: any) {
-    if (!teamMembers || !reportReviewer) {
-      return;
+  showReportReviewerWarning(teamMembers: any, reportReviewers: any) {
+    if (!teamMembers || !!teamMembers.length || !reportReviewers || !reportReviewers.length) {
+      return false;
     }
     const members = simplifyValue(teamMembers);
-    const reviewer = simplifyValue(reportReviewer);
-    return (members || []).includes(reviewer);
+    const reviewers = simplifyValue(reportReviewers);
+    const commonIDs = members.filter((id: any) => reviewers.includes(id));
+    return commonIDs.length;
   }
 
   static get styles(): CSSResultArray {

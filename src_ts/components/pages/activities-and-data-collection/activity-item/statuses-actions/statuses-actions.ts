@@ -208,7 +208,7 @@ export class StatusesActionsComponent extends LitElement {
         if (!reviewResponse) {
           return;
         }
-        newStatusData.report_reviewer = reviewResponse.reviewer;
+        newStatusData.report_reviewers = reviewResponse.reviewers;
       }
     }
     store.dispatch<AsyncEffect>(changeActivityStatus(this.activityId, newStatusData)).then(() => {
