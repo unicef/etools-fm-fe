@@ -14,11 +14,15 @@ import {loadQuestionsAll, updateQuestionOrders} from '../../../../../redux/effec
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {repeat} from 'lit/directives/repeat.js';
 import Sortable from 'sortablejs';
+import {AutoScroll} from 'sortablejs';
+
+Sortable.mount(new AutoScroll());
 
 @customElement('question-order-popup')
 export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
   @property() items: IQuestion[] = [];
-  @property() listLoadingInProcess = false;
+  @property() showSpinner = false;
+  @property() spinnerText!: string;
   @property() draggedItem: HTMLElement | null = null;
 
   currentOrigIndex: number = 0;
@@ -71,12 +75,13 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
   constructor() {
     super();
 
-    this.listLoadingInProcess = true;
+    this.spinnerText = getTranslation('MAIN.LOADING_DATA_IN_PROCESS');
+    this.showSpinner = true;
 
     store
       .dispatch<AsyncEffect>(loadQuestionsAll())
       .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_QUESTIONS')}))
-      .then(() => (this.listLoadingInProcess = false));
+      .then(() => (this.showSpinner = false));
 
     this.questionsDataUnsubscribe = store.subscribe(
       questionsListDataAll((data: any[] | null) => {
@@ -109,11 +114,12 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
         size="md"
         no-padding
         keep-dialog-open
-        ?show-spinner="${this.listLoadingInProcess}"
+        ?show-spinner="${this.showSpinner}"
         .okBtnText="${translate('MAIN.BUTTONS.SAVE')}"
         .cancelBtnText="${translate('CANCEL')}"
         dialog-title="${translate('EDIT_QUESTIONS_ORDER')}"
         @confirm-btn-clicked="${() => this.save()}"
+        spinner-text="${this.spinnerText}"
         @close="${this.onClose}"
       >
         <div class="layout-vertical">
@@ -135,6 +141,7 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
     const el = this.shadowRoot?.querySelector('#sortable-list') as HTMLElement;
     this.sortableEl = Sortable.create(el, {
       sort: true,
+      scroll: true,
       draggable: '.sortable-item',
       dataIdAttr: 'data-id',
       animation: 150,
@@ -151,6 +158,8 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   save(): void {
+    this.spinnerText = getTranslation('MAIN.SAVING_DATA_IN_PROCESS');
+    this.showSpinner = true;
     const elList = this.shadowRoot?.querySelector('#sortable-list') as HTMLElement;
     const elItems = elList.querySelectorAll('.sortable-item') || [];
     let index = 0;
@@ -162,9 +171,11 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
     store
       .dispatch<AsyncEffect>(updateQuestionOrders(dataToSave))
       .then((_response: any) => {
+        this.showSpinner = false;
         this.onClose(true);
       })
       .catch((err: any) => {
+        this.showSpinner = false;
         parseRequestErrorsAndShowAsToastMsgs(err, this);
       });
   }
