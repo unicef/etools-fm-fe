@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {QUESTIONS_DETAILS, QUESTIONS_LIST} from '../../endpoints/endpoints-list';
+import {QUESTIONS_DETAILS, QUESTIONS_LIST, QUESTIONS_ORDER} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {
   SetQuestionsList,
@@ -39,11 +39,11 @@ export function updateQuestion(id: number, question: IEditedQuestion): (dispatch
 }
 
 export function updateQuestionOrders(
-  _questionOrders: {id: number; order: number}[]
+  questionOrders: {id: number; order: number}[]
 ): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
-    const endpoint: IResultEndpoint = getEndpoint(QUESTIONS_DETAILS);
-    return startRequest(dispatch, endpoint.url, 'PATCH', {});
+    const endpoint: IResultEndpoint = getEndpoint(QUESTIONS_ORDER);
+    return startRequest(dispatch, endpoint.url, 'PATCH', questionOrders);
   };
 }
 
@@ -58,7 +58,7 @@ function startRequest(
   dispatch: Dispatch,
   url: string,
   method: RequestMethod,
-  data: Partial<IEditedQuestion>
+  data: Partial<IEditedQuestion> | any
 ): Promise<void> {
   dispatch(new SetQuestionUpdateState(true));
 

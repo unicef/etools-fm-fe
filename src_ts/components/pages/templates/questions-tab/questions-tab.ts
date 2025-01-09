@@ -330,7 +330,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     openDialog<IQuestion | undefined>({
       dialog: 'question-order-popup'
     }).then(({confirmed}: IDialogResponse<any>) => {
-      if (!confirmed) {
+      if (!(confirmed === true)) {
         return;
       }
       // we need to refresh current list if saving was done in edit popup

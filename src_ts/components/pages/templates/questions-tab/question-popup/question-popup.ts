@@ -214,6 +214,10 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     super.firstUpdated(_changedProperties);
   }
 
+  getItemOrder(order: any) {
+    return isNaN(parseInt(order)) ? 1 : order;
+  }
+
   private changeOptionsOnTypeChange(type: string): void {
     if (this.errors && this.errors.scale) {
       delete this.errors.scale;

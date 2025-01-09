@@ -9,6 +9,7 @@ import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {loadQuestionsAll, updateQuestionOrders} from '../../../../../redux/effects/questions.effects';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {repeat} from 'lit/directives/repeat.js';
@@ -16,7 +17,7 @@ import Sortable from 'sortablejs';
 
 @customElement('question-order-popup')
 export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
-  @property() items: IQuestionOrder[] = [];
+  @property() items: IQuestion[] = [];
   @property() listLoadingInProcess = false;
   @property() draggedItem: HTMLElement | null = null;
 
@@ -82,7 +83,6 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
         if (!data) {
           return;
         }
-        data.map((x, index) => (x.currentOrder = index));
         this.items = data;
       })
     );
@@ -102,7 +102,6 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   render(): TemplateResult {
-    console.log('render...', Date.now());
     return html`
       ${DialogStyles}
       <etools-dialog
@@ -123,9 +122,7 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
               this.items || [],
               (item) => item.id,
               (item: IQuestion, _index) => html`
-                <li class="sortable-item" draggable="true" data-order="${item.order}" data-id="${item.id}">
-                  ${item.text}
-                </li>
+                <li class="sortable-item" draggable="true" data-id="${item.id}">${item.text}</li>
               `
             )}
           </ul>
@@ -136,7 +133,6 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
 
   setSortable() {
     const el = this.shadowRoot?.querySelector('#sortable-list') as HTMLElement;
-    const updateItemsOrder = this.updateItemsOrder.bind(this);
     this.sortableEl = Sortable.create(el, {
       sort: true,
       draggable: '.sortable-item',
@@ -146,25 +142,8 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
       ghostClass: 'blue-background-class',
       setData: function (dataTransfer: any, _dragEl: any) {
         dataTransfer.setData('Text', '');
-      },
-      onEnd: function (evt: any) {
-        updateItemsOrder(evt.oldIndex, evt.newIndex);
       }
     });
-  }
-
-  updateItemsOrder(initialIndex: number, currentIndex: number) {
-    // update currentOrder of items after drag and drop
-    this.items[initialIndex].currentOrder = currentIndex;
-    if (initialIndex < currentIndex) {
-      for (let i = initialIndex + 1; i < currentIndex; i++) {
-        this.items[i].currentOrder--;
-      }
-    } else if (initialIndex > currentIndex) {
-      for (let i = 0; i < initialIndex; i++) {
-        this.items[i].currentOrder++;
-      }
-    }
   }
 
   onClose(confirmed = false): void {
@@ -172,11 +151,21 @@ export class QuestionOrderComponent extends DataMixin()<IQuestion>(LitElement) {
   }
 
   save(): void {
-    const dataToSave = this.items.map((x) => {
-      return {id: x.id, order: x.currentOrder};
+    const elList = this.shadowRoot?.querySelector('#sortable-list') as HTMLElement;
+    const elItems = elList.querySelectorAll('.sortable-item') || [];
+    let index = 0;
+    const dataToSave: any[] = [];
+    elItems.forEach((el: any) => {
+      dataToSave.push({id: parseInt(el.dataset.id), order: index++});
     });
-    // @dci TODO
-    store.dispatch<AsyncEffect>(updateQuestionOrders(dataToSave));
-    this.onClose(true);
+
+    store
+      .dispatch<AsyncEffect>(updateQuestionOrders(dataToSave))
+      .then((_response: any) => {
+        this.onClose(true);
+      })
+      .catch((err: any) => {
+        parseRequestErrorsAndShowAsToastMsgs(err, this);
+      });
   }
 }

@@ -15,10 +15,6 @@ interface IQuestion<O = QuestionOption> {
   order: number;
 }
 
-interface IQuestionOrder extends IQuestion {
-  currentOrder: number;
-}
-
 type IEditedQuestion = Partial<IQuestion<EditedQuestionOption>>;
 
 type QuestionOption = {
