@@ -7,7 +7,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '../../../../utils/objects-diff';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 @customElement('data-collect-popup')

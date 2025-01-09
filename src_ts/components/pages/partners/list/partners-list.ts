@@ -24,7 +24,7 @@ import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNERS_EXPORT} from '../../../../endpoints/endpoints-list';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';

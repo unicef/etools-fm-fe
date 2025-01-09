@@ -9,7 +9,7 @@ import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
 
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: ActionPointsPopup): TemplateResult {
   return html`

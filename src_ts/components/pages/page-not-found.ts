@@ -4,7 +4,7 @@ import {customElement} from 'lit/decorators.js';
 import {SharedStyles} from '../styles/shared-styles';
 import {pageLayoutStyles} from '../styles/page-layout-styles';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**

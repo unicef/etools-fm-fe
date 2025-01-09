@@ -71,6 +71,7 @@ export const ACTION_POINTS_OFFICES = 'offices';
 export const FEATURES_FLAGS = 'flags';
 export const SYNC_VENDOR_DATA = 'syncVendorData';
 export const ACTIVATE_VENDOR = 'activateVendor';
+export const QUESTIONS_ORDER = 'questionsOrder';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -397,5 +398,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTIVATE_VENDOR]: {
     template: '/api/tpm/partners/<%=id%>/activate/'
+  },
+
+  [QUESTIONS_ORDER]: {
+    url: '/api/v1/field-monitoring/settings/questions/update-order/'
   }
 };

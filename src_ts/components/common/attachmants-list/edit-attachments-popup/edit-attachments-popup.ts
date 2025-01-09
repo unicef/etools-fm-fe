@@ -10,7 +10,7 @@ import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {

@@ -33,7 +33,10 @@ export class SetWidgetLocations {
 export class SaveLocationPath {
   readonly type: WidgetLocationsActionTypes.SAVE_LOCATION_PATH = WidgetLocationsActionTypes.SAVE_LOCATION_PATH;
 
-  constructor(public locationPath: WidgetLocation[], public locationId: string) {}
+  constructor(
+    public locationPath: WidgetLocation[],
+    public locationId: string
+  ) {}
 }
 
 export class SetWidgetLocationsLoading {

@@ -17,7 +17,7 @@ import {getDifference} from '../../../../../utils/objects-diff';
 import {checklistEditedCard} from '../../../../../../redux/selectors/activity-checklist.selectors';
 import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-checklist.actions';
 import {Unsubscribe} from 'redux';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 const ENTER = 13;
 const ESCAPE = 27;

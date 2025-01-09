@@ -6,7 +6,7 @@ import {html, TemplateResult} from 'lit';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {TPMActionPointsPopup} from './tpm-action-points-popup';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: TPMActionPointsPopup): TemplateResult {
   return html`

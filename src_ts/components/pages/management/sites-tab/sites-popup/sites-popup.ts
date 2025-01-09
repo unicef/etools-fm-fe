@@ -17,7 +17,7 @@ import {leafletStyles} from '../../../../styles/leaflet-styles';
 import {SitesTabStyles} from '../sites-tab.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {STATUS_OPTIONS} from '../../../../common/dropdown-options';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';

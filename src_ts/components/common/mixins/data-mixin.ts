@@ -1,21 +1,17 @@
-import {LitElement} from 'lit';
+import {LitElement, PropertyDeclarations} from 'lit';
 import clone from 'ramda/es/clone';
 import equals from 'ramda/es/equals';
-import {PropertyDeclarations} from 'lit-element/src/lib/updating-element';
 
-/* eslint-disable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
 /* @LitMixin */
 export const DataMixin =
   <B extends Constructor<LitElement>>() =>
   <T>(superclass: B) =>
     class extends superclass {
-      /* eslint-enable @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type */
       editedData: Partial<T> = {};
       originalData!: T | null;
       errors: GenericObject = {};
 
       static get properties(): PropertyDeclarations {
-        // eslint-disable-next-line
         // @ts-ignore
         const superProps: PropertyDeclarations = super.properties;
         return {

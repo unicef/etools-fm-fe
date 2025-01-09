@@ -5,7 +5,7 @@ import {html, TemplateResult} from 'lit';
 import {CoOverviewTabComponent} from './co-overview-tab';
 import {InputStyles} from '../../../styles/input-styles';
 import {repeat} from 'lit/directives/repeat.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: CoOverviewTabComponent): TemplateResult {
   return html`

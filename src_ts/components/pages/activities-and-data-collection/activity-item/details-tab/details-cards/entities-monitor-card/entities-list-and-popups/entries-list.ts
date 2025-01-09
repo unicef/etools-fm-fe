@@ -2,7 +2,7 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
 @customElement('entries-list')

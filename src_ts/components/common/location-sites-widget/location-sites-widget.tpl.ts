@@ -2,7 +2,7 @@ import {LocationSitesWidgetComponent} from './location-sites-widget';
 import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {updateAppLocation} from '../../../routing/routes';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: LocationSitesWidgetComponent): TemplateResult {
   return html`

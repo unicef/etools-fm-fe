@@ -10,7 +10,7 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {prettyDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {simplifyValue} from '../../../utils/objects-diff';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: IssueTrackerTabComponent): TemplateResult {
   // language=HTML

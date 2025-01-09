@@ -5,7 +5,7 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {ReviewChecklistItemStyles} from './review-checklist-item.styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('review-checklist-item')
 export class ReviewChecklistItemComponent extends LitElement {

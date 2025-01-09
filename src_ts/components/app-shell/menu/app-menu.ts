@@ -1,4 +1,3 @@
-/* eslint-disable lit/attribute-value-entities */
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
@@ -13,10 +12,9 @@ import {hasPermission, Permissions} from '../../../config/permissions';
 import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
-import {get as getTranslation} from 'lit-translate';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**

@@ -9,7 +9,7 @@ import {ChecklistSelectionTable} from './checklist-selection-table';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 

@@ -2,7 +2,7 @@ import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../../../common/progressbar/column-item-progress-bar';
 import {repeat} from 'lit/directives/repeat.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
 
 enum WidthCalculationTargets {

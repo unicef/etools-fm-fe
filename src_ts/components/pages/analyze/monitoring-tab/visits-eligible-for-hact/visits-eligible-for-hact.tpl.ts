@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {VisitsEligibleForHact} from './visits-eligible-for-hact';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';

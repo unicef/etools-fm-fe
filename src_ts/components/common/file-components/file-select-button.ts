@@ -1,6 +1,6 @@
 import {css, html, LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, query} from 'lit/decorators.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
 @customElement('file-select-button')

@@ -18,7 +18,7 @@ import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 
 @customElement('question-popup')
@@ -212,6 +212,10 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+  }
+
+  getItemOrder(order: any) {
+    return isNaN(parseInt(order)) ? 1 : order;
   }
 
   private changeOptionsOnTypeChange(type: string): void {

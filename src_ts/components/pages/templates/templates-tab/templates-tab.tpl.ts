@@ -9,7 +9,7 @@ import {html, TemplateResult} from 'lit';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {INTERVENTION, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {InputStyles} from '../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: TemplatesTabComponent): TemplateResult {

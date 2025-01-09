@@ -42,7 +42,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -334,7 +334,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
       }
     });
-    ['location', 'location_site', 'tpm_partner', 'visit_lead', 'report_reviewer'].forEach((key) => {
+    ['location', 'location_site', 'tpm_partner', 'visit_lead', 'report_reviewers'].forEach((key) => {
       if (this.activityDetails![key as keyof IActivityDetails]) {
         // @ts-ignore: Object is possibly 'null'
         dataToDuplicate[key] = this.activityDetails[key].id;

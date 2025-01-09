@@ -34,12 +34,13 @@ export function request<T>(input: RequestInfo, init: RequestInit = {}): Promise<
           try {
             const data: GenericObject = JSON.parse(error);
             const errorsArray = getErrorsArray(data);
-            let {status, statusText} = response;
+            const {status, statusText: initialStatusText} = response;
+            let statusText = initialStatusText;
             if (errorsArray && errorsArray.length) {
               statusText = errorsArray.join('\n');
             }
             return Promise.reject({data, status, statusText: statusText, initialResponse: response});
-          } catch (e) {
+          } catch {
             return Promise.reject({
               data: 'UnknownError',
               status: 500,
@@ -76,7 +77,7 @@ function getToken(): string {
     .reduce((a: GenericObject, [key, value]: string[]): GenericObject => {
       try {
         a[key] = JSON.parse(value);
-      } catch (error) {
+      } catch {
         a[key] = value;
       }
       return a;

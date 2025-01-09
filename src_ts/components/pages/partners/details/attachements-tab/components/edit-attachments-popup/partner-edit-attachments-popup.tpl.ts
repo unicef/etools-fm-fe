@@ -1,7 +1,7 @@
 import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {PartnerEditAttachmentsPopupComponent} from './partner-edit-attachments-popup';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../styles/dialog-styles';
 import {resetError} from '../../../../../../utils/utils';

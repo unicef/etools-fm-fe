@@ -7,7 +7,7 @@ import {updateChecklistAttachments} from '../../../../../../redux/effects/data-c
 import {store} from '../../../../../../redux/store';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {template} from './summary-checklist-attachments-popup.tpl';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('summary-checklist-attachments-popup')
 export class SummaryChecklistAttachmentsPopup extends LitElement {

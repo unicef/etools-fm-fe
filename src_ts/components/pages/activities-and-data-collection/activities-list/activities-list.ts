@@ -38,7 +38,7 @@ import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {
   EtoolsRouteQueryParam,

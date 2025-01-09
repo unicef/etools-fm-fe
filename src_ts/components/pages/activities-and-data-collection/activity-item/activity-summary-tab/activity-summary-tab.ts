@@ -13,7 +13,7 @@ import {findingsComponents} from '../../../../../redux/reducers/findings-compone
 import './summary-card';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {ACTIVITIES_PAGE} from '../../activities-page';
 import {SUMMARY_TAB} from '../activities-tabs';
