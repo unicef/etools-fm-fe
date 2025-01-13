@@ -182,9 +182,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
               dynamic-align
             ></etools-dropdown>
           </div>
-          <div class="row">
+          <div class="row layout-vertical">
             <span
-              class="warning"
+              class="col-md-6 col-12 warning"
               ?hidden=${!this.showReportReviewerWarning(
                 this.editedData.team_members,
                 this.editedData?.report_reviewers
@@ -367,7 +367,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   }
 
   showReportReviewerWarning(teamMembers: any, reportReviewers: any) {
-    if (!teamMembers || !!teamMembers.length || !reportReviewers || !reportReviewers.length) {
+    if (!teamMembers || !teamMembers.length || !reportReviewers || !reportReviewers.length) {
       return false;
     }
     const members = simplifyValue(teamMembers);
