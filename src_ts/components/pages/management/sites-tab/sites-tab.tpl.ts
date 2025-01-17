@@ -27,6 +27,7 @@ export function template(this: SitesTabComponent): TemplateResult {
         this.lowResolutionLayout = e.detail.value;
       }}"
     ></etools-media-query>
+
     <section class="elevation page-content filters" elevation="1">
       <div class="row">
         <etools-input
