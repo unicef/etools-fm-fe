@@ -306,6 +306,7 @@ type EditableTPMActionPoint = {
 type ActionPointPopupData = {
   action_point: ActionPoint | undefined;
   activity_id: number;
+  activityDetails: IActivityDetails;
 };
 
 type TPMActionPointPopupData = {

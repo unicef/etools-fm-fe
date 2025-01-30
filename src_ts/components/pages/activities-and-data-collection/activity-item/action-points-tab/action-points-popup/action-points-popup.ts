@@ -11,9 +11,6 @@ import {SectionsMixin} from '../../../../../common/mixins/sections-mixin';
 import {Unsubscribe} from 'redux';
 import {updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
 import {actionPointsUpdateStatusSelector} from '../../../../../../redux/selectors/action-points.selectors';
-import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
-import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
-import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
 import {getDifference} from '../../../../../utils/objects-diff';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
@@ -24,15 +21,14 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {SlSwitch} from '@shoelace-style/shoelace';
 
 @customElement('action-points-popup')
-export class ActionPointsPopup extends InterventionsMixin(
-  PartnersMixin(CpOutputsMixin(SectionsMixin(DataMixin()<EditableActionPoint>(LitElement))))
-) {
+export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionPoint>(LitElement)) {
   @property() dialogOpened = true;
   @property() users: User[] = [];
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
   @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
   @property() selectedRelatedTo: string | null = null;
   @property() showInactive = false;
+  @property() activityDetails!: IActivityDetails;
 
   @property() savingInProcess: boolean | null = false;
   @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
@@ -46,7 +42,7 @@ export class ActionPointsPopup extends InterventionsMixin(
 
   liteInterventions: LiteIntervention[] = [];
 
-  set dialogData({action_point, activity_id}: ActionPointPopupData) {
+  set dialogData({action_point, activity_id, activityDetails}: ActionPointPopupData) {
     if (action_point) {
       this.data = this.extractIds(action_point);
       this.url = action_point.url;
@@ -65,7 +61,9 @@ export class ActionPointsPopup extends InterventionsMixin(
         intervention: null
       };
     }
+    this.activityDetails = activityDetails;
     this.activityId = activity_id;
+    this.liteInterventions = (this.activityDetails.interventions || []).map((x) => ({id: x.id, name: x.number}));
     this.selectedRelatedTo = this.getRelatedTo(this.editedData);
   }
 
@@ -179,14 +177,14 @@ export class ActionPointsPopup extends InterventionsMixin(
     }
   }
 
-  getRelatedNames(showInactive: boolean): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
+  getRelatedNames(_showInactive: boolean): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
     switch (this.selectedRelatedTo) {
       case PARTNER:
-        return this.partners;
+        return this.activityDetails.partners || [];
       case OUTPUT:
-        return this.showInactive ? this.outputs : this.outputsActive;
+        return this.activityDetails.cp_outputs || [];
       case INTERVENTION:
-        return this.getLiteInterventions(showInactive);
+        return this.liteInterventions;
       default:
         return [];
     }
@@ -248,16 +246,6 @@ export class ActionPointsPopup extends InterventionsMixin(
     if (!this.editedData.category) {
       this.errors.category = errorMessage;
     }
-  }
-
-  private getLiteInterventions(showInactive: boolean): LiteIntervention[] {
-    const interventionToUse = showInactive
-      ? (this.interventions || []).slice()
-      : (this.interventionsActive || []).slice();
-    this.liteInterventions = interventionToUse.map((item: EtoolsIntervention) => {
-      return {id: item.id, name: item.title};
-    });
-    return this.liteInterventions;
   }
 
   private extractIds(actionPoint: ActionPoint): EditableActionPoint {

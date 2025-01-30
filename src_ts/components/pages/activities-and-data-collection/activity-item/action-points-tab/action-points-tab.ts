@@ -86,7 +86,8 @@ export class ActionPointsTab extends LitElement {
       dialog: 'action-points-popup',
       dialogData: {
         action_point: actionPoint,
-        activity_id: this.activityDetails.id
+        activity_id: this.activityDetails.id,
+        activityDetails: this.activityDetails
       }
     });
   }
