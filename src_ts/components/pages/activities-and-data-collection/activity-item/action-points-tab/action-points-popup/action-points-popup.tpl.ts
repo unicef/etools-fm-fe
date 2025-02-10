@@ -130,12 +130,6 @@ export function template(this: ActionPointsPopup): TemplateResult {
           @click="${() => this.resetFieldError('office')}"
         ></etools-dropdown>
 
-        <div class="col-6 offset-6 additional-padding" ?hidden="${!this.showInactiveRow(this.selectedRelatedTo)}">
-          <sl-switch ?checked="${this.showInactive}" @sl-change="${this.onShowInactiveChange}">
-            ${translate('TPM_DETAILS.SHOW_INACTIVE')}
-          </sl-switch>
-        </div>
-
         <!--    Related To    -->
         <etools-dropdown
           id="dpdRelatedTo"

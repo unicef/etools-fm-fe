@@ -18,7 +18,6 @@ import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-tr
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
-import {SlSwitch} from '@shoelace-style/shoelace';
 
 @customElement('action-points-popup')
 export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionPoint>(LitElement)) {
@@ -27,7 +26,6 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
   @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
   @property() selectedRelatedTo: string | null = null;
-  @property() showInactive = false;
   @property() activityDetails!: IActivityDetails;
 
   @property() savingInProcess: boolean | null = false;
@@ -219,10 +217,6 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     }
   }
 
-  showInactiveRow(selectedRelatedTo: string | null) {
-    return selectedRelatedTo === OUTPUT || selectedRelatedTo == INTERVENTION;
-  }
-
   private checkRequiredFields(): void {
     const errorMessage = getTranslation('THIS_FIELD_IS_REQUIRED');
     if (!this.editedData.description) {
@@ -274,14 +268,6 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     } else {
       return null;
     }
-  }
-
-  onShowInactiveChange(e: CustomEvent): void {
-    if (!e.target) {
-      return;
-    }
-    this.showInactive = (e.target as SlSwitch).checked;
-    // this.requestUpdate();
   }
 
   static get styles(): CSSResult[] {
