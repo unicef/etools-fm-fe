@@ -201,6 +201,10 @@ type ConfirmSubmitPopupData = {
   actionPointReminder: string;
 };
 
+type ConfirmDuplicatePopupData = {
+  showChecklist: boolean;
+};
+
 type ReasonPopupResponse = {
   comment: string;
 };

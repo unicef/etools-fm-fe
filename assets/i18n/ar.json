@@ -700,6 +700,8 @@
   "TPM_RAISED_ISSUES_INFO": "يرجى إدراج نقاط العمل الخاصة بنقطة الاتصال الخاصة بموظفي اليونيسف للنظر فيها كإجراءات متابعة",
   "WARNING_REVIEWER_TEAM_MEMBER": "تحذير: المحكم المختار هو أيضًا عضو في الفريق. للفصل بين الواجبات، فكر في اختيار محكم غير مشارك في الزيارة.",
   "EDIT_QUESTIONS_ORDER": "تحرير ترتيب الأسئلة",
+  "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
+  "DUPLICATE_CHECKLIST": "Include checklist",
   "PD_STATUS": {
     "DRAFT": "تطوير",
     "REVIEW": "مراجعة",

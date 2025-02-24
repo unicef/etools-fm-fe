@@ -42,6 +42,24 @@ export function createActivityDetails(activityDetails: Partial<IActivityDetails>
   };
 }
 
+export function duplicateActivityDetails(id: number, withChecklist: boolean): IAsyncAction {
+  return {
+    types: [
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DETAILS, {id});
+      const options: RequestInit = {
+        method: 'POST',
+        body: JSON.stringify({with_checklist: withChecklist})
+      };
+      return request(url, options);
+    }
+  };
+}
+
 export function updateActivityDetails(id: number, activityDetails: Partial<IActivityDetails>): IAsyncAction {
   return {
     types: [
