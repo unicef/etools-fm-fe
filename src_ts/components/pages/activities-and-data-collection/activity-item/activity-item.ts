@@ -16,11 +16,7 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {activityDetailsData, activityStatusIsChanging} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
-import {
-  createActivityDetails,
-  duplicateActivityDetails,
-  requestActivityDetails
-} from '../../../../redux/effects/activity-details.effects';
+import {duplicateActivityDetails, requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
   CANCELLED,
@@ -55,7 +51,6 @@ import {ActivityDetailsActions, ActivityDetailsCreation} from '../../../../redux
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
 import {loadActionPoints, loadTPMActionPoints} from '../../../../redux/effects/action-points.effects';
-import {AnyObject} from '@unicef-polymer/etools-types';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 
