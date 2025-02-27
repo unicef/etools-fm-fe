@@ -70,7 +70,7 @@ export class StatusesActionsComponent extends LitElement {
             @click="${() => this.changeStatus(transition)}"
             ?disabled="${this.disableBtns}"
           >
-            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            <etools-icon name="chevron-left" slot="prefix"></etools-icon>
           </etools-button>
         `
       : html``;

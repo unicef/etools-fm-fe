@@ -93,7 +93,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             href="${this.previousRoute ||
             `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
           >
-            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            <etools-icon name="chevron-left" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
           </etools-button>
           <etools-button class="neutral" variant="text" @click="${this.browserPrint}">
