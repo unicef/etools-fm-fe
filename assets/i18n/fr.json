@@ -693,6 +693,8 @@
   "TPM_RAISED_ISSUES_INFO": "Veuillez insérer des points d'action que le point focal du personnel de l'UNICEF considérera comme actions de suivi.",
   "WARNING_REVIEWER_TEAM_MEMBER": "Avertissement : Le réviseur sélectionné est également un membre de l'équipe. Pour la séparation des tâches, envisagez de choisir un évaluateur non impliqué dans la visite.",
   "EDIT_QUESTIONS_ORDER": "Modifier l'ordre des questions",
+  "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
+  "DUPLICATE_CHECKLIST": "Include checklist",
   "PD_STATUS": {
     "DRAFT": "Développement",
     "REVIEW": "Consultez le site",
