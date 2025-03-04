@@ -1,6 +1,11 @@
 import {IAsyncAction} from '../middleware';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {ACTIVITIES_LIST, ACTIVITY_CHECKLIST_ATTACHMENTS, ACTIVITY_DETAILS} from '../../endpoints/endpoints-list';
+import {
+  ACTIVITIES_LIST,
+  ACTIVITY_CHECKLIST_ATTACHMENTS,
+  ACTIVITY_DETAILS,
+  ACTIVITY_DUPLICATE
+} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {
   ActivityDetailsActions,
@@ -36,6 +41,24 @@ export function createActivityDetails(activityDetails: Partial<IActivityDetails>
       const options: RequestInit = {
         method: 'POST',
         body: JSON.stringify(activityDetails)
+      };
+      return request(url, options);
+    }
+  };
+}
+
+export function duplicateActivityDetails(id: number, withChecklist: boolean): IAsyncAction {
+  return {
+    types: [
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_SUCCESS,
+      ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_FAILURE
+    ],
+    api: () => {
+      const {url}: IResultEndpoint = getEndpoint(ACTIVITY_DUPLICATE, {id});
+      const options: RequestInit = {
+        method: 'POST',
+        body: JSON.stringify({with_checklist: withChecklist})
       };
       return request(url, options);
     }

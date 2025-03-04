@@ -45,6 +45,7 @@ export const ACTIVITY_CHECKLIST_ATTACHMENTS = 'activityChecklistAttachments';
 export const DATA_COLLECTION_ACTIVITY = 'dataCollectionActivities';
 export const ACTIVITY_OVERALL_FINDING = 'activityOverallFinding';
 export const ACTIVITY_DETAILS = 'activityDetails';
+export const ACTIVITY_DUPLICATE = 'activityDuplicate';
 export const DATA_COLLECTION_CHECKLIST = 'dataCollectionChecklist';
 export const DATA_COLLECTION_METHODS = 'dataCollectionMethods';
 export const DATA_COLLECTION_CHECKLIST_ITEM = 'dataCollectionChecklistItem';
@@ -280,6 +281,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTIVITY_DETAILS]: {
     template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
+  },
+
+  [ACTIVITY_DUPLICATE]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=id%>/duplicate/'
   },
 
   [DATA_COLLECTION_ACTIVITY]: {
