@@ -3,7 +3,7 @@ import {customElement, property, query} from 'lit/decorators.js';
 import {AttachmentsStyles} from '../../styles/attachments.styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('file-select-input')
 export class FileSelectInput extends LitElement {
@@ -50,7 +50,7 @@ export class FileSelectInput extends LitElement {
     return html`
       <div class="file-selector-container">
         <input id="file" hidden type="file" />
-        <a id="link" target="_blank" hidden></a>
+        <a id="link" target="_blank" hidden aria-label="link"></a>
         ${this.hasFileName
           ? html`
               <div class="filename-container">

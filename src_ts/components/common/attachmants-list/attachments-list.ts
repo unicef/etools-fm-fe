@@ -14,7 +14,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {CardStyles} from '../../styles/card-styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 store.addReducers({attachmentsList});
 

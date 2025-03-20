@@ -113,9 +113,9 @@
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
     "EXPORT": "EXPORT",
-    "REPORT_REVIEWER": "Réviseur de rapport",
-    "REPORT_REVIEWER_SELECT": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez sélectionner l'utilisateur et continuer.",
-    "REPORT_REVIEWER_CONFIRM": "L'utilisateur suivant sera informé de cette soumission afin de l'examiner. Veuillez confirmer l'utilisateur et continuer.",
+    "REPORT_REVIEWERS": "Réviseurs de rapports",
+    "REPORT_REVIEWER_SELECT": "Les utilisateurs suivants seront informés de cette soumission afin de l'examiner. Veuillez sélectionner les utilisateurs et continuer.",
+    "REPORT_REVIEWER_CONFIRM": "Les utilisateurs suivants seront informés de cette soumission afin de l'examiner. Veuillez confirmer les utilisateurs et continuer.",
     "REVIEWED_BY": "Revu par"
   },
   "ACTIVITY_ITEM": {
@@ -691,17 +691,21 @@
   "PLEASE_ANSWER": "Important : veuillez fournir la réponse si disponible",
   "TPM_RAISED_ISSUES": "Problèmes soulevés par le TPM",
   "TPM_RAISED_ISSUES_INFO": "Veuillez insérer des points d'action que le point focal du personnel de l'UNICEF considérera comme actions de suivi.",
+  "WARNING_REVIEWER_TEAM_MEMBER": "Avertissement : Le réviseur sélectionné est également un membre de l'équipe. Pour la séparation des tâches, envisagez de choisir un évaluateur non impliqué dans la visite.",
+  "EDIT_QUESTIONS_ORDER": "Modifier l'ordre des questions",
+  "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
+  "DUPLICATE_CHECKLIST": "Include checklist",
   "PD_STATUS": {
-      "DRAFT": "Développement",
-      "REVIEW": "Consultez le site",
-      "SIGNATURE": "Signature",
-      "SIGNED": "Signé",
-      "ACTIVE": "Actif",
-      "CANCELLED": "Annulé",
-      "ENDED": "Fini",
-      "CLOSED": "Fermé",
-      "SUSPENDED": "Suspendu",
-      "TERMINATED": "Terminé",
-      "EXPIRED": "Expiré"
+    "DRAFT": "Développement",
+    "REVIEW": "Consultez le site",
+    "SIGNATURE": "Signature",
+    "SIGNED": "Signé",
+    "ACTIVE": "Actif",
+    "CANCELLED": "Annulé",
+    "ENDED": "Fini",
+    "CLOSED": "Fermé",
+    "SUSPENDED": "Suspendu",
+    "TERMINATED": "Terminé",
+    "EXPIRED": "Expiré"
   }
 }

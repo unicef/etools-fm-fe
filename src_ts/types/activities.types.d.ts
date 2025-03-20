@@ -14,7 +14,7 @@ interface IListActivity {
   checklists_count: number;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
-  report_reviewer: ActivityTeamMember;
+  report_reviewers: ActivityTeamMember[];
   reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
   remote_monitoring: boolean;
@@ -28,7 +28,7 @@ interface IActivityDetails extends IListActivity {
   cancel_reason: string;
   report_reject_reason: string;
   offices: Office[];
-  report_reviewer: ActivityTeamMember;
+  report_reviewers: ActivityTeamMember[];
 }
 
 type ActivityStatus =
@@ -201,6 +201,10 @@ type ConfirmSubmitPopupData = {
   actionPointReminder: string;
 };
 
+type ConfirmDuplicatePopupData = {
+  showChecklist: boolean;
+};
+
 type ReasonPopupResponse = {
   comment: string;
 };
@@ -210,7 +214,7 @@ type ReportReviewerPopupData = {
 };
 
 type ReportReviewerPopupResponse = {
-  reviewer: string;
+  reviewers: [];
 };
 
 type NoteInfo = {
@@ -306,6 +310,7 @@ type EditableTPMActionPoint = {
 type ActionPointPopupData = {
   action_point: ActionPoint | undefined;
   activity_id: number;
+  activityDetails: IActivityDetails;
 };
 
 type TPMActionPointPopupData = {

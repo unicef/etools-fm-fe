@@ -17,7 +17,7 @@ import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {request} from '../../../../../../../../endpoints/request';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {repeat} from 'lit/directives/repeat.js';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CP_OUTPUTS, INTERVENTIONS} from '../../../../../../../../endpoints/endpoints-list';
 import {filterPDStatuses} from '../../../../../../../../config/app-constants';
 

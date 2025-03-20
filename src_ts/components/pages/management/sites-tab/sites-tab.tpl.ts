@@ -8,7 +8,7 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {html, TemplateResult} from 'lit';
 import {SitesTabComponent} from './sites-tab';
 import {hasPermission, Permissions} from '../../../../config/permissions';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: SitesTabComponent): TemplateResult {
@@ -27,6 +27,7 @@ export function template(this: SitesTabComponent): TemplateResult {
         this.lowResolutionLayout = e.detail.value;
       }}"
     ></etools-media-query>
+
     <section class="elevation page-content filters" elevation="1">
       <div class="row">
         <etools-input

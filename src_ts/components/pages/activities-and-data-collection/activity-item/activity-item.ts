@@ -10,13 +10,13 @@ import {RouterStyles} from '../../../app-shell/router-style';
 import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-content-header/page-content-header-slotted-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
-
+import './statuses-actions/confirm-duplicate-popup';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {activityDetailsData, activityStatusIsChanging} from '../../../../redux/selectors/activity-details.selectors';
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
-import {createActivityDetails, requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
+import {duplicateActivityDetails, requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {
   ASSIGNED,
   CANCELLED,
@@ -42,7 +42,7 @@ import {
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
 import {ACTIVITIES_PAGE} from '../activities-page';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
@@ -51,8 +51,8 @@ import {ActivityDetailsActions, ActivityDetailsCreation} from '../../../../redux
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-summary-effects';
 import {loadActionPoints, loadTPMActionPoints} from '../../../../redux/effects/action-points.effects';
-import {AnyObject} from '@unicef-polymer/etools-types';
 import {hasPermission, Permissions} from '../../../../config/permissions';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 
 store.addReducers({activityDetails});
 
@@ -176,20 +176,22 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           <sl-dropdown id="pdMenuBtn" ?hidden="${this.hideMoreActionsButton()}">
             <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
             <sl-menu>
-              <sl-menu-item
-                tracker="Duplicate Activity"
-                ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
-                @click="${this.onDuplicateClick}"
-              >
-                <etools-icon slot="prefix" name="content-copy"></etools-icon>
-                ${translate('DUPLICATE')}
-              </sl-menu-item>
               <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
                 <etools-icon slot="prefix" name="file-download"></etools-icon>
                 ${translate('ACTIVITY_DETAILS.EXPORT')}
               </sl-menu-item>
             </sl-menu>
           </sl-dropdown>
+
+          <etools-button
+            variant="text"
+            class="neutral"
+            tracker="Duplicate Activity"
+            ?hidden="${!hasPermission(Permissions.CREATE_VISIT)}"
+            @click="${this.onDuplicateClick}"
+          >
+            <etools-icon slot="prefix" name="content-copy"></etools-icon>${translate('DUPLICATE')}
+          </etools-button>
 
           <statuses-actions
             .activityId="${this.activityDetails && this.activityDetails.id}"
@@ -301,15 +303,23 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
   onDuplicateClick(e: Event) {
     this.trackAnalytics(e);
+    openDialog({
+      dialog: 'confirm-duplicate-popup',
+      dialogData: {
+        showChecklist: this.activityDetails?.status !== DRAFT
+      }
+    }).then((response: any) => {
+      if (!response.confirmed) {
+        return;
+      }
+      this.createDuplicate(this.activityDetails!.id, response.withChecklist);
+    });
+  }
 
-    const activityToDuplicate = this.getActivityDataForDuplicate();
-    if (!activityToDuplicate) {
-      fireEvent(this, 'toast', {text: getTranslation('NO_ACTIVITY_DATA_TO_DUPLICATE')});
-      return;
-    }
+  createDuplicate(id: number, withChecklist: boolean) {
     this.isSaving = true;
     store
-      .dispatch<AsyncEffect>(createActivityDetails(activityToDuplicate))
+      .dispatch<AsyncEffect>(duplicateActivityDetails(id, withChecklist))
       .then(({payload}: ActivityDetailsCreation) => {
         if (payload && payload.id) {
           updateAppLocation(`activities/${payload.id}/details/`);
@@ -321,27 +331,6 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         }
       })
       .finally(() => (this.isSaving = false));
-  }
-
-  getActivityDataForDuplicate() {
-    if (!this.activityDetails) {
-      return null;
-    }
-    const dataToDuplicate: AnyObject = {};
-    ['offices', 'sections', 'team_members', 'partners', 'cp_outputs', 'interventions'].forEach((key) => {
-      if (this.activityDetails![key as keyof IActivityDetails]) {
-        // @ts-ignore: Object is possibly 'null'
-        dataToDuplicate[key] = this.activityDetails![key].map((x: AnyObject) => x.id);
-      }
-    });
-    ['location', 'location_site', 'tpm_partner', 'visit_lead', 'report_reviewer'].forEach((key) => {
-      if (this.activityDetails![key as keyof IActivityDetails]) {
-        // @ts-ignore: Object is possibly 'null'
-        dataToDuplicate[key] = this.activityDetails[key].id;
-      }
-    });
-    dataToDuplicate.monitor_type = this.activityDetails!.monitor_type;
-    return dataToDuplicate;
   }
 
   disconnectedCallback(): void {
@@ -430,7 +419,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     if (!this.activityDetails?.id) {
       return true;
     }
-    return !hasPermission(Permissions.CREATE_VISIT) && this.hideExportButton();
+    return this.hideExportButton();
   }
 
   export(e: any): void {

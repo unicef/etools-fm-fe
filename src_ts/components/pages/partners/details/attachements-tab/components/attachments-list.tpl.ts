@@ -4,7 +4,7 @@ import './edit-attachments-popup/partner-edit-attachments-popup';
 import './remove-attachment-popup/partner-remove-attachment-popup';
 import {PartnerAttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getTypeDisplayName} from '../../../../../utils/attachments-helper';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';

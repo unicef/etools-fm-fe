@@ -6,7 +6,7 @@ import {
   CANCELLED,
   COMPLETED
 } from '../../../pages/activities-and-data-collection/activity-item/statuses-actions/activity-statuses';
-import {langChanged} from 'lit-translate';
+import {langChanged} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 /**
  * @LitElement

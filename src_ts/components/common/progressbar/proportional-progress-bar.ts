@@ -1,7 +1,7 @@
 import {html, css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 @customElement('proportional-progress-bar')
 export class ProportionalProgressBar extends LitElement {

@@ -1,4 +1,3 @@
-/* eslint-disable lit/attribute-value-entities */
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
@@ -13,10 +12,9 @@ import {hasPermission, Permissions} from '../../../config/permissions';
 import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
-import {translate} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
-import {get as getTranslation} from 'lit-translate';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 /**
@@ -208,34 +206,6 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         <div class="nav-menu-item section-title">
           <span>${translate('NAVIGATION_MENU.COMMUNITY_CHANNELS')}</span>
         </div>
-
-        <a
-          class="nav-menu-item lighter-item"
-          href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/9726e9e7-c72f-4153-9fd2-7b418a1e426c/ReportSection?ctid=77410195-14e1-4fb8-904b-ab1892023667"
-          target="_blank"
-          @click="${this.trackAnalytics}"
-          tracker="Implementation Intelligence"
-        >
-          <sl-tooltip
-            for="power-bi-icon"
-            placement="right"
-            ?disabled="${!this.smallMenu}"
-            content="${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
-              'Implementation Intelligence'
-            )}"
-          >
-            <etools-icon id="power-bi-icon" name="powerBi"></etools-icon>
-          </sl-tooltip>
-          <div class="name">
-            ${this.translateKey(
-              this.selectedLanguage,
-              'NAVIGATION_MENU.IMPLEMENTATION_INTELLIGENCE',
-              'Implementation Intelligence'
-            )}
-          </div>
-        </a>
 
         <a
           class="nav-menu-item lighter-item"

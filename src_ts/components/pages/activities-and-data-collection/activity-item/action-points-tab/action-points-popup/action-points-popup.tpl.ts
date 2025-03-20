@@ -9,7 +9,7 @@ import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {ActionPointsPopup} from './action-points-popup';
 
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: ActionPointsPopup): TemplateResult {
   return html`
@@ -129,12 +129,6 @@ export function template(this: ActionPointsPopup): TemplateResult {
           @focus="${() => this.resetFieldError('office')}"
           @click="${() => this.resetFieldError('office')}"
         ></etools-dropdown>
-
-        <div class="col-6 offset-6 additional-padding" ?hidden="${!this.showInactiveRow(this.selectedRelatedTo)}">
-          <sl-switch ?checked="${this.showInactive}" @sl-change="${this.onShowInactiveChange}">
-            ${translate('TPM_DETAILS.SHOW_INACTIVE')}
-          </sl-switch>
-        </div>
 
         <!--    Related To    -->
         <etools-dropdown

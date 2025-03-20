@@ -12,7 +12,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {CardStyles} from '../../../../styles/card-styles';
 import './review-checklist-item/review-checklist-item';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
-import {get} from 'lit-translate';
+import {get} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
 
 store.addReducers({activityChecklist});

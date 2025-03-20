@@ -4,6 +4,7 @@ import {QuestionActions, QuestionsActionTypes} from '../actions/questions.action
 const INITIAL_STATE: IQuestionsState = {
   error: {},
   data: null,
+  dataAll: null,
   updateInProcess: null
 };
 
@@ -14,6 +15,8 @@ export const questions: Reducer<IQuestionsState, any> = (
   switch (action.type) {
     case QuestionsActionTypes.SET_QUESTIONS_LIST:
       return {...state, data: action.payload};
+    case QuestionsActionTypes.SET_QUESTIONS_LIST_ALL:
+      return {...state, dataAll: action.payload};
     case QuestionsActionTypes.SET_QUESTION_UPDATE_STATE:
       return {...state, updateInProcess: action.payload};
     case QuestionsActionTypes.SET_QUESTION_UPDATE_ERROR:

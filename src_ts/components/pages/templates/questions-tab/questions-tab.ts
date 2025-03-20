@@ -28,7 +28,7 @@ import {
   updateFilterSelectionOptions,
   updateFiltersSelectedValues
 } from '@unicef-polymer/etools-unicef/src/etools-filters/filters';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
@@ -37,9 +37,10 @@ import {
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import './question-popup/question-popup';
+import './question-order-popup/question-order-popup';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
@@ -50,7 +51,10 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
   @property() filters: EtoolsFilter[] | null = null;
   @property() listLoadingInProcess = false;
   @property() filtersInitialized = false;
-  @property({type: Boolean})
+  @property({type: Boolean}) draggedItem: HTMLElement | null = null;
+  @property({type: Number}) hoverIndex = null;
+  @property({type: Number}) draggedIndex = null;
+
   lowResolutionLayout = false;
   categories: EtoolsCategory[] = [];
   sections: EtoolsSection[] = [];
@@ -159,8 +163,19 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         <div class="card-title-box with-bottom-line">
           <div class="card-title counter">${translate('QUESTIONS.TABLE_CAPTION', this.tableInformation)}</div>
           <div class="buttons-container">
+            <sl-tooltip for="sort-icon" placement="top" content="${translate('EDIT_QUESTIONS_ORDER')}">
+              <etools-icon-button
+                id="sort-icon"
+                @click="${() => this.openOrderPopup()}"
+                class="panel-button"
+                ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+                data-type="add"
+                name="sort"
+              ></etools-icon-button>
+            </sl-tooltip>
+
             <etools-icon-button
-              @click="${() => this.openPopup()}"
+              @click="${() => this.openAddEditPopup()}"
               class="panel-button"
               ?hidden="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
               data-type="add"
@@ -233,7 +248,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                 <div class="hover-block">
                   <etools-icon
                     name="${hasPermission(Permissions.EDIT_QUESTIONS) ? 'create' : 'visibility'}"
-                    @click="${() => this.openPopup(question)}"
+                    @click="${() => this.openAddEditPopup(question)}"
                   ></etools-icon>
                 </div>
               </div>
@@ -288,7 +303,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     return item ? item.name : '';
   }
 
-  openPopup(question?: IQuestion): void {
+  openAddEditPopup(question?: IQuestion): void {
     if (question) {
       question = clone(question);
     }
@@ -306,6 +321,20 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
       if (!needToRefresh) {
         return;
       }
+      const currentParams: EtoolsRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
+      store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
+    });
+  }
+
+  openOrderPopup() {
+    openDialog<IQuestion | undefined>({
+      dialog: 'question-order-popup'
+    }).then(({confirmed}: IDialogResponse<any>) => {
+      if (!(confirmed === true)) {
+        return;
+      }
+      // we need to refresh current list if saving was done in edit popup
+      // For update params it will load questions list in subscriber
       const currentParams: EtoolsRouteQueryParams | null = store.getState().app.routeDetails.queryParams;
       store.dispatch<AsyncEffect>(loadQuestions(currentParams || {}));
     });

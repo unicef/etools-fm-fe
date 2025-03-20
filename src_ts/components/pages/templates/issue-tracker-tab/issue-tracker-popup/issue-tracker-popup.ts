@@ -16,7 +16,7 @@ import {SiteMixin} from '../../../../common/mixins/site-mixin';
 import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 import {repeat} from 'lit/directives/repeat.js';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';

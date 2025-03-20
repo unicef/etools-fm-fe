@@ -74,6 +74,7 @@ interface IQuestionsState {
   updateInProcess: null | boolean;
   error: null | GenericObject;
   data: null | IListData<IQuestion>;
+  dataAll: null | IQuestion[];
 }
 
 interface IRationaleState {

@@ -18,7 +18,7 @@ import {tpmPartnerDetails} from '../../../../redux/reducers/tpm-partner-details.
 import {requestTPMPartnerDetails} from '../../../../redux/effects/tpm-partner-details.effects';
 import {Unsubscribe} from 'redux';
 import {PARTNERS_PAGE} from '../partners-page';
-import {translate, get as getTranslation} from 'lit-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
 import {getEndpoint} from '../../../../endpoints/endpoints';

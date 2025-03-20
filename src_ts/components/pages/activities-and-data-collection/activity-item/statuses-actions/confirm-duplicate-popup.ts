@@ -10,17 +10,14 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
-@customElement('confirm-submit-popup')
-export class ConfirmSubmitPopup extends LitElement {
+@customElement('confirm-duplicate-popup')
+export class ConfirmDuplicatePopup extends LitElement {
   @property() protected dialogOpened = true;
-  @property() protected confirmText = '';
-  @property() protected disableConfirmBtn = false;
-  @property() protected actionPointReminder = '';
+  @property() protected showChecklist = false;
+  @property() protected withChecklist = false;
 
-  set dialogData({confirmText, actionPointReminder}: ConfirmSubmitPopupData) {
-    this.confirmText = confirmText;
-    this.actionPointReminder = actionPointReminder;
-    this.disableConfirmBtn = !!actionPointReminder;
+  set dialogData({showChecklist}: ConfirmDuplicatePopupData) {
+    this.showChecklist = showChecklist;
   }
 
   render(): TemplateResult | void {
@@ -31,7 +28,7 @@ export class ConfirmSubmitPopup extends LitElement {
           display: block;
         }
         p {
-          margin-block-end: 8px;
+          margin: 32px 8px;
         }
       </style>
       <etools-dialog
@@ -43,20 +40,15 @@ export class ConfirmSubmitPopup extends LitElement {
         .okBtnText="${translate('CONTINUE')}"
         .cancelBtnText="${translate('CANCEL')}"
         @close="${this.onClose}"
-        ?disable-confirm-btn="${this.disableConfirmBtn}"
         @confirm-btn-clicked="${() => this.confirmSubmit()}"
       >
         <div class="container-dialog">
-          ${this.confirmText ? html`<p><span>${this.confirmText}</span></p>` : ``}
-          ${this.actionPointReminder
+          ${translate('CONFIRM_DUPLICATE_ACTIVITY')}
+          ${this.showChecklist
             ? html`
                 <p>
-                  <span class="d-block">${this.actionPointReminder}</span>
-                  <etools-checkbox
-                    class="checkbox"
-                    @sl-change="${(e: any) => this.onActionPointConfirm(e.target.checked as boolean)}"
-                  >
-                    ${translate('NO_ACTION_POINT')}
+                  <etools-checkbox class="checkbox" @sl-change="${(e: any) => (this.withChecklist = e.target.checked)}">
+                    ${translate('DUPLICATE_CHECKLIST')}
                   </etools-checkbox>
                 </p>
               `
@@ -71,11 +63,7 @@ export class ConfirmSubmitPopup extends LitElement {
   }
 
   confirmSubmit(): void {
-    fireEvent(this, 'dialog-closed', {confirmed: true});
-  }
-
-  onActionPointConfirm(confirm: boolean) {
-    this.disableConfirmBtn = !confirm;
+    fireEvent(this, 'dialog-closed', {confirmed: true, withChecklist: this.withChecklist});
   }
 
   static get styles(): CSSResultArray {

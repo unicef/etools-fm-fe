@@ -6,7 +6,7 @@ import {ATTACHMENTS_STORE} from '../../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SummaryChecklistAttachmentsPopup} from './summary-checklist-attachments-popup';
 
 export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult {
@@ -25,7 +25,7 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
       @close="${this.onClose}"
       @confirm-btn-clicked="${() => this.saveChanges()}"
     >
-      <a id="link" target="_blank" hidden></a>
+      <a id="link" target="_blank" hidden aria-label="link"></a>
 
       <!--    Spinner    -->
       <etools-loading

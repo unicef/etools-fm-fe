@@ -3,7 +3,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import '../../../../common/layout/etools-card';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SummaryCard} from './summary-card';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';

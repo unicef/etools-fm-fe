@@ -8,7 +8,7 @@ import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js
 import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 import './action-points-popup/action-points-popup';
 import './tpm-action-points-popup/tpm-action-points-popup';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ActionPointsTab): TemplateResult {

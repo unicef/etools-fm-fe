@@ -45,6 +45,7 @@ export const ACTIVITY_CHECKLIST_ATTACHMENTS = 'activityChecklistAttachments';
 export const DATA_COLLECTION_ACTIVITY = 'dataCollectionActivities';
 export const ACTIVITY_OVERALL_FINDING = 'activityOverallFinding';
 export const ACTIVITY_DETAILS = 'activityDetails';
+export const ACTIVITY_DUPLICATE = 'activityDuplicate';
 export const DATA_COLLECTION_CHECKLIST = 'dataCollectionChecklist';
 export const DATA_COLLECTION_METHODS = 'dataCollectionMethods';
 export const DATA_COLLECTION_CHECKLIST_ITEM = 'dataCollectionChecklistItem';
@@ -71,6 +72,7 @@ export const ACTION_POINTS_OFFICES = 'offices';
 export const FEATURES_FLAGS = 'flags';
 export const SYNC_VENDOR_DATA = 'syncVendorData';
 export const ACTIVATE_VENDOR = 'activateVendor';
+export const QUESTIONS_ORDER = 'questionsOrder';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -281,6 +283,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     template: '/api/v1/field-monitoring/planning/activities/<%=id%>/'
   },
 
+  [ACTIVITY_DUPLICATE]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=id%>/duplicate/'
+  },
+
   [DATA_COLLECTION_ACTIVITY]: {
     template: '/api/v1/field-monitoring/data-collection/activities/<%=activityId%>/'
   },
@@ -397,5 +403,9 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ACTIVATE_VENDOR]: {
     template: '/api/tpm/partners/<%=id%>/activate/'
+  },
+
+  [QUESTIONS_ORDER]: {
+    url: '/api/v1/field-monitoring/settings/questions/update-order/'
   }
 };

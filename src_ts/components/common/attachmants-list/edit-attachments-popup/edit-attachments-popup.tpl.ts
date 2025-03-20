@@ -2,7 +2,7 @@ import '../../file-components/file-select-input';
 import '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 import {EditAttachmentsPopupComponent} from './edit-attachments-popup';
 import {html, TemplateResult} from 'lit';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../styles/input-styles';
 import {DialogStyles} from '../../../styles/dialog-styles';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';

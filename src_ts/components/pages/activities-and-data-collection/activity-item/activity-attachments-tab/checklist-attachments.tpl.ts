@@ -7,7 +7,7 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 
 export function template(this: ChecklistAttachments): TemplateResult {

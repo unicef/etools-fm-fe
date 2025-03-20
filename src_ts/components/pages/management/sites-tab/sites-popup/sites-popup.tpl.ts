@@ -3,7 +3,7 @@ import {hasPermission, Permissions} from '../../../../../config/permissions';
 import {SitesPopupComponent} from './sites-popup';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 
 export function template(this: SitesPopupComponent): TemplateResult {

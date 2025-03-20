@@ -6,7 +6,7 @@ import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {get as getTranslation} from 'lit-translate';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
 import {activateVendor, getVendorByNumber} from '../../../../../redux/effects/tpm-partners.effects';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';

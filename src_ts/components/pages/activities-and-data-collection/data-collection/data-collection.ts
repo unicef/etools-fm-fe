@@ -33,7 +33,7 @@ import '@unicef-polymer/etools-form-builder';
 import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
-import {translate} from 'lit-translate';
+import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
@@ -93,7 +93,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             href="${this.previousRoute ||
             `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
           >
-            <etools-icon name="arrowLeftIcon" slot="prefix"></etools-icon>
+            <etools-icon name="chevron-left" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
           </etools-button>
           <etools-button class="neutral" variant="text" @click="${this.browserPrint}">
