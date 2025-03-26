@@ -14,7 +14,7 @@ import './entities-list-and-popups/cp-output-popup';
 import './entities-list-and-popups/intervention-popup';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
-import {simplifyValue} from '../../../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';

@@ -3,7 +3,8 @@ import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {store} from '../../../../../redux/store';
-import {getDifference} from '../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+
 import {addQuestion, updateQuestion} from '../../../../../redux/effects/questions.effects';
 import {Unsubscribe} from 'redux';
 import {questionUpdate} from '../../../../../redux/selectors/questions.selectors';

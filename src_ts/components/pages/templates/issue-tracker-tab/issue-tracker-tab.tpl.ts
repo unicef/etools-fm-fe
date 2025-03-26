@@ -9,7 +9,7 @@ import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi'
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {prettyDate} from '@unicef-polymer/etools-utils/dist/date.util';
-import {simplifyValue} from '../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: IssueTrackerTabComponent): TemplateResult {

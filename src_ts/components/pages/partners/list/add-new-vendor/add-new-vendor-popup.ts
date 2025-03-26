@@ -11,7 +11,7 @@ import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist
 import {activateVendor, getVendorByNumber} from '../../../../../redux/effects/tpm-partners.effects';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
-import {getDifference} from '../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {store} from '../../../../../redux/store';
 import {updateTPMPartnerDetails} from '../../../../../redux/effects/tpm-partner-details.effects';
 import {canEditField} from '../../../../utils/utils';
