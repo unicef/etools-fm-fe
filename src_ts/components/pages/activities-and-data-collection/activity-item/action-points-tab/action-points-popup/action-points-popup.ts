@@ -11,7 +11,7 @@ import {SectionsMixin} from '../../../../../common/mixins/sections-mixin';
 import {Unsubscribe} from 'redux';
 import {updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
 import {actionPointsUpdateStatusSelector} from '../../../../../../redux/selectors/action-points.selectors';
-import {getDifference} from '../../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';

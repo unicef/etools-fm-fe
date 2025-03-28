@@ -8,7 +8,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {CardStyles} from '../../../../../styles/card-styles';
 import {template} from './partner-information.tpl';
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
-import {getDifference} from '../../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';

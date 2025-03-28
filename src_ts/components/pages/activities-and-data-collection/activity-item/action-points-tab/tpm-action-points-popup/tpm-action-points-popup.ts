@@ -14,7 +14,7 @@ import {tpmActionPointsUpdateStatusSelector} from '../../../../../../redux/selec
 import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
 import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
-import {getDifference} from '../../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';

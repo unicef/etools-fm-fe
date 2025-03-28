@@ -16,7 +16,7 @@ import {loadSiteLocations} from '../../../../../../../redux/effects/site-specifi
 import clone from 'ramda/es/clone';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
-import {simplifyValue} from '../../../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
