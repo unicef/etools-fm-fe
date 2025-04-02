@@ -126,7 +126,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     if (!level) {
       return;
     }
-      
+
     this.loadAdditionalData(`${level}s` as 'interventions' | 'outputs' | 'partners');
     if (this.queryParams && this.queryParams.level === level) {
       return;
