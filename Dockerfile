@@ -26,7 +26,7 @@ RUN apk add --update bash
 
 WORKDIR /code
 RUN npm init -y
-RUN npm install express
+RUN npm install express@4.21.2
 RUN npm install compression
 RUN npm install ua-parser-js
 RUN npm install browser-capabilities@1.1.x
