@@ -175,7 +175,7 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     }
   }
 
-  getRelatedNames(_showInactive: boolean): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
+  getRelatedNames(): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
     switch (this.selectedRelatedTo) {
       case PARTNER:
         return this.activityDetails.partners || [];

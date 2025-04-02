@@ -25,7 +25,6 @@ export class TPMActionPointsPopup extends InterventionsMixin(
 ) {
   @property() dialogOpened = true;
   @property() categories!: ActionPointsCategory[];
-  @property() showInactive = false;
   @property() savingInProcess: boolean | null = false;
 
   liteInterventions: LiteIntervention[] = [];
