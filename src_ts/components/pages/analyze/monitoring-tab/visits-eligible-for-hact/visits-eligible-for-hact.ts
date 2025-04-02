@@ -14,7 +14,7 @@ import {template} from './visits-eligible-for-hact.tpl';
 import {hactVisitsSelector} from '../../../../../redux/selectors/monitoring-activities.selectors';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
-import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
+import PaginationMixin from '@unicef-polymer/etools-unicef/src/mixins/pagination-mixin';
 
 @customElement('visits-eligible-for-hact')
 export class VisitsEligibleForHact extends PaginationMixin(LitElement) {
