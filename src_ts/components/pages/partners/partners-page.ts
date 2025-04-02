@@ -14,8 +14,8 @@ import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/r
 
 store.addReducers({tpmPartners});
 export const PARTNERS_PAGE = 'partners';
-export const PARTNERS_LIST_PAGE = 'list';
-export const PARTNER_DETAILS_PAGE = 'item';
+export const PARTNERS_LIST_PAGE = 'partners-list';
+export const PARTNER_DETAILS_PAGE = 'partner-details';
 
 @customElement('partners-page')
 export class PartnersPageComponent extends LitElement {

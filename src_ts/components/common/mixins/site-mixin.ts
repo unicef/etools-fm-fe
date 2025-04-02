@@ -1,6 +1,6 @@
 import {store} from '../../../redux/store';
 import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
-import {locationsInvert} from '../../pages/management/sites-tab/locations-invert';
+import {locationsInvert} from '../../pages/management/sites/locations-invert';
 import {Unsubscribe} from 'redux';
 import {LitElement, PropertyDeclarations} from 'lit';
 

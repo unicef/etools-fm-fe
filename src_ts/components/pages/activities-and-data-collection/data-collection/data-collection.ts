@@ -23,7 +23,7 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
-import {ACTIVITIES_PAGE} from '../activities-page';
+import {ACTIVITIES_PAGE} from '../activities-and-data-collection-page';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
@@ -40,7 +40,7 @@ import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
-const PAGE = 'activities';
+const PAGE = 'activities-and-data-collection';
 const SUB_ROUTE = 'data-collection';
 
 @customElement('data-collection-checklist')
