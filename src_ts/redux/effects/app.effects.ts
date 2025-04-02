@@ -29,7 +29,6 @@ const loadPageComponents: ActionCreator<ThunkResult> =
     try {
       await import(`../../components/pages/${page}/${page}-page.ts`);
 
-      // If we have routeDetails.param.tab then the subRouteName is a normal page, else the subRouteName is an actually a tab
       if (subPage) {
         await import(`../../components/pages/${page}/${subPage}/${subPage}.ts`);
 
@@ -38,7 +37,7 @@ const loadPageComponents: ActionCreator<ThunkResult> =
         }
       }
     } catch (e) {
-      // console.log(e);
+      console.log(e);
       console.log(`No file imports configuration found: page: ${page}, subpage: ${subPage}, tab: ${tab}!`);
       EtoolsRouter.updateAppLocation(EtoolsRouter.getRedirectPath(EtoolsRedirectPath.NOT_FOUND));
     }
