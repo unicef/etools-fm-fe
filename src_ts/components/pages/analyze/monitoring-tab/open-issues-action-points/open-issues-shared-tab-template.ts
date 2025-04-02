@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 import {openIssuesSharedTabTemplateStyles} from './open-issues-shared-tab-template.styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import PaginationMixin from '@unicef-polymer/etools-modules-common/dist/mixins/pagination-mixin';
+import PaginationMixin from '@unicef-polymer/etools-unicef/src/mixins/pagination-mixin';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 
 @customElement('open-issues-shared-tab-template')
