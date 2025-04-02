@@ -14,7 +14,9 @@
     "outDir": "src",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src_ts/**/*.ts"],
   "exclude": []
