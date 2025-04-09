@@ -24,8 +24,10 @@ export function sortFindingsAndOverall(
 
   findings.forEach((finding: DataCollectionFinding | SummaryFinding) => {
     const id: string = getDataKey(finding.activity_question);
-    findingsAndOverall[id].name = getTargetName(finding.activity_question);
-    findingsAndOverall[id].findings.push(finding);
+    if (id && findingsAndOverall[id]) {
+      findingsAndOverall[id].name = getTargetName(finding.activity_question);
+      findingsAndOverall[id].findings.push(finding);
+    }
   });
   return findingsAndOverall;
 }
