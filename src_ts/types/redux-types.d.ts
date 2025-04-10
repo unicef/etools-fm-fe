@@ -224,7 +224,7 @@ interface IAdditionalInfoState {
 
 type FindingsAndOverall<T = DataCollectionFinding, U = DataCollectionOverall> = {
   findings: null | T[];
-  overall: undefined | U[];
+  overall: null | U[];
 };
 
 interface IActivitySummaryState {

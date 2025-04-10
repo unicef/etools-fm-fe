@@ -398,13 +398,14 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
         };
 
-        const availableFilters = [...questionsFilters()];
+        const availableFilters = [...(questionsFilters() as EtoolsFilter[])];
         // @dci clearSelectedValuesInFilters(questionsFilters);
         this.populateDropdownFilterOptions(optionsCollection, availableFilters);
 
         const selectedFilters =
-          (this.filters || availableFilters)?.filter((filter) => filter.selected).map((filter) => filter.filterKey) ||
-          [];
+          (this.filters || availableFilters)
+            ?.filter((filter: any) => filter.selected)
+            .map((filter: any) => filter.filterKey) || [];
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
         this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
         this.filters.forEach((filter) => {

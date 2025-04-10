@@ -6,7 +6,7 @@ import {store} from '../../../../../redux/store';
 import {sitesUpdateSelector} from '../../../../../redux/selectors/site-specific-locations.selectors';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {addSiteLocation, updateSiteLocation} from '../../../../../redux/effects/site-specific-locations.effects';
-import {getDifference} from '../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {IMarker, MapHelper} from '../../../../common/map-mixin';
 import {currentWorkspaceSelector} from '../../../../../redux/selectors/static-data.selectors';
 import {SharedStyles} from '../../../../styles/shared-styles';

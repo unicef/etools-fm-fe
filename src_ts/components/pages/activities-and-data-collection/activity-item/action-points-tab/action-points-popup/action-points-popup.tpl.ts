@@ -159,11 +159,11 @@ export function template(this: ActionPointsPopup): TemplateResult {
           .selected="${this.getSelectedRelatedName()}"
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.updateEditableDataRelationContent(detail.selectedItem)}"
-          ?trigger-value-change-event="${this.getRelatedNames(this.showInactive).length}"
+          ?trigger-value-change-event="${this.getRelatedNames().length}"
           required
           label="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.RELATED_NAME')}"
           placeholder="${translate('ACTIVITY_ITEM.ACTION_POINTS.POPUP.SELECT_RELATED_NAME')}"
-          .options="${this.getRelatedNames(this.showInactive)}"
+          .options="${this.getRelatedNames()}"
           option-label="name"
           option-value="id"
           allow-outside-scroll

@@ -5,7 +5,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {getDifference} from '../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';

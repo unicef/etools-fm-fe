@@ -4,7 +4,7 @@ import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
-import {simplifyValue} from '../../../../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';

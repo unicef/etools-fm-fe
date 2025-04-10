@@ -10,7 +10,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';
 import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
-import {simplifyValue} from '../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 const USER_STAFF: UserType = 'staff';
 
 @customElement('report-reviewer-popup')
