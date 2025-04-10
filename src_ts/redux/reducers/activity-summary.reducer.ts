@@ -4,7 +4,7 @@ import {ActivitySummaryActions, ActivitySummaryActionTypes} from '../actions/act
 const INITIAL: IActivitySummaryState = {
   findingsAndOverall: {
     findings: null,
-    overall: undefined
+    overall: null
   },
   error: null,
   editedFindingsTab: null,

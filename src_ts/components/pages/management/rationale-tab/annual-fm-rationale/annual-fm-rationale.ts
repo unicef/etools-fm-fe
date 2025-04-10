@@ -10,7 +10,7 @@ import {template} from './annual-fm-rationale.tpl';
 import {Unsubscribe} from 'redux';
 import {rationaleUpdate, rationaleUpdateError} from '../../../../../redux/selectors/rationale.selectors';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
-import {getDifference} from '../../../../utils/objects-diff';
+import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {SetRationaleUpdateError} from '../../../../../redux/actions/rationale.actions';
 import dayjs from 'dayjs';
 

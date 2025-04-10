@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {simplifyValue} from '../../../../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {request} from '../../../../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';

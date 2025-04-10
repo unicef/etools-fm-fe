@@ -14,7 +14,7 @@ import {TPM_PARTNERS, USERS} from '../../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../../redux/effects/load-static-data.effect';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
-import {simplifyValue} from '../../../../../utils/objects-diff';
+import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {clone} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
