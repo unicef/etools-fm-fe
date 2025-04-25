@@ -65,8 +65,8 @@ EtoolsRouter
   )
   .addRoute(new RegExp(`^activities$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
-      routeName: 'activities',
-      subRouteName: 'list',
+      routeName: 'activities-and-data-collection',
+      subRouteName: 'activities-list',
       path: params.matchDetails[0],
       queryParams: params.queryParams,
       params: null
@@ -76,8 +76,8 @@ EtoolsRouter
     new RegExp(`^activities\\/${routeParamRegex}$`),
     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
-        routeName: 'activities',
-        subRouteName: 'item',
+        routeName: 'activities-and-data-collection',
+        subRouteName: 'activity-item',
         path: params.matchDetails[0],
         queryParams: null,
         params: {id: params.matchDetails[1]}
@@ -88,8 +88,8 @@ EtoolsRouter
     new RegExp(`^activities\\/${routeParamRegex}\\/${routeParamRegex}$`),
     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
-        routeName: 'activities',
-        subRouteName: 'item',
+        routeName: 'activities-and-data-collection',
+        subRouteName: 'activity-item',
         path: params.matchDetails[0],
         queryParams: null,
         params: {id: params.matchDetails[1], tab: params.matchDetails[2]}
@@ -100,7 +100,7 @@ EtoolsRouter
     new RegExp(`^activities\\/${routeParamRegex}\\/data-collection\\/${routeParamRegex}$`),
     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
-        routeName: 'activities',
+        routeName: 'activities-and-data-collection',
         subRouteName: 'data-collection',
         path: params.matchDetails[0],
         queryParams: null,
@@ -132,7 +132,7 @@ EtoolsRouter
   .addRoute(new RegExp(`^partners$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'partners',
-      subRouteName: 'list',
+      subRouteName: 'partners-list',
       path: params.matchDetails[0],
       queryParams: params.queryParams,
       params: null
@@ -141,7 +141,7 @@ EtoolsRouter
   .addRoute(new RegExp(`^partners\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'partners',
-      subRouteName: 'item',
+      subRouteName: 'partner-details',
       path: params.matchDetails[0],
       queryParams: null,
       params: {id: params.matchDetails[1]}
@@ -152,7 +152,7 @@ EtoolsRouter
     (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
       return {
         routeName: 'partners',
-        subRouteName: 'item',
+        subRouteName: 'partner-details',
         path: params.matchDetails[0],
         queryParams: null,
         params: {id: params.matchDetails[1], tab: params.matchDetails[2]}

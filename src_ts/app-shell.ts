@@ -303,7 +303,10 @@ export class AppShell extends connect(store)(LitElement) {
               class="page"
               ?active="${this.isActivePage(this.mainPage, 'management', this.subPage, 'rationale|sites')}"
             ></management-page>
-            <activities-page class="page" ?active="${this.isActivePage(this.mainPage, 'activities')}"></activities-page>
+            <activities-page
+              class="page"
+              ?active="${this.isActivePage(this.mainPage, 'activities-and-data-collection')}"
+            ></activities-page>
             <analyze-page
               class="page"
               ?active="${this.isActivePage(

@@ -78,8 +78,8 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
         >
           <!-- Sidebar item - DATA VISITS -->
           <a
-            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities')}"
-            menu-name="activities"
+            class="nav-menu-item ${this.getItemClass(this.selectedOption, 'activities-and-data-collection')}"
+            menu-name="activities-and-data-collection"
             href="${Environment.basePath + 'activities'}"
             @click="${this.trackAnalytics}"
             tracker="Visits"

@@ -228,7 +228,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
-    if (!(routeName === 'activities' && subRouteName === 'list')) {
+    if (!(routeName === 'activities-and-data-collection' && subRouteName === 'activities-list')) {
       return;
     }
 
