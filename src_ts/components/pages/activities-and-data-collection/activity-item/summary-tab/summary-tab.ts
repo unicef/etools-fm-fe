@@ -15,7 +15,6 @@ import {activeLanguageSelector} from '../../../../../redux/selectors/active-lang
 import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
-import {ACTIVITIES_PAGE} from '../../activities-and-data-collection-page';
 import {SUMMARY_TAB} from '../activities-tabs';
 import {repeat} from 'lit/directives/repeat.js';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
