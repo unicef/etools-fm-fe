@@ -136,7 +136,7 @@ export class ManagementPage extends PagePermissionsMixin(MatomoMixin(LitElement)
       return false;
     }
     if (!hasPermission(Permissions.VIEW_PLANING)) {
-      updateAppLocation(ACTIVITIES_PAGE);
+      updateAppLocation('activities');
     }
     return true;
   }

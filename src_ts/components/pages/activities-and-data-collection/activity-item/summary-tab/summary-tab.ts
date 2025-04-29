@@ -66,7 +66,7 @@ export class ActivitySummaryTab extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    store.dispatch(new SaveRoute(`${ACTIVITIES_PAGE}/${this.activityId}/${SUMMARY_TAB}`));
+    store.dispatch(new SaveRoute(`activities/${this.activityId}/${SUMMARY_TAB}`));
     this.routeDetailsUnsubscribe = store.subscribe(
       routeDetailsSelector(({params}: EtoolsRouteDetails) => {
         this.activityId = params && (params.id as number);

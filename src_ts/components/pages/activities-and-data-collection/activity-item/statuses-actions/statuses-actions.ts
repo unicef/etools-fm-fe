@@ -26,7 +26,6 @@ import {changeActivityStatus} from '../../../../../redux/effects/activity-detail
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {updateAppLocation} from '../../../../../routing/routes';
-import {ACTIVITIES_PAGE} from '../../activities-and-data-collection-page';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {getErrorText} from '../../../../utils/utils';
@@ -219,7 +218,7 @@ export class StatusesActionsComponent extends LitElement {
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
         fireEvent(this, 'toast', {text: `${getTranslation('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
       } else if (transition.transition === REJECT) {
-        updateAppLocation(`${ACTIVITIES_PAGE}`);
+        updateAppLocation('activities');
       }
     });
   }

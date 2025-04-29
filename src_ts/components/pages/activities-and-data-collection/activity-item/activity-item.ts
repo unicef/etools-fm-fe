@@ -278,7 +278,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
             store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
               if (store.getState().activityDetails.error) {
-                updateAppLocation(ACTIVITIES_PAGE);
+                updateAppLocation('activities');
               }
             });
           } else {
