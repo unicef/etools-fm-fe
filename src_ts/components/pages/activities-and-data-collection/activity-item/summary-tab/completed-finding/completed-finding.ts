@@ -1,5 +1,6 @@
 import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {DATA_COLLECTION_PAGE} from '../../../activities-and-data-collection-page';
@@ -25,7 +26,8 @@ export class CompletedFindingComponent extends LitElement {
           ? html` <label class="completed-finding-title">${this.completedFindingTitle}</label> `
           : html`
               <label class="completed-finding-title shorted-title">
-                <sl-tooltip placement="right" offset="5" content="${this.completedFindingTitle}">
+                <sl-tooltip placement="right" offset="5">
+                  <div slot="content">${unsafeHTML(this.completedFindingTitle)}</div>
                   <span id="ellipsis">...</span>
                 </sl-tooltip>
               </label>
