@@ -63,7 +63,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     this.narrative_finding = this.overallInfo?.narrative_finding || '';
     this.onTrackValue = this.originalOverallInfo?.on_track;
     this._attachTypesEndpointName = ACTIVITY_REPORT_ATTACHMENTS;
-    this.attachmentTypes = store.getState().attachmentsList.attachmentsTypes[this._attachTypesEndpointName];
+    this.attachmentTypes = store.getState().attachmentsList?.attachmentsTypes[this._attachTypesEndpointName];
     if (!this.attachmentTypes || !this.attachmentTypes.length) {
       store.dispatch<AsyncEffect>(
         loadAttachmentsTypes(this._attachTypesEndpointName, {id: this.originalOverallInfo!.id})

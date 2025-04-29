@@ -12,8 +12,8 @@ export const listAttachmentUpdate: Selector<boolean | null> = select<boolean | n
 export const attachmentsTypesSelector: DynamicSelector<AttachmentType[] | undefined> = dynamicSelect<
   AttachmentsTypesState,
   AttachmentType[]
->((store: IRootState) => store.attachmentsList.attachmentsTypes);
+>((store: IRootState) => store.attachmentsList?.attachmentsTypes);
 
 export const attachmentsPermissionsSelector: Selector<GenericObject | null> = select<GenericObject | null>(
-  (store: IRootState) => store.attachmentsList.permissions
+  (store: IRootState) => store.attachmentsList?.permissions
 );
