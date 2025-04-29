@@ -33,6 +33,7 @@ import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {DATA_COLLECTION_PAGE} from '../../activities-and-data-collection-page';
 
 store.addReducers({dataCollection});
 
