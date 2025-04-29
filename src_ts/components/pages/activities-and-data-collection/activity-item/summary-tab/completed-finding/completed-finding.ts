@@ -2,7 +2,7 @@ import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
-import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../../activities-and-data-collection-page';
+import {DATA_COLLECTION_PAGE} from '../../../activities-and-data-collection-page';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
@@ -42,7 +42,7 @@ export class CompletedFindingComponent extends LitElement {
   goToDataCollection(): void {
     /* eslint-disable max-len */
     updateAppLocation(
-      `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
+      `${Environment.basePath}activities/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
     );
     /* eslint-enable max-len */
   }
