@@ -255,7 +255,7 @@ export class DataCollectTab extends LitElement {
     this.processCreate(method).then(({payload}: IAsyncAction) => {
       this.createInProgress = false;
       if (payload && payload.id) {
-        updateAppLocation(`${ACTIVITIES_PAGE}/${this.activityId}/${DATA_COLLECTION_PAGE}/${payload.id}`);
+        updateAppLocation(`activities/${this.activityId}/${DATA_COLLECTION_PAGE}/${payload.id}`);
       }
     });
   }
