@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {ThunkAction} from 'redux-thunk';
 import {AppAction, UpdateStoreRouteDetails} from '../actions/app.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';

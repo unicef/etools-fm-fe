@@ -22,7 +22,6 @@ import {activityDetailsData} from '../../../../../redux/selectors/activity-detai
 import {updateAppLocation} from '../../../../../routing/routes';
 import {IAsyncAction} from '../../../../../redux/middleware';
 import {Unsubscribe} from 'redux';
-import {ACTIVITIES_PAGE, DATA_COLLECTION_PAGE} from '../../activities-and-data-collection-page';
 import {COLLECT_TAB, TABS_PROPERTIES} from '../activities-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';

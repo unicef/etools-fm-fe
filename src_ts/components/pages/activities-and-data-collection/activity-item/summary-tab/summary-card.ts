@@ -16,7 +16,6 @@ import '@shoelace-style/shoelace/dist/components/radio/radio.js';
 import {RadioButtonStyles} from '../../../../styles/radio-button-styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
-// eslint-disable-next-line
 import './summary-checklist-attachments-popup/summary-checklist-attachments-popup';
 import {store} from '../../../../../redux/store';
 import {Unsubscribe} from 'redux';

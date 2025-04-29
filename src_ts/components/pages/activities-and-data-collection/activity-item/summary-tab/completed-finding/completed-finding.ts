@@ -42,11 +42,9 @@ export class CompletedFindingComponent extends LitElement {
   }
 
   goToDataCollection(): void {
-    /* eslint-disable max-len */
     updateAppLocation(
       `${Environment.basePath}activities/${this.activityId}/${DATA_COLLECTION_PAGE}/${this.completedFinding.checklist}/`
     );
-    /* eslint-enable max-len */
   }
 
   copyAnswer(event: MouseEvent): void {
