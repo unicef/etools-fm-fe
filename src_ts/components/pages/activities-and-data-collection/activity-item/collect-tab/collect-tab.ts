@@ -215,10 +215,7 @@ export class DataCollectTab extends LitElement {
                 : ''}
 
               <div class="hover-block">
-                <a
-                  href="${Environment.basePath}${ACTIVITIES_PAGE}/${this
-                    .activityId}/${DATA_COLLECTION_PAGE}/${item.id}/"
-                >
+                <a href="${Environment.basePath}activities/${this.activityId}/${DATA_COLLECTION_PAGE}/${item.id}/">
                   <etools-icon name="${this.isReadonly ? 'visibility' : 'create'}"></etools-icon>
                 </a>
                 <etools-icon-button

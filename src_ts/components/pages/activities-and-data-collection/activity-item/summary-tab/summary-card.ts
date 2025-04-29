@@ -25,6 +25,7 @@ import {loadAttachmentsTypes} from '../../../../../redux/effects/attachments-lis
 import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-list';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
+import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
@@ -43,6 +44,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected trackStatusColor = '';
   @property() protected orginalTrackStatus: boolean | null = null;
   @property() protected attachmentTypes: AttachmentType[] = [];
+  @property({type: String}) narrative_finding = '';
   attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
@@ -58,9 +60,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     super.connectedCallback();
     this.originalFindings = clone(this.findings);
     this.originalOverallInfo = clone(this.overallInfo);
+    this.narrative_finding = this.overallInfo?.narrative_finding || '';
     this.onTrackValue = this.originalOverallInfo?.on_track;
     this._attachTypesEndpointName = ACTIVITY_REPORT_ATTACHMENTS;
-    this.attachmentTypes = store.getState().attachmentsList.attachmentsTypes[this._attachTypesEndpointName];
+    this.attachmentTypes = store.getState().attachmentsList?.attachmentsTypes[this._attachTypesEndpointName];
     if (!this.attachmentTypes || !this.attachmentTypes.length) {
       store.dispatch<AsyncEffect>(
         loadAttachmentsTypes(this._attachTypesEndpointName, {id: this.originalOverallInfo!.id})
@@ -163,17 +166,20 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               )}
             </div>
             <div class="flex-3">
-              <etools-textarea
-                id="details-input"
-                .value="${(this.overallInfo && this.overallInfo.narrative_finding) || ''}"
-                label="${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}"
-                ?readonly="${!this.isEditMode}"
-                placeholder="${this.isEditMode
-                  ? translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING_PLACEHOLDER')
-                  : '—'}"
-                @value-changed="${({detail}: CustomEvent) =>
-                  this.updateOverallFinding({narrative_finding: detail.value})}"
-              ></etools-textarea>
+              <label>${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.OVERALL_FINDING')}</label>
+              <div class="rich-container">
+                <rich-text
+                  id="details-input"
+                  .value="${this.narrative_finding || ''}"
+                  ?readonly="${!this.isEditMode}"
+                  @editor-changed="${({detail}: CustomEvent) => {
+                    if (detail.value !== this.narrative_finding) {
+                      this.updateOverallFinding({narrative_finding: detail.value});
+                    }
+                  }}"
+                >
+                </rich-text>
+              </div>
             </div>
           </div>
         `
@@ -317,6 +323,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected cancelEdit(): void {
     this.findings = clone(this.originalFindings);
     this.overallInfo = clone(this.originalOverallInfo);
+    this.narrative_finding = this.overallInfo?.narrative_finding || '';
     this.isEditMode = false;
     fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
   }
@@ -432,6 +439,15 @@ export class SummaryCard extends MethodsMixin(LitElement) {
           background-color: #ffffff;
         }
         .readonly {
+          background-color: var(--secondary-background-color);
+        }
+        .rich-container {
+          border: solid 1px var(--secondary-background-color);
+        }
+        rich-text::part(rich-viewer) {
+          background-color: #ffffff;
+        }
+        rich-text[readonly]::part(rich-viewer) {
           background-color: var(--secondary-background-color);
         }
       `
