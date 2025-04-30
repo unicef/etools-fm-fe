@@ -188,6 +188,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   protected updateOverallFinding(newData: Partial<SummaryOverall>): void {
     const oldData: Partial<SummaryOverall> = this.overallInfo || {};
     this.overallInfo = {...oldData, ...newData} as SummaryOverall;
+    this.narrative_finding = this.overallInfo?.narrative_finding || '';
+    this.requestUpdate();
   }
 
   protected getAdditionalButtons(): TemplateResult {
