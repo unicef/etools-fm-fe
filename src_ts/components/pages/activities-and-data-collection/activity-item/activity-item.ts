@@ -41,7 +41,6 @@ import {
 } from './activities-tabs';
 import {Unsubscribe} from 'redux';
 import {STAFF, TPM} from '../../../common/dropdown-options';
-import {ACTIVITIES_PAGE} from '../activities-page';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../redux/actions/app.actions';
 import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
@@ -56,8 +55,8 @@ import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 
 store.addReducers({activityDetails});
 
-const PAGE = 'activities';
-const SUB_ROUTE = 'item';
+const PAGE = 'activities-and-data-collection';
+const SUB_ROUTE = 'activity-item';
 
 const VALID_TABS: Set<string> = new Set([
   DETAILS_TAB,
@@ -278,7 +277,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
 
             store.dispatch<AsyncEffect>(requestActivityDetails(this.activityId)).then(() => {
               if (store.getState().activityDetails.error) {
-                updateAppLocation(ACTIVITIES_PAGE);
+                updateAppLocation('activities');
               }
             });
           } else {

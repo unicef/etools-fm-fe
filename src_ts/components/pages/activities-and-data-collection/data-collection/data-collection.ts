@@ -23,7 +23,7 @@ import {activityDetailsData} from '../../../../redux/selectors/activity-details.
 import {requestActivityDetails} from '../../../../redux/effects/activity-details.effects';
 import {MethodsMixin} from '../../../common/mixins/methods-mixin';
 import {COLLECT_TAB, DETAILS_TAB, TABS_PROPERTIES} from '../activity-item/activities-tabs';
-import {ACTIVITIES_PAGE} from '../activities-page';
+import {ACTIVITIES_PAGE} from '../activities-and-data-collection-page';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
@@ -40,7 +40,6 @@ import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
-const PAGE = 'activities';
 const SUB_ROUTE = 'data-collection';
 
 @customElement('data-collection-checklist')
@@ -78,7 +77,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
           <div class="method-name">${this.checklistFormJson?.blueprint.title}</div>
 
           <div class="title-description">
-            <a href="${Environment.basePath}${PAGE}/${this.activityId}/${DETAILS_TAB}">
+            <a href="${Environment.basePath}activities/${this.activityId}/${DETAILS_TAB}">
               ${(this.activityDetails && this.activityDetails.reference_number) || ''}
             </a>
             | ${this.checklist && this.checklist.id} | ${this.checklist && this.checklist.author.name}
@@ -90,8 +89,7 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
             variant="success"
             class="back-button"
             target="_self"
-            href="${this.previousRoute ||
-            `${Environment.basePath}${ACTIVITIES_PAGE}/${this.activityId}/${COLLECT_TAB}`}"
+            href="${this.previousRoute || `${Environment.basePath}activities/${this.activityId}/${COLLECT_TAB}`}"
           >
             <etools-icon name="chevron-left" slot="prefix"></etools-icon>
             ${translate('MAIN.BACK')}
@@ -185,12 +183,11 @@ export class DataCollectionChecklistComponent extends MethodsMixin(LitElement) {
      */
     this.routeDetailsUnsubscribe = store.subscribe(
       routeDetailsSelector(({routeName, subRouteName, params}: EtoolsRouteDetails) => {
-        if (routeName !== PAGE || subRouteName !== SUB_ROUTE) {
+        if (routeName !== ACTIVITIES_PAGE || subRouteName !== SUB_ROUTE) {
           return;
         }
         const activityId: string | null = params && (params.id as string);
         const checklistId: string | null = params && (params.checklist as string);
-
         if (!activityId || !checklistId) {
           updateAppLocation('page-not-found');
         }
