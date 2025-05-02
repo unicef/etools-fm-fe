@@ -159,7 +159,8 @@ export class SummaryCard extends MethodsMixin(LitElement) {
                     .completedFindingMethod="${this.getMethodName(finding.method, true)}"
                     .activityId="${this.activityId}"
                     ?show-copy-arrow="${(!this.overallInfo || !this.overallInfo.narrative_finding) && this.isEditMode}"
-                    @copy-answer="${() => this.updateOverallFinding({narrative_finding: finding.narrative_finding})}"
+                    @copy-answer="${() =>
+                      this.updateOverallFinding({narrative_finding: finding.narrative_finding}, true)}"
                   ></completed-finding>
                 `
               )}
@@ -169,11 +170,11 @@ export class SummaryCard extends MethodsMixin(LitElement) {
               <div class="rich-container">
                 <rich-text
                   id="details-input"
-                  .value="${this.narrative_finding || ''}"
+                  .value="${this.narrative_finding}"
                   ?readonly="${!this.isEditMode}"
-                  @editor-changed="${({detail}: CustomEvent) => {
-                    if (detail.value !== this.narrative_finding) {
-                      this.updateOverallFinding({narrative_finding: detail.value});
+                  @editor-changed="${(e: CustomEvent) => {
+                    if (e.detail.value !== this.narrative_finding) {
+                      this.updateOverallFinding({narrative_finding: e.detail.value}, false);
                     }
                   }}"
                 >
@@ -185,11 +186,12 @@ export class SummaryCard extends MethodsMixin(LitElement) {
       : html``;
   }
 
-  protected updateOverallFinding(newData: Partial<SummaryOverall>): void {
+  protected updateOverallFinding(newData: Partial<SummaryOverall>, isCopy?: boolean): void {
     const oldData: Partial<SummaryOverall> = this.overallInfo || {};
     this.overallInfo = {...oldData, ...newData} as SummaryOverall;
-    this.narrative_finding = this.overallInfo?.narrative_finding || '';
-    this.requestUpdate();
+    if (isCopy) {
+      this.narrative_finding = this.overallInfo?.narrative_finding || '';
+    }
   }
 
   protected getAdditionalButtons(): TemplateResult {
@@ -322,11 +324,16 @@ export class SummaryCard extends MethodsMixin(LitElement) {
    * Reverts all changes to original data, resets original data fields, cancel edit using store.dispatch
    */
   protected cancelEdit(): void {
-    this.findings = clone(this.originalFindings);
-    this.overallInfo = clone(this.originalOverallInfo);
+    // in order to trigger rich-editor change must update first with current value
     this.narrative_finding = this.overallInfo?.narrative_finding || '';
-    this.isEditMode = false;
-    fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
+    this.requestUpdate();
+    setTimeout(() => {
+      this.findings = clone(this.originalFindings);
+      this.overallInfo = clone(this.originalOverallInfo);
+      this.narrative_finding = this.overallInfo?.narrative_finding || '';
+      this.isEditMode = false;
+      fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
+    }, 20);
   }
 
   /**
