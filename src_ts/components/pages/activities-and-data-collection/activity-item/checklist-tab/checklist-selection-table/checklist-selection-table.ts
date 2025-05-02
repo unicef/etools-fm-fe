@@ -9,7 +9,7 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
-import {TemplatesStyles} from '../../../../templates/templates-tab/templates-tab.styles';
+import {TemplatesStyles} from '../../../../templates/templates/templates.styles';
 import {ChecklistSelectionTableStyles} from './checklist-selection-table.styles';
 import {updateActivityChecklist} from '../../../../../../redux/effects/activity-checklist.effects';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';

@@ -89,9 +89,9 @@ export class AnalyzePage extends PagePermissionsMixin(LitElement) implements IEt
   getTabElement(): TemplateResult {
     switch (this.activeTab) {
       case MONITORING_ACTIVITY:
-        return html` <monitoring-tab></monitoring-tab> `;
+        return html` <monitoring-activity-tab></monitoring-activity-tab> `;
       case COUNTRY_OVERVIEW:
-        return html` <co-overview-tab></co-overview-tab> `;
+        return html` <country-overview-tab></country-overview-tab> `;
       default:
         return html` Tab Not Found `;
     }
