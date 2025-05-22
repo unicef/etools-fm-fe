@@ -215,7 +215,13 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <etools-button variant="text" class="neutral" target="_blank" @click="${() => this.openPopup()}"" ?hidden="${this.readonly}">
+        <etools-button
+          variant="text"
+          class="neutral"
+          target="_blank"
+          @click="${() => this.openPopup()}"
+          ?hidden="${this.readonly}"
+        >
           <etools-icon name="add-box" slot="prefix"></etools-icon>
           ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ADD_ACTION_POINT')}
         </etools-button>

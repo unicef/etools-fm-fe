@@ -16,7 +16,7 @@ export function sortFindingsAndOverall(
       // generate unique id
       const id: string = getDataKey(overall);
       // name exists in findings data, findings will be populated if findings iteration
-      result[id] = {name: '', type: '', target_id: '', findings: [], overall};
+      result[id] = {name: '', type: '', target: null, findings: [], overall};
       return result;
     },
     {}
