@@ -45,6 +45,8 @@ type SummaryOverall = DataCollectionOverall & {
 
 type SortedFindingsAndOverall = {
   name: string;
+  type: string;
+  target: any;
   overall: DataCollectionOverall;
   findings: DataCollectionFinding[];
 };

@@ -16,7 +16,7 @@ export function sortFindingsAndOverall(
       // generate unique id
       const id: string = getDataKey(overall);
       // name exists in findings data, findings will be populated if findings iteration
-      result[id] = {name: '', findings: [], overall};
+      result[id] = {name: '', type: '', target_id: '', findings: [], overall};
       return result;
     },
     {}
@@ -26,6 +26,8 @@ export function sortFindingsAndOverall(
     const id: string = getDataKey(finding.activity_question);
     if (id && findingsAndOverall[id]) {
       findingsAndOverall[id].name = getTargetName(finding.activity_question);
+      findingsAndOverall[id].type = getTargetType(finding.activity_question);
+      findingsAndOverall[id].target = getTarget(finding.activity_question);
       findingsAndOverall[id].findings.push(finding);
     }
   });
@@ -48,6 +50,10 @@ function getDataKey(dataObject: DataCollectionOverall | IChecklistItem | ISummar
   }
 }
 
+function getTarget(dataObject: DataCollectionOverall | IChecklistItem | ISummaryChecklistItem): any {
+  return dataObject.partner || dataObject.cp_output || dataObject.intervention || null;
+}
+
 function getTargetName(checklist: IChecklistItem | ISummaryChecklistItem): string {
   if (checklist.partner) {
     return `${get('LEVELS_OPTIONS.PARTNER')}: ${checklist.partner.name}`;
@@ -55,6 +61,18 @@ function getTargetName(checklist: IChecklistItem | ISummaryChecklistItem): strin
     return `${get('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
   } else if (checklist.intervention) {
     return `${get('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
+  } else {
+    return '';
+  }
+}
+
+function getTargetType(checklist: IChecklistItem | ISummaryChecklistItem): string {
+  if (checklist.partner) {
+    return 'partner';
+  } else if (checklist.cp_output) {
+    return 'cp_output';
+  } else if (checklist.intervention) {
+    return 'intervention';
   } else {
     return '';
   }

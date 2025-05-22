@@ -27,7 +27,9 @@ export class CompletedFindingComponent extends LitElement {
           : html`
               <label class="completed-finding-title shorted-title">
                 <sl-tooltip placement="right" offset="5">
-                  <div slot="content">${unsafeHTML(this.completedFindingTitle)}</div>
+                  ${this.completedFindingTitle
+                    ? html`<div slot="content">${unsafeHTML(this.completedFindingTitle.toString())}</div>`
+                    : html`${this.completedFindingTitle}`}
                   <span id="ellipsis">...</span>
                 </sl-tooltip>
               </label>

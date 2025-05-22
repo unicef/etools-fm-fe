@@ -27,11 +27,14 @@ import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/numbe
 import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
+import './action-points-popup/summary-action-points-popup';
 
 @customElement('summary-card')
 export class SummaryCard extends MethodsMixin(LitElement) {
   @property() activityId: number | null = null;
   @property({type: String}) tabName = '';
+  @property({type: String}) target = '';
+  @property({type: String}) type = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
@@ -44,6 +47,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
   @property() protected orginalTrackStatus: boolean | null = null;
   @property() protected attachmentTypes: AttachmentType[] = [];
   @property({type: String}) narrative_finding = '';
+  @property() activityDetails!: IActivityDetails;
   attachmentsEndpoint?: string;
 
   private originalOverallInfo: SummaryOverall | null = null;
@@ -211,6 +215,10 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
+        <etools-button variant="text" class="neutral" target="_blank" @click="${() => this.openPopup()}"" ?hidden="${this.readonly}">
+          <etools-icon name="add-box" slot="prefix"></etools-icon>
+          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ADD_ACTION_POINT')}
+        </etools-button>
         <etools-radio-group value="checked">
           <sl-radio name="trackStatus" value="checked" class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
@@ -219,6 +227,19 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         ${this.getAttachmentsButton()}
       `;
     }
+  }
+
+  openPopup(): void {
+    openDialog<ActionPointPopupData>({
+      dialog: 'summary-action-points-popup',
+      dialogData: {
+        action_point: {
+          [this.type]: this.target
+        } as any,
+        activity_id: this.activityId as number,
+        activityDetails: this.activityDetails
+      }
+    });
   }
 
   /**
