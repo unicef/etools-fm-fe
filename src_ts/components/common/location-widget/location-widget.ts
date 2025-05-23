@@ -161,15 +161,16 @@ export class LocationWidgetComponent extends LitElement {
       const state: IRootState = store.getState();
       const {query} = state.widgetLocations;
       if (value) {
-        store.dispatch<AsyncEffect>(loadLocationsChunk({search: value, query, page: 1, reload: true}));
+        store.dispatch<AsyncEffect>(loadLocationsChunk({search: value, query, reload: true}));
       } else {
-        store.dispatch<AsyncEffect>(loadLocationsChunk({search: '', query, page: 1, reload: true}));
+        store.dispatch<AsyncEffect>(loadLocationsChunk({search: '', query, reload: true}));
       }
     }, 300);
 
-    store
-      .dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', page: 1, reload: true}))
-      .catch(() => fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_LOCATIONS')}));
+    store.dispatch<AsyncEffect>(loadLocationsChunk({query: 'level=0', reload: true})).catch((err: any) => {
+      console.log(err);
+      fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_LOCATIONS')});
+    });
 
     this.currentWorkspaceUnsubscribe = store.subscribe(
       currentWorkspaceSelector((workspace: Workspace | undefined) => {
@@ -227,11 +228,12 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   loadNextItems(): void {
-    const state: IRootState = store.getState();
-    const {hasNext, page} = state.widgetLocations;
-    if (hasNext) {
-      store.dispatch<AsyncEffect>(loadLocationsChunk({page: page + 1}));
-    }
+    // loaded all for now, no need to load next page
+    // const state: IRootState = store.getState();
+    // const {hasNext, page} = state.widgetLocations;
+    // if (hasNext) {
+    //   store.dispatch<AsyncEffect>(loadLocationsChunk({page: page + 1}));
+    // }
   }
 
   disconnectedCallback(): void {
