@@ -170,8 +170,6 @@ interface ITPMPartnerDetailsState extends IRequestState {
 interface IWidgetLocationsState {
   loading: null | boolean;
   items: WidgetLocation[];
-  count: number;
-  page: number;
   query: string;
   search: string;
   hasNext: boolean;

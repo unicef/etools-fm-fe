@@ -16,9 +16,10 @@ export function loadLocationsChunk(
   return (dispatch: Dispatch, getState: () => IRootState) => {
     const state: IRootState = getState();
     const {reload} = params;
-    const {page, query, search} = {...state.widgetLocations, ...params};
+
+    const {query, search} = {...state.widgetLocations, ...params};
     const endpoint: IResultEndpoint = getEndpoint(WIDGET_LOCATIONS_CHUNK);
-    let url = `${endpoint.url}?page=${page}`;
+    let url = `${endpoint.url}?page_size=all`;
     if (query) {
       url = `${url}&${query}`;
     }
@@ -27,12 +28,12 @@ export function loadLocationsChunk(
     }
     dispatch(new SetWidgetLocationsLoading(true));
 
-    return request<IListData<WidgetLocation>>(url, {method: 'GET'})
-      .then((response: IListData<WidgetLocation>) => {
+    return request<WidgetLocation[]>(url, {method: 'GET'})
+      .then((response: WidgetLocation[]) => {
         if (reload) {
-          dispatch(new SetWidgetLocations(response, page, search, query));
+          dispatch(new SetWidgetLocations(response, search, query));
         } else {
-          dispatch(new AddWidgetLocations(response, page, search, query));
+          dispatch(new AddWidgetLocations(response, search, query));
         }
       })
       .then(() => {
