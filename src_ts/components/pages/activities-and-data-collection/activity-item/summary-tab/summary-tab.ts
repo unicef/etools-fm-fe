@@ -25,6 +25,7 @@ store.addReducers({activitySummary, findingsComponents});
 export class ActivitySummaryTab extends LitElement {
   @property() activityId: number | null = null;
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
+  @property() activityDetails!: IActivityDetails;
 
   @property() protected findingsAndOverall: GenericObject<SortedFindingsAndOverall> = {};
   @property() private rawFindingsAndOverall: FindingsAndOverall = {overall: null, findings: null};
@@ -45,12 +46,15 @@ export class ActivitySummaryTab extends LitElement {
           Boolean(findings.length)
         ),
         (_item: any) => Date.now(),
-        ({name, findings, overall}: SortedFindingsAndOverall) => {
+        ({name, findings, overall, target, type}: SortedFindingsAndOverall) => {
           return html`
             <div class="findings-block">
               <summary-card
                 .activityId="${this.activityId}"
+                .activityDetails="${this.activityDetails}"
                 .tabName="${name}"
+                .target="${target}"
+                .type="${type}"
                 .overallInfo="${overall}"
                 .findings="${findings}"
                 ?readonly="${this.readonly}"

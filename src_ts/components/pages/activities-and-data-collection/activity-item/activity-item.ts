@@ -361,6 +361,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         return html`
           <activity-summary-tab
             .activityId="${this.activityId}"
+            .activityDetails="${this.activityDetails}"
             ?readonly="${!this.checkEditPermission(SUMMARY_TAB)}"
           ></activity-summary-tab>
         `;

@@ -44,7 +44,8 @@
       "ADDITIONAL_BUTTONS": {
         "NOT_MONITORED": "غير مراقب",
         "OFF_TRACK": "خارج المسار",
-        "ON_TRACK": "وفقاً للخطة"
+        "ON_TRACK": "وفقاً للخطة",
+        "ADD_ACTION_POINT": "أضف نقطة العمل"
       },
       "OVERALL_FINDING_PLACEHOLDER": "الرجاء إدخال الملاحظات العامة هنا",
       "OVERALL_FINDING": "الملاحظات العامة"
@@ -639,6 +640,8 @@
   "PLEASE_WAIT_COUNTRY_CHANGE": "الرجاء الانتظار بينما تتغير بيانات الدولة...",
   "PLEASE_WAIT_ORGANIZATION_CHANGE": "الرجاء الانتظار بينما تتغير بيانات المؤسسة...",
   "ERROR_SAVE_PROFILE": "لم يتم حفظ بيانات الملف الشخصي. ",
+  "ACTION_POINT_CREATED": "تم إنشاء نقطة العمل!",
+  "ERROR_ACTION_POINT_CREATE": "لا يمكن إنشاء نقطة عمل",
   "TPM": {
     "TITLE": "المراقبين المستقلين",
     "ADD_NEW_VENDOR": "إضافة مورد جديد",
