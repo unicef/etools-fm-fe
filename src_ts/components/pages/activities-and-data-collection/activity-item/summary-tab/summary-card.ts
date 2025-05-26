@@ -198,9 +198,20 @@ export class SummaryCard extends MethodsMixin(LitElement) {
     }
   }
 
+  private addActionPointButton() {
+    if (!this.activityDetails.permissions.edit.action_points) {
+      return html``;
+    }
+
+    return html`<etools-button variant="text" class="neutral" target="_blank" @click="${() => this.openPopup()}">
+      <etools-icon name="add-box" slot="prefix"></etools-icon>
+      ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ADD_ACTION_POINT')}
+    </etools-button>`;
+  }
+
   protected getAdditionalButtons(): TemplateResult {
     if (this.isEditMode) {
-      return html` ${this.findingsStatusButton()} ${this.getAttachmentsButton()} `;
+      return html`${this.addActionPointButton()} ${this.findingsStatusButton()} ${this.getAttachmentsButton()} `;
     } else {
       if (this.overallInfo?.on_track == null) {
         this.trackStatusText = 'ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.NOT_MONITORED';
@@ -215,16 +226,7 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         }
       }
       return html`
-        <etools-button
-          variant="text"
-          class="neutral"
-          target="_blank"
-          @click="${() => this.openPopup()}"
-          ?hidden="${this.readonly}"
-        >
-          <etools-icon name="add-box" slot="prefix"></etools-icon>
-          ${translate('ACTIVITY_ADDITIONAL_INFO.SUMMARY.ADDITIONAL_BUTTONS.ADD_ACTION_POINT')}
-        </etools-button>
+        ${this.addActionPointButton()}
         <etools-radio-group value="checked">
           <sl-radio name="trackStatus" value="checked" class="epc-header-radio-button ${this.trackStatusColor}">
             ${translate(this.trackStatusText)}
