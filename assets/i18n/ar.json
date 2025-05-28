@@ -705,6 +705,7 @@
   "EDIT_QUESTIONS_ORDER": "تحرير ترتيب الأسئلة",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{2}: تمت زيارته بالفعل في هذا العام التقويمي في النشاط/الأنشطة {0} {1} ",
   "PD_STATUS": {
     "DRAFT": "تطوير",
     "REVIEW": "مراجعة",

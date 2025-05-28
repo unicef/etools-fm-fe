@@ -29,7 +29,20 @@ interface IActivityDetails extends IListActivity {
   report_reject_reason: string;
   offices: Office[];
   report_reviewers: ActivityTeamMember[];
+  overlapping_entities: OverlappingEntities;
 }
+
+type OverlappingEntities = {
+  cp_outputs: OverlappingItem[];
+  interventions: OverlappingItem[];
+  partners: OverlappingItem[];
+};
+
+type OverlappingItem = {
+  name: string;
+  number: string;
+  source_activity_numbers: string[];
+};
 
 type ActivityStatus =
   | 'draft'
