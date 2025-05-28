@@ -6,7 +6,6 @@ import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {getTypeDisplayName} from '../../utils/attachments-helper';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
@@ -49,7 +48,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
         <etools-data-table-column class="col-data col-3" field="created">
           ${translate('ATTACHMENTS_LIST.COLUMNS.CREATED')}
         </etools-data-table-column>
-        <etools-data-table-column class="col-data col-3" field="file_type">
+        <etools-data-table-column class="col-data col-3" field="file_type_name">
           ${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data col-6" field="file">
@@ -85,7 +84,7 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                     class="col-data col-3"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
                   >
-                    ${getTypeDisplayName(attachment.file_type, this.attachmentsTypes)}
+                    ${attachment.file_type_name}
                   </div>
                   <div
                     class="col-data col-6 file-link"

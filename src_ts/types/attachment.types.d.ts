@@ -2,6 +2,7 @@ interface IAttachment {
   id: number;
   filename: string;
   file_type: number;
+  file_type_name: string;
   file: string | File | null;
   hyperlink: string;
   created: string;

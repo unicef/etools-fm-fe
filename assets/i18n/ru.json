@@ -46,7 +46,8 @@
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
-        "NOT_MONITORED": "Not Monitored"
+        "NOT_MONITORED": "Not Monitored",
+        "ADD_ACTION_POINT": "Добавить точку действия"
       }
     }
   },
@@ -628,6 +629,8 @@
   "PLEASE_WAIT_COUNTRY_CHANGE": "Пожалуйста, подождите, пока данные о стране изменятся...",
   "PLEASE_WAIT_ORGANIZATION_CHANGE": "Пожалуйста, подождите, пока данные организации изменятся...",
   "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!",
+  "ACTION_POINT_CREATED": "Действие было создано!",
+  "ERROR_ACTION_POINT_CREATE": "Не могу создать точку действия",
   "TPM": {
     "TITLE": "Third Party Monitors",
     "ADD_NEW_VENDOR": "Add New Vendor",
@@ -692,6 +695,7 @@
   "EDIT_QUESTIONS_ORDER": "Изменить порядок вопросов",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{0} '{1}' уже был посещен в этом календарном году в рамках мероприятия/мероприятий: {2}",
   "PD_STATUS": {
     "DRAFT": "Развитие",
     "REVIEW": "Рассмотрение",

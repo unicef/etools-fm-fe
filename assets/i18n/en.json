@@ -46,7 +46,8 @@
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "Off Track",
         "ON_TRACK": "On Track",
-        "NOT_MONITORED": "Not Monitored"
+        "NOT_MONITORED": "Not Monitored",
+        "ADD_ACTION_POINT": "Add Action Point"
       }
     }
   },
@@ -631,6 +632,8 @@
   "PLEASE_WAIT_COUNTRY_CHANGE": "Please wait while country data is changing...",
   "PLEASE_WAIT_ORGANIZATION_CHANGE": "Please wait while organization data is changing...",
   "ERROR_SAVE_PROFILE": "Profile data not saved. Save profile error!",
+  "ACTION_POINT_CREATED": "Action Point has been created!",
+  "ERROR_ACTION_POINT_CREATE": "Can not create Action Point",
   "TPM": {
     "TITLE": "Third Party Monitors",
     "ADD_NEW_VENDOR": "Add New Vendor",
@@ -695,6 +698,7 @@
   "EDIT_QUESTIONS_ORDER": "Edit Questions Order",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{0} '{1}' was already visited in this calendar year in activity/activities: {2}",
   "PD_STATUS": {
     "DRAFT": "Development",
     "REVIEW": "Review",
