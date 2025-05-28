@@ -124,7 +124,7 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
       );
     }
     if (overlappingInfo.length) {
-      fireEvent(this, 'toast', {text: overlappingInfo.join('\n')});
+      fireEvent(this, 'toast', {text: overlappingInfo.join('\n'), duration: 60000});
     }
   }
 
