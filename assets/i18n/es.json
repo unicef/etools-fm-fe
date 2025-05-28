@@ -707,6 +707,7 @@
   "EDIT_QUESTIONS_ORDER": "Editar orden de preguntas",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{0} {1} was already visited in this calendar year in activity/activities: {2}",
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",

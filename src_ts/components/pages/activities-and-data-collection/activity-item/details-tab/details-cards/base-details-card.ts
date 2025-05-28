@@ -16,6 +16,7 @@ import {Unsubscribe} from 'redux';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {getErrorText} from '../../../../../utils/utils';
+import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   @property() isEditMode = false;
@@ -67,7 +68,12 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
     if (Object.entries(diff).length) {
       this.isUpdate = true;
       if (this.editedData.id) {
-        store.dispatch<AsyncEffect>(updateActivityDetails(this.editedData.id, diff)).then(() => this.finish());
+        store
+          .dispatch<AsyncEffect>(updateActivityDetails(this.editedData.id, diff))
+          .then(({payload}: ActivityDetailsCreation) => {
+            this.showOverlapingInfo(payload);
+            this.finish();
+          });
       } else {
         store.dispatch<AsyncEffect>(createActivityDetails(diff)).then(({payload}: ActivityDetailsCreation) => {
           this.finish();
@@ -79,6 +85,46 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
     } else {
       this.isEditMode = false;
       store.dispatch(new SetEditedDetailsCard(null));
+    }
+  }
+
+  protected showOverlapingInfo(activity: IActivityDetails): void {
+    if (!activity || !activity.id) {
+      return;
+    }
+    const overlappingInfo: string[] = [];
+    const overlappingMsg = getTranslation('OVERLAPPING_ENITITIES');
+    const partnerText = getTranslation('ACTIVITY_DETAILS.PARTNER');
+    const cpOutputsText = getTranslation('ACTIVITY_DETAILS.CP_OUTPUT');
+    const interventionsText = getTranslation('ACTIVITY_DETAILS.INTERVENTION');
+    if (activity.overlapping_entities) {
+      (activity.overlapping_entities.partners || []).forEach((item: OverlappingItem) =>
+        overlappingInfo.push(
+          overlappingMsg
+            .replace('{0}', partnerText)
+            .replace('{1}', item.name)
+            .replace('{2}', (item.source_activity_numbers || []).join(', '))
+        )
+      );
+      (activity.overlapping_entities.cp_outputs || []).forEach((item: OverlappingItem) =>
+        overlappingInfo.push(
+          overlappingMsg
+            .replace('{0}', cpOutputsText)
+            .replace('{1}', item.name)
+            .replace('{2}', (item.source_activity_numbers || []).join(', '))
+        )
+      );
+      (activity.overlapping_entities.interventions || []).forEach((item: OverlappingItem) =>
+        overlappingInfo.push(
+          overlappingMsg
+            .replace('{0}', interventionsText)
+            .replace('{1}', item.number)
+            .replace('{2}', (item.source_activity_numbers || []).join(', '))
+        )
+      );
+    }
+    if (overlappingInfo.length) {
+      fireEvent(this, 'toast', {text: overlappingInfo.join('\n')});
     }
   }
 
