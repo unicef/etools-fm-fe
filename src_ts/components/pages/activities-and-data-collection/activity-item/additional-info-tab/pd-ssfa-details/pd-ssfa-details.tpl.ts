@@ -79,11 +79,7 @@ export function template(this: PdSsfaDetails): TemplateResult {
                 class="col-data col-3"
                 data-col-header-label="${translate('ACTIVITY_ADDITIONAL_INFO.PD_SPD_DETAILS.PROGRESS_REPORTS')}"
               >
-                <a
-                  class="link-cell link-content"
-                  href="/pmp/interventions/${intervention.id}/progress/reports"
-                  target="_blank"
-                >
+                <a class="link-cell link-content" href="/pmp/interventions/${intervention.id}/reports" target="_blank">
                   <etools-icon-button name="launch"></etools-icon-button>
                   <label class="link-text" style="text-transform: uppercase">${translate('VIEW')}</label>
                 </a>

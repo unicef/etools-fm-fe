@@ -46,7 +46,8 @@
       "ADDITIONAL_BUTTONS": {
         "OFF_TRACK": "En Retard",
         "ON_TRACK": "En Bonne Voie",
-        "NOT_MONITORED": "Pas Monitoré"
+        "NOT_MONITORED": "Pas Monitoré",
+        "ADD_ACTION_POINT": "Ajouter le point d'action"
       }
     }
   },
@@ -631,6 +632,8 @@
   "PLEASE_WAIT_COUNTRY_CHANGE": "Veuillez patienter pendant que les données du pays sont modifiées...",
   "PLEASE_WAIT_ORGANIZATION_CHANGE": "Veuillez patienter pendant que les données de l'organisation sont modifiées...",
   "ERROR_SAVE_PROFILE": "Données de profil non enregistrées. Erreur de sauvegarde du profil !",
+  "ACTION_POINT_CREATED": "Le point d'action a été créé!",
+  "ERROR_ACTION_POINT_CREATE": "Ne peut pas créer un point d'action",
   "TPM": {
     "TITLE": "Moniteurs tiers",
     "ADD_NEW_VENDOR": "Ajouter un nouveau fournisseur",
@@ -695,6 +698,7 @@
   "EDIT_QUESTIONS_ORDER": "Modifier l'ordre des questions",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{0} '{1}' a déjà été visité au cours de cette année civile dans l'activité/les activités : {2}",
   "PD_STATUS": {
     "DRAFT": "Développement",
     "REVIEW": "Consultez le site",

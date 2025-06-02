@@ -11,8 +11,7 @@ export class AddWidgetLocations {
     WidgetLocationsActionTypes.ADD_WIDGET_LOCATIONS_LIST;
 
   constructor(
-    public widgetLocations: IListData<WidgetLocation>,
-    public page: number = 1,
+    public widgetLocations: WidgetLocation[],
     public search: string = '',
     public query: string = ''
   ) {}
@@ -23,8 +22,7 @@ export class SetWidgetLocations {
     WidgetLocationsActionTypes.SET_WIDGET_LOCATIONS_LIST;
 
   constructor(
-    public widgetLocations: IListData<WidgetLocation>,
-    public page: number = 1,
+    public widgetLocations: WidgetLocation[],
     public search: string = '',
     public query: string = ''
   ) {}

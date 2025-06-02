@@ -46,7 +46,8 @@
       "ADDITIONAL_BUTTONS": {
         "NOT_MONITORED": "No monitoreado",
         "OFF_TRACK": "Desfasado",
-        "ON_TRACK": "En camino"
+        "ON_TRACK": "En camino",
+        "ADD_ACTION_POINT": "Agregar punto de acción"
       },
       "OVERALL_FINDING_PLACEHOLDER": "Por favor ingrese aquí sus observaciones generales",
       "OVERALL_FINDING": "Observaciones generales"
@@ -641,6 +642,8 @@
   "PLEASE_WAIT_COUNTRY_CHANGE": "Espere mientras los datos del país cambian...",
   "PLEASE_WAIT_ORGANIZATION_CHANGE": "Espere mientras los datos de la organización cambian...",
   "ERROR_SAVE_PROFILE": "Datos de perfil no guardados. ",
+  "ACTION_POINT_CREATED": "¡Se ha creado un punto de acción!",
+  "ERROR_ACTION_POINT_CREATE": "No se puede crear un punto de acción",
   "TPM": {
     "TITLE": "Monitores de terceros",
     "ADD_NEW_VENDOR": "Agregar nuevo proveedor",
@@ -704,6 +707,7 @@
   "EDIT_QUESTIONS_ORDER": "Editar orden de preguntas",
   "CONFIRM_DUPLICATE_ACTIVITY": "Please confirm you want to duplicate current activity",
   "DUPLICATE_CHECKLIST": "Include checklist",
+  "OVERLAPPING_ENITITIES": "{0} '{1}' ya fue visitado en este año calendario en la actividad/actividades: {2}",
   "PD_STATUS": {
     "DRAFT": "Desarrollo",
     "REVIEW": "Revisar",

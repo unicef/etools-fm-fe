@@ -26,7 +26,8 @@ export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Pr
 
 export function updateActionPoint(
   activityId: number,
-  data: Partial<EditableActionPoint>
+  data: Partial<EditableActionPoint>,
+  skipReloadActionPointsList?: boolean
 ): (dispatch: Dispatch) => Promise<void | UpdateActionPointError> {
   return (dispatch: Dispatch) => {
     let id = '';
@@ -39,7 +40,9 @@ export function updateActionPoint(
     dispatch(new SetActionPointsUpdateStatus(true));
     return request<ActionPoint>(url, {method: method, body: JSON.stringify(data)})
       .then(() => {
-        dispatch<AsyncEffect>(loadActionPoints(activityId));
+        if (!skipReloadActionPointsList) {
+          dispatch<AsyncEffect>(loadActionPoints(activityId));
+        }
       })
       .catch((error: GenericObject) => {
         dispatch(new UpdateActionPointError(error));
