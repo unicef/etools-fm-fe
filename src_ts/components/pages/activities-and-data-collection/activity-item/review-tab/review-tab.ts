@@ -14,11 +14,12 @@ import './review-checklist-item/review-checklist-item';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
 import {get} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
+import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 store.addReducers({activityChecklist});
 
 @customElement('activity-review-tab')
-export class ActivityReviewTab extends LitElement {
+export class ActivityReviewTab extends CommentsMixin(LitElement) {
   @property() methods: GenericObject<string> = {};
   @property() protected sortedChecklists: IChecklistByMethods[] = [];
   private activityChecklistUnsubscribe!: Unsubscribe;
@@ -53,14 +54,27 @@ export class ActivityReviewTab extends LitElement {
             </div>
 
             ${Object.entries(sortedChecklist.checklist).map(
-              ([targetTitle, items]: [string, IChecklistItem[]]) => html`
-                <review-checklist-item .itemTitle="${targetTitle}" .checklist="${items}"></review-checklist-item>
+              ([targetTitle, checklist]: [string, {targetId: number; items: IChecklistItem[]}]) => html`
+                <review-checklist-item
+                  related-to="review-${sortedChecklist.method}-${checklist.targetId}"
+                  related-to-description="${this.methods[sortedChecklist.method]} - ${targetTitle}"
+                  comments-container
+                  .itemTitle="${targetTitle}"
+                  .checklist="${checklist.items}"
+                ></review-checklist-item>
               `
             )}
           </section>
         `
       )}
     `;
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.table-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   connectedCallback(): void {
@@ -116,25 +130,32 @@ export class ActivityReviewTab extends LitElement {
     }, {});
   }
 
-  private sortByTarget(checklist: IChecklistItem[]): GenericObject<IChecklistItem[]> {
-    return checklist.reduce((sorted: GenericObject<IChecklistItem[]>, item: IChecklistItem) => {
-      let key: string;
-      if (item.partner) {
-        key = `${get('LEVELS_OPTIONS.PARTNER')}: ${item.partner.name}`;
-      } else if (item.cp_output) {
-        key = `${get('LEVELS_OPTIONS.OUTPUT')}: ${item.cp_output.name}`;
-      } else if (item.intervention) {
-        key = `${get('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
-      } else {
-        return sorted;
-      }
+  private sortByTarget(checklist: IChecklistItem[]): GenericObject<{targetId: number; items: IChecklistItem[]}> {
+    return checklist.reduce(
+      (sorted: GenericObject<{targetId: number; items: IChecklistItem[]}>, item: IChecklistItem) => {
+        let key: string;
+        let targetId: number;
+        if (item.partner) {
+          key = `${get('LEVELS_OPTIONS.PARTNER')}: ${item.partner.name}`;
+          targetId = item.partner.id;
+        } else if (item.cp_output) {
+          key = `${get('LEVELS_OPTIONS.OUTPUT')}: ${item.cp_output.name}`;
+          targetId = item.cp_output.id;
+        } else if (item.intervention) {
+          key = `${get('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
+          targetId = item.intervention.id;
+        } else {
+          return sorted;
+        }
 
-      if (!sorted[key]) {
-        sorted[key] = [];
-      }
-      sorted[key].push(item);
-      return sorted;
-    }, {});
+        if (!sorted[key]) {
+          sorted[key] = {targetId, items: []};
+        }
+        sorted[key].items.push(item);
+        return sorted;
+      },
+      {}
+    );
   }
 
   private createMethodsLib(methods: EtoolsMethod[]): GenericObject<string> {

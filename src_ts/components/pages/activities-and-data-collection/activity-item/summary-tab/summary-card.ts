@@ -28,12 +28,13 @@ import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import './action-points-popup/summary-action-points-popup';
+import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 @customElement('summary-card')
-export class SummaryCard extends MethodsMixin(LitElement) {
+export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
   @property() activityId: number | null = null;
   @property({type: String}) tabName = '';
-  @property({type: String}) target = '';
+  @property({type: Object}) target: any = null;
   @property({type: String}) type = '';
   @property({type: Object}) overallInfo: SummaryOverall | null = null;
   @property({type: Array}) findings: SummaryFinding[] = [];
@@ -83,6 +84,13 @@ export class SummaryCard extends MethodsMixin(LitElement) {
         [this._attachTypesEndpointName]
       )
     );
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   disconnectedCallback(): void {

@@ -708,5 +708,13 @@
     "SUSPENDED": "Приостановлено",
     "TERMINATED": "Прекращено",
     "EXPIRED": "Просроченный"
-  }
+  },
+  "COMMENT_MODE": "Режим комментариев",
+  "ENTER_MESSAGE_HERE": "Введите сообщение здесь",
+  "COMMENT": "Комментарий",
+  "COMMENTS_ON": "Комментарии",
+  "COMMENTS_PANEL": "Комментарии панели",
+  "CAN_NOT_DELETE_COMMENT": "Не может удалить комментарий. ",
+  "CAN_NOT_RESOLVE_COMMENT": "Не может разрешить комментарий. ",
+  "NO_COMMENTS": "Еще нет комментариев"
 }

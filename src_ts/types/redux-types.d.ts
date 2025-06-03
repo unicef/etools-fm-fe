@@ -25,6 +25,11 @@ interface IRootState {
   globalLoading: IGlobalLoadingState;
   tpmPartners: ITPMPartnersState;
   tpmPartnerDetails: ITPMPartnerDetailsState;
+  commentsData: {
+    commentsModeEnabled: boolean;
+    collection: GenericObject<CommentsCollection>;
+    endpoints: CommentsEndpoints;
+  };
 }
 
 type StoreSelectorFunction<T> = (store: IRootState) => T;

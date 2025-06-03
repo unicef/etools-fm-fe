@@ -79,6 +79,7 @@ export class AttachmentsListComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+
     this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._endpointName];
     if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
       store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));

@@ -35,6 +35,9 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
     ></etools-media-query>
     <etools-card
       card-title="${this.tableTitle}"
+      related-to="checklist-${this.targetId}"
+      related-to-description="${this.tableTitle}"
+      comments-container
       is-collapsible
       ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode}"
