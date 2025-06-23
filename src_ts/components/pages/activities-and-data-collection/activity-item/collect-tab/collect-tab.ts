@@ -34,12 +34,14 @@ import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/li
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {DATA_COLLECTION_PAGE} from '../../activities-and-data-collection-page';
+import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
+import '../../../../common/layout/etools-card';
 
 store.addReducers({dataCollection});
 
 type DataCollectByMethods = {[key: number]: DataCollectionChecklist[]};
 @customElement('data-collect-tab')
-export class DataCollectTab extends LitElement {
+export class DataCollectTab extends CommentsMixin(LitElement) {
   @property({type: Number, attribute: 'activity-id', reflect: true}) activityId!: number;
 
   @property({type: Object}) protected checklistByMethods: DataCollectByMethods = {};
@@ -140,7 +142,14 @@ export class DataCollectTab extends LitElement {
       ${repeat(
         this.dataCollectionMethods,
         (method: EtoolsMethod) => html`
-          <etools-card class="page-content" card-title="${method.name}" is-collapsible>
+          <etools-card
+            class="page-content"
+            card-title="${method.name}"
+            related-to="collect-${method.id}"
+            related-to-description="${method.name}"
+            comments-container
+            is-collapsible
+          >
             <div slot="actions">
               <etools-icon-button
                 @click="${() => this.onCreateChecklist(method)}"
@@ -245,6 +254,13 @@ export class DataCollectTab extends LitElement {
   getMethodType(id: number): string {
     const method: EtoolsMethod | undefined = this.dataCollectionMethods.find((item: EtoolsMethod) => item.id === id);
     return method ? method.name : '';
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   onCreateChecklist(method: EtoolsMethod): void {

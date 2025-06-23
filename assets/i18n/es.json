@@ -720,5 +720,13 @@
     "SUSPENDED": "Suspendido",
     "TERMINATED": "Terminado",
     "EXPIRED": "Venció"
-  }
+  },
+  "COMMENT_MODE": "Modo de comentario",
+  "ENTER_MESSAGE_HERE": "Ingrese el mensaje aquí",
+  "COMMENT": "Comentario",
+  "COMMENTS_ON": "Comenta sobre",
+  "COMMENTS_PANEL": "Panel de comentarios",
+  "CAN_NOT_DELETE_COMMENT": "No puede eliminar los comentarios. ",
+  "CAN_NOT_RESOLVE_COMMENT": "No se puede resolver comentarios. ",
+  "NO_COMMENTS": "Todavía no hay comentarios"
 }

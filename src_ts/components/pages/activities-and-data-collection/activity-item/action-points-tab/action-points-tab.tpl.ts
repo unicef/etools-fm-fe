@@ -30,6 +30,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       class="elevation page-content card-container"
       elevation="1"
       ?hidden="${!this.activityDetails.permissions.view.action_points}"
+      comment-element="action_points"
     >
       <etools-loading
         ?active="${this.loading}"
@@ -153,6 +154,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       class="elevation page-content card-container"
       elevation="1"
       ?hidden="${!this.activityDetails.permissions.view.tpm_concerns}"
+      comment-element="tpm_concerns"
     >
       <etools-loading
         ?active="${this.loading}"

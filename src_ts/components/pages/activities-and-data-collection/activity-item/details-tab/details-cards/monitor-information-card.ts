@@ -78,6 +78,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
         ${FormBuilderCardStyles}
       </style>
       <etools-card
+        related-to="monitor_info"
+        comments-container
         card-title="${translate('ACTIVITY_DETAILS.MONITOR_INFO')}"
         ?is-editable="${(!this.editedCard || this.editedCard === CARD_NAME) &&
         !ELEMENT_FIELDS.every((field: string) => this.isFieldReadonly(field))}"

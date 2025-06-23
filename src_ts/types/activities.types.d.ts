@@ -149,7 +149,7 @@ interface IChecklistQuestion {
 
 interface IChecklistByMethods {
   method: number;
-  checklist: GenericObject<IChecklistItem[]>;
+  checklist: GenericObject<{targetId: number; items: IChecklistItem[]}>;
 }
 
 type ActivityPermissions = {

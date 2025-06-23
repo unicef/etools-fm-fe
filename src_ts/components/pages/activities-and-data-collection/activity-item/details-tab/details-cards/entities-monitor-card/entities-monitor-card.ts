@@ -18,12 +18,15 @@ import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparis
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
 
 export const CARD_NAME = 'entities-monitor';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['cp_outputs', 'partners', 'interventions'];
 
 @customElement('entities-monitor-card')
-export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutputsMixin(BaseDetailsCard))) {
+export class EntitiesMonitorCard extends CommentsMixin(
+  InterventionsMixin(PartnersMixin(CpOutputsMixin(BaseDetailsCard)))
+) {
   @property() activityPartners: IActivityPartner[] = [];
   @property() activityCpOutputs: IActivityCPOutput[] = [];
   @property() activityInterventions: IActivityIntervention[] = [];
@@ -41,6 +44,8 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
         ${FormBuilderCardStyles}
       </style>
       <etools-card
+        related-to="entities_to_monitor"
+        comments-container
         card-title="${translate('ACTIVITY_DETAILS.ENTRIES_TO_MONITOR')}"
         ?is-editable="${this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)}"
         ?edit="${this.isEditMode}"
@@ -104,6 +109,13 @@ export class EntitiesMonitorCard extends InterventionsMixin(PartnersMixin(CpOutp
         </div>
       </etools-card>
     `;
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   protected startEdit(): void {

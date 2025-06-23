@@ -79,7 +79,7 @@ EtoolsRouter
         routeName: 'activities-and-data-collection',
         subRouteName: 'activity-item',
         path: params.matchDetails[0],
-        queryParams: null,
+        queryParams: params.queryParams,
         params: {id: params.matchDetails[1]}
       };
     }
@@ -91,7 +91,7 @@ EtoolsRouter
         routeName: 'activities-and-data-collection',
         subRouteName: 'activity-item',
         path: params.matchDetails[0],
-        queryParams: null,
+        queryParams: params.queryParams,
         params: {id: params.matchDetails[1], tab: params.matchDetails[2]}
       };
     }
@@ -103,7 +103,7 @@ EtoolsRouter
         routeName: 'activities-and-data-collection',
         subRouteName: 'data-collection',
         path: params.matchDetails[0],
-        queryParams: null,
+        queryParams: params.queryParams,
         params: {id: params.matchDetails[1], checklist: params.matchDetails[2]}
       };
     }
