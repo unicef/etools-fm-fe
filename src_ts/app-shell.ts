@@ -54,6 +54,9 @@ import {MapHelper} from './components/common/map-mixin';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
+import {commentsData} from './components/common/comments/comments.reducer.js';
+import {CommentsPanels} from './components/common/comments-panels/comments-panels.js';
+import {enableCommentMode} from './components/common/comments/comments.actions.js';
 
 registerTranslateConfig({
   empty: (key) => `${key && key[0].toUpperCase() + key.slice(1).toLowerCase()}`,
@@ -66,6 +69,7 @@ initializeIcons();
 // These are the actions needed by this element.
 
 store.addReducers({
+  commentsData,
   user,
   country,
   organization,
@@ -113,6 +117,11 @@ export class AppShell extends connect(store)(LitElement) {
 
   @query('#drawer') private drawer!: AppDrawer;
   @query('#appHeadLayout') private appHeaderLayout!: AppHeaderLayout;
+
+  @property({type: Boolean})
+  commentMode = false;
+
+  private commentsPanel: CommentsPanels | null = null;
 
   private selectedLanguageAux = '';
 
@@ -220,6 +229,32 @@ export class AppShell extends connect(store)(LitElement) {
       // seletedLanguage has to be set after loadLocalization finishes to
       // trigger UI updates only after the [lang].json is loaded
       this.selectedLanguage = state.activeLanguage.activeLanguage;
+    }
+
+    if (state.user.data) {
+      const commentsState = Boolean(this.routeDetails.queryParams?.comment_mode);
+      this.checkCommentsMode(commentsState, false);
+    }
+  }
+
+  checkCommentsMode(newState: boolean, notTabs: boolean): void {
+    if (this.commentMode === newState) {
+      return;
+    }
+    this.commentMode = newState;
+
+    if (!this.commentMode && this.commentsPanel) {
+      this.commentsPanel.remove();
+      this.commentsPanel = null;
+    } else if (this.commentMode && !this.commentsPanel && !notTabs) {
+      this.commentsPanel = document.createElement('comments-panels') as CommentsPanels;
+      document.body.append(this.commentsPanel);
+    }
+
+    if (!notTabs) {
+      setTimeout(() => {
+        store.dispatch(enableCommentMode(this.commentMode));
+      }, 10);
     }
   }
 

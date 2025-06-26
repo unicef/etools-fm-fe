@@ -8,6 +8,7 @@ import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {enableCommentMode} from '../../components/common/comments/comments.actions';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
 
@@ -50,6 +51,7 @@ const loadPageComponents: ActionCreator<ThunkResult> =
     }
     // add page details to redux store, to be used in other components
     dispatch(new UpdateStoreRouteDetails(routeDetails));
+    dispatch(enableCommentMode(Boolean(routeDetails?.queryParams?.comment_mode)));
   };
 
 export const navigate: ActionCreator<ThunkResult> = (path: string) => (dispatch: any) => {

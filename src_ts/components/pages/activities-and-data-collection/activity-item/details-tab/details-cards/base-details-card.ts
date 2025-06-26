@@ -17,8 +17,9 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {getErrorText} from '../../../../../utils/utils';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {CommentElementMeta, CommentsMixin} from '../../../../../common/comments/comments-mixin';
 
-export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
+export class BaseDetailsCard extends CommentsMixin(DataMixin()<IActivityDetails>(LitElement)) {
   @property() isEditMode = false;
   @property() isUpdate = false;
   @property() editedCard: string | null = null;
@@ -28,6 +29,13 @@ export class BaseDetailsCard extends DataMixin()<IActivityDetails>(LitElement) {
   private activityDetailsUnsubscribe!: Unsubscribe;
   private errorUnsubscribe!: Unsubscribe;
   private editedCardUnsubscribe!: Unsubscribe;
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
+  }
 
   connectedCallback(): void {
     super.connectedCallback();

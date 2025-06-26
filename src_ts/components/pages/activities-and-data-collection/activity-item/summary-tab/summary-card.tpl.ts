@@ -16,6 +16,9 @@ export function template(this: SummaryCard): TemplateResult {
     </style>
     <etools-card
       card-title="${this.tabName}"
+      related-to="summary_${this.type}-${this.target?.id}"
+      related-to-description="${this.tabName}"
+      comments-container
       is-collapsible
       ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode && !this.updateInProcess}"

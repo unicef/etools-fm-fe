@@ -18,12 +18,13 @@ import {checklistEditedCard} from '../../../../../../redux/selectors/activity-ch
 import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-checklist.actions';
 import {Unsubscribe} from 'redux';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {CommentElementMeta, CommentsMixin} from '../../../../../common/comments/comments-mixin';
 
 const ENTER = 13;
 const ESCAPE = 27;
 
 @customElement('checklist-selection-table')
-export class ChecklistSelectionTable extends LitElement {
+export class ChecklistSelectionTable extends CommentsMixin(LitElement) {
   @property({type: Array}) questionsList: IChecklistItem[] = [];
   @property() isEditMode = false;
   @property() editedDetails: GenericObject = {opened: false};
@@ -33,6 +34,7 @@ export class ChecklistSelectionTable extends LitElement {
   @property({type: Boolean})
   lowResolutionLayout = false;
   @property() protected blockEdit = false;
+  @property() targetId = 0;
 
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private methods!: EtoolsMethod[];
@@ -57,6 +59,13 @@ export class ChecklistSelectionTable extends LitElement {
 
   get allQuestionsEnabled(): boolean {
     return !this.questionsList.some((question: IChecklistItem) => !question.is_enabled);
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   render(): TemplateResult {

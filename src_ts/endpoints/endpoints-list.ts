@@ -407,5 +407,17 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [QUESTIONS_ORDER]: {
     url: '/api/v1/field-monitoring/settings/questions/update-order/'
+  },
+  comments: {
+    template: '/api/comments/v1/field_monitoring_planning/monitoringactivity/<%=collectionId%>/'
+  },
+  resolveComment: {
+    template: '/api/comments/v1/field_monitoring_planning/monitoringactivity/<%=collectionId%>/<%=commentId%>/resolve/'
+  },
+  deleteComment: {
+    template: '/api/comments/v1/field_monitoring_planning/monitoringactivity/<%=collectionId%>/<%=commentId%>/delete/'
+  },
+  downloadComment: {
+    template: '/api/comments/v1/field_monitoring_planning/monitoringactivity/<%=collectionId%>/csv/'
   }
 };
