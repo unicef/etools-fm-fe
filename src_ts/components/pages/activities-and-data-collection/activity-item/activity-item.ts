@@ -52,6 +52,12 @@ import {loadSummaryFindingsAndOverall} from '../../../../redux/effects/activity-
 import {loadActionPoints, loadTPMActionPoints} from '../../../../redux/effects/action-points.effects';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {buildUrlQueryString} from '@unicef-polymer/etools-utils/dist/general.util';
+import '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import {enableCommentMode, getComments, setCommentsEndpoint} from '../../../common/comments/comments.actions';
+import {AsyncAction} from '@unicef-polymer/etools-types';
+import {etoolsEndpoints} from '../../../../endpoints/endpoints-list';
+import {CommentsEndpoints} from '../../../common/comments/comments-types';
 
 store.addReducers({activityDetails});
 
@@ -78,6 +84,8 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activeTab!: string;
   @property() childInEditMode = false;
   @property() isUnicefUser = false;
+  @property({type: Boolean})
+  commentMode = false;
 
   pageTabs: PageTab[] = [
     {
@@ -171,6 +179,14 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           ${(this.activityDetails && this.activityDetails.reference_number) || translate('ACTIVITY_ITEM.NEW_ACTIVITY')}
         </h1>
 
+        <div slot="middle" class="comment-mode-switch">
+          ${this.activityDetails
+            ? html` <sl-switch id="commentMode" ?checked="${this.commentMode}" @sl-change="${this.commentModeChange}"
+                >${translate('COMMENT_MODE')}</sl-switch
+              >`
+            : html``}
+        </div>
+
         <div slot="title-row-actions" class="content-header-actions">
           <sl-dropdown id="pdMenuBtn" ?hidden="${this.hideMoreActionsButton()}">
             <etools-icon-button label="menu" name="more-vert" slot="trigger"> </etools-icon-button>
@@ -238,12 +254,22 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         }
         this.activityDetails = data;
         this.checkTab();
+        store.dispatch<AsyncAction>(getComments(etoolsEndpoints.comments, Number(this.activityDetails.id)));
+
+        const commentsEndpoints: CommentsEndpoints = {
+          saveComments: etoolsEndpoints.comments,
+          deleteComment: etoolsEndpoints.deleteComment,
+          resolveComment: etoolsEndpoints.resolveComment
+        };
+        store.dispatch(setCommentsEndpoint(commentsEndpoints));
+        store.dispatch(enableCommentMode(Boolean(store.getState().app.routeDetails.queryParams?.comment_mode)));
       }, false)
     );
 
     // On Route changes
     this.routeDetailsUnsubscribe = store.subscribe(
-      routeDetailsSelector(({routeName, subRouteName, params}: EtoolsRouteDetails) => {
+      routeDetailsSelector((data: EtoolsRouteDetails) => {
+        const {routeName, subRouteName, params, queryParams} = data;
         if (routeName !== PAGE || subRouteName !== SUB_ROUTE) {
           return;
         }
@@ -253,6 +279,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           updateAppLocation('page-not-found');
         }
         this.activityId = activityId;
+        this.commentMode = Boolean(queryParams?.comment_mode);
 
         if (this.activityId === 'new') {
           this.activityDetails = null;
@@ -298,6 +325,30 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
         this.isUnicefUser = user && user.is_unicef_user;
       })
     );
+  }
+
+  commentModeChange(e: CustomEvent) {
+    if (!e.detail) {
+      return;
+    }
+    const element = e.currentTarget as HTMLInputElement;
+    // initial load
+    if (element.checked === this.commentMode) {
+      return;
+    }
+    history.pushState(window.history.state, '', this.computeNewPath(element.checked));
+    window.dispatchEvent(new CustomEvent('popstate'));
+  }
+
+  computeNewPath(commentMode: boolean) {
+    const queryParams = {...(store.getState().app.routeDetails!.queryParams || {})};
+    if (commentMode) {
+      queryParams['comment_mode'] = 'true';
+    } else {
+      delete queryParams['comment_mode'];
+    }
+    const stringParams: string = buildUrlQueryString(queryParams);
+    return store.getState().app.routeDetails!.path + (stringParams !== '' ? `?${stringParams}` : '');
   }
 
   onDuplicateClick(e: Event) {
@@ -406,7 +457,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     }
 
     fireEvent(this, 'child-in-edit-mode-changed', {inEditMode: false});
-    updateAppLocation(`activities/${this.activityId || 'new'}/${tabName}`);
+    const stringParams: string = buildUrlQueryString(store.getState().app.routeDetails!.queryParams || {});
+    updateAppLocation(
+      `activities/${this.activityId || 'new'}/${tabName}${stringParams !== '' ? `?${stringParams}` : ''}`
+    );
   }
 
   hideExportButton(): boolean {
@@ -485,6 +539,10 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
           statuses-actions {
             margin-left: 0px;
           }
+        }
+
+        .comment-mode-switch {
+          margin-left: 50px;
         }
       `
     ];

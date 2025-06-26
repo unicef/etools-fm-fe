@@ -31,6 +31,7 @@ import {activeLanguageSelector} from '../../../../../../../redux/selectors/activ
 import {applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
 dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
@@ -60,7 +61,7 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
 ];
 
 @customElement('activity-details-card')
-export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsCard)) {
+export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
   @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
   @property() locations: EtoolsLightLocation[] = [];
@@ -137,6 +138,8 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
       </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.ACTIVITY_DETAILS')}"
+        related-to="activity_details"
+        comments-container
         ?is-editable="${this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)}"
         ?edit="${this.isEditMode}"
         @start-edit="${() => this.startEdit()}"
@@ -280,6 +283,13 @@ export class ActivityDetailsCard extends OfficesMixin(SectionsMixin(BaseDetailsC
         </div>
       </etools-card>
     `;
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   selectSections(sections: Section[]): void {

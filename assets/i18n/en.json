@@ -711,5 +711,13 @@
     "SUSPENDED": "Suspended",
     "TERMINATED": "Terminated",
     "EXPIRED": "Expired"
-  }
+  },
+  "COMMENT_MODE": "Comment Mode",
+  "ENTER_MESSAGE_HERE": "Enter message here",
+  "COMMENT": "Comment",
+  "COMMENTS_ON": "Comments on",
+  "COMMENTS_PANEL": "Comments Panel",
+  "CAN_NOT_DELETE_COMMENT": "Can not delete comment. Try again",
+  "CAN_NOT_RESOLVE_COMMENT": "Can not resolve comment. Try again",
+  "NO_COMMENTS": "There are no comments yet"
 }

@@ -16,12 +16,13 @@ import {ACTION_POINTS_CATEGORIES} from '../../../../../endpoints/endpoints-list'
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
 import {staticDataDynamic} from '../../../../../redux/selectors/static-data.selectors';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 store.addReducers({actionPointsList});
 store.addReducers({tpmActionPointsList});
 
 @customElement('action-points-tab')
-export class ActionPointsTab extends LitElement {
+export class ActionPointsTab extends CommentsMixin(LitElement) {
   @property() items: ActionPoint[] = [];
   @property() tpmItems: TPMActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;

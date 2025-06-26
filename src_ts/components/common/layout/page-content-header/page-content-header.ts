@@ -119,6 +119,7 @@ export class PageContentHeader extends LitElement {
         <h1>
           <slot name="page-title"></slot>
         </h1>
+        <slot name="middle"></slot>
         <div class="title-row-actions">
           <slot name="title-row-actions"></slot>
         </div>
