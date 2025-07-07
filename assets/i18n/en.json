@@ -128,7 +128,7 @@
       "ASSIGN_AND_ACCEPT": "Assign & Accept",
       "assign": "Assign",
       "accept": "Accept",
-      "mark_data_collected": "Finalize",
+      "mark_data_collected": "Save",
       "submit_report": "Submit",
       "complete": "Approve",
       "reject": "Reject",
