@@ -44,7 +44,7 @@ export const ListMixin =
         if (paramName === 'page_size') {
           newParams.page = 1;
         }
-        updateQueryParams({[paramName]: newValue});
+        updateQueryParams(newParams);
       }
 
       updateQueryParamsIfPageIsActive(queryParams: GenericObject, pageName: string, reset?: boolean): void {
