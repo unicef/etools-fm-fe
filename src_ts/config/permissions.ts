@@ -10,7 +10,6 @@ let currentUserGroups: string[] | null = null;
 export enum Permissions {
   VIEW_SETTINGS = 'VIEW_SETTINGS',
   VIEW_PLANING = 'VIEW_PLANING',
-  VIEW_ANALYZE = 'VIEW_ANALYZE',
   EDIT_SITES = 'EDIT_SITES',
   EDIT_RATIONALE = 'EDIT_RATIONALE',
   EDIT_LOG_ISSUES = 'EDIT_LOG_ISSUES',
@@ -37,7 +36,6 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
   [PME]: new Set([
     Permissions.VIEW_SETTINGS,
     Permissions.VIEW_PLANING,
-    Permissions.VIEW_ANALYZE,
     Permissions.EDIT_SITES,
     Permissions.EDIT_LOG_ISSUES,
     Permissions.EDIT_RATIONALE,
@@ -51,7 +49,6 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
   [FM_USER]: new Set([
     Permissions.VIEW_SETTINGS,
     Permissions.VIEW_PLANING,
-    Permissions.VIEW_ANALYZE,
     Permissions.FM_USER_TEST_PERMISSION,
     Permissions.EDIT_LOG_ISSUES,
     Permissions.EDIT_RATIONALE,
@@ -61,7 +58,7 @@ const PERMISSIONS_MAP: GenericObject<Set<Permissions>> = {
     Permissions.EDIT_ACTION_POINT,
     Permissions.CREATE_VISIT
   ]),
-  [UNICEF_USER]: new Set([Permissions.VIEW_SETTINGS, Permissions.VIEW_PLANING, Permissions.VIEW_ANALYZE])
+  [UNICEF_USER]: new Set([Permissions.VIEW_SETTINGS, Permissions.VIEW_PLANING])
 };
 
 export function setUser({groups}: IEtoolsUserModel): void {
