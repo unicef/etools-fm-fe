@@ -53,15 +53,6 @@ export const DATA_COLLECTION_SPECIFIC_CHECKLIST = 'dataCollectionSpecificCheckli
 export const DATA_COLLECTION_OVERALL_FINDING = 'dataCollectionOverallFinding';
 export const DATA_COLLECTION_BLUEPRINT = 'dataCollectionBlueprint';
 export const ATTACHMENTS_STORE = 'attachmentsStore';
-export const MONITORING_ACTIVITY_OVERALL_STATISTICS = 'monitoringActivityOverallStatistics';
-export const MONITORING_ACTIVITY_PARTNERS_COVERAGE = 'monitoringActivityPartnersCoverage';
-export const MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE = 'monitoringActivityInterventionsCoverage';
-export const MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE = 'monitoringActivityCpOutputCoverage';
-export const GEOGRAPHIC_COVERAGE = 'geographicCoverage';
-export const OPEN_ISSUES_PARTNERS = 'openIssuesPartners';
-export const OPEN_ISSUES_CP_OUTPUT = 'openIssuesCpOutput';
-export const OPEN_ISSUES_LOCATIONS = 'openIssuesLocations';
-export const HACT_VISITS = 'hactVisits';
 export const FULL_REPORT = 'fullReport';
 export const ACTION_POINTS_LIST = 'actionPointsList';
 export const ACTION_POINTS_DETAILS = 'actionPointsDetails';
@@ -331,42 +322,6 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [ATTACHMENTS_STORE]: {
     url: '/api/v2/attachments/upload/'
-  },
-
-  [MONITORING_ACTIVITY_OVERALL_STATISTICS]: {
-    template: '/api/v1/field-monitoring/analyze/overall/'
-  },
-
-  [MONITORING_ACTIVITY_PARTNERS_COVERAGE]: {
-    template: '/api/v1/field-monitoring/analyze/coverage/partners/'
-  },
-
-  [MONITORING_ACTIVITY_INTERVENTIONS_COVERAGE]: {
-    template: '/api/v1/field-monitoring/analyze/coverage/interventions/'
-  },
-
-  [MONITORING_ACTIVITY_CP_OUTPUT_COVERAGE]: {
-    template: '/api/v1/field-monitoring/analyze/coverage/cp-outputs/'
-  },
-
-  [GEOGRAPHIC_COVERAGE]: {
-    template: '/api/v1/field-monitoring/analyze/coverage/geographic/'
-  },
-
-  [OPEN_ISSUES_PARTNERS]: {
-    template: '/api/v1/field-monitoring/analyze/issues/partners/'
-  },
-
-  [OPEN_ISSUES_CP_OUTPUT]: {
-    template: '/api/v1/field-monitoring/analyze/issues/cp-outputs/'
-  },
-
-  [OPEN_ISSUES_LOCATIONS]: {
-    template: '/api/v1/field-monitoring/analyze/issues/locations/'
-  },
-
-  [HACT_VISITS]: {
-    template: '/api/v1/field-monitoring/analyze/hact/'
   },
 
   [ACTION_POINTS_LIST]: {
