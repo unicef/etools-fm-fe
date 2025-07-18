@@ -2,10 +2,9 @@ import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import './issue-tracker-list';
 import './pd-ssfa-details/pd-ssfa-details';
-import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 @customElement('additional-info-tab')
-export class AdditionalInfoTab extends CommentsMixin(LitElement) {
+export class AdditionalInfoTab extends LitElement {
   @property() activityDetails: IActivityDetails | null = null;
   @property() isUnicefUser = false;
 
