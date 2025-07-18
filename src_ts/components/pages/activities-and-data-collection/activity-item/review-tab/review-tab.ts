@@ -14,12 +14,11 @@ import './review-checklist-item/review-checklist-item';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
 import {get} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
-import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 store.addReducers({activityChecklist});
 
 @customElement('activity-review-tab')
-export class ActivityReviewTab extends CommentsMixin(LitElement) {
+export class ActivityReviewTab extends LitElement {
   @property() methods: GenericObject<string> = {};
   @property() protected sortedChecklists: IChecklistByMethods[] = [];
   private activityChecklistUnsubscribe!: Unsubscribe;
@@ -56,9 +55,7 @@ export class ActivityReviewTab extends CommentsMixin(LitElement) {
             ${Object.entries(sortedChecklist.checklist).map(
               ([targetTitle, checklist]: [string, {targetId: number; items: IChecklistItem[]}]) => html`
                 <review-checklist-item
-                  related-to="review-${sortedChecklist.method}-${checklist.targetId}"
-                  related-to-description="${this.methods[sortedChecklist.method]} - ${targetTitle}"
-                  comments-container
+                  .targetId="${checklist.targetId}"
                   .itemTitle="${targetTitle}"
                   .checklist="${checklist.items}"
                 ></review-checklist-item>
@@ -68,13 +65,6 @@ export class ActivityReviewTab extends CommentsMixin(LitElement) {
         `
       )}
     `;
-  }
-
-  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
-    const element: HTMLElement = container.shadowRoot!.querySelector('.table-container') as HTMLElement;
-    const relatedTo: string = container.getAttribute('related-to') as string;
-    const relatedToDescription = container.getAttribute('related-to-description') as string;
-    return [{element, relatedTo, relatedToDescription}];
   }
 
   connectedCallback(): void {

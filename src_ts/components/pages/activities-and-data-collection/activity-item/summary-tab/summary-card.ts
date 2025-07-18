@@ -87,7 +87,7 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
-    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const element: HTMLElement = container as HTMLElement;
     const relatedTo: string = container.getAttribute('related-to') as string;
     const relatedToDescription = container.getAttribute('related-to-description') as string;
     return [{element, relatedTo, relatedToDescription}];
@@ -290,7 +290,12 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
       case TEXT_TYPE:
         return html`
           ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
-          <div class="finding-container">
+          <div
+            class="finding-container"
+            related-to="summary_${this.type}-${this.target?.id}-${finding.activity_question.id}"
+            related-to-description="[${this.tabName}] ${finding.activity_question.text}"
+            comments-container
+          >
             <text-field
               ?is-readonly="${!this.isEditMode}"
               .value="${finding.value}"
@@ -302,7 +307,12 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
         `;
       case NUMBER_TYPE:
         return html`
-          <div class="finding-container">
+          <div
+            class="finding-container"
+            related-to="summary_${this.type}-${this.target?.id}-${finding.activity_question.id}"
+            related-to-description="${this.tabName}: ${finding.activity_question.text}"
+            comments-container
+          >
             ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <number-field
               ?is-readonly="${!this.isEditMode}"
@@ -316,7 +326,12 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
       case BOOL_TYPE:
       case SCALE_TYPE:
         return html`
-          <div class="finding-container">
+          <div
+            class="finding-container"
+            related-to="summary_${this.type}-${this.target?.id}-${finding.activity_question.id}"
+            related-to-description="${this.tabName}: ${finding.activity_question.text}"
+            comments-container
+          >
             ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
             <scale-field
               .options="${finding.activity_question.question.options}"

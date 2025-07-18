@@ -17,9 +17,10 @@ import '../../../../common/file-components/files-popup';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 @customElement('issue-tracker-list')
-export class IssueTrackerList extends LitElement {
+export class IssueTrackerList extends CommentsMixin(LitElement) {
   @property() loading = false;
   @property() items: LogIssue[] = [];
   @property() queryParams: GenericObject = {
@@ -37,6 +38,8 @@ export class IssueTrackerList extends LitElement {
     };
     this.loadIssues(this.queryParams);
   }
+
+  commentsModeInitialize = false;
 
   loadIssues(params: GenericObject): void {
     this.loading = true;
@@ -128,7 +131,14 @@ export class IssueTrackerList extends LitElement {
         ${repeat(
           this.items,
           (logIssue: LogIssue) => html`
-            <etools-data-table-row secondary-bg-on-hover no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+            <etools-data-table-row
+              related-to="additional_info_points_of_note-${logIssue.id}"
+              related-to-description="${logIssue.issue}"
+              comments-container
+              secondary-bg-on-hover
+              no-collapse
+              .lowResolutionLayout="${this.lowResolutionLayout}"
+            >
               <div slot="row-data" class="row">
                 <div class="col-data col-md-1" data-col-header-label="${translate('ISSUE_TRACKER.RELATED_TO')}">
                   <span class="truncate">
@@ -182,6 +192,19 @@ export class IssueTrackerList extends LitElement {
       };
       this.loadIssues(params);
     }) as any);
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (changedProperties.has('items') && this.items.length) {
+      this.setCommentMode();
+    }
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   static get styles(): CSSResultArray {

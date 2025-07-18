@@ -30,7 +30,6 @@ export function template(this: ActionPointsTab): TemplateResult {
       class="elevation page-content card-container"
       elevation="1"
       ?hidden="${!this.activityDetails.permissions.view.action_points}"
-      comment-element="action_points"
     >
       <etools-loading
         ?active="${this.loading}"
@@ -93,7 +92,13 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table content   -->
       ${this.items.map(
         (item: ActionPoint) => html`
-          <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+          <etools-data-table-row
+            related-to="action_points-${item.id}"
+            related-to-description="${item.reference_number} - ${item.description}"
+            comments-container
+            secondary-bg-on-hover
+            .lowResolutionLayout="${this.lowResolutionLayout}"
+          >
             <div slot="row-data" class="layout-horizontal editable-row">
               <div
                 class="col-data col-md-3"
@@ -207,7 +212,14 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table content   -->
       ${this.tpmItems.map(
         (item: TPMActionPoint) => html`
-          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+          <etools-data-table-row
+            related-to="tpm_concerns-${item.id}"
+            related-to-description="${item.description}"
+            comments-container
+            no-collapse
+            secondary-bg-on-hover
+            .lowResolutionLayout="${this.lowResolutionLayout}"
+          >
             <div slot="row-data" class="layout-horizontal editable-row">
               <div
                 class="col-data col-md-9"
