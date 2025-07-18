@@ -34,6 +34,7 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
     ['open', 'Open'],
     ['completed', 'Completed']
   ]);
+  commentsModeInitialize = false;
 
   private actionPointsListUnsubscribe!: Unsubscribe;
   private tpmActionPointsListUnsubscribe!: Unsubscribe;
@@ -41,6 +42,16 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
 
   render(): TemplateResult {
     return template.call(this);
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (
+      (changedProperties.has('items') || changedProperties.has('tpmItems')) &&
+      this.items.length &&
+      this.tpmItems.length
+    ) {
+      this.setCommentMode();
+    }
   }
 
   connectedCallback(): void {

@@ -52,7 +52,14 @@ export function template(this: PdSsfaDetails): TemplateResult {
         : ''}
       ${this.getTargetInterventions().map(
         (intervention: IActivityIntervention) => html`
-          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+          <etools-data-table-row
+            related-to="additional_info_pd_spd_details-${intervention.id}"
+            related-to-description="${intervention.title}"
+            comments-container
+            no-collapse
+            secondary-bg-on-hover
+            .lowResolutionLayout="${this.lowResolutionLayout}"
+          >
             <div slot="row-data" class="editable-row">
               <div
                 class="col-data col-3"

@@ -40,7 +40,10 @@ export class CommentsGroup extends LitElement {
       return html`${this.relatedItem?.name}`;
     }
 
-    return html`${this.relatedToDescription} ${this.fieldDescription ? translate(this.fieldDescription) : ''}`;
+    return html`${this.fieldDescription ? translate(this.fieldDescription) : ''}${this.fieldDescription &&
+    this.relatedToDescription
+      ? ': '
+      : ''}${this.relatedToDescription}`;
   }
 
   static get styles() {
