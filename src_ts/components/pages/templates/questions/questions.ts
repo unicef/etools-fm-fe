@@ -395,7 +395,17 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           sections__in,
           category__in,
           level__in: applyDropdownTranslation(LEVELS),
-          answer_type__in: applyDropdownTranslation(ANSWER_TYPES)
+          answer_type__in: applyDropdownTranslation(ANSWER_TYPES),
+          is_custom: [
+            {
+              value: 'false',
+              display_name: getTranslation('QUESTIONS.IS_CUSTOM.STANDARD')
+            },
+            {
+              value: 'true',
+              display_name: getTranslation('QUESTIONS.IS_CUSTOM.NON_STANDARD')
+            }
+          ]
         };
 
         const availableFilters = [...(questionsFilters() as EtoolsFilter[])];
@@ -408,6 +418,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
             .map((filter: any) => filter.filterKey) || [];
         const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
         this.filters = updateFiltersSelectedValues(currentParams, availableFilters);
+
         this.filters.forEach((filter) => {
           filter.selected = filter.selected || selectedFilters?.indexOf(filter.filterKey) > -1;
         });

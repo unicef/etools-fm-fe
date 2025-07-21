@@ -374,7 +374,12 @@
       "QUESTION": "Pregunta",
       "SCALE_SIZE": "Tamaño de escala",
       "SECTIONS": "Secciones",
-      "ORDER": "Pedir"
+      "ORDER": "Pedir",
+      "IS_CUSTOM": "Tipo de pregunta"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "No estándar",
+      "STANDARD": "Estándar"
     },
     "LEVEL": {
       "INTERVENTION": "PD/SPD",

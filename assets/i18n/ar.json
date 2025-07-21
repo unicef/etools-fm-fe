@@ -372,7 +372,12 @@
       "QUESTION": "سؤال",
       "SCALE_SIZE": "حجم المقياس",
       "SECTIONS": "الأقسام",
-      "ORDER": "طلب"
+      "ORDER": "طلب",
+      "IS_CUSTOM": "نوع السؤال"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "غير قياسي",
+      "STANDARD": "معيار"
     },
     "LEVEL": {
       "INTERVENTION": "وثيقة البرامج/اتفاقية التمويل الصغير",

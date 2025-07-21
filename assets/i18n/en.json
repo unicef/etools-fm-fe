@@ -358,7 +358,12 @@
       "IS_HACT": "Counts towards HACT",
       "IS_ACTIVE": "Is Active",
       "SCALE_SIZE": "Scale Size",
-      "ORDER": "Order"
+      "ORDER": "Order",
+      "IS_CUSTOM": "Question Type"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "Non-Standard",
+      "STANDARD": "Standard"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
