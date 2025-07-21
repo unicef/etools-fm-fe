@@ -355,7 +355,12 @@
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
       "SCALE_SIZE": "Localized Scale Size",
-      "ORDER": "Order"
+      "ORDER": "Order",
+      "IS_CUSTOM": "Тип вопроса"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "Нестандартный",
+      "STANDARD": "Стандартный"
     },
     "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
