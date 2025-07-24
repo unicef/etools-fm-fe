@@ -314,6 +314,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Экспорт",
     "FILTERS": {
       "LEVEL_LABEL": "Localized Select Level",
       "LEVEL_PLACEHOLDER": "Localized Select Level",

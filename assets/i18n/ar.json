@@ -326,6 +326,7 @@
   },
   "TEMPLATES": {
     "ADD_DETAIL": "أضف التفاصيل",
+    "EXPORT": "تصدير",
     "COLUMNS": {
       "DETAILS": "تفاصيل محددة للتنفيذ",
       "METHODS": "الأساليب",

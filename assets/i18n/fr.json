@@ -316,6 +316,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Exporter",
     "FILTERS": {
       "LEVEL_LABEL": "Sélectionnez le niveau",
       "LEVEL_PLACEHOLDER": "Sélectionnez le niveau",

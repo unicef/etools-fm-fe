@@ -328,6 +328,7 @@
   },
   "TEMPLATES": {
     "ADD_DETAIL": "Agregar detalle",
+    "EXPORT":"Exportar",
     "COLUMNS": {
       "DETAILS": "Detalles específicos a sondear",
       "METHODS": "Métodos",
