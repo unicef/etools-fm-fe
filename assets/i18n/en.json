@@ -316,6 +316,7 @@
     }
   },
   "TEMPLATES": {
+    "EXPORT":"Export",
     "FILTERS": {
       "LEVEL_LABEL": "Select Level",
       "LEVEL_PLACEHOLDER": "Select Level",
@@ -727,6 +728,6 @@
   "NO_COMMENTS": "There are no comments yet",
   "SUMMARY_PARTNER": "Partner Summary",
   "SUMMARY_CPOUTPUT": "CP Output Summary",
-  "SUMMARY_PDSPD": "PD/SPD Summary"
-
+  "SUMMARY_PDSPD": "PD/SPD Summary",
+  "MESSAGE_WAS_DELETED": "Message was deleted"
 }

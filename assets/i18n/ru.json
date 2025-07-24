@@ -314,6 +314,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Экспорт",
     "FILTERS": {
       "LEVEL_LABEL": "Localized Select Level",
       "LEVEL_PLACEHOLDER": "Localized Select Level",
@@ -721,5 +722,9 @@
   "COMMENTS_PANEL": "Комментарии панели",
   "CAN_NOT_DELETE_COMMENT": "Не может удалить комментарий. ",
   "CAN_NOT_RESOLVE_COMMENT": "Не может разрешить комментарий. ",
-  "NO_COMMENTS": "Еще нет комментариев"
+  "NO_COMMENTS": "Еще нет комментариев",
+  "SUMMARY_PARTNER": "Краткое изложение партнера",
+  "SUMMARY_CPOUTPUT": "Сводка вывода CP",
+  "SUMMARY_PDSPD": "КРУПАНА PD/SPD",
+  "MESSAGE_WAS_DELETED": "Сообщение было удалено"
 }

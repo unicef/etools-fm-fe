@@ -316,6 +316,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Exporter",
     "FILTERS": {
       "LEVEL_LABEL": "Sélectionnez le niveau",
       "LEVEL_PLACEHOLDER": "Sélectionnez le niveau",
@@ -724,5 +725,9 @@
   "COMMENTS_PANEL": "Groupe de commentaires",
   "CAN_NOT_DELETE_COMMENT": "Ne peut pas supprimer des commentaires. ",
   "CAN_NOT_RESOLVE_COMMENT": "Ne peut pas résoudre le commentaire. ",
-  "NO_COMMENTS": "Il n'y a pas encore de commentaires"
+  "NO_COMMENTS": "Il n'y a pas encore de commentaires",
+  "SUMMARY_PARTNER": "Résumé du partenaire",
+  "SUMMARY_CPOUTPUT": "Résumé de la sortie CP",
+  "SUMMARY_PDSPD": "Résumé PD / SPD",
+  "MESSAGE_WAS_DELETED": "Le message a été supprimé"
 }
