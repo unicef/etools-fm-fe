@@ -731,5 +731,9 @@
   "COMMENTS_PANEL": "لوحة التعليقات",
   "CAN_NOT_DELETE_COMMENT": "لا يمكن حذف التعليق. ",
   "CAN_NOT_RESOLVE_COMMENT": "لا يمكن حل التعليق. ",
-  "NO_COMMENTS": "لا توجد تعليقات حتى الآن"
+  "NO_COMMENTS": "لا توجد تعليقات حتى الآن",
+  "SUMMARY_PARTNER": "ملخص الشريك",
+  "SUMMARY_CPOUTPUT": "ملخص الإخراج CP",
+  "SUMMARY_PDSPD": "ملخص PD/SPD",
+  "MESSAGE_WAS_DELETED": "تم حذف الرسالة"
 }

@@ -1,5 +1,5 @@
 import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../redux/store';
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {updateAppLocation} from '../../../routing/routes';
@@ -58,6 +58,9 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
   @property()
   allowView = false;
 
+  @query('questions-tab')
+  questinonsTab!: any;
+
   render(): TemplateResult {
     return this.allowView
       ? html`
@@ -71,6 +74,20 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
               @sl-tab-show="${({detail}: any) => this.onSelect(detail.name)}"
               .activeTab="${this.activeTab}"
             ></etools-tabs-lit>
+
+            <div slot="title-row-actions" class="content-header-actions">
+              <etools-button
+                id="export"
+                class="neutral"
+                variant="text"
+                @click="${this.export}"
+                tracker="Export TPM Partners"
+                ?hidden=${this.activeTab !== QUESTIONS_TAB}
+              >
+                <etools-icon name="file-download" slot="prefix"></etools-icon>
+                ${translate('TEMPLATES.EXPORT')}
+              </etools-button>
+            </div>
           </page-content-header>
 
           ${this.getTabElement()}
@@ -106,7 +123,7 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
       case ISSUE_TRACKER_TAB:
         return html` <issue-tracker-tab></issue-tracker-tab> `;
       case TEMPLATES_TAB:
-        return html` <templates-tab></templates-tab> `;
+        return html` <templates-tab export></templates-tab> `;
       default:
         return html` Tab Not Found `;
     }
@@ -127,6 +144,10 @@ export class TemplatesPage extends PagePermissionsMixin(LitElement) implements I
       updateAppLocation('page-not-found');
     }
     return true;
+  }
+
+  export() {
+    this.questinonsTab.export();
   }
 
   static get styles(): CSSResultArray {

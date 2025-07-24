@@ -10,7 +10,13 @@ import {updateQueryParams} from '../../../../routing/routes';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {CATEGORIES, METHODS, SECTIONS} from '../../../../endpoints/endpoints-list';
+import {
+  CATEGORIES,
+  METHODS,
+  QUESTIONS_LIST,
+  QUESTIONS_LIST_EXPORT,
+  SECTIONS
+} from '../../../../endpoints/endpoints-list';
 import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {ANSWER_TYPES, LEVELS} from '../../../common/dropdown-options';
@@ -45,6 +51,9 @@ import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {request} from '../../../../endpoints/request';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {getEndpoint} from '../../../../endpoints/endpoints';
 
 @customElement('questions-tab')
 export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
@@ -432,5 +441,15 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
         updateFilterSelectionOptions(activitiesListFilters, filter.filterKey, filtersData[filter.filterKey]);
       }
     });
+  }
+
+  async export() {
+    const {url}: IResultEndpoint = getEndpoint(QUESTIONS_LIST_EXPORT);
+    const queryParams: any = {...this.queryParams};
+    delete queryParams.page;
+    delete queryParams.page_size;
+    const queryParamsString = EtoolsRouter.encodeQueryParams(queryParams);
+    const resultUrl = `${url}${queryParamsString ? `?${queryParamsString}` : ''}`;
+    window.open(resultUrl, '_blank');
   }
 }

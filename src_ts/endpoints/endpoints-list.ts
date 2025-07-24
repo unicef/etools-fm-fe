@@ -10,6 +10,7 @@ export const SITES_LIST = 'siteLocations';
 export const SITE_DETAILS = 'siteLocationsDetails';
 export const CURRENT_WORKSPACE = 'currentWorkspace';
 export const QUESTIONS_LIST = 'questionsList';
+export const QUESTIONS_LIST_EXPORT = 'questionsListExport';
 export const QUESTIONS_DETAILS = 'questionsDetails';
 export const CATEGORIES = 'categories';
 export const SECTIONS = 'sections';
@@ -195,6 +196,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [QUESTIONS_LIST]: {
     url: '/api/v1/field-monitoring/settings/questions/'
+  },
+
+  [QUESTIONS_LIST_EXPORT]: {
+    url: '/api/v1/field-monitoring/settings/questions/export'
   },
 
   [QUESTIONS_DETAILS]: {

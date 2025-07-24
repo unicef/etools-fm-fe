@@ -733,5 +733,9 @@
   "COMMENTS_PANEL": "Panel de comentarios",
   "CAN_NOT_DELETE_COMMENT": "No puede eliminar los comentarios. ",
   "CAN_NOT_RESOLVE_COMMENT": "No se puede resolver comentarios. ",
-  "NO_COMMENTS": "Todavía no hay comentarios"
+  "NO_COMMENTS": "Todavía no hay comentarios",
+  "SUMMARY_PARTNER": "Resumen de socios",
+  "SUMMARY_CPOUTPUT": "Resumen de salida de CP",
+  "SUMMARY_PDSPD": "Resumen de PD/SPD",
+  "MESSAGE_WAS_DELETED": "Se eliminó el mensaje"
 }
