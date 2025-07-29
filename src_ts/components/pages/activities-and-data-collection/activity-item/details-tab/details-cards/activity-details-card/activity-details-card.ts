@@ -32,6 +32,9 @@ import {applyPageTabsTranslation} from '../../../../../../utils/translation-help
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+
 dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
@@ -44,7 +47,9 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'start_date',
   'location_site',
   'location',
-  'offices'
+  'offices',
+  'visit_goals',
+  'objective'
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -60,6 +65,65 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
   }
 ];
 
+const VISIT_GOALS = [
+  {
+    name: 'Programme Implementation Monitoring',
+    id: 'programmeImplementationMonitoring',
+    info: [
+      'Check alignment with work plans, results frameworks, and donor agreements.',
+      'Assess delivery of planned interventions and activities.',
+      'Verify whether services (e.g., education, health, WASH) are reaching intended beneficiaries.'
+    ]
+  },
+  {
+    name: 'Outputs and Results Verification',
+    id: 'outputsAndResultsVerification',
+    info: [
+      'Monitor the achievement of specific outputs, activities and interventions (e.g., supplies delivered, teacher training).',
+      'Validate results data reported by implementing partners- CSO and government.',
+      'Assess quality, timeliness, and completeness of services or interventions.'
+    ]
+  },
+  {
+    name: 'Partner Monitoring',
+    id: 'partnerMonitoring',
+    info: [
+      'Review partner activities and compliance with Harmonized Approach to Cash Transfers (HACT).',
+      'Validate use of funds and effectiveness of partner implementation.',
+      'Assess partner capacity, coordination, and challenges.',
+      'Cross-check reported data with field observations.',
+      'Identify issues in data collection, documentation, or reporting accuracy.'
+    ]
+  },
+  {
+    name: 'Risk and Compliance Monitoring',
+    id: 'riskAndComplianceMonitoring',
+    info: [
+      'Identify operational or contextual risks (e.g., PSEA, ESS, security, political, financial).',
+      "Ensure compliance with UNICEF's ethical standards, protection, and procurement rules.",
+      'Flag fraud, misuse, or diversion of resources.'
+    ]
+  },
+  {
+    name: 'Beneficiary Feedback and Accountability',
+    id: 'beneficiaryFeedbackAndAccountability',
+    info: [
+      'Collect feedback from communities and beneficiaries, including complaints or suggestions.',
+      'Monitor equity and inclusion (e.g., access for marginalized or vulnerable populations).',
+      'Assess satisfaction and relevance of interventions to community needs.'
+    ]
+  },
+  {
+    name: 'Humanitarian Response Monitoring',
+    id: 'humanitarianResponseMonitoring',
+    info: [
+      'Track evolving humanitarian needs (nutrition, displacement, WASH conditions).',
+      'Monitor emergency response coverage and gaps.',
+      'Coordinate with clusters and other humanitarian actors.'
+    ]
+  }
+];
+
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
   @property() widgetOpened = false;
@@ -69,6 +133,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() activitySections: Section[] = [];
 
   @property() activityOffices: Office[] | [] = [];
+  @property() activityVisitGoals: any[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
@@ -128,6 +193,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     super.data = data;
     this.activitySections = data ? clone(data.sections) : [];
     this.activityOffices = data ? clone(data.offices) : [];
+    this.activityVisitGoals = data && data.visit_goals ? clone(data.visit_goals) : [];
   }
 
   render(): TemplateResult {
@@ -279,12 +345,58 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 ${translate('ACTIVITY_DETAILS.INVOLVES_REMOTE_MONITORING')}
               </sl-switch>
             </div>
+            <div class="col-md-6 col-12">
+              <etools-dropdown-multi
+                class="visit-goals"
+                .selectedValues="${simplifyValue(this.activityVisitGoals)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.selectVisitGoal(detail.selectedItems)}"
+                ?trigger-value-change-event="${this.isEditMode}"
+                label="${translate('ACTIVITY_DETAILS.VISIT_GOALS')}"
+                .options="${VISIT_GOALS.map((x: any) => ({
+                  ...x,
+                  name: html`<div style="display: flex;">
+                    ${x.name}
+                    <etools-info-tooltip hoist position="right">
+                      <span slot="message"
+                        ><ul>
+                          ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
+                        </ul></span
+                      >
+                    </etools-info-tooltip>
+                  </div>`
+                }))}"
+                option-label="name"
+                option-value="id"
+                ?readonly="${!this.isEditMode}"
+                ?invalid="${this.errors && this.errors.visitGoals}"
+                .errorMessage="${this.errors && this.errors.visitGoals}"
+                @focus="${() => this.resetFieldError('visit_goals')}"
+                @click="${() => this.resetFieldError('visit_goals')}"
+                allow-outside-scroll
+                dynamic-align
+              ></etools-dropdown-multi>
+            </div>
+            <div class="col-md-6 col-12">
+              <etools-textarea
+                label="${translate('ACTIVITY_DETAILS.OBJECTIVE')}"
+                .value="${this.editedData.objective}"
+                placeholder="&#8212;"
+                ?readonly="${!this.isEditMode}"
+                ?invalid="${this.errors && this.errors.visitGoals}"
+                .errorMessage="${this.errors && this.errors.visitGoals}"
+                @focus="${() => this.resetFieldError('visit_goals')}"
+                @click="${() => this.resetFieldError('visit_goals')}"
+                @value-changed="${({detail}: CustomEvent) => this.updateModelValue('objective', detail.value)}"
+              >
+              </etools-textarea>
+            </div>
           </div>
         </div>
       </etools-card>
     `;
   }
-
+  // || this.isFieldReadonly('goal_of_visit')
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
     const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
     const relatedTo: string = container.getAttribute('related-to') as string;
@@ -303,6 +415,14 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     if (JSON.stringify(offices) !== JSON.stringify(this.activityOffices)) {
       this.activityOffices = offices;
       this.updateModelValue('offices', offices);
+    }
+  }
+
+  selectVisitGoal(visitGoals: Office[]): void {
+    console.log(visitGoals, this.activityVisitGoals);
+    if (JSON.stringify(visitGoals) !== JSON.stringify(this.activityVisitGoals)) {
+      this.activityVisitGoals = visitGoals;
+      this.updateModelValue('visit_goals', visitGoals);
     }
   }
 
