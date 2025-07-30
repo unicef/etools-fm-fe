@@ -6,11 +6,13 @@ import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {ReviewChecklistItemStyles} from './review-checklist-item.styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {CommentElementMeta, CommentsMixin} from '../../../../../common/comments/comments-mixin';
 
 @customElement('review-checklist-item')
-export class ReviewChecklistItemComponent extends LitElement {
+export class ReviewChecklistItemComponent extends CommentsMixin(LitElement) {
   @property() itemTitle = '';
   @property() checklist: IChecklistItem[] = [];
+  @property({type: Number}) targetId: number | null = null;
 
   render(): TemplateResult | void {
     return html`
@@ -31,7 +33,12 @@ export class ReviewChecklistItemComponent extends LitElement {
 
             ${this.checklist.map(
               (checklistItem: IChecklistItem) => html`
-                <div class="row checklist-line">
+                <div
+                  class="row checklist-line"
+                  related-to="review-${this.targetId}-${checklistItem.id}"
+                  related-to-description="${this.itemTitle}: ${checklistItem.text}"
+                  comments-container
+                >
                   <div class="row-details-content col-md-4 col-12">${checklistItem.text}</div>
                   <div class="row-details-content col-md-8 col-12">${checklistItem.specific_details}</div>
                 </div>
@@ -45,5 +52,12 @@ export class ReviewChecklistItemComponent extends LitElement {
 
   static get styles(): CSSResultArray {
     return [SharedStyles, pageLayoutStyles, layoutStyles, ReviewChecklistItemStyles];
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 }

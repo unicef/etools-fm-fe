@@ -11,7 +11,8 @@
       "TEAM_MEMBERS": "Localized Team Members",
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status",
-      "SECTIONS": "Localized Sections"
+      "SECTIONS": "Localized Sections",
+      "PARTNER": "Localized Partner"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -127,7 +128,7 @@
       "ASSIGN_AND_ACCEPT": "Localized Assign & Accept",
       "assign": "Localized Assign",
       "accept": "Localized Accept",
-      "mark_data_collected": "Localized Finalize",
+      "mark_data_collected": "Localized Save",
       "submit_report": "Localized Submit",
       "complete": "Localized Complete",
       "reject": "Localized Reject",
@@ -314,6 +315,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Экспорт",
     "FILTERS": {
       "LEVEL_LABEL": "Localized Select Level",
       "LEVEL_PLACEHOLDER": "Localized Select Level",
@@ -355,7 +357,12 @@
       "IS_HACT": "Localized Counts towards HACT",
       "IS_ACTIVE": "Localized Is Active",
       "SCALE_SIZE": "Localized Scale Size",
-      "ORDER": "Order"
+      "ORDER": "Order",
+      "IS_CUSTOM": "Тип вопроса"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "Нестандартный",
+      "STANDARD": "Стандартный"
     },
     "TABLE_CAPTION": "Localized {{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
@@ -716,5 +723,9 @@
   "COMMENTS_PANEL": "Комментарии панели",
   "CAN_NOT_DELETE_COMMENT": "Не может удалить комментарий. ",
   "CAN_NOT_RESOLVE_COMMENT": "Не может разрешить комментарий. ",
-  "NO_COMMENTS": "Еще нет комментариев"
+  "NO_COMMENTS": "Еще нет комментариев",
+  "SUMMARY_PARTNER": "Краткое изложение партнера",
+  "SUMMARY_CPOUTPUT": "Сводка вывода CP",
+  "SUMMARY_PDSPD": "КРУПАНА PD/SPD",
+  "MESSAGE_WAS_DELETED": "Сообщение было удалено"
 }

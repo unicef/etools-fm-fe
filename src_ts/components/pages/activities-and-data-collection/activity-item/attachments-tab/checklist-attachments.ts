@@ -19,9 +19,10 @@ import {
   activityChecklistAttachmentsTypes
 } from '../../../../../redux/selectors/activity-details.selectors';
 import {template} from './checklist-attachments.tpl';
+import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 @customElement('checklist-attachments')
-export class ChecklistAttachments extends MethodsMixin(LitElement) {
+export class ChecklistAttachments extends CommentsMixin(MethodsMixin(LitElement)) {
   @property() activityDetailsId: number | null = null;
   @property() items: IChecklistAttachment[] = [];
   @property() attachmentsTypes: AttachmentType[] = [];
@@ -64,6 +65,18 @@ export class ChecklistAttachments extends MethodsMixin(LitElement) {
     super.disconnectedCallback();
     this.checklistAttachmentsUnsubscribe();
     this.checklistAttachmentsTypesUnsubscribe();
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (changedProperties.has('items') || (changedProperties.has('loading') && this.items.length && !this.loading)) {
+      this.setCommentMode();
+    }
+  }
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   getRelatedInfo({partner, cp_output, intervention}: IChecklistAttachment): {type: string; content: string} {

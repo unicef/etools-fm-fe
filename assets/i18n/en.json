@@ -11,7 +11,8 @@
       "TEAM_MEMBERS": "Team Members",
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "PARTNER": "Partner"
     },
     "REFERENCE_NO": "Reference #",
     "FILTERS": {
@@ -128,7 +129,7 @@
       "ASSIGN_AND_ACCEPT": "Assign & Accept",
       "assign": "Assign",
       "accept": "Accept",
-      "mark_data_collected": "Finalize",
+      "mark_data_collected": "Save",
       "submit_report": "Submit",
       "complete": "Approve",
       "reject": "Reject",
@@ -316,6 +317,7 @@
     }
   },
   "TEMPLATES": {
+    "EXPORT":"Export",
     "FILTERS": {
       "LEVEL_LABEL": "Select Level",
       "LEVEL_PLACEHOLDER": "Select Level",
@@ -358,7 +360,12 @@
       "IS_HACT": "Counts towards HACT",
       "IS_ACTIVE": "Is Active",
       "SCALE_SIZE": "Scale Size",
-      "ORDER": "Order"
+      "ORDER": "Order",
+      "IS_CUSTOM": "Question Type"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "Non-Standard",
+      "STANDARD": "Standard"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} of {{ count }} Questions to show",
     "COLUMNS": {
@@ -719,5 +726,9 @@
   "COMMENTS_PANEL": "Comments Panel",
   "CAN_NOT_DELETE_COMMENT": "Can not delete comment. Try again",
   "CAN_NOT_RESOLVE_COMMENT": "Can not resolve comment. Try again",
-  "NO_COMMENTS": "There are no comments yet"
+  "NO_COMMENTS": "There are no comments yet",
+  "SUMMARY_PARTNER": "Partner Summary",
+  "SUMMARY_CPOUTPUT": "CP Output Summary",
+  "SUMMARY_PDSPD": "PD/SPD Summary",
+  "MESSAGE_WAS_DELETED": "Message was deleted"
 }

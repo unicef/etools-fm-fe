@@ -62,7 +62,7 @@ export class ChecklistSelectionTable extends CommentsMixin(LitElement) {
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
-    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
     const relatedTo: string = container.getAttribute('related-to') as string;
     const relatedToDescription = container.getAttribute('related-to-description') as string;
     return [{element, relatedTo, relatedToDescription}];

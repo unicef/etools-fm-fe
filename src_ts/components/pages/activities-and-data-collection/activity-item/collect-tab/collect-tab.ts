@@ -59,8 +59,11 @@ export class DataCollectTab extends CommentsMixin(LitElement) {
   private methodsLoadingUnsubscribe!: Unsubscribe;
 
   connectedCallback(): void {
+    this.commentsModeInitialize = false;
+
     super.connectedCallback();
     store.dispatch(new SaveRoute(null));
+
     // Check permissions
     this.activityUnsubscribe = store.subscribe(
       activityDetailsData((activityDetails: IActivityDetails | null) => {
@@ -121,6 +124,16 @@ export class DataCollectTab extends CommentsMixin(LitElement) {
     this.methodsLoadingUnsubscribe();
   }
 
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (
+      (changedProperties.has('dataCollectionMethods') || changedProperties.has('checklistByMethods')) &&
+      this.dataCollectionMethods.length &&
+      Object.keys(this.checklistByMethods).length
+    ) {
+      this.setCommentMode();
+    }
+  }
+
   render(): TemplateResult {
     return html`
       <style>
@@ -142,14 +155,7 @@ export class DataCollectTab extends CommentsMixin(LitElement) {
       ${repeat(
         this.dataCollectionMethods,
         (method: EtoolsMethod) => html`
-          <etools-card
-            class="page-content"
-            card-title="${method.name}"
-            related-to="collect-${method.id}"
-            related-to-description="${method.name}"
-            comments-container
-            is-collapsible
-          >
+          <etools-card class="page-content" card-title="${method.name}" is-collapsible>
             <div slot="actions">
               <etools-icon-button
                 @click="${() => this.onCreateChecklist(method)}"
@@ -193,7 +199,14 @@ export class DataCollectTab extends CommentsMixin(LitElement) {
       ${repeat(
         collect,
         (item: DataCollectionChecklist) => html`
-          <etools-data-table-row no-collapse secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+          <etools-data-table-row
+            related-to="collect-${item.id}"
+            related-to-description="${method.name} - ${item.information_source}"
+            comments-container
+            no-collapse
+            secondary-bg-on-hover
+            .lowResolutionLayout="${this.lowResolutionLayout}"
+          >
             <div slot="row-data" class="editable-row">
               <!--  Author  -->
               <div
@@ -257,7 +270,7 @@ export class DataCollectTab extends CommentsMixin(LitElement) {
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
-    const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
     const relatedTo: string = container.getAttribute('related-to') as string;
     const relatedToDescription = container.getAttribute('related-to-description') as string;
     return [{element, relatedTo, relatedToDescription}];

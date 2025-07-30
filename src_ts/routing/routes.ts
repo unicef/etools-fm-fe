@@ -108,27 +108,6 @@ EtoolsRouter
       };
     }
   )
-  .addRoute(new RegExp(`^analyze\\/${routeParamRegex}$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
-    return {
-      routeName: 'analyze',
-      subRouteName: params.matchDetails[1],
-      path: params.matchDetails[0],
-      queryParams: params.queryParams,
-      params: null
-    };
-  })
-  .addRoute(
-    new RegExp(`^analyze\\/${routeParamRegex}\\/${routeParamRegex}$`),
-    (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
-      return {
-        routeName: 'analyze',
-        subRouteName: params.matchDetails[1],
-        path: params.matchDetails[0],
-        queryParams: null,
-        params: {tab: params.matchDetails[2]}
-      };
-    }
-  )
   .addRoute(new RegExp(`^partners$`), (params: EtoolsRouteCallbackParams): EtoolsRouteDetails => {
     return {
       routeName: 'partners',

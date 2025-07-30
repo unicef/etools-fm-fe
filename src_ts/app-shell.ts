@@ -342,15 +342,6 @@ export class AppShell extends connect(store)(LitElement) {
               class="page"
               ?active="${this.isActivePage(this.mainPage, 'activities-and-data-collection')}"
             ></activities-page>
-            <analyze-page
-              class="page"
-              ?active="${this.isActivePage(
-                this.mainPage,
-                'analyze',
-                this.subPage,
-                'country-overview|monitoring-activity'
-              )}"
-            ></analyze-page>
             <partners-page class="page" ?active="${this.isActivePage(this.mainPage, 'partners')}"></partners-page>
             <page-not-found
               class="page"

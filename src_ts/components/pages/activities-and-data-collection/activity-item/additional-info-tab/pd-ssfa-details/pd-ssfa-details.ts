@@ -6,9 +6,10 @@ import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
+import {CommentElementMeta, CommentsMixin} from '../../../../../common/comments/comments-mixin';
 
 @customElement('pd-ssfa-details')
-export class PdSsfaDetails extends LitElement {
+export class PdSsfaDetails extends CommentsMixin(LitElement) {
   @property() interventions: IActivityIntervention[] | null = null;
   @property() items: EtoolsIntervention[] = [];
   @property() pageSize = 5;
@@ -16,10 +17,18 @@ export class PdSsfaDetails extends LitElement {
   @property() loading = false;
   @property({type: Boolean})
   lowResolutionLayout = false;
+  commentsModeInitialize = false;
+
   set interventionsData(interventions: IActivityIntervention[] | null) {
     this.loading = true;
     this.interventions = interventions;
     this.loading = false;
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (changedProperties.has('interventions') && this.interventions?.length) {
+      this.setCommentMode();
+    }
   }
 
   render(): TemplateResult {
@@ -45,6 +54,13 @@ export class PdSsfaDetails extends LitElement {
     } else {
       return [];
     }
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   static get styles(): CSSResult[] {

@@ -9,7 +9,8 @@ export enum QuestionFilterKeys {
   category__in = 'category__in',
   answer_type__in = 'answer_type__in',
   is_hact = 'is_hact',
-  is_active = 'is_active'
+  is_active = 'is_active',
+  is_custom = 'is_custom'
 }
 
 export const selectedValueTypeByFilterKey: GenericObject = {
@@ -18,6 +19,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
   [QuestionFilterKeys.methods__in]: 'Array',
   [QuestionFilterKeys.category__in]: 'Array',
   [QuestionFilterKeys.answer_type__in]: 'Array',
+  [QuestionFilterKeys.is_custom]: 'string',
   [QuestionFilterKeys.is_hact]: 'boolean',
   [QuestionFilterKeys.is_active]: 'boolean'
 };
@@ -87,6 +89,20 @@ export function questionsFilters() {
       filterNameKey: 'QUESTIONS.LABELS.ANSWER_TYPE',
       filterKey: 'answer_type__in',
       type: EtoolsFilterTypes.DropdownMulti,
+      selectionOptions: [],
+      selectedValue: [],
+      optionValue: 'value',
+      optionLabel: 'display_name',
+      selected: false,
+      minWidth: '350px',
+      hideSearch: true,
+      disabled: false
+    },
+    {
+      filterName: translate('QUESTIONS.LABELS.IS_CUSTOM') as any as string,
+      filterNameKey: 'QUESTIONS.LABELS.IS_CUSTOM',
+      filterKey: 'is_custom',
+      type: EtoolsFilterTypes.Dropdown,
       selectionOptions: [],
       selectedValue: [],
       optionValue: 'value',

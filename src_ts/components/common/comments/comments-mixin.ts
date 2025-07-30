@@ -49,6 +49,7 @@ export function CommentsMixin<T extends Constructor<LitElement>>(baseClass: T) {
     private metaDataCollection: MetaData[] = [];
     private commentsModeEnabled = false;
     private currentEditedComments: MetaData | null = null;
+    commentsModeInitialize = true;
 
     // Overwrite this method where needed
     getCurrentCollectionId() {
@@ -101,6 +102,11 @@ export function CommentsMixin<T extends Constructor<LitElement>>(baseClass: T) {
     }
 
     async setCommentMode() {
+      if (!this.commentsModeInitialize) {
+        this.commentsModeInitialize = true;
+        return;
+      }
+
       await this.updateComplete;
       if (this.commentsModeEnabled) {
         this.startCommentMode();
@@ -114,7 +120,6 @@ export function CommentsMixin<T extends Constructor<LitElement>>(baseClass: T) {
       const elements: NodeListOf<HTMLElement> = this.shadowRoot!.querySelectorAll(
         '[comment-element], [comments-container]'
       );
-
       this.metaDataCollection = Array.from(elements)
         .filter((element) => !!element)
         .map((element: HTMLElement) => {
