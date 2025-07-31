@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
 import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
-import {staticDataDynamic} from '../../../../../../../redux/selectors/static-data.selectors';
+import {staticDataDynamic, visitGoalsSelector} from '../../../../../../../redux/selectors/static-data.selectors';
 import {LOCATIONS_ENDPOINT} from '../../../../../../../endpoints/endpoints-list';
 import {Unsubscribe} from 'redux';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -32,6 +32,9 @@ import {applyPageTabsTranslation} from '../../../../../../utils/translation-help
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+
 dayjs.extend(isSameOrBefore);
 
 export const CARD_NAME = 'activity-details';
@@ -44,7 +47,9 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'start_date',
   'location_site',
   'location',
-  'offices'
+  'offices',
+  'visit_goals',
+  'objective'
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -64,15 +69,18 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
 export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
   @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
+  @property() visitGoals: VisitGoal[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
 
   @property() activityOffices: Office[] | [] = [];
+  @property() activityVisitGoals: any[] | [] = [];
   @property({type: String}) activeTab = SITE_TAB;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
   private sitesUnsubscribe!: Unsubscribe;
+  private visitGoalsUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
@@ -128,6 +136,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     super.data = data;
     this.activitySections = data ? clone(data.sections) : [];
     this.activityOffices = data ? clone(data.offices) : [];
+    this.activityVisitGoals = data && data.visit_goals ? clone(data.visit_goals) : [];
   }
 
   render(): TemplateResult {
@@ -279,12 +288,63 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 ${translate('ACTIVITY_DETAILS.INVOLVES_REMOTE_MONITORING')}
               </sl-switch>
             </div>
+            <div class="col-md-6 col-12">
+              <etools-dropdown-multi
+                class="visit-goals"
+                .selectedValues="${simplifyValue(this.activityVisitGoals)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.selectVisitGoal(detail.selectedItems)}"
+                ?trigger-value-change-event="${this.isEditMode}"
+                label="${translate('ACTIVITY_DETAILS.VISIT_GOALS')}"
+                .options="${this.visitGoals.map((x: any) => ({
+                  ...x,
+                  name: html` <style>
+                      .tag .etools-info-tooltip {
+                        display: none;
+                      }
+                    </style>
+                    <div style="display: flex; align-items: center">
+                      ${x.name}
+                      <etools-info-tooltip hoist position="right">
+                        <span slot="message"
+                          ><ul>
+                            ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
+                          </ul></span
+                        >
+                      </etools-info-tooltip>
+                    </div>`
+                }))}"
+                option-label="name"
+                option-value="id"
+                ?readonly="${!this.isEditMode}"
+                ?invalid="${this.errors && this.errors.visitGoals}"
+                .errorMessage="${this.errors && this.errors.visitGoals}"
+                @focus="${() => this.resetFieldError('visit_goals')}"
+                @click="${() => this.resetFieldError('visit_goals')}"
+                allow-outside-scroll
+                dynamic-align
+              ></etools-dropdown-multi>
+            </div>
+            <div class="col-md-6 col-12">
+              <etools-textarea
+                label="${translate('ACTIVITY_DETAILS.OBJECTIVE')}"
+                .value="${this.editedData.objective}"
+                placeholder="&#8212;"
+                ?readonly="${!this.isEditMode}"
+                ?invalid="${this.errors && this.errors.visitGoals}"
+                .errorMessage="${this.errors && this.errors.visitGoals}"
+                @focus="${() => this.resetFieldError('visit_goals')}"
+                @click="${() => this.resetFieldError('visit_goals')}"
+                @value-changed="${({detail}: CustomEvent) => this.updateModelValue('objective', detail.value)}"
+              >
+              </etools-textarea>
+            </div>
           </div>
         </div>
       </etools-card>
     `;
   }
-
+  // || this.isFieldReadonly('goal_of_visit')
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
     const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
     const relatedTo: string = container.getAttribute('related-to') as string;
@@ -303,6 +363,14 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     if (JSON.stringify(offices) !== JSON.stringify(this.activityOffices)) {
       this.activityOffices = offices;
       this.updateModelValue('offices', offices);
+    }
+  }
+
+  selectVisitGoal(visitGoals: Office[]): void {
+    console.log(visitGoals, this.activityVisitGoals);
+    if (JSON.stringify(visitGoals) !== JSON.stringify(this.activityVisitGoals)) {
+      this.activityVisitGoals = visitGoals;
+      this.updateModelValue('visit_goals', visitGoals);
     }
   }
 
@@ -375,6 +443,15 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       })
     );
 
+    this.visitGoalsUnsubscribe = store.subscribe(
+      visitGoalsSelector((visitGoals: VisitGoal[] | undefined) => {
+        if (!visitGoals) {
+          return;
+        }
+        this.visitGoals = visitGoals;
+      })
+    );
+
     const state: IRootState = store.getState();
     if (!state.specificLocations.data) {
       store.dispatch<AsyncEffect>(loadSiteLocations());
@@ -388,6 +465,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.sitesUnsubscribe();
+    this.visitGoalsUnsubscribe();
     this.locationsUnsubscribe();
     this.activeLanguageUnsubscribe();
   }

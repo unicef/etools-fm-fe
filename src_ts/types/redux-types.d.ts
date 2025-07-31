@@ -67,6 +67,13 @@ interface IStaticDataState {
   cpOutcomes?: EtoolsCpOutcome[];
   offices?: ActionPointsOffice[];
   actionPointsCategories?: ActionPointsCategory[];
+  visitGoals?: VisitGoal[];
+}
+
+interface ISpecificLocationsState {
+  id: number;
+  name: string;
+  info?: any[];
 }
 
 interface ISpecificLocationsState {
