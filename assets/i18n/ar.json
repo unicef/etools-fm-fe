@@ -11,7 +11,8 @@
       "TEAM_MEMBERS": "أعضاء الفريق",
       "CHECKLISTS_COUNT": "قوائم المراجعة",
       "STATUS": "حالة",
-      "SECTIONS": "الأقسام"
+      "SECTIONS": "الأقسام",
+      "PARTNER": "الشريك"
     },
     "REFERENCE_NO": "مرجع #",
     "FILTERS": {
@@ -217,7 +218,7 @@
       "cancel": "إلغاء",
       "complete": "إكمال",
       "mark_checklist_configured": "مراجعة",
-      "mark_data_collected": "إنهاء",
+      "mark_data_collected": "حفظ",
       "mark_details_configured": "التالي",
       "reject": "رفض",
       "reject_report": "إرسال التقرير مرة أخرى",
@@ -326,6 +327,7 @@
   },
   "TEMPLATES": {
     "ADD_DETAIL": "أضف التفاصيل",
+    "EXPORT": "تصدير",
     "COLUMNS": {
       "DETAILS": "تفاصيل محددة للتنفيذ",
       "METHODS": "الأساليب",
@@ -372,7 +374,12 @@
       "QUESTION": "سؤال",
       "SCALE_SIZE": "حجم المقياس",
       "SECTIONS": "الأقسام",
-      "ORDER": "طلب"
+      "ORDER": "طلب",
+      "IS_CUSTOM": "نوع السؤال"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "غير قياسي",
+      "STANDARD": "معيار"
     },
     "LEVEL": {
       "INTERVENTION": "وثيقة البرامج/اتفاقية التمويل الصغير",
@@ -726,5 +733,9 @@
   "COMMENTS_PANEL": "لوحة التعليقات",
   "CAN_NOT_DELETE_COMMENT": "لا يمكن حذف التعليق. ",
   "CAN_NOT_RESOLVE_COMMENT": "لا يمكن حل التعليق. ",
-  "NO_COMMENTS": "لا توجد تعليقات حتى الآن"
+  "NO_COMMENTS": "لا توجد تعليقات حتى الآن",
+  "SUMMARY_PARTNER": "ملخص الشريك",
+  "SUMMARY_CPOUTPUT": "ملخص الإخراج CP",
+  "SUMMARY_PDSPD": "ملخص PD/SPD",
+  "MESSAGE_WAS_DELETED": "تم حذف الرسالة"
 }

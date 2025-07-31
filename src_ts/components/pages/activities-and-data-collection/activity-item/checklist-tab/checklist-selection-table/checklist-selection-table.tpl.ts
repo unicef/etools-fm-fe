@@ -35,9 +35,6 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
     ></etools-media-query>
     <etools-card
       card-title="${this.tableTitle}"
-      related-to="checklist-${this.targetId}"
-      related-to-description="${this.tableTitle}"
-      comments-container
       is-collapsible
       ?is-editable="${!this.readonly}"
       ?edit="${this.isEditMode}"
@@ -108,7 +105,13 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
         <!-- Table Row item -->
         ${this.questionsList.map(
           (question: IChecklistItem) => html`
-            <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
+            <etools-data-table-row
+              no-collapse
+              .lowResolutionLayout="${this.lowResolutionLayout}"
+              related-to="checklist-${this.targetId}-${question.id}"
+              related-to-description="[${this.tableTitle}] ${question.text}"
+              comments-container
+            >
               <div slot="row-data" class="editable-row">
                 <!-- Question item Text -->
                 <div class="col-data col-4" data-col-header-label="${translate('ACTIVITY_CHECKLIST.COLUMNS.TEXT')}">

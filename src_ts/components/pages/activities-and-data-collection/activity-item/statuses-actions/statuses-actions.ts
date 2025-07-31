@@ -33,6 +33,8 @@ import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
 import {Unsubscribe} from 'redux';
 import {summaryFindingsOverall} from '../../../../../redux/selectors/activity-summary.selectors';
+import {SUMMARY_PAGE} from '../../activities-and-data-collection-page';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {
@@ -217,6 +219,8 @@ export class StatusesActionsComponent extends LitElement {
         const backendMessage = getErrorText(errors);
         const errorText: string = backendMessage || getTranslation('PLEASE_TRY_AGAIN');
         fireEvent(this, 'toast', {text: `${getTranslation('ERROR_CHANGE_ACTIVITY_STATUS')}: ${errorText}`});
+      } else if (transition.target === REPORT_FINALIZATION) {
+        updateAppLocation(`${Environment.basePath}activities/${this.activityId}/${SUMMARY_PAGE}`);
       } else if (transition.transition === REJECT) {
         updateAppLocation('activities');
       }

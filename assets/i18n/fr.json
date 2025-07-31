@@ -11,7 +11,8 @@
       "TEAM_MEMBERS": "Membres de l'Equipe",
       "CHECKLISTS_COUNT": "Listes de contrôle",
       "STATUS": "Statut",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "PARTNER": "Partenaire"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -128,7 +129,7 @@
       "ASSIGN_AND_ACCEPT": "Assigner & Accepter",
       "assign": "Assigner",
       "accept": "Accepter",
-      "mark_data_collected": "Finaliser",
+      "mark_data_collected": "Sauvegarder",
       "submit_report": "Soumettre",
       "complete": "Terminer",
       "reject": "Rejeter",
@@ -316,6 +317,7 @@
     }
   },
   "TEMPLATES": {
+    "Export": "Exporter",
     "FILTERS": {
       "LEVEL_LABEL": "Sélectionnez le niveau",
       "LEVEL_PLACEHOLDER": "Sélectionnez le niveau",
@@ -358,7 +360,12 @@
       "IS_HACT": "Compte pour HACT",
       "IS_ACTIVE": "C'est actif",
       "SCALE_SIZE": "Taille de l'échelle",
-      "ORDER": "Ordre"
+      "ORDER": "Ordre",
+      "IS_CUSTOM": "Type de question"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "Non standard",
+      "STANDARD": "Standard"
     },
     "TABLE_CAPTION": "{{ start }} - {{ end }} de {{ count }} Questions à montrer",
     "COLUMNS": {
@@ -719,5 +726,9 @@
   "COMMENTS_PANEL": "Groupe de commentaires",
   "CAN_NOT_DELETE_COMMENT": "Ne peut pas supprimer des commentaires. ",
   "CAN_NOT_RESOLVE_COMMENT": "Ne peut pas résoudre le commentaire. ",
-  "NO_COMMENTS": "Il n'y a pas encore de commentaires"
+  "NO_COMMENTS": "Il n'y a pas encore de commentaires",
+  "SUMMARY_PARTNER": "Résumé du partenaire",
+  "SUMMARY_CPOUTPUT": "Résumé de la sortie CP",
+  "SUMMARY_PDSPD": "Résumé PD / SPD",
+  "MESSAGE_WAS_DELETED": "Le message a été supprimé"
 }

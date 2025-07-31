@@ -94,27 +94,6 @@ export class AppMenu extends connect(store)(MatomoMixin(LitElement)) {
             </sl-tooltip>
             <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.VISITS', 'Visits')}</div>
           </a>
-
-          <!-- Sidebar item - ANALYSIS -->
-          <a
-            class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'analyze')}"
-            menu-name="analyze"
-            href="${Environment.basePath + 'analyze/country-overview'}"
-            ?hidden="${!this.userLoaded || !hasPermission(Permissions.VIEW_ANALYZE)}"
-            @click="${this.trackAnalytics}"
-            tracker="Analysis"
-          >
-            <sl-tooltip
-              for="page2-icon"
-              placement="right"
-              ?disabled="${!this.smallMenu}"
-              content=" ${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}"
-            >
-              <etools-icon id="page2-icon" name="av:equalizer"></etools-icon>
-            </sl-tooltip>
-            <div class="name">${this.translateKey(this.selectedLanguage, 'NAVIGATION_MENU.ANALYSIS', 'Analysis')}</div>
-          </a>
-
           <!-- Sidebar item - TEMPLATES -->
           <a
             class="nav-menu-item  ${this.getItemClass(this.selectedOption, 'templates')}"

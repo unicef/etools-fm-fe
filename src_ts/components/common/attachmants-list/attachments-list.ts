@@ -15,19 +15,22 @@ import {CardStyles} from '../../styles/card-styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {CommentElementMeta, CommentsMixin} from '../comments/comments-mixin';
 
 store.addReducers({attachmentsList});
 
 @customElement('attachments-list')
-export class AttachmentsListComponent extends LitElement {
+export class AttachmentsListComponent extends CommentsMixin(LitElement) {
   @property() loadingInProcess = false;
   @property({type: String, attribute: 'tab-title-key'})
   tabTitleKey = 'ATTACHMENTS_LIST.TITLE';
   @property({type: Boolean, attribute: 'readonly'}) readonly = false;
   @property() attachmentsTypes: AttachmentType[] = [];
   @property({type: Boolean}) lowResolutionLayout = false;
-  attachmentsList: IAttachment[] = [];
+  @property({type: String, attribute: 'related-to'}) relatedTo: string = '';
+  @property({type: Array}) attachmentsList: IAttachment[] = [];
   additionalEndpointData: GenericObject = {};
+  commentsModeInitialize = false;
 
   private attachmentsListUnsubscribe: Unsubscribe | undefined;
   private debouncedLoading: Callback | undefined;
@@ -54,7 +57,7 @@ export class AttachmentsListComponent extends LitElement {
           if (!attachments) {
             return;
           }
-          this.attachmentsList = Array.isArray(attachments) ? attachments : attachments.results;
+          this.attachmentsList = [...(Array.isArray(attachments) ? attachments : attachments.results)];
         },
         [endpointName],
         false
@@ -102,6 +105,15 @@ export class AttachmentsListComponent extends LitElement {
     this.attachmentsTypesUnsubscribe();
   }
 
+  updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    if (
+      changedProperties.has('attachmentsList') ||
+      (changedProperties.has('loadingInProcess') && this.attachmentsList.length && !this.loadingInProcess)
+    ) {
+      this.setCommentMode();
+    }
+  }
+
   openPopup(attachment?: IAttachment): void {
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
@@ -117,6 +129,13 @@ export class AttachmentsListComponent extends LitElement {
       }
       this.debouncedLoading();
     });
+  }
+
+  getSpecialElements(container: HTMLElement): CommentElementMeta[] {
+    const element: HTMLElement = container.shadowRoot!.querySelector('#wrapper') as HTMLElement;
+    const relatedTo: string = container.getAttribute('related-to') as string;
+    const relatedToDescription = container.getAttribute('related-to-description') as string;
+    return [{element, relatedTo, relatedToDescription}];
   }
 
   openDeletePopup(id: number): void {

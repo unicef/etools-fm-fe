@@ -62,8 +62,11 @@ export function template(this: ActivitiesListComponent): TemplateResult {
         ?no-collapse="${!this.items.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
-        <etools-data-table-column class="col-data col-md-2">
+        <etools-data-table-column class="col-data col-md-1">
           ${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}
+        </etools-data-table-column>
+        <etools-data-table-column class="col-data col-md-1">
+          ${translate('ACTIVITIES_LIST.COLUMNS.PARTNER')}
         </etools-data-table-column>
         <etools-data-table-column class="col-data col-md-1">
           ${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}
@@ -105,10 +108,13 @@ export function template(this: ActivitiesListComponent): TemplateResult {
           <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
             <div slot="row-data" class="editable-row">
               <div
-                class="col-data col-md-2"
+                class="col-data col-md-1"
                 data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.REFERENCE_NUMBER')}"
               >
                 <a class="link-cell" href="${this.getActivityDetailsLink(activity)}">${activity.reference_number}</a>
+              </div>
+              <div class="col-data col-md-1" data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.PARTNER')}">
+                ${activity.tpm_partner?.name || ''}
               </div>
               <div class="col-data col-md-1" data-col-header-label="${translate('ACTIVITIES_LIST.COLUMNS.START_DATE')}">
                 ${formatDate(activity.start_date!) || '-'}

@@ -9,7 +9,8 @@
       "STATUS": "Estado",
       "TEAM_MEMBERS": "Miembros del equipo",
       "VISIT_LEAD": "Líder de visita",
-      "SECTIONS": "Secciones"
+      "SECTIONS": "Secciones",
+      "PARTNER": "Socio"
     },
     "CREATE_NEW_BUTTON": "Crear nuevo",
     "FILTERS": {
@@ -219,7 +220,7 @@
       "cancel": "Cancelar",
       "complete": "Completar",
       "mark_checklist_configured": "Revisar",
-      "mark_data_collected": "Finalizar",
+      "mark_data_collected": "Guardar",
       "mark_details_configured": "Siguiente",
       "reject": "Rechazar",
       "reject_report": "Enviar informe",
@@ -328,6 +329,7 @@
   },
   "TEMPLATES": {
     "ADD_DETAIL": "Agregar detalle",
+    "EXPORT":"Exportar",
     "COLUMNS": {
       "DETAILS": "Detalles específicos a sondear",
       "METHODS": "Métodos",
@@ -374,7 +376,12 @@
       "QUESTION": "Pregunta",
       "SCALE_SIZE": "Tamaño de escala",
       "SECTIONS": "Secciones",
-      "ORDER": "Pedir"
+      "ORDER": "Pedir",
+      "IS_CUSTOM": "Tipo de pregunta"
+    },
+    "IS_CUSTOM": {
+      "NON_STANDARD": "No estándar",
+      "STANDARD": "Estándar"
     },
     "LEVEL": {
       "INTERVENTION": "PD/SPD",
@@ -728,5 +735,9 @@
   "COMMENTS_PANEL": "Panel de comentarios",
   "CAN_NOT_DELETE_COMMENT": "No puede eliminar los comentarios. ",
   "CAN_NOT_RESOLVE_COMMENT": "No se puede resolver comentarios. ",
-  "NO_COMMENTS": "Todavía no hay comentarios"
+  "NO_COMMENTS": "Todavía no hay comentarios",
+  "SUMMARY_PARTNER": "Resumen de socios",
+  "SUMMARY_CPOUTPUT": "Resumen de salida de CP",
+  "SUMMARY_PDSPD": "Resumen de PD/SPD",
+  "MESSAGE_WAS_DELETED": "Se eliminó el mensaje"
 }

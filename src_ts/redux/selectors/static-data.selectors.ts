@@ -1,13 +1,5 @@
 import {dynamicSelect, select} from './create-selectors';
 
-export const locationsDataSelector: Selector<EtoolsLightLocation[] | undefined> = select<
-  EtoolsLightLocation[] | undefined
->((store: IRootState) => store.staticData.locations);
-
-export const outputsDataSelector: Selector<EtoolsCpOutput[] | undefined> = select<EtoolsCpOutput[] | undefined>(
-  (store: IRootState) => store.staticData.outputs
-);
-
 export const cpOutcomesDataSelector: Selector<EtoolsCpOutcome[] | undefined> = select<EtoolsCpOutcome[] | undefined>(
   (store: IRootState) => store.staticData.cpOutcomes
 );

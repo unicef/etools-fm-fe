@@ -63,7 +63,14 @@ export function template(this: ChecklistAttachments): TemplateResult {
         ${repeat(
           this.items,
           (item: IChecklistAttachment) => html`
-            <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
+            <etools-data-table-row
+              related-to="attachments_checklist-${item.id}"
+              related-to-description="${this.getRelatedInfo(item).type} - ${this.getRelatedInfo(item)
+                .content}: ${item.filename}"
+              comments-container
+              secondary-bg-on-hover
+              .lowResolutionLayout="${this.lowResolutionLayout}"
+            >
               <div slot="row-data" class="editable-row">
                 <div
                   class="col-data col-md-2"

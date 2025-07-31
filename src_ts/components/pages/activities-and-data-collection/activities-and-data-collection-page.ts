@@ -18,6 +18,7 @@ export const ACTIVITIES_PAGE = 'activities-and-data-collection';
 export const ACTIVITIES_LIST_PAGE = 'activities-list';
 export const ACTIVITY_ITEM_PAGE = 'activity-item';
 export const DATA_COLLECTION_PAGE = 'data-collection';
+export const SUMMARY_PAGE = 'summary';
 
 const PAGE: string = ACTIVITIES_PAGE;
 

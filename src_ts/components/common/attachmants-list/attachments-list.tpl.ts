@@ -8,6 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
   // language=HTML
@@ -72,6 +73,9 @@ export function template(this: AttachmentsListComponent): TemplateResult {
         ? this.attachmentsList.map(
             (attachment: IAttachment) => html`
               <etools-data-table-row
+                related-to=${ifDefined(this.relatedTo) ? this.relatedTo + '-' + attachment.id : undefined}
+                related-to-description="${attachment.file_type_name}: ${attachment.filename}"
+                comments-container="${ifDefined(this.relatedTo)}"
                 no-collapse
                 secondary-bg-on-hover
                 .lowResolutionLayout="${this.lowResolutionLayout}"
