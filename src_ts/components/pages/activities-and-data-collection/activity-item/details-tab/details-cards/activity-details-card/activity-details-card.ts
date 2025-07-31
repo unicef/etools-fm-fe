@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
 import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
-import {staticDataDynamic} from '../../../../../../../redux/selectors/static-data.selectors';
+import {staticDataDynamic, visitGoalsSelector} from '../../../../../../../redux/selectors/static-data.selectors';
 import {LOCATIONS_ENDPOINT} from '../../../../../../../endpoints/endpoints-list';
 import {Unsubscribe} from 'redux';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -65,69 +65,11 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
   }
 ];
 
-const VISIT_GOALS = [
-  {
-    name: 'Programme Implementation Monitoring',
-    id: 'programmeImplementationMonitoring',
-    info: [
-      'Check alignment with work plans, results frameworks, and donor agreements.',
-      'Assess delivery of planned interventions and activities.',
-      'Verify whether services (e.g., education, health, WASH) are reaching intended beneficiaries.'
-    ]
-  },
-  {
-    name: 'Outputs and Results Verification',
-    id: 'outputsAndResultsVerification',
-    info: [
-      'Monitor the achievement of specific outputs, activities and interventions (e.g., supplies delivered, teacher training).',
-      'Validate results data reported by implementing partners- CSO and government.',
-      'Assess quality, timeliness, and completeness of services or interventions.'
-    ]
-  },
-  {
-    name: 'Partner Monitoring',
-    id: 'partnerMonitoring',
-    info: [
-      'Review partner activities and compliance with Harmonized Approach to Cash Transfers (HACT).',
-      'Validate use of funds and effectiveness of partner implementation.',
-      'Assess partner capacity, coordination, and challenges.',
-      'Cross-check reported data with field observations.',
-      'Identify issues in data collection, documentation, or reporting accuracy.'
-    ]
-  },
-  {
-    name: 'Risk and Compliance Monitoring',
-    id: 'riskAndComplianceMonitoring',
-    info: [
-      'Identify operational or contextual risks (e.g., PSEA, ESS, security, political, financial).',
-      "Ensure compliance with UNICEF's ethical standards, protection, and procurement rules.",
-      'Flag fraud, misuse, or diversion of resources.'
-    ]
-  },
-  {
-    name: 'Beneficiary Feedback and Accountability',
-    id: 'beneficiaryFeedbackAndAccountability',
-    info: [
-      'Collect feedback from communities and beneficiaries, including complaints or suggestions.',
-      'Monitor equity and inclusion (e.g., access for marginalized or vulnerable populations).',
-      'Assess satisfaction and relevance of interventions to community needs.'
-    ]
-  },
-  {
-    name: 'Humanitarian Response Monitoring',
-    id: 'humanitarianResponseMonitoring',
-    info: [
-      'Track evolving humanitarian needs (nutrition, displacement, WASH conditions).',
-      'Monitor emergency response coverage and gaps.',
-      'Coordinate with clusters and other humanitarian actors.'
-    ]
-  }
-];
-
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
   @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
+  @property() visitGoals: VisitGoal[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
@@ -138,6 +80,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
   private sitesUnsubscribe!: Unsubscribe;
+  private visitGoalsUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
@@ -353,18 +296,23 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                   this.selectVisitGoal(detail.selectedItems)}"
                 ?trigger-value-change-event="${this.isEditMode}"
                 label="${translate('ACTIVITY_DETAILS.VISIT_GOALS')}"
-                .options="${VISIT_GOALS.map((x: any) => ({
+                .options="${this.visitGoals.map((x: any) => ({
                   ...x,
-                  name: html`<div style="display: flex;">
-                    ${x.name}
-                    <etools-info-tooltip hoist position="right">
-                      <span slot="message"
-                        ><ul>
-                          ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
-                        </ul></span
-                      >
-                    </etools-info-tooltip>
-                  </div>`
+                  name: html` <style>
+                      .tag .etools-info-tooltip {
+                        display: none;
+                      }
+                    </style>
+                    <div style="display: flex; align-items: center">
+                      ${x.name}
+                      <etools-info-tooltip hoist position="right">
+                        <span slot="message"
+                          ><ul>
+                            ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
+                          </ul></span
+                        >
+                      </etools-info-tooltip>
+                    </div>`
                 }))}"
                 option-label="name"
                 option-value="id"
@@ -495,6 +443,15 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       })
     );
 
+    this.visitGoalsUnsubscribe = store.subscribe(
+      visitGoalsSelector((visitGoals: VisitGoal[] | undefined) => {
+        if (!visitGoals) {
+          return;
+        }
+        this.visitGoals = visitGoals;
+      })
+    );
+
     const state: IRootState = store.getState();
     if (!state.specificLocations.data) {
       store.dispatch<AsyncEffect>(loadSiteLocations());
@@ -508,6 +465,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.sitesUnsubscribe();
+    this.visitGoalsUnsubscribe();
     this.locationsUnsubscribe();
     this.activeLanguageUnsubscribe();
   }

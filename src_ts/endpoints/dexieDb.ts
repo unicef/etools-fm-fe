@@ -10,6 +10,7 @@ import {
   PARTNERS,
   SECTIONS,
   TPM_PARTNERS,
+  VISIT_GOALS,
   USERS
 } from './endpoints-list';
 
@@ -25,6 +26,7 @@ etoolsCustomDexieDb.version(1).stores({
   [CP_OUTPUTS]: 'id',
   [INTERVENTIONS]: 'id',
   [CATEGORIES]: 'id',
+  [VISIT_GOALS]: 'id',
   [SECTIONS]: 'id',
   [METHODS]: 'id'
 });
