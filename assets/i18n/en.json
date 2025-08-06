@@ -118,7 +118,9 @@
     "REPORT_REVIEWERS": "Report Reviewers",
     "REPORT_REVIEWER_SELECT": "The following users will be notified of this submission in order to review. Please select the users and proceed.",
     "REPORT_REVIEWER_CONFIRM": "The following users will be notified of this submission in order to review. Please confirm the users and proceed.",
-    "REVIEWED_BY": "Reviewed by"
+    "REVIEWED_BY": "Reviewed by",
+    "VISIT_GOALS": "Visit goals",
+    "OBJECTIVE": "Objective"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",

@@ -120,7 +120,9 @@
     "REPORT_REVIEWERS": "Revisores de informes",
     "REPORT_REVIEWER_SELECT": "Los siguientes usuarios serán notificados de este envío para poder revisarlo. Seleccione los usuarios y continúe.",
     "REPORT_REVIEWER_CONFIRM": "Los siguientes usuarios serán notificados de este envío para poder revisarlo. Confirme los usuarios y continúe.",
-    "REVIEWED_BY": "Revisado por"
+    "REVIEWED_BY": "Revisado por",
+    "VISIT_GOALS": "Objetivos de la visita",
+    "OBJECTIVE": "Objetivo"
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {
