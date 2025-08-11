@@ -298,14 +298,14 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 label="${translate('ACTIVITY_DETAILS.VISIT_GOALS')}"
                 .options="${this.visitGoals.map((x: any) => ({
                   ...x,
-                  name: html` <style>
+                  itemTemplate: html` <style>
                       .tag .etools-info-tooltip {
                         display: none;
                       }
                     </style>
                     <div style="display: flex; align-items: center">
                       ${x.name}
-                      <etools-info-tooltip hoist position="right">
+                      <etools-info-tooltip hoist position="right" style="pointer-events: all">
                         <span slot="message"
                           ><ul>
                             ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
