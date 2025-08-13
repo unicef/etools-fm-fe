@@ -68,6 +68,7 @@ interface IStaticDataState {
   offices?: ActionPointsOffice[];
   actionPointsCategories?: ActionPointsCategory[];
   visitGoals?: VisitGoal[];
+  facilityTypes?: FacilityType[];
 }
 
 interface ISpecificLocationsState {
