@@ -455,7 +455,8 @@
     "NUMBER_INTEGER_TYPE": "Nombre entier",
     "NUMBER_FLOAT_TYPE": "Nombre flottant",
     "BOOL": "Booléen",
-    "LIKERT_SCALE": "Échelle de Likert"
+    "LIKERT_SCALE": "Échelle de Likert",
+    "MULTIPLE_CHOICE": "Choix multiple"
   },
   "MONITOR_TYPES": {
     "STAFF": "Staff",

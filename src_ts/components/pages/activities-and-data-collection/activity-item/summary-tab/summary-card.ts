@@ -9,7 +9,7 @@ import {template} from './summary-card.tpl';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 // import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
-import {BOOL_TYPE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
+import {BOOL_TYPE, MULTIPLE_CHOICE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
 import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';
 import '@shoelace-style/shoelace/dist/components/radio/radio.js';
@@ -25,6 +25,7 @@ import {ACTIVITY_REPORT_ATTACHMENTS} from '../../../../../endpoints/endpoints-li
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/text-field';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/number-field';
 import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
+import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/choice-field.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import './action-points-popup/summary-action-points-popup';
@@ -341,6 +342,25 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
             >
               ${this.getFindingQuestion(finding)}
             </scale-field>
+          </div>
+        `;
+      case MULTIPLE_CHOICE:
+        return html`
+          <div
+            class="finding-container"
+            related-to="summary_${this.type}-${this.target?.id}-${finding.activity_question.id}"
+            related-to-description="${this.tabName}: ${finding.activity_question.text}"
+            comments-container
+          >
+            ${this.getQuestionTooltip(finding.activity_question.question?.show_mandatory_warning)}
+            <choice-field
+              .options="${finding.activity_question.question.options}"
+              ?is-readonly="${!this.isEditMode}"
+              .value="${finding.value}"
+              @value-changed="${({detail}: CustomEvent) => this.updateFinding(finding, detail.value)}"
+            >
+              ${this.getFindingQuestion(finding)}
+            </choice-field>
           </div>
         `;
       default:
