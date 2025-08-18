@@ -17,6 +17,7 @@ export const SECTIONS = 'sections';
 export const METHODS = 'methods';
 export const PARTNERS = 'partners';
 export const VISIT_GOALS = 'visitGoals';
+export const FACILITY_TYPES = 'facilityTypes';
 export const TPM_PARTNERS = 'tpmPartners';
 export const TPM_PARTNERS_EXPORT = 'tpmPartnersExport';
 export const TPM_DETAILS = 'tpmDetails';
@@ -128,6 +129,13 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
     exp: 60 * 60 * 1000, // 1h
     cachingKey: 'id',
     cacheTableName: VISIT_GOALS
+  },
+
+  [FACILITY_TYPES]: {
+    url: '/api/v1/field-monitoring/planning/facility-types/?page_size=all',
+    exp: 60 * 60 * 1000, // 1h
+    cachingKey: 'id',
+    cacheTableName: FACILITY_TYPES
   },
 
   [TPM_PARTNERS]: {
