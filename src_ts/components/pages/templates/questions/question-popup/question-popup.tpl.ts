@@ -6,7 +6,7 @@ import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {html, TemplateResult} from 'lit';
 import {QuestionPopupComponent} from './question-popup';
 import {repeat} from 'lit/directives/repeat.js';
-import {BOOL_TYPE, SCALE_TYPE} from '../../../../common/dropdown-options';
+import {BOOL_TYPE, MULTIPLE_CHOICE, SCALE_TYPE} from '../../../../common/dropdown-options';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
@@ -243,6 +243,44 @@ export function template(this: QuestionPopupComponent): TemplateResult {
                   @click="${() => this.resetFieldError('options', index)}"
                   maxlength="100"
                 ></etools-input>
+              </div>
+            `
+          )}
+        </div>
+
+        <div class="scales-container col-md-12 col-12 row" ?hidden="${this.editedData.answer_type !== MULTIPLE_CHOICE}">
+          <etools-button
+            @click="${() => {
+              this.editedData.options!.push({label: '', value: `${this.editedData.options!.length + 1}`});
+              this.requestUpdate();
+            }}"
+            >Add</etools-button
+          >
+          ${repeat(
+            this.editedData.options as Partial<QuestionOption>[],
+            (option: EditedQuestionOption) => option.value,
+            (option: EditedQuestionOption, index: number) => html`
+              <div class="col-md-12 col-12 align-items-center layout-horizontal">
+                <div class="option-index">${option.translation ? option.translation : option.value}:</div>
+                <etools-input
+                  no-label-float
+                  class="validate-input"
+                  .value="${option.label}"
+                  @value-changed="${({detail}: CustomEvent) => this.changeOptionLabel(index, detail.value)}"
+                  ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+                  ?invalid="${this.errors?.options && this.errors.options[index]?.label}"
+                  .errorMessage="${this.errors?.options && this.errors.options[index]?.label}"
+                  @focus="${() => this.resetFieldError('options', index)}"
+                  @click="${() => this.resetFieldError('options', index)}"
+                  maxlength="100"
+                ></etools-input>
+                <etools-button
+                  @click="${() => {
+                    this.editedData.options!.splice(index, 1);
+                    this.requestUpdate();
+                  }}"
+                  >Remove</etools-button
+                >
               </div>
             `
           )}

@@ -28,7 +28,7 @@ type BlueprintField = {
   name: string;
   repeatable: boolean;
   required: boolean;
-  input_type: 'text' | 'likert_scale' | 'bool' | 'number' | 'number-integer' | 'number-float'; // add more
+  input_type: 'text' | 'likert_scale' | 'bool' | 'number' | 'number-integer' | 'number-float' | 'multiple_choice';
   label: string;
   validations: string[];
   help_text: string;

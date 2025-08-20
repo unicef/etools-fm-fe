@@ -455,7 +455,8 @@
     "NUMBER_INTEGER_TYPE": "Integer number",
     "NUMBER_FLOAT_TYPE": "Float number",
     "BOOL": "Boolean",
-    "LIKERT_SCALE": "Likert Scale"
+    "LIKERT_SCALE": "Likert Scale",
+    "MULTIPLE_CHOICE": "Multiple Choice"
   },
   "MONITOR_TYPES": {
     "STAFF": "Staff",

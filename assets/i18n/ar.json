@@ -463,7 +463,8 @@
     "NUMBER": "رقم",
     "NUMBER_FLOAT_TYPE": "عدد تعويم",
     "NUMBER_INTEGER_TYPE": "رقم صحيح",
-    "TEXT": "نص"
+    "TEXT": "نص",
+    "MULTIPLE_CHOICE": "اختيار متعدد"
   },
   "MONITOR_TYPES": {
     "STAFF": "الموظّفين",

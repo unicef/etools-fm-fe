@@ -465,7 +465,8 @@
     "NUMBER": "Número",
     "NUMBER_FLOAT_TYPE": "Número flotante",
     "NUMBER_INTEGER_TYPE": "Número entero",
-    "TEXT": "Texto"
+    "TEXT": "Texto",
+    "MULTIPLE_CHOICE": "Selección múltiple"
   },
   "MONITOR_TYPES": {
     "STAFF": "Personal",
