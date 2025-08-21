@@ -9,6 +9,17 @@ type Site = {
   security_detail: string;
 };
 
+type VisitGoal = {
+  id: number;
+  name: string;
+  info: string[];
+};
+
+type FacilityType = {
+  id: number;
+  name: string;
+};
+
 type EditedSite = Partial<Site>;
 
 interface ISiteParrentLocation {

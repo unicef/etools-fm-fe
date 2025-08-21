@@ -27,7 +27,14 @@ type QuestionOption = {
 
 type EditedQuestionOption = Partial<QuestionOption>;
 
-type QuestionAnswerType = 'likert_scale' | 'bool' | 'number' | 'number-integer' | 'number-float' | 'text';
+type QuestionAnswerType =
+  | 'multiple_choice'
+  | 'likert_scale'
+  | 'bool'
+  | 'number'
+  | 'number-integer'
+  | 'number-float'
+  | 'text';
 
 type AnswerTypeOption = {
   value: QuestionAnswerType;

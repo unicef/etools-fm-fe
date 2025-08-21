@@ -24,6 +24,14 @@ export const usersDataSelectors: Selector<User[] | undefined> = select<User[] | 
   (store: IRootState) => store.staticData.users
 );
 
+export const visitGoalsSelector: Selector<VisitGoal[] | undefined> = select<VisitGoal[] | undefined>(
+  (store: IRootState) => store.staticData.visitGoals
+);
+
+export const facilityTypesSelector: Selector<FacilityType[] | undefined> = select<FacilityType[] | undefined>(
+  (store: IRootState) => store.staticData.facilityTypes
+);
+
 export const staticDataDynamic: DynamicSelector<any> = dynamicSelect<IStaticDataState, any>(
   (store: IRootState) => store.staticData
 );
