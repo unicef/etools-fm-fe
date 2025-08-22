@@ -251,10 +251,12 @@ export function template(this: QuestionPopupComponent): TemplateResult {
         <div class="scales-container col-md-12 col-12 row" ?hidden="${this.editedData.answer_type !== MULTIPLE_CHOICE}">
           <etools-button
             @click="${() => {
-              this.editedData.options!.push({label: '', value: `${this.editedData.options!.length + 1}`});
+              const values = this.editedData.options?.map((x) => Number(x.value)) ?? [];
+              const maxValue = values.length > 0 ? Math.max(...values) : 0;
+              this.editedData.options!.push({label: '', value: `${maxValue + 1}`});
               this.requestUpdate();
             }}"
-            >Add</etools-button
+            >${translate('MAIN.BUTTONS.ADD')}</etools-button
           >
           ${repeat(
             this.editedData.options as Partial<QuestionOption>[],
