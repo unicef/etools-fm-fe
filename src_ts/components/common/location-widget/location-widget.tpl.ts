@@ -46,7 +46,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
             ${!this.isSiteList
               ? html`
                   <lazy-list
-                    .items="${this.items}"
+                    .items="${this.items.filter((x) => !x.is_active)}"
                     .itemStyle="${this.itemStyle}"
                     .itemTemplate="${(location: WidgetLocation) => html`
                       <div class="location-line" @click="${() => this.onLocationLineClick(location)}">
