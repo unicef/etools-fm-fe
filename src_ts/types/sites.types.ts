@@ -73,6 +73,7 @@ type WidgetLocation = {
   name: string;
   p_code: string;
   point: GeojsonPoint;
+  is_active?: boolean;
 };
 
 type WidgetStoreData = {
