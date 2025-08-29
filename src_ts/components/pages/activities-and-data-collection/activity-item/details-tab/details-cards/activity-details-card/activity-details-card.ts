@@ -54,7 +54,7 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'offices',
   'visit_goals',
   'objective',
-  'facility_type'
+  'facility_types'
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -216,12 +216,11 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             >
             </etools-dropdown>
 
-            <etools-dropdown
+            <etools-dropdown-multi
+              .selectedValues="${simplifyValue(this.editedData.facility_types)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                this.selectFacilityTypes(detail.selectedItems)}"
               class="col-md-3 col-12"
-              .selected="${this.editedData.facility_type}"
-              @etools-selected-item-changed="${({detail}: CustomEvent) => {
-                this.updateModelValue('facility_type', detail.selectedItem?.id || null);
-              }}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TYPE_OF_FACILITY')}"
               .options="${this.facilityTypes}"
@@ -234,7 +233,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
               @click="${() => this.resetFieldError('type_of_facility')}"
               allow-outside-scroll
               dynamic-align
-            ></etools-dropdown>
+            ></etools-dropdown-multi>
 
             <!--     Start Date and End Date inputs     -->
             <div class="col-md-3 col-12">
@@ -383,6 +382,13 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
       this.activitySections = [...sections];
       this.updateModelValue('sections', sections);
+    }
+  }
+
+  selectFacilityTypes(sections: Section[]): void {
+    if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
+      this.activitySections = [...sections];
+      this.updateModelValue('facility_types', sections);
     }
   }
 
