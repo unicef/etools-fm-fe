@@ -118,7 +118,10 @@
     "REPORT_REVIEWERS": "Report Reviewers",
     "REPORT_REVIEWER_SELECT": "The following users will be notified of this submission in order to review. Please select the users and proceed.",
     "REPORT_REVIEWER_CONFIRM": "The following users will be notified of this submission in order to review. Please confirm the users and proceed.",
-    "REVIEWED_BY": "Reviewed by"
+    "REVIEWED_BY": "Reviewed by",
+    "VISIT_GOALS": "Visit goals",
+    "TYPE_OF_FACILITY": "Type of facility",
+    "OBJECTIVE": "Objective"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",
@@ -452,7 +455,8 @@
     "NUMBER_INTEGER_TYPE": "Integer number",
     "NUMBER_FLOAT_TYPE": "Float number",
     "BOOL": "Boolean",
-    "LIKERT_SCALE": "Likert Scale"
+    "LIKERT_SCALE": "Likert Scale",
+    "MULTIPLE_CHOICE": "Multiple Choice"
   },
   "MONITOR_TYPES": {
     "STAFF": "Staff",
@@ -604,7 +608,7 @@
   },
   "THIS_FIELD_IS_REQUIRED": "This field is required",
   "LOCATION_TO_BE_VISITED": "Location to be visited",
-  "SITE_TO_BE_VISITED": "Site To Be Visited",
+  "SITE_TO_BE_VISITED": "Site to be visited",
   "ROWS_PER_PAGE": "Rows per page:",
   "UPLOAD_FILE": "Upload File",
   "SELECT": "Select",

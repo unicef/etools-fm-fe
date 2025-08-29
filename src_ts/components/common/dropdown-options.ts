@@ -16,6 +16,7 @@ export const TEXT_TYPE = 'text';
 export const NUMBER_TYPE = 'number';
 export const BOOL_TYPE = 'bool';
 export const SCALE_TYPE = 'likert_scale';
+export const MULTIPLE_CHOICE = 'multiple_choice';
 
 // Data collection Json specific types
 export const NUMBER_INTEGER_TYPE = 'number-integer';
@@ -34,7 +35,8 @@ export const ANSWER_TYPES: AnswerTypeOption[] = [
   {value: TEXT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.TEXT`},
   {value: NUMBER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER`},
   {value: BOOL_TYPE, display_name: `ANSWER_TYPE_OPTIONS.BOOL`},
-  {value: SCALE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.LIKERT_SCALE`}
+  {value: SCALE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.LIKERT_SCALE`},
+  {value: MULTIPLE_CHOICE, display_name: `ANSWER_TYPE_OPTIONS.MULTIPLE_CHOICE`}
 ];
 
 export const LEVELS: DefaultDropdownOption<string>[] = [

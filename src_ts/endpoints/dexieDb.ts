@@ -10,7 +10,9 @@ import {
   PARTNERS,
   SECTIONS,
   TPM_PARTNERS,
-  USERS
+  VISIT_GOALS,
+  USERS,
+  FACILITY_TYPES
 } from './endpoints-list';
 
 const etoolsCustomDexieDb: Dexie = new Dexie('FM');
@@ -25,6 +27,8 @@ etoolsCustomDexieDb.version(1).stores({
   [CP_OUTPUTS]: 'id',
   [INTERVENTIONS]: 'id',
   [CATEGORIES]: 'id',
+  [VISIT_GOALS]: 'id',
+  [FACILITY_TYPES]: 'id',
   [SECTIONS]: 'id',
   [METHODS]: 'id'
 });
