@@ -37,7 +37,7 @@ import {loadStaticData} from './redux/effects/load-static-data.effect';
 import {user} from './redux/reducers/user.reducer';
 import {country} from './redux/reducers/country.reducer';
 import {organization} from './redux/reducers/organization.reducer';
-import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT, FACILITY_TYPES, VISIT_GOALS} from './endpoints/endpoints-list';
+import {CURRENT_WORKSPACE, LOCATIONS_ENDPOINT, VISIT_GOALS} from './endpoints/endpoints-list';
 import {currentUser, userSelector} from './redux/selectors/user.selectors';
 import {setUser} from './config/permissions';
 import {appDrawerStyles} from './components/app-shell/menu/styles/app-drawer-styles';
@@ -150,7 +150,6 @@ export class AppShell extends connect(store)(LitElement) {
     store.dispatch<AsyncEffect>(loadStaticData(LOCATIONS_ENDPOINT));
     store.dispatch<AsyncEffect>(loadStaticData(CURRENT_WORKSPACE));
     store.dispatch<AsyncEffect>(loadStaticData(VISIT_GOALS));
-    store.dispatch<AsyncEffect>(loadStaticData(FACILITY_TYPES));
 
     store.subscribe(
       currentUser((userData: IEtoolsUserModel | null) => {
