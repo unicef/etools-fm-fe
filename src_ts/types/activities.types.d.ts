@@ -31,7 +31,6 @@ interface IActivityDetails extends IListActivity {
   report_reviewers: ActivityTeamMember[];
   overlapping_entities: OverlappingEntities;
   visit_goals?: any[];
-  facility_type?: number;
   objective?: string;
 }
 
