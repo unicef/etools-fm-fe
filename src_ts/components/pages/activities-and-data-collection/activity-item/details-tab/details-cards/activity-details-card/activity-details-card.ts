@@ -3,11 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
 import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
-import {
-  facilityTypesSelector,
-  staticDataDynamic,
-  visitGoalsSelector
-} from '../../../../../../../redux/selectors/static-data.selectors';
+import {staticDataDynamic, visitGoalsSelector} from '../../../../../../../redux/selectors/static-data.selectors';
 import {LOCATIONS_ENDPOINT} from '../../../../../../../endpoints/endpoints-list';
 import {Unsubscribe} from 'redux';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -75,7 +71,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() widgetOpened = false;
   @property() sitesList: Site[] = [];
   @property() visitGoals: VisitGoal[] = [];
-  @property() facilityTypes: FacilityType[] = [];
   @property() locations: EtoolsLightLocation[] = [];
 
   @property() activitySections: Section[] = [];
@@ -88,7 +83,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   private sitesUnsubscribe!: Unsubscribe;
   private visitGoalsUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
-  private facilityTypesUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResult[] {
@@ -205,7 +199,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             </etools-dropdown>
 
             <etools-dropdown
-              class="readonly-required col-md-3 col-12"
+              class="readonly-required col-md-6 col-12"
               .selected="${simplifyValue(this.editedData.location_site)}"
               label="${translate('SITE_TO_BE_VISITED')}"
               .options="${this.sitesList}"
@@ -359,8 +353,8 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 ?readonly="${!this.isEditMode}"
                 ?invalid="${this.errors && this.errors.visitGoals}"
                 .errorMessage="${this.errors && this.errors.visitGoals}"
-                @focus="${() => this.resetFieldError('objective')}"
-                @click="${() => this.resetFieldError('objective')}"
+                @focus="${() => this.resetFieldError('visit_goals')}"
+                @click="${() => this.resetFieldError('visit_goals')}"
                 @value-changed="${({detail}: CustomEvent) => this.updateModelValue('objective', detail.value)}"
               >
               </etools-textarea>
@@ -400,6 +394,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   }
 
   selectVisitGoal(visitGoals: Office[]): void {
+    console.log(visitGoals, this.activityVisitGoals);
     if (JSON.stringify(visitGoals) !== JSON.stringify(this.activityVisitGoals)) {
       this.activityVisitGoals = visitGoals;
       this.updateModelValue('visit_goals', visitGoals);
@@ -484,15 +479,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       })
     );
 
-    this.facilityTypesUnsubscribe = store.subscribe(
-      facilityTypesSelector((facilityTypes: FacilityType[] | undefined) => {
-        if (!facilityTypes) {
-          return;
-        }
-        this.facilityTypes = facilityTypes;
-      })
-    );
-
     const state: IRootState = store.getState();
     if (!state.specificLocations.data) {
       store.dispatch<AsyncEffect>(loadSiteLocations());
@@ -508,7 +494,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     this.sitesUnsubscribe();
     this.visitGoalsUnsubscribe();
     this.locationsUnsubscribe();
-    this.facilityTypesUnsubscribe();
     this.activeLanguageUnsubscribe();
   }
 
