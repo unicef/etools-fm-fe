@@ -49,7 +49,8 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'location',
   'offices',
   'visit_goals',
-  'objective'
+  'objective',
+  'facility_types'
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -209,6 +210,25 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             >
             </etools-dropdown>
 
+            <etools-dropdown-multi
+              .selectedValues="${simplifyValue(this.editedData.facility_types)}"
+              @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                this.selectFacilityTypes(detail.selectedItems)}"
+              class="col-md-3 col-12"
+              ?trigger-value-change-event="${this.isEditMode}"
+              label="${translate('ACTIVITY_DETAILS.TYPE_OF_FACILITY')}"
+              .options="${this.facilityTypes}"
+              option-label="name"
+              option-value="id"
+              ?readonly="${!this.isEditMode}"
+              ?invalid="${this.errors && this.errors.typeOfFacility}"
+              .errorMessage="${this.errors && this.errors.typeOfFacility}"
+              @focus="${() => this.resetFieldError('type_of_facility')}"
+              @click="${() => this.resetFieldError('type_of_facility')}"
+              allow-outside-scroll
+              dynamic-align
+            ></etools-dropdown-multi>
+
             <!--     Start Date and End Date inputs     -->
             <div class="col-md-3 col-12">
               <datepicker-lite
@@ -356,6 +376,13 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
       this.activitySections = [...sections];
       this.updateModelValue('sections', sections);
+    }
+  }
+
+  selectFacilityTypes(sections: Section[]): void {
+    if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
+      this.activitySections = [...sections];
+      this.updateModelValue('facility_types', sections);
     }
   }
 
