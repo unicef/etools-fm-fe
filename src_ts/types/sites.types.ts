@@ -15,6 +15,11 @@ type VisitGoal = {
   info: string[];
 };
 
+type FacilityType = {
+  id: number;
+  name: string;
+};
+
 type EditedSite = Partial<Site>;
 
 interface ISiteParrentLocation {
@@ -68,6 +73,7 @@ type WidgetLocation = {
   name: string;
   p_code: string;
   point: GeojsonPoint;
+  is_active?: boolean;
 };
 
 type WidgetStoreData = {
