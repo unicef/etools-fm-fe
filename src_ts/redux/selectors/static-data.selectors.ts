@@ -28,6 +28,10 @@ export const visitGoalsSelector: Selector<VisitGoal[] | undefined> = select<Visi
   (store: IRootState) => store.staticData.visitGoals
 );
 
+export const facilityTypesSelector: Selector<FacilityType[] | undefined> = select<FacilityType[] | undefined>(
+  (store: IRootState) => store.staticData.facilityTypes
+);
+
 export const staticDataDynamic: DynamicSelector<any> = dynamicSelect<IStaticDataState, any>(
   (store: IRootState) => store.staticData
 );

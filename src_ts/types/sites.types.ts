@@ -15,6 +15,11 @@ type VisitGoal = {
   info: string[];
 };
 
+type FacilityType = {
+  id: number;
+  name: string;
+};
+
 type EditedSite = Partial<Site>;
 
 interface ISiteParrentLocation {
