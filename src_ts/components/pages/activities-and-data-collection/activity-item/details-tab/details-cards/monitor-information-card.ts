@@ -153,10 +153,18 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
               .options="${this.membersOptions
-                .filter(x => !((!x.is_active || !x.has_active_realm) && !this.originalData?.team_members?.find( y => Number(y.id) === Number(x.id))))
-                .map((x : User) => ({
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.team_members?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
                   ...x,
-                  disabled: (!x.is_active || !x.has_active_realm) && !this.teamMembers?.find( y => Number(y.id) === Number(x.id))
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.teamMembers?.find((y) => Number(y.id) === Number(x.id))
                 }))}"
               option-label="name"
               option-value="id"
@@ -178,8 +186,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.VISIT_LEAD')}"
               .options="${this.visitLeadOptions
-                .filter(x => !((!x.is_active || !x.has_active_realm) && this.originalData?.visit_lead?.id !== x.id))
-                .map((x : ActivityTeamMember) => ({
+                .filter((x) => !((!x.is_active || !x.has_active_realm) && this.originalData?.visit_lead?.id !== x.id))
+                .map((x: ActivityTeamMember) => ({
                   ...x,
                   disabled: (!x.is_active || !x.has_active_realm) && this.personResponsible?.id !== x.id
                 }))}"
@@ -212,10 +220,18 @@ export class MonitorInformationCard extends BaseDetailsCard {
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
               .options="${this.reviewerOptions
-                .filter(x => !((!x.is_active || !x.has_active_realm) && !this.originalData?.report_reviewers?.find( y => Number(y.id) === Number(x.id))))
-                .map((x : User) => ({
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
                   ...x,
-                  disabled: (!x.is_active || !x.has_active_realm) && !this.editedData.report_reviewers?.find( y => Number(y.id) === Number(x.id))
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.editedData.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
                 }))}"
               option-label="name"
               option-value="id"
@@ -270,7 +286,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
             // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
-            this.updateVisitLeadOptions( this.membersOptions.filter(y => this.editedData.team_members?.find(x => x.id === y.id)) || []);
+            this.updateVisitLeadOptions(
+              this.membersOptions.filter((y) => this.editedData.team_members?.find((x) => x.id === y.id)) || []
+            );
           });
         },
         [USERS]
@@ -316,7 +334,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
         isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
       }
       return isValid;
-    })
+    });
   }
 
   getReviewerOptions(): void {
@@ -340,14 +358,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
     }
   }
 
-  updateVisitLeadOptions(members: ActivityTeamMember[]){
-      // visitLeadOptions will contain only selected team members
-      // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
-      const visitLeads = clone(members);
-      if (this.preserveSelectedLeadVisit && !visitLeads.some((x: ActivityTeamMember) => x.id === this.personResponsible?.id)) {
-        visitLeads.push(this.personResponsible as User);
-      }
-      this.visitLeadOptions = visitLeads;
+  updateVisitLeadOptions(members: ActivityTeamMember[]) {
+    // visitLeadOptions will contain only selected team members
+    // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
+    const visitLeads = clone(members);
+    if (
+      this.preserveSelectedLeadVisit &&
+      !visitLeads.some((x: ActivityTeamMember) => x.id === this.personResponsible?.id)
+    ) {
+      visitLeads.push(this.personResponsible as User);
+    }
+    this.visitLeadOptions = visitLeads;
   }
 
   setPersonResponsible(responsible: User | null): void {
