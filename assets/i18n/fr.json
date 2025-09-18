@@ -120,6 +120,7 @@
     "REPORT_REVIEWER_CONFIRM": "Les utilisateurs suivants seront informés de cette soumission afin de l'examiner. Veuillez confirmer les utilisateurs et continuer.",
     "REVIEWED_BY": "Revu par",
     "VISIT_GOALS": "Objectifs de la visite",
+    "TYPE_OF_FACILITY": "Type d'installation",
     "OBJECTIVE": "Objective"
   },
   "ACTIVITY_ITEM": {
