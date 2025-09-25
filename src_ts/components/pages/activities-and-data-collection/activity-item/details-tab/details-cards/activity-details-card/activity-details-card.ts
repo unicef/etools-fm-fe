@@ -385,10 +385,9 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     }
   }
 
-  selectFacilityTypes(sections: Section[]): void {
-    if (JSON.stringify(sections) !== JSON.stringify(this.activitySections)) {
-      this.activitySections = [...sections];
-      this.updateModelValue('facility_types', sections);
+  selectFacilityTypes(facilityTypes: Section[]): void {
+    if (JSON.stringify(facilityTypes) !== JSON.stringify(this.editedData.facility_types)) {
+      this.updateModelValue('facility_types', facilityTypes);
     }
   }
 
