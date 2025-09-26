@@ -90,7 +90,8 @@
     "USER_TYPE": "Localized Primary Field Monitor is",
     "USER_TYPES": {
       "STAFF": "Localized Staff",
-      "TPM": "Localized Third Party Monitor"
+      "TPM": "Localized Third Party Monitor",
+      "BOTH": "Оба"
     },
     "PARTNER": "Localized Partner",
     "CP_OUTPUT": "Localized CP Output",

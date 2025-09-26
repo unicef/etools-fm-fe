@@ -90,7 +90,8 @@
     "USER_TYPE": "Le principal moniteur terrain est ",
     "USER_TYPES": {
       "STAFF": "Staff",
-      "TPM": "Moniteur Tiers"
+      "TPM": "Moniteur Tiers",
+      "BOTH": "Les deux"
     },
     "PARTNER": "Partenaire",
     "CP_OUTPUT": "Extrant PP",
