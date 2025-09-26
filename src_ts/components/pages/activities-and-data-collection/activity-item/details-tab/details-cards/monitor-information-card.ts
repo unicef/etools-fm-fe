@@ -293,17 +293,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
-    this.membersOptions = this.users.filter((user: User) => {
-      let isValid = false;
-      if (userType === USER_STAFF) {
-        isValid = userType === user.user_type;
-      } else if (userType === USER_TPM) {
-        isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
-      } else if (userType === USER_BOTH) {
-        isValid = true;
-      }
-      return isValid;
-    });
+    if (userType != USER_BOTH) {
+      this.membersOptions = this.users.filter((user: User) => {
+        let isValid = false;
+        if (userType === USER_STAFF) {
+          isValid = userType === user.user_type;
+        } else if (userType === USER_TPM) {
+          isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
+        }
+        return isValid;
+      });
+    } else {
+      const IDs = new Set(); // temp variable to keep track of accepted ids
+      this.membersOptions = this.users.filter(({id}) => !IDs.has(id) && IDs.add(id));
+    }
   }
 
   getReviewerOptions(): void {
