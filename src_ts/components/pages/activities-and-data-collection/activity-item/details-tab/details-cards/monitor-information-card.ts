@@ -26,6 +26,7 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type
 
 const USER_STAFF: UserType = 'staff';
 const USER_TPM: UserType = 'tpm';
+const USER_BOTH: UserType = 'both';
 
 type MemberOptions = {
   userType: UserType;
@@ -47,7 +48,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @query('#teamMembers')
   teamMembersDd!: EtoolsDropdownMultiEl;
 
-  userTypes: UserType[] = [USER_STAFF, USER_TPM];
+  userTypes: UserType[] = [USER_STAFF, USER_TPM, USER_BOTH];
   users: User[] = [];
   preserveSelectedLeadVisit = false;
 
@@ -280,7 +281,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
     }
 
-    if (this.userType === USER_TPM && !data.tpmPartners) {
+    if ((this.userType === USER_TPM || this.userType === USER_BOTH) && !data.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
   }
@@ -294,11 +295,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
     this.membersOptions = this.users.filter((user: User) => {
       let isValid = false;
-      if (userType) {
+      if (userType === USER_STAFF) {
         isValid = userType === user.user_type;
-      }
-      if (userType === USER_TPM) {
+      } else if (userType === USER_TPM) {
         isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
+      } else if (userType === USER_BOTH) {
+        isValid = true;
       }
       return isValid;
     });
@@ -346,7 +348,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     this.userType = userType;
     this.updateModelValue('monitor_type', userType);
     const state: IRootState = store.getState() as IRootState;
-    if (userType === USER_TPM && !state.staticData.tpmPartners) {
+    if ((userType === USER_TPM || userType === USER_BOTH) && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
     this.getMembersOptions({userType: userType, tpmPartner: this.tpmPartner});

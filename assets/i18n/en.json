@@ -90,7 +90,8 @@
     "USER_TYPE": "Primary Field Monitor is",
     "USER_TYPES": {
       "STAFF": "Staff",
-      "TPM": "Third Party Monitor"
+      "TPM": "Third Party Monitor",
+      "BOTH": "Both"
     },
     "PARTNER": "Partner",
     "CP_OUTPUT": "CP Output",
@@ -320,7 +321,7 @@
     }
   },
   "TEMPLATES": {
-    "EXPORT":"Export",
+    "EXPORT": "Export",
     "FILTERS": {
       "LEVEL_LABEL": "Select Level",
       "LEVEL_PLACEHOLDER": "Select Level",
