@@ -116,7 +116,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             </etools-radio-group>
           </div>
           <div class="row">
-            ${this.editedData.monitor_type === USER_TPM
+            ${this.editedData.monitor_type === USER_TPM || this.editedData.monitor_type === USER_BOTH
               ? html`
                   <etools-dropdown
                     class="col-md-6 col-12"
@@ -293,20 +293,17 @@ export class MonitorInformationCard extends BaseDetailsCard {
   }
 
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
-    if (userType != USER_BOTH) {
-      this.membersOptions = this.users.filter((user: User) => {
-        let isValid = false;
-        if (userType === USER_STAFF) {
-          isValid = userType === user.user_type;
-        } else if (userType === USER_TPM) {
-          isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
-        }
-        return isValid;
-      });
-    } else {
-      const IDs = new Set(); // temp variable to keep track of accepted ids
-      this.membersOptions = this.users.filter(({id}) => !IDs.has(id) && IDs.add(id));
-    }
+    this.membersOptions = this.users.filter((user: User) => {
+      let isValid = false;
+      if (userType === USER_STAFF) {
+        isValid = userType === user.user_type;
+      } else if (userType === USER_TPM) {
+        isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
+      } else if (userType === USER_BOTH) {
+        isValid = user.user_type === USER_STAFF || (tpmPartner ? tpmPartner.id === user.tpm_partner : false);
+      }
+      return isValid;
+    });
   }
 
   getReviewerOptions(): void {
@@ -318,7 +315,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       const id: number | null = tpmPartner ? tpmPartner.id : null;
       this.tpmPartner = tpmPartner;
       this.updateModelValue('tpm_partner', id);
-      this.getMembersOptions({userType: USER_TPM, tpmPartner});
+      this.getMembersOptions({userType: this.userType, tpmPartner});
     }
   }
 
