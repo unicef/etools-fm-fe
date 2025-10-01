@@ -37,7 +37,7 @@ type MemberOptions = {
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
-  @property() visitLeadOptions: User[] = [];
+  @property() visitLeadOptions: ActivityTeamMember[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
@@ -153,7 +153,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
               }}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
-              .options="${this.membersOptions}"
+              .options="${this.membersOptions
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.team_members?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
+                  ...x,
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.teamMembers?.find((y) => Number(y.id) === Number(x.id))
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('team_members')}"
@@ -173,7 +186,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.setPersonResponsible(detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.VISIT_LEAD')}"
-              .options="${this.visitLeadOptions}"
+              .options="${this.visitLeadOptions
+                .filter((x) => !((!x.is_active || !x.has_active_realm) && this.originalData?.visit_lead?.id !== x.id))
+                .map((x: ActivityTeamMember) => ({
+                  ...x,
+                  disabled: (!x.is_active || !x.has_active_realm) && this.personResponsible?.id !== x.id
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
@@ -202,7 +220,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.updateModelValue('report_reviewers', detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
-              .options="${this.reviewerOptions}"
+              .options="${this.reviewerOptions
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
+                  ...x,
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.editedData.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewers')}"
@@ -256,7 +287,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
             // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
-            this.visitLeadOptions = (clone(this.editedData.team_members) || []) as User[];
+            this.updateVisitLeadOptions(
+              this.membersOptions.filter((y) => this.editedData.team_members?.find((x) => x.id === y.id)) || []
+            );
           });
         },
         [USERS]
@@ -323,15 +356,21 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (JSON.stringify(members) !== JSON.stringify(this.teamMembers)) {
       this.updateModelValue('team_members', members);
       this.teamMembers = members;
-
-      // visitLeadOptions will contain only selected team members
-      // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
-      const visitLeads = clone(members);
-      if (this.preserveSelectedLeadVisit && !visitLeads.some((x: User) => x.id === this.personResponsible?.id)) {
-        visitLeads.push(this.personResponsible as User);
-      }
-      this.visitLeadOptions = visitLeads;
+      this.updateVisitLeadOptions(members);
     }
+  }
+
+  updateVisitLeadOptions(members: ActivityTeamMember[]) {
+    // visitLeadOptions will contain only selected team members
+    // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
+    const visitLeads = clone(members);
+    if (
+      this.preserveSelectedLeadVisit &&
+      !visitLeads.some((x: ActivityTeamMember) => x.id === this.personResponsible?.id)
+    ) {
+      visitLeads.push(this.personResponsible as User);
+    }
+    this.visitLeadOptions = visitLeads;
   }
 
   setPersonResponsible(responsible: User | null): void {
