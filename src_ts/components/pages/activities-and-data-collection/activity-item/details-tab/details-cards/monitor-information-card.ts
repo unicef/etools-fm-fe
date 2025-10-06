@@ -271,13 +271,13 @@ export class MonitorInformationCard extends BaseDetailsCard {
             return;
           }
           this.users = users;
-          if (this.editedData.monitor_type === USER_BOTH && this.editedData.team_members?.length) {
-            this.users = addMissingItems(this.users, this.editedData.team_members);
-          }
           this.getMembersOptions({
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
+          if (this.editedData.monitor_type === USER_BOTH && this.editedData.team_members?.length) {
+            this.membersOptions = addMissingItems(this.membersOptions, this.editedData.team_members);
+          }
           // Waited for dropdown options
           this.getReviewerOptions();
 
