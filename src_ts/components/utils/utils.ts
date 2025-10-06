@@ -1,7 +1,6 @@
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {appLanguages} from '../../config/app-constants';
 import path from 'ramda/es/path';
-import {F} from 'ramda';
 
 export const languageIsAvailableInApp = (lngCode: string): boolean => {
   return appLanguages.some((lng: any) => lng.value === lngCode);

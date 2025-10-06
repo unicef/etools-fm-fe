@@ -16,7 +16,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {clone, xor} from 'ramda';
+import {clone} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
