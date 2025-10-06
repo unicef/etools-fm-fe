@@ -16,10 +16,11 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {InputStyles} from '../../../../../styles/input-styles';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {clone} from 'ramda';
+import {clone, xor} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {addMissingItems} from '../../../../../utils/utils';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
@@ -270,6 +271,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
             return;
           }
           this.users = users;
+          if (this.editedData.monitor_type === USER_BOTH && this.editedData.team_members?.length) {
+            this.users = addMissingItems(this.users, this.editedData.team_members);
+          }
           this.getMembersOptions({
             userType: this.userType,
             tpmPartner: this.tpmPartner
@@ -288,7 +292,8 @@ export class MonitorInformationCard extends BaseDetailsCard {
             // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
             this.updateVisitLeadOptions(
-              this.membersOptions.filter((y) => this.editedData.team_members?.find((x) => x.id === y.id)) || []
+              this.membersOptions.filter((y) => this.editedData.team_members?.find((x) => x.id === y.id)) || [],
+              this.editedData.visit_lead
             );
           });
         },
@@ -341,6 +346,9 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   getReviewerOptions(): void {
     this.reviewerOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
+    if (this.editedData.report_reviewers?.length) {
+      this.reviewerOptions = addMissingItems(this.reviewerOptions, this.editedData.report_reviewers);
+    }
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
@@ -360,15 +368,18 @@ export class MonitorInformationCard extends BaseDetailsCard {
     }
   }
 
-  updateVisitLeadOptions(members: ActivityTeamMember[]) {
+  updateVisitLeadOptions(members: ActivityTeamMember[], visit_lead?: ActivityTeamMember | null) {
     // visitLeadOptions will contain only selected team members
-    // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
+    // and will preserve the previous selection if this is missing in selected teamMembers (backward compatibility)
     const visitLeads = clone(members);
     if (
       this.preserveSelectedLeadVisit &&
       !visitLeads.some((x: ActivityTeamMember) => x.id === this.personResponsible?.id)
     ) {
       visitLeads.push(this.personResponsible as User);
+    }
+    if (visit_lead && !(visitLeads || []).find((x: ActivityTeamMember) => x.id === visit_lead.id)) {
+      visitLeads.push(visit_lead);
     }
     this.visitLeadOptions = visitLeads;
   }
