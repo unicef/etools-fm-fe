@@ -275,6 +275,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
+          // in case user is tpm and type is 'Both', saved Unicef users will be missing so will add them
           if (this.editedData.monitor_type === USER_BOTH && this.editedData.team_members?.length) {
             this.membersOptions = addMissingItems(this.membersOptions, this.editedData.team_members);
           }
@@ -347,6 +348,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   getReviewerOptions(): void {
     this.reviewerOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
     if (this.editedData.report_reviewers?.length) {
+      // add them if missing
       this.reviewerOptions = addMissingItems(this.reviewerOptions, this.editedData.report_reviewers);
     }
   }
