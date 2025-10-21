@@ -64,6 +64,8 @@ type ActivityTeamMember = {
   first_name: string;
   middle_name: string;
   last_name: string;
+  is_active?: boolean;
+  has_active_realm?: boolean;
 };
 
 interface IActivityTpmPartner {
