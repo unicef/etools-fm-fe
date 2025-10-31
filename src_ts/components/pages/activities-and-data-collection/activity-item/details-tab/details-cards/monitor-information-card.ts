@@ -20,12 +20,14 @@ import {clone} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi.js';
 import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {addMissingItems} from '../../../../../utils/utils';
 
 export const CARD_NAME = 'monitor-information';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['tpm_partner', 'monitor_type', 'team_members', 'visit_lead'];
 
 const USER_STAFF: UserType = 'staff';
 const USER_TPM: UserType = 'tpm';
+const USER_BOTH: UserType = 'both';
 
 type MemberOptions = {
   userType: UserType;
@@ -36,7 +38,7 @@ type MemberOptions = {
 export class MonitorInformationCard extends BaseDetailsCard {
   @property() membersOptions: User[] = [];
   @property() tpmPartnersOptions: EtoolsTPMPartner[] = [];
-  @property() visitLeadOptions: User[] = [];
+  @property() visitLeadOptions: ActivityTeamMember[] = [];
   @property() userType!: UserType;
 
   @property() tpmPartner?: IActivityTpmPartner | null;
@@ -47,7 +49,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
   @query('#teamMembers')
   teamMembersDd!: EtoolsDropdownMultiEl;
 
-  userTypes: UserType[] = [USER_STAFF, USER_TPM];
+  userTypes: UserType[] = [USER_STAFF, USER_TPM, USER_BOTH];
   users: User[] = [];
   preserveSelectedLeadVisit = false;
 
@@ -115,7 +117,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
             </etools-radio-group>
           </div>
           <div class="row">
-            ${this.editedData.monitor_type === USER_TPM
+            ${this.editedData.monitor_type === USER_TPM || this.editedData.monitor_type === USER_BOTH
               ? html`
                   <etools-dropdown
                     class="col-md-6 col-12"
@@ -152,7 +154,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
               }}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.TEAM_MEMBERS')}"
-              .options="${this.membersOptions}"
+              .options="${this.membersOptions
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.team_members?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
+                  ...x,
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.teamMembers?.find((y) => Number(y.id) === Number(x.id))
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('team_members')}"
@@ -172,7 +187,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.setPersonResponsible(detail.selectedItem)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.VISIT_LEAD')}"
-              .options="${this.visitLeadOptions}"
+              .options="${this.visitLeadOptions
+                .filter((x) => !((!x.is_active || !x.has_active_realm) && this.originalData?.visit_lead?.id !== x.id))
+                .map((x: ActivityTeamMember) => ({
+                  ...x,
+                  disabled: (!x.is_active || !x.has_active_realm) && this.personResponsible?.id !== x.id
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('visit_lead')}"
@@ -201,7 +221,20 @@ export class MonitorInformationCard extends BaseDetailsCard {
                 this.updateModelValue('report_reviewers', detail.selectedItems)}"
               ?trigger-value-change-event="${this.isEditMode}"
               label="${translate('ACTIVITY_DETAILS.REPORT_REVIEWERS')}"
-              .options="${this.reviewerOptions}"
+              .options="${this.reviewerOptions
+                .filter(
+                  (x) =>
+                    !(
+                      (!x.is_active || !x.has_active_realm) &&
+                      !this.originalData?.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
+                    )
+                )
+                .map((x: User) => ({
+                  ...x,
+                  disabled:
+                    (!x.is_active || !x.has_active_realm) &&
+                    !this.editedData.report_reviewers?.find((y) => Number(y.id) === Number(x.id))
+                }))}"
               option-label="name"
               option-value="id"
               ?readonly="${!this.isEditMode || this.isFieldReadonly('report_reviewers')}"
@@ -242,6 +275,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
             userType: this.userType,
             tpmPartner: this.tpmPartner
           });
+          // in case user is tpm and type is 'Both', saved Unicef users will be missing so will add them
+          if (this.editedData.monitor_type === USER_BOTH && this.editedData.team_members?.length) {
+            this.membersOptions = addMissingItems(this.membersOptions, this.editedData.team_members);
+          }
           // Waited for dropdown options
           this.getReviewerOptions();
 
@@ -255,7 +292,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
           waitForCondition(() => !!this.teamMembersDd, 100).then(() => {
             // this.teamMembersDd.triggerValueChangeEvent = true;
             this.teamMembers = clone(this.editedData.team_members);
-            this.visitLeadOptions = (clone(this.editedData.team_members) || []) as User[];
+            this.updateVisitLeadOptions(
+              this.membersOptions.filter((y) => this.editedData.team_members?.find((x) => x.id === y.id)) || [],
+              this.editedData.visit_lead
+            );
           });
         },
         [USERS]
@@ -280,7 +320,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       store.dispatch<AsyncEffect>(loadStaticData(USERS));
     }
 
-    if (this.userType === USER_TPM && !data.tpmPartners) {
+    if ((this.userType === USER_TPM || this.userType === USER_BOTH) && !data.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
   }
@@ -294,11 +334,12 @@ export class MonitorInformationCard extends BaseDetailsCard {
   getMembersOptions({userType, tpmPartner}: MemberOptions): void {
     this.membersOptions = this.users.filter((user: User) => {
       let isValid = false;
-      if (userType) {
+      if (userType === USER_STAFF) {
         isValid = userType === user.user_type;
-      }
-      if (userType === USER_TPM) {
+      } else if (userType === USER_TPM) {
         isValid = tpmPartner ? tpmPartner.id === user.tpm_partner : false;
+      } else if (userType === USER_BOTH) {
+        isValid = user.user_type === USER_STAFF || (tpmPartner ? tpmPartner.id === user.tpm_partner : false);
       }
       return isValid;
     });
@@ -306,6 +347,10 @@ export class MonitorInformationCard extends BaseDetailsCard {
 
   getReviewerOptions(): void {
     this.reviewerOptions = this.users.filter((user: User) => user.user_type === USER_STAFF);
+    if (this.editedData.report_reviewers?.length) {
+      // add them if missing
+      this.reviewerOptions = addMissingItems(this.reviewerOptions, this.editedData.report_reviewers);
+    }
   }
 
   setTpmPartner(tpmPartner: EtoolsTPMPartner | null): void {
@@ -313,7 +358,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
       const id: number | null = tpmPartner ? tpmPartner.id : null;
       this.tpmPartner = tpmPartner;
       this.updateModelValue('tpm_partner', id);
-      this.getMembersOptions({userType: USER_TPM, tpmPartner});
+      this.getMembersOptions({userType: this.userType, tpmPartner});
     }
   }
 
@@ -321,15 +366,24 @@ export class MonitorInformationCard extends BaseDetailsCard {
     if (JSON.stringify(members) !== JSON.stringify(this.teamMembers)) {
       this.updateModelValue('team_members', members);
       this.teamMembers = members;
-
-      // visitLeadOptions will contain only selected team members
-      // and will preserve the previos selection if this is missing in selected teamMembers (backward compatibility)
-      const visitLeads = clone(members);
-      if (this.preserveSelectedLeadVisit && !visitLeads.some((x: User) => x.id === this.personResponsible?.id)) {
-        visitLeads.push(this.personResponsible as User);
-      }
-      this.visitLeadOptions = visitLeads;
+      this.updateVisitLeadOptions(members);
     }
+  }
+
+  updateVisitLeadOptions(members: ActivityTeamMember[], visit_lead?: ActivityTeamMember | null) {
+    // visitLeadOptions will contain only selected team members
+    // and will preserve the previous selection if this is missing in selected teamMembers (backward compatibility)
+    const visitLeads = clone(members);
+    if (
+      this.preserveSelectedLeadVisit &&
+      !visitLeads.some((x: ActivityTeamMember) => x.id === this.personResponsible?.id)
+    ) {
+      visitLeads.push(this.personResponsible as User);
+    }
+    if (visit_lead && !(visitLeads || []).find((x: ActivityTeamMember) => x.id === visit_lead.id)) {
+      visitLeads.push(visit_lead);
+    }
+    this.visitLeadOptions = visitLeads;
   }
 
   setPersonResponsible(responsible: User | null): void {
@@ -346,7 +400,7 @@ export class MonitorInformationCard extends BaseDetailsCard {
     this.userType = userType;
     this.updateModelValue('monitor_type', userType);
     const state: IRootState = store.getState() as IRootState;
-    if (userType === USER_TPM && !state.staticData.tpmPartners) {
+    if ((userType === USER_TPM || userType === USER_BOTH) && !state.staticData.tpmPartners) {
       store.dispatch<AsyncEffect>(loadStaticData(TPM_PARTNERS));
     }
     this.getMembersOptions({userType: userType, tpmPartner: this.tpmPartner});

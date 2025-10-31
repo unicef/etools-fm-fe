@@ -76,6 +76,8 @@ type User = {
   last_name: string;
   user_type: string;
   tpm_partner: null | number;
+  is_active?: boolean;
+  has_active_realm?: boolean;
 };
 
 type EtoolsLightLocation = {

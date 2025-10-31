@@ -18,6 +18,6 @@ type LogIssueHistory = {
   created: number;
 };
 
-type UserType = 'staff' | 'tpm';
+type UserType = 'staff' | 'tpm' | 'both';
 type RelatedType = 'cp_output' | 'partner' | 'location';
 type IssueStatus = 'new' | 'past';

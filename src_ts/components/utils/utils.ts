@@ -43,6 +43,16 @@ export const getMaxLength = (permissions: GenericObject, field: string): number 
   return getFromPath(permissions, ['actions', 'GET', field, 'max_length']);
 };
 
+export const addMissingItems = (mainArray: any[], itemsToCheckArray: any[]): any[] => {
+  const missingItems: any[] = (itemsToCheckArray || []).filter(
+    (s: any) => !(mainArray || []).find((f) => s.id === f.id)
+  );
+  if (missingItems?.length) {
+    return mainArray.concat(missingItems);
+  }
+  return mainArray;
+};
+
 export const getErrorText = (errors: GenericObject): string => {
   let errSource = '';
   if (errors.data && errors.data !== 'UnknownError') {

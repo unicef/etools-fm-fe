@@ -113,7 +113,8 @@
     "USER_TYPE": "El monitor de campo principal es",
     "USER_TYPES": {
       "STAFF": "Personal",
-      "TPM": "Monitores de terceros"
+      "TPM": "Monitores de terceros",
+      "BOTH": "Ambos"
     },
     "VISIT_LEAD": "Líder de Visita",
     "VISIT_LETTER": "Carta de visita",
@@ -332,7 +333,7 @@
   },
   "TEMPLATES": {
     "ADD_DETAIL": "Agregar detalle",
-    "EXPORT":"Exportar",
+    "EXPORT": "Exportar",
     "COLUMNS": {
       "DETAILS": "Detalles específicos a sondear",
       "METHODS": "Métodos",
