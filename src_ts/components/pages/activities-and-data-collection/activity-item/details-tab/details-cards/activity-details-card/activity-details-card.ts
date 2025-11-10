@@ -32,12 +32,16 @@ import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/li
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';
-import {applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
+import {applyDropdownTranslation, applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
+import {FACILITY_TYPE_DURATION} from '../../../../../../common/dropdown-options';
 import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import '../assign-duration-popup';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import {mapOptionsToObject} from '../../../../../../utils/utils';
 
 dayjs.extend(isSameOrBefore);
 
@@ -77,6 +81,9 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() visitGoals: VisitGoal[] = [];
   @property() facilityTypes: FacilityType[] = [];
   @property() locations: EtoolsLightLocation[] = [];
+  @property() facilitTypeDurationOptions: GenericObject = mapOptionsToObject(
+    applyDropdownTranslation(FACILITY_TYPE_DURATION)
+  );
 
   @property() activitySections: Section[] = [];
 
@@ -150,7 +157,15 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     return html`
       ${InputStyles}
       <style>
-        ${FormBuilderCardStyles}
+        ${FormBuilderCardStyles} etools-button.assign-duration {
+          margin-inline: -5px;
+        }
+        etools-button.assign-duration::part(label) {
+          text-transform: none;
+          text-wrap: auto;
+          word-break: break-word;
+          line-height: 20px;
+        }
       </style>
       <etools-card
         card-title="${translate('ACTIVITY_DETAILS.ACTIVITY_DETAILS')}"
@@ -205,7 +220,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             </etools-dropdown>
 
             <etools-dropdown
-              class="readonly-required col-md-3 col-12"
+              class="readonly-required col-md-2 col-12"
               .selected="${simplifyValue(this.editedData.location_site)}"
               label="${translate('SITE_TO_BE_VISITED')}"
               .options="${this.sitesList}"
@@ -216,24 +231,40 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             >
             </etools-dropdown>
 
-            <etools-dropdown-multi
-              .selectedValues="${simplifyValue(this.editedData.facility_types)}"
-              @etools-selected-items-changed="${({detail}: CustomEvent) =>
-                this.selectFacilityTypes(detail.selectedItems)}"
-              class="col-md-3 col-12"
-              ?trigger-value-change-event="${this.isEditMode}"
-              label="${translate('ACTIVITY_DETAILS.TYPE_OF_FACILITY')}"
-              .options="${this.facilityTypes}"
-              option-label="name"
-              option-value="id"
-              ?readonly="${!this.isEditMode}"
-              ?invalid="${this.errors && this.errors.typeOfFacility}"
-              .errorMessage="${this.errors && this.errors.typeOfFacility}"
-              @focus="${() => this.resetFieldError('type_of_facility')}"
-              @click="${() => this.resetFieldError('type_of_facility')}"
-              allow-outside-scroll
-              dynamic-align
-            ></etools-dropdown-multi>
+            <div class="col-md-4 col-12">
+              <etools-dropdown-multi
+                id="edmFacilityTypes"
+                .selectedValues="${simplifyValue(this.editedData.facility_types)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  this.selectFacilityTypes(detail.selectedItems)}"
+                class="w100"
+                ?trigger-value-change-event="${this.isEditMode}"
+                label="${translate('ACTIVITY_DETAILS.TYPE_OF_FACILITY')}"
+                .options="${this.facilityTypes.map((x: any) => ({
+                  ...x,
+                  selectedTemplate: this.getFacilityWithDurations(x)
+                }))}"
+                option-label="name"
+                option-value="id"
+                ?readonly="${!this.isEditMode}"
+                ?invalid="${this.errors && this.errors.typeOfFacility}"
+                .errorMessage="${this.errors && this.errors.typeOfFacility}"
+                @focus="${() => this.resetFieldError('type_of_facility')}"
+                @click="${() => this.resetFieldError('type_of_facility')}"
+                allow-outside-scroll
+                dynamic-align
+              ></etools-dropdown-multi>
+
+              <etools-button
+                class="primary assign-duration"
+                variant="text"
+                target="_blank"
+                ?hidden="${!this.isEditMode}"
+                @click="${this.openFacilityDurationPopup}"
+              >
+                ${translate('ACTIVITY_DETAILS.ASSIGN_INFRASTRUCTURE_TYPE')}
+              </etools-button>
+            </div>
 
             <!--     Start Date and End Date inputs     -->
             <div class="col-md-3 col-12">
@@ -266,6 +297,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
             <!--     Sections dropdown     -->
             <div class="col-md-6 col-12">
               <etools-dropdown-multi
+                id="edmSections"
                 .selectedValues="${simplifyValue(this.activitySections)}"
                 @etools-selected-items-changed="${({detail}: CustomEvent) => this.selectSections(detail.selectedItems)}"
                 ?trigger-value-change-event="${this.isEditMode}"
@@ -370,6 +402,15 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       </etools-card>
     `;
   }
+
+  getFacilityWithDurations(x: any) {
+    const found = (this.editedData?.facility_types || []).find((f) => f.id == x.id);
+    if (found?.durations?.length) {
+      return `${x.name} (${found.durations.map((x: string) => this.facilitTypeDurationOptions[x] || '').join(', ')})`;
+    }
+    return x.name;
+  }
+
   // || this.isFieldReadonly('goal_of_visit')
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
     const element: HTMLElement = container.shadowRoot!.querySelector('.card-container') as HTMLElement;
@@ -386,9 +427,79 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   }
 
   selectFacilityTypes(facilityTypes: Section[]): void {
-    if (JSON.stringify(facilityTypes) !== JSON.stringify(this.editedData.facility_types)) {
-      this.updateModelValue('facility_types', facilityTypes);
+    const selectedFacilityTypeIDs = simplifyValue(facilityTypes || []);
+    const existingFacilityTypeIDs = simplifyValue(this.editedData.facility_types || []);
+    if (JSON.stringify(selectedFacilityTypeIDs) !== JSON.stringify(existingFacilityTypeIDs)) {
+      let sectionsToHave: number[] = [];
+      let found!: any;
+      (facilityTypes || []).forEach((x: any) => {
+        // preserve durations
+        found = (this.editedData.facility_types || []).find((y: any) => y.id == x.id);
+        if (found) {
+          x.durations = found.durations;
+        }
+        found = (this.facilityTypes || []).find((y: any) => y.id == x.id);
+        if (found && found.related_sections?.length) {
+          sectionsToHave = sectionsToHave.concat(found.related_sections.map((x: any) => Number(x.id)));
+        }
+      });
+
+      const removedFacilityIDs = existingFacilityTypeIDs.filter((x: any) => !selectedFacilityTypeIDs.includes(x.id));
+      let sectionIDsToBeRemoved: number[] = [];
+      (removedFacilityIDs || []).forEach((removedId: any) => {
+        found = (this.facilityTypes || []).find((y: any) => Number(y.id) == Number(removedId));
+        if (found && found.related_sections?.length) {
+          sectionIDsToBeRemoved = sectionIDsToBeRemoved.concat(found.related_sections.map((x: any) => Number(x.id)));
+        }
+      });
+      // save with durations, not only IDs
+      this.editedData.facility_types = [...facilityTypes];
+      const allSections = this.sections.length ? this.sections : this.activitySections;
+      let editedSections = clone(this.activitySections || []);
+
+      // remove sections
+      editedSections = editedSections.filter((x) => !sectionIDsToBeRemoved.includes(Number(x.id)));
+
+      // add sections
+      sectionsToHave.forEach((sectionId: any) => {
+        if (sectionId && !editedSections.some((x) => Number(x.id) == sectionId)) {
+          const found = allSections.find((x) => Number(x.id) == sectionId) as Section;
+          if (found) {
+            editedSections.push(found);
+          }
+        }
+      });
+      this.selectSections(editedSections);
     }
+  }
+
+  openFacilityDurationPopup(): void {
+    (this.editedData.facility_types || []).forEach((x: any) => {
+      let found: any;
+      if (!x.name) {
+        found = this.facilityTypes.find((y: any) => y.id == x.id);
+        if (found) {
+          x.name = found.name;
+        }
+      }
+    });
+    openDialog<any>({
+      dialog: 'assign-duration-popup',
+      dialogData: {
+        facility_types: clone(this.editedData.facility_types || [])
+      }
+    }).then(({confirmed, response}: IDialogResponse<any>) => {
+      if (!confirmed) {
+        return;
+      }
+      (response || []).forEach((facility: any) => {
+        const found = this.editedData.facility_types?.find((x: any) => x.id == facility.id);
+        if (found) {
+          found.durations = facility.durations || [];
+        }
+      });
+      this.requestUpdate();
+    });
   }
 
   selectOffices(offices: Office[]): void {
@@ -498,7 +609,10 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     }
 
     this.activeLanguageUnsubscribe = store.subscribe(
-      activeLanguageSelector(() => (this.pageTabs = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS)))
+      activeLanguageSelector(() => {
+        this.pageTabs = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
+        this.facilitTypeDurationOptions = mapOptionsToObject(applyDropdownTranslation(FACILITY_TYPE_DURATION));
+      })
     );
   }
 

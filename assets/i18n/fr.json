@@ -122,6 +122,10 @@
     "REVIEWED_BY": "Revu par",
     "VISIT_GOALS": "Objectifs de la visite",
     "TYPE_OF_FACILITY": "Type d'installation",
+    "ASSIGN_FACILITY_DURATION": "Durée d'affectation de l'installation",
+    "ASSIGN_INFRASTRUCTURE_TYPE": "Attribuer un type d'infrastructure",
+    "INFRASTRUCTURE_TYPE": "Type d'infrastructure",
+    "FACILITY_DURATION": "Durée de l'installation",
     "OBJECTIVE": "Objective"
   },
   "ACTIVITY_ITEM": {
@@ -449,6 +453,11 @@
     "PARTNER": "Partenaire",
     "OUTPUT": "Extrant du PP",
     "INTERVENTION": "PD/SPD"
+  },
+  "FACILITY_TYPE_DURATION": {
+    "TEMPORARY": "Temporaire",
+    "SEMI_PERMANENT": "Semi-permanent",
+    "PERMANENT": "Permanent"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Texte",

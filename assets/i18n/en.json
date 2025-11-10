@@ -122,6 +122,8 @@
     "REVIEWED_BY": "Reviewed by",
     "VISIT_GOALS": "Visit goals",
     "TYPE_OF_FACILITY": "Type of facility",
+    "ASSIGN_INFRASTRUCTURE_TYPE": "Assign Infrastructure Type",
+    "INFRASTRUCTURE_TYPE": "Infrastructure Type",
     "OBJECTIVE": "Objective"
   },
   "ACTIVITY_ITEM": {
@@ -449,6 +451,11 @@
     "PARTNER": "Partner",
     "OUTPUT": "CP Output",
     "INTERVENTION": "PD/SPD"
+  },
+  "FACILITY_TYPE_DURATION": {
+    "TEMPORARY": "Temporary",
+    "SEMI_PERMANENT": "Semi Permanent",
+    "PERMANENT": "Permanent"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Text",

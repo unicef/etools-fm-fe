@@ -32,6 +32,7 @@ interface IActivityDetails extends IListActivity {
   overlapping_entities: OverlappingEntities;
   visit_goals?: any[];
   facility_types?: any[];
+  facility_type_duration: string;
   objective?: string;
 }
 

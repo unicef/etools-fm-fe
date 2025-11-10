@@ -73,6 +73,9 @@ export class BaseDetailsCard extends CommentsMixin(DataMixin()<IActivityDetails>
     const diff: Partial<IActivityDetails> = getDifference<IActivityDetails>(this.originalData || {}, this.editedData, {
       toRequest: true
     });
+    if (diff?.facility_types) {
+      diff.facility_types = this.editedData.facility_types;
+    }
     if (Object.entries(diff).length) {
       this.isUpdate = true;
       if (this.editedData.id) {
