@@ -18,6 +18,7 @@ type VisitGoal = {
 type FacilityType = {
   id: number;
   name: string;
+  durations: any[];
 };
 
 type EditedSite = Partial<Site>;

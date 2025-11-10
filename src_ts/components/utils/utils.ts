@@ -43,6 +43,13 @@ export const getMaxLength = (permissions: GenericObject, field: string): number 
   return getFromPath(permissions, ['actions', 'GET', field, 'max_length']);
 };
 
+export const mapOptionsToObject = (options: DefaultDropdownOption[]): object => {
+  const resp: GenericObject = {};
+  (options || []).forEach((x: DefaultDropdownOption) => (resp[x.value] = x.display_name));
+
+  return resp;
+};
+
 export const addMissingItems = (mainArray: any[], itemsToCheckArray: any[]): any[] => {
   const missingItems: any[] = (itemsToCheckArray || []).filter(
     (s: any) => !(mainArray || []).find((f) => s.id === f.id)
