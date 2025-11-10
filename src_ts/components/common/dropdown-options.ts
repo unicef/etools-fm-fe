@@ -27,6 +27,11 @@ export const PARTNER = 'partner';
 export const OUTPUT = 'output';
 export const INTERVENTION = 'intervention';
 
+//FACILITY TYPE DURATION
+export const TEMPORARY = 'temporary';
+export const SEMI_PERMANENT = 'semi_permanent';
+export const PERMANENT = 'permanent';
+
 // MONITOR_TYPES
 export const STAFF = 'staff';
 export const TPM = 'tpm';
@@ -43,6 +48,12 @@ export const LEVELS: DefaultDropdownOption<string>[] = [
   {value: PARTNER, display_name: `LEVELS_OPTIONS.PARTNER`},
   {value: OUTPUT, display_name: `LEVELS_OPTIONS.OUTPUT`},
   {value: INTERVENTION, display_name: `LEVELS_OPTIONS.INTERVENTION`}
+];
+
+export const FACILITY_TYPE_DURATION: DefaultDropdownOption<string>[] = [
+  {value: TEMPORARY, display_name: `FACILITY_TYPE_DURATION.TEMPORARY`},
+  {value: SEMI_PERMANENT, display_name: `FACILITY_TYPE_DURATION.SEMI_PERMANENT`},
+  {value: PERMANENT, display_name: `FACILITY_TYPE_DURATION.PERMANENT`}
 ];
 
 export const MONITOR_TYPES: DefaultDropdownOption<string>[] = [
