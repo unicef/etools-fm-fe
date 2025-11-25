@@ -122,6 +122,8 @@
     "REVIEWED_BY": "تمت مراجعته من قبل",
     "VISIT_GOALS": "أهداف الزيارة",
     "TYPE_OF_FACILITY": "نوع المنشأة",
+    "ASSIGN_INFRASTRUCTURE_TYPE": "تعيين نوع البنية التحتية",
+    "INFRASTRUCTURE_TYPE": "نوع البنية التحتية",
     "OBJECTIVE": "موضوعي"
   },
   "ACTIVITY_ITEM": {
@@ -457,6 +459,11 @@
     "INTERVENTION": "وثيقة البرامج/وثيقة البرامج المبسطة",
     "OUTPUT": "مخرج البرنامج القطري",
     "PARTNER": "الشريك"
+  },
+  "FACILITY_TYPE_DURATION": {
+    "TEMPORARY": "مؤقت",
+    "SEMI_PERMANENT": "شبه دائمة",
+    "PERMANENT": "دائم"
   },
   "ANSWER_TYPE_OPTIONS": {
     "BOOL": "قيمة منطقية",
