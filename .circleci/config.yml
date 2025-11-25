@@ -74,3 +74,4 @@ workflows:
                 - master
                 - staging
                 - develop
+                - update-packages
