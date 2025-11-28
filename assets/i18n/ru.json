@@ -121,6 +121,8 @@
     "REVIEWED_BY": "Рассмотрено",
     "VISIT_GOALS": "Цели посещения",
     "TYPE_OF_FACILITY": "Тип объекта",
+    "ASSIGN_INFRASTRUCTURE_TYPE": "Назначить тип инфраструктуры",
+    "INFRASTRUCTURE_TYPE": "Тип инфраструктуры",
     "OBJECTIVE": "Цель"
   },
   "ACTIVITY_ITEM": {
@@ -446,6 +448,11 @@
     "PARTNER": "Localized Partner",
     "OUTPUT": "Localized CP Output",
     "INTERVENTION": "Localized PD/SPD"
+  },
+  "FACILITY_TYPE_DURATION": {
+    "TEMPORARY": "Временный",
+    "SEMI_PERMANENT": "Полупостоянный",
+    "PERMANENT": "Постоянный"
   },
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Localized Text",

@@ -240,10 +240,10 @@ export class LocationSitesWidgetComponent extends LitElement {
       this.locationSearch = value;
       if (this.locationSearch) {
         this.sitesList = this.sites.filter((site: Site) => {
-          return site.name.toLowerCase().includes(value.toLowerCase());
+          return site.is_active && site.name.toLowerCase().includes(value.toLowerCase());
         });
       } else {
-        this.sitesList = [...this.sites];
+        this.sitesList = this.sites.filter((s: Site) => s.is_active);
       }
     }
   }

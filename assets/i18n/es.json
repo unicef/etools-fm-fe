@@ -124,6 +124,8 @@
     "REVIEWED_BY": "Revisado por",
     "VISIT_GOALS": "Objetivos de la visita",
     "TYPE_OF_FACILITY": "Tipo de instalación",
+    "ASSIGN_INFRASTRUCTURE_TYPE": "Asignar tipo de infraestructura",
+    "INFRASTRUCTURE_TYPE": "Tipo de infraestructura",
     "OBJECTIVE": "Objetivo"
   },
   "ACTIVITY_ITEM": {
@@ -459,6 +461,11 @@
     "PARTNER": "Socio",
     "OUTPUT": "Producto de CP",
     "INTERVENTION": "PD/SPD"
+  },
+  "FACILITY_TYPE_DURATION": {
+    "TEMPORARY": "Temporario",
+    "SEMI_PERMANENT": "Semipermanente",
+    "PERMANENT": "Permanente"
   },
   "ANSWER_TYPE_OPTIONS": {
     "BOOL": "Booleano",
