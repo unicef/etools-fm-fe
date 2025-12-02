@@ -3,7 +3,7 @@ RUN apk update
 RUN apk add --update bash
 
 RUN apk add git
-RUN npm install -g typescript@4.x
+RUN npm install -g typescript@5.3.3
 
 WORKDIR /code
 CMD ["sh", "-c", "npm start"]
