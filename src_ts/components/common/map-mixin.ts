@@ -1,6 +1,38 @@
 const TILE_LAYER: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
 const TILE_LAYER_LABELS: Readonly<string> = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
 const arcgisWebmapId = '71608a6be8984b4694f7c613d7048114'; // Default WebMap ID
+const arcgisWebMapDataUrl = `https://www.arcgis.com/sharing/rest/content/items/${arcgisWebmapId}/data?f=json`;
+
+interface ArcgisTargetGeometry {
+  xmin?: number;
+  ymin?: number;
+  xmax?: number;
+  ymax?: number;
+  x?: number;
+  y?: number;
+}
+
+interface ArcgisWebMapLayer {
+  id?: string;
+  layerType?: string;
+  templateUrl?: string;
+  url?: string;
+  opacity?: number;
+  visibility?: boolean;
+  title?: string;
+}
+
+interface ArcgisWebMapData {
+  baseMap?: {
+    baseMapLayers?: ArcgisWebMapLayer[];
+  };
+  operationalLayers?: ArcgisWebMapLayer[];
+  initialState?: {
+    viewpoint?: {
+      targetGeometry?: ArcgisTargetGeometry;
+    };
+  };
+}
 
 export interface IMarker extends L.Marker {
   staticData?: any;
@@ -12,6 +44,8 @@ export class MapHelper {
   staticMarkers: IMarker[] | null = null;
   dynamicMarker: IMarker | null = null;
   markerClusters: any | null = null;
+  private arcgisWebMapData: ArcgisWebMapData | null = null;
+  private arcgisWebMapPromise: Promise<ArcgisWebMapData> | null = null;
 
   arcgisMapIsAvailable(): Promise<boolean> {
     return fetch(`https://www.arcgis.com/sharing/rest/content/items/${arcgisWebmapId}?f=json`)
@@ -55,8 +89,6 @@ export class MapHelper {
     await this.loadScript('node_modules/leaflet/dist/leaflet.js');
     await this.loadScript('node_modules/esri-leaflet/dist/esri-leaflet.js');
     await this.loadScript('node_modules/leaflet.markercluster/dist/leaflet.markercluster.js');
-    await this.loadScript('node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js');
-    await this.loadScript('assets/packages/esri-leaflet-webmap.js');
     return arcgisMapIsAvailable ? this.initArcgisMap(element) : this.initOpenStreetMap(element);
   }
 
@@ -72,8 +104,10 @@ export class MapHelper {
   }
 
   initArcgisMap(mapElement: HTMLElement): void {
-    this.webmap = (L as any).esri.webMap(arcgisWebmapId, {map: L.map(mapElement), maxZoom: 20, minZoom: 2});
-    this.map = this.webmap._map;
+    this.loadArcgisMap(mapElement).catch((error: any) => {
+      console.error('Failed to initialize ArcGIS map, falling back to OpenStreetMap', error);
+      this.initOpenStreetMap(mapElement);
+    });
   }
 
   setStaticMarkers(markersData: MarkerDataObj[]): void {
@@ -196,5 +230,111 @@ export class MapHelper {
     }
 
     return marker;
+  }
+
+  private async loadArcgisMap(mapElement: HTMLElement): Promise<void> {
+    const webMapData = await this.getArcgisWebMapData();
+    const map = L.map(mapElement, {maxZoom: 20, minZoom: 2});
+    this.map = map;
+    this.webmap = {_map: map, _loaded: false};
+    const baseLayers = webMapData.baseMap?.baseMapLayers || [];
+    const operationalLayers = webMapData.operationalLayers || [];
+
+    this.applyArcgisInitialViewpoint(map, webMapData);
+    [...baseLayers, ...operationalLayers].forEach((layer) => this.addArcgisLayerToMap(map, layer));
+    this.webmap._loaded = true;
+  }
+
+  private getArcgisWebMapData(): Promise<ArcgisWebMapData> {
+    if (this.arcgisWebMapData) {
+      return Promise.resolve(this.arcgisWebMapData);
+    }
+
+    if (!this.arcgisWebMapPromise) {
+      this.arcgisWebMapPromise = fetch(arcgisWebMapDataUrl)
+        .then((res) => res.json())
+        .then((data: ArcgisWebMapData) => {
+          this.arcgisWebMapData = data;
+          return data;
+        })
+        .catch((error) => {
+          this.arcgisWebMapPromise = null;
+          throw error;
+        });
+    }
+
+    return this.arcgisWebMapPromise;
+  }
+
+  private applyArcgisInitialViewpoint(map: L.Map, data: ArcgisWebMapData): void {
+    const geometry = data.initialState?.viewpoint?.targetGeometry;
+    if (!geometry) {
+      map.setView([0, 0], 2);
+      return;
+    }
+
+    if (
+      typeof geometry.xmin === 'number' &&
+      typeof geometry.ymin === 'number' &&
+      typeof geometry.xmax === 'number' &&
+      typeof geometry.ymax === 'number'
+    ) {
+      const sw = L.CRS.EPSG3857.unproject(L.point(geometry.xmin, geometry.ymin));
+      const ne = L.CRS.EPSG3857.unproject(L.point(geometry.xmax, geometry.ymax));
+      map.fitBounds(L.latLngBounds(sw, ne), {animate: false});
+      return;
+    }
+
+    if (typeof geometry.x === 'number' && typeof geometry.y === 'number') {
+      const center = L.CRS.EPSG3857.unproject(L.point(geometry.x, geometry.y));
+      map.setView(center, 4);
+      return;
+    }
+
+    map.setView([0, 0], 2);
+  }
+
+  private addArcgisLayerToMap(map: L.Map, layer: ArcgisWebMapLayer | undefined): void {
+    if (!layer || layer.visibility === false) {
+      return;
+    }
+
+    const opacity = typeof layer.opacity === 'number' ? layer.opacity : 1;
+    switch (layer.layerType) {
+      case 'WebTiledLayer':
+        if (!layer.templateUrl) {
+          console.warn('ArcGIS WebTiledLayer missing templateUrl', layer);
+          return;
+        }
+        L.tileLayer(this.normalizeTemplateUrl(layer.templateUrl), {
+          opacity,
+          detectRetina: layer.templateUrl.includes('@2x')
+        }).addTo(map);
+        return;
+      case 'ArcGISTiledMapServiceLayer':
+        if (layer.url && (L as any).esri?.tiledMapLayer) {
+          (L as any).esri.tiledMapLayer({url: layer.url, opacity}).addTo(map);
+        }
+        return;
+      case 'ArcGISFeatureLayer':
+        if (layer.url && (L as any).esri?.featureLayer) {
+          (L as any).esri.featureLayer({url: layer.url, opacity}).addTo(map);
+        }
+        return;
+      case 'ArcGISMapServiceLayer':
+        if (layer.url && (L as any).esri?.dynamicMapLayer) {
+          (L as any).esri.dynamicMapLayer({url: layer.url, opacity}).addTo(map);
+        }
+        return;
+      default:
+        console.warn(`Unsupported ArcGIS layer type: ${layer.layerType || 'undefined'}`, layer);
+    }
+  }
+
+  private normalizeTemplateUrl(templateUrl: string): string {
+    return templateUrl
+      .replace(/\{level\}/gi, '{z}')
+      .replace(/\{col\}/gi, '{x}')
+      .replace(/\{row\}/gi, '{y}');
   }
 }
