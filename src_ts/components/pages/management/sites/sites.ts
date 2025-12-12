@@ -21,6 +21,7 @@ import {SitesTabStyles} from './sites.styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {
   EtoolsRouteDetails,
+  EtoolsRouteQueryParam,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
@@ -38,9 +39,11 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
 
   constructor() {
     super();
-    this.debouncedLoading = debounce(() => {
+
+    this.searchKeyDown = debounce(this.searchKeyDown.bind(this), 500) as any;
+    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
-      store.dispatch<AsyncEffect>(loadSiteLocations()).then(() => (this.listLoadingInProcess = false));
+      store.dispatch<AsyncEffect>(loadSiteLocations(params)).then(() => (this.listLoadingInProcess = false));
     }, 100);
   }
 
@@ -58,15 +61,13 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     this.onRouteChange(currentRoute);
 
     this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: Site[] | null) => {
+      sitesSelector((sites: IListData<Site> | null) => {
         if (!sites) {
           return;
         }
-        this.sitesObjects = sites;
-        const paramsAreValid: boolean = this.checkParams(this.queryParams);
-        if (paramsAreValid) {
-          this.refreshData();
-        }
+        this.count = sites.count;
+        this.sitesObjects = sites.results;
+        this.items = locationsInvert(sites.results);
       })
     );
   }
@@ -85,21 +86,14 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     const paramsAreValid: boolean = this.checkParams(queryParams, true);
     if (paramsAreValid) {
       this.queryParams = queryParams;
-    } else {
-      return;
-    }
-
-    if (!this.sitesObjects) {
-      this.debouncedLoading();
-    } else {
-      this.refreshData();
+      this.debouncedLoading(this.queryParams);
     }
   }
 
   checkParams(params?: EtoolsRouteQueryParams | null, update?: boolean): boolean {
     const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid && update) {
-      updateQueryParams({page: 1, page_size: 10});
+      updateQueryParams({page: 1, page_size: 10, is_active: true});
     }
     return !invalid;
   }
@@ -135,22 +129,14 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   changeShowInactive(event: CustomEvent): void {
     // prevent updating during initialization
     const checked = (event.currentTarget as HTMLInputElement).checked;
-    if (!this.sitesObjects || checked === null || checked === undefined) {
-      return;
-    }
     if (checked) {
-      updateQueryParams({show_inactive: checked, page: 1});
+      updateQueryParams({is_active: null, page: 1});
     } else {
-      updateQueryParams({show_inactive: null, page: 1});
+      updateQueryParams({is_active: true, page: 1});
     }
-    this.refreshData();
   }
 
   searchKeyDown({detail}: CustomEvent): void {
-    // prevent updating during initialization
-    if (!this.sitesObjects) {
-      return;
-    }
     const {value} = detail;
     const currentValue: number | string = (this.queryParams && this.queryParams.search) || 0;
     if (value === null || value === currentValue || value === undefined) {
@@ -163,60 +149,6 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     if (value.length > 1) {
       updateQueryParams({search: value, page: 1});
     }
-    if (value.length !== 1) {
-      this.refreshData();
-    }
-  }
-
-  private filterSearch(sitesObject: Site[]): Site[] {
-    if (!this.queryParams) {
-      return sitesObject;
-    }
-    if (this.queryParams.search) {
-      const match: string = this.queryParams.search.toLowerCase();
-      return sitesObject.filter((site: Site) => {
-        const siteName: string = site.parent.name.toLowerCase();
-        const parentName: string = site.name.toLowerCase();
-        return !!~siteName.indexOf(match) || !!~parentName.indexOf(match);
-      });
-    }
-    return sitesObject;
-  }
-
-  private refreshData(): void {
-    let sitesObject: Site[] = this.filterSites(this.sitesObjects || []);
-    this.count = sitesObject.length;
-    sitesObject = this.filterPagination(sitesObject);
-    this.items = locationsInvert(sitesObject);
-  }
-
-  private filterSites(sitesObject: Site[]): Site[] {
-    const sites: Site[] = this.filterShowInactive(sitesObject);
-    return this.filterSearch(sites);
-  }
-
-  private filterShowInactive(sitesObject: Site[]): Site[] {
-    if (!this.queryParams) {
-      return sitesObject;
-    }
-    if (!this.queryParams.show_inactive) {
-      return sitesObject.filter((site: Site) => site.is_active);
-    }
-    return sitesObject;
-  }
-
-  private filterPagination(sitesObject: Site[]): Site[] {
-    if (!this.queryParams) {
-      return sitesObject;
-    }
-    const page: number = +this.queryParams.page;
-    const pageSize: number = +this.queryParams.page_size;
-    if (!page || !pageSize) {
-      return sitesObject;
-    }
-    const startIndex: number = page * pageSize - pageSize;
-    const endIndex: number = page * pageSize;
-    return sitesObject.slice(startIndex, endIndex);
   }
 
   static get styles(): CSSResult[] {

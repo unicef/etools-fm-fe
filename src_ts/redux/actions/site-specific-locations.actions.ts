@@ -8,7 +8,7 @@ export enum SitesActionsTypes {
 export class SetSpecificLocations {
   readonly type: SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST = SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST;
 
-  constructor(public payload: IStatedListData<Site>) {}
+  constructor(public payload: IListData<Site>) {}
 }
 
 export class StartSiteLocationsUpdating {

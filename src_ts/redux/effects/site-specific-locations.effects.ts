@@ -8,26 +8,23 @@ import {Dispatch} from 'redux';
 import {request} from '../../endpoints/request';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {SITE_DETAILS, SITES_LIST} from '../../endpoints/endpoints-list';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 
-export function loadSiteLocations(): (dispatch: Dispatch) => Promise<void> {
+export function loadSiteLocations(params: EtoolsRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(SITES_LIST);
-    return request<Site[]>(url, {method: 'GET'})
-      .catch(() => {
-        // dispatch(new AddNotification('Can not Load locations'));
-        return [] as Site[];
-      })
-      .then((response: Site[]) => {
-        const respObject: IStatedListData<Site> = {
-          count: response.length,
-          next: null,
-          previous: null,
-          results: response,
-          current: url
-        };
-        dispatch(new SetSpecificLocations(respObject));
-      });
+    const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
+    return request<IListData<Site>>(resultUrl, {method: 'GET'}).then((response: IListData<Site>) => {
+      dispatch(new SetSpecificLocations(response));
+    });
   };
+}
+
+export function loadSites(params: EtoolsRouteQueryParams): Promise<IListData<Site>> {
+  const {url}: IResultEndpoint = getEndpoint(SITES_LIST);
+  const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
+  return request<IListData<Site>>(resultUrl, {method: 'GET'});
 }
 
 export function updateSiteLocation(id: number, siteLocation: EditedSite): (dispatch: Dispatch) => Promise<void> {

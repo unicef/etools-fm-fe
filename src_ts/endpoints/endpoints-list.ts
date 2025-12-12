@@ -199,7 +199,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [SITES_LIST]: {
-    url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
+    url: '/api/v1/field-monitoring/settings/sites/'
   },
 
   [SITE_DETAILS]: {

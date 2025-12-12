@@ -57,10 +57,10 @@ export class IssueTrackerTabComponent extends SiteMixin(
       store.dispatch<AsyncEffect>(requestLogIssue(params));
       // .then(() => this.dispatchOnStore(new StopGlobalLoading({type: 'specificLocations'})));
     }, 100);
-    const state: IRootState = store.getState();
-    if (!state.specificLocations.data) {
-      store.dispatch<AsyncEffect>(loadSiteLocations());
-    }
+    // const state: IRootState = store.getState();
+    // if (!state.specificLocations.data) {
+    //   store.dispatch<AsyncEffect>(loadSiteLocations());
+    // }
     this.loadStaticData();
   }
 

@@ -1,4 +1,4 @@
-import {html, css, TemplateResult, CSSResult} from 'lit';
+import {html, css, TemplateResult, CSSResult, PropertyValues} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
@@ -77,10 +77,10 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
   @property() widgetOpened = false;
-  @property() sitesList: Site[] = [];
   @property() visitGoals: VisitGoal[] = [];
   @property() facilityTypes: FacilityType[] = [];
   @property() locations: EtoolsLightLocation[] = [];
+  @property() siteOption: Site[] = [];
   @property() facilitTypeDurationOptions: GenericObject = mapOptionsToObject(
     applyDropdownTranslation(FACILITY_TYPE_DURATION)
   );
@@ -223,7 +223,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
               class="readonly-required col-md-2 col-12"
               .selected="${simplifyValue(this.editedData.location_site)}"
               label="${translate('SITE_TO_BE_VISITED')}"
-              .options="${this.sitesList}"
+              .options="${this.siteOption || []}"
               option-label="name"
               option-value="id"
               readonly
@@ -535,11 +535,17 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     return html`
       <location-sites-widget
         .selectedLocation="${simplifyValue(this.editedData.location)}"
-        .selectedSites="${this.editedData.location_site ? [simplifyValue(this.editedData.location_site)] : []}"
+        .selectedSites="${this.editedData.location_site ? [this.editedData.location_site] : []}"
         @sites-changed="${({detail}: CustomEvent) => {
+          console.log('@sites-changed', detail.sites);
+          if (detail.sites?.length) {
+            console.log('@sites-changed', detail.sites);
+            this.siteOption = detail.sites;
+          }
           this.updateModelValue('location_site', detail.sites[0] || null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
+          console.log('@location-changed', detail.location);
           this.updateModelValue('location', detail.location);
         }}"
       ></location-sites-widget>
@@ -550,11 +556,17 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     return html`
       <location-widget
         .selectedLocation="${simplifyValue(this.editedData.location)}"
-        .selectedSites="${this.editedData.location_site ? [simplifyValue(this.editedData.location_site)] : []}"
+        .selectedSites="${this.editedData.location_site ? [this.editedData.location_site] : []}"
         @sites-changed="${({detail}: CustomEvent) => {
+          console.log('@sites-changed', detail.sites);
+          if (detail.sites?.length) {
+            console.log('@sites-changed', detail.sites);
+            this.siteOption = detail.sites;
+          }
           this.updateModelValue('location_site', detail.sites[0] || null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
+          console.log('@location-changed', detail.location);
           this.updateModelValue('location', detail.location);
         }}"
       ></location-widget>
@@ -576,15 +588,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       )
     );
 
-    this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: Site[] | null) => {
-        if (!sites) {
-          return;
-        }
-        this.sitesList = sites;
-      })
-    );
-
     this.visitGoalsUnsubscribe = store.subscribe(
       visitGoalsSelector((visitGoals: VisitGoal[] | undefined) => {
         if (!visitGoals) {
@@ -603,10 +606,10 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       })
     );
 
-    const state: IRootState = store.getState();
-    if (!state.specificLocations.data) {
-      store.dispatch<AsyncEffect>(loadSiteLocations());
-    }
+    // const state: IRootState = store.getState();
+    // if (!state.specificLocations.data) {
+    //   store.dispatch<AsyncEffect>(loadSiteLocations());
+    // }
 
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector(() => {
@@ -614,6 +617,12 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
         this.facilitTypeDurationOptions = mapOptionsToObject(applyDropdownTranslation(FACILITY_TYPE_DURATION));
       })
     );
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('editedData')) {
+      this.siteOption = this.editedData?.location_site ? [this.editedData.location_site] : [];
+    }
   }
 
   disconnectedCallback(): void {

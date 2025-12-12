@@ -12,6 +12,9 @@ import {
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 import {ACTIVE_STATUS_FILTER} from '../activity-item/statuses-actions/activity-statuses';
+import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
+import {locationsInvert} from '../../management/sites/locations-invert';
+import {construct} from 'ramda';
 
 export interface ActivityFilter extends EtoolsFilter {
   selectionOptionsEndpoint?: string;
@@ -53,7 +56,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilterKey);
 
-export function getAllAtivitiesFilters() {
+export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
   return [
     {
       filterName: translate('ACTIVITIES_LIST.REFERENCE_NO') as any as string,
@@ -149,7 +152,8 @@ export function getAllAtivitiesFilters() {
       selected: true,
       minWidth: '350px',
       hideSearch: false,
-      disabled: false
+      disabled: false,
+      loadDataDropdownOptions: loadSiteDropdownOptions
     },
     {
       filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS') as any as string,
@@ -268,9 +272,9 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.sections__in
 ];
 
-export const getActivitiesFilters = (isUnicefUser: boolean) => {
+export const getActivitiesFilters = (isUnicefUser: boolean, loadSiteDropdownOptions: any) => {
   if (isUnicefUser) {
-    return getAllAtivitiesFilters();
+    return getAllAtivitiesFilters(loadSiteDropdownOptions);
   }
-  return getAllAtivitiesFilters().filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
+  return getAllAtivitiesFilters(loadSiteDropdownOptions).filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
 };
