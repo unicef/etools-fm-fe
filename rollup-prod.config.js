@@ -39,10 +39,6 @@ const copyConfig = {
     { src: 'upgrade-browser.html', dest: 'src' },
     { src: 'node_modules/leaflet/dist/leaflet.js', dest: 'src/node_modules/leaflet/dist' },
     { src: 'node_modules/esri-leaflet/dist/esri-leaflet.js', dest: 'src/node_modules/esri-leaflet/dist' },
-    {
-      src: 'node_modules/@mapbox/leaflet-omnivore/leaflet-omnivore.min.js',
-      dest: 'src/node_modules/@mapbox/leaflet-omnivore/'
-    },
     { src: 'node_modules/leaflet/dist/leaflet.css', dest: 'src/node_modules/leaflet/dist' },
     { src: 'node_modules/leaflet/dist/images/**', dest: 'src/node_modules/leaflet/dist/images' },
     {
