@@ -61,7 +61,7 @@ export class LocationWidgetComponent extends LitElement {
   private pathLoadingUnsubscribe!: Unsubscribe;
   private widgetItemsUnsubscribe!: Unsubscribe;
   private readonly debouncedSitesLoading: Callback;
-  private loadingSitesParams = {page: 1, page_size: 10, is_active: true, search: '', parentId: ''};
+  private loadingSitesParams = {page: 1, page_size: 30, is_active: true, search: '', parent_id: ''};
   private sitesCount: number = 0;
   private inputDebounce!: Callback;
 
@@ -156,7 +156,7 @@ export class LocationWidgetComponent extends LitElement {
     super();
 
     this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
-      if (!this.sitesLocation) {
+      if (!this.sitesLocation || params.page == 1) {
         this.sitesLocation = [];
       }
       const mustCheckSelectedSites = !this.sitesCount;
@@ -351,10 +351,10 @@ export class LocationWidgetComponent extends LitElement {
       } else {
         this.loadingSitesParams = {
           page: 1,
-          page_size: 10,
+          page_size: 30,
           is_active: true,
           search: this.locationSearch ? this.locationSearch : '',
-          parentId: this.selectedLocation || ''
+          parent_id: this.selectedLocation || ''
         };
       }
       this.debouncedSitesLoading(this.loadingSitesParams);
@@ -466,7 +466,7 @@ export class LocationWidgetComponent extends LitElement {
       this.selectedLocation = id;
       this.loadingSitesParams = {
         page: 1,
-        page_size: 10,
+        page_size: 30,
         is_active: true,
         search: this.locationSearch ? this.locationSearch : '',
         parentId: this.selectedLocation || ''

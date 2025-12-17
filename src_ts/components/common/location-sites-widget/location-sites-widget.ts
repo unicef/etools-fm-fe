@@ -38,7 +38,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private readonly debouncedSitesLoading: Callback;
-  private loadingParams = {page: 1, page_size: 10, is_active: true, search: ''};
+  private loadingParams = {page: 1, page_size: 30, is_active: true, search: ''};
   private itemsCount: number = 0;
   private sitesLoading = true;
 
@@ -135,6 +135,9 @@ export class LocationSitesWidgetComponent extends LitElement {
     this.search = debounce(this.search.bind(this), 500) as any;
     this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.sitesLoading = true;
+      if (params.page === 1 && !this.sitesList) {
+        this.sitesList = [];
+      }
       loadSites(params)
         .then((resp: IListData<Site>) => {
           this.itemsCount = resp.count;
@@ -142,11 +145,7 @@ export class LocationSitesWidgetComponent extends LitElement {
             .map((location: IGroupedSites) => location.sites)
             .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
-          if (params.page === 1) {
-            this.sitesList = sites;
-          } else {
-            this.sitesList = this.sitesList.concat(sites);
-          }
+          this.sitesList = this.sitesList.concat(sites);
           this.sitesLoading = false;
           this.hasSites = this.sitesList.length > 0;
           if (!this.mapInitializationProcess) {
@@ -261,11 +260,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   search({value}: {value: string} = {value: ''}): void {
     if (this.locationSearch !== value) {
       this.locationSearch = value;
-      if (this.locationSearch) {
-        this.loadingParams = {page: 1, page_size: 10, is_active: true, search: this.locationSearch};
-      } else {
-        this.loadingParams = {page: 1, page_size: 10, is_active: true, search: ''};
-      }
+      this.loadingParams = {page: 1, page_size: 30, is_active: true, search: this.locationSearch || ''};
       this.debouncedSitesLoading(this.loadingParams);
     }
   }

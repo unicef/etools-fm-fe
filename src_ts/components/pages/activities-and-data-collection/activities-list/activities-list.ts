@@ -86,6 +86,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly userUnsubscribe: Unsubscribe;
   private readonly prevQueryParamsKey = 'ActivitiesPrevParams';
   private siteFilterEl?: EtoolsDropdownMulti;
+
   @property({type: Object})
   loadSiteDropdownOptions!: (search: string, page: number, shownOptionsLimit: number) => void;
   @property() sitesOptions: Site[] = [];
@@ -311,6 +312,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
     this.sitesOptions = this.sitesOptions.concat(sites);
+    this.siteFilterEl.preserveSearchOnClose = true;
     this.siteFilterEl.options = this.sitesOptions;
     this.filtersData = {...this.filtersData, location_site__in: this.sitesOptions};
     const f = this.activitiesListFilters.find((x) => x.filterKey === ActivityFilterKeys.location_site__in);
