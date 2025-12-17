@@ -3,9 +3,8 @@ import {customElement, property} from 'lit/decorators.js';
 import {template} from './sites.tpl';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
-import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
+import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
 import {updateQueryParams} from '../../../../routing/routes';
 import {locationsInvert} from './locations-invert';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -33,17 +32,24 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
   @property() listLoadingInProcess = false;
   private sitesObjects: Site[] | null = null;
 
-  private readonly debouncedLoading: Callback;
-  private sitesUnsubscribe!: Unsubscribe;
+  private readonly debouncedSitesLoading: Callback;
   private routeUnsubscribe!: Unsubscribe;
 
   constructor() {
     super();
 
     this.searchKeyDown = debounce(this.searchKeyDown.bind(this), 500) as any;
-    this.debouncedLoading = debounce((params: EtoolsRouteQueryParam) => {
+    this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.listLoadingInProcess = true;
-      store.dispatch<AsyncEffect>(loadSiteLocations(params)).then(() => (this.listLoadingInProcess = false));
+      loadSites(params).then((sites: IListData<Site>) => {
+        if (!sites) {
+          return;
+        }
+        this.count = sites.count;
+        this.sitesObjects = sites.results;
+        this.items = locationsInvert(sites.results);
+        this.listLoadingInProcess = false;
+      });
     }, 100);
   }
 
@@ -59,22 +65,10 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     );
     const currentRoute: EtoolsRouteDetails = (store.getState() as IRootState).app.routeDetails;
     this.onRouteChange(currentRoute);
-
-    this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: IListData<Site> | null) => {
-        if (!sites) {
-          return;
-        }
-        this.count = sites.count;
-        this.sitesObjects = sites.results;
-        this.items = locationsInvert(sites.results);
-      })
-    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.sitesUnsubscribe();
     this.routeUnsubscribe();
   }
 
@@ -86,7 +80,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
     const paramsAreValid: boolean = this.checkParams(queryParams, true);
     if (paramsAreValid) {
       this.queryParams = queryParams;
-      this.debouncedLoading(this.queryParams);
+      this.debouncedSitesLoading(this.queryParams);
     }
   }
 
@@ -122,7 +116,7 @@ export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {
         updateQueryParams({page: 1});
       }
       // refresh current list
-      this.debouncedLoading();
+      this.debouncedSitesLoading(this.queryParams);
     });
   }
 

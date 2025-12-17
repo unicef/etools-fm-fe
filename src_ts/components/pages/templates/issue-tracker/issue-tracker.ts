@@ -10,7 +10,6 @@ import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/eto
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {template} from './issue-tracker.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
-import {loadSiteLocations} from '../../../../redux/effects/site-specific-locations.effects';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
@@ -21,7 +20,6 @@ import {SharedStyles} from '../../../styles/shared-styles';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {PartnersMixin} from '../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../common/mixins/cp-outputs-mixin';
-import {SiteMixin} from '../../../common/mixins/site-mixin';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import './issue-tracker-popup/issue-tracker-popup';
 import '../../../common/file-components/files-popup';
@@ -30,11 +28,11 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
 } from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
+import {locationsInvert} from '../../management/sites/locations-invert';
 
 @customElement('issue-tracker-tab')
-export class IssueTrackerTabComponent extends SiteMixin(
-  CpOutputsMixin(PartnersMixin(ListMixin()<LogIssue>(LitElement)))
-) {
+export class IssueTrackerTabComponent extends CpOutputsMixin(PartnersMixin(ListMixin()<LogIssue>(LitElement))) {
   @property({type: Boolean})
   isLoad = false;
 
@@ -43,6 +41,10 @@ export class IssueTrackerTabComponent extends SiteMixin(
 
   @property({type: Boolean})
   lowResolutionLayout = false;
+
+  @property({type: Object})
+  loadSitesDropdownOptions?: (search: string, page: number, shownOptionsLimit: number) => void;
+  @property() sitesOptions: Site[] = [];
 
   private readonly debouncedLoading: Callback;
 
@@ -74,6 +76,9 @@ export class IssueTrackerTabComponent extends SiteMixin(
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    this.loadSitesDropdownOptions = this._loadSitesDropdownOptions.bind(this);
+
     this.routeUnsubscribe = store.subscribe(
       routeDetailsSelector((details: EtoolsRouteDetails) => {
         return this.onRouteChange(details);
@@ -126,11 +131,24 @@ export class IssueTrackerTabComponent extends SiteMixin(
     return !invalid;
   }
 
+  async _loadSitesDropdownOptions(search: string, page: number, shownOptionsLimit: number) {
+    const params = {search: search, page: page, page_size: shownOptionsLimit, is_active: true};
+    if (!this.sitesOptions || page == 1) {
+      this.sitesOptions = [];
+    }
+    const resp = await loadSites(params);
+    const sites = locationsInvert(resp.results)
+      .map((location: IGroupedSites) => location.sites)
+      .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
+
+    this.sitesOptions = this.sitesOptions.concat(sites);
+  }
+
   getName(item: LogIssue): string {
     if (item.partner) {
       return item.partner.name;
     } else if (item.location && item.location_site) {
-      return `${item.location.name} - ${item.location_site.name}`;
+      return `${(item.location as ISiteParrentLocation).name} - ${item.location_site.name}`;
     } else if (item.cp_output) {
       return item.cp_output.name;
     } else {

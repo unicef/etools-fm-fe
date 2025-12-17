@@ -2,7 +2,6 @@ import {html, css, TemplateResult, CSSResult, PropertyValues} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {SectionsMixin} from '../../../../../../common/mixins/sections-mixin';
 import {store} from '../../../../../../../redux/store';
-import {sitesSelector} from '../../../../../../../redux/selectors/site-specific-locations.selectors';
 import {
   facilityTypesSelector,
   staticDataDynamic,
@@ -16,7 +15,6 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
-import {loadSiteLocations} from '../../../../../../../redux/effects/site-specific-locations.effects';
 import clone from 'ramda/es/clone';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
@@ -92,7 +90,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property({type: String}) activeTab = SITE_TAB;
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
-  private sitesUnsubscribe!: Unsubscribe;
   private visitGoalsUnsubscribe!: Unsubscribe;
   private locationsUnsubscribe!: Unsubscribe;
   private facilityTypesUnsubscribe!: Unsubscribe;
@@ -606,11 +603,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       })
     );
 
-    // const state: IRootState = store.getState();
-    // if (!state.specificLocations.data) {
-    //   store.dispatch<AsyncEffect>(loadSiteLocations());
-    // }
-
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector(() => {
         this.pageTabs = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
@@ -627,7 +619,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.sitesUnsubscribe();
     this.visitGoalsUnsubscribe();
     this.locationsUnsubscribe();
     this.facilityTypesUnsubscribe();

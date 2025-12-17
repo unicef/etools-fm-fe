@@ -5,7 +5,6 @@ import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.selectors';
 import {MapHelper} from '../map-mixin';
-import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
 import {locationsInvert} from '../../pages/management/sites/locations-invert';
 import {LocationWidgetStyles} from './location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
@@ -25,14 +24,12 @@ import {getLocationPart} from '../../utils/get-location-part';
 import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
-import {equals} from 'ramda';
 import clone from 'ramda/es/clone';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
 import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
-import {SITE_DETAILS} from '../../../endpoints/endpoints-list';
 
 store.addReducers({widgetLocations, specificLocations});
 
@@ -62,9 +59,8 @@ export class LocationWidgetComponent extends LitElement {
   private currentWorkspaceUnsubscribe!: Unsubscribe;
   private widgetLoadingUnsubscribe!: Unsubscribe;
   private pathLoadingUnsubscribe!: Unsubscribe;
-  private sitesUnsubscribe!: Unsubscribe;
   private widgetItemsUnsubscribe!: Unsubscribe;
-  private readonly debouncedLoadingSites: Callback;
+  private readonly debouncedSitesLoading: Callback;
   private loadingSitesParams = {page: 1, page_size: 10, is_active: true, search: '', parentId: ''};
   private sitesCount: number = 0;
   private inputDebounce!: Callback;
@@ -159,7 +155,7 @@ export class LocationWidgetComponent extends LitElement {
   constructor() {
     super();
 
-    this.debouncedLoadingSites = debounce((params: EtoolsRouteQueryParam) => {
+    this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
       if (!this.sitesLocation) {
         this.sitesLocation = [];
       }
@@ -210,22 +206,6 @@ export class LocationWidgetComponent extends LitElement {
       })
     );
 
-    // this.sitesUnsubscribe = store.subscribe(
-    //   sitesSelector((sites: Site[] | null) => {
-    //     if (!sites) {
-    //       return;
-    //     }
-    //     this.sites = locationsInvert(sites)
-    //       .map((location: IGroupedSites) => location.sites)
-    //       .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
-
-    //     this.sitesLoading = false;
-    //     if (this.selectedSites.length) {
-    //       this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-    //     }
-    //   })
-    // );
-
     this.widgetLoadingUnsubscribe = store.subscribe(
       widgetLocationsLoading((loading: boolean | null) => {
         if (typeof loading !== 'boolean') {
@@ -268,7 +248,6 @@ export class LocationWidgetComponent extends LitElement {
     this.currentWorkspaceUnsubscribe();
     this.widgetLoadingUnsubscribe();
     this.pathLoadingUnsubscribe();
-    this.sitesUnsubscribe();
     this.widgetItemsUnsubscribe();
   }
 
@@ -378,7 +357,7 @@ export class LocationWidgetComponent extends LitElement {
           parentId: this.selectedLocation || ''
         };
       }
-      this.debouncedLoadingSites(this.loadingSitesParams);
+      this.debouncedSitesLoading(this.loadingSitesParams);
     }
   }
 
@@ -386,7 +365,7 @@ export class LocationWidgetComponent extends LitElement {
     if (this.siteListEl.scrollTop + this.siteListEl.clientHeight >= this.siteListEl.scrollHeight) {
       if (this.sitesCount > (this.sitesLocation || []).length) {
         this.loadingSitesParams.page++;
-        this.debouncedLoadingSites(this.loadingSitesParams);
+        this.debouncedSitesLoading(this.loadingSitesParams);
       }
     }
   }
@@ -492,7 +471,7 @@ export class LocationWidgetComponent extends LitElement {
         search: this.locationSearch ? this.locationSearch : '',
         parentId: this.selectedLocation || ''
       };
-      this.debouncedLoadingSites(this.loadingSitesParams);
+      this.debouncedSitesLoading(this.loadingSitesParams);
     }
   }
 

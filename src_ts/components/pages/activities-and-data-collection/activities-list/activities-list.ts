@@ -1,5 +1,5 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
@@ -21,8 +21,7 @@ import {
   ActivitiesFiltersHelper
 } from './activities-list.filters';
 import {staticDataDynamic} from '../../../../redux/selectors/static-data.selectors';
-import {sitesSelector} from '../../../../redux/selectors/site-specific-locations.selectors';
-import {loadSiteLocations, loadSites} from '../../../../redux/effects/site-specific-locations.effects';
+import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
 import {specificLocations} from '../../../../redux/reducers/site-specific-locations.reducer';
 import {SharedStyles} from '../../../styles/shared-styles';
 // eslint-disable-next-line
@@ -289,53 +288,36 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     });
 
     this.loadDataForFilters();
-    // setTimeout(() => {
-    //   const filtersEl = this.shadowRoot?.querySelector('etools-filters');
-    //   if (filtersEl) {
-    //     this.siteFilterEl = filtersEl.shadowRoot?.querySelector('#location_site__in');
-    //     if (this.siteFilterEl) {
-    //       this.siteFilterEl.loadDataMethod = this.loadSiteDropdownOptions;
-    //     }
-    //   }
-    // }, 1000);
   }
 
-  _loadSiteDropdownOptions(search: string, page: number, shownOptionsLimit: number) {
+  async _loadSiteDropdownOptions(search: string, page: number, shownOptionsLimit: number) {
     const params = {search: search, page: page, page_size: shownOptionsLimit, is_active: true};
     if (!this.sitesOptions || page == 1) {
       this.sitesOptions = [];
     }
-    loadSites(params).then((resp: IListData<Site>) => {
+    if (!this.siteFilterEl) {
+      const filtersEl = this.shadowRoot?.querySelector('etools-filters');
+      if (filtersEl) {
+        this.siteFilterEl = filtersEl.shadowRoot?.querySelector('#location_site__in') as EtoolsDropdownMulti;
+      }
       if (!this.siteFilterEl) {
-        const filtersEl = this.shadowRoot?.querySelector('etools-filters');
-        if (filtersEl) {
-          this.siteFilterEl = filtersEl.shadowRoot?.querySelector('#location_site__in') as EtoolsDropdownMulti;
-        }
-        if (!this.siteFilterEl) {
-          return;
-        }
+        return;
       }
+    }
 
-      const sites = locationsInvert(resp.results)
-        .map((location: IGroupedSites) => location.sites)
-        .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
+    const resp = await loadSites(params);
+    const sites = locationsInvert(resp.results)
+      .map((location: IGroupedSites) => location.sites)
+      .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
-      this.sitesOptions = this.sitesOptions.concat(sites);
-      this.siteFilterEl.options = this.sitesOptions;
-      this.filtersData = {...this.filtersData, location_site__in: this.sitesOptions};
-      const f = this.activitiesListFilters.find((x) => x.filterKey === ActivityFilterKeys.location_site__in);
-      if (f) {
-        f.selectionOptions = this.sitesOptions;
-      }
-      this.siteFilterEl.requestUpdate();
-
-      //   this.filtersData[ActivityFilterKeys.location_site__in] = this.sitesOptions;
-      //   ActivitiesFiltersHelper.updateFilterSelectionOptions(
-      //     this.activitiesListFilters,
-      //     ActivityFilterKeys.location_site__in,
-      //     this.filtersData[ActivityFilterKeys.location_site__in]
-      //   );
-    });
+    this.sitesOptions = this.sitesOptions.concat(sites);
+    this.siteFilterEl.options = this.sitesOptions;
+    this.filtersData = {...this.filtersData, location_site__in: this.sitesOptions};
+    const f = this.activitiesListFilters.find((x) => x.filterKey === ActivityFilterKeys.location_site__in);
+    if (f) {
+      f.selectionOptions = this.sitesOptions;
+    }
+    this.siteFilterEl.requestUpdate();
   }
 
   private subscribeOnFilterData(dataPath: string, filterKey: string): void {
@@ -395,11 +377,6 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
 
   private loadDataForFilters(): void {
     const storeState: IRootState = store.getState();
-    // dci
-    // if (!storeState.specificLocations.data) {
-    //   store.dispatch<AsyncEffect>(loadSiteLocations());
-    // }
-
     // we don't need to load locations(loaded in appShell) and users (loaded in activities-page)
     const {
       partners = 'partners',

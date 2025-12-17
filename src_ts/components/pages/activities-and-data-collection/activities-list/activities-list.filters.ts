@@ -12,9 +12,6 @@ import {
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 import {ACTIVE_STATUS_FILTER} from '../activity-item/statuses-actions/activity-statuses';
-import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
-import {locationsInvert} from '../../management/sites/locations-invert';
-import {construct} from 'ramda';
 
 export interface ActivityFilter extends EtoolsFilter {
   selectionOptionsEndpoint?: string;

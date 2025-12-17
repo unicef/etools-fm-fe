@@ -1,14 +1,7 @@
 export enum SitesActionsTypes {
-  SET_SPECIFIC_LOCATIONS_LIST = '[Sites Action]: SET_SPECIFIC_LOCATIONS_LIST',
   START_SITE_LOCATIONS_UPDATING = '[Sites Action]:START_SITE_LOCATIONS_UPDATING',
   STOP_SITE_LOCATIONS_UPDATING = '[Sites Action]:STOP_SITE_LOCATIONS_UPDATING',
   SET_SITE_LOCATIONS_UPDATING_ERROR = '[Sites Action]:SET_SITE_LOCATIONS_UPDATING_ERROR'
-}
-
-export class SetSpecificLocations {
-  readonly type: SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST = SitesActionsTypes.SET_SPECIFIC_LOCATIONS_LIST;
-
-  constructor(public payload: IListData<Site>) {}
 }
 
 export class StartSiteLocationsUpdating {
@@ -27,7 +20,6 @@ export class SetSiteLocationsUpdatingError {
 }
 
 export type SiteLocationsActions =
-  | SetSpecificLocations
   | StartSiteLocationsUpdating
   | StopSiteLocationsUpdating
   | SetSiteLocationsUpdatingError;

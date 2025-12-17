@@ -37,7 +37,7 @@ export class LocationSitesWidgetComponent extends LitElement {
   protected defaultMapCenter: L.LatLngTuple = DEFAULT_COORDINATES;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
-  private readonly debouncedLoadingSites: Callback;
+  private readonly debouncedSitesLoading: Callback;
   private loadingParams = {page: 1, page_size: 10, is_active: true, search: ''};
   private itemsCount: number = 0;
   private sitesLoading = true;
@@ -133,7 +133,7 @@ export class LocationSitesWidgetComponent extends LitElement {
     super();
 
     this.search = debounce(this.search.bind(this), 500) as any;
-    this.debouncedLoadingSites = debounce((params: EtoolsRouteQueryParam) => {
+    this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.sitesLoading = true;
       loadSites(params)
         .then((resp: IListData<Site>) => {
@@ -177,29 +177,6 @@ export class LocationSitesWidgetComponent extends LitElement {
         this.mapInitialisation();
       })
     );
-
-    // this.sitesUnsubscribe = store.subscribe(
-    //   sitesSelector((sites: Site[] | null) => {
-    //     if (!sites) {
-    //       return;
-    //     }
-
-    //     this.sites = locationsInvert(sites)
-    //       .map((location: IGroupedSites) => location.sites)
-    //       .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
-
-    //     this.sitesList = this.sites.filter((s: Site) => s.is_active);
-    //     this.sitesLoading = false;
-    //     this.hasSites = this.sitesList.length > 0;
-    //     if (!this.mapInitializationProcess) {
-    //       this.addSitesToMap();
-    //     }
-
-    //     if (this.selectedSites.length) {
-    //       this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-    //     }
-    //   })
-    // );
   }
 
   disconnectedCallback(): void {
@@ -276,7 +253,7 @@ export class LocationSitesWidgetComponent extends LitElement {
     if (this.siteListEl.scrollTop + this.siteListEl.clientHeight >= this.siteListEl.scrollHeight) {
       if (this.itemsCount > (this.sitesList || []).length) {
         this.loadingParams.page++;
-        this.debouncedLoadingSites(this.loadingParams);
+        this.debouncedSitesLoading(this.loadingParams);
       }
     }
   }
@@ -289,14 +266,14 @@ export class LocationSitesWidgetComponent extends LitElement {
       } else {
         this.loadingParams = {page: 1, page_size: 10, is_active: true, search: ''};
       }
-      this.debouncedLoadingSites(this.loadingParams);
+      this.debouncedSitesLoading(this.loadingParams);
     }
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.mapInitialisation();
-    this.debouncedLoadingSites(this.loadingParams);
+    this.debouncedSitesLoading(this.loadingParams);
   }
 
   protected updated(changedProperties: PropertyValues): void {
