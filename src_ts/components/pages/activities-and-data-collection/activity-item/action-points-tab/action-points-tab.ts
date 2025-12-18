@@ -17,12 +17,17 @@ import {loadStaticData} from '../../../../../redux/effects/load-static-data.effe
 import {staticDataDynamic} from '../../../../../redux/selectors/static-data.selectors';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {CommentsMixin} from '../../../../common/comments/comments-mixin';
+import {loadActionPoints} from '../../../../../redux/effects/action-points.effects.ts';
+import {SetActionPointsParams} from '../../../../../redux/actions/action-points.actions.ts';
 
 store.addReducers({actionPointsList});
 store.addReducers({tpmActionPointsList});
 
 @customElement('action-points-tab')
 export class ActionPointsTab extends CommentsMixin(LitElement) {
+  @property() pageSize = 10;
+  @property() pageNumber = 1;
+  @property() count = 0;
   @property() items: ActionPoint[] = [];
   @property() tpmItems: TPMActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
@@ -63,9 +68,13 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
     }
 
     this.actionPointsListUnsubscribe = store.subscribe(
-      actionPointsListSelector((actionPointsList: ActionPoint[]) => {
-        this.items = actionPointsList;
+      actionPointsListSelector((actionPointsList: IListData<ActionPoint>) => {
+        this.items = actionPointsList.results;
+        this.count = actionPointsList.count;
         this.loading = false;
+        const params = store.getState().actionPointsList?.params;
+        this.pageSize = params?.pageSize || 10;
+        this.pageNumber = params?.page || 1;
       })
     );
     this.tpmActionPointsListUnsubscribe = store.subscribe(
@@ -85,7 +94,21 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
       )
     );
   }
+  onPageSizeChange(pageSize: number): void {
+    if (this.pageSize !== pageSize) {
+      this.pageSize = pageSize;
+      store.dispatch(new SetActionPointsParams({page_size: this.pageSize, page: this.pageNumber}));
+      store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityDetails.id)));
+    }
+  }
 
+  onPageNumberChange(pageNumber: number): void {
+    if (this.pageNumber !== pageNumber) {
+      this.pageNumber = pageNumber;
+      store.dispatch(new SetActionPointsParams({page_size: this.pageSize, page: this.pageNumber}));
+      store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityDetails.id)));
+    }
+  }
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.actionPointsListUnsubscribe();

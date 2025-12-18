@@ -12,6 +12,8 @@ export const actionPointsList: Reducer<IActionPointsListState, any> = (
   action: ActionPointsActions
 ) => {
   switch (action.type) {
+    case ActionPointsActionTypes.SET_ACTION_POINTS_PARAMS:
+      return {...state, params: action.payload};
     case ActionPointsActionTypes.SET_ACTION_POINTS_LIST:
       return {...state, data: action.payload};
     case ActionPointsActionTypes.UPDATE_ACTION_POINT_ERROR:

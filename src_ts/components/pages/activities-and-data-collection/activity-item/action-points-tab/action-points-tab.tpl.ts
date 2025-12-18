@@ -153,6 +153,17 @@ export function template(this: ActionPointsTab): TemplateResult {
           </etools-data-table-row>
         `
       )}
+      <etools-data-table-footer
+        id="footer"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
+        .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
+        .pageSize="${this.pageSize || undefined}"
+        .pageNumber="${this.pageNumber || undefined}"
+        .totalResults="${this.count ?? 0}"
+        @page-size-changed="${(event: CustomEvent) => this.onPageSizeChange(event.detail.value)}"
+        @page-number-changed="${(event: CustomEvent) => this.onPageNumberChange(event.detail.value)}"
+      >
+      </etools-data-table-footer>
     </section>
 
     <section

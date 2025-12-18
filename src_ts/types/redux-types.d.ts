@@ -1,3 +1,5 @@
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+
 interface IRootState {
   app: IAppState;
   user: IUserState;
@@ -111,9 +113,10 @@ type AttachmentsTypesState = {
 };
 
 interface IActionPointsListState {
-  data: ActionPoint[];
+  data: IListData<ActionPoint>;
   updateInProcess: null | boolean;
   error: GenericObject;
+  params: EtoolsRouteQueryParams;
 }
 
 interface ITPMActionPointsListState {
