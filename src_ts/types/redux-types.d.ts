@@ -120,9 +120,10 @@ interface IActionPointsListState {
 }
 
 interface ITPMActionPointsListState {
-  data: TPMActionPoint[];
+  data: IListData<TPMActionPoint>;
   updateInProcess: null | boolean;
   error: GenericObject;
+  params: EtoolsRouteQueryParams;
 }
 
 interface IQuestionTemplatesState {

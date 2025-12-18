@@ -270,6 +270,17 @@ export function template(this: ActionPointsTab): TemplateResult {
           </etools-data-table-row>
         `
       )}
+      <etools-data-table-footer
+        id="footer"
+        .lowResolutionLayout="${this.lowResolutionLayout}"
+        .rowsPerPageText="${translate('ROWS_PER_PAGE')}"
+        .pageSize="${this.tpmPageSize || undefined}"
+        .pageNumber="${this.tpmPageNumber || undefined}"
+        .totalResults="${this.tpmCount ?? 0}"
+        @page-size-changed="${(event: CustomEvent) => this.onTpmPageSizeChange(event.detail.value)}"
+        @page-number-changed="${(event: CustomEvent) => this.onTpmPageNumberChange(event.detail.value)}"
+      >
+      </etools-data-table-footer>
     </section>
   `;
 }

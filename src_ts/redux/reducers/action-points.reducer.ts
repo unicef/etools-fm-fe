@@ -4,7 +4,8 @@ import {ActionPointsActions, ActionPointsActionTypes} from '../actions/action-po
 const INITIAL_STATE: IActionPointsListState = {
   data: [],
   updateInProcess: false,
-  error: {}
+  error: {},
+  params: {page_size: 10, page: 1}
 };
 
 export const actionPointsList: Reducer<IActionPointsListState, any> = (
