@@ -17,12 +17,20 @@ import {loadStaticData} from '../../../../../redux/effects/load-static-data.effe
 import {staticDataDynamic} from '../../../../../redux/selectors/static-data.selectors';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {CommentsMixin} from '../../../../common/comments/comments-mixin';
+import {loadActionPoints, loadTPMActionPoints} from '../../../../../redux/effects/action-points.effects.ts';
+import {SetActionPointsParams, SetTPMActionPointsParams} from '../../../../../redux/actions/action-points.actions.ts';
 
 store.addReducers({actionPointsList});
 store.addReducers({tpmActionPointsList});
 
 @customElement('action-points-tab')
 export class ActionPointsTab extends CommentsMixin(LitElement) {
+  @property() pageSize = 10;
+  @property() pageNumber = 1;
+  @property() count = 0;
+  @property() tpmPageSize = 10;
+  @property() tpmPageNumber = 1;
+  @property() tpmCount = 0;
   @property() items: ActionPoint[] = [];
   @property() tpmItems: TPMActionPoint[] = [];
   @property() activityDetails!: IActivityDetails;
@@ -63,15 +71,23 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
     }
 
     this.actionPointsListUnsubscribe = store.subscribe(
-      actionPointsListSelector((actionPointsList: ActionPoint[]) => {
-        this.items = actionPointsList;
+      actionPointsListSelector((actionPointsList: IListData<ActionPoint>) => {
+        this.items = actionPointsList.results;
+        this.count = actionPointsList.count;
         this.loading = false;
+        const params = store.getState().actionPointsList.params;
+        this.pageSize = params.page_size;
+        this.pageNumber = params.page;
       })
     );
     this.tpmActionPointsListUnsubscribe = store.subscribe(
-      tpmActionPointsListSelector((actionPointsList: TPMActionPoint[]) => {
-        this.tpmItems = actionPointsList;
+      tpmActionPointsListSelector((tpmActionPointsList: IListData<TPMActionPoint>) => {
+        this.tpmItems = tpmActionPointsList.results;
+        this.tpmCount = tpmActionPointsList.count;
         this.loading = false;
+        const params = store.getState().tpmActionPointsList.params;
+        this.tpmPageSize = params.page_size;
+        this.tpmPageNumber = params.page;
       })
     );
     this.actionPointsCategoriesUnsubscribe = store.subscribe(
@@ -85,7 +101,42 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
       )
     );
   }
+  onPageSizeChange(pageSize: number): void {
+    if (this.pageSize !== pageSize) {
+      this.pageSize = pageSize;
+      this.handleActionPointsParamsChange();
+    }
+  }
 
+  onPageNumberChange(pageNumber: number): void {
+    if (this.pageNumber !== pageNumber) {
+      this.pageNumber = pageNumber;
+      this.handleActionPointsParamsChange();
+    }
+  }
+
+  handleActionPointsParamsChange(): void {
+    store.dispatch(new SetActionPointsParams({page_size: this.pageSize, page: this.pageNumber}));
+    store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityDetails.id)));
+  }
+  handleTpmActionPointsParamsChange(): void {
+    store.dispatch(new SetTPMActionPointsParams({page_size: this.tpmPageSize, page: this.tpmPageNumber}));
+    store.dispatch<AsyncEffect>(loadTPMActionPoints(Number(this.activityDetails.id)));
+  }
+
+  onTpmPageSizeChange(pageSize: number): void {
+    if (this.tpmPageSize !== pageSize) {
+      this.tpmPageSize = pageSize;
+      this.handleTpmActionPointsParamsChange();
+    }
+  }
+
+  onTpmPageNumberChange(pageNumber: number): void {
+    if (this.tpmPageNumber !== pageNumber) {
+      this.tpmPageNumber = pageNumber;
+      this.handleTpmActionPointsParamsChange();
+    }
+  }
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.actionPointsListUnsubscribe();

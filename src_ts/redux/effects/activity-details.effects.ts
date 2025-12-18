@@ -13,8 +13,12 @@ import {
   ChecklistAttachmentsTypesRequest
 } from '../actions/activity-details.actions';
 import {Dispatch} from 'redux';
+import {store} from '../store.ts';
+import {SetActionPointsParams, SetTPMActionPointsParams} from '../actions/action-points.actions.ts';
 
 export function requestActivityDetails(id: string): IAsyncAction {
+  store.dispatch(new SetActionPointsParams({page_size: 10, page: 1}));
+  store.dispatch(new SetTPMActionPointsParams({page_size: 10, page: 1}));
   return {
     types: [
       ActivityDetailsActions.ACTIVITY_DETAILS_GET_REQUEST,
@@ -30,6 +34,8 @@ export function requestActivityDetails(id: string): IAsyncAction {
 }
 
 export function createActivityDetails(activityDetails: Partial<IActivityDetails>): IAsyncAction {
+  store.dispatch(new SetActionPointsParams({page_size: 10, page: 1}));
+  store.dispatch(new SetTPMActionPointsParams({page_size: 10, page: 1}));
   return {
     types: [
       ActivityDetailsActions.ACTIVITY_DETAILS_CREATE_REQUEST,
