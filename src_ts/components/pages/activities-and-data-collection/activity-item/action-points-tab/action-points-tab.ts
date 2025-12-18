@@ -73,7 +73,7 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
         this.count = actionPointsList.count;
         this.loading = false;
         const params = store.getState().actionPointsList?.params;
-        this.pageSize = params?.pageSize || 10;
+        this.pageSize = params?.page_size || 10;
         this.pageNumber = params?.page || 1;
       })
     );
