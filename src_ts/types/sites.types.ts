@@ -9,6 +9,11 @@ type Site = {
   security_detail: string;
 };
 
+type LocationType = {
+  id: number;
+  name_display: string;
+};
+
 type VisitGoal = {
   id: number;
   name: string;

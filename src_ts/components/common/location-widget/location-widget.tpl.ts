@@ -61,7 +61,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                     @nextPage="${() => this.loadNextItems()}"
                   ></lazy-list>
                 `
-              : html`
+              : html`<div id="siteList" @scroll="${() => this.onSiteListScroll()}">
                   ${repeat(
                     this.sitesLocation,
                     (site: Site) => html`
@@ -79,7 +79,7 @@ export function template(this: LocationWidgetComponent): TemplateResult {
                       </div>
                     `
                   )}
-                `}
+                </div>`}
 
             <div ?hidden="${!this.isSitesEmpty()}" class="missing-sites">
               ${translate('LOCATION_WIDGET.MISSING_SITES.NO_SITES')}<br />

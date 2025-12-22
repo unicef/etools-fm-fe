@@ -22,7 +22,7 @@ export function template(this: LocationSitesWidgetComponent): TemplateResult {
             <etools-icon name="search" slot="prefix"></etools-icon>
           </etools-input>
 
-          <div class="locations-list layout-vertical">
+          <div id="siteList" class="locations-list layout-vertical" @scroll="${() => this.onSiteListScroll()}">
             ${repeat(
               this.sitesList || [],
               (site: Site) => html`

@@ -16,7 +16,10 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
   // language=HTML
   return html`
     <style>
-      ${dataTableStylesLit}
+      ${dataTableStylesLit} .filter {
+        min-width: 240px;
+        margin-inline-start: 16px;
+      }
     </style>
     <etools-media-query
       query="(max-width: 767px)"
@@ -26,7 +29,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
     ></etools-media-query>
     <section class="elevation page-content filters" elevation="1">
       <div class="row">
-        <div class="filter col-md-3 col-12">
+        <div class="filter">
           <etools-dropdown-multi
             label="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
             placeholder="${translate('ISSUE_TRACKER.CP_OUTPUT')}"
@@ -42,7 +45,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
             no-dynamic-align
           ></etools-dropdown-multi>
         </div>
-        <div class="filter col-md-3 col-12">
+        <div class="filter">
           <etools-dropdown-multi
             label="${translate('ISSUE_TRACKER.PARTNER')}"
             placeholder="${translate('ISSUE_TRACKER.PARTNER')}"
@@ -58,11 +61,11 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
             no-dynamic-align
           ></etools-dropdown-multi>
         </div>
-        <div class="col-md-3 col-12">
+        <div class="filter">
           <etools-dropdown-multi
             label="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
             placeholder="${translate('ISSUE_TRACKER.LOCATION_SITE')}"
-            .options="${this.locations}"
+            .options="${this.sitesOptions}"
             option-label="name"
             option-value="id"
             .selectedValues="${(this.queryParams && simplifyValue(this.queryParams.location__in)) || []}"
@@ -70,11 +73,12 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
             @etools-selected-items-changed="${({detail}: CustomEvent) => this.onLocationsChanged(detail.selectedItems)}"
             .minWidth="160px"
             .autoWidth="${true}"
+            .loadDataMethod="${this.loadSitesDropdownOptions}"
             horizontal-align="left"
             no-dynamic-align
           ></etools-dropdown-multi>
         </div>
-        <div class="toggle-button-control filter col-md-3 col-12">
+        <div class="toggle-button-control filter">
           <sl-switch
             .checked="${this.queryParams && this.queryParams.status}"
             @sl-change="${(event: CustomEvent) => this.changeShowOnlyNew((event.target as SlSwitch).checked)}"

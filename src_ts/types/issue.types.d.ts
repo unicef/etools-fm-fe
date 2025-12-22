@@ -3,7 +3,7 @@ type LogIssue = {
   related_to_type?: RelatedType;
   partner?: Partner | null;
   cp_output?: CpOutput | null;
-  location?: ISiteParrentLocation | null;
+  location?: ISiteParrentLocation | number | null;
   location_site?: Site | null;
   status: IssueStatus;
   issue: string;
