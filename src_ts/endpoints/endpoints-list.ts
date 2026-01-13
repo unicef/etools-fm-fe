@@ -74,21 +74,21 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [USERS]: {
-    url: '/api/v1/field-monitoring/planning/users/?page_size=all',
+    url: '/api/v1/field-monitoring/planning/users/?page_size=all&with_name=true',
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
     cacheTableName: USERS
   },
 
   [REVIEWERS]: {
-    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all',
+    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all&with_name=true',
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
     cacheTableName: REVIEWERS
   },
 
   [TEAM_MEMBERS]: {
-    template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
+    template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all&with_name=true'
   },
 
   [CP_OUTCOMES]: {
