@@ -427,15 +427,15 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(DataMixin()<
     if (!(parentId > 0)) {
       return;
     }
-    if (!this.sitesOptions || page == 1) {
-      this.sitesOptions = [];
-    }
     const params = {search: search, page: page, page_size: shownOptionsLimit, is_active: true, parent_id: parentId};
     const resp = await loadSites(params);
     const sites = locationsInvert(resp.results)
       .map((location: IGroupedSites) => location.sites)
       .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
 
+    if (!this.sitesOptions || page == 1) {
+      this.sitesOptions = [];
+    }
     this.sitesOptions = this.sitesOptions.concat(sites);
   }
 
@@ -495,7 +495,9 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(DataMixin()<
   setLocation(value: any): void {
     if (this.editedData.location != value) {
       this.updateModelValue('location', Number(value));
-      this.loadSitesDropdownOptions('', 1, 30);
+      setTimeout(() => {
+        this.loadSitesDropdownOptions('', 1, 30);
+      }, 100);
     }
   }
 
