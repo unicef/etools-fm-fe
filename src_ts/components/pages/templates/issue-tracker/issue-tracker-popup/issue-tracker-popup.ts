@@ -272,6 +272,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(DataMixin()<
                   option-label="name_display"
                   option-value="id"
                   .loadDataMethod="${this.loadLocationsDropdownOptions}"
+                  preserve-search-on-close
                   required
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location}"
@@ -294,6 +295,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(DataMixin()<
                   option-label="name"
                   option-value="id"
                   .loadDataMethod="${this.loadSitesDropdownOptions}"
+                  preserve-search-on-close
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location_site}"
                   .errorMessage="${this.errors && this.errors.location_site}"

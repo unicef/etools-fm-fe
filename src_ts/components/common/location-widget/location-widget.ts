@@ -469,7 +469,7 @@ export class LocationWidgetComponent extends LitElement {
         page_size: 30,
         is_active: true,
         search: this.locationSearch ? this.locationSearch : '',
-        parentId: this.selectedLocation || ''
+        parent_id: this.selectedLocation || ''
       };
       this.debouncedSitesLoading(this.loadingSitesParams);
     }
