@@ -1,6 +1,6 @@
 import {select} from './create-selectors';
 
-export const actionPointsListSelector: Selector<ActionPoint[]> = select<ActionPoint[]>(
+export const actionPointsListSelector: Selector<IListData<ActionPoint>> = select<IListData<ActionPoint>>(
   (store: IRootState) => store.actionPointsList.data
 );
 

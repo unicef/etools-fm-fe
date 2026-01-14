@@ -194,6 +194,24 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
       this.editedData.partner = null;
       this.editedData.cp_output = null;
       this.editedData.intervention = null;
+      this.setSelectedDefaultValue();
+    }
+  }
+  setSelectedDefaultValue() {
+    const options = this.getRelatedNames();
+    if (options.length === 1) {
+      const id = options[0].id;
+      switch (this.selectedRelatedTo) {
+        case PARTNER:
+          this.editedData.partner = id;
+          break;
+        case OUTPUT:
+          this.editedData.cp_output = id;
+          break;
+        case INTERVENTION:
+          this.editedData.intervention = id;
+          break;
+      }
     }
   }
 

@@ -4,7 +4,8 @@ import {ActionPointsActions, ActionPointsActionTypes} from '../actions/action-po
 const INITIAL_STATE: ITPMActionPointsListState = {
   data: [],
   updateInProcess: false,
-  error: {}
+  error: {},
+  params: {page_size: 10, page: 1}
 };
 
 export const tpmActionPointsList: Reducer<ITPMActionPointsListState, any> = (
@@ -12,6 +13,8 @@ export const tpmActionPointsList: Reducer<ITPMActionPointsListState, any> = (
   action: ActionPointsActions
 ) => {
   switch (action.type) {
+    case ActionPointsActionTypes.SET_TPM_ACTION_POINTS_PARAMS:
+      return {...state, params: action.payload};
     case ActionPointsActionTypes.SET_TPM_ACTION_POINTS_LIST:
       return {...state, data: action.payload};
     case ActionPointsActionTypes.UPDATE_ACTION_POINT_ERROR:
