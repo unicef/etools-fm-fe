@@ -132,6 +132,13 @@ export class MapHelper {
     });
   }
 
+  removeCluster() {
+    this.removeStaticMarkers();
+    if (this.markerClusters) {
+      (this.map as L.Map).removeLayer(this.markerClusters);
+    }
+  }
+
   addCluster(markersData: MarkerDataObj[], onclick?: (e: any) => void): void {
     this.markerClusters = (L as any).markerClusterGroup();
     const markers: L.Marker[] = [];
