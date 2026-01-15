@@ -80,7 +80,7 @@ interface ISpecificLocationsState {
 interface ISpecificLocationsState {
   updateInProcess: null | boolean;
   errors: null | GenericObject;
-  data: null | IStatedListData<Site>;
+  data: null | IListData<Site>;
 }
 
 interface IQuestionsState {

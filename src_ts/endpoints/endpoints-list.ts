@@ -8,6 +8,7 @@ export const SITES_EXPORT = 'unicefUsers';
 export const ACTIVITIES_EXPORT = 'activitiesExport';
 export const SITES_LIST = 'siteLocations';
 export const SITE_DETAILS = 'siteLocationsDetails';
+export const LOCATIONS_WITH_SITES = 'locationsWithSites';
 export const CURRENT_WORKSPACE = 'currentWorkspace';
 export const QUESTIONS_LIST = 'questionsList';
 export const QUESTIONS_LIST_EXPORT = 'questionsListExport';
@@ -74,21 +75,21 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [USERS]: {
-    url: '/api/v1/field-monitoring/planning/users/?page_size=all',
+    url: '/api/v1/field-monitoring/planning/users/?page_size=all&with_name=true',
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
     cacheTableName: USERS
   },
 
   [REVIEWERS]: {
-    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all',
+    url: '/api/v1/field-monitoring/planning/users/?user_type=report_reviewer&page_size=all&with_name=true',
     exp: 60 * 60 * 1000, // 1 hour
     cachingKey: 'id',
     cacheTableName: REVIEWERS
   },
 
   [TEAM_MEMBERS]: {
-    template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all'
+    template: '/api/v1/field-monitoring/planning/users/<%=params%>&page_size=all&with_name=true'
   },
 
   [CP_OUTCOMES]: {
@@ -199,11 +200,15 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [SITES_LIST]: {
-    url: '/api/v1/field-monitoring/settings/sites/?page_size=all'
+    url: '/api/v1/field-monitoring/settings/sites/'
   },
 
   [SITE_DETAILS]: {
     template: '/api/v1/field-monitoring/settings/sites/<%=id%>/'
+  },
+
+  [LOCATIONS_WITH_SITES]: {
+    template: '/api/v1/field-monitoring/settings/locations-with-sites/'
   },
 
   [CURRENT_WORKSPACE]: {

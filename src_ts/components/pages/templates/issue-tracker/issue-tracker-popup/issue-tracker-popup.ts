@@ -11,7 +11,6 @@ import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import {IssueTrackerPopupStyles} from './issue-tracker-popu.styles';
-import {SiteMixin} from '../../../../common/mixins/site-mixin';
 import {CpOutputsMixin} from '../../../../common/mixins/cp-outputs-mixin';
 import {PartnersMixin} from '../../../../common/mixins/partners-mixin';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
@@ -31,9 +30,11 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../../endpoints/endpoints-list';
+import {loadLocationWithSites, loadSites} from '../../../../../redux/effects/site-specific-locations.effects';
+import {locationsInvert} from '../../../management/sites/locations-invert';
 
 @customElement('issue-tracker-popup')
-export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(DataMixin()<LogIssue>(LitElement)))) {
+export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(DataMixin()<LogIssue>(LitElement))) {
   @property() attachments: StoredAttachment[] = [];
 
   @property()
@@ -46,10 +47,10 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   partners: EtoolsPartner[] = [];
 
   @property({type: Array})
-  locations: IGroupedSites[] = [];
+  locationOptions: LocationType[] = [];
 
   @property({type: Array})
-  locationSites: Site[] = [];
+  sitesOptions: Site[] = [];
 
   @property() dialogOpened = true;
 
@@ -65,6 +66,12 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   @property({type: Array})
   statusOptions: any[] = [];
 
+  @property({type: Object})
+  loadLocationsDropdownOptions!: (search: string, page: number, shownOptionsLimit: number) => void;
+
+  @property({type: Object})
+  loadSitesDropdownOptions!: (search: string, page: number, shownOptionsLimit: number) => void;
+
   relatedTypes: RelatedType[] = ['cp_output', 'partner', 'location'];
   isNew = false;
   isRequest = false;
@@ -74,6 +81,10 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
 
   constructor() {
     super();
+
+    this.loadLocationsDropdownOptions = this._loadLocationsDropdownOptions.bind(this);
+    this.loadSitesDropdownOptions = this._loadSitesDropdownOptions.bind(this);
+
     this.updateUnsubscribe = store.subscribe(
       issueTrackerIsUpdate((isRequest: boolean | null) => {
         // set updating state for spinner
@@ -109,6 +120,10 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   }
 
   set dialogData(data: LogIssue) {
+    if (this.data?.location && (this.data.location as ISiteParrentLocation).id) {
+      this.data.location = Number((this.data.location as ISiteParrentLocation).id);
+    }
+
     super.data = data;
     this.isNew = !data;
     if (this.isNew) {
@@ -247,16 +262,17 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
               `
             : ''}
           ${this.relatedToType === 'location'
-            ? html`
-                <etools-dropdown
+            ? html` <etools-dropdown
                   id="dpdLocation"
                   class="validate-input col-md-6 col-12"
-                  .selected="${simplifyValue(this.editedData.location)}"
+                  .selected="${this.editedData.location}"
                   label="${translate('ISSUE_TRACKER.LOCATION')}"
                   placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.LOCATION')}"
-                  .options=${this.locations}
-                  option-label="name"
+                  .options=${this.locationOptions}
+                  option-label="name_display"
                   option-value="id"
+                  .loadDataMethod="${this.loadLocationsDropdownOptions}"
+                  preserve-search-on-close
                   required
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location}"
@@ -275,9 +291,11 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
                   .selected="${simplifyValue(this.editedData.location_site)}"
                   label="${translate('ISSUE_TRACKER.SITE')}"
                   placeholder="${translate('ISSUE_TRACKER.PLACEHOLDER.SITE')}"
-                  .options=${this.locationSites}
+                  .options=${this.sitesOptions}
                   option-label="name"
                   option-value="id"
+                  .loadDataMethod="${this.loadSitesDropdownOptions}"
+                  preserve-search-on-close
                   ?readonly="${this.isReadOnly}"
                   ?invalid="${this.errors && this.errors.location_site}"
                   .errorMessage="${this.errors && this.errors.location_site}"
@@ -288,8 +306,7 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
                     this.updateModelValue('location_site', detail.selectedItem && detail.selectedItem.id)}"
                   allow-outside-scroll
                 >
-                </etools-dropdown>
-              `
+                </etools-dropdown>`
             : ''}
 
           <etools-textarea
@@ -396,6 +413,32 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
     store.dispatch<AsyncEffect>(createLogIssue(this.editedData, this.currentFiles));
   }
 
+  async _loadLocationsDropdownOptions(search: string, page: number, shownOptionsLimit: number) {
+    const params = {search: search, page: page, page_size: shownOptionsLimit};
+    if (!this.locationOptions || page == 1) {
+      this.locationOptions = [];
+    }
+    const resp = await loadLocationWithSites(params);
+    this.locationOptions = this.locationOptions.concat(resp.results);
+  }
+
+  async _loadSitesDropdownOptions(search: string, page: number, shownOptionsLimit: number) {
+    const parentId = (this.editedData.location as number) || -1;
+    if (!(parentId > 0)) {
+      return;
+    }
+    const params = {search: search, page: page, page_size: shownOptionsLimit, is_active: true, parent_id: parentId};
+    const resp = await loadSites(params);
+    const sites = locationsInvert(resp.results)
+      .map((location: IGroupedSites) => location.sites)
+      .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
+
+    if (!this.sitesOptions || page == 1) {
+      this.sitesOptions = [];
+    }
+    this.sitesOptions = this.sitesOptions.concat(sites);
+  }
+
   attachmentsUploaded(attachments: {success: string[]; error: string[]}): void {
     try {
       const parsedAttachments: IAttachment[] = attachments.success.map((jsonAttachment: string | IAttachment) => {
@@ -450,15 +493,12 @@ export class IssueTrackerPopup extends PartnersMixin(CpOutputsMixin(SiteMixin(Da
   }
 
   setLocation(value: any): void {
-    this.updateModelValue('location', value);
-    const locationId: string | undefined = this.editedData && (this.editedData.location as unknown as string);
-    if (!locationId) {
-      return;
+    if (this.editedData.location != value) {
+      this.updateModelValue('location', Number(value));
+      setTimeout(() => {
+        this.loadSitesDropdownOptions('', 1, 30);
+      }, 100);
     }
-    const location: IGroupedSites | undefined = this.locations.find(
-      (item: ISiteParrentLocation) => item.id === locationId
-    );
-    this.locationSites = (location && location.sites) || [];
   }
 
   onChangeFile({id, file}: SelectedFile): void {
