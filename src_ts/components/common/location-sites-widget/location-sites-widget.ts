@@ -135,7 +135,7 @@ export class LocationSitesWidgetComponent extends LitElement {
     this.search = debounce(this.search.bind(this), 500) as any;
     this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
       this.sitesLoading = true;
-      if (params.page === 1 && !this.sitesList) {
+      if (params.page === 1 || !this.sitesList) {
         this.sitesList = [];
       }
       loadSites(params)
