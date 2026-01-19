@@ -53,7 +53,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
 
 export const ActivitiesFiltersHelper = new FiltersHelper(selectedValueTypeByFilterKey);
 
-export function getAllAtivitiesFilters() {
+export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
   return [
     {
       filterName: translate('ACTIVITIES_LIST.REFERENCE_NO') as any as string,
@@ -149,7 +149,8 @@ export function getAllAtivitiesFilters() {
       selected: true,
       minWidth: '350px',
       hideSearch: false,
-      disabled: false
+      disabled: false,
+      loadDataDropdownOptions: loadSiteDropdownOptions
     },
     {
       filterName: translate('ACTIVITIES_LIST.FILTERS.PARTNERS') as any as string,
@@ -268,9 +269,9 @@ const filtersOnlyForUnicefUser: string[] = [
   ActivityFilterKeys.sections__in
 ];
 
-export const getActivitiesFilters = (isUnicefUser: boolean) => {
+export const getActivitiesFilters = (isUnicefUser: boolean, loadSiteDropdownOptions: any) => {
   if (isUnicefUser) {
-    return getAllAtivitiesFilters();
+    return getAllAtivitiesFilters(loadSiteDropdownOptions);
   }
-  return getAllAtivitiesFilters().filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
+  return getAllAtivitiesFilters(loadSiteDropdownOptions).filter((x) => !filtersOnlyForUnicefUser.includes(x.filterKey));
 };

@@ -5,7 +5,6 @@ import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {currentWorkspaceSelector} from '../../../redux/selectors/static-data.selectors';
 import {IMarker, MapHelper} from '../map-mixin';
-import {sitesSelector} from '../../../redux/selectors/site-specific-locations.selectors';
 import {locationsInvert} from '../../pages/management/sites/locations-invert';
 import {LocationWidgetStyles} from '../location-widget/location-widget.styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
@@ -16,15 +15,16 @@ import {CardStyles} from '../../styles/card-styles';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {leafletStyles} from '../../styles/leaflet-styles';
+import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
+import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 
 const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505];
 
 @customElement('location-sites-widget')
 export class LocationSitesWidgetComponent extends LitElement {
   @property() selectedLocation: string | null = null;
-  @property() selectedSites: number[] = [];
-
-  @property() sites: Site[] = [];
+  @property() selectedSites: Site[] = [];
   @property() sitesList!: Site[];
 
   @property() hasSites = true;
@@ -32,11 +32,14 @@ export class LocationSitesWidgetComponent extends LitElement {
 
   @property() private mapInitializationProcess = false;
   @query('#map') private mapElement!: HTMLElement;
+  @query('#siteList') siteListEl!: HTMLElement;
 
   protected defaultMapCenter: L.LatLngTuple = DEFAULT_COORDINATES;
   private MapHelper!: MapHelper;
   private currentWorkspaceUnsubscribe!: Unsubscribe;
-  private sitesUnsubscribe!: Unsubscribe;
+  private readonly debouncedSitesLoading: Callback;
+  private loadingParams = {page: 1, page_size: 30, is_active: true, search: ''};
+  private itemsCount: number = 0;
   private sitesLoading = true;
 
   static get styles(): CSSResultArray {
@@ -126,6 +129,39 @@ export class LocationSitesWidgetComponent extends LitElement {
     return template.call(this);
   }
 
+  constructor() {
+    super();
+
+    this.search = debounce(this.search.bind(this), 500) as any;
+    this.debouncedSitesLoading = debounce((params: EtoolsRouteQueryParam) => {
+      this.sitesLoading = true;
+      if (params.page === 1 || !this.sitesList) {
+        this.sitesList = [];
+      }
+      loadSites(params)
+        .then((resp: IListData<Site>) => {
+          this.itemsCount = resp.count;
+          const sites = locationsInvert(resp.results)
+            .map((location: IGroupedSites) => location.sites)
+            .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
+
+          this.sitesList = this.sitesList.concat(sites);
+          this.sitesLoading = false;
+          this.hasSites = this.sitesList.length > 0;
+          if (!this.mapInitializationProcess) {
+            this.addSitesToMap();
+          }
+
+          if (this.selectedSites.length) {
+            this.checkSelectedSites(this.selectedSites, this.selectedLocation);
+          }
+        })
+        .finally(() => {
+          this.sitesLoading = false;
+        });
+    }, 300);
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     this.MapHelper = new MapHelper();
@@ -140,42 +176,18 @@ export class LocationSitesWidgetComponent extends LitElement {
         this.mapInitialisation();
       })
     );
-
-    this.sitesUnsubscribe = store.subscribe(
-      sitesSelector((sites: Site[] | null) => {
-        if (!sites) {
-          return;
-        }
-
-        this.sites = locationsInvert(sites)
-          .map((location: IGroupedSites) => location.sites)
-          .reduce((allSites: Site[], currentSites: Site[]) => [...allSites, ...currentSites], []);
-
-        this.sitesList = this.sites.filter((s: Site) => s.is_active);
-        this.sitesLoading = false;
-        this.hasSites = this.sitesList.length > 0;
-        if (!this.mapInitializationProcess) {
-          this.addSitesToMap();
-        }
-
-        if (this.selectedSites.length) {
-          this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-        }
-      })
-    );
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.currentWorkspaceUnsubscribe();
-    this.sitesUnsubscribe();
   }
 
   addSitesToMap(): void {
-    if (!this.MapHelper.map || !this.sitesList || this.MapHelper.markerClusters) {
+    if (!this.MapHelper.map || !this.sitesList) {
       return;
     }
-
+    this.MapHelper.removeCluster();
     const siteClick = this.onSiteClick.bind(this);
     const reversedMarks: MarkerDataObj[] = [];
     (this.sitesList || []).forEach((location) => {
@@ -185,6 +197,7 @@ export class LocationSitesWidgetComponent extends LitElement {
         popup: location.name
       });
     });
+
     this.MapHelper.addCluster(reversedMarks, siteClick);
     this.requestUpdate();
     setTimeout(() => {
@@ -194,7 +207,7 @@ export class LocationSitesWidgetComponent extends LitElement {
 
   showSelectedSite(): void {
     if (this.selectedSites && this.selectedSites.length && this.selectedLocation) {
-      const site = {id: this.selectedSites[0], parent: {id: this.selectedLocation}} as Site;
+      const site = this.selectedSites[0]; //, parent: {id: this.selectedLocation}} as Site;
       this.onSiteHoverStart(site);
       this.onSiteLineClick(site);
     }
@@ -212,12 +225,12 @@ export class LocationSitesWidgetComponent extends LitElement {
   }
 
   onSiteLineClick(site: Site): void {
-    this.changeLocationAndSite(site.parent.id, site.id);
+    this.changeLocationAndSite(site.parent.id, {id: site.id, name: site.name});
   }
 
   onSiteClick(e: CustomEvent): void {
     const site = e.target as any;
-    this.changeLocationAndSite(site.staticData.parent.id, site.staticData.id);
+    this.changeLocationAndSite(site.staticData.parent.id, {id: site.staticData.id, name: site.staticData.name});
   }
 
   onRemoveSiteClick(event: CustomEvent): void {
@@ -225,32 +238,37 @@ export class LocationSitesWidgetComponent extends LitElement {
     this.changeLocationAndSite();
   }
 
-  changeLocationAndSite(idLocation?: string, idSite?: number): void {
+  changeLocationAndSite(idLocation?: string, site?: any): void {
     fireEvent(this, 'location-changed', {location: idLocation});
-    fireEvent(this, 'sites-changed', {sites: [idSite]});
+    fireEvent(this, 'sites-changed', {sites: site ? [site] : null});
   }
 
   getSiteLineClass(siteId: number | string): string {
-    const isSelected: boolean = this.selectedSites.findIndex((id: number) => id === siteId) !== -1;
+    const isSelected: boolean = (this.selectedSites || []).some((site: any) => site.id == siteId);
     return isSelected ? 'selected' : '';
+  }
+
+  onSiteListScroll(): void {
+    if (this.siteListEl.scrollTop + this.siteListEl.clientHeight >= this.siteListEl.scrollHeight) {
+      if (this.itemsCount > (this.sitesList || []).length) {
+        this.loadingParams.page++;
+        this.debouncedSitesLoading(this.loadingParams);
+      }
+    }
   }
 
   search({value}: {value: string} = {value: ''}): void {
     if (this.locationSearch !== value) {
       this.locationSearch = value;
-      if (this.locationSearch) {
-        this.sitesList = this.sites.filter((site: Site) => {
-          return site.is_active && site.name.toLowerCase().includes(value.toLowerCase());
-        });
-      } else {
-        this.sitesList = this.sites.filter((s: Site) => s.is_active);
-      }
+      this.loadingParams = {page: 1, page_size: 30, is_active: true, search: this.locationSearch || ''};
+      this.debouncedSitesLoading(this.loadingParams);
     }
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.mapInitialisation();
+    this.debouncedSitesLoading(this.loadingParams);
   }
 
   protected updated(changedProperties: PropertyValues): void {
@@ -260,7 +278,7 @@ export class LocationSitesWidgetComponent extends LitElement {
     }
   }
 
-  private checkSelectedSites(selectedSites: number[], selectedLocation: string | null): void {
+  private checkSelectedSites(selectedSites: any[], selectedLocation: string | null): void {
     if (this.mapInitializationProcess) {
       return;
     }
@@ -272,14 +290,13 @@ export class LocationSitesWidgetComponent extends LitElement {
     if (this.sitesLoading || !selectedSites.length) {
       return;
     }
-
-    const missingSites: number[] = selectedSites.filter(
-      (siteId: number) => this.sites.findIndex((site: Site) => site.id === siteId) === -1
-    );
+    const existingIDs = new Set((this.sitesList || []).map((item) => item.id));
+    let missingSites = selectedSites.filter((selected: any) => !existingIDs.has(selected.id));
+    missingSites = missingSites.map((site: any) => site.id);
 
     if (missingSites.length !== 0) {
       console.warn(`This sites are missing in list: ${missingSites}. They will be removed from selected`);
-      this.selectedSites = selectedSites.filter((siteId: number) => !missingSites.includes(siteId));
+      this.selectedSites = selectedSites.filter((selected: any) => !missingSites.includes(selected.id));
       missingSites.forEach((siteId: number) => this.MapHelper.removeStaticMarker(siteId));
     }
   }
