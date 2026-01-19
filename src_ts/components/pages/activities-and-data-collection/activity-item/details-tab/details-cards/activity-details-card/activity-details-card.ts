@@ -40,6 +40,7 @@ import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import '../assign-duration-popup';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {mapOptionsToObject} from '../../../../../../utils/utils';
+import {min} from 'ramda';
 
 dayjs.extend(isSameOrBefore);
 
@@ -77,7 +78,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() widgetOpened = false;
   @property() visitGoals: VisitGoal[] = [];
   @property() facilityTypes: FacilityType[] = [];
-  @property() locations: EtoolsLightLocation[] = [];
+  @property() locationOptions: EtoolsLightLocation[] = [];
   @property() siteOption: Site[] = [];
   @property() facilitTypeDurationOptions: GenericObject = mapOptionsToObject(
     applyDropdownTranslation(FACILITY_TYPE_DURATION)
@@ -91,7 +92,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   @property() pageTabs: PageTab[] = applyPageTabsTranslation(ACTIVITY_DETAILS_TABS);
 
   private visitGoalsUnsubscribe!: Unsubscribe;
-  private locationsUnsubscribe!: Unsubscribe;
   private facilityTypesUnsubscribe!: Unsubscribe;
   private activeLanguageUnsubscribe!: Unsubscribe;
 
@@ -207,7 +207,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
               class="readonly-required col-md-6 col-12"
               .selected="${simplifyValue(this.editedData.location)}"
               label="${translate('LOCATION_TO_BE_VISITED')}"
-              .options="${this.locations}"
+              .options="${this.locationOptions}"
               option-label="name"
               option-value="id"
               readonly
@@ -536,14 +536,16 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
         @sites-changed="${({detail}: CustomEvent) => {
           console.log('@sites-changed', detail.sites);
           if (detail.sites?.length) {
-            console.log('@sites-changed', detail.sites);
             this.siteOption = detail.sites;
           }
-          this.updateModelValue('location_site', detail.sites[0] || null);
+          this.updateModelValue('location_site', detail.sites?.length ? detail.sites[0] : null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
+          if (detail.location?.length) {
+            this.locationOptions = detail.location;
+          }
           console.log('@location-changed', detail.location);
-          this.updateModelValue('location', detail.location);
+          this.updateModelValue('location', detail.location?.length ? detail.location[0] : null);
         }}"
       ></location-sites-widget>
     `;
@@ -557,14 +559,16 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
         @sites-changed="${({detail}: CustomEvent) => {
           console.log('@sites-changed', detail.sites);
           if (detail.sites?.length) {
-            console.log('@sites-changed', detail.sites);
             this.siteOption = detail.sites;
           }
-          this.updateModelValue('location_site', detail.sites[0] || null);
+          this.updateModelValue('location_site', detail.sites?.length ? detail.sites[0] : null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
+          if (detail.location?.length) {
+            this.locationOptions = detail.location;
+          }
           console.log('@location-changed', detail.location);
-          this.updateModelValue('location', detail.location);
+          this.updateModelValue('location', detail.location?.length ? detail.location[0] : null);
         }}"
       ></location-widget>
     `;
@@ -572,18 +576,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    this.locationsUnsubscribe = store.subscribe(
-      staticDataDynamic(
-        (locations: EtoolsLightLocation[] | undefined) => {
-          if (!locations) {
-            return;
-          }
-          this.locations = locations;
-        },
-        [LOCATIONS_ENDPOINT]
-      )
-    );
 
     this.visitGoalsUnsubscribe = store.subscribe(
       visitGoalsSelector((visitGoals: VisitGoal[] | undefined) => {
@@ -620,7 +612,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.visitGoalsUnsubscribe();
-    this.locationsUnsubscribe();
     this.facilityTypesUnsubscribe();
     this.activeLanguageUnsubscribe();
   }

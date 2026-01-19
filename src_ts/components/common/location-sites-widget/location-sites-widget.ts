@@ -225,12 +225,12 @@ export class LocationSitesWidgetComponent extends LitElement {
   }
 
   onSiteLineClick(site: Site): void {
-    this.changeLocationAndSite(site.parent.id, {id: site.id, name: site.name});
+    this.changeLocationAndSite(site.parent, {id: site.id, name: site.name});
   }
 
   onSiteClick(e: CustomEvent): void {
     const site = e.target as any;
-    this.changeLocationAndSite(site.staticData.parent.id, {id: site.staticData.id, name: site.staticData.name});
+    this.changeLocationAndSite(site.staticData.parent, {id: site.staticData.id, name: site.staticData.name});
   }
 
   onRemoveSiteClick(event: CustomEvent): void {
@@ -238,8 +238,8 @@ export class LocationSitesWidgetComponent extends LitElement {
     this.changeLocationAndSite();
   }
 
-  changeLocationAndSite(idLocation?: string, site?: any): void {
-    fireEvent(this, 'location-changed', {location: idLocation});
+  changeLocationAndSite(location?: any, site?: any): void {
+    fireEvent(this, 'location-changed', {location: location ? [location] : null});
     fireEvent(this, 'sites-changed', {sites: site ? [site] : null});
   }
 

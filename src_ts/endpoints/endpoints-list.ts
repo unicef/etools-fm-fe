@@ -104,10 +104,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [LOCATIONS_ENDPOINT]: {
-    url: '/api/locations-light/',
-    exp: 25 * 60 * 60 * 1000, // 25h
-    cachingKey: 'id',
-    cacheTableName: LOCATIONS_ENDPOINT
+    url: '/api/locations-light/'
   },
 
   [CHANGE_COUNTRY]: {

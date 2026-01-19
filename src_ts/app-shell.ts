@@ -147,7 +147,6 @@ export class AppShell extends connect(store)(LitElement) {
       })
     );
 
-    store.dispatch<AsyncEffect>(loadStaticData(LOCATIONS_ENDPOINT));
     store.dispatch<AsyncEffect>(loadStaticData(CURRENT_WORKSPACE));
     store.dispatch<AsyncEffect>(loadStaticData(VISIT_GOALS));
     store.dispatch<AsyncEffect>(loadStaticData(FACILITY_TYPES));
