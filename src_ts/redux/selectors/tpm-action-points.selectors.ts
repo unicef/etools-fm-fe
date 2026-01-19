@@ -1,6 +1,6 @@
 import {select} from './create-selectors';
 
-export const tpmActionPointsListSelector: Selector<TPMActionPoint[]> = select<TPMActionPoint[]>(
+export const tpmActionPointsListSelector: Selector<IListData<TPMActionPoint>> = select<IListData<TPMActionPoint>>(
   (store: IRootState) => store.tpmActionPointsList.data
 );
 
