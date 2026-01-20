@@ -33,7 +33,7 @@
     "@unicef-polymer/etools-modules-common": "^6.0.0",
     "@unicef-polymer/etools-piwik-analytics": "^5.0.0",
     "@unicef-polymer/etools-types": "^2.0.0",
-    "@unicef-polymer/etools-unicef": "^2.0.0",
+    "@unicef-polymer/etools-unicef": "^2.0.1",
     "@unicef-polymer/etools-utils": "^3.0.0",
     "lit": "^3.3.1",
     "dayjs": "^1.11.13",
@@ -83,5 +83,7 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-musl": "^4.28.1"
   },
-  "relativeDependencies": {}
+  "relativeDependencies": {
+    "@unicef-polymer/etools-unicef": "../../etools-polymer/etools-unicef"
+  }
 }

@@ -20,8 +20,8 @@ import {store} from '../store.ts';
 export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTION_POINTS_LIST, {activityId});
-    const params = store.getState().actionPointsList.params;
-    const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
+    const params = store.getState().actionPointsList?.params || '';
+    const resultUrl = params ? `${url}?${EtoolsRouter.encodeQueryParams(params)}` : url;
     return request<IListData<ActionPoint>>(resultUrl, {method: 'GET'}).then((response: IListData<ActionPoint>) => {
       dispatch(new SetActionPointsList(response));
     });

@@ -60,6 +60,7 @@ import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ACTIVITIES_EXPORT} from '../../../../endpoints/endpoints-list';
 import {EtoolsDropdownMulti} from '@unicef-polymer/etools-unicef/src/etools-dropdown/EtoolsDropdownMulti';
 import {locationsInvert} from '../../management/sites/locations-invert';
+import {AsyncEffect, IRootState} from '../../../../types/redux-types';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -148,15 +149,12 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES),
           location_site__in: this.sitesOptions
         };
-        waitForCondition(() => !!this.user).then(() => {
-          this.activitiesListFilters = getActivitiesFilters(
-            this.user.is_unicef_user,
-            this.loadSiteDropdownOptions
-          ) as any;
-          this.initFilters();
-        });
       })
     );
+    waitForCondition(() => !!this.user).then(() => {
+      this.activitiesListFilters = getActivitiesFilters(this.user.is_unicef_user, this.loadSiteDropdownOptions) as any;
+      this.initFilters();
+    });
   }
 
   static get styles(): CSSResult[] {
