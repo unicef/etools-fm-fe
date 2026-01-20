@@ -207,7 +207,8 @@ export class LocationSitesWidgetComponent extends LitElement {
 
   showSelectedSite(): void {
     if (this.selectedSites && this.selectedSites.length && this.selectedLocation) {
-      const site = this.selectedSites[0]; //, parent: {id: this.selectedLocation}} as Site;
+      const site = this.selectedSites[0];
+      site.parent = {id: this.selectedLocation} as ISiteParrentLocation;
       this.onSiteHoverStart(site);
       this.onSiteLineClick(site);
     }
