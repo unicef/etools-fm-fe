@@ -421,7 +421,6 @@ export class LocationWidgetComponent extends LitElement {
     // }
 
     if (changedProperties.has('selectedLocation')) {
-      debugger;
       fireEvent(this, 'location-changed', {location: this.selectedLocation});
     }
   }
