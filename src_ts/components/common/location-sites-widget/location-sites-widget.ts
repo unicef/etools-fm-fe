@@ -297,7 +297,7 @@ export class LocationSitesWidgetComponent extends LitElement {
 
     if (missingSites.length !== 0) {
       console.warn(`This sites are missing in list: ${missingSites}. They will be removed from selected`);
-      this.selectedSites = selectedSites.filter((selected: any) => !missingSites.includes(selected.id));
+      // this.selectedSites = selectedSites.filter((selected: any) => !missingSites.includes(selected.id));
       missingSites.forEach((siteId: number) => this.MapHelper.removeStaticMarker(siteId));
     }
   }
