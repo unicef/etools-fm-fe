@@ -19,6 +19,7 @@ import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {CommentsMixin} from '../../../../common/comments/comments-mixin';
 import {loadActionPoints, loadTPMActionPoints} from '../../../../../redux/effects/action-points.effects.ts';
 import {SetActionPointsParams, SetTPMActionPointsParams} from '../../../../../redux/actions/action-points.actions.ts';
+import {AsyncEffect} from '../../../../../types/redux-types';
 
 store.addReducers({actionPointsList});
 store.addReducers({tpmActionPointsList});

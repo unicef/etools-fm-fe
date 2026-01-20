@@ -563,6 +563,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
           this.updateModelValue('location_site', detail.sites[0] || null);
         }}"
         @location-changed="${({detail}: CustomEvent) => {
+          debugger;
           console.log('@location-changed', detail.location);
           this.updateModelValue('location', detail.location);
         }}"
@@ -636,12 +637,12 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   }
 
   protected save(): void {
-    if (!this.editedData.location) {
-      fireEvent(this, 'toast', {
-        text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
-      });
-      return;
-    }
+    // if (!this.editedData.location) {
+    //   fireEvent(this, 'toast', {
+    //     text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
+    //   });
+    //   return;
+    // }
     if (this.isStartDateAfterEndDate()) {
       super.save();
     } else {
