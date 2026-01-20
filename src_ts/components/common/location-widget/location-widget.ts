@@ -31,6 +31,7 @@ import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-tr
 import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
 import {AsyncEffect, IRootState} from '../../../types/redux-types';
+import equals from 'ramda/es/equals';
 
 store.addReducers({widgetLocations, specificLocations});
 
@@ -403,11 +404,6 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   protected updated(changedProperties: PropertyValues): void {
-    // const oldSelectedSites: number[] | undefined = changedProperties.get('selectedSites') as any[] | undefined;
-    // if (oldSelectedSites || changedProperties.has('mapInitializationProcess')) {
-    //   this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-    // }
-
     const properties: string[] = ['selectedLocation', 'listLoading', 'pathLoading', 'mapInitializationProcess'];
     const locationOrLoadingChanged: boolean = properties.some((propertyName: string) =>
       changedProperties.has(propertyName)
@@ -416,9 +412,10 @@ export class LocationWidgetComponent extends LitElement {
       this.restoreHistory(this.selectedLocation, this.loadingInProcess);
     }
 
-    // if (oldSelectedSites && !equals(oldSelectedSites, this.selectedSites)) {
-    //   fireEvent(this, 'sites-changed', {sites: this.selectedSites});
-    // }
+    const oldSelectedSites: number[] | undefined = changedProperties.get('selectedSites') as any[] | undefined;
+    if (oldSelectedSites && !equals(oldSelectedSites, this.selectedSites)) {
+      fireEvent(this, 'sites-changed', {sites: this.selectedSites});
+    }
 
     if (changedProperties.has('selectedLocation')) {
       fireEvent(this, 'location-changed', {location: this.selectedLocation});

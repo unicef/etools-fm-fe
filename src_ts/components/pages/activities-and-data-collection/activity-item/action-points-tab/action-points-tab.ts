@@ -86,9 +86,9 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
         this.tpmItems = tpmActionPointsList.results;
         this.tpmCount = tpmActionPointsList.count;
         this.loading = false;
-        const params = store.getState().tpmActionPointsList.params;
-        this.tpmPageSize = params.page_size;
-        this.tpmPageNumber = params.page;
+        const params = store.getState().tpmActionPointsList?.params;
+        this.tpmPageSize = params?.page_size || 10;
+        this.tpmPageNumber = params?.page || 1;
       })
     );
     this.actionPointsCategoriesUnsubscribe = store.subscribe(
