@@ -260,7 +260,7 @@ export class LocationWidgetComponent extends LitElement {
 
   onSiteLineClick(site: Site): void {
     const index: number = this.selectedSites.findIndex((selected: any) => selected.id === site.id);
-    let parent = null;
+    let parentId = null;
     // site was not selected before
     if (index === -1) {
       // if site not on the map, clear map markers
@@ -269,13 +269,13 @@ export class LocationWidgetComponent extends LitElement {
       const coords: CoordinatesArray = [...site.point.coordinates].reverse() as CoordinatesArray;
       this.MapHelper.addStaticMarker({coords, staticData: site, popup: site.name});
       this.selectedSites = [{id: site.id, name: site.name}];
-      parent = site.parent;
+      parentId = site.parent;
     } else {
       // site was selected so remove
       this.selectedSites = [];
       this.MapHelper.removeStaticMarker(site.id);
     }
-    fireEvent(this, 'location-changed', {location: parent});
+    fireEvent(this, 'location-changed', {location: parentId});
     fireEvent(this, 'sites-changed', {sites: this.selectedSites});
   }
 
