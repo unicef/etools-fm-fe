@@ -14,12 +14,16 @@ import {
   SetTPMActionPointsList,
   SetTPMActionPointsUpdateStatus
 } from '../actions/action-points.actions';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {store} from '../store.ts';
 
 export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTION_POINTS_LIST, {activityId});
-    return request<IListData<ActionPoint>>(url, {method: 'GET'}).then((response: IListData<ActionPoint>) => {
-      dispatch(new SetActionPointsList(response.results));
+    const params = store.getState().actionPointsList?.params || '';
+    const resultUrl = params ? `${url}?${EtoolsRouter.encodeQueryParams(params)}` : url;
+    return request<IListData<ActionPoint>>(resultUrl, {method: 'GET'}).then((response: IListData<ActionPoint>) => {
+      dispatch(new SetActionPointsList(response));
     });
   };
 }
@@ -54,9 +58,13 @@ export function updateActionPoint(
 export function loadTPMActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(TPM_ACTION_POINTS_LIST, {activityId});
-    return request<IListData<TPMActionPoint>>(url, {method: 'GET'}).then((response: IListData<TPMActionPoint>) => {
-      dispatch(new SetTPMActionPointsList(response.results));
-    });
+    const params = store.getState().tpmActionPointsList.params;
+    const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
+    return request<IListData<TPMActionPoint>>(resultUrl, {method: 'GET'}).then(
+      (response: IListData<TPMActionPoint>) => {
+        dispatch(new SetTPMActionPointsList(response));
+      }
+    );
   };
 }
 

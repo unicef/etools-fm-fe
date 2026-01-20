@@ -58,6 +58,7 @@ import {enableCommentMode, getComments, setCommentsEndpoint} from '../../../comm
 import {AsyncAction} from '@unicef-polymer/etools-types';
 import {etoolsEndpoints} from '../../../../endpoints/endpoints-list';
 import {CommentsEndpoints} from '../../../common/comments/comments-types';
+import {AsyncEffect, IActivityDetailsState} from '../../../../types/redux-types';
 
 store.addReducers({activityDetails});
 
@@ -298,7 +299,6 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
             // loadSummaryFindingsAndOverall & loadActionPoints here because we need data loaded
             // for Action button click even if user doesn't open the tabs
             store.dispatch<AsyncEffect>(loadSummaryFindingsAndOverall(Number(this.activityId)));
-
             store.dispatch<AsyncEffect>(loadActionPoints(Number(this.activityId)));
             store.dispatch<AsyncEffect>(loadTPMActionPoints(Number(this.activityId)));
 
