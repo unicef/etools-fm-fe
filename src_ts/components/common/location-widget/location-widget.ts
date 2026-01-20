@@ -30,6 +30,8 @@ import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
+import {AsyncEffect, IRootState} from '../../../types/redux-types';
+import equals from 'ramda/es/equals';
 
 store.addReducers({widgetLocations, specificLocations});
 
@@ -268,7 +270,7 @@ export class LocationWidgetComponent extends LitElement {
       const coords: CoordinatesArray = [...site.point.coordinates].reverse() as CoordinatesArray;
       this.MapHelper.addStaticMarker({coords, staticData: site, popup: site.name});
       this.selectedSites = [{id: site.id, name: site.name}];
-      parentId = site.parent.id;
+      parentId = site.parent;
     } else {
       // site was selected so remove
       this.selectedSites = [];
@@ -402,11 +404,6 @@ export class LocationWidgetComponent extends LitElement {
   }
 
   protected updated(changedProperties: PropertyValues): void {
-    // const oldSelectedSites: number[] | undefined = changedProperties.get('selectedSites') as any[] | undefined;
-    // if (oldSelectedSites || changedProperties.has('mapInitializationProcess')) {
-    //   this.checkSelectedSites(this.selectedSites, this.selectedLocation);
-    // }
-
     const properties: string[] = ['selectedLocation', 'listLoading', 'pathLoading', 'mapInitializationProcess'];
     const locationOrLoadingChanged: boolean = properties.some((propertyName: string) =>
       changedProperties.has(propertyName)
@@ -415,13 +412,14 @@ export class LocationWidgetComponent extends LitElement {
       this.restoreHistory(this.selectedLocation, this.loadingInProcess);
     }
 
-    // if (oldSelectedSites && !equals(oldSelectedSites, this.selectedSites)) {
-    //   fireEvent(this, 'sites-changed', {sites: this.selectedSites});
-    // }
+    const oldSelectedSites: number[] | undefined = changedProperties.get('selectedSites') as any[] | undefined;
+    if (oldSelectedSites && !equals(oldSelectedSites, this.selectedSites)) {
+      fireEvent(this, 'sites-changed', {sites: this.selectedSites});
+    }
 
-    // if (changedProperties.has('selectedLocation')) {
-    //   fireEvent(this, 'location-changed', {location: this.selectedLocation});
-    // }
+    if (changedProperties.has('selectedLocation')) {
+      fireEvent(this, 'location-changed', {location: this.selectedLocation});
+    }
   }
 
   private checkSelectedSites(selectedSites: number[]): void {

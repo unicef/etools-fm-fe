@@ -1,4 +1,7 @@
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+
 export enum ActionPointsActionTypes {
+  SET_ACTION_POINTS_PARAMS = '[Action points action]: SET_ACTION_POINTS_PARAMS',
   SET_ACTION_POINTS_LIST = '[Action points action]: SET_ACTION_POINTS_LIST',
   UPDATE_ACTION_POINT = '[Action points action]: UPDATE_ACTION_POINT',
   GET_ACTION_POINTS_OFFICES = '[Action points action]: GET_ACTION_POINTS_OFFICES',
@@ -6,13 +9,19 @@ export enum ActionPointsActionTypes {
   UPDATE_ACTION_POINT_ERROR = '[Action points action]: UPDATE_ACTION_POINT_ERROR',
   SET_ACTION_POINTS_UPDATE_STATUS = '[Action points action]: SET_ACTION_POINTS_UPDATE_STATUS',
   SET_TPM_ACTION_POINTS_LIST = '[Action points action]: SET_TPM_ACTION_POINTS_LIST',
+  SET_TPM_ACTION_POINTS_PARAMS = '[Action points action]: SET_TPM_ACTION_POINTS_PARAMS',
   UPDATE_TPM_ACTION_POINT = '[Action points action]: UPDATE_TPM_ACTION_POINT',
   SET_TPM_ACTION_POINTS_UPDATE_STATUS = '[Action points action]: SET_TPM_ACTION_POINTS_UPDATE_STATUS'
 }
 
 export class SetActionPointsList {
   readonly type: ActionPointsActionTypes.SET_ACTION_POINTS_LIST = ActionPointsActionTypes.SET_ACTION_POINTS_LIST;
-  constructor(public payload: ActionPoint[]) {}
+  constructor(public payload: IListData<ActionPoint>) {}
+}
+
+export class SetActionPointsParams {
+  readonly type: ActionPointsActionTypes.SET_ACTION_POINTS_PARAMS = ActionPointsActionTypes.SET_ACTION_POINTS_PARAMS;
+  constructor(public payload: EtoolsRouteQueryParams) {}
 }
 
 export class UpdateActionPoint {
@@ -45,7 +54,12 @@ export class SetActionPointsUpdateStatus {
 export class SetTPMActionPointsList {
   readonly type: ActionPointsActionTypes.SET_TPM_ACTION_POINTS_LIST =
     ActionPointsActionTypes.SET_TPM_ACTION_POINTS_LIST;
-  constructor(public payload: TPMActionPoint[]) {}
+  constructor(public payload: IListData<TPMActionPoint>) {}
+}
+export class SetTPMActionPointsParams {
+  readonly type: ActionPointsActionTypes.SET_TPM_ACTION_POINTS_PARAMS =
+    ActionPointsActionTypes.SET_TPM_ACTION_POINTS_PARAMS;
+  constructor(public payload: EtoolsRouteQueryParams) {}
 }
 
 export class UpdateTPMActionPoint {
@@ -68,4 +82,6 @@ export type ActionPointsActions =
   | SetActionPointsUpdateStatus
   | SetTPMActionPointsList
   | UpdateTPMActionPoint
-  | SetTPMActionPointsUpdateStatus;
+  | SetTPMActionPointsUpdateStatus
+  | SetActionPointsParams
+  | SetTPMActionPointsParams;

@@ -74,4 +74,3 @@ workflows:
                 - master
                 - staging
                 - develop
-                - sites-pagination

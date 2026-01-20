@@ -207,7 +207,8 @@ export class LocationSitesWidgetComponent extends LitElement {
 
   showSelectedSite(): void {
     if (this.selectedSites && this.selectedSites.length && this.selectedLocation) {
-      const site = this.selectedSites[0]; //, parent: {id: this.selectedLocation}} as Site;
+      const site = this.selectedSites[0];
+      site.parent = {id: this.selectedLocation} as ISiteParrentLocation;
       this.onSiteHoverStart(site);
       this.onSiteLineClick(site);
     }
@@ -225,12 +226,12 @@ export class LocationSitesWidgetComponent extends LitElement {
   }
 
   onSiteLineClick(site: Site): void {
-    this.changeLocationAndSite(site.parent.id, {id: site.id, name: site.name});
+    this.changeLocationAndSite(site.parent, {id: site.id, name: site.name});
   }
 
   onSiteClick(e: CustomEvent): void {
     const site = e.target as any;
-    this.changeLocationAndSite(site.staticData.parent.id, {id: site.staticData.id, name: site.staticData.name});
+    this.changeLocationAndSite(site.staticData.parent, {id: site.staticData.id, name: site.staticData.name});
   }
 
   onRemoveSiteClick(event: CustomEvent): void {
@@ -238,7 +239,7 @@ export class LocationSitesWidgetComponent extends LitElement {
     this.changeLocationAndSite();
   }
 
-  changeLocationAndSite(idLocation?: string, site?: any): void {
+  changeLocationAndSite(idLocation?: any, site?: any): void {
     fireEvent(this, 'location-changed', {location: idLocation});
     fireEvent(this, 'sites-changed', {sites: site ? [site] : null});
   }
@@ -296,7 +297,7 @@ export class LocationSitesWidgetComponent extends LitElement {
 
     if (missingSites.length !== 0) {
       console.warn(`This sites are missing in list: ${missingSites}. They will be removed from selected`);
-      this.selectedSites = selectedSites.filter((selected: any) => !missingSites.includes(selected.id));
+      // this.selectedSites = selectedSites.filter((selected: any) => !missingSites.includes(selected.id));
       missingSites.forEach((siteId: number) => this.MapHelper.removeStaticMarker(siteId));
     }
   }
