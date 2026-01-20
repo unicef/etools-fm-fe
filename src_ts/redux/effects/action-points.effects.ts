@@ -16,6 +16,7 @@ import {
 } from '../actions/action-points.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {store} from '../store.ts';
+import {AsyncEffect} from '../../types/redux-types';
 
 export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
@@ -58,8 +59,8 @@ export function updateActionPoint(
 export function loadTPMActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(TPM_ACTION_POINTS_LIST, {activityId});
-    const params = store.getState().tpmActionPointsList.params;
-    const resultUrl = `${url}?${EtoolsRouter.encodeQueryParams(params)}`;
+    const params = store.getState().tpmActionPointsList?.params;
+    const resultUrl = params ? `${url}?${EtoolsRouter.encodeQueryParams(params)}` : url;
     return request<IListData<TPMActionPoint>>(resultUrl, {method: 'GET'}).then(
       (response: IListData<TPMActionPoint>) => {
         dispatch(new SetTPMActionPointsList(response));
