@@ -52,7 +52,7 @@ export class ActivityDetailsTab extends LitElement {
     // language=HTML
     return html`
       <details-note-card></details-note-card>
-      <activity-details-card class="page-content"></activity-details-card>
+      <activity-details-card class="page-content" .activityId="${this.activityId}"></activity-details-card>
       ${this.checkActivityId()}
     `;
   }
