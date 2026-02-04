@@ -74,6 +74,7 @@ const ACTIVITY_DETAILS_TABS: PageTab[] = [
 
 @customElement('activity-details-card')
 export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixin(BaseDetailsCard))) {
+  @property() activityId: string | null = null;
   @property() widgetOpened = false;
   @property() visitGoals: VisitGoal[] = [];
   @property() facilityTypes: FacilityType[] = [];
@@ -611,9 +612,20 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     );
   }
 
+  firstUpdated(): void {
+    if (this.activityId === 'new' && this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)) {
+      this.startEdit();
+    }
+  }
+
   updated(changedProperties: PropertyValues) {
     if (changedProperties.has('editedData')) {
       this.siteOption = this.editedData?.location_site ? [this.editedData.location_site] : [];
+    }
+    if (changedProperties.has('activityId') && this.activityId === 'new' && !this.isEditMode) {
+      if (this.havePossibilityToEditCard(CARD_NAME, ELEMENT_FIELDS)) {
+        this.startEdit();
+      }
     }
   }
 
