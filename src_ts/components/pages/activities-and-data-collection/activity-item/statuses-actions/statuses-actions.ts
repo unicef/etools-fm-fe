@@ -192,7 +192,7 @@ export class StatusesActionsComponent extends LitElement {
             : 'CONFIRM_COMPLETE_SUMMARY_NOT_COMPLETE'
         );
       }
-      if (activityDetails.permissions.edit.action_points && !(storeState.actionPointsList?.data || []).length) {
+      if (activityDetails.permissions.edit.action_points && !storeState.actionPointsList?.data?.results?.length) {
         // if can add Action Point and doesn't have any, display reminder
         actionPointReminder = getTranslation('ACTION_POINT_REMINDER');
       }
