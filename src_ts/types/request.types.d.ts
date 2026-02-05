@@ -1,3 +1,4 @@
+
 interface IEtoolsRequest {
   readonly lastAjaxRequest: GenericObject | null | undefined;
   readonly activeAjaxRequests: any[] | null | undefined;
