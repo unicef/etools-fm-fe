@@ -60,7 +60,6 @@ import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {ACTIVITIES_EXPORT} from '../../../../endpoints/endpoints-list';
 import {EtoolsDropdownMulti} from '@unicef-polymer/etools-unicef/src/etools-dropdown/EtoolsDropdownMulti';
 import {locationsInvert} from '../../management/sites/locations-invert';
-import {AsyncEffect, IRootState} from '../../../../types/redux-types';
 
 store.addReducers({activities, specificLocations, activityDetails});
 
@@ -260,10 +259,10 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
-    const invalid: boolean = !params || !params.page || !params.page_size || !params.status__in;
+    const invalid: boolean = !params || !params.page || !params.page_size;
     if (invalid) {
-      const {page = 1, page_size = 10, status__in = ACTIVE_STATUS_FILTER} = params || {};
-      updateQueryParams({page, page_size, status__in});
+      const {page = 1, page_size = 10} = params || {};
+      updateQueryParams({page, page_size});
     }
     return !invalid;
   }
