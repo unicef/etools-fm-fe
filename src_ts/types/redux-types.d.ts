@@ -1,5 +1,3 @@
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-
 interface IRootState {
   app: IAppState;
   user: IUserState;
