@@ -16,7 +16,6 @@ import {
 } from '../actions/action-points.actions';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {store} from '../store.ts';
-import {AsyncEffect} from '../../types/redux-types';
 
 export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
