@@ -47,11 +47,7 @@ import {
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
-import {
-  ACTIVE_STATUS_FILTER,
-  DATA_COLLECTION,
-  REPORT_FINALIZATION
-} from '../activity-item/statuses-actions/activity-statuses';
+import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
