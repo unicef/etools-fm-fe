@@ -17,6 +17,7 @@ export const CATEGORIES = 'categories';
 export const SECTIONS = 'sections';
 export const METHODS = 'methods';
 export const PARTNERS = 'partners';
+export const PARTNERSGPD = 'partnersGpd';
 export const VISIT_GOALS = 'visitGoals';
 export const FACILITY_TYPES = 'facilityTypes';
 export const TPM_PARTNERS = 'tpmPartners';

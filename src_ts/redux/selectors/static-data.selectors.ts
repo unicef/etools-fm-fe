@@ -8,6 +8,10 @@ export const partnersDataSelector: Selector<EtoolsPartner[] | undefined> = selec
   (store: IRootState) => store.staticData.partners
 );
 
+export const partnersGpdDataSelector: Selector<EtoolsPartner[] | undefined> = select<EtoolsPartner[] | undefined>(
+  (store: IRootState) => store.staticData.partnersGpd
+);
+
 export const sectionsDataSelector: Selector<EtoolsSection[] | undefined> = select<EtoolsSection[] | undefined>(
   (store: IRootState) => store.staticData.sections
 );

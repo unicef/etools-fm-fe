@@ -3,12 +3,13 @@ import {staticDataDynamic} from '../../../redux/selectors/static-data.selectors'
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
-import {PARTNERS} from '../../../endpoints/endpoints-list';
+import {PARTNERS, PARTNERSGPD} from '../../../endpoints/endpoints-list';
 
 /* @LitMixin */
 export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     partners: EtoolsPartner[] = [];
+    isGpd = false;
 
     private partnersUnsubscribe!: Unsubscribe;
 
@@ -23,6 +24,11 @@ export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) 
 
     connectedCallback(): void {
       super.connectedCallback();
+      this.loadPartners();
+    }
+
+    loadPartners() {
+      const path = this.isGpd ? PARTNERSGPD : PARTNERS;
       this.partnersUnsubscribe = store.subscribe(
         staticDataDynamic(
           (partners: EtoolsPartner[] | undefined) => {
@@ -31,9 +37,10 @@ export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) 
             }
             this.partners = partners;
           },
-          [PARTNERS]
+          [path]
         )
       );
+
       const data: IStaticDataState = (store.getState() as IRootState).staticData;
       if (!data.partners) {
         store.dispatch<AsyncEffect>(loadStaticData(PARTNERS));

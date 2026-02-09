@@ -19,6 +19,13 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     return [SharedStyles, layoutStyles];
   }
 
+  set dialogData({isGpd}: any) {
+    this.isGpd = isGpd;
+    if (this.isGpd) {
+      this.loadPartners();
+    }
+  }
+
   selectPartner(item: EtoolsPartner): void {
     this.partner = item;
   }
