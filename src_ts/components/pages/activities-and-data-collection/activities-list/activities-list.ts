@@ -47,7 +47,11 @@ import {
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
-import {DATA_COLLECTION, REPORT_FINALIZATION} from '../activity-item/statuses-actions/activity-statuses';
+import {
+  ACTIVE_STATUS_FILTER,
+  DATA_COLLECTION,
+  REPORT_FINALIZATION
+} from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
@@ -82,6 +86,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   private readonly userUnsubscribe: Unsubscribe;
   private readonly prevQueryParamsKey = 'ActivitiesPrevParams';
   private siteFilterEl?: EtoolsDropdownMulti;
+  private isFirstLoad = true;
 
   @property({type: Object})
   loadSiteDropdownOptions!: (search: string, page: number, shownOptionsLimit: number) => void;
@@ -255,10 +260,19 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private checkParams(params?: EtoolsRouteQueryParams | null): boolean {
-    const invalid: boolean = !params || !params.page || !params.page_size;
+    let invalid: boolean = !params || !params.page || !params.page_size;
+    const filterParams: any = {};
+    if (this.isFirstLoad) {
+      this.isFirstLoad = false;
+      if (!params?.status__in) {
+        invalid = true;
+        filterParams.status__in = ACTIVE_STATUS_FILTER;
+      }
+    }
     if (invalid) {
-      const {page = 1, page_size = 10} = params || {};
-      updateQueryParams({page, page_size});
+      filterParams.page = params?.page || 1;
+      filterParams.page_size = params?.page_size || 10;
+      updateQueryParams(filterParams);
     }
     return !invalid;
   }
