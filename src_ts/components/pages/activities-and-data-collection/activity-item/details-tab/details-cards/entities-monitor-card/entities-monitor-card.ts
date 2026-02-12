@@ -115,11 +115,12 @@ export class EntitiesMonitorCard extends CommentsMixin(
             >
             </entries-list>
           </div>
+          <hr />
           <div class="row">
             <!--  GOV  Partners List    -->
             <entries-list
               class="col-md-4 col-12"
-              .nameList="${translate('ACTIVITY_DETAILS.PARTNERS')}"
+              .nameList="${translate('ACTIVITY_DETAILS.GOVERNMENT_PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"
               .items="${this.activityGpdPartners}"
               ?is-readonly="${!this.isEditMode}"
@@ -302,6 +303,12 @@ export class EntitiesMonitorCard extends CommentsMixin(
       css`
         .card-content {
           padding: 25px 18px;
+        }
+        hr {
+          background-color: var(--gray-mid);
+          width: 100%;
+          height: 2px;
+          margin-block: 16px;
         }
       `
     ];
