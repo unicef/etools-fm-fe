@@ -5,13 +5,13 @@ import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/sr
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
-import {SEND_REPORT_EMAIL, EMAIL_RECIPIENTS} from '../../../../../endpoints/endpoints-list';
+import {SEND_REPORT_EMAIL, EMAIL_RECIPIENTS} from '../../../endpoints/endpoints-list';
 import {sendRequest} from '@unicef-polymer/etools-utils/dist/etools-ajax';
-import {SharedStyles} from '../../../../styles/shared-styles';
-import {CardStyles} from '../../../../styles/card-styles';
-import {DialogStyles} from '../../../../styles/dialog-styles';
-import {InputStyles} from '../../../../styles/input-styles';
-import {getEndpoint} from '../../../../../endpoints/endpoints';
+import {SharedStyles} from '../../styles/shared-styles';
+import {CardStyles} from '../../styles/card-styles';
+import {DialogStyles} from '../../styles/dialog-styles';
+import {InputStyles} from '../../styles/input-styles';
+import {getEndpoint} from '../../../endpoints/endpoints';
 import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
 
 export interface SendReportEmailDialogData {
@@ -93,10 +93,14 @@ export class SendReportEmailDialog extends LitElement {
         ?opened="${this.dialogOpened}"
         .okBtnText="${translate('SEND')}"
         .cancelBtnText="${translate('CANCEL')}"
-        ?okBtnDisabled="${this.isSending || !this.isValid()}"
+        ?disable-confirm-btn="${this.isSending || !this.isValid()}"
         @close="${this.onClose}"
         @confirm-btn-clicked="${() => this.sendEmail()}"
       >
+        <etools-loading
+          ?active="${this.isSending}"
+          loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
+        ></etools-loading>
         <div class="row">
           <div class="form-field">
             <etools-dropdown-multi

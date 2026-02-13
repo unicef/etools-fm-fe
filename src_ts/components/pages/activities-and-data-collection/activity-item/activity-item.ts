@@ -11,6 +11,7 @@ import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-conten
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import './statuses-actions/confirm-duplicate-popup';
+import '../../../common/send-report-email-dialog/send-report-email-dialog';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -530,9 +531,11 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     if (!this.activityDetails?.id) {
       return;
     }
-    import('./send-report-email-dialog/send-report-email-dialog').then((module) => {
-      const {openSendReportEmailDialog} = module;
-      openSendReportEmailDialog(this.activityDetails!.id);
+    openDialog({
+      dialog: 'send-report-email-dialog',
+      dialogData: {
+        activityId: this.activityDetails.id
+      }
     });
   }
 
