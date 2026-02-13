@@ -118,6 +118,8 @@
     },
     "VISIT_LEAD": "Líder de Visita",
     "VISIT_LETTER": "Carta de visita",
+    "SEND_BY_EMAIL": "Enviar por correo electrónico",
+    "SEND_REPORT_BY_EMAIL": "Enviar informe por correo electrónico",
     "REPORT_REVIEWERS": "Revisores de informes",
     "REPORT_REVIEWER_SELECT": "Los siguientes usuarios serán notificados de este envío para poder revisarlo. Seleccione los usuarios y continúe.",
     "REPORT_REVIEWER_CONFIRM": "Los siguientes usuarios serán notificados de este envío para poder revisarlo. Confirme los usuarios y continúe.",
@@ -751,5 +753,16 @@
   "SUMMARY_PARTNER": "Resumen de socios",
   "SUMMARY_CPOUTPUT": "Resumen de salida de CP",
   "SUMMARY_PDSPD": "Resumen de PD/SPD",
-  "MESSAGE_WAS_DELETED": "Se eliminó el mensaje"
+  "MESSAGE_WAS_DELETED": "Se eliminó el mensaje",
+  "SEND": "Enviar",
+  "RECIPIENTS": "Destinatarios",
+  "SELECT_RECIPIENTS": "Seleccionar destinatarios",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA": "Ingrese las direcciones de correo electrónico separadas por comas",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA_HELP": "Separe varias direcciones de correo electrónico con comas",
+  "REQUIRED_FIELD": "Este campo es obligatorio",
+  "MESSAGE": "Mensaje",
+  "OPTIONAL_MESSAGE_TO_INCLUDE_IN_EMAIL": "Mensaje opcional para incluir en el correo electrónico",
+  "INVALID_EMAIL_ADDRESSES": "Direcciones de correo electrónico inválidas",
+  "REPORT_SENT_SUCCESSFULLY": "Informe enviado con éxito",
+  "FAILED_TO_SEND_EMAIL": "Error al enviar el correo electrónico. Por favor, inténtelo de nuevo más tarde"
 }
