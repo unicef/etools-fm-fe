@@ -78,6 +78,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
           <div class="row">
             <!--    Partners List    -->
             <entries-list
+              id="partnersList"
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"
@@ -119,6 +120,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
           <div class="row">
             <!--  GOV  Partners List    -->
             <entries-list
+              id="gpdPartnersList"
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.GOVERNMENT_PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"

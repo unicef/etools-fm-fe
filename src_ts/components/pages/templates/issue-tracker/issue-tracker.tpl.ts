@@ -17,7 +17,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
   return html`
     <style>
       ${dataTableStylesLit} .filter {
-        min-width: 240px;
+        min-width: 260px;
         margin-inline-start: 16px;
       }
     </style>

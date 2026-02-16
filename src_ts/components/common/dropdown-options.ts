@@ -46,8 +46,8 @@ export const ANSWER_TYPES: AnswerTypeOption[] = [
 
 export const LEVELS: DefaultDropdownOption<string>[] = [
   {value: PARTNER, display_name: `LEVELS_OPTIONS.PARTNER`},
-  {value: OUTPUT, display_name: `LEVELS_OPTIONS.OUTPUT`},
-  {value: INTERVENTION, display_name: `LEVELS_OPTIONS.INTERVENTION`}
+  {value: OUTPUT, display_name: `LEVELS_OPTIONS.OUTPUT;ACTIVITY_DETAILS.KEY_INTERVENTIONS`},
+  {value: INTERVENTION, display_name: `LEVELS_OPTIONS.INTERVENTION;ACTIVITY_DETAILS.GPD`}
 ];
 
 export const FACILITY_TYPE_DURATION: DefaultDropdownOption<string>[] = [

@@ -52,7 +52,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table header   -->
       <etools-data-table-header
         no-title
-        ?no-collapse="${!this.items.length}"
+        ?no-collapse="${this.items?.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
         <etools-data-table-column class="col-md-3 col-data">

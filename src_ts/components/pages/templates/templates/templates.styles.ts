@@ -38,7 +38,7 @@ export const TemplatesStyles: CSSResult = css`
 
   .filter {
     width: 40%;
-    max-width: 300px;
+    max-width: 380px;
   }
 
   .methods {
