@@ -138,6 +138,8 @@ interface IChecklistItem {
   specific_details: string;
   is_enabled: boolean;
   text: string;
+  gpd: null | any;
+  ewp_activity: null | any;
 }
 
 interface IChecklistQuestion {

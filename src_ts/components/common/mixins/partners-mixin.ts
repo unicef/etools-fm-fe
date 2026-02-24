@@ -1,43 +1,53 @@
-import {LitElement, PropertyDeclarations} from 'lit';
+import {LitElement} from 'lit';
 import {staticDataDynamic} from '../../../redux/selectors/static-data.selectors';
 import {store} from '../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
-import {PARTNERS, PARTNERSGPD} from '../../../endpoints/endpoints-list';
+import {PARTNERS} from '../../../endpoints/endpoints-list';
 
 /* @LitMixin */
 export const PartnersMixin = <T extends Constructor<LitElement>>(superclass: T) =>
   class extends superclass {
     partners: EtoolsPartner[] = [];
-    isGpd = false;
+    allPartners: EtoolsPartner[] = [];
+    _activityId: string | null = null;
+    private _isGpd: undefined | boolean = undefined;
+    set isGpd(isGpd: undefined | boolean) {
+      this._isGpd = isGpd;
+      this.filterPartners(isGpd);
+    }
+    get isGpd(): undefined | boolean {
+      return this._isGpd;
+    }
 
     private partnersUnsubscribe!: Unsubscribe;
-
-    static get properties(): PropertyDeclarations {
-      // @ts-ignore
-      const superProps: PropertyDeclarations = super.properties;
-      return {
-        ...superProps,
-        partners: {type: Array}
-      };
-    }
 
     connectedCallback(): void {
       super.connectedCallback();
       this.loadPartners();
     }
 
+    filterPartners(isGpd: undefined | boolean) {
+      if (isGpd === undefined) {
+        this.partners = this.allPartners;
+      } else {
+        this.partners = isGpd
+          ? this.allPartners.filter((x: any) => x.organization_type === 'Government')
+          : this.allPartners.filter((x: any) => x.organization_type !== 'Government');
+      }
+    }
+
     loadPartners() {
-      const path = this.isGpd ? PARTNERSGPD : PARTNERS;
       this.partnersUnsubscribe = store.subscribe(
         staticDataDynamic(
           (partners: EtoolsPartner[] | undefined) => {
             if (!partners) {
               return;
             }
-            this.partners = partners;
+            this.allPartners = partners;
+            this.filterPartners(this.isGpd);
           },
-          [path]
+          [PARTNERS]
         )
       );
 

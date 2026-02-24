@@ -134,6 +134,12 @@ export class ActivityReviewTab extends LitElement {
         } else if (item.intervention) {
           key = `${get('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
           targetId = item.intervention.id;
+        } else if (item.gpd) {
+          key = `${get('LEVELS_OPTIONS.GPD')}: ${item.gpd.gpd_ref}`;
+          targetId = item.gpd.id;
+        } else if (item.ewp_activity) {
+          key = `${get('LEVELS_OPTIONS.EWP_ACTIVITY')}: ${item.ewp_activity.wbs}`;
+          targetId = item.ewp_activity.id;
         } else {
           return sorted;
         }

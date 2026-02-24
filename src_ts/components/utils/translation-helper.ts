@@ -4,10 +4,7 @@ export function applyDropdownTranslation(dropdown: DefaultDropdownOption<any>[])
   return dropdown.map((item: DefaultDropdownOption<any>) => {
     return {
       ...item,
-      display_name: (item.display_name as string)
-        .split(';')
-        .map((x: string) => get(x))
-        .join(' / ')
+      display_name: get(item.display_name as string)
     };
   });
 }

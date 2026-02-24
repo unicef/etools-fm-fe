@@ -59,6 +59,10 @@ export class IssueTrackerList extends CommentsMixin(LitElement) {
       return `${item.location.name} - ${item.location_site.name}`;
     } else if (item.cp_output) {
       return item.cp_output.name;
+    } else if (item.gpd) {
+      return item.gpd.gpd_ref;
+    } else if (item.ewp_activity) {
+      return item.ewp_activity.wbs;
     } else {
       return '';
     }

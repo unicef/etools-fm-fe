@@ -11,6 +11,8 @@ type LogIssue = {
   author: Author;
   history: LogIssueHistory[];
   closed_by: Author;
+  gpd: any;
+  ewp_activity: any;
 };
 
 type LogIssueHistory = {

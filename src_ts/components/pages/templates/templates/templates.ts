@@ -15,7 +15,7 @@ import {getEndpoint} from '../../../../endpoints/endpoints';
 import {request} from '../../../../endpoints/request';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {hasPermission, Permissions} from '../../../../config/permissions';
-import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../common/dropdown-options';
+import {EWP_ACTIVITY, INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../common/dropdown-options';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
@@ -39,7 +39,8 @@ const ESCAPE = 27;
 export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitElement) {
   @property() listLoadingInProcess = false;
   @property() editedDetails: GenericObject = {opened: false};
-  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(LEVELS);
+  private templateLevels = LEVELS.filter((x) => x.value !== EWP_ACTIVITY);
+  @property() levels: DefaultDropdownOption<string>[] = applyDropdownTranslation(this.templateLevels);
   @query('#details-input') private detailsInput!: HTMLInputElement;
   @property() private additionalDataLoadingCount = 0;
   @property({type: Boolean})
@@ -89,7 +90,7 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     this.loadAdditionalData('methods');
     this.activeLanguageUnsubscribe = store.subscribe(
       activeLanguageSelector(() => {
-        this.levels = applyDropdownTranslation(LEVELS);
+        this.levels = applyDropdownTranslation(this.templateLevels);
       })
     );
   }
@@ -126,7 +127,6 @@ export class TemplatesTabComponent extends ListMixin()<IQuestionTemplate>(LitEle
     if (!level) {
       return;
     }
-
     this.loadAdditionalData(`${level}s` as 'interventions' | 'outputs' | 'partners');
     if (this.queryParams && this.queryParams.level === level) {
       return;

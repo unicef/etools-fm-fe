@@ -401,9 +401,10 @@
       "STANDARD": "Estándar"
     },
     "LEVEL": {
-      "INTERVENTION": "PD/SPD",
+      "INTERVENTION": "PD/SPD/gPD",
       "OUTPUT": "Producto del CP",
-      "PARTNER": "Socio"
+      "PARTNER": "Socio",
+      "EWP_ACTIVITY": "Intervenciones y actividades clave"
     },
     "PLACEHOLDERS": {
       "ANSWER_TYPE": "Seleccionar Tipo de respuesta",
@@ -471,7 +472,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Socio",
     "OUTPUT": "Producto de CP",
-    "INTERVENTION": "PD/SPD"
+    "INTERVENTION": "PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Intervenciones y actividades clave"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporario",

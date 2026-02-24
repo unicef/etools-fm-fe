@@ -401,7 +401,8 @@
     "LEVEL": {
       "PARTNER": "Localized Partner",
       "OUTPUT": "Localized CP Output",
-      "INTERVENTION": "Localized PD/SPD"
+      "INTERVENTION": "Localized PD/SPD/gPD",
+      "EWP_ACTIVITY": "Localized Key Interventions and Activities"
     }
   },
   "SITES": {
@@ -458,7 +459,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
     "OUTPUT": "Localized CP Output",
-    "INTERVENTION": "Localized PD/SPD"
+    "INTERVENTION": "Localized PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Localized Key Interventions and Activities"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Временный",

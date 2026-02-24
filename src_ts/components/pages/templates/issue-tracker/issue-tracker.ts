@@ -151,6 +151,10 @@ export class IssueTrackerTabComponent extends CpOutputsMixin(PartnersMixin(ListM
       return `${(item.location as ISiteParrentLocation).name} - ${item.location_site.name}`;
     } else if (item.cp_output) {
       return item.cp_output.name;
+    } else if (item.gpd) {
+      return item.gpd.gpd_ref;
+    } else if (item.ewp_activity) {
+      return item.ewp_activity.wbs;
     } else {
       return '';
     }

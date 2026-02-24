@@ -406,7 +406,8 @@
     "LEVEL": {
       "PARTNER": "Partenaire",
       "OUTPUT": "Extrant du PP",
-      "INTERVENTION": "PD/SPD"
+      "INTERVENTION": "PD/SPD/gPD",
+      "EWP_ACTIVITY": "Interventions et activités clés"
     }
   },
   "SITES": {
@@ -463,7 +464,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",
     "OUTPUT": "Extrant du PP",
-    "INTERVENTION": "PD/SPD"
+    "INTERVENTION": "PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Interventions et activités clés"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporaire",

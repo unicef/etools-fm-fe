@@ -26,6 +26,7 @@ export const NUMBER_FLOAT_TYPE = 'number-float';
 export const PARTNER = 'partner';
 export const OUTPUT = 'output';
 export const INTERVENTION = 'intervention';
+export const EWP_ACTIVITY = 'ewp_activity';
 
 //FACILITY TYPE DURATION
 export const TEMPORARY = 'temporary';
@@ -46,8 +47,9 @@ export const ANSWER_TYPES: AnswerTypeOption[] = [
 
 export const LEVELS: DefaultDropdownOption<string>[] = [
   {value: PARTNER, display_name: `LEVELS_OPTIONS.PARTNER`},
-  {value: OUTPUT, display_name: `LEVELS_OPTIONS.OUTPUT;ACTIVITY_DETAILS.KEY_INTERVENTIONS`},
-  {value: INTERVENTION, display_name: `LEVELS_OPTIONS.INTERVENTION;ACTIVITY_DETAILS.GPD`}
+  {value: OUTPUT, display_name: `LEVELS_OPTIONS.OUTPUT`},
+  {value: INTERVENTION, display_name: `LEVELS_OPTIONS.INTERVENTION`},
+  {value: EWP_ACTIVITY, display_name: `LEVELS_OPTIONS.EWP_ACTIVITY`}
 ];
 
 export const FACILITY_TYPE_DURATION: DefaultDropdownOption<string>[] = [

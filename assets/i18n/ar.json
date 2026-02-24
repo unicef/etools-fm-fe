@@ -401,7 +401,8 @@
     "LEVEL": {
       "INTERVENTION": "وثيقة البرامج/اتفاقية التمويل الصغير",
       "OUTPUT": "مخرج البرنامج القطري",
-      "PARTNER": "الشريك"
+      "PARTNER": "الشريك",
+      "EWP_ACTIVITY": "التدخلات والأنشطة الرئيسية"
     },
     "PLACEHOLDERS": {
       "ANSWER_TYPE": "حدد نوع الإجابة",
@@ -469,7 +470,8 @@
   "LEVELS_OPTIONS": {
     "INTERVENTION": "وثيقة البرامج/وثيقة البرامج المبسطة",
     "OUTPUT": "مخرج البرنامج القطري",
-    "PARTNER": "الشريك"
+    "PARTNER": "الشريك",
+    "EWP_ACTIVITY": "التدخلات والأنشطة الرئيسية"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "مؤقت",

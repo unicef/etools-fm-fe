@@ -13,18 +13,10 @@ export const staticData: Reducer<IStaticDataState, any> = (
       if (state[dataName]) {
         throw new Error(`Data "${dataName}" was already added. Use Reset or Update actions.`);
       }
-      if (dataName === 'partners') {
-        return {
-          [dataName]: (data || []).filter((x: any) => x.organization_type !== 'Government'),
-          [`${dataName}Gpd`]: (data || []).filter((x: any) => x.organization_type === 'Government'),
-          ...state
-        };
-      } else {
-        return {
-          [dataName]: data,
-          ...state
-        };
-      }
+      return {
+        [dataName]: data,
+        ...state
+      };
 
     case StaticDataActionTypes.UPDATE_STATIC_DATA:
       if (!state[dataName]) {
