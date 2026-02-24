@@ -116,6 +116,8 @@
     "MAP_SELECT_LOCATION_BY_SITE": "Sélectionnez l'emplacement par site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Sélectionnez l'emplacement par niveau d'administratif",
     "EXPORT": "EXPORT",
+    "SEND_BY_EMAIL": "Envoyer par e-mail",
+    "SEND_REPORT_BY_EMAIL": "Envoyer le rapport par e-mail",
     "REPORT_REVIEWERS": "Réviseurs de rapports",
     "REPORT_REVIEWER_SELECT": "Les utilisateurs suivants seront informés de cette soumission afin de l'examiner. Veuillez sélectionner les utilisateurs et continuer.",
     "REPORT_REVIEWER_CONFIRM": "Les utilisateurs suivants seront informés de cette soumission afin de l'examiner. Veuillez confirmer les utilisateurs et continuer.",
@@ -744,5 +746,16 @@
   "SUMMARY_PARTNER": "Résumé du partenaire",
   "SUMMARY_CPOUTPUT": "Résumé de la sortie CP",
   "SUMMARY_PDSPD": "Résumé PD / SPD",
-  "MESSAGE_WAS_DELETED": "Le message a été supprimé"
+  "MESSAGE_WAS_DELETED": "Le message a été supprimé",
+  "SEND": "Envoyer",
+  "RECIPIENTS": "Destinataires",
+  "SELECT_RECIPIENTS": "Sélectionner les destinataires",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA": "Entrez les adresses e-mail séparées par des virgules",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA_HELP": "Séparez plusieurs adresses e-mail par des virgules",
+  "REQUIRED_FIELD": "Ce champ est obligatoire",
+  "MESSAGE": "Message",
+  "OPTIONAL_MESSAGE_TO_INCLUDE_IN_EMAIL": "Message optionnel à inclure dans l'e-mail",
+  "INVALID_EMAIL_ADDRESSES": "Adresses e-mail invalides",
+  "REPORT_SENT_SUCCESSFULLY": "Rapport envoyé avec succès",
+  "FAILED_TO_SEND_EMAIL": "Échec de l'envoi de l'e-mail. Veuillez réessayer plus tard"
 }

@@ -11,6 +11,7 @@ import {pageContentHeaderSlottedStyles} from '../../../common/layout/page-conten
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 import './statuses-actions/confirm-duplicate-popup';
+import '../../../common/send-report-email-dialog/send-report-email-dialog';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -84,6 +85,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
   @property() activeTab!: string;
   @property() childInEditMode = false;
   @property() isUnicefUser = false;
+  @property() currentUser: IEtoolsUserModel | null = null;
   @property({type: Boolean})
   commentMode = false;
 
@@ -194,6 +196,14 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
               <sl-menu-item tracker="Export PDF" ?hidden="${this.hideExportButton()}" @click="${this.export}">
                 <etools-icon slot="prefix" name="file-download"></etools-icon>
                 ${translate('ACTIVITY_DETAILS.EXPORT')}
+              </sl-menu-item>
+              <sl-menu-item
+                tracker="Send by Email"
+                ?hidden="${this.hideSendEmailButton()}"
+                @click="${this.openSendEmailDialog}"
+              >
+                <etools-icon slot="prefix" name="mail"></etools-icon>
+                ${translate('ACTIVITY_DETAILS.SEND_BY_EMAIL')}
               </sl-menu-item>
             </sl-menu>
           </sl-dropdown>
@@ -322,6 +332,7 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     this.userUnsubscribe = store.subscribe(
       currentUser((user: IEtoolsUserModel | null) => {
         this.isUnicefUser = user && user.is_unicef_user;
+        this.currentUser = user;
       })
     );
   }
@@ -468,6 +479,39 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     );
   }
 
+  hideSendEmailButton(): boolean {
+    // Only show for completed reports
+    if (!this.activityDetails?.id || this.activityDetails.status !== COMPLETED) {
+      return true;
+    }
+
+    // Check if user has permission: IsUNICEF | IsFieldMonitor | IsVisitLead | IsTeamMember | IsMonitoringVisitApprover
+    if (!this.currentUser) {
+      return true;
+    }
+
+    const userId = this.currentUser.user;
+
+    // Check if user is Field Monitor (FM User or PME)
+    const isFieldMonitor = this.currentUser.groups?.some(
+      (group: UserGroup) => group.name === 'FM User' || group.name === 'PME'
+    );
+
+    // Check if user is Visit Lead
+    const isVisitLead = this.activityDetails.visit_lead?.id === userId;
+
+    // Check if user is Team Member
+    const isTeamMember = this.activityDetails.team_members?.some((member: ActivityTeamMember) => member.id === userId);
+
+    // Check if user is Monitoring Visit Approver (in report_reviewers)
+    const isMonitoringVisitApprover = this.activityDetails.report_reviewers?.some(
+      (reviewer: ActivityTeamMember) => reviewer.id === userId
+    );
+
+    // Hide button if user doesn't have any of the required permissions
+    return !(isFieldMonitor || isVisitLead || isTeamMember || isMonitoringVisitApprover || this.isUnicefUser);
+  }
+
   hideMoreActionsButton() {
     if (!this.activityDetails?.id) {
       return true;
@@ -479,6 +523,20 @@ export class NewActivityComponent extends MatomoMixin(LitElement) {
     e.currentTarget.blur();
     this.trackAnalytics(e);
     window.open(`/api/v1/field-monitoring/planning/activities/${this.activityDetails?.id}/pdf/`, '_blank');
+  }
+
+  openSendEmailDialog(e: any): void {
+    e.currentTarget.blur();
+    this.trackAnalytics(e);
+    if (!this.activityDetails?.id) {
+      return;
+    }
+    openDialog({
+      dialog: 'send-report-email-dialog',
+      dialogData: {
+        activityId: this.activityDetails.id
+      }
+    });
   }
 
   private checkEditPermission(target: string): boolean {

@@ -364,7 +364,9 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                       <etools-info-tooltip hoist position="right" style="pointer-events: all">
                         <span slot="message"
                           ><ul>
-                            ${x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)}
+                            ${x.info?.length
+                              ? x.info.map((text: string) => html`<li>${unsafeHTML(text)}</li>`)
+                              : html`<li>&#8212;</li>`}
                           </ul></span
                         >
                       </etools-info-tooltip>
