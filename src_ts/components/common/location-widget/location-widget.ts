@@ -30,7 +30,6 @@ import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
-import {AsyncEffect, IRootState} from '../../../types/redux-types';
 import equals from 'ramda/es/equals';
 
 store.addReducers({widgetLocations, specificLocations});

@@ -116,6 +116,8 @@
     },
     "VISIT_LEAD": "قائد الزيارة",
     "VISIT_LETTER": "خطاب الزيارة",
+    "SEND_BY_EMAIL": "إرسال عبر البريد الإلكتروني",
+    "SEND_REPORT_BY_EMAIL": "إرسال التقرير عبر البريد الإلكتروني",
     "REPORT_REVIEWERS": "تقرير المراجعين",
     "REPORT_REVIEWER_SELECT": "سيتم إخطار المستخدمين التاليين بهذا الإرسال من أجل المراجعة. الرجاء تحديد المستخدمين والمتابعة.",
     "REPORT_REVIEWER_CONFIRM": "سيتم إخطار المستخدمين التاليين بهذا الإرسال من أجل المراجعة. يرجى تأكيد المستخدمين والمتابعة.",
@@ -749,5 +751,16 @@
   "SUMMARY_PARTNER": "ملخص الشريك",
   "SUMMARY_CPOUTPUT": "ملخص الإخراج CP",
   "SUMMARY_PDSPD": "ملخص PD/SPD",
-  "MESSAGE_WAS_DELETED": "تم حذف الرسالة"
+  "MESSAGE_WAS_DELETED": "تم حذف الرسالة",
+  "SEND": "إرسال",
+  "RECIPIENTS": "المستلمون",
+  "SELECT_RECIPIENTS": "اختر المستلمين",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA": "أدخل عناوين البريد الإلكتروني مفصولة بفواصل",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA_HELP": "افصل عناوين البريد الإلكتروني المتعددة بفواصل",
+  "REQUIRED_FIELD": "هذا الحقل مطلوب",
+  "MESSAGE": "رسالة",
+  "OPTIONAL_MESSAGE_TO_INCLUDE_IN_EMAIL": "رسالة اختيارية لتضمينها في البريد الإلكتروني",
+  "INVALID_EMAIL_ADDRESSES": "عناوين بريد إلكتروني غير صالحة",
+  "REPORT_SENT_SUCCESSFULLY": "تم إرسال التقرير بنجاح",
+  "FAILED_TO_SEND_EMAIL": "فشل إرسال البريد الإلكتروني. يرجى المحاولة مرة أخرى لاحقًا"
 }
