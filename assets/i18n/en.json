@@ -116,6 +116,8 @@
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
     "EXPORT": "EXPORT",
+    "SEND_BY_EMAIL": "Send by Email",
+    "SEND_REPORT_BY_EMAIL": "Send Report by Email",
     "REPORT_REVIEWERS": "Report Reviewers",
     "REPORT_REVIEWER_SELECT": "The following users will be notified of this submission in order to review. Please select the users and proceed.",
     "REPORT_REVIEWER_CONFIRM": "The following users will be notified of this submission in order to review. Please confirm the users and proceed.",
@@ -742,5 +744,16 @@
   "SUMMARY_PARTNER": "Partner Summary",
   "SUMMARY_CPOUTPUT": "CP Output Summary",
   "SUMMARY_PDSPD": "PD/SPD Summary",
-  "MESSAGE_WAS_DELETED": "Message was deleted"
+  "MESSAGE_WAS_DELETED": "Message was deleted",
+  "SEND": "Send",
+  "RECIPIENTS": "Recipients",
+  "SELECT_RECIPIENTS": "Select recipients",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA": "Enter email addresses separated by comma",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA_HELP": "Separate multiple email addresses with commas",
+  "REQUIRED_FIELD": "This field is required",
+  "MESSAGE": "Message",
+  "OPTIONAL_MESSAGE_TO_INCLUDE_IN_EMAIL": "Optional message to include in email",
+  "INVALID_EMAIL_ADDRESSES": "Invalid email addresses",
+  "REPORT_SENT_SUCCESSFULLY": "Report sent successfully",
+  "FAILED_TO_SEND_EMAIL": "Failed to send email. Please try again later"
 }

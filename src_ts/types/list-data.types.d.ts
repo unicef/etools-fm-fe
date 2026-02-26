@@ -1,4 +1,3 @@
-/* eslint-disable */
 interface IListData<T> {
   count: number;
   next: string | null;

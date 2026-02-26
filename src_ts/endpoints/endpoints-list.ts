@@ -58,6 +58,8 @@ export const DATA_COLLECTION_OVERALL_FINDING = 'dataCollectionOverallFinding';
 export const DATA_COLLECTION_BLUEPRINT = 'dataCollectionBlueprint';
 export const ATTACHMENTS_STORE = 'attachmentsStore';
 export const FULL_REPORT = 'fullReport';
+export const SEND_REPORT_EMAIL = 'sendReportEmail';
+export const EMAIL_RECIPIENTS = 'emailRecipients';
 export const ACTION_POINTS_LIST = 'actionPointsList';
 export const ACTION_POINTS_DETAILS = 'actionPointsDetails';
 export const TPM_ACTION_POINTS_LIST = 'tpmActionPointsList';
@@ -101,6 +103,14 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [FULL_REPORT]: {
     template: '/api/reports/results/<%=id%>/full/'
+  },
+
+  [SEND_REPORT_EMAIL]: {
+    template: '/api/v1/field-monitoring/planning/activities/<%=id%>/send-email/'
+  },
+
+  [EMAIL_RECIPIENTS]: {
+    url: '/api/v1/field-monitoring/planning/activities/email-recipients/'
   },
 
   [LOCATIONS_ENDPOINT]: {
