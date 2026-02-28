@@ -8,23 +8,14 @@ parameters:
     default: staging
 
 variables:
-  DOCKER_APP_IMAGE: unicef/etools-prp
-  DOCKER_UI_IMAGE: unicef/etools-prp-polymer
+  DOCKER_IMAGE: nicef/etools-field-monitoring
 
 stages:
 - stage: DeployDemo
   displayName: Deploy to Demo (Rancher)
 
   variables:
-    - group: rke-cluster-prp
-    - name: DEMO_APP_DEPLOYMENTS
-      value: |
-        api-prp-demo
-        beater-prp-demo
-        worker-prp-demo
-    - name: DEMO_UI_DEPLOYMENTS
-      value: |
-        polymer-prp-demo
+    - group: rke-cluster-etstgtrn
 
   jobs:
   - deployment: Deploy
@@ -38,19 +29,11 @@ stages:
           steps:
             - script: |
                 echo "Checking image existence:"
-                echo "$(DOCKER_APP_IMAGE):${{ parameters.imageTag }}"
+                echo "$(DOCKER_IMAGE):${{ parameters.imageTag }}"
                 docker manifest inspect \
-                  $(DOCKER_APP_IMAGE):${{ parameters.imageTag }} \
+                  $(DOCKER_IMAGE):${{ parameters.imageTag }} \
                   > /dev/null
-              displayName: Validate backend image exists
-
-            - script: |
-                echo "Checking image existence:"
-                echo "$(DOCKER_UI_IMAGE):${{ parameters.imageTag }}"
-                docker manifest inspect \
-                  $(DOCKER_UI_IMAGE):${{ parameters.imageTag }} \
-                  > /dev/null
-              displayName: Validate frontend image exists
+              displayName: Validate image exists
 
             - task: KubectlInstaller@0
               displayName: Install kubectl
@@ -61,49 +44,17 @@ stages:
                 mkdir -p ~/.kube
                 echo "$(KUBECONFIG_B64)" | base64 -d > ~/.kube/config
                 chmod 600 ~/.kube/config
-                kubectl config use-context rke-cluster-prp
+                kubectl config use-context rke-cluster-etstgtrn
               displayName: Configure kubeconfig
 
             - script: |
-                echo "$(DEMO_APP_DEPLOYMENTS)" | while read APP; do
-                  if [ -n "$APP" ]; then
-                    echo "Updating $APP..."
-                    kubectl -n prp-demo\
-                      set image deployment/$APP \
-                      $APP=$(DOCKER_APP_IMAGE):${{ parameters.imageTag }}
-                  fi
-                done
-              displayName: Deploy Backend applications
+                kubectl -n etools-demo \
+                  set image deployment/fm-demo \
+                  fm-demo=$(DOCKER_IMAGE):${{ parameters.imageTag }}
+              displayName: Deploy application
 
             - script: |
-                echo "$(DEMO_APP_DEPLOYMENTS)" | while read APP; do
-                  if [ -n "$APP" ]; then
-                    echo "Waiting rollout for $APP..."
-                    kubectl rollout status deployment/$APP \
-                      -n prp-demo\
-                      --timeout=300s
-                  fi
-                done
-              displayName: Wait for Backend pods to start
-
-            - script: |
-                echo "$(DEMO_UI_DEPLOYMENTS)" | while read APP; do
-                  if [ -n "$APP" ]; then
-                    echo "Updating $APP..."
-                    kubectl -n prp-demo\
-                      set image deployment/$APP \
-                      $APP=$(DOCKER_UI_IMAGE):${{ parameters.imageTag }}
-                  fi
-                done
-              displayName: Deploy Frontend applications
-
-            - script: |
-                echo "$(DEMO_UI_DEPLOYMENTS)" | while read APP; do
-                  if [ -n "$APP" ]; then
-                    echo "Waiting rollout for $APP..."
-                    kubectl rollout status deployment/$APP \
-                      -n prp-demo\
-                      --timeout=300s
-                  fi
-                done
-              displayName: Wait for UI pods to start
+                kubectl rollout status deployment/fm-demo \
+                  -n etools-demo \
+                  --timeout=300s
+              displayName: Wait for pods to start
