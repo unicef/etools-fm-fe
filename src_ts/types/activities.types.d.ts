@@ -34,6 +34,8 @@ interface IActivityDetails extends IListActivity {
   facility_types?: any[];
   facility_type_duration: string;
   objective?: string;
+  ewp_activities: string[];
+  gpds: string[];
 }
 
 type OverlappingEntities = {
@@ -112,6 +114,7 @@ interface ITpmPartnerStaffMemberProfile {
 interface IActivityPartner {
   id: number;
   name: string;
+  organization_type: string;
 }
 
 interface IActivityCPOutput {
@@ -135,6 +138,8 @@ interface IChecklistItem {
   specific_details: string;
   is_enabled: boolean;
   text: string;
+  gpd: null | any;
+  ewp_activity: null | any;
 }
 
 interface IChecklistQuestion {

@@ -100,6 +100,17 @@
     "PARTNER_ORGANIZATION": "Organisation Partenaire",
     "CP_OUTPUTS": "Extrant PP",
     "CP_OUTPUTS_FOUND": "{{ count }} Extrants PP ont été trouvées:",
+    "KEY_INTERVENTIONS": "Interventions et activités clés",
+    "ADD_KEY_INTERVENTIONS": "Ajouter les interventions et activités clés",
+    "GOVERNMENT_PARTNERS": "Partenaires gouvernementaux",
+    "ADD_GOVERNMENT_PARTNERS": "Ajouter des partenaires gouvernementaux",
+    "GPD": "gPDs",
+    "ADD_GPD": "Ajouter des gPD",
+    "WORKPLAN_WBS": "Activité du plan de travail WBS",
+    "WORKPLAN_WBS_EXPECTED_FORMAT": "Format attendu : 4 chiffres / 2 lettres majuscules ou chiffres / 2 chiffres / 3 chiffres / 3 chiffres / 3 chiffres / 7 lettres majuscules ou chiffres",
+    "REF_NUMBER_EXPECTED_FORMAT": "Format attendu : 2 chiffres / 6 chiffres",
+    "WRONG_FORMAT": "Wrong Format",
+    "REFERENCE_NUMBER": "Numéro de référence",
     "SHOW_EXPIRED": "Afficher expiré",
     "PD_STATUS": "Statut du DP",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD ont été trouvées:",
@@ -397,7 +408,8 @@
     "LEVEL": {
       "PARTNER": "Partenaire",
       "OUTPUT": "Extrant du PP",
-      "INTERVENTION": "PD/SPD"
+      "INTERVENTION": "PD/SPD/gPD",
+      "EWP_ACTIVITY": "Interventions et activités clés"
     }
   },
   "SITES": {
@@ -454,7 +466,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Partenaire",
     "OUTPUT": "Extrant du PP",
-    "INTERVENTION": "PD/SPD"
+    "INTERVENTION": "PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Interventions et activités clés"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporaire",

@@ -45,6 +45,13 @@ function getDataKey(dataObject: DataCollectionOverall | IChecklistItem | ISummar
     const id: number =
       typeof dataObject.intervention === 'object' ? dataObject.intervention.id : dataObject.intervention;
     return `intervention_${id}`;
+  } else if (dataObject.gpd) {
+    const id: number = typeof dataObject.gpd === 'object' ? dataObject.gpd.id : dataObject.gpd;
+    return `gpd_${id}`;
+  } else if (dataObject.ewp_activity) {
+    const id: number =
+      typeof dataObject.ewp_activity === 'object' ? dataObject.ewp_activity.id : dataObject.ewp_activity;
+    return `ewp_activity_${id}`;
   } else {
     return '';
   }
@@ -61,6 +68,10 @@ function getTargetName(checklist: IChecklistItem | ISummaryChecklistItem): strin
     return `${get('LEVELS_OPTIONS.OUTPUT')}: ${checklist.cp_output.name}`;
   } else if (checklist.intervention) {
     return `${get('LEVELS_OPTIONS.INTERVENTION')}: ${checklist.intervention.title}`;
+  } else if (checklist.gpd) {
+    return `${get('LEVELS_OPTIONS.GPD')}: ${checklist.gpd.gpd_ref}`;
+  } else if (checklist.ewp_activity) {
+    return `${get('LEVELS_OPTIONS.EWP_ACTIVITY')}: ${checklist.ewp_activity.wbs}`;
   } else {
     return '';
   }
@@ -73,6 +84,10 @@ function getTargetType(checklist: IChecklistItem | ISummaryChecklistItem): strin
     return 'cp_output';
   } else if (checklist.intervention) {
     return 'intervention';
+  } else if (checklist.gpd) {
+    return 'gpd';
+  } else if (checklist.ewp_activity) {
+    return 'ewp_activity';
   } else {
     return '';
   }

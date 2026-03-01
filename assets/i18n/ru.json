@@ -100,6 +100,17 @@
     "PARTNER_ORGANIZATION": "Localized Partner Organization",
     "CP_OUTPUTS": "Localized CP Outputs",
     "CP_OUTPUTS_FOUND": "Localized {{ count }} CP Outputs were found:",
+    "KEY_INTERVENTIONS": "Основные мероприятия и инициативы",
+    "ADD_KEY_INTERVENTIONS": "Добавить ключевые мероприятия и виды деятельности",
+    "GOVERNMENT_PARTNERS": "Государственные партнеры",
+    "ADD_GOVERNMENT_PARTNERS": "Добавить государственных партнеров",
+    "GPD": "gPDs",
+    "ADD_GPD": "Добавить gPD",
+    "WORKPLAN_WBS": "План работ, Деятельность, Структура разбивки работ (WBS)",
+    "WORKPLAN_WBS_EXPECTED_FORMAT": "Ожидаемый формат: 4 цифры / 2 заглавные буквы или цифры / 2 цифры / 3 цифры / 3 цифры / 3 цифры / 7 заглавных букв или цифр",
+    "REF_NUMBER_EXPECTED_FORMAT": "Ожидаемый формат: 2 цифры / 6 цифр",
+    "WRONG_FORMAT": "Wrong Format",
+    "REFERENCE_NUMBER": "Справочный номер",
     "SHOW_EXPIRED": "Показать истекшее",
     "PD_STATUS": "Статус PD",
     "INTERVENTIONS_FOUND": "Localized {{ count }} PD/SPD were found:",
@@ -393,7 +404,8 @@
     "LEVEL": {
       "PARTNER": "Localized Partner",
       "OUTPUT": "Localized CP Output",
-      "INTERVENTION": "Localized PD/SPD"
+      "INTERVENTION": "Localized PD/SPD/gPD",
+      "EWP_ACTIVITY": "Localized Key Interventions and Activities"
     }
   },
   "SITES": {
@@ -450,7 +462,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Localized Partner",
     "OUTPUT": "Localized CP Output",
-    "INTERVENTION": "Localized PD/SPD"
+    "INTERVENTION": "Localized PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Localized Key Interventions and Activities"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Временный",

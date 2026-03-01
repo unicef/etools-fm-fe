@@ -40,6 +40,7 @@ type EtoolsCpOutcome = {
 type EtoolsPartner = {
   id: number;
   name: string;
+  organization_type: string;
 };
 
 type EtoolsTPMPartner = {

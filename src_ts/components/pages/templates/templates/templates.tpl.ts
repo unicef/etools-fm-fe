@@ -15,7 +15,9 @@ import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-
 export function template(this: TemplatesTabComponent): TemplateResult {
   return html`
     <style>
-      ${dataTableStylesLit}
+      ${dataTableStylesLit} section.filters-container .filter etools-dropdown {
+        min-width: 180px;
+      }
     </style>
     <etools-media-query
       query="(max-width: 767px)"
@@ -26,7 +28,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
     ${InputStyles}
     <section class="filters-container elevation page-content card-container question-filters-section" elevation="1">
       <div class="row">
-        <div class="filter col-md-4 col-12">
+        <div class="filter col-md-6 col-12">
           <etools-dropdown
             .options="${this.levels}"
             .selected="${(this.queryParams && this.queryParams.level) || undefined}"
@@ -36,7 +38,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             hide-search
             label="${translate('TEMPLATES.FILTERS.LEVEL_LABEL')}"
             placeholder="${translate('TEMPLATES.FILTERS.LEVEL_PLACEHOLDER')}"
-            .minWidth="160px"
+            .minWidth="180px"
             horizontal-align="left"
             no-dynamic-align
             option-label="display_name"
@@ -53,7 +55,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             enable-none-option
             label="${translate('TEMPLATES.FILTERS.PARTNER_LABEL')}"
             placeholder="${translate('TEMPLATES.FILTERS.PARTNER_PLACEHOLDER')}"
-            .minWidth="160px"
+            .minWidth="180px"
             .autoWidth="${true}"
             horizontal-align="left"
             no-dynamic-align
@@ -70,7 +72,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             enable-none-option
             label="${translate('TEMPLATES.FILTERS.OUTPUT_LABEL')}"
             placeholder="${translate('TEMPLATES.FILTERS.OUTPUT_PLACEHOLDER')}"
-            .minWidth="160px"
+            .minWidth="180px"
             .autoWidth="${true}"
             horizontal-align="left"
             no-dynamic-align
@@ -87,7 +89,7 @@ export function template(this: TemplatesTabComponent): TemplateResult {
             enable-none-option
             label="${translate('TEMPLATES.FILTERS.INTERVENTION_LABEL')}"
             placeholder="${translate('TEMPLATES.FILTERS.INTERVENTION_PLACEHOLDER')}"
-            .minWidth="160px"
+            .minWidth="180px"
             .autoWidth="${true}"
             horizontal-align="left"
             no-dynamic-align

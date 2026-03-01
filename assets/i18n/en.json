@@ -100,6 +100,17 @@
     "PARTNER_ORGANIZATION": "Partner Organization",
     "CP_OUTPUTS": "CP Outputs",
     "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
+    "KEY_INTERVENTIONS": "Key Interventions and Activities",
+    "ADD_KEY_INTERVENTIONS": "Add Key Interventions and Activities",
+    "GOVERNMENT_PARTNERS": "Government Partners",
+    "ADD_GOVERNMENT_PARTNERS": "Add Government Partners",
+    "GPD": "gPDs",
+    "ADD_GPD": "Add gPDs",
+    "WORKPLAN_WBS": "Workplan Activity WBS",
+    "WORKPLAN_WBS_EXPECTED_FORMAT": "Expected format: 4 digits/ 2 uppercase letters or digits/ 2 digits/ 3 digits/ 3 digits/ 3 digits/ 7 uppercase letters or digits",
+    "REF_NUMBER_EXPECTED_FORMAT": "Expected format: 2 digits/ 6 digits",
+    "WRONG_FORMAT": "Wrong Format",
+    "REFERENCE_NUMBER": "Reference Number",
     "SHOW_EXPIRED": "Show Expired",
     "PD_STATUS": "PD Status",
     "INTERVENTIONS_FOUND": "{{ count }} PD/SPD were found:",
@@ -395,7 +406,8 @@
     "LEVEL": {
       "PARTNER": "Partner",
       "OUTPUT": "CP Output",
-      "INTERVENTION": "PD/SPD"
+      "INTERVENTION": "PD/SPD/gPD",
+      "EWP_ACTIVITY": "Key Interventions and Activities"
     }
   },
   "SITES": {
@@ -452,7 +464,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Partner",
     "OUTPUT": "CP Output",
-    "INTERVENTION": "PD/SPD"
+    "INTERVENTION": "PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Key Interventions and Activities"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporary",

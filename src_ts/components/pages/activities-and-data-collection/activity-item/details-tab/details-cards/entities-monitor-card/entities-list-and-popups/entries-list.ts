@@ -109,7 +109,7 @@ export class EntriesList extends LitElement {
                 ${this.formatItem(item)}
                 ${!this.isReadonly
                   ? html`
-                      <div class="hover-block" @click="${() => this.removeEntry(item.id)}">
+                      <div class="hover-block" @click="${() => this.removeEntry(item?.id || item)}">
                         <etools-icon name="delete"></etools-icon>
                       </div>
                     `
