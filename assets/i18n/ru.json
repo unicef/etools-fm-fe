@@ -126,6 +126,9 @@
     "CANCELLATION_NOTE": "Localized Cancellation Note",
     "MAP_SELECT_LOCATION_BY_SITE": "Select Location by Site",
     "MAP_SELECT_LOCATION_BY_ADMIN_LEVEL": "Select Location by Admin Level",
+    "EXPORT": "ЭКСПОРТ",
+    "SEND_BY_EMAIL": "Отправить по электронной почте",
+    "SEND_REPORT_BY_EMAIL": "Отправить отчет по электронной почте",
     "REPORT_REVIEWERS": "Рецензенты отчетов",
     "REPORT_REVIEWER_SELECT": "Следующие пользователи будут уведомлены об этом материале для рассмотрения. Пожалуйста, выберите пользователей и продолжайте.",
     "REPORT_REVIEWER_CONFIRM": "Следующие пользователи будут уведомлены об этом материале для рассмотрения. Пожалуйста, подтвердите пользователей и продолжайте.",
@@ -753,5 +756,16 @@
   "SUMMARY_PARTNER": "Краткое изложение партнера",
   "SUMMARY_CPOUTPUT": "Сводка вывода CP",
   "SUMMARY_PDSPD": "КРУПАНА PD/SPD",
-  "MESSAGE_WAS_DELETED": "Сообщение было удалено"
+  "MESSAGE_WAS_DELETED": "Сообщение было удалено",
+  "SEND": "Отправить",
+  "RECIPIENTS": "Получатели",
+  "SELECT_RECIPIENTS": "Выберите получателей",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA": "Введите адреса электронной почты, разделенные запятыми",
+  "ENTER_EMAIL_ADDRESSES_SEPARATED_BY_COMMA_HELP": "Разделите несколько адресов электронной почты запятыми",
+  "REQUIRED_FIELD": "Это поле обязательно для заполнения",
+  "MESSAGE": "Сообщение",
+  "OPTIONAL_MESSAGE_TO_INCLUDE_IN_EMAIL": "Необязательное сообщение для включения в электронное письмо",
+  "INVALID_EMAIL_ADDRESSES": "Неверные адреса электронной почты",
+  "REPORT_SENT_SUCCESSFULLY": "Отчет успешно отправлен",
+  "FAILED_TO_SEND_EMAIL": "Не удалось отправить электронное письмо. Пожалуйста, попробуйте позже"
 }
