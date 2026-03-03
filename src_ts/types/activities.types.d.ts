@@ -138,6 +138,7 @@ interface IChecklistItem {
 }
 
 interface IChecklistQuestion {
+  tooltip?: string;
   id: number;
   answer_type: string;
   choices_size: null | number;

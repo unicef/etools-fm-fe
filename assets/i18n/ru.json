@@ -349,6 +349,7 @@
     "VIEW_POPUP_TITLE": "Localized View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Localized Enter Question Text",
+      "TOOLTIP": "Краткая подсказка или определение (макс. 500 символов). Содержимое будет добавлено.",
       "SECTIONS": "Localized Select Sections",
       "METHODS": "Localized Select Collection Methods",
       "GROUP": "Localized Select Group",
@@ -367,7 +368,8 @@
       "IS_ACTIVE": "Localized Is Active",
       "SCALE_SIZE": "Localized Scale Size",
       "ORDER": "Order",
-      "IS_CUSTOM": "Тип вопроса"
+      "IS_CUSTOM": "Тип вопроса",
+      "TOOLTIP": "Подсказка"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Нестандартный",

@@ -383,7 +383,8 @@
       "SCALE_SIZE": "حجم المقياس",
       "SECTIONS": "الأقسام",
       "ORDER": "طلب",
-      "IS_CUSTOM": "نوع السؤال"
+      "IS_CUSTOM": "نوع السؤال",
+      "TOOLTIP": "تلميح"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "غير قياسي",

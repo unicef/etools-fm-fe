@@ -58,6 +58,17 @@ export function template(this: QuestionPopupComponent): TemplateResult {
           @click="${() => this.resetFieldError('text')}"
         ></etools-textarea>
 
+        <etools-textarea
+          class="validate-input col-md-12 col-12"
+          .value="${this.editedData.tooltip ?? ''}"
+          @value-changed="${({detail}: CustomEvent) => this.updateModelValue('tooltip', detail.value)}"
+          max-rows="2"
+          maxlength="500"
+          label="${translate('QUESTIONS.LABELS.TOOLTIP')}"
+          placeholder="${translate('QUESTIONS.PLACEHOLDERS.TOOLTIP')}"
+          ?readonly="${!hasPermission(Permissions.EDIT_QUESTIONS)}"
+        ></etools-textarea>
+
         <etools-dropdown-multi
           class="validate-input col-md-12 col-12"
           .selectedValues="${this.editedData.sections}"

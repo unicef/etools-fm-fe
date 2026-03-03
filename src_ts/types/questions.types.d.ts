@@ -9,6 +9,7 @@ interface IQuestion<O = QuestionOption> {
   category: number;
   sections: number[];
   text: string;
+  tooltip?: string;
   is_hact: boolean;
   is_active: boolean;
   is_custom: boolean;
