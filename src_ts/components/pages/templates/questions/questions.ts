@@ -136,7 +136,9 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
     return html`
       ${InputStyles}
       <style>
-        ${dataTableStylesLit}
+        ${dataTableStylesLit} .question-tooltip {
+          align-items: start;
+        }
       </style>
       <etools-media-query
         query="(max-width: 767px)"
@@ -228,12 +230,12 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
                 <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
                   ${question.tooltip
                     ? html`
-                        <etools-info-tooltip hoist to="body">
+                        <etools-info-tooltip hoist to="body" class="question-tooltip">
                           <span slot="field">${question.text || '-'}</span>
                           <span slot="message">${question.tooltip}</span>
                         </etools-info-tooltip>
                       `
-                    : (question.text || '-')}
+                    : question.text || '-'}
                 </div>
                 <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.LEVEL')}">
                   ${translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-'}

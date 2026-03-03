@@ -21,6 +21,9 @@ export class ReviewChecklistItemComponent extends CommentsMixin(LitElement) {
         etools-data-table-row::part(edt-list-row-wrapper) {
           background-color: var(--primary-background-color);
         }
+        .question-tooltip {
+          align-items: start;
+        }
       </style>
       <div class="table-container">
         <etools-data-table-row .detailsOpened="${true}">
@@ -43,7 +46,7 @@ export class ReviewChecklistItemComponent extends CommentsMixin(LitElement) {
                   <div class="row-details-content col-md-4 col-12">
                     ${checklistItem.question?.tooltip
                       ? html`
-                          <etools-info-tooltip hoist to="body">
+                          <etools-info-tooltip hoist to="body" class="question-tooltip">
                             <span slot="field">${checklistItem.text}</span>
                             <span slot="message">${checklistItem.question.tooltip}</span>
                           </etools-info-tooltip>

@@ -134,7 +134,7 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
       <div class="layout-vertical question-container">
         ${finding.activity_question.question?.tooltip
           ? html`
-              <etools-info-tooltip hoist to="body">
+              <etools-info-tooltip hoist to="body" class="question-tooltip">
                 <span slot="field" class="question-text">${finding.activity_question.text}</span>
                 <span slot="message">${finding.activity_question.question?.tooltip}</span>
               </etools-info-tooltip>
@@ -536,6 +536,9 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
         }
         rich-text[readonly]::part(rich-viewer) {
           background-color: var(--secondary-background-color);
+        }
+        .question-tooltip {
+          align-items: start;
         }
       `
     ];
