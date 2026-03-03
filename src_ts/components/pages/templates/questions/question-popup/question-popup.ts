@@ -32,7 +32,8 @@ export class QuestionPopupComponent extends DataMixin()<IQuestion>(LitElement) {
     options: [],
     answer_type: ANSWER_TYPES[0].value,
     level: LEVELS[0].value,
-    is_active: true
+    is_active: true,
+    tooltip: ''
   };
   @property({type: Boolean})
   autovlidateCateg = false;

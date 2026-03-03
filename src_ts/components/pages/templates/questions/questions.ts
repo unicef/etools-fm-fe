@@ -20,6 +20,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
 import {QuestionsTabStyles} from './question.styles';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
@@ -225,7 +226,14 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
             <etools-data-table-row secondary-bg-on-hover .lowResolutionLayout="${this.lowResolutionLayout}">
               <div slot="row-data" class="editable-row">
                 <div class="col-data col-md-4" data-col-header-label="${translate('QUESTIONS.COLUMNS.TEXT')}">
-                  ${question.text || '-'}
+                  ${question.tooltip
+                    ? html`
+                        <etools-info-tooltip hoist to="body">
+                          <span slot="field">${question.text || '-'}</span>
+                          <span slot="message">${question.tooltip}</span>
+                        </etools-info-tooltip>
+                      `
+                    : (question.text || '-')}
                 </div>
                 <div class="col-data col-md-2" data-col-header-label="${translate('QUESTIONS.COLUMNS.LEVEL')}">
                   ${translate(`QUESTIONS.LEVEL.${question.level.toUpperCase()}`) || '-'}

@@ -27,7 +27,7 @@ import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/numbe
 import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/choice-field.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
-import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
 import './action-points-popup/summary-action-points-popup';
 import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
@@ -132,7 +132,14 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
   protected getFindingQuestion(finding: SummaryFinding): TemplateResult {
     return html`
       <div class="layout-vertical question-container">
-        <div class="question-text">${finding.activity_question.text}</div>
+        ${finding.activity_question.question?.tooltip
+          ? html`
+              <etools-info-tooltip hoist to="body">
+                <span slot="field" class="question-text">${finding.activity_question.text}</span>
+                <span slot="message">${finding.activity_question.question?.tooltip}</span>
+              </etools-info-tooltip>
+            `
+          : html`<div class="question-text">${finding.activity_question.text}</div>`}
         <div class="question-details">${finding.activity_question.specific_details}</div>
         <div class="flex-2 layout-horizontal layout-wrap">
           ${finding.activity_question.findings.map(

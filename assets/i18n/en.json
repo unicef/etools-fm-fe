@@ -350,6 +350,7 @@
     "VIEW_POPUP_TITLE": "View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Enter Question Text",
+      "TOOLTIP": "Brief guidance or definition (max 500 characters). Content to be supplied.",
       "SECTIONS": "Select Sections",
       "METHODS": "Select Collection Methods",
       "CATEGORY": "Select group",
@@ -369,7 +370,8 @@
       "IS_ACTIVE": "Is Active",
       "SCALE_SIZE": "Scale Size",
       "ORDER": "Order",
-      "IS_CUSTOM": "Question Type"
+      "IS_CUSTOM": "Question Type",
+      "TOOLTIP": "Tooltip"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Non-Standard",

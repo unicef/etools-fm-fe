@@ -132,7 +132,14 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                       ?hidden="${this.isEditMode || !question.is_enabled}"
                     />
                   </div>
-                  ${question.text}
+                  ${question.question?.tooltip
+                    ? html`
+                        <etools-info-tooltip hoist to="body">
+                          <span slot="field">${question.text}</span>
+                          <span slot="message">${question.question.tooltip}</span>
+                        </etools-info-tooltip>
+                      `
+                    : question.text}
                 </div>
 
                 <!-- Editable Question Specific Details -->
