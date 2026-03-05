@@ -253,12 +253,12 @@ stages:
             # Deploy sanitized tag (SAFE_BRANCH). For tag-triggered runs, SAFE_BRANCH == sanitized Git tag
             - script: |
                 kubectl -n etools-prod \
-                  set image deployment/fm-prod \
-                  fm-prod=$(DOCKER_IMAGE):$(SAFE_BRANCH)
+                  set image deployment/fm \
+                  fm=$(DOCKER_IMAGE):$(SAFE_BRANCH)
               displayName: Deploy application
 
             - script: |
-                kubectl rollout status deployment/fm-prod \
+                kubectl rollout status deployment/fm \
                   -n etools-prod \
                   --timeout=300s
               displayName: Wait for pods to start
