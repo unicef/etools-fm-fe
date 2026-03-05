@@ -8,7 +8,7 @@ parameters:
     default: staging
 
 variables:
-  DOCKER_IMAGE: nicef/etools-field-monitoring
+  DOCKER_IMAGE: unicef/etools-field-monitoring
 
 stages:
 - stage: DeployDemo
