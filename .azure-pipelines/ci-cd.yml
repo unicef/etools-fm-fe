@@ -204,12 +204,12 @@ stages:
 
             - script: |
                 kubectl -n etools-staging \
-                  set image deployment/fm-staging \
-                  fm-staging=$(DOCKER_IMAGE):$(Build.SourceVersion)
+                  set image deployment/field-monitoring \
+                  field-monitoring=$(DOCKER_IMAGE):$(Build.SourceVersion)
               displayName: Deploy application
 
             - script: |
-                kubectl rollout status deployment/fm-staging \
+                kubectl rollout status deployment/field-monitoring \
                   -n etools-staging \
                   --timeout=300s
               displayName: Wait for pods to start
