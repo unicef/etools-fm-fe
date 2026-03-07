@@ -157,9 +157,11 @@ stages:
               displayName: Configure kubeconfig
 
             - script: |
+                IMAGE="$(DOCKER_IMAGE):$(Build.SourceVersion)"
+                echo "Deploying image: $IMAGE"
                 kubectl -n etools-dev \
                   set image deployment/fm \
-                  fm=$(DOCKER_IMAGE):$(Build.SourceVersion)
+                  fm=$IMAGE
               displayName: Deploy application
 
             - script: |
@@ -203,9 +205,11 @@ stages:
               displayName: Configure kubeconfig
 
             - script: |
+                IMAGE="$(DOCKER_IMAGE):$(Build.SourceVersion)"
+                echo "Deploying image: $IMAGE"
                 kubectl -n etools-staging \
                   set image deployment/field-monitoring \
-                  field-monitoring=$(DOCKER_IMAGE):$(Build.SourceVersion)
+                  field-monitoring=$IMAGE
               displayName: Deploy application
 
             - script: |
@@ -252,9 +256,11 @@ stages:
 
             # Deploy sanitized tag (SAFE_BRANCH). For tag-triggered runs, SAFE_BRANCH == sanitized Git tag
             - script: |
+                IMAGE="$(DOCKER_IMAGE):$(SAFE_BRANCH)"
+                echo "Deploying image: $IMAGE"
                 kubectl -n etools-prod \
                   set image deployment/fm \
-                  fm=$(DOCKER_IMAGE):$(SAFE_BRANCH)
+                  fm=$IMAGE
               displayName: Deploy application
 
             - script: |
