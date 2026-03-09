@@ -12,7 +12,8 @@
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status",
       "SECTIONS": "Localized Sections",
-      "PARTNER": "Localized Partner"
+      "PARTNER": "Localized Partner",
+      "IS_PROGRAMATIC_VISIT": "Программный визит"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -29,7 +30,8 @@
       "STARTS_AFTER": "Localized Start After",
       "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
-      "SECTIONS": "Localized Sections"
+      "SECTIONS": "Localized Sections",
+      "IS_PROGRAMATIC_VISIT": "Программный визит"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

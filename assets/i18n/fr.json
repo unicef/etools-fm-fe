@@ -12,7 +12,8 @@
       "CHECKLISTS_COUNT": "Listes de contrôle",
       "STATUS": "Statut",
       "SECTIONS": "Sections",
-      "PARTNER": "Partenaire"
+      "PARTNER": "Partenaire",
+      "IS_PROGRAMATIC_VISIT": "Visite programmatique"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -29,7 +30,8 @@
       "STARTS_AFTER": "Commence après",
       "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "IS_PROGRAMATIC_VISIT": "Visite programmatique"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

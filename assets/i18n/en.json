@@ -12,7 +12,8 @@
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status",
       "SECTIONS": "Sections",
-      "PARTNER": "Partner"
+      "PARTNER": "Partner",
+      "IS_PROGRAMATIC_VISIT": "Programmatic Visit"
     },
     "REFERENCE_NO": "Reference #",
     "FILTERS": {
@@ -29,7 +30,8 @@
       "STARTS_AFTER": "Starts After",
       "END_BEFORE": "End Before",
       "OFFICE": "Field Office",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "IS_PROGRAMATIC_VISIT": "Programmatic Visit"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
