@@ -234,8 +234,8 @@ export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
       filterKey: ActivityFilterKeys.is_programatic_visit,
       type: EtoolsFilterTypes.Dropdown,
       selectionOptions: [
-        {value: 'true', label: "YES"},
-        {value: 'false', label: "NO"}
+        {value: 'true', label: 'YES'},
+        {value: 'false', label: 'NO'}
       ],
       selectedValue: null,
       optionValue: 'value',

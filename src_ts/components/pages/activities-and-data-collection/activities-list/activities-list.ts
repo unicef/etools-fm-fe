@@ -421,7 +421,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         Boolean(
           this.filtersData[filter.filterKey] ||
             filter.filterKey === ActivityFilterKeys.location_site__in ||
-            ((filter as ActivityFilter).selectionOptions?.length && !(filter as ActivityFilter).selectionOptionsEndpoint)
+            ((filter as ActivityFilter).selectionOptions?.length &&
+              !(filter as ActivityFilter).selectionOptionsEndpoint)
         )
     );
     if (!allDataLoaded) {
