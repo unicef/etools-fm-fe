@@ -9,7 +9,7 @@ import {
   TPM_PARTNERS,
   USERS
 } from '../../../../endpoints/endpoints-list';
-import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FiltersHelper} from '@unicef-polymer/etools-unicef/src/etools-filters/filters-helper.class';
 import {ACTIVE_STATUS_FILTER} from '../activity-item/statuses-actions/activity-statuses';
 
@@ -234,8 +234,8 @@ export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
       filterKey: ActivityFilterKeys.is_programatic_visit,
       type: EtoolsFilterTypes.Dropdown,
       selectionOptions: [
-        {value: 'true', label: 'YES'},
-        {value: 'false', label: 'NO'}
+        {value: 'true', label: getTranslation('GENERAL.YES')},
+        {value: 'false', label: getTranslation('GENERAL.NO')}
       ],
       selectedValue: null,
       optionValue: 'value',

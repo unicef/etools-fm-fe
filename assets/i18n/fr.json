@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Oui",
+    "NO": "Non"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Activités",
     "CREATE_NEW_BUTTON": "Créer",

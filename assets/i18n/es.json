@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Sí",
+    "NO": "No"
+  },
   "ACTIVITIES_LIST": {
     "COLUMNS": {
       "CHECKLISTS_COUNT": "Listas de verificación",

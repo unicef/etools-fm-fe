@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "نعم",
+    "NO": "لا"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "أنشطة",
     "CREATE_NEW_BUTTON": "خلق جديد إبداع جديد",

@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Да",
+    "NO": "Нет"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Localized Activities",
     "CREATE_NEW_BUTTON": "Localized Create New",
