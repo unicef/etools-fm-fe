@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Yes",
+    "NO": "No"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Activities",
     "CREATE_NEW_BUTTON": "Create New",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status",
       "SECTIONS": "Sections",
-      "PARTNER": "Partner"
+      "PARTNER": "Partner",
+      "IS_PROGRAMMATIC_VISIT": "Programmatic Visit"
     },
     "REFERENCE_NO": "Reference #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "Starts After",
       "END_BEFORE": "End Before",
       "OFFICE": "Field Office",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "IS_PROGRAMMATIC_VISIT": "Programmatic Visit"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -145,9 +151,18 @@
       "reject_report": "Send Back Report"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Cancellation comment", "TITLE": "Cancellation reason"},
-      "reject": {"LABEL": "Rejection comment", "TITLE": "Rejection reason"},
-      "reject_report": {"LABEL": "Send back report comment", "TITLE": "Send back report reason"}
+      "cancel": {
+        "LABEL": "Cancellation comment",
+        "TITLE": "Cancellation reason"
+      },
+      "reject": {
+        "LABEL": "Rejection comment",
+        "TITLE": "Rejection reason"
+      },
+      "reject_report": {
+        "LABEL": "Send back report comment",
+        "TITLE": "Send back report reason"
+      }
     },
     "STATUSES": {
       "draft": "Draft",
