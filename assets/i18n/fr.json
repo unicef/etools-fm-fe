@@ -17,7 +17,8 @@
       "STATUS": "Statut",
       "SECTIONS": "Sections",
       "PARTNER": "Partenaire",
-      "IS_PROGRAMATIC_VISIT": "Visite programmatique"
+      "IS_PROGRAMATIC_VISIT": "Visite programmatique",
+      "is_programmatic_visit": "Visite programmatique"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -35,7 +36,8 @@
       "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
       "SECTIONS": "Sections",
-      "IS_PROGRAMATIC_VISIT": "Visite programmatique"
+      "IS_PROGRAMATIC_VISIT": "Visite programmatique",
+      "is_programmatic_visit": "Visite programmatique"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

@@ -12,7 +12,7 @@ interface IListActivity {
   start_date: null | string;
   end_date: null | string;
   checklists_count: number;
-  is_programatic_visit: boolean;
+  is_programmatic_visit: boolean;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
   report_reviewers: ActivityTeamMember[];

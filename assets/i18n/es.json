@@ -15,7 +15,8 @@
       "VISIT_LEAD": "Líder de visita",
       "SECTIONS": "Secciones",
       "PARTNER": "Socio",
-      "IS_PROGRAMATIC_VISIT": "Visita programática"
+      "IS_PROGRAMATIC_VISIT": "Visita programática",
+      "is_programmatic_visit": "Visita programática"
     },
     "CREATE_NEW_BUTTON": "Crear nuevo",
     "FILTERS": {
@@ -35,7 +36,8 @@
       "SECTIONS": "Secciones",
       "STARTS_AFTER": "Comienza después de",
       "END_BEFORE": "Termina antes",
-      "IS_PROGRAMATIC_VISIT": "Visita programática"
+      "IS_PROGRAMATIC_VISIT": "Visita programática",
+      "is_programmatic_visit": "Visita programática"
     },
     "REFERENCE_NO": "Referencia",
     "TITLE": "Actividades"

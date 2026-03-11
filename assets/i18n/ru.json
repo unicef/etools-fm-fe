@@ -17,7 +17,8 @@
       "STATUS": "Localized Status",
       "SECTIONS": "Localized Sections",
       "PARTNER": "Localized Partner",
-      "IS_PROGRAMATIC_VISIT": "Программный визит"
+      "IS_PROGRAMATIC_VISIT": "Программный визит",
+      "is_programmatic_visit": "Программный визит"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -35,7 +36,8 @@
       "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
       "SECTIONS": "Localized Sections",
-      "IS_PROGRAMATIC_VISIT": "Программный визит"
+      "IS_PROGRAMATIC_VISIT": "Программный визит",
+      "is_programmatic_visit": "Программный визит"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

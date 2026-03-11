@@ -30,7 +30,7 @@ export enum ActivityFilterKeys {
   interventions__in = 'interventions__in',
   cp_outputs__in = 'cp_outputs__in',
   status__in = 'status__in',
-  is_programatic_visit = 'is_programatic_visit',
+  is_programmatic_visit = 'is_programmatic_visit',
   start_date__gte = 'start_date__gte',
   end_date__lte = 'end_date__lte',
   sections__in = 'sections__in'
@@ -48,7 +48,7 @@ export const selectedValueTypeByFilterKey: GenericObject = {
   [ActivityFilterKeys.interventions__in]: 'Array',
   [ActivityFilterKeys.cp_outputs__in]: 'Array',
   [ActivityFilterKeys.status__in]: 'Array',
-  [ActivityFilterKeys.is_programatic_visit]: 'string',
+  [ActivityFilterKeys.is_programmatic_visit]: 'string',
   [ActivityFilterKeys.start_date__gte]: 'string',
   [ActivityFilterKeys.end_date__lte]: 'string'
 };
@@ -229,9 +229,9 @@ export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
       disabled: false
     },
     {
-      filterName: translate('ACTIVITIES_LIST.FILTERS.IS_PROGRAMATIC_VISIT') as any as string,
-      filterNameKey: 'ACTIVITIES_LIST.FILTERS.IS_PROGRAMATIC_VISIT',
-      filterKey: ActivityFilterKeys.is_programatic_visit,
+      filterName: translate('ACTIVITIES_LIST.FILTERS.is_programmatic_visit') as any as string,
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.is_programmatic_visit',
+      filterKey: ActivityFilterKeys.is_programmatic_visit,
       type: EtoolsFilterTypes.Dropdown,
       selectionOptions: [
         {value: 'true', label: getTranslation('GENERAL.YES')},
