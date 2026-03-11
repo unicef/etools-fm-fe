@@ -229,8 +229,8 @@ export function getAllAtivitiesFilters(loadSiteDropdownOptions: any) {
       disabled: false
     },
     {
-      filterName: translate('ACTIVITIES_LIST.FILTERS.is_programmatic_visit') as any as string,
-      filterNameKey: 'ACTIVITIES_LIST.FILTERS.is_programmatic_visit',
+      filterName: translate('ACTIVITIES_LIST.FILTERS.IS_PROGRAMMATIC_VISIT') as any as string,
+      filterNameKey: 'ACTIVITIES_LIST.FILTERS.IS_PROGRAMMATIC_VISIT',
       filterKey: ActivityFilterKeys.is_programmatic_visit,
       type: EtoolsFilterTypes.Dropdown,
       selectionOptions: [

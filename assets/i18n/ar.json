@@ -17,8 +17,7 @@
       "STATUS": "حالة",
       "SECTIONS": "الأقسام",
       "PARTNER": "الشريك",
-      "IS_PROGRAMATIC_VISIT": "زيارة برنامجية",
-      "is_programmatic_visit": "زيارة برنامجية"
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     },
     "REFERENCE_NO": "مرجع #",
     "FILTERS": {
@@ -36,8 +35,7 @@
       "END_BEFORE": "نهاية قبل",
       "OFFICE": "المكتب الميداني",
       "SECTIONS": "الأقسام",
-      "IS_PROGRAMATIC_VISIT": "زيارة برنامجية",
-      "is_programmatic_visit": "زيارة برنامجية"
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {

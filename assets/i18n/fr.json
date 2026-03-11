@@ -17,8 +17,7 @@
       "STATUS": "Statut",
       "SECTIONS": "Sections",
       "PARTNER": "Partenaire",
-      "IS_PROGRAMATIC_VISIT": "Visite programmatique",
-      "is_programmatic_visit": "Visite programmatique"
+      "IS_PROGRAMMATIC_VISIT": "Visite programmatique"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -36,8 +35,7 @@
       "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
       "SECTIONS": "Sections",
-      "IS_PROGRAMATIC_VISIT": "Visite programmatique",
-      "is_programmatic_visit": "Visite programmatique"
+      "IS_PROGRAMMATIC_VISIT": "Visite programmatique"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -155,9 +153,18 @@
       "reject_report": "Renvoyer le rapport"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Commentaire d'annulation", "TITLE": "Motif d'annulation"},
-      "reject": {"LABEL": "Commentaire de rejet", "TITLE": "Motif du rejet"},
-      "reject_report": {"LABEL": "Commentaire sur le renvoi du rapport", "TITLE": "Raison du renvoi du rapport"}
+      "cancel": {
+        "LABEL": "Commentaire d'annulation",
+        "TITLE": "Motif d'annulation"
+      },
+      "reject": {
+        "LABEL": "Commentaire de rejet",
+        "TITLE": "Motif du rejet"
+      },
+      "reject_report": {
+        "LABEL": "Commentaire sur le renvoi du rapport",
+        "TITLE": "Raison du renvoi du rapport"
+      }
     },
     "STATUSES": {
       "draft": "Draft",

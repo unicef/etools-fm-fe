@@ -17,8 +17,7 @@
       "STATUS": "Localized Status",
       "SECTIONS": "Localized Sections",
       "PARTNER": "Localized Partner",
-      "IS_PROGRAMATIC_VISIT": "Программный визит",
-      "is_programmatic_visit": "Программный визит"
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -36,8 +35,7 @@
       "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
       "SECTIONS": "Localized Sections",
-      "IS_PROGRAMATIC_VISIT": "Программный визит",
-      "is_programmatic_visit": "Программный визит"
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -153,9 +151,18 @@
       "reject_report": "Отправить обратно отчет"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
-      "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
-      "reject_report": {"LABEL": "Комментарий к отчету о возврате", "TITLE": "Причина возврата отчета"}
+      "cancel": {
+        "LABEL": "Localized Cancellation comment",
+        "TITLE": "Localized Cancellation reason"
+      },
+      "reject": {
+        "LABEL": "Localized Rejection comment",
+        "TITLE": "Localized Rejection reason"
+      },
+      "reject_report": {
+        "LABEL": "Комментарий к отчету о возврате",
+        "TITLE": "Причина возврата отчета"
+      }
     },
     "STATUSES": {
       "draft": "Localized Draft",
