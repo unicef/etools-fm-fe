@@ -352,6 +352,7 @@
     "VIEW_POPUP_TITLE": "Voir la question",
     "PLACEHOLDERS": {
       "QUESTION": "Saisir le texte de la question",
+      "TOOLTIP": "Brève aide ou définition (max 500 caractères). Contenu à fournir.",
       "SECTIONS": "Sélectionnez les rubriques",
       "METHODS": "Sélectionnez les méthodes de collecte",
       "CATEGORY": "Sélectionnez le groupe",
@@ -371,7 +372,8 @@
       "IS_ACTIVE": "C'est actif",
       "SCALE_SIZE": "Taille de l'échelle",
       "ORDER": "Ordre",
-      "IS_CUSTOM": "Type de question"
+      "IS_CUSTOM": "Type de question",
+      "TOOLTIP": "Info-bulle"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Non standard",

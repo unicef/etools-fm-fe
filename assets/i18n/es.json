@@ -385,7 +385,8 @@
       "SCALE_SIZE": "Tamaño de escala",
       "SECTIONS": "Secciones",
       "ORDER": "Pedir",
-      "IS_CUSTOM": "Tipo de pregunta"
+      "IS_CUSTOM": "Tipo de pregunta",
+      "TOOLTIP": "Información de ayuda"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "No estándar",
@@ -403,6 +404,7 @@
       "LEVEL": "Seleccionar Nivel objetivo de la pregunta",
       "METHODS": "Seleccionar Métodos de recolección",
       "QUESTION": "Ingresar el texto de la pregunta",
+      "TOOLTIP": "Breve orientación o definición (máx. 500 caracteres). Contenido a suministrar.",
       "SCALE_SIZE": "Seleccionar Tamaño de escala",
       "SECTIONS": "Seleccionar Secciones"
     },

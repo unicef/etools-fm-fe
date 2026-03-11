@@ -19,6 +19,7 @@ import {SetEditedChecklistCard} from '../../../../../../redux/actions/activity-c
 import {Unsubscribe} from 'redux';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CommentElementMeta, CommentsMixin} from '../../../../../common/comments/comments-mixin';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
 
 const ENTER = 13;
 const ESCAPE = 27;
