@@ -463,14 +463,17 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
     this.onTrackValue = onTrackState;
   }
 
-  private getFindingAnswer(value: string, question: IChecklistQuestion): string {
+  private getFindingAnswer(value: string | string[], question: IChecklistQuestion): string | string[] {
     if (!question.options.length) {
-      return value;
+      return Array.isArray(value) ? value.join(', ') : value;
     } else {
-      const option: QuestionOption | undefined = question.options.find(
-        (option: QuestionOption) => option.value === value
-      );
-      return (option && option.label) || '';
+      const options: string = question.options
+        .filter((option: QuestionOption) =>
+          Array.isArray(value) ? value.includes(option.value.toString()) : value === option.value.toString()
+        )
+        .map((option: QuestionOption) => option.label)
+        .join(', ');
+      return options || '';
     }
   }
 
