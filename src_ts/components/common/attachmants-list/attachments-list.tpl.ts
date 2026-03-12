@@ -8,6 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
@@ -85,10 +86,18 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                     ${formatDate(attachment.created) || '-'}
                   </div>
                   <div
-                    class="col-data col-3"
+                    class="col-data col-3 col-file-type-with-tooltip"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
+                    style="display: inline-flex; align-items: center; gap: 4px; overflow: visible;"
                   >
                     ${attachment.file_type_name}
+                    ${this.getDocumentCategoryTooltip(attachment.file_type_name)
+                      ? html`
+                          <info-icon-tooltip
+                            .tooltipText="${this.getDocumentCategoryTooltip(attachment.file_type_name)}"
+                          ></info-icon-tooltip>
+                        `
+                      : ''}
                   </div>
                   <div
                     class="col-data col-6 file-link"
