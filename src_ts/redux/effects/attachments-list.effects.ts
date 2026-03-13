@@ -36,7 +36,7 @@ export function loadAttachmentsTypes(
     if (!url) {
       throw new Error(`Provided endpoint name (${endpointName}) is not found in endpoint list`);
     }
-    return request<AttachmentType[]>(`${url}file-types/?page_size=all`, { method: 'GET' }).then(
+    return request<AttachmentType[]>(`${url}file-types/?page_size=all`, {method: 'GET'}).then(
       (response: AttachmentType[]) => {
         dispatch(new SetAttachmentsTypes({name: endpointName, data: response}));
       }
