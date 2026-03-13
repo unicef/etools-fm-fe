@@ -38,7 +38,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
           max-height: 80vh;
           overflow: auto;
         }
-      `,
+      `
     ];
   }
 
@@ -104,7 +104,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   switchFileType(value: any): void {
     if (value) {
-      this.editedData = { ...this.editedData, file_type: value };
+      this.editedData = {...this.editedData, file_type: value};
       this.requestUpdate();
     }
   }
@@ -115,7 +115,8 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     if (id == null || !this.attachmentTypes?.length) return '';
     const option = this.attachmentTypes.find((t) => t.id === id);
     const description = option?.description ?? '';
-    // Preserve intentional new lines in tooltip by converting `\n` to `<br>` for info-icon-tooltip (which renders HTML).
+    // Preserve intentional new lines in tooltip by converting `\n` to `<br>`
+    // for info-icon-tooltip (which renders HTML).
     return description ? description.replace(/\n/g, '<br>') : '';
   }
 

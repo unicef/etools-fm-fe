@@ -198,7 +198,7 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
           max-height: 80vh;
           overflow: auto;
         }
-      `,
+      `
     ];
   }
 }

@@ -23,7 +23,7 @@ const TOOLTIP_HEIGHT_FIX_CSS = `
 `;
 
 function injectIntoTooltip(el: Element): void {
-  const host = el as HTMLElement & { shadowRoot: ShadowRoot };
+  const host = el as HTMLElement & {shadowRoot: ShadowRoot};
   const sr = host.shadowRoot;
   if (!sr?.getElementById(TOOLTIP_FIX_STYLE_ID)) {
     const style = document.createElement('style');
