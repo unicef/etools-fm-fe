@@ -1,7 +1,8 @@
-import {LitElement, TemplateResult, CSSResult} from 'lit';
+import {LitElement, TemplateResult, CSSResult, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './attachments-list.tpl';
 import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
+import {ACTIVITY_RELATED_DOCUMENTS, ACTIVITY_REPORT_ATTACHMENTS} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
 import {attachmentsListSelector, attachmentsTypesSelector} from '../../../redux/selectors/attachments-list.selectors';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -16,6 +17,7 @@ import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer'
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CommentElementMeta, CommentsMixin} from '../comments/comments-mixin';
+import {injectInfoTooltipHeightFix} from './info-tooltip-height-fix';
 
 store.addReducers({attachmentsList});
 
@@ -80,12 +82,25 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     return template.call(this);
   }
 
+  /** Tooltip for a document category label (from API description in attachmentsTypes). */
+  getDocumentCategoryTooltip(label: string): string {
+    const type = this.attachmentsTypes?.find((t) => t.label === label);
+    const description = type?.description ?? '';
+    // Preserve new lines in tooltip (info-icon-tooltip renders HTML)
+    return description ? description.replace(/\n/g, '<br>') : '';
+  }
+
+  /** For Related Documents we load file types from data-collection (ACTIVITY_REPORT_ATTACHMENTS). */
+  private get _typesStoreKey(): string {
+    return this._endpointName === ACTIVITY_RELATED_DOCUMENTS ? ACTIVITY_REPORT_ATTACHMENTS : this._endpointName;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._endpointName];
-    if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
-      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._typesStoreKey] ?? [];
+    if (!this.attachmentsTypes.length) {
+      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._typesStoreKey, this.additionalEndpointData));
     }
 
     this.attachmentsTypesUnsubscribe = store.subscribe(
@@ -95,7 +110,7 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
             this.attachmentsTypes = types;
           }
         },
-        [this._endpointName]
+        [this._typesStoreKey]
       )
     );
   }
@@ -105,6 +120,10 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     this.attachmentsTypesUnsubscribe();
   }
 
+  firstUpdated(): void {
+    injectInfoTooltipHeightFix(this.shadowRoot!);
+  }
+
   updated(changedProperties: Map<string | number | symbol, unknown>): void {
     if (
       changedProperties.has('attachmentsList') ||
@@ -112,14 +131,17 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     ) {
       this.setCommentMode();
     }
+    injectInfoTooltipHeightFix(this.shadowRoot!);
   }
 
   openPopup(attachment?: IAttachment): void {
+    const typesFromStore = store.getState().attachmentsList?.attachmentsTypes?.[this._endpointName];
+    const attachmentTypes = Array.isArray(typesFromStore) ? typesFromStore : this.attachmentsTypes;
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: this.attachmentsTypes,
+        attachmentTypes: attachmentTypes || [],
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }
@@ -151,6 +173,32 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
+    return [
+      elevationStyles,
+      SharedStyles,
+      pageLayoutStyles,
+      layoutStyles,
+      CardStyles,
+      css`
+        /* Allow tooltip popup to extend outside table cell (avoid 5–6px clipped line) */
+        .attachments-list-table-section {
+          overflow: visible;
+        }
+        .attachments-list-table-section *[slot='row-data'] {
+          overflow: visible;
+        }
+        .col-file-type-with-tooltip {
+          overflow: visible;
+          min-width: 0;
+        }
+        /* Tooltip content container: height follows content (info-icon-tooltip from etools-unicef) */
+        info-icon-tooltip::part(etools-iit-content) {
+          height: auto;
+          min-height: auto;
+          max-height: 80vh;
+          overflow: auto;
+        }
+      `
+    ];
   }
 }
