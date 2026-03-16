@@ -121,7 +121,7 @@ export function loadChecklistAttachments(activityId: number): (dispatch: Dispatc
 export function loadChecklistAttachmentsTypes(activityId: number): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {
     const {url}: IResultEndpoint = getEndpoint(ACTIVITY_CHECKLIST_ATTACHMENTS, {activityId});
-    return request<AttachmentType[]>(`${url}file-types?page_size=all`, {method: 'GET'}).then(
+    return request<AttachmentType[]>(`${url}file-types/?page_size=all`, {method: 'GET'}).then(
       (response: AttachmentType[]) => {
         dispatch(new ChecklistAttachmentsTypesRequest(response));
       }
