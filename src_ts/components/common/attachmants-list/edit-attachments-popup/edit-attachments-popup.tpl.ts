@@ -8,6 +8,7 @@ import {DialogStyles} from '../../../styles/dialog-styles';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   // language=HTML
@@ -33,26 +34,36 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
         loading-text="${translate('MAIN.SAVING_DATA_IN_PROCESS')}"
       ></etools-loading>
       <div class="container-dialog layout-vertical">
-        <etools-dropdown
-          class="validate-input"
-          .selected="${this.editedData.file_type}"
-          @etools-selected-item-changed="${({detail}: CustomEvent) =>
-            this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"
-          trigger-value-change-event
-          label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
-          placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
-          required
-          hide-search
-          .options="${this.attachmentTypes}"
-          option-label="label"
-          option-value="id"
-          ?invalid="${this.errors && this.errors.file_type}"
-          .errorMessage="${this.errors && this.errors.file_type}"
-          @focus="${() => this.resetFieldError('file_type')}"
-          @click="${() => this.resetFieldError('file_type')}"
-          allow-outside-scroll
-          dynamic-align
-        ></etools-dropdown>
+        <div class="file-type-with-tooltip" style="display: inline-flex; align-items: center; gap: 4px;">
+          <etools-dropdown
+            class="validate-input"
+            .selected="${this.editedData.file_type}"
+            @etools-selected-item-changed="${({detail}: CustomEvent) =>
+              this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"
+            trigger-value-change-event
+            label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
+            placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
+            required
+            hide-search
+            .options="${this.attachmentTypes}"
+            option-label="label"
+            option-value="id"
+            ?invalid="${this.errors && this.errors.file_type}"
+            .errorMessage="${this.errors && this.errors.file_type}"
+            @focus="${() => this.resetFieldError('file_type')}"
+            @click="${() => this.resetFieldError('file_type')}"
+            allow-outside-scroll
+            dynamic-align
+          ></etools-dropdown>
+          ${this.selectedCategoryTooltip
+            ? html`
+                <info-icon-tooltip
+                  class="file-type-tooltip"
+                  .tooltipText="${this.selectedCategoryTooltip}"
+                ></info-icon-tooltip>
+              `
+            : ''}
+        </div>
         <div class="file-upload-container">
           <etools-upload
             .uploadBtnLabel="${translate('UPLOAD_FILE')}"
