@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Sí",
+    "NO": "No"
+  },
   "ACTIVITIES_LIST": {
     "COLUMNS": {
       "CHECKLISTS_COUNT": "Listas de verificación",
@@ -10,7 +14,8 @@
       "TEAM_MEMBERS": "Miembros del equipo",
       "VISIT_LEAD": "Líder de visita",
       "SECTIONS": "Secciones",
-      "PARTNER": "Socio"
+      "PARTNER": "Socio",
+      "IS_PROGRAMMATIC_VISIT": "Visita programática"
     },
     "CREATE_NEW_BUTTON": "Crear nuevo",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "VISIT_LEAD": "Líder de visita",
       "SECTIONS": "Secciones",
       "STARTS_AFTER": "Comienza después de",
-      "END_BEFORE": "Termina antes"
+      "END_BEFORE": "Termina antes",
+      "IS_PROGRAMMATIC_VISIT": "Visita programática"
     },
     "REFERENCE_NO": "Referencia",
     "TITLE": "Actividades"
