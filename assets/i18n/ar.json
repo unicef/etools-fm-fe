@@ -503,6 +503,7 @@
     "EDIT_POPUP_TITLE": "تحرير المرفق",
     "FILE_TYPE_LABEL": "نوع المستند",
     "FILE_TYPE_PLACEHOLDER": "حدد نوع المستند",
+    "FILE_TYPE_REQUIRED": "نوع الملف مطلوب",
     "RELATED_DOCUMENTS": "الوثائق ذات الصلة",
     "REPORT_ATTACHMENTS": "مرفقات التقرير",
     "TITLE": "المرفقات"

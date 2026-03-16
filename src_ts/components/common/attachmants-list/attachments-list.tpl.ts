@@ -88,7 +88,6 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                   <div
                     class="col-data col-3 col-file-type-with-tooltip"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
-                    style="display: inline-flex; align-items: center; gap: 4px; overflow: visible;"
                   >
                     ${attachment.file_type_name}
                     ${this.getDocumentCategoryTooltip(attachment.file_type_name)

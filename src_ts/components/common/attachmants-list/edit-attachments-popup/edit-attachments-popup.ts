@@ -105,7 +105,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   switchFileType(value: any): void {
     if (value) {
       this.editedData = {...this.editedData, file_type: value};
-      this.requestUpdate();
     }
   }
 

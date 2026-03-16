@@ -1,8 +1,3 @@
-/**
- * Injects styles into info-icon-tooltip's shadow root so sl-tooltip's body (parent of
- * etools-iit-content) grows with content. We target both ::part(body) and .tooltip__body
- * so the fix works regardless of Shoelace version.
- */
 const TOOLTIP_FIX_STYLE_ID = 'etools-iit-sl-tooltip-body-height-fix';
 
 const TOOLTIP_HEIGHT_FIX_CSS = `

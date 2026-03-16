@@ -496,6 +496,7 @@
     "DELETE_POPUP_TITLE": "Supprimer la pièce jointe?",
     "FILE_TYPE_LABEL": "Type de document",
     "FILE_TYPE_PLACEHOLDER": "Sélectionnez le type de document",
+    "FILE_TYPE_REQUIRED": "Le type de fichier est requis",
     "COLUMNS": {
       "CREATED": "Date de téléchargement",
       "FILE_TYPE": "Type de document",

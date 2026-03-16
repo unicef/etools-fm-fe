@@ -506,6 +506,7 @@
     "EDIT_POPUP_TITLE": "Editar archivo adjunto",
     "FILE_TYPE_LABEL": "Tipo de documento",
     "FILE_TYPE_PLACEHOLDER": "Seleccionar Tipo de documento",
+    "FILE_TYPE_REQUIRED": "El tipo de archivo es obligatorio",
     "RELATED_DOCUMENTS": "Documentos relacionados",
     "REPORT_ATTACHMENTS": "Anexos del informe",
     "TITLE": "Archivos adjuntos"

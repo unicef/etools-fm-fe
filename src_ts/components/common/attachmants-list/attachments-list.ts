@@ -135,13 +135,11 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
   }
 
   openPopup(attachment?: IAttachment): void {
-    const typesFromStore = store.getState().attachmentsList?.attachmentsTypes?.[this._endpointName];
-    const attachmentTypes = Array.isArray(typesFromStore) ? typesFromStore : this.attachmentsTypes;
     openDialog<IAttachmentPopupData>({
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: attachmentTypes || [],
+        attachmentTypes: this.attachmentsTypes || [],
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }
@@ -188,6 +186,9 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
           overflow: visible;
         }
         .col-file-type-with-tooltip {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
           overflow: visible;
           min-width: 0;
         }
