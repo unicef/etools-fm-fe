@@ -10,7 +10,7 @@ import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-h
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 store.addReducers({tpmPartners});
 export const PARTNERS_PAGE = 'partners';

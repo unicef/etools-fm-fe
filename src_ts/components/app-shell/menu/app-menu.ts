@@ -2,7 +2,7 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 
 import {navMenuStyles} from './styles/nav-menu-styles';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {SMALL_MENU_ACTIVE_LOCALSTORAGE_KEY} from '../../../config/config';
 
 import {CSSResult, html, LitElement, TemplateResult} from 'lit';
@@ -13,9 +13,9 @@ import {store} from '../../../redux/store';
 import {currentUser} from '../../../redux/selectors/user.selectors';
 import {Unsubscribe} from 'redux';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/src/matomo-mixin';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 /**
  * main menu

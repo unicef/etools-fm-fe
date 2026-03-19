@@ -9,7 +9,7 @@ import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-h
 import {routeDetailsSelector} from '../../../redux/selectors/app.selectors';
 import {RouterStyles} from '../../app-shell/router-style';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {loadStaticData} from '../../../redux/effects/load-static-data.effect';
 import {USERS} from '../../../endpoints/endpoints-list';
 

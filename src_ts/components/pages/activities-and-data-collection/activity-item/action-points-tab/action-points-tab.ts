@@ -1,7 +1,7 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './action-points-tab.tpl';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
@@ -15,7 +15,7 @@ import {tpmActionPointsListSelector} from '../../../../../redux/selectors/tpm-ac
 import {ACTION_POINTS_CATEGORIES} from '../../../../../endpoints/endpoints-list';
 import {loadStaticData} from '../../../../../redux/effects/load-static-data.effect';
 import {staticDataDynamic} from '../../../../../redux/selectors/static-data.selectors';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {CommentsMixin} from '../../../../common/comments/comments-mixin';
 import {loadActionPoints, loadTPMActionPoints} from '../../../../../redux/effects/action-points.effects.ts';
 import {SetActionPointsParams, SetTPMActionPointsParams} from '../../../../../redux/actions/action-points.actions.ts';

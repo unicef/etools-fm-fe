@@ -1,24 +1,24 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {store} from '../../../../../../redux/store';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {template} from './partner-information.tpl';
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {canEditField} from '../../../../../utils/utils';
 import {updateTPMPartnerDetails} from '../../../../../../redux/effects/tpm-partner-details.effects';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-error-parser';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {
   resetRequiredFields,
   validateRequiredFields
-} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
+} from '@unicef-polymer/etools-modules-common/src/utils/validation-helper';
 
 @customElement('partner-information')
 export class PartnerInformation extends connect(store)(DataMixin()<IActivityTpmPartnerExtended>(LitElement)) {

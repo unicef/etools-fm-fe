@@ -1,6 +1,6 @@
 import {css, LitElement, TemplateResult, CSSResultArray, html, PropertyValues} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {questionsListDataAll} from '../../../../../redux/selectors/questions.selectors';
@@ -9,7 +9,7 @@ import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-error-parser';
 import {loadQuestionsAll, updateQuestionOrders} from '../../../../../redux/effects/questions.effects';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {repeat} from 'lit/directives/repeat.js';

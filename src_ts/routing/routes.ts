@@ -1,13 +1,13 @@
 import {store} from '../redux/store';
 import {navigate} from '../redux/effects/app.effects';
 import {equals, pick} from 'ramda';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {
   EtoolsRouteCallbackParams,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 const routeParamRegex = '([^\\/?#=+]+)';
 
 EtoolsRouter.init({

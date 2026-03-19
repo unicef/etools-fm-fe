@@ -7,8 +7,8 @@ import {Dispatch} from 'redux';
 import {request} from '../../endpoints/request';
 import {getEndpoint} from '../../endpoints/endpoints';
 import {SITE_DETAILS, SITES_LIST, LOCATIONS_WITH_SITES} from '../../endpoints/endpoints-list';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 
 export function loadSites(params: EtoolsRouteQueryParams): Promise<IListData<Site>> {
   const {url}: IResultEndpoint = getEndpoint(SITES_LIST);

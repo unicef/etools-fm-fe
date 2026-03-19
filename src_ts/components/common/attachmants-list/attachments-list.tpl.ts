@@ -6,7 +6,7 @@ import './remove-attachment-popup/remove-attachment-popup';
 import {AttachmentsListComponent} from './attachments-list';
 import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/src/date.util';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {ifDefined} from 'lit/directives/if-defined.js';
 

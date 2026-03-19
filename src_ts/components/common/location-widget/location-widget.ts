@@ -12,23 +12,23 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {SharedStyles} from '../../styles/shared-styles';
 import {TemplatesStyles} from '../../pages/templates/templates/templates.styles';
 import {CardStyles} from '../../styles/card-styles';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {
   widgetLocationPathLoading,
   widgetLocationsLoading,
   widgetLocationsItems
 } from '../../../redux/selectors/widget-locations.selectors';
 import {loadLocationPath, loadLocationsChunk} from '../../../redux/effects/widget-locations.effects';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {getLocationPart} from '../../utils/get-location-part';
 import {widgetLocations} from '../../../redux/reducers/widget-locations.reducer';
 import {specificLocations} from '../../../redux/reducers/site-specific-locations.reducer';
 import {leafletStyles} from '../../styles/leaflet-styles';
 import clone from 'ramda/es/clone';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {reverseNestedArray} from '@unicef-polymer/etools-utils/dist/array.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {reverseNestedArray} from '@unicef-polymer/etools-utils/src/array.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
 import equals from 'ramda/es/equals';
 

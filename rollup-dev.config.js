@@ -34,7 +34,7 @@ const config = {
     chunkFileNames: '[name].js',
   },
   watch: {
-    include: ['src_ts/**', 'node_modules/**']
+    include: ['src_ts/**', '../../libraries/**', '../../common/**']
   },
   plugins: [
     ...defaultConfig.plugins,

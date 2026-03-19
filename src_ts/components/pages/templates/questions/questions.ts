@@ -1,18 +1,18 @@
 import {CSSResult, LitElement, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {store} from '../../../../redux/store';
 import {loadQuestions} from '../../../../redux/effects/questions.effects';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {questionsListData} from '../../../../redux/selectors/questions.selectors';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {CATEGORIES, METHODS, QUESTIONS_LIST_EXPORT, SECTIONS} from '../../../../endpoints/endpoints-list';
 import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {ANSWER_TYPES, LEVELS} from '../../../common/dropdown-options';
 import {questionsFilters} from './questions.filters';
 import {SharedStyles} from '../../../styles/shared-styles';
@@ -34,7 +34,7 @@ import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import './question-popup/question-popup';
@@ -45,8 +45,8 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 
 @customElement('questions-tab')

@@ -8,16 +8,16 @@ import {
   attachmentsPermissionsSelector,
   attachmentsTypesSelector
 } from '../../../../../../redux/selectors/attachments-list.selectors';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {Unsubscribe} from 'redux';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
 import {SharedStyles} from '../../../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {attachmentsList} from '../../../../../../redux/reducers/attachments-list.reducer';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getFromPath} from '../../../../../utils/utils';
 import './edit-attachments-popup/partner-edit-attachments-popup';

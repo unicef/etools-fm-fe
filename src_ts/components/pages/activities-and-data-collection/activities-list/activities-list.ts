@@ -1,13 +1,13 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './activities-list.tpl';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateAppLocation, updateQueryParams} from '../../../../routing/routes';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
@@ -35,15 +35,15 @@ import {activityDetailsError} from '../../../../redux/selectors/activity-details
 import {activityDetails} from '../../../../redux/reducers/activity-details.reducer';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../redux/selectors/active-language.selectors';
-import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/src/matomo-mixin';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
+import {waitForCondition} from '@unicef-polymer/etools-utils/src/wait.util';
 import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import uniqBy from 'lodash-es/uniqBy';
 import {currentUser} from '../../../../redux/selectors/user.selectors';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -54,9 +54,9 @@ import {
 } from '../activity-item/statuses-actions/activity-statuses';
 import {COLLECT_TAB, DETAILS_TAB, SUMMARY_TAB} from '../activity-item/activities-tabs';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {getEndpoint} from '../../../../endpoints/endpoints';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {ACTIVITIES_EXPORT} from '../../../../endpoints/endpoints-list';
 import {EtoolsDropdownMulti} from '@unicef-polymer/etools-unicef/src/etools-dropdown/EtoolsDropdownMulti';
 import {locationsInvert} from '../../management/sites/locations-invert';

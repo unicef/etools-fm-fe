@@ -1,13 +1,13 @@
 import {html, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, query} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import './comment';
-import EtoolsDialog from '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import EtoolsDialog from '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {GenericObject} from '@unicef-polymer/etools-types';
 import {get as getTranslation, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {sharedStyles} from '@unicef-polymer/etools-modules-common/dist/styles/shared-styles-lit';
+import {sharedStyles} from '@unicef-polymer/etools-modules-common/src/styles/shared-styles-lit';
 import {CommentsItemsNameMap} from './comments-items-name-map';
 import {EditComments} from './edit-comments-base';
 import {removeTrailingIds} from './comments.helpers';

@@ -17,7 +17,7 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SaveRoute} from '../../../../../redux/actions/app.actions';
 import {SUMMARY_TAB} from '../activities-tabs';
 import {repeat} from 'lit/directives/repeat.js';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 store.addReducers({activitySummary, findingsComponents});
 

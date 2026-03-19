@@ -34,8 +34,8 @@ import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-a
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});

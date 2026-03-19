@@ -1,6 +1,6 @@
 import {FEATURES_FLAGS} from '../../endpoints/endpoints-list';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {EtoolsLogger} from '@unicef-polymer/etools-utils/dist/singleton/logger';
+import {EtoolsLogger} from '@unicef-polymer/etools-utils/src/singleton/logger';
 import '../common/error-warn-box';
 import {request} from '../../endpoints/request';
 import {EtoolsErrorWarnBox} from '../common/error-warn-box';

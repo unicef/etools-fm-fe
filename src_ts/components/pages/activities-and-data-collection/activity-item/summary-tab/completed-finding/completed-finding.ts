@@ -4,8 +4,8 @@ import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {DATA_COLLECTION_PAGE} from '../../../activities-and-data-collection-page';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 @customElement('completed-finding')
 export class CompletedFindingComponent extends LitElement {

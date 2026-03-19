@@ -5,11 +5,11 @@ import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {loadRationale} from '../../../../redux/effects/rationale.effects';
 import {rationaleData} from '../../../../redux/selectors/rationale.selectors';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
@@ -19,7 +19,7 @@ import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-tr
 import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import dayjs from 'dayjs';
 
 @customElement('rationale-tab')

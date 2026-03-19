@@ -1,6 +1,6 @@
 import {css, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {SharedStyles} from '../../../../../../styles/shared-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {store} from '../../../../../../../redux/store';
@@ -13,8 +13,8 @@ import './entities-list-and-popups/partner-popup';
 import './entities-list-and-popups/cp-output-popup';
 import './entities-list-and-popups/intervention-popup';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
-import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
+import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';

@@ -1,14 +1,14 @@
 import {css, LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import './completed-finding/completed-finding';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {get, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {template} from './summary-card.tpl';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 // import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {BOOL_TYPE, MULTIPLE_CHOICE, NUMBER_TYPE, SCALE_TYPE, TEXT_TYPE} from '../../../../common/dropdown-options';
 import {clone} from 'ramda';
 import '@unicef-polymer/etools-unicef/src/etools-radio/etools-radio-group';

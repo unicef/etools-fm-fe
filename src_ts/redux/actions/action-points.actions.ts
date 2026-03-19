@@ -1,4 +1,4 @@
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 export enum ActionPointsActionTypes {
   SET_ACTION_POINTS_PARAMS = '[Action points action]: SET_ACTION_POINTS_PARAMS',

@@ -23,18 +23,18 @@ import {
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {store} from '../../../../../redux/store';
 import {changeActivityStatus} from '../../../../../redux/effects/activity-details.effects';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {updateAppLocation} from '../../../../../routing/routes';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {getErrorText} from '../../../../utils/utils';
-import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
-import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
+import {waitForCondition} from '@unicef-polymer/etools-utils/src/wait.util';
+import '@unicef-polymer/etools-modules-common/src/layout/are-you-sure';
 import {Unsubscribe} from 'redux';
 import {summaryFindingsOverall} from '../../../../../redux/selectors/activity-summary.selectors';
 import {SUMMARY_PAGE} from '../../activities-and-data-collection-page';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 @customElement('statuses-actions')
 export class StatusesActionsComponent extends LitElement {

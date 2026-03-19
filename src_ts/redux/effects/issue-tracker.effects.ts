@@ -3,8 +3,8 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {LOG_ISSUES, LOG_ISSUES_ATTACHMENTS, LOG_ISSUES_DETAILS} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {IssueTrackerActions} from '../actions/issue-tracker.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 export function requestLogIssue(params: EtoolsRouteQueryParams): IAsyncAction {
   return {

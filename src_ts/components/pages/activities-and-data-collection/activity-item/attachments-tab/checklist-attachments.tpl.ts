@@ -8,7 +8,7 @@ import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-
 import {ChecklistAttachments} from './checklist-attachments';
 import {getTypeDisplayName} from '../../../../utils/attachments-helper';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/src/date.util';
 
 export function template(this: ChecklistAttachments): TemplateResult {
   return html`

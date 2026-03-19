@@ -1,11 +1,11 @@
 import {css, LitElement, TemplateResult, html, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {store} from '../../../../../../redux/store';
 import {activityDetailsData} from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 @customElement('details-note-card')
 export class DetailsNoteCard extends LitElement {

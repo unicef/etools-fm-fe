@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, html, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import '../../common/layout/page-content-header/page-content-header';
-import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/src/layout/etools-tabs';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 // eslint-disable-next-line
 import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-header/page-content-header-slotted-styles';
@@ -19,9 +19,9 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
-import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/src/matomo-mixin';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {updateAppLocation} from '../../../routing/routes';
 
 store.addReducers({specificLocations, rationale});

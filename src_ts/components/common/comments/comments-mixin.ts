@@ -1,11 +1,11 @@
 import {LitElement} from 'lit';
 import {CommentsCollection, CommentType} from './comments.reducer';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import './comments-dialog';
 import '../comments-panels/comments-panels';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
 import {Constructor} from '@unicef-polymer/etools-types';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../redux/store';
 
 type MetaData = CommentElementMeta & {

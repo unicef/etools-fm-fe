@@ -1,7 +1,7 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './tpm-action-points-popup.tpl';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../../../../redux/store';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
 import {ACTION_POINTS_CATEGORIES} from '../../../../../../endpoints/endpoints-list';
@@ -14,7 +14,7 @@ import {tpmActionPointsUpdateStatusSelector} from '../../../../../../redux/selec
 import {InterventionsMixin} from '../../../../../common/mixins/interventions-mixin';
 import {PartnersMixin} from '../../../../../common/mixins/partners-mixin';
 import {CpOutputsMixin} from '../../../../../common/mixins/cp-outputs-mixin';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../../styles/card-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';

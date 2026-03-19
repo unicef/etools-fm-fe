@@ -3,9 +3,9 @@ import {customElement} from 'lit/decorators.js';
 // These are the shared styles needed by this element.
 import {SharedStyles} from '../../styles/shared-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 /**
  * @customElement

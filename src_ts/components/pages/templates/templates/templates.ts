@@ -1,13 +1,13 @@
 import {LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './templates.tpl';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {updateQueryParams} from '../../../../routing/routes';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {loadQuestionTemplates} from '../../../../redux/effects/templates.effects';
 import {questionTemplatesListData} from '../../../../redux/selectors/templates.selectors';
 import {QUESTION_TEMPLATES, QUESTION_TEMPLATES_WITH_TARGET} from '../../../../endpoints/endpoints-list';
@@ -29,7 +29,7 @@ import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 const AllowedLevels: Set<string> = new Set([PARTNER, OUTPUT, INTERVENTION]);
 const ENTER = 13;

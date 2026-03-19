@@ -1,6 +1,6 @@
 import {CSSResultArray, LitElement, PropertyValues, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
@@ -10,7 +10,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {store} from '../../../../../redux/store';
 import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
-import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 const USER_STAFF: UserType = 'staff';
 
 @customElement('report-reviewer-popup')

@@ -1,6 +1,6 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {AttachmentsStyles} from '../../../../../styles/attachments.styles';
 import {clone} from 'ramda';
 import {updateChecklistAttachments} from '../../../../../../redux/effects/data-collection.effects';

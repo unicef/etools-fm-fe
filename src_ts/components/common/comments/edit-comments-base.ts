@@ -1,11 +1,11 @@
 import {LitElement, PropertyValues} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {CommentsEndpoints} from './comments-types';
-import {sendRequest} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request';
-import {getEndpoint} from '@unicef-polymer/etools-utils/dist/endpoint.util';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {sendRequest} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-request';
+import {getEndpoint} from '@unicef-polymer/etools-utils/src/endpoint.util';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
 import {addComment, updateComment} from './comments.actions';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CommentType} from './comments.reducer';
 import {store} from '../../../redux/store';

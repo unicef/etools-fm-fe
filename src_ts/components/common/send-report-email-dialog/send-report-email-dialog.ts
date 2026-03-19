@@ -1,18 +1,18 @@
 import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {SEND_REPORT_EMAIL, EMAIL_RECIPIENTS} from '../../../endpoints/endpoints-list';
-import {sendRequest} from '@unicef-polymer/etools-utils/dist/etools-ajax';
+import {sendRequest} from '@unicef-polymer/etools-utils/src/etools-ajax';
 import {SharedStyles} from '../../styles/shared-styles';
 import {CardStyles} from '../../styles/card-styles';
 import {DialogStyles} from '../../styles/dialog-styles';
 import {InputStyles} from '../../styles/input-styles';
 import {getEndpoint} from '../../../endpoints/endpoints';
-import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {parseRequestErrorsAndShowAsToastMsgs} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-error-parser';
 
 export interface SendReportEmailDialogData {
   activityId: number;

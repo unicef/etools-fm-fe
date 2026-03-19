@@ -14,7 +14,7 @@ import {
   SetTPMActionPointsList,
   SetTPMActionPointsUpdateStatus
 } from '../actions/action-points.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {store} from '../store.ts';
 
 export function loadActionPoints(activityId: number): (dispatch: Dispatch) => Promise<void> {

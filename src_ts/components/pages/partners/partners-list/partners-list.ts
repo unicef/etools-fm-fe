@@ -1,14 +1,14 @@
 import {css, CSSResult, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './partners-list.tpl';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../redux/store';
 import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {updateQueryParams} from '../../../../routing/routes';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {loadPartnersList} from '../../../../redux/effects/tpm-partners.effects';
 import {tpmPartners} from '../../../../redux/reducers/tpm-partners.reducer';
 import {tpmPartnersListData, tpmPartnersPermissions} from '../../../../redux/selectors/tpm-partners.selectors';
@@ -22,18 +22,18 @@ import {CardStyles} from '../../../styles/card-styles';
 
 import {ListMixin} from '../../../common/mixins/list-mixin';
 import {applyDropdownTranslation} from '../../../utils/translation-helper';
-import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/src/matomo-mixin';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table-footer';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {TPM_PARTNERS_EXPORT} from '../../../../endpoints/endpoints-list';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import './add-new-vendor/add-new-vendor-popup';
 import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParam,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {canAdd} from '../../../utils/utils';
 
 store.addReducers({tpmPartners});

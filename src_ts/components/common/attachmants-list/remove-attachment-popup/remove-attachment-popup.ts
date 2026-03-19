@@ -1,7 +1,7 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './remove-attachment-popup.tpl';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../../redux/store';
 import {listAttachmentUpdate} from '../../../../redux/selectors/attachments-list.selectors';
 import {Unsubscribe} from 'redux';

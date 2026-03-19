@@ -4,19 +4,19 @@ import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {request} from '../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../endpoints/endpoints';
 import {LOG_ISSUES} from '../../../../../endpoints/endpoints-list';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {SharedStyles} from '../../../../styles/shared-styles';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import '../../../../common/file-components/files-popup';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
 @customElement('issue-tracker-list')

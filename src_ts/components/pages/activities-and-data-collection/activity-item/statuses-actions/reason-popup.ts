@@ -1,6 +1,6 @@
 import {CSSResultArray, LitElement, PropertyValues, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {SharedStyles} from '../../../../styles/shared-styles';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';

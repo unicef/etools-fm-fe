@@ -1,6 +1,6 @@
-import AjaxRequestMixin from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request-mixin';
+import AjaxRequestMixin from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-request-mixin';
 import {etoolsCustomDexieDb} from './dexieDb';
-import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {getErrorsArray} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-error-parser';
 
 class RequestBase {
   lastAjaxRequest: any;

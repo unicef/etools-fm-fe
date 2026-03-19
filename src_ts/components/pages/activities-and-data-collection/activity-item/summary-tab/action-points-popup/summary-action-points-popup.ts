@@ -1,7 +1,7 @@
 import {css, LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './summary-action-points-popup.tpl';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../../../../redux/store';
 import {staticDataDynamic} from '../../../../../../redux/selectors/static-data.selectors';
 import {
@@ -14,7 +14,7 @@ import {loadStaticData} from '../../../../../../redux/effects/load-static-data.e
 import {DataMixin} from '../../../../../common/mixins/data-mixin';
 import {SectionsMixin} from '../../../../../common/mixins/sections-mixin';
 import {Unsubscribe} from 'redux';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';

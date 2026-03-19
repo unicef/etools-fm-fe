@@ -3,8 +3,8 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {QUESTION_TEMPLATES, QUESTION_TEMPLATES_WITH_TARGET} from '../../endpoints/endpoints-list';
 import {request} from '../../endpoints/request';
 import {SetQuestionTemplatesList} from '../actions/templates.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 export function loadQuestionTemplates(
   params: EtoolsRouteQueryParams,

@@ -7,9 +7,9 @@ import {routeDetailsSelector} from '../../../../redux/selectors/app.selectors';
 import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
 import {updateQueryParams} from '../../../../routing/routes';
 import {locationsInvert} from './locations-invert';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import './sites-popup/sites-popup';
 import {SharedStyles} from '../../../styles/shared-styles';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
@@ -22,7 +22,7 @@ import {
   EtoolsRouteDetails,
   EtoolsRouteQueryParam,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 @customElement('sites-tab')
 export class SitesTabComponent extends ListMixin()<IGroupedSites>(LitElement) {

@@ -5,13 +5,13 @@ import '@unicef-polymer/etools-unicef/src/etools-app-selector/etools-app-selecto
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
 
-import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/languages-dropdown';
-import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/countries-dropdown';
-import '@unicef-polymer/etools-modules-common/dist/components/dropdowns/organizations-dropdown';
-import '@unicef-polymer/etools-modules-common/dist/components/buttons/support-button';
+import '@unicef-polymer/etools-modules-common/src/components/dropdowns/languages-dropdown';
+import '@unicef-polymer/etools-modules-common/src/components/dropdowns/countries-dropdown';
+import '@unicef-polymer/etools-modules-common/src/components/dropdowns/organizations-dropdown';
+import '@unicef-polymer/etools-modules-common/src/components/buttons/support-button';
 
-import {DexieRefresh} from '@unicef-polymer/etools-utils/dist/singleton/dexie-refresh';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {DexieRefresh} from '@unicef-polymer/etools-utils/src/singleton/dexie-refresh';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
 import {store} from '../../../redux/store';
 
 import {html, LitElement, TemplateResult} from 'lit';
@@ -19,20 +19,20 @@ import {customElement, property} from 'lit/decorators.js';
 
 import {UpdateDrawerState} from '../../../redux/actions/app.actions';
 import {isEmpty} from 'ramda';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {updateCurrentUserData} from '../../../redux/effects/user.effects';
 import {currentUser, userSelector} from '../../../redux/selectors/user.selectors';
 
 import {activeLanguage} from '../../../redux/reducers/active-language.reducer';
 import {etoolsCustomDexieDb} from '../../../endpoints/dexieDb';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/matomo-mixin';
+import MatomoMixin from '@unicef-polymer/etools-piwik-analytics/src/matomo-mixin';
 import {appLanguages} from '../../../config/app-constants';
 import {etoolsEndpoints} from '../../../endpoints/endpoints-list';
 import {ActiveLanguageSwitched} from '../../../redux/actions/active-language.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/src/enums/router.enum';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {updateAppLocation} from '../../../routing/routes';
 
 store.addReducers({

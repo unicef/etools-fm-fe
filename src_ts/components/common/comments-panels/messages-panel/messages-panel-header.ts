@@ -1,6 +1,6 @@
 import {LitElement, html, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {CommentPanelsStyles} from '../common-comments.styles';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {makeCommentsDraggable} from '../../comments/comments.helpers';

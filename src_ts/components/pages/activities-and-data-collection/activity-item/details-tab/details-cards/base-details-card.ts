@@ -1,6 +1,6 @@
 import {LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {store} from '../../../../../../redux/store';
 import {createActivityDetails, updateActivityDetails} from '../../../../../../redux/effects/activity-details.effects';
 import clone from 'ramda/es/clone';
@@ -13,7 +13,7 @@ import {
   detailsEditedCard
 } from '../../../../../../redux/selectors/activity-details.selectors';
 import {Unsubscribe} from 'redux';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {updateAppLocation} from '../../../../../../routing/routes';
 import {getErrorText} from '../../../../../utils/utils';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';

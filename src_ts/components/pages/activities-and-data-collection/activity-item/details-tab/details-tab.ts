@@ -13,7 +13,7 @@ import {store} from '../../../../../redux/store';
 import {SetEditedDetailsCard} from '../../../../../redux/actions/activity-details.actions';
 import {routeDetailsSelector} from '../../../../../redux/selectors/app.selectors';
 import {ACTIVITIES_PAGE} from '../../activities-and-data-collection-page';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 const PAGE: string = ACTIVITIES_PAGE;
 

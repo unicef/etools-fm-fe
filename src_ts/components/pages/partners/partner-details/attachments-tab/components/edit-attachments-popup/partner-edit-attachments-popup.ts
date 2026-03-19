@@ -1,6 +1,6 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {template} from './partner-edit-attachments-popup.tpl';
 import {store} from '../../../../../../../redux/store';
 import {addAttachmentToList, updateListAttachment} from '../../../../../../../redux/effects/attachments-list.effects';
@@ -11,7 +11,7 @@ import {pageLayoutStyles} from '../../../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../../../../../common/mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
+import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/src/utils/validation-helper';
 import {EtoolsUpload} from '@unicef-polymer/etools-unicef/src/etools-upload/etools-upload';
 
 @customElement('partner-edit-attachment-popup')

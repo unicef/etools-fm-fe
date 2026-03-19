@@ -1,17 +1,17 @@
 import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
 import {store} from '../../../../redux/store';
 import {Unsubscribe} from 'redux';
 import {updateQueryParams} from '../../../../routing/routes';
 import {requestLogIssue} from '../../../../redux/effects/issue-tracker.effects';
 
 import {EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {template} from './issue-tracker.tpl';
 import {issueTrackerData, issueTrackerIsLoad} from '../../../../redux/selectors/issue-tracker.selectors';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../../styles/card-styles';
@@ -27,7 +27,7 @@ import {
   EtoolsRouteQueryParam,
   EtoolsRouteDetails,
   EtoolsRouteQueryParams
-} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {loadSites} from '../../../../redux/effects/site-specific-locations.effects';
 import {locationsInvert} from '../../management/sites/locations-invert';
 

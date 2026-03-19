@@ -12,12 +12,12 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {SharedStyles} from '../../styles/shared-styles';
 import {TemplatesStyles} from '../../pages/templates/templates/templates.styles';
 import {CardStyles} from '../../styles/card-styles';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {leafletStyles} from '../../styles/leaflet-styles';
-import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
+import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';
 import {loadSites} from '../../../redux/effects/site-specific-locations.effects';
-import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParam} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 const DEFAULT_COORDINATES: L.LatLngTuple = [-0.09, 51.505];
 

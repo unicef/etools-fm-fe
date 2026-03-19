@@ -4,14 +4,14 @@ import './comments-list/comments-list';
 import './messages-panel/messages-panel';
 import {CommentPanelsStyles} from './common-comments.styles';
 import {CommentsCollection, CommentType} from '../comments/comments.reducer';
-import {connect} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {connect} from '@unicef-polymer/etools-utils/src/pwa.utils';
 import {CommentItemData, CommentRelatedItem, CommentsEndpoints} from '../comments/comments-types';
-import {buildUrlQueryString} from '@unicef-polymer/etools-utils/dist/general.util';
+import {buildUrlQueryString} from '@unicef-polymer/etools-utils/src/general.util';
 import {ComponentsPosition} from '../comments/comments-items-name-map';
 import {removeTrailingIds} from '../comments/comments.helpers';
 // import {ExpectedResult, ResultLinkLowerResult} from '@unicef-polymer/etools-types';
-// import {sendRequest} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-request';
-// import {getEndpoint} from '@unicef-polymer/etools-utils/dist/endpoint.util';
+// import {sendRequest} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-request';
+// import {getEndpoint} from '@unicef-polymer/etools-utils/src/endpoint.util';
 // import {etoolsEndpoints} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
 

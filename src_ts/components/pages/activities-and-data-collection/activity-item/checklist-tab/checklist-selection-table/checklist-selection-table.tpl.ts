@@ -11,7 +11,7 @@ import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-
 import {InputStyles} from '../../../../../styles/input-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 export function template(this: ChecklistSelectionTable): TemplateResult {
   return html`

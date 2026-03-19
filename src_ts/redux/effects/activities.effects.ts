@@ -1,10 +1,10 @@
 import {Dispatch} from 'redux';
 import {getEndpoint} from '../../endpoints/endpoints';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {request} from '../../endpoints/request';
 import {SetActivitiesList} from '../actions/activities.actions';
 import {ACTIVITIES_LIST} from '../../endpoints/endpoints-list';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {store} from '../store.ts';
 import {SetActionPointsParams, SetTPMActionPointsParams} from '../actions/action-points.actions.ts';
 

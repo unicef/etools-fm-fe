@@ -8,8 +8,8 @@ import {
   SetQuestionUpdateError,
   SetQuestionUpdateState
 } from '../actions/questions.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 export function loadQuestions(params: EtoolsRouteQueryParams): (dispatch: Dispatch) => Promise<void> {
   return (dispatch: Dispatch) => {

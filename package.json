@@ -11,17 +11,12 @@
   "scripts": {
     "build": "export NODE_OPTIONS=--max_old_space_size=4096 && rollup -c rollup-prod.config.js --configPlugin @rollup/plugin-commonjs",
     "tsToJs": "tsc --skipLibCheck || true",
-    "start": "rm -rf src && npm install && rollup -c rollup-dev.config.js --configPlugin @rollup/plugin-commonjs -w",
+    "start": "rm -rf src && pnpm install && rollup -c rollup-dev.config.js --configPlugin @rollup/plugin-commonjs -w",
     "lint:eslint": "eslint src_ts/**",
     "format:eslint": "eslint src_ts/** --fix",
-    "lint": "npm run lint:eslint",
-    "format": "npm run format:eslint",
-    "generate:icons": "npm --prefix node_modules/@unicef-polymer/etools-unicef run generate-icons -- --output=$(pwd)/assets/icons/ --icons=$(pwd)/assets/icons/icons.js",
-    "rd:init": "relative-deps init",
-    "rd:add": "relative-deps add",
-    "rd:reload": "relative-deps",
-    "rd:watch": "chokidar \"../../etools-polymer/**/*.js\" \"../../etools-polymer/**/**/*.js\" -c 'npm run rd:reload' --silent",
-    "prepare": "relative-deps"
+    "lint": "pnpm run lint:eslint",
+    "format": "pnpm run format:eslint",
+    "generate:icons": "pnpm --dir node_modules/@unicef-polymer/etools-unicef run generate-icons -- --output=$(pwd)/assets/icons/ --icons=$(pwd)/assets/icons/icons.js"
   },
   "dependencies": {
     "@shoelace-style/shoelace": "2.20.1",
@@ -29,12 +24,12 @@
     "@types/lodash-es": "^4.17.7",
     "@types/ramda": "0.30.2",
     "@types/sortablejs": "^1.15.8",
-    "@unicef-polymer/etools-form-builder": "^4.0.2",
-    "@unicef-polymer/etools-modules-common": "^6.0.0",
-    "@unicef-polymer/etools-piwik-analytics": "^5.0.0",
-    "@unicef-polymer/etools-types": "^2.0.0",
-    "@unicef-polymer/etools-unicef": "^2.0.5",
-    "@unicef-polymer/etools-utils": "^3.0.0",
+    "@unicef-polymer/etools-form-builder": "workspace:*",
+    "@unicef-polymer/etools-modules-common": "workspace:*",
+    "@unicef-polymer/etools-piwik-analytics": "workspace:*",
+    "@unicef-polymer/etools-types": "workspace:*",
+    "@unicef-polymer/etools-unicef": "workspace:*",
+    "@unicef-polymer/etools-utils": "workspace:*",
     "dayjs": "^1.11.13",
     "dexie": "^3.2.4",
     "esri-leaflet": "^3.0.8",
@@ -68,7 +63,6 @@
     "globals": "^15.13.0",
     "js-yaml": ">=4.1.1",
     "prettier": "~3.4.2",
-    "relative-deps": "^1.0.7",
     "rollup": "4.28.1",
     "rollup-plugin-copy": "3.4.0",
     "rollup-plugin-delete": "2.1.0",
@@ -82,6 +76,5 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-musl": "^4.28.1"
-  },
-  "relativeDependencies": {}
+  }
 }

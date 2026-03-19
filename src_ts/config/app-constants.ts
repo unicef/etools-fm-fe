@@ -1,4 +1,4 @@
-import {GenericObject} from '@unicef-polymer/etools-types/dist/global.types';
+import {GenericObject} from '@unicef-polymer/etools-types/src/global.types';
 
 export const appLanguages: GenericObject<string>[] = [
   {value: 'en', display_name: 'English'},

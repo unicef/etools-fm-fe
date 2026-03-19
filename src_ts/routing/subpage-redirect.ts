@@ -1,5 +1,5 @@
 // define here main routes that need redirect to list subRoute
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {Router} from './router';
 
 const redirectsList: GenericObject = {

@@ -1,9 +1,9 @@
 import {html, LitElement, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import '@unicef-polymer/etools-unicef/src/etools-collapse/etools-collapse';
 import {CardStyles} from '../../styles/card-styles';
-import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
+import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import '@unicef-polymer/etools-unicef/src/etools-icon-button/etools-icon-button';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 

@@ -8,7 +8,7 @@ import {InputStyles} from '../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../styles/dialog-styles';
 import {SummaryActionPointsPopup} from './summary-action-points-popup';
 
-import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
+import {formatDate} from '@unicef-polymer/etools-utils/src/date.util';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 
 export function template(this: SummaryActionPointsPopup): TemplateResult {

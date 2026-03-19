@@ -1,9 +1,9 @@
 import {css, LitElement, TemplateResult, CSSResultArray, PropertyValues} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {template} from './question-popup.tpl';
-import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
+import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {store} from '../../../../../redux/store';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 
 import {addQuestion, updateQuestion} from '../../../../../redux/effects/questions.effects';
 import {Unsubscribe} from 'redux';
@@ -17,7 +17,7 @@ import {QuestionPopupStyles} from './question-popup.styles';
 import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {applyDropdownTranslation} from '../../../../utils/translation-helper';
 import {activeLanguageSelector} from '../../../../../redux/selectors/active-language.selectors';
-import {getErrorsArray} from '@unicef-polymer/etools-utils/dist/etools-ajax/ajax-error-parser';
+import {getErrorsArray} from '@unicef-polymer/etools-utils/src/etools-ajax/ajax-error-parser';
 import {validateRequiredFields} from '../../../../utils/validations.helper';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';

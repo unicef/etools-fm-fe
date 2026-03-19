@@ -4,7 +4,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {CardStyles} from '../../../../styles/card-styles';
 import './collect-popup';
-import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {store} from '../../../../../redux/store';
 import {
   createCollectionChecklist,
@@ -32,7 +32,7 @@ import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {SharedStyles} from '../../../../styles/shared-styles';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {DATA_COLLECTION_PAGE} from '../../activities-and-data-collection-page';
 import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 import '../../../../common/layout/etools-card';

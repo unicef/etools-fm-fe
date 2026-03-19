@@ -9,7 +9,7 @@ import {pageContentHeaderSlottedStyles} from '../../common/layout/page-content-h
 
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import '../../common/layout/page-content-header/page-content-header';
-import '@unicef-polymer/etools-modules-common/dist/layout/etools-tabs';
+import '@unicef-polymer/etools-modules-common/src/layout/etools-tabs';
 import {questionTemplates} from '../../../redux/reducers/templates.reducer';
 import {questions} from '../../../redux/reducers/questions.reducer';
 import {issueTracker} from '../../../redux/reducers/issue-tracker.reducer';
@@ -20,7 +20,7 @@ import {applyPageTabsTranslation} from '../../utils/translation-helper';
 import {Unsubscribe} from 'redux';
 import {activeLanguageSelector} from '../../../redux/selectors/active-language.selectors';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 
 store.addReducers({questions, questionTemplates, issueTracker, specificLocations});
 

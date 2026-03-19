@@ -2,7 +2,7 @@
  @license
  Copyright (c) 2019 The eTools Project Authors. All rights reserved.
  */
-import {connect, installMediaQueryWatcher, installRouter} from '@unicef-polymer/etools-utils/dist/pwa.utils';
+import {connect, installMediaQueryWatcher, installRouter} from '@unicef-polymer/etools-utils/src/pwa.utils';
 // This element is connected to the Redux store.
 import {store} from './redux/store';
 // These are the elements needed by this element.
@@ -16,7 +16,7 @@ import '@unicef-polymer/etools-form-builder';
 import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
 
-import '@unicef-polymer/etools-piwik-analytics/etools-piwik-analytics.js';
+import '@unicef-polymer/etools-piwik-analytics/src/etools-piwik-analytics';
 import {AppShellStyles} from './components/app-shell/app-shell-styles';
 import {RouterStyles} from './components/app-shell/router-style';
 
@@ -47,11 +47,11 @@ import {globalLoading} from './redux/reducers/global-loading.reducer';
 
 import {registerTranslateConfig, use} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {checkEnvFlags} from './components/utils/check-flags';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {ActiveLanguageSwitched} from './redux/actions/active-language.actions';
 import {languageIsAvailableInApp} from './components/utils/utils';
 import {MapHelper} from './components/common/map-mixin';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 import {commentsData} from './components/common/comments/comments.reducer.js';

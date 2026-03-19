@@ -3,8 +3,8 @@ import {getEndpoint} from '../../endpoints/endpoints';
 import {request} from '../../endpoints/request';
 import {SetTPMPartnersList, SetTPMPartnersPermissions} from '../actions/tpm-partners.actions';
 import {ACTIVATE_VENDOR, TPM_PARTNERS, SYNC_VENDOR_DATA} from '../../endpoints/endpoints-list';
-import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouteQueryParams} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 
 export function loadPartnersList(
   params: EtoolsRouteQueryParams,

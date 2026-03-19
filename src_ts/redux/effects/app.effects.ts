@@ -1,13 +1,13 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppAction, UpdateStoreRouteDetails} from '../actions/app.actions';
-import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
+import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {ActionCreator, Dispatch} from 'redux';
 import {getRedirectToListPath} from '../../routing/subpage-redirect';
 import {GlobalLoadingUpdate} from '../actions/global-loading.actions';
-import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/dist/enums/router.enum';
-import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/dist/interfaces/router.interfaces';
-import {waitForCondition} from '@unicef-polymer/etools-utils/dist/wait.util';
-import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
+import {EtoolsRedirectPath} from '@unicef-polymer/etools-utils/src/enums/router.enum';
+import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
+import {waitForCondition} from '@unicef-polymer/etools-utils/src/wait.util';
+import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {enableCommentMode} from '../../components/common/comments/comments.actions';
 
 type ThunkResult = ThunkAction<void, IRootState, undefined, AppAction>;
