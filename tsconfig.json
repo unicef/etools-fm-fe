@@ -3,7 +3,11 @@
     "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["es2018", "esnext", "dom"],
+    "lib": [
+      "es2018",
+      "esnext",
+      "dom"
+    ],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -18,6 +22,9 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src_ts/**/*.ts"],
-  "exclude": []
+  "include": [
+    "src_ts/**/*.ts"
+  ],
+  "exclude": [],
+  "extends": "../../../tsconfig.json"
 }
