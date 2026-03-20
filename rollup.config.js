@@ -114,7 +114,7 @@ const config = {
   },
   plugins: [importMetaUrlCurrentModulePlugin(), commonAliasPlugin(), resolveFromRootPlugin(), resolve({
     extensions: ['.js', '.ts'],
-    preserveSymlinks: false // 🔥 critical for pnpm
+    preserveSymlinks: false
   }), commonjs(), esbuild(), dynamicImportVars()],
   preserveEntrySignatures: false
 };
