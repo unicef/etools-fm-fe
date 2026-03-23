@@ -76,6 +76,7 @@ export class ActivityChecklistTab extends LitElement {
         if (!checklist) {
           return;
         }
+        debugger;
         this.sortedChecklist = checklist.reduce(
           (sorted: GenericObject<{target_id: number; items: IChecklistItem[]}>, item: IChecklistItem) => {
             let key: string;
@@ -89,15 +90,16 @@ export class ActivityChecklistTab extends LitElement {
             } else if (item.intervention) {
               key = `${get('LEVELS_OPTIONS.INTERVENTION')}: ${item.intervention.title}`;
               target_id = item.intervention.id;
-            } else if (item.gpd) {
-              key = `${get('LEVELS_OPTIONS.GPD')}: ${item.gpd.gpd_ref}`;
-              target_id = item.gpd.id;
             } else if (item.ewp_activity) {
               key = `${get('LEVELS_OPTIONS.EWP_ACTIVITY')}: ${item.ewp_activity.wbs}`;
               target_id = item.ewp_activity.id;
             } else {
               return sorted;
             }
+            // else if (item.gpd) {
+            //   key = `${get('LEVELS_OPTIONS.GPD')}: ${item.gpd.gpd_ref}`;
+            //   target_id = item.gpd.id;
+            // }
 
             if (!sorted[key]) {
               sorted[key] = {target_id, items: []};

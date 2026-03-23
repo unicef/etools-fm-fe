@@ -43,6 +43,11 @@ type EtoolsPartner = {
   organization_type: string;
 };
 
+type EwpActivity = {
+  cp_output: {id: number; name: string};
+  activities: string[];
+};
+
 type EtoolsTPMPartner = {
   blocked: boolean;
   vision_synced: boolean;

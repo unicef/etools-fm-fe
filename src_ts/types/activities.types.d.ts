@@ -299,6 +299,7 @@ type ActionPoint = {
   partner: IActivityPartner | null;
   intervention: IActivityIntervention | null;
   cp_output: IActivityCPOutput | null;
+  ewp_activity: string;
   history: ActionPointsHistory;
   url: string;
 };
@@ -322,6 +323,7 @@ type EditableActionPoint = {
   partner: number | null;
   intervention: number | null;
   cp_output: number | null;
+  ewp_activity: string | null;
 };
 
 type EditableTPMActionPoint = {
@@ -343,4 +345,4 @@ type TPMActionPointPopupData = {
 };
 
 type LiteIntervention = {id: number; name: string};
-type RelatedToFields = 'partner' | 'cp_output' | 'intervention';
+type RelatedToFields = 'partner' | 'cp_output' | 'intervention' | 'ewp_activity';

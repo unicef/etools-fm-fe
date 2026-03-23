@@ -77,6 +77,10 @@ export class BaseDetailsCard extends CommentsMixin(DataMixin()<IActivityDetails>
       diff.facility_types = this.editedData.facility_types;
     }
     if (Object.entries(diff).length) {
+      if (diff.ewp_activities) {
+        (diff.ewp_activities || []).forEach((x: any) => (x.cp_output = x.cp_output.id));
+      }
+
       this.isUpdate = true;
       if (this.editedData.id) {
         store

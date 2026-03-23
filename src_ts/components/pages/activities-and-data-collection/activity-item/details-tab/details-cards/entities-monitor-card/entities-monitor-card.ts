@@ -136,7 +136,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
             <entries-list
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.KEY_INTERVENTIONS')}"
-              .formatItem="${(item: string) => item}"
+              .formatItem="${(item: EwpActivity) => this.getEwpActivityText(item)}"
               .items="${this.activityEwpActivities}"
               ?is-readonly="${!this.isEditMode}"
               @add-entry="${() => this.openAddKeyIntervention()}"
@@ -149,6 +149,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
 
             <!--    GPDs List    -->
             <entries-list
+              hidden
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.GPD')}"
               .formatItem="${(item: string) => item}"
@@ -165,6 +166,10 @@ export class EntitiesMonitorCard extends CommentsMixin(
         </div>
       </etools-card>
     `;
+  }
+
+  getEwpActivityText(item: EwpActivity) {
+    return `${item.cp_output.name}: ${item.activities.join(', ')}`;
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
