@@ -252,6 +252,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
       if (!confirmed) {
         return;
       }
+      debugger;
       if (response) {
         this.activityEwpActivities = [...(this.activityEwpActivities || []), response];
         this.editedData.ewp_activities = this.activityEwpActivities;

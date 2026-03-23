@@ -1,20 +1,19 @@
 import {CSSResultArray, LitElement, TemplateResult, css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {repeat} from 'lit-html/directives/repeat.js';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
 import {request} from '../../../../../../../../endpoints/request';
 import {getEndpoint} from '../../../../../../../../endpoints/endpoints';
 import {debounce} from '@unicef-polymer/etools-utils/dist/debouncer.util';
-import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
+import {CP_OUTPUT_ACTIVITIES_WBS, CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/dist/singleton/router';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
-import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsInput} from '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {validateRequiredFields} from '@unicef-polymer/etools-modules-common/dist/utils/validation-helper';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
@@ -22,9 +21,10 @@ import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js'
 @customElement('key-intervention-popup')
 export class PartnerPopup extends PartnersMixin(LitElement) {
   @property() dialogOpened = true;
-  @property() workplanWBS: any[] = [''];
+  @property() workplanWBS: any[] = [];
   @property() selectedCpOutput?: EtoolsCpOutput;
   @property() cpOutputs: EtoolsCpOutput[] = [];
+  @property() workplanWBSOptions: any[] = [];
   @property() showExpired = false;
   private loadingCpOutputs!: Callback;
 
@@ -85,7 +85,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     if (validateRequiredFields(this)) {
       fireEvent(this, 'dialog-closed', {
         confirmed: true,
-        response: {cp_output: this.selectedCpOutput, activities: this.workplanWBS}
+        response: {cp_output: this.selectedCpOutput, activities: (this.workplanWBS || []).map((x: any) => x.wbs)}
       });
     }
   }
@@ -110,17 +110,27 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
   selectCpOutput(cpOutput: EtoolsCpOutput): void {
     if (this.selectedCpOutput !== cpOutput) {
       this.selectedCpOutput = cpOutput;
+      this.workplanWBS = [];
+      this.workplanWBSOptions = [];
+      this.requestUpdate();
+      if (this.selectedCpOutput?.id) {
+        this.getWorkplanWBSOptions(this.selectedCpOutput?.id);
+      }
     }
   }
 
-  addActivityWbs() {
-    this.workplanWBS.push('');
-    this.requestUpdate();
-  }
-
-  removeActivityWbs(index: number) {
-    this.workplanWBS.splice(index, 1);
-    this.requestUpdate();
+  getWorkplanWBSOptions(id: number): void {
+    if (!(Number(id) > 0)) {
+      return;
+    }
+    const {url}: IResultEndpoint = getEndpoint(CP_OUTPUT_ACTIVITIES_WBS);
+    request(`${url}?cp_output=${id}`)
+      .then((res: any) => {
+        this.workplanWBSOptions = res.results || [];
+      })
+      .catch(() => {
+        fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')});
+      });
   }
 
   // language=HTML
@@ -157,56 +167,31 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
                 trigger-value-change-event
                 @etools-selected-item-changed="${({detail}: CustomEvent) => this.selectCpOutput(detail.selectedItem)}"
                 horizontal-align="left"
+                required
                 no-dynamic-align
               ></etools-dropdown>
             </div>
           </div>
 
-          ${repeat(
-            this.workplanWBS || [],
-            (_item: string, index: number) => html`
-              <div class="row">
-                <div class="col-10 col-md-8 offset-1">
-                  <etools-input
-                    class="activity-wbs-input"
-                    label="${translate('ACTIVITY_DETAILS.WORKPLAN_WBS')}"
-                    pattern="^(\\d{4})\\/([A-Z0-9]{2})\\/(\\d{2})\\/(\\d{3})\\/(\\d{3})\\/(\\d{3})\\/([A-Z0-9]{7})"
-                    no-label-float
-                    placeholder="____/__/__/___/___/___/______"
-                    required
-                    error-message="${translate('THIS_FIELD_IS_REQUIRED')}. ${translate(
-                      'ACTIVITY_DETAILS.WRONG_FORMAT'
-                    )}"
-                    .value="${this.workplanWBS[index] || ''}"
-                    @blur="${(e: Event) => this.validateWBS(e)}"
-                    @value-changed="${({detail}: CustomEvent) => (this.workplanWBS[index] = detail && detail.value)}"
-                  ></etools-input>
-                </div>
-                <div class="col-1 pt-16">
-                  <etools-icon
-                    ?hidden="${index != 0}"
-                    name="add-circle"
-                    class="add-icon"
-                    @click="${this.addActivityWbs}"
-                  ></etools-icon>
-                  <etools-icon
-                    ?hidden="${index === 0}"
-                    class="remove-icon"
-                    name="remove-circle"
-                    @click="${(_e: any) => this.removeActivityWbs(index)}"
-                  ></etools-icon>
-                </div>
-              </div>
-            `
-          )};
           <div class="row">
             <div class="col-10 col-md-8 offset-1">
-              <div class="format-label">
-                <label>${translate('ACTIVITY_DETAILS.WORKPLAN_WBS_EXPECTED_FORMAT')} </label>
-              </div>
+              <etools-dropdown-multi
+                id="edmFacilityTypes"
+                .selectedValues="${simplifyValue(this.workplanWBS)}"
+                @etools-selected-items-changed="${({detail}: CustomEvent) =>
+                  (this.workplanWBS = detail.selectedItems || [])}"
+                class="w100"
+                trigger-value-change-event
+                label="${translate('ACTIVITY_DETAILS.WORKPLAN_WBS')}"
+                .options="${this.workplanWBSOptions}"
+                option-label="wbs"
+                option-value="id"
+                required
+                allow-outside-scroll
+                dynamic-align
+              ></etools-dropdown-multi>
             </div>
-          </div>
-        </div>
+          </div>      
       </etools-dialog>
     `;
   }
