@@ -234,8 +234,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   filtersChange(e: CustomEvent): void {
-    const detail = {...e.detail, page: 1} as GenericObject;
-    updateQueryParams(detail, true);
+    updateQueryParams({...e.detail, page: 1}, true);
   }
 
   private onRouteChange({routeName, subRouteName, queryParams}: EtoolsRouteDetails): void {
@@ -420,10 +419,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
         (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
         Boolean(
           this.filtersData[filter.filterKey] ||
-            filter.filterKey === ActivityFilterKeys.location_site__in ||
-            ((filter as ActivityFilter).selectionOptions?.length &&
-              !(filter as ActivityFilter).selectionOptionsEndpoint)
-        )
+            filter.filterKey === ActivityFilterKeys.location_site__in)
     );
     if (!allDataLoaded) {
       return;
