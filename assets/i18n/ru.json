@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Да",
+    "NO": "Нет"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Localized Activities",
     "CREATE_NEW_BUTTON": "Localized Create New",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status",
       "SECTIONS": "Localized Sections",
-      "PARTNER": "Localized Partner"
+      "PARTNER": "Localized Partner",
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "Localized Start After",
       "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
-      "SECTIONS": "Localized Sections"
+      "SECTIONS": "Localized Sections",
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -145,9 +151,18 @@
       "reject_report": "Отправить обратно отчет"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
-      "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
-      "reject_report": {"LABEL": "Комментарий к отчету о возврате", "TITLE": "Причина возврата отчета"}
+      "cancel": {
+        "LABEL": "Localized Cancellation comment",
+        "TITLE": "Localized Cancellation reason"
+      },
+      "reject": {
+        "LABEL": "Localized Rejection comment",
+        "TITLE": "Localized Rejection reason"
+      },
+      "reject_report": {
+        "LABEL": "Комментарий к отчету о возврате",
+        "TITLE": "Причина возврата отчета"
+      }
     },
     "STATUSES": {
       "draft": "Localized Draft",

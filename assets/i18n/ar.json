@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "نعم",
+    "NO": "لا"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "أنشطة",
     "CREATE_NEW_BUTTON": "خلق جديد إبداع جديد",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "قوائم المراجعة",
       "STATUS": "حالة",
       "SECTIONS": "الأقسام",
-      "PARTNER": "الشريك"
+      "PARTNER": "الشريك",
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     },
     "REFERENCE_NO": "مرجع #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "يبدأ بعد",
       "END_BEFORE": "نهاية قبل",
       "OFFICE": "المكتب الميداني",
-      "SECTIONS": "الأقسام"
+      "SECTIONS": "الأقسام",
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
