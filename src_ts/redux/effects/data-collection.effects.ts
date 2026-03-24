@@ -20,6 +20,7 @@ import {request} from '../../endpoints/request';
 import {store} from '../store';
 import {Dispatch} from 'redux';
 import {SetEditedFindingsCard, SetFindingsUpdateState} from '../actions/findings-components.actions';
+import {loadSummaryFindingsAndOverall} from './activity-summary-effects';
 
 export function loadDataCollectionChecklist(activityId: number): IAsyncAction {
   return {
@@ -130,7 +131,8 @@ export function updateFindingsAndOverall(
             skip = 'overall';
           }
           store.dispatch(new SetEditedFindingsCard(null));
-          store.dispatch<AsyncEffect>(loadFindingsAndOverall(activityId, checklistId, skip));
+          store.dispatch(loadFindingsAndOverall(activityId, checklistId, skip));
+          store.dispatch(loadSummaryFindingsAndOverall(Number(activityId), skip));
         })
         .finally(() => {
           store.dispatch(new SetFindingsUpdateState(false));
@@ -244,6 +246,7 @@ export function updateBlueprintValue(
     return request<ChecklistFormJson>(endpoint.url, {method: 'POST', body: JSON.stringify(data)}).then(
       (response: ChecklistFormJson) => {
         dispatch(new LoadBlueprint(response));
+        store.dispatch(loadSummaryFindingsAndOverall(Number(activityId)));
       }
     );
   };

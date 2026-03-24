@@ -466,6 +466,7 @@
   "ANSWER_TYPE_OPTIONS": {
     "TEXT": "Texte",
     "NUMBER": "Nombre",
+    "PERCENTAGE": "Pourcentage",
     "NUMBER_INTEGER_TYPE": "Nombre entier",
     "NUMBER_FLOAT_TYPE": "Nombre flottant",
     "BOOL": "Booléen",

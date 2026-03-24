@@ -33,6 +33,7 @@ type QuestionAnswerType =
   | 'likert_scale'
   | 'bool'
   | 'number'
+  | 'percentage'
   | 'number-integer'
   | 'number-float'
   | 'text';
