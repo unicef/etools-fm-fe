@@ -417,9 +417,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     const allDataLoaded: boolean = this.activitiesListFilters.every(
       (filter: EtoolsFilter) =>
         (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
-        Boolean(
-          this.filtersData[filter.filterKey] ||
-            filter.filterKey === ActivityFilterKeys.location_site__in)
+        Boolean(this.filtersData[filter.filterKey] || filter.filterKey === ActivityFilterKeys.location_site__in)
     );
     if (!allDataLoaded) {
       return;
