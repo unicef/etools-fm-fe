@@ -11,8 +11,6 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {injectInfoTooltipHeightFix} from '../info-tooltip-height-fix';
-
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
@@ -31,12 +29,13 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
       pageLayoutStyles,
       layoutStyles,
       css`
-        /* Tooltip content container: height follows content (info-icon-tooltip from etools-unicef) */
-        info-icon-tooltip::part(etools-iit-content) {
-          height: auto;
-          min-height: auto;
-          max-height: 80vh;
-          overflow: auto;
+        /* Match tooltip panel width to dialog column, not 50vw / full description line */
+        .container-dialog {
+          container-type: inline-size;
+          container-name: edit-attach-file-type;
+        }
+        :host .container-dialog info-icon-tooltip {
+          --iit-max-width: calc(100cqw - 1.5rem);
         }
       `
     ];
@@ -63,14 +62,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   render(): TemplateResult {
     return template.call(this);
-  }
-
-  firstUpdated(): void {
-    injectInfoTooltipHeightFix(this.shadowRoot!);
-  }
-
-  updated(): void {
-    injectInfoTooltipHeightFix(this.shadowRoot!);
   }
 
   connectedCallback(): void {
@@ -108,15 +99,15 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
   }
 
-  /** Tooltip for the currently selected document category (from API description). */
-  get selectedCategoryTooltip(): string {
+  /** API `description` for the current file type, as HTML for `info-icon-tooltip`. */
+  get selectedFileTypeDescriptionTooltip(): string {
     const id = this.editedData?.file_type;
-    if (id == null || !this.attachmentTypes?.length) return '';
-    const option = this.attachmentTypes.find((t) => t.id === id);
-    const description = option?.description ?? '';
-    // Preserve intentional new lines in tooltip by converting `\n` to `<br>`
-    // for info-icon-tooltip (which renders HTML).
-    return description ? description.replace(/\n/g, '<br>') : '';
+    if (id == null || !this.attachmentTypes?.length) {
+      return '';
+    }
+    const type = this.attachmentTypes.find((t) => String(t.id) === String(id));
+    const raw = type?.description ?? '';
+    return raw.trim() ? raw.replace(/\n/g, '<br>') : '';
   }
 
   protected processRequest(): void {

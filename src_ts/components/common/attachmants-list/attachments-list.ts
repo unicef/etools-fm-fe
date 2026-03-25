@@ -17,8 +17,6 @@ import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer'
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CommentElementMeta, CommentsMixin} from '../comments/comments-mixin';
-import {injectInfoTooltipHeightFix} from './info-tooltip-height-fix';
-
 store.addReducers({attachmentsList});
 
 @customElement('attachments-list')
@@ -82,12 +80,16 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     return template.call(this);
   }
 
-  /** Tooltip for a document category label (from API description in attachmentsTypes). */
-  getDocumentCategoryTooltip(label: string): string {
+  /** Plain-text description for native `title` on file type (from API). */
+  getFileTypeDescriptionText(label: string): string {
     const type = this.attachmentsTypes?.find((t) => t.label === label);
-    const description = type?.description ?? '';
-    // Preserve new lines in tooltip (info-icon-tooltip renders HTML)
-    return description ? description.replace(/\n/g, '<br>') : '';
+    return (type?.description ?? '').trim();
+  }
+
+  /** HTML for `info-icon-tooltip` — preserves API newlines. */
+  getFileTypeDescriptionTooltipHtml(label: string): string {
+    const text = this.getFileTypeDescriptionText(label);
+    return text ? text.replace(/\n/g, '<br>') : '';
   }
 
   /** For Related Documents we load file types from data-collection (ACTIVITY_REPORT_ATTACHMENTS). */
@@ -120,10 +122,6 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     this.attachmentsTypesUnsubscribe();
   }
 
-  firstUpdated(): void {
-    injectInfoTooltipHeightFix(this.shadowRoot!);
-  }
-
   updated(changedProperties: Map<string | number | symbol, unknown>): void {
     if (
       changedProperties.has('attachmentsList') ||
@@ -131,7 +129,6 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     ) {
       this.setCommentMode();
     }
-    injectInfoTooltipHeightFix(this.shadowRoot!);
   }
 
   openPopup(attachment?: IAttachment): void {
@@ -178,26 +175,25 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
       layoutStyles,
       CardStyles,
       css`
-        /* Allow tooltip popup to extend outside table cell (avoid 5–6px clipped line) */
-        .attachments-list-table-section {
-          overflow: visible;
-        }
-        .attachments-list-table-section *[slot='row-data'] {
-          overflow: visible;
-        }
-        .col-file-type-with-tooltip {
+        .col-file-type-cell {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
-          overflow: visible;
+          gap: 0;
           min-width: 0;
+          overflow: visible;
         }
-        /* Tooltip content container: height follows content (info-icon-tooltip from etools-unicef) */
-        info-icon-tooltip::part(etools-iit-content) {
-          height: auto;
-          min-height: auto;
-          max-height: 80vh;
-          overflow: auto;
+        .file-type-label {
+          display: inline-block;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+        }
+        .file-type-tooltip-anchor {
+          display: inline-flex;
+          align-items: center;
+          margin: 0;
+          padding: 0;
         }
       `
     ];
