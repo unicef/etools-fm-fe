@@ -11,7 +11,7 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
-import {ACTIVITY_STATUSES, MONITOR_TYPES} from '../../../common/dropdown-options';
+import { ACTIVITY_STATUSES, MONITOR_TYPES, PROGRAMMATIC_VISIT_OPTIONS } from '../../../common/dropdown-options';
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {
@@ -73,9 +73,11 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   lowResolutionLayout = false;
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
+  @property() programmaticVisitOptions: DefaultDropdownOption<string>[] = applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS);
   @property() private filtersData: GenericObject = {
     monitor_type: applyDropdownTranslation(MONITOR_TYPES),
-    status__in: applyDropdownTranslation(ACTIVITY_STATUSES)
+    status__in: applyDropdownTranslation(ACTIVITY_STATUSES),
+    is_programmatic_visit: applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS)
   };
 
   private readonly routeDetailsUnsubscribe: Unsubscribe;
@@ -143,12 +145,15 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       activeLanguageSelector((_lang: string) => {
         this.activityTypes = applyDropdownTranslation(MONITOR_TYPES);
         this.activityStatuses = applyDropdownTranslation(ACTIVITY_STATUSES);
+        this.programmaticVisitOptions = applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS);
         this.filtersData = {
           ...this.filtersData,
           monitor_type: applyDropdownTranslation(MONITOR_TYPES),
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES),
-          location_site__in: this.sitesOptions
-        };
+          location_site__in: this.sitesOptions,
+          is_programmatic_visit: applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS)
+        };  
+        this.setFilters();
       })
     );
     waitForCondition(() => !!this.user).then(() => {
@@ -408,21 +413,18 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     });
   }
 
-  private isDropdown(filter: EtoolsFilter): boolean {
-    return filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti;
-  }
-
-  private needsAsyncData(filter: ActivityFilter): boolean {
-    return this.isDropdown(filter) && !!(filter.selectionOptionsEndpoint || filter.loadDataDropdownOptions);
-  }
-
   private setFilters(unsubscribe?: Unsubscribe): void {
     if (unsubscribe) {
+      // unsubscribe after method initialization complete
       setTimeout(unsubscribe, 0);
     }
+
     const allDataLoaded: boolean = this.activitiesListFilters.every(
-      (filter: ActivityFilter) => !this.needsAsyncData(filter) || Boolean(this.filtersData[filter.filterKey])
+      (filter: EtoolsFilter) =>
+        (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
+        Boolean(this.filtersData[filter.filterKey] || filter.filterKey === ActivityFilterKeys.location_site__in)
     );
+
     if (!allDataLoaded) {
       return;
     }
@@ -432,16 +434,18 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
       (this.filters || this.activitiesListFilters)
         ?.filter((filter) => filter.selected)
         .map((filter) => filter.filterKey) || [];
+
     const currentParams: GenericObject = store.getState().app.routeDetails.queryParams || {};
     this.filters = ActivitiesFiltersHelper.updateFiltersSelectedValues(currentParams, this.activitiesListFilters);
+
     this.filters.forEach((filter) => {
       filter.selected = filter.selected || selectedFilters?.indexOf(filter.filterKey) > -1;
     });
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
-    activitiesListFilters.forEach((filter: ActivityFilter) => {
-      if (this.isDropdown(filter) && filtersData[filter.filterKey]) {
+    activitiesListFilters.forEach((filter: EtoolsFilter) => {
+      if (filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti) {
         ActivitiesFiltersHelper.updateFilterSelectionOptions(
           activitiesListFilters,
           filter.filterKey,
