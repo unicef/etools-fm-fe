@@ -77,3 +77,8 @@ export const STATUS_OPTIONS: SiteStatusOption[] = [
   {id: 0, value: false, display_name: 'SITES.STATUS.INACTIVE'},
   {id: 1, value: true, display_name: 'SITES.STATUS.ACTIVE'}
 ];
+
+export const PROGRAMMATIC_VISIT_OPTIONS: DefaultDropdownOption<string>[] = [
+  {value: 'true', display_name: `GENERAL.YES`},
+  {value: 'false', display_name: `GENERAL.NO`}
+];
