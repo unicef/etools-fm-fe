@@ -1,4 +1,4 @@
-import {LitElement, TemplateResult, CSSResultArray, css} from 'lit';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './edit-attachments-popup.tpl';
@@ -11,8 +11,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {injectInfoTooltipHeightFix} from '../info-tooltip-height-fix';
-
+import {AttachmentsEditPopupTooltipStyles} from '../../../styles/attachments.styles';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
@@ -26,20 +25,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [
-      SharedStyles,
-      pageLayoutStyles,
-      layoutStyles,
-      css`
-        /* Tooltip content container: height follows content (info-icon-tooltip from etools-unicef) */
-        info-icon-tooltip::part(etools-iit-content) {
-          height: auto;
-          min-height: auto;
-          max-height: 80vh;
-          overflow: auto;
-        }
-      `
-    ];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, AttachmentsEditPopupTooltipStyles];
   }
 
   set dialogData(data: IAttachmentPopupData) {
@@ -63,14 +49,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   render(): TemplateResult {
     return template.call(this);
-  }
-
-  firstUpdated(): void {
-    injectInfoTooltipHeightFix(this.shadowRoot!);
-  }
-
-  updated(): void {
-    injectInfoTooltipHeightFix(this.shadowRoot!);
   }
 
   connectedCallback(): void {
@@ -108,15 +86,15 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
   }
 
-  /** Tooltip for the currently selected document category (from API description). */
-  get selectedCategoryTooltip(): string {
+  /** API `description` for the current file type, as HTML for `info-icon-tooltip`. */
+  get selectedFileTypeDescriptionTooltip(): string {
     const id = this.editedData?.file_type;
-    if (id == null || !this.attachmentTypes?.length) return '';
-    const option = this.attachmentTypes.find((t) => t.id === id);
-    const description = option?.description ?? '';
-    // Preserve intentional new lines in tooltip by converting `\n` to `<br>`
-    // for info-icon-tooltip (which renders HTML).
-    return description ? description.replace(/\n/g, '<br>') : '';
+    if (id == null || !this.attachmentTypes?.length) {
+      return '';
+    }
+    const type = this.attachmentTypes.find((t) => String(t.id) === String(id));
+    const raw = type?.description ?? '';
+    return raw.trim() ? raw.replace(/\n/g, '<br>') : '';
   }
 
   protected processRequest(): void {
@@ -129,7 +107,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
 
     if (!this.editedData.file_type) {
-      this.errors = {file_type: getTranslation('ATTACHMENTS_LIST.FILE_TYPE_REQUIRED') || 'File type is required'};
+      this.errors = {file_type: getTranslation('ATTACHMENTS_LIST.FILE_TYPE_REQUIRED')};
       return;
     }
 
@@ -169,6 +147,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {
     const modifiedFields = Object.keys(data);
-    return modifiedFields.length >= 1 && modifiedFields.every((f) => f === 'file_type' || f === 'id');
+    return modifiedFields.length === 1 && modifiedFields[0] === 'file_type';
   }
 }

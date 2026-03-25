@@ -496,6 +496,7 @@
     "COLUMNS": {
       "CREATED": "Localized Date Uploaded",
       "FILE_TYPE": "Localized Document Type",
+      "CATEGORY": "Localized Category",
       "FILE": "Localized File Attachment"
     }
   },

@@ -62,6 +62,5 @@ interface IChecklistAttachment extends IAttachment {
 type AttachmentType = {
   id: number;
   label: string;
-  /** Tooltip/description from API (fm_activity_documents file-types). */
   description?: string;
 };

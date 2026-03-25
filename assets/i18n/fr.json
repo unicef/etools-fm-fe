@@ -500,6 +500,7 @@
     "COLUMNS": {
       "CREATED": "Date de téléchargement",
       "FILE_TYPE": "Type de document",
+      "CATEGORY": "Catégorie",
       "FILE": "Pièce jointe"
     }
   },
