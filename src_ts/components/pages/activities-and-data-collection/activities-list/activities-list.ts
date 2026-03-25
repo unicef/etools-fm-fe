@@ -441,7 +441,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
     activitiesListFilters.forEach((filter: ActivityFilter) => {
-      if (this.isDropdown(filter) && this.needsAsyncData(filter)) {
+      if (this.isDropdown(filter) && filtersData[filter.filterKey]) {
         ActivitiesFiltersHelper.updateFilterSelectionOptions(
           activitiesListFilters,
           filter.filterKey,
