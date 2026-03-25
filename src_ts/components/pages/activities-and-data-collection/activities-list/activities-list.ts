@@ -11,7 +11,7 @@ import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {loadActivitiesList} from '../../../../redux/effects/activities.effects';
 import {activities} from '../../../../redux/reducers/activities.reducer';
 import {activitiesListData} from '../../../../redux/selectors/activities.selectors';
-import { ACTIVITY_STATUSES, MONITOR_TYPES, PROGRAMMATIC_VISIT_OPTIONS } from '../../../common/dropdown-options';
+import {ACTIVITY_STATUSES, MONITOR_TYPES, PROGRAMMATIC_VISIT_OPTIONS} from '../../../common/dropdown-options';
 import {EtoolsFilterTypes, EtoolsFilter} from '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
 import {loadStaticData} from '../../../../redux/effects/load-static-data.effect';
 import {
@@ -73,7 +73,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   lowResolutionLayout = false;
   @property() activityTypes: DefaultDropdownOption<string>[] = applyDropdownTranslation(MONITOR_TYPES);
   @property() activityStatuses: DefaultDropdownOption<string>[] = applyDropdownTranslation(ACTIVITY_STATUSES);
-  @property() programmaticVisitOptions: DefaultDropdownOption<string>[] = applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS);
+  @property() programmaticVisitOptions: DefaultDropdownOption<string>[] =
+    applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS);
   @property() private filtersData: GenericObject = {
     monitor_type: applyDropdownTranslation(MONITOR_TYPES),
     status__in: applyDropdownTranslation(ACTIVITY_STATUSES),
@@ -152,7 +153,7 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
           status__in: applyDropdownTranslation(ACTIVITY_STATUSES),
           location_site__in: this.sitesOptions,
           is_programmatic_visit: applyDropdownTranslation(PROGRAMMATIC_VISIT_OPTIONS)
-        };  
+        };
         this.setFilters();
       })
     );

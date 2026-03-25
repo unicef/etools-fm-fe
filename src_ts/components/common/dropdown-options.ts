@@ -79,6 +79,6 @@ export const STATUS_OPTIONS: SiteStatusOption[] = [
 ];
 
 export const PROGRAMMATIC_VISIT_OPTIONS: DefaultDropdownOption<string>[] = [
-  { value: 'true', display_name: `GENERAL.YES` },
-  { value: 'false', display_name: `GENERAL.NO` }
+  {value: 'true', display_name: `GENERAL.YES`},
+  {value: 'false', display_name: `GENERAL.NO`}
 ];
