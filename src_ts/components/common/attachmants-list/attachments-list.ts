@@ -1,4 +1,4 @@
-import {LitElement, TemplateResult, CSSResult, css} from 'lit';
+import {LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './attachments-list.tpl';
 import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
@@ -13,6 +13,7 @@ import {SharedStyles} from '../../styles/shared-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../styles/card-styles';
+import {AttachmentsListFileTypeTooltipStyles} from '../../styles/attachments.styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
@@ -174,28 +175,7 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
       pageLayoutStyles,
       layoutStyles,
       CardStyles,
-      css`
-        .col-file-type-cell {
-          display: inline-flex;
-          align-items: center;
-          gap: 0;
-          min-width: 0;
-          overflow: visible;
-        }
-        .file-type-label {
-          display: inline-block;
-          max-width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          vertical-align: middle;
-        }
-        .file-type-tooltip-anchor {
-          display: inline-flex;
-          align-items: center;
-          margin: 0;
-          padding: 0;
-        }
-      `
+      AttachmentsListFileTypeTooltipStyles
     ];
   }
 }

@@ -497,7 +497,8 @@
     "COLUMNS": {
       "CREATED": "تاريخ الرفع",
       "FILE": "ملف مرفق",
-      "FILE_TYPE": "نوع الوثيقة"
+      "FILE_TYPE": "نوع الوثيقة",
+      "CATEGORY": "الفئة"
     },
     "DELETE_POPUP_TITLE": "هل تريد حذف المرفق؟",
     "EDIT_POPUP_TITLE": "تحرير المرفق",

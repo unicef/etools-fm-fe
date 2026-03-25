@@ -500,7 +500,8 @@
     "COLUMNS": {
       "CREATED": "Fecha de subida",
       "FILE": "Archivo adjunto",
-      "FILE_TYPE": "Tipo de documento"
+      "FILE_TYPE": "Tipo de documento",
+      "CATEGORY": "Categoría"
     },
     "DELETE_POPUP_TITLE": "¿Eliminar documento adjunto?",
     "EDIT_POPUP_TITLE": "Editar archivo adjunto",

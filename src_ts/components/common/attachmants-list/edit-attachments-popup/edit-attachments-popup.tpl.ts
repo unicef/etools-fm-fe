@@ -41,6 +41,7 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           @etools-selected-item-changed="${({detail}: CustomEvent) =>
             this.switchFileType(detail.selectedItem && detail.selectedItem.id)}"
           trigger-value-change-event
+          label="${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}"
           placeholder="${translate('ATTACHMENTS_LIST.FILE_TYPE_PLACEHOLDER')}"
           required
           hide-search

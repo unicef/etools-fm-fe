@@ -1,4 +1,4 @@
-import {LitElement, TemplateResult, CSSResultArray, css} from 'lit';
+import {LitElement, TemplateResult, CSSResultArray} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {template} from './edit-attachments-popup.tpl';
@@ -11,6 +11,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {AttachmentsEditPopupTooltipStyles} from '../../../styles/attachments.styles';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
@@ -24,21 +25,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [
-      SharedStyles,
-      pageLayoutStyles,
-      layoutStyles,
-      css`
-        /* Match tooltip panel width to dialog column, not 50vw / full description line */
-        .container-dialog {
-          container-type: inline-size;
-          container-name: edit-attach-file-type;
-        }
-        :host .container-dialog info-icon-tooltip {
-          --iit-max-width: calc(100cqw - 1.5rem);
-        }
-      `
-    ];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, AttachmentsEditPopupTooltipStyles];
   }
 
   set dialogData(data: IAttachmentPopupData) {
@@ -120,7 +107,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
 
     if (!this.editedData.file_type) {
-      this.errors = {file_type: getTranslation('ATTACHMENTS_LIST.FILE_TYPE_REQUIRED') || 'File type is required'};
+      this.errors = {file_type: getTranslation('ATTACHMENTS_LIST.FILE_TYPE_REQUIRED')};
       return;
     }
 
@@ -160,6 +147,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   private onlyDocTypeHasChanged(data: Partial<IAttachment>): boolean {
     const modifiedFields = Object.keys(data);
-    return modifiedFields.length >= 1 && modifiedFields.every((f) => f === 'file_type' || f === 'id');
+    return modifiedFields.length === 1 && modifiedFields[0] === 'file_type';
   }
 }
