@@ -408,16 +408,20 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
     });
   }
 
+  private isDropdown(filter: EtoolsFilter): boolean {
+    return filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti;
+  }
+
+  private needsAsyncData(filter: ActivityFilter): boolean {
+    return this.isDropdown(filter) && !!(filter.selectionOptionsEndpoint || filter.loadDataDropdownOptions);
+  }
+
   private setFilters(unsubscribe?: Unsubscribe): void {
     if (unsubscribe) {
-      // unsubscribe after method initialization complete
       setTimeout(unsubscribe, 0);
     }
-    // check that data for all dropdowns is loaded
     const allDataLoaded: boolean = this.activitiesListFilters.every(
-      (filter: EtoolsFilter) =>
-        (filter.type !== EtoolsFilterTypes.Dropdown && filter.type !== EtoolsFilterTypes.DropdownMulti) ||
-        Boolean(this.filtersData[filter.filterKey] || filter.filterKey === ActivityFilterKeys.location_site__in)
+      (filter: ActivityFilter) => !this.needsAsyncData(filter) || Boolean(this.filtersData[filter.filterKey])
     );
     if (!allDataLoaded) {
       return;
@@ -436,8 +440,8 @@ export class ActivitiesListComponent extends MatomoMixin(ListMixin()<IListActivi
   }
 
   private populateDropdownFilterOptions(filtersData: GenericObject, activitiesListFilters: ActivityFilter[]): void {
-    activitiesListFilters.forEach((filter: EtoolsFilter) => {
-      if (filter.type === EtoolsFilterTypes.Dropdown || filter.type === EtoolsFilterTypes.DropdownMulti) {
+    activitiesListFilters.forEach((filter: ActivityFilter) => {
+      if (this.isDropdown(filter) && this.needsAsyncData(filter)) {
         ActivitiesFiltersHelper.updateFilterSelectionOptions(
           activitiesListFilters,
           filter.filterKey,
