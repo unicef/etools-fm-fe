@@ -8,7 +8,7 @@ import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../styles/card-styles';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 
 @customElement('confirm-duplicate-popup')
 export class ConfirmDuplicatePopup extends LitElement {

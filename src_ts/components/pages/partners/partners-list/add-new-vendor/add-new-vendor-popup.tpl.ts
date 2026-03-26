@@ -4,7 +4,7 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {isRequired} from '../../../../utils/utils';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {CardStyles} from '../../../../styles/card-styles';
 
 export function template(this: AddNewVendorPopupComponent): TemplateResult {

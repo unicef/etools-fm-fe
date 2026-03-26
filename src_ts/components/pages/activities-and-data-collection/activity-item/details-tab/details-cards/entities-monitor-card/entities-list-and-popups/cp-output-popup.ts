@@ -13,7 +13,7 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/elevation-styles';
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CP_OUTPUTS} from '../../../../../../../../endpoints/endpoints-list';

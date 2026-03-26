@@ -9,7 +9,7 @@ import {elevationStyles} from '@unicef-polymer/etools-modules-common/src/styles/
 import {CardStyles} from '../../../../../../../styles/card-styles';
 import {SharedStyles} from '../../../../../../../styles/shared-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {debounce} from '@unicef-polymer/etools-utils/src/debouncer.util';

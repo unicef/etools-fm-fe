@@ -9,7 +9,7 @@ import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 
 @customElement('etools-card')
 export class EtoolsCard extends LitElement {

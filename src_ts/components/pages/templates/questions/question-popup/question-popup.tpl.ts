@@ -10,7 +10,7 @@ import {BOOL_TYPE, MULTIPLE_CHOICE, SCALE_TYPE} from '../../../../common/dropdow
 import {InputStyles} from '../../../../styles/input-styles';
 import {DialogStyles} from '../../../../styles/dialog-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
 
 export function template(this: QuestionPopupComponent): TemplateResult {

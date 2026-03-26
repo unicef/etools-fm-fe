@@ -5,7 +5,7 @@ import {InputStyles} from '../../../../styles/input-styles';
 import {AnnualFmRationale} from './annual-fm-rationale';
 import '../../../../common/layout/etools-card';
 import {hasPermission, Permissions} from '../../../../../config/permissions';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 
 export function template(this: AnnualFmRationale): TemplateResult {
   return html`

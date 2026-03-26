@@ -3,7 +3,7 @@ import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../styles/dialog-styles';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 
 export function template(this: PartnerRemoveAttachmentPopupComponent): TemplateResult {
   // language=HTML

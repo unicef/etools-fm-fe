@@ -1,10 +1,10 @@
 import {html, TemplateResult} from 'lit';
 import {ActionPointsTab} from './action-points-tab';
 import {InputStyles} from '../../../../styles/input-styles';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 import './action-points-popup/action-points-popup';
 import './tpm-action-points-popup/tpm-action-points-popup';

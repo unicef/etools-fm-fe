@@ -17,7 +17,7 @@ import {openDialog} from '@unicef-polymer/etools-utils/src/dialog.util';
 import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
 
 export const CARD_NAME = 'entities-monitor';

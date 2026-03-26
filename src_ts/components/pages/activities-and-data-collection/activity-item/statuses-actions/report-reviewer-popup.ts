@@ -7,7 +7,7 @@ import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {get as getTranslation, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../styles/card-styles';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {store} from '../../../../../redux/store';
 import {usersDataSelectors} from '../../../../../redux/selectors/static-data.selectors';
 import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';

@@ -6,7 +6,7 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {prettyDate} from '@unicef-polymer/etools-utils/src/date.util';
 import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';

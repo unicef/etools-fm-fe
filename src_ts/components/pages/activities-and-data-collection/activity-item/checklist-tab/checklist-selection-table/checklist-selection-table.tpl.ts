@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
@@ -6,11 +6,11 @@ import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '../../../../../common/layout/etools-card';
 import {html, TemplateResult} from 'lit';
 import {ChecklistSelectionTable} from './checklist-selection-table';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {InputStyles} from '../../../../../styles/input-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 
 export function template(this: ChecklistSelectionTable): TemplateResult {

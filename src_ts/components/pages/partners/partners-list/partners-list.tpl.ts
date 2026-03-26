@@ -1,8 +1,8 @@
 import {PartnersListComponent} from './partners-list';
 import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';

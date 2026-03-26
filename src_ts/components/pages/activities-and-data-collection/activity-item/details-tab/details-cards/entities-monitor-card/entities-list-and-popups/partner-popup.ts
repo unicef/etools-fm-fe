@@ -2,7 +2,7 @@ import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {PartnersMixin} from '../../../../../../../common/mixins/partners-mixin';
 import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import {simplifyValue} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import {InputStyles} from '../../../../../../../styles/input-styles';
 import {DialogStyles} from '../../../../../../../styles/dialog-styles';

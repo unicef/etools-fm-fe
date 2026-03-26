@@ -1,11 +1,11 @@
 import {ActivitiesListComponent} from './activities-list';
 import {html, TemplateResult} from 'lit';
 import '@unicef-polymer/etools-unicef/src/etools-filters/etools-filters';
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import {hasPermission, Permissions} from '../../../../config/permissions';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/src/date.util';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 
 export function template(this: ActivitiesListComponent): TemplateResult {

@@ -26,7 +26,7 @@ import '@unicef-polymer/etools-modules-common/src/layout/etools-tabs';
 import '@unicef-polymer/etools-unicef/src/etools-date-time/datepicker-lite';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';

@@ -8,7 +8,7 @@ import {DataMixin} from '../../../../common/mixins/data-mixin';
 import {getDifference} from '@unicef-polymer/etools-utils/src/equality-comparisons.util';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 
 @customElement('data-collect-popup')
 export class DataCollectPopup extends DataMixin()<DataCollectionChecklist>(LitElement) {

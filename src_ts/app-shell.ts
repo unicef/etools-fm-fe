@@ -12,7 +12,7 @@ import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header-layout';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-header';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-toolbar';
 import '@unicef-polymer/etools-unicef/src/etools-app-layout/app-footer';
-import '@unicef-polymer/etools-form-builder';
+import '@unicef-polymer/etools-form-builder/src';
 import '@unicef-polymer/etools-unicef/src/etools-toasts/etools-toasts';
 import {createDynamicDialog} from '@unicef-polymer/etools-unicef/src/etools-dialog/dynamic-dialog';
 

@@ -1,4 +1,4 @@
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';

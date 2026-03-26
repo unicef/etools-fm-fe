@@ -19,7 +19,7 @@ import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {clone} from 'ramda';
 import {EtoolsDropdownMultiEl} from '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import {waitForCondition} from '@unicef-polymer/etools-utils/src/wait.util';
-import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
+import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/src/lib/styles/form-builder-card.styles';
 import {addMissingItems} from '../../../../../utils/utils';
 
 export const CARD_NAME = 'monitor-information';

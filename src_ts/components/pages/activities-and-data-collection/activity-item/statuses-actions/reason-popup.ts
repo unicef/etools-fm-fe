@@ -7,7 +7,7 @@ import {DialogStyles} from '../../../../styles/dialog-styles';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {get as getTranslation, translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CardStyles} from '../../../../styles/card-styles';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 
 @customElement('reason-popup')
 export class ReasonPopup extends LitElement {

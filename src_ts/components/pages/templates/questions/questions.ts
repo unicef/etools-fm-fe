@@ -43,7 +43,7 @@ import {hasPermission, Permissions} from '../../../../config/permissions';
 import {InputStyles} from '../../../styles/input-styles';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {getDataFromSessionStorage, setDataOnSessionStorage} from '../../../utils/utils';
-import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query.js';
+import '@unicef-polymer/etools-unicef/src/etools-media-query/etools-media-query';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
 import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
 import {EtoolsRouter} from '@unicef-polymer/etools-utils/src/singleton/router';

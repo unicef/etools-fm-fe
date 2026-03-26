@@ -2,7 +2,7 @@ import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
 import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown-multi';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import {SEND_REPORT_EMAIL, EMAIL_RECIPIENTS} from '../../../endpoints/endpoints-list';

@@ -6,7 +6,7 @@ import {CardStyles} from '../../../../styles/card-styles';
 import {pageLayoutStyles} from '../../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import '../../../../common/attachmants-list/attachments-list';
-import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table';
 import {MethodsMixin} from '../../../../common/mixins/methods-mixin';
 import {Unsubscribe} from 'redux';
 import {store} from '../../../../../redux/store';

@@ -30,7 +30,7 @@ import {findingsComponents} from '../../../../redux/reducers/findings-components
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
 import '@unicef-polymer/etools-form-builder';
-import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/dist/form-attachments-popup';
+import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/src/form-attachments-popup';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';

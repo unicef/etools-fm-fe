@@ -1,7 +1,7 @@
 import {html, TemplateResult, CSSResultArray, css} from 'lit';
 import {customElement, query} from 'lit/decorators.js';
 import {fireEvent} from '@unicef-polymer/etools-utils/src/fire-event.util';
-import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
 import '@unicef-polymer/etools-unicef/src/etools-input/etools-textarea';
 import './comment';
 import EtoolsDialog from '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog';
