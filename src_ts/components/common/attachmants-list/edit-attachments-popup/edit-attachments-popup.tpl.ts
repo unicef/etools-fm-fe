@@ -8,6 +8,8 @@ import {DialogStyles} from '../../../styles/dialog-styles';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import '@unicef-polymer/etools-unicef/src/etools-dialog/etools-dialog.js';
+import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 
 export function template(this: EditAttachmentsPopupComponent): TemplateResult {
   // language=HTML
@@ -46,13 +48,35 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           .options="${this.attachmentTypes}"
           option-label="label"
           option-value="id"
+          option-tooltip="description"
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"
           @click="${() => this.resetFieldError('file_type')}"
           allow-outside-scroll
           dynamic-align
-        ></etools-dropdown>
+        >
+          <span slot="label">
+            ${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}
+            ${this.selectedFileTypeDescriptionTooltip
+              ? html`
+                  <span
+                    @mousedown="${(e: Event) => {
+                      e.preventDefault();
+                      e.stopImmediatePropagation();
+                    }}"
+                  >
+                    <info-icon-tooltip
+                      position="bottom"
+                      offset="12"
+                      hoist
+                      .tooltipText="${this.selectedFileTypeDescriptionTooltip}"
+                    ></info-icon-tooltip>
+                  </span>
+                `
+              : ''}
+          </span>
+        </etools-dropdown>
         <div class="file-upload-container">
           <etools-upload
             .uploadBtnLabel="${translate('UPLOAD_FILE')}"

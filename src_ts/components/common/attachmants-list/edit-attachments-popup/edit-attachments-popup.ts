@@ -11,7 +11,7 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-
+import {AttachmentsEditPopupTooltipStyles} from '../../../styles/attachments.styles';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
@@ -25,7 +25,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, layoutStyles];
+    return [SharedStyles, pageLayoutStyles, layoutStyles, AttachmentsEditPopupTooltipStyles];
   }
 
   set dialogData(data: IAttachmentPopupData) {
@@ -33,11 +33,15 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
       return;
     }
     const {editedAttachment, attachmentTypes, endpointName, additionalEndpointData}: IAttachmentPopupData = data;
-    this.attachmentTypes = attachmentTypes;
+    this.attachmentTypes = Array.isArray(attachmentTypes) ? attachmentTypes : [];
     this.endpointName = endpointName;
-    this.additionalEndpointData = additionalEndpointData;
+    this.additionalEndpointData = additionalEndpointData || {};
 
     if (!editedAttachment) {
+      this.data = {} as IAttachment;
+      if (this.attachmentTypes.length) {
+        this.editedData.file_type = this.attachmentTypes[0].id;
+      }
       return;
     }
     this.data = editedAttachment;
@@ -78,8 +82,19 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
 
   switchFileType(value: any): void {
     if (value) {
-      this.editedData.file_type = value;
+      this.editedData = {...this.editedData, file_type: value};
     }
+  }
+
+  /** API `description` for the current file type, as HTML for `info-icon-tooltip`. */
+  get selectedFileTypeDescriptionTooltip(): string {
+    const id = this.editedData?.file_type;
+    if (id == null || !this.attachmentTypes?.length) {
+      return '';
+    }
+    const type = this.attachmentTypes.find((t) => String(t.id) === String(id));
+    const raw = type?.description ?? '';
+    return raw.trim() ? raw.replace(/\n/g, '<br>') : '';
   }
 
   protected processRequest(): void {
@@ -92,13 +107,10 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
     }
 
     if (!this.editedData.file_type) {
-      this.errors = {
-        file_type: 'File type is required'
-      };
+      this.errors = {file_type: getTranslation('ATTACHMENTS_LIST.FILE_TYPE_REQUIRED')};
       return;
     }
 
-    // compose new attachment data
     const data: Partial<IAttachment> = {};
     if (this.selectedFileId) {
       data.id = this.selectedFileId;
@@ -108,7 +120,6 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
       data.file_type = this.editedData.file_type;
     }
 
-    // don't save attachment if nothing changed. just close popup
     if (!Object.keys(data).length) {
       this.onClose();
       return;
