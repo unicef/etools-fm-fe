@@ -132,7 +132,11 @@
     "TYPE_OF_FACILITY": "Тип объекта",
     "ASSIGN_INFRASTRUCTURE_TYPE": "Назначить тип инфраструктуры",
     "INFRASTRUCTURE_TYPE": "Тип инфраструктуры",
-    "OBJECTIVE": "Цель"
+    "OBJECTIVE": "Цель",
+    "METHODOLOGY": "Методология",
+    "METHOD_KII": "Ключевые информантские интервью (KII)",
+    "METHOD_FGD": "Групповые обсуждения (FGD)",
+    "METHOD_OBSERVATIONS": "Наблюдения"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Localized New Activity",

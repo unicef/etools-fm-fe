@@ -16,6 +16,7 @@ import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
 import clone from 'ramda/es/clone';
+import equals from 'ramda/es/equals';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
@@ -33,6 +34,7 @@ import {activeLanguageSelector} from '../../../../../../../redux/selectors/activ
 import {applyDropdownTranslation, applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
 import {FACILITY_TYPE_DURATION} from '../../../../../../common/dropdown-options';
 import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
@@ -55,8 +57,15 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'location',
   'offices',
   'visit_goals',
+  'data_collection_methods',
   'objective',
   'facility_types'
+];
+
+const DATA_COLLECTION_METHODOLOGY_OPTIONS: {value: string; labelKey: string}[] = [
+  {value: 'kii', labelKey: 'ACTIVITY_DETAILS.METHOD_KII'},
+  {value: 'fgd', labelKey: 'ACTIVITY_DETAILS.METHOD_FGD'},
+  {value: 'observations', labelKey: 'ACTIVITY_DETAILS.METHOD_OBSERVATIONS'}
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -383,6 +392,23 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 dynamic-align
               ></etools-dropdown-multi>
             </div>
+            <div class="col-12">
+              <span>${translate('ACTIVITY_DETAILS.METHODOLOGY')}</span>
+              <div>
+                ${DATA_COLLECTION_METHODOLOGY_OPTIONS.map(
+                  (opt) => html`
+                    <etools-checkbox
+                      ?checked="${this.isDataCollectionMethodologySelected(opt.value)}"
+                      ?disabled="${!this.isEditMode || this.isFieldReadonly('data_collection_methods')}"
+                      @sl-change="${(e: any) =>
+                        this.toggleDataCollectionMethodology(opt.value, Boolean(e.target.checked))}"
+                    >
+                      ${translate(opt.labelKey)}
+                    </etools-checkbox>
+                  `
+                )}
+              </div>
+            </div>
             <div class="col-md-6 col-12">
               <etools-textarea
                 label="${translate('ACTIVITY_DETAILS.OBJECTIVE')}"
@@ -514,6 +540,30 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       this.activityVisitGoals = visitGoals;
       this.updateModelValue('visit_goals', visitGoals);
     }
+  }
+
+  isDataCollectionMethodologySelected(code: string): boolean {
+    return (this.editedData.data_collection_methods || []).includes(code);
+  }
+
+  toggleDataCollectionMethodology(code: string, checked: boolean): void {
+    const current = [...(this.editedData.data_collection_methods || [])];
+    if (checked) {
+      if (!current.includes(code)) {
+        current.push(code);
+      }
+    } else {
+      const idx = current.indexOf(code);
+      if (idx !== -1) {
+        current.splice(idx, 1);
+      }
+    }
+    // String[] must not go through DataMixin.updateModelValue (it maps arrays to item.id).
+    if (equals(current, this.editedData.data_collection_methods || [])) {
+      return;
+    }
+    this.editedData.data_collection_methods = current;
+    this.requestUpdate();
   }
 
   onChangeMapTab(tabName: string): void {
@@ -649,10 +699,20 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     }
   }
 
+  hasSelectedDataCollectionMethodology(): boolean {
+    return Boolean((this.editedData.data_collection_methods || []).length);
+  }
+
   protected save(): void {
     if (!this.editedData.location) {
       fireEvent(this, 'toast', {
         text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
+      });
+      return;
+    }
+    if (!this.hasSelectedDataCollectionMethodology()) {
+      fireEvent(this, 'toast', {
+        text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('ACTIVITY_DETAILS.METHODOLOGY')}`
       });
       return;
     }

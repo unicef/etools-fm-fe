@@ -134,7 +134,11 @@
     "ASSIGN_INFRASTRUCTURE_TYPE": "Attribuer un type d'infrastructure",
     "INFRASTRUCTURE_TYPE": "Type d'infrastructure",
     "FACILITY_DURATION": "Durée de l'installation",
-    "OBJECTIVE": "Objective"
+    "OBJECTIVE": "Objective",
+    "METHODOLOGY": "Méthodologie",
+    "METHOD_KII": "Entretiens avec des informateurs clés (KII)",
+    "METHOD_FGD": "Groupes de discussion (FGD)",
+    "METHOD_OBSERVATIONS": "Observations"
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",
