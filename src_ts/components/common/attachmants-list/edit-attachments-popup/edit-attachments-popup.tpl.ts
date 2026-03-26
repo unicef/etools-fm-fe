@@ -60,12 +60,19 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
             ${translate('ATTACHMENTS_LIST.FILE_TYPE_LABEL')}
             ${this.selectedFileTypeDescriptionTooltip
               ? html`
-                  <info-icon-tooltip
-                    position="bottom"
-                    offset="12"
-                    hoist
-                    .tooltipText="${this.selectedFileTypeDescriptionTooltip}"
-                  ></info-icon-tooltip>
+                  <span
+                    @mousedown="${(e: Event) => {
+                      e.preventDefault();
+                      e.stopImmediatePropagation();
+                    }}"
+                  >
+                    <info-icon-tooltip
+                      position="bottom"
+                      offset="12"
+                      hoist
+                      .tooltipText="${this.selectedFileTypeDescriptionTooltip}"
+                    ></info-icon-tooltip>
+                  </span>
                 `
               : ''}
           </span>
