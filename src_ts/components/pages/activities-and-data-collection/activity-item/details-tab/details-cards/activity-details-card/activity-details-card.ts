@@ -544,7 +544,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
   toggleDataCollectionMethodology(code: string, checked: boolean): void {
     const current = this.editedData.data_collection_methodolgy || [];
     const updated = checked ? Array.from(new Set([...current, code])) : current.filter((item) => item !== code);
-    
+
     if (areEqual(updated, current)) {
       return;
     }
