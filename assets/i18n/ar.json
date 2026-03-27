@@ -134,9 +134,11 @@
     "INFRASTRUCTURE_TYPE": "نوع البنية التحتية",
     "OBJECTIVE": "موضوعي",
     "METHODOLOGY": "المنهجية",
-    "METHOD_KII": "مقابلات مع مصادر رئيسية (KII)",
-    "METHOD_FGD": "مجموعات نقاش مركزة (FGD)",
-    "METHOD_OBSERVATIONS": "ملاحظات ميدانية"
+    "METHOD": {
+      "KII": "مقابلات مع مصادر رئيسية (KII)",
+      "FGD": "مجموعات نقاش مركزة (FGD)",
+      "OBSERVATIONS": "ملاحظات ميدانية"
+    }
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

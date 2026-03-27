@@ -19,7 +19,7 @@ interface IListActivity {
   reviewed_by: ActivityTeamMember;
   sections: {id: number; name: string}[];
   remote_monitoring: boolean;
-  data_collection_methods?: string[];
+  data_collection_methodolgy?: string[];
 }
 
 interface IActivityDetails extends IListActivity {
@@ -211,7 +211,7 @@ type ActivityPermissionsObject = {
   additional_info: boolean;
   action_points: boolean;
   tpm_concerns: boolean;
-  data_collection_methods: boolean;
+  data_collection_methodolgy: boolean;
 };
 
 type ReasonPopupData = {

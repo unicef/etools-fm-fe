@@ -136,9 +136,11 @@
     "FACILITY_DURATION": "Durée de l'installation",
     "OBJECTIVE": "Objective",
     "METHODOLOGY": "Méthodologie",
-    "METHOD_KII": "Entretiens avec des informateurs clés (KII)",
-    "METHOD_FGD": "Groupes de discussion (FGD)",
-    "METHOD_OBSERVATIONS": "Observations"
+    "METHOD": {
+      "KII": "Entretiens avec des informateurs clés (KII)",
+      "FGD": "Groupes de discussion (FGD)",
+      "OBSERVATIONS": "Observations"
+    }
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Nouvelle activité",

@@ -16,10 +16,9 @@ import {CardStyles} from '../../../../../../styles/card-styles';
 import {BaseDetailsCard} from '../base-details-card';
 import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-details.actions';
 import clone from 'ramda/es/clone';
-import equals from 'ramda/es/equals';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
-import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {areEqual, simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
@@ -49,7 +48,7 @@ export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
 const AREA_TAB = 'AREA_TAB';
 
-const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
+const ELEMENT_FIELDS = [
   'sections',
   'end_date',
   'start_date',
@@ -57,15 +56,15 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'location',
   'offices',
   'visit_goals',
-  'data_collection_methods',
+  'data_collection_methodolgy',
   'objective',
   'facility_types'
 ];
 
 const DATA_COLLECTION_METHODOLOGY_OPTIONS: {value: string; labelKey: string}[] = [
-  {value: 'kii', labelKey: 'ACTIVITY_DETAILS.METHOD_KII'},
-  {value: 'fgd', labelKey: 'ACTIVITY_DETAILS.METHOD_FGD'},
-  {value: 'observations', labelKey: 'ACTIVITY_DETAILS.METHOD_OBSERVATIONS'}
+  {value: 'kii', labelKey: 'ACTIVITY_DETAILS.METHOD.KII'},
+  {value: 'fgd', labelKey: 'ACTIVITY_DETAILS.METHOD.FGD'},
+  {value: 'observations', labelKey: 'ACTIVITY_DETAILS.METHOD.OBSERVATIONS'}
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -398,8 +397,8 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 ${DATA_COLLECTION_METHODOLOGY_OPTIONS.map(
                   (opt) => html`
                     <etools-checkbox
-                      ?checked="${this.isDataCollectionMethodologySelected(opt.value)}"
-                      ?disabled="${!this.isEditMode || this.isFieldReadonly('data_collection_methods')}"
+                      ?checked="${(this.editedData.data_collection_methodolgy || []).includes(opt.value)}"
+                      ?disabled="${!this.isEditMode}"
                       @sl-change="${(e: any) =>
                         this.toggleDataCollectionMethodology(opt.value, Boolean(e.target.checked))}"
                     >
@@ -542,28 +541,14 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     }
   }
 
-  isDataCollectionMethodologySelected(code: string): boolean {
-    return (this.editedData.data_collection_methods || []).includes(code);
-  }
-
   toggleDataCollectionMethodology(code: string, checked: boolean): void {
-    const current = [...(this.editedData.data_collection_methods || [])];
-    if (checked) {
-      if (!current.includes(code)) {
-        current.push(code);
-      }
-    } else {
-      const idx = current.indexOf(code);
-      if (idx !== -1) {
-        current.splice(idx, 1);
-      }
-    }
-    // String[] must not go through DataMixin.updateModelValue (it maps arrays to item.id).
-    if (equals(current, this.editedData.data_collection_methods || [])) {
+    const current = this.editedData.data_collection_methodolgy || [];
+    const updated = checked ? Array.from(new Set([...current, code])) : current.filter((item) => item !== code);
+    
+    if (areEqual(updated, current)) {
       return;
     }
-    this.editedData.data_collection_methods = current;
-    this.requestUpdate();
+    this.editedData.data_collection_methodolgy = updated;
   }
 
   onChangeMapTab(tabName: string): void {
@@ -699,10 +684,6 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     }
   }
 
-  hasSelectedDataCollectionMethodology(): boolean {
-    return Boolean((this.editedData.data_collection_methods || []).length);
-  }
-
   protected save(): void {
     if (!this.editedData.location) {
       fireEvent(this, 'toast', {
@@ -710,7 +691,7 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       });
       return;
     }
-    if (!this.hasSelectedDataCollectionMethodology()) {
+    if (!(((this.editedData as any).data_collection_methodolgy || []) as string[]).length) {
       fireEvent(this, 'toast', {
         text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('ACTIVITY_DETAILS.METHODOLOGY')}`
       });

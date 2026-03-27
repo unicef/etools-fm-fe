@@ -134,9 +134,11 @@
     "INFRASTRUCTURE_TYPE": "Infrastructure Type",
     "OBJECTIVE": "Objective",
     "METHODOLOGY": "Methodology",
-    "METHOD_KII": "Key Informant Interviews (KII)",
-    "METHOD_FGD": "Focus Group Discussions (FGD)",
-    "METHOD_OBSERVATIONS": "Observations"
+    "METHOD": {
+      "KII": "Key Informant Interviews (KII)",
+      "FGD": "Focus Group Discussions (FGD)",
+      "OBSERVATIONS": "Observations"
+    }
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",

@@ -134,9 +134,11 @@
     "INFRASTRUCTURE_TYPE": "Тип инфраструктуры",
     "OBJECTIVE": "Цель",
     "METHODOLOGY": "Методология",
-    "METHOD_KII": "Ключевые информантские интервью (KII)",
-    "METHOD_FGD": "Групповые обсуждения (FGD)",
-    "METHOD_OBSERVATIONS": "Наблюдения"
+    "METHOD": {
+      "KII": "Ключевые информантские интервью (KII)",
+      "FGD": "Групповые обсуждения (FGD)",
+      "OBSERVATIONS": "Наблюдения"
+    }
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "Localized New Activity",

@@ -136,9 +136,11 @@
     "INFRASTRUCTURE_TYPE": "Tipo de infraestructura",
     "OBJECTIVE": "Objetivo",
     "METHODOLOGY": "Metodología",
-    "METHOD_KII": "Entrevistas con informantes clave (EIC)",
-    "METHOD_FGD": "Grupos focales (FGD)",
-    "METHOD_OBSERVATIONS": "Observaciones"
+    "METHOD": {
+      "KII": "Entrevistas con informantes clave (EIC)",
+      "FGD": "Grupos focales (FGD)",
+      "OBSERVATIONS": "Observaciones"
+    }
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {
