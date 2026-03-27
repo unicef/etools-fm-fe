@@ -511,9 +511,11 @@
     "DELETE_POPUP_TITLE": "Localized Delete attachment?",
     "FILE_TYPE_LABEL": "Localized Document Type",
     "FILE_TYPE_PLACEHOLDER": "Localized Select Document Type",
+    "FILE_TYPE_REQUIRED": "Тип файла обязателен",
     "COLUMNS": {
       "CREATED": "Localized Date Uploaded",
       "FILE_TYPE": "Localized Document Type",
+      "CATEGORY": "Localized Category",
       "FILE": "Localized File Attachment"
     }
   },
