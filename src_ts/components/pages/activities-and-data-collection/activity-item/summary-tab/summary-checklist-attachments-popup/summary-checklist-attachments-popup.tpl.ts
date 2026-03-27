@@ -54,7 +54,6 @@ export function template(this: SummaryChecklistAttachmentsPopup): TemplateResult
                   .options="${this.attachmentTypes}"
                   option-label="label"
                   option-value="id"
-                  option-tooltip="description"
                   ?invalid="${!attachment.file_type && this.saveBtnClicked}"
                   .errorMessage="${translate('THIS_FIELD_IS_REQUIRED')}"
                   allow-outside-scroll

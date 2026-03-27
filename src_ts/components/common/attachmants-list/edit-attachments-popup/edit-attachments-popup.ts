@@ -11,7 +11,6 @@ import {pageLayoutStyles} from '../../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {DataMixin} from '../../mixins/data-mixin';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
-import {AttachmentsEditPopupTooltipStyles} from '../../../styles/attachments.styles';
 @customElement('edit-attachment-popup')
 export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitElement) {
   @property() dialogOpened = true;
@@ -25,7 +24,7 @@ export class EditAttachmentsPopupComponent extends DataMixin()<IAttachment>(LitE
   private updateAttachmentsUnsubscribe!: Unsubscribe;
 
   static get styles(): CSSResultArray {
-    return [SharedStyles, pageLayoutStyles, layoutStyles, AttachmentsEditPopupTooltipStyles];
+    return [SharedStyles, pageLayoutStyles, layoutStyles];
   }
 
   set dialogData(data: IAttachmentPopupData) {
