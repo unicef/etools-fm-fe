@@ -48,7 +48,6 @@ export function template(this: EditAttachmentsPopupComponent): TemplateResult {
           .options="${this.attachmentTypes}"
           option-label="label"
           option-value="id"
-          option-tooltip="description"
           ?invalid="${this.errors && this.errors.file_type}"
           .errorMessage="${this.errors && this.errors.file_type}"
           @focus="${() => this.resetFieldError('file_type')}"

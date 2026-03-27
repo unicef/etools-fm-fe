@@ -43,7 +43,6 @@ export function template(this: PartnerEditAttachmentsPopupComponent): TemplateRe
           .options="${this.attachmentTypes}"
           option-label="label"
           option-value="id"
-          option-tooltip="description"
           @focus="${resetError}"
           @click="${resetError}"
           allow-outside-scroll

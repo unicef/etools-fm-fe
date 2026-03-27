@@ -87,13 +87,3 @@ export const AttachmentsListFileTypeTooltipStyles: CSSResult = css`
     padding: 0;
   }
 `;
-
-export const AttachmentsEditPopupTooltipStyles: CSSResult = css`
-  .container-dialog {
-    container-type: inline-size;
-    container-name: edit-attach-file-type;
-  }
-  :host .container-dialog info-icon-tooltip {
-    --iit-max-width: calc(100cqw - 1.5rem);
-  }
-`;
