@@ -1,6 +1,6 @@
 import {LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
-import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {getDifference, simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {store} from '../../../../../../redux/store';
 import {createActivityDetails, updateActivityDetails} from '../../../../../../redux/effects/activity-details.effects';
 import clone from 'ramda/es/clone';
@@ -79,6 +79,7 @@ export class BaseDetailsCard extends CommentsMixin(DataMixin()<IActivityDetails>
     if (Object.entries(diff).length) {
       if (diff.ewp_activities) {
         (diff.ewp_activities || []).forEach((x: any) => (x.cp_output = x.cp_output.id));
+        (diff.ewp_activities || []).forEach((x: any) => (x.activities = simplifyValue(x.activities || [])));
       }
 
       this.isUpdate = true;

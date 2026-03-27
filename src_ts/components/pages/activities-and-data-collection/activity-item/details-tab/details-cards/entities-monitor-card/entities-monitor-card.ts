@@ -169,7 +169,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
   }
 
   getEwpActivityText(item: EwpActivity) {
-    return `${item.cp_output.name}: ${item.activities.join(', ')}`;
+    return `${item.cp_output.name}: ${(item.activities || []).map((x: any) => x.name).join(', ')}`;
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
@@ -252,7 +252,6 @@ export class EntitiesMonitorCard extends CommentsMixin(
       if (!confirmed) {
         return;
       }
-      debugger;
       if (response) {
         this.activityEwpActivities = [...(this.activityEwpActivities || []), response];
         this.editedData.ewp_activities = this.activityEwpActivities;

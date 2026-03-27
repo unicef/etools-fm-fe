@@ -76,7 +76,6 @@ export class ActivityChecklistTab extends LitElement {
         if (!checklist) {
           return;
         }
-        debugger;
         this.sortedChecklist = checklist.reduce(
           (sorted: GenericObject<{target_id: number; items: IChecklistItem[]}>, item: IChecklistItem) => {
             let key: string;
@@ -96,11 +95,6 @@ export class ActivityChecklistTab extends LitElement {
             } else {
               return sorted;
             }
-            // else if (item.gpd) {
-            //   key = `${get('LEVELS_OPTIONS.GPD')}: ${item.gpd.gpd_ref}`;
-            //   target_id = item.gpd.id;
-            // }
-
             if (!sorted[key]) {
               sorted[key] = {target_id, items: []};
             }

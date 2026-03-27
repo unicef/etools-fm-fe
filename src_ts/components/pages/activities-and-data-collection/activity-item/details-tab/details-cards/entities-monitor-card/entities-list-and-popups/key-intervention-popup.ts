@@ -85,7 +85,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     if (validateRequiredFields(this)) {
       fireEvent(this, 'dialog-closed', {
         confirmed: true,
-        response: {cp_output: this.selectedCpOutput, activities: (this.workplanWBS || []).map((x: any) => x.wbs)}
+        response: {cp_output: this.selectedCpOutput, activities: this.workplanWBS}
       });
     }
   }
@@ -124,9 +124,9 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
       return;
     }
     const {url}: IResultEndpoint = getEndpoint(CP_OUTPUT_ACTIVITIES_WBS);
-    request(`${url}?cp_output=${id}`)
+    request(`${url}&cp_output=${id}`)
       .then((res: any) => {
-        this.workplanWBSOptions = res.results || [];
+        this.workplanWBSOptions = res || [];
       })
       .catch(() => {
         fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')});
@@ -184,7 +184,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
                 trigger-value-change-event
                 label="${translate('ACTIVITY_DETAILS.WORKPLAN_WBS')}"
                 .options="${this.workplanWBSOptions}"
-                option-label="wbs"
+                option-label="name"
                 option-value="id"
                 required
                 allow-outside-scroll

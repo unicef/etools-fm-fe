@@ -240,7 +240,7 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
   },
 
   [CP_OUTPUT_ACTIVITIES_WBS]: {
-    url: '/api/v1/field-monitoring/planning/activity-options/'
+    url: '/api/v1/field-monitoring/planning/activity-options/?page_size=all'
   },
 
   [CATEGORIES]: {
