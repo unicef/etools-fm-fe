@@ -12,6 +12,7 @@ interface IListActivity {
   start_date: null | string;
   end_date: null | string;
   checklists_count: number;
+  is_programmatic_visit: boolean;
   status: ActivityStatus;
   team_members: ActivityTeamMember[];
   report_reviewers: ActivityTeamMember[];
@@ -143,6 +144,7 @@ interface IChecklistItem {
 }
 
 interface IChecklistQuestion {
+  tooltip?: string;
   id: number;
   answer_type: string;
   choices_size: null | number;

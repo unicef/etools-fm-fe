@@ -151,7 +151,7 @@ export class StatusesActionsComponent extends LitElement {
     this.findingsOverallUnsubscribe = store.subscribe(
       summaryFindingsOverall((overall) => {
         this.findingsOverall = overall;
-      })
+      }, true)
     );
   }
 

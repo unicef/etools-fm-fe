@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Да",
+    "NO": "Нет"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Localized Activities",
     "CREATE_NEW_BUTTON": "Localized Create New",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "Localized Checklists",
       "STATUS": "Localized Status",
       "SECTIONS": "Localized Sections",
-      "PARTNER": "Localized Partner"
+      "PARTNER": "Localized Partner",
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     },
     "REFERENCE_NO": "Localized Reference #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "Localized Start After",
       "END_BEFORE": "Localized End Before",
       "OFFICE": "Localized Field Office",
-      "SECTIONS": "Localized Sections"
+      "SECTIONS": "Localized Sections",
+      "IS_PROGRAMMATIC_VISIT": "Программный визит"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -156,9 +162,18 @@
       "reject_report": "Отправить обратно отчет"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Localized Cancellation comment", "TITLE": "Localized Cancellation reason"},
-      "reject": {"LABEL": "Localized Rejection comment", "TITLE": "Localized Rejection reason"},
-      "reject_report": {"LABEL": "Комментарий к отчету о возврате", "TITLE": "Причина возврата отчета"}
+      "cancel": {
+        "LABEL": "Localized Cancellation comment",
+        "TITLE": "Localized Cancellation reason"
+      },
+      "reject": {
+        "LABEL": "Localized Rejection comment",
+        "TITLE": "Localized Rejection reason"
+      },
+      "reject_report": {
+        "LABEL": "Комментарий к отчету о возврате",
+        "TITLE": "Причина возврата отчета"
+      }
     },
     "STATUSES": {
       "draft": "Localized Draft",
@@ -360,6 +375,7 @@
     "VIEW_POPUP_TITLE": "Localized View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Localized Enter Question Text",
+      "TOOLTIP": "Краткая подсказка или определение (макс. 500 символов). Содержимое будет добавлено.",
       "SECTIONS": "Localized Select Sections",
       "METHODS": "Localized Select Collection Methods",
       "GROUP": "Localized Select Group",
@@ -378,7 +394,8 @@
       "IS_ACTIVE": "Localized Is Active",
       "SCALE_SIZE": "Localized Scale Size",
       "ORDER": "Order",
-      "IS_CUSTOM": "Тип вопроса"
+      "IS_CUSTOM": "Тип вопроса",
+      "TOOLTIP": "Подсказка"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Нестандартный",
@@ -504,9 +521,11 @@
     "DELETE_POPUP_TITLE": "Localized Delete attachment?",
     "FILE_TYPE_LABEL": "Localized Document Type",
     "FILE_TYPE_PLACEHOLDER": "Localized Select Document Type",
+    "FILE_TYPE_REQUIRED": "Тип файла обязателен",
     "COLUMNS": {
       "CREATED": "Localized Date Uploaded",
       "FILE_TYPE": "Localized Document Type",
+      "CATEGORY": "Localized Category",
       "FILE": "Localized File Attachment"
     }
   },

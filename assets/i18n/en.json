@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Yes",
+    "NO": "No"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Activities",
     "CREATE_NEW_BUTTON": "Create New",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "Checklists",
       "STATUS": "Status",
       "SECTIONS": "Sections",
-      "PARTNER": "Partner"
+      "PARTNER": "Partner",
+      "IS_PROGRAMMATIC_VISIT": "Programmatic Visit"
     },
     "REFERENCE_NO": "Reference #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "Starts After",
       "END_BEFORE": "End Before",
       "OFFICE": "Field Office",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "IS_PROGRAMMATIC_VISIT": "Programmatic Visit"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -156,9 +162,18 @@
       "reject_report": "Send Back Report"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Cancellation comment", "TITLE": "Cancellation reason"},
-      "reject": {"LABEL": "Rejection comment", "TITLE": "Rejection reason"},
-      "reject_report": {"LABEL": "Send back report comment", "TITLE": "Send back report reason"}
+      "cancel": {
+        "LABEL": "Cancellation comment",
+        "TITLE": "Cancellation reason"
+      },
+      "reject": {
+        "LABEL": "Rejection comment",
+        "TITLE": "Rejection reason"
+      },
+      "reject_report": {
+        "LABEL": "Send back report comment",
+        "TITLE": "Send back report reason"
+      }
     },
     "STATUSES": {
       "draft": "Draft",
@@ -361,6 +376,7 @@
     "VIEW_POPUP_TITLE": "View Question",
     "PLACEHOLDERS": {
       "QUESTION": "Enter Question Text",
+      "TOOLTIP": "Brief guidance or definition (max 500 characters). Content to be supplied.",
       "SECTIONS": "Select Sections",
       "METHODS": "Select Collection Methods",
       "CATEGORY": "Select group",
@@ -380,7 +396,8 @@
       "IS_ACTIVE": "Is Active",
       "SCALE_SIZE": "Scale Size",
       "ORDER": "Order",
-      "IS_CUSTOM": "Question Type"
+      "IS_CUSTOM": "Question Type",
+      "TOOLTIP": "Tooltip"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Non-Standard",
@@ -506,9 +523,11 @@
     "DELETE_POPUP_TITLE": "Delete attachment?",
     "FILE_TYPE_LABEL": "Document Type",
     "FILE_TYPE_PLACEHOLDER": "Select Document Type",
+    "FILE_TYPE_REQUIRED": "File type is required",
     "COLUMNS": {
       "CREATED": "Date Uploaded",
       "FILE_TYPE": "Document Type",
+      "CATEGORY": "Category",
       "FILE": "File Attachment"
     }
   },

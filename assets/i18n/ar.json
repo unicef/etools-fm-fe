@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "نعم",
+    "NO": "لا"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "أنشطة",
     "CREATE_NEW_BUTTON": "خلق جديد إبداع جديد",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "قوائم المراجعة",
       "STATUS": "حالة",
       "SECTIONS": "الأقسام",
-      "PARTNER": "الشريك"
+      "PARTNER": "الشريك",
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     },
     "REFERENCE_NO": "مرجع #",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "يبدأ بعد",
       "END_BEFORE": "نهاية قبل",
       "OFFICE": "المكتب الميداني",
-      "SECTIONS": "الأقسام"
+      "SECTIONS": "الأقسام",
+      "IS_PROGRAMMATIC_VISIT": "زيارة برنامجية"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -394,7 +400,8 @@
       "SCALE_SIZE": "حجم المقياس",
       "SECTIONS": "الأقسام",
       "ORDER": "طلب",
-      "IS_CUSTOM": "نوع السؤال"
+      "IS_CUSTOM": "نوع السؤال",
+      "TOOLTIP": "تلميح"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "غير قياسي",
@@ -509,12 +516,14 @@
     "COLUMNS": {
       "CREATED": "تاريخ الرفع",
       "FILE": "ملف مرفق",
-      "FILE_TYPE": "نوع الوثيقة"
+      "FILE_TYPE": "نوع الوثيقة",
+      "CATEGORY": "الفئة"
     },
     "DELETE_POPUP_TITLE": "هل تريد حذف المرفق؟",
     "EDIT_POPUP_TITLE": "تحرير المرفق",
     "FILE_TYPE_LABEL": "نوع المستند",
     "FILE_TYPE_PLACEHOLDER": "حدد نوع المستند",
+    "FILE_TYPE_REQUIRED": "نوع الملف مطلوب",
     "RELATED_DOCUMENTS": "الوثائق ذات الصلة",
     "REPORT_ATTACHMENTS": "مرفقات التقرير",
     "TITLE": "المرفقات"

@@ -26,6 +26,9 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
       .sm-header etools-checkbox {
         margin-right: 6px;
       }
+      .question-tooltip {
+        align-items: start;
+      }
     </style>
     <etools-media-query
       query="(max-width: 767px)"
@@ -132,7 +135,14 @@ export function template(this: ChecklistSelectionTable): TemplateResult {
                       ?hidden="${this.isEditMode || !question.is_enabled}"
                     />
                   </div>
-                  ${question.text}
+                  ${question.question?.tooltip
+                    ? html`
+                        <etools-info-tooltip hoist to="body" class="question-tooltip">
+                          <span slot="field">${question.text}</span>
+                          <span slot="message">${question.question.tooltip}</span>
+                        </etools-info-tooltip>
+                      `
+                    : question.text}
                 </div>
 
                 <!-- Editable Question Specific Details -->

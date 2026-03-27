@@ -8,6 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
 import {dataTableStylesLit} from '@unicef-polymer/etools-unicef/src/etools-data-table/styles/data-table-styles';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/info-icon-tooltip';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 export function template(this: AttachmentsListComponent): TemplateResult {
@@ -85,10 +86,23 @@ export function template(this: AttachmentsListComponent): TemplateResult {
                     ${formatDate(attachment.created) || '-'}
                   </div>
                   <div
-                    class="col-data col-3"
+                    class="col-data col-3 col-file-type-cell"
                     data-col-header-label="${translate('ATTACHMENTS_LIST.COLUMNS.FILE_TYPE')}"
+                    title="${this.getFileTypeDescriptionText(attachment.file_type_name)}"
                   >
-                    ${attachment.file_type_name}
+                    <span class="file-type-label">${attachment.file_type_name}</span>
+                    ${this.getFileTypeDescriptionTooltipHtml(attachment.file_type_name)
+                      ? html`
+                          <span class="file-type-tooltip-anchor">
+                            <info-icon-tooltip
+                              position="top"
+                              offset="12"
+                              hoist
+                              .tooltipText="${this.getFileTypeDescriptionTooltipHtml(attachment.file_type_name)}"
+                            ></info-icon-tooltip>
+                          </span>
+                        `
+                      : ''}
                   </div>
                   <div
                     class="col-data col-6 file-link"
