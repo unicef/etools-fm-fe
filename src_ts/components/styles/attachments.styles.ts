@@ -64,3 +64,26 @@ export const AttachmentsStyles: CSSResult = css`
     box-sizing: border-box;
   }
 `;
+
+export const AttachmentsListFileTypeTooltipStyles: CSSResult = css`
+  .col-file-type-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    min-width: 0;
+    overflow: visible;
+  }
+  .file-type-label {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+  .file-type-tooltip-anchor {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+`;

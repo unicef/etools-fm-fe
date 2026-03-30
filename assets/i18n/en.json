@@ -509,9 +509,11 @@
     "DELETE_POPUP_TITLE": "Delete attachment?",
     "FILE_TYPE_LABEL": "Document Type",
     "FILE_TYPE_PLACEHOLDER": "Select Document Type",
+    "FILE_TYPE_REQUIRED": "File type is required",
     "COLUMNS": {
       "CREATED": "Date Uploaded",
       "FILE_TYPE": "Document Type",
+      "CATEGORY": "Category",
       "FILE": "File Attachment"
     }
   },
