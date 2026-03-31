@@ -29,14 +29,14 @@ import '@unicef-polymer/etools-unicef/src/etools-input/etools-input';
 import {findingsComponents} from '../../../../redux/reducers/findings-components.reducer';
 import {InputStyles} from '../../../styles/input-styles';
 import {SharedStyles} from '../../../styles/shared-styles';
-import '@unicef-polymer/etools-form-builder';
+import '@unicef-polymer/etools-form-builder/src';
 import {AttachmentsHelper} from '@unicef-polymer/etools-form-builder/src/form-attachments-popup';
 import {getEndpoint} from '../../../../endpoints/endpoints';
 import {ATTACHMENTS_STORE} from '../../../../endpoints/endpoints-list';
 import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {EtoolsRouteDetails} from '@unicef-polymer/etools-utils/src/interfaces/router.interfaces';
 import {Environment} from '@unicef-polymer/etools-utils/src/singleton/environment';
-import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder';
+import {FormAbstractGroup} from '@unicef-polymer/etools-form-builder/src';
 
 store.addReducers({findingsComponents, dataCollection, activityDetails});
 
