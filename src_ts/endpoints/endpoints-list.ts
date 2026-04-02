@@ -17,6 +17,7 @@ export const CATEGORIES = 'categories';
 export const SECTIONS = 'sections';
 export const METHODS = 'methods';
 export const PARTNERS = 'partners';
+export const PARTNERSGPD = 'partnersGpd';
 export const VISIT_GOALS = 'visitGoals';
 export const FACILITY_TYPES = 'facilityTypes';
 export const TPM_PARTNERS = 'tpmPartners';
@@ -70,6 +71,7 @@ export const FEATURES_FLAGS = 'flags';
 export const SYNC_VENDOR_DATA = 'syncVendorData';
 export const ACTIVATE_VENDOR = 'activateVendor';
 export const QUESTIONS_ORDER = 'questionsOrder';
+export const CP_OUTPUT_ACTIVITIES_WBS = 'cp_output_activities_wbs';
 
 export const etoolsEndpoints: IEtoolsEndpoints = {
   [PROFILE_ENDPOINT]: {
@@ -235,6 +237,10 @@ export const etoolsEndpoints: IEtoolsEndpoints = {
 
   [QUESTIONS_DETAILS]: {
     template: '/api/v1/field-monitoring/settings/questions/<%=id%>/'
+  },
+
+  [CP_OUTPUT_ACTIVITIES_WBS]: {
+    url: '/api/v1/field-monitoring/planning/activity-options/?page_size=all'
   },
 
   [CATEGORIES]: {

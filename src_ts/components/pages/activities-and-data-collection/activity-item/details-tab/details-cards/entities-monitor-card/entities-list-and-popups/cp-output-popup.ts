@@ -26,8 +26,13 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
   @property() cpOutputs: EtoolsCpOutput[] = [];
   @property() selectedPartners: EtoolsPartner[] = [];
   @property() showExpired = false;
+  @property() excludeCPOutputIDs: number[] = [];
 
   private loadingCpOutputs!: Callback;
+
+  set dialogData({excludeCPOutputIDs}: any) {
+    this.excludeCPOutputIDs = excludeCPOutputIDs || [];
+  }
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -39,7 +44,7 @@ export class CpOutputPopup extends PartnersMixin(LitElement) {
         endpoint += '&active=true';
       }
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => {
-        this.cpOutputs = response;
+        this.cpOutputs = (response || []).filter((x: EtoolsCpOutput) => !this.excludeCPOutputIDs.includes(x.id));
         if (!this.showExpired && this.selectedCpOutput) {
           // if only active displayed and have item already selected, check if exists in the options
           if (!this.cpOutputs.find((x) => x.id === this.selectedCpOutput!.id)) {

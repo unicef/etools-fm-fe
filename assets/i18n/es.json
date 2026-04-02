@@ -94,6 +94,19 @@
     "CP_OUTPUT": "Producto del CP",
     "CP_OUTPUTS": "Productos del CP",
     "CP_OUTPUTS_FOUND": "{{ count }}Se encontraron productos del CP:",
+    "PROGRAMME_ACTIVITIES": "Actividades del programa",
+    "ADD_PROGRAMME_ACTIVITIES": "Agregar actividades del programa",
+    "EDIT_PROGRAMME_ACTIVITIES": "Editar actividades del programa",
+    "FROM_PROGRAMME_ACTIVITIES": "agregado a través de actividades del programa",
+    "GOVERNMENT_PARTNERS": "Socios gubernamentales",
+    "ADD_GOVERNMENT_PARTNERS": "Agregar socios gubernamentales",
+    "GPD": "gPDs",
+    "ADD_GPD": "Agregar gPD",
+    "WORKPLAN_WBS": "EDT de la actividad del plan de trabajo",
+    "WORKPLAN_WBS_EXPECTED_FORMAT": "Formato esperado: 4 dígitos/ 2 letras mayúsculas o dígitos/ 2 dígitos/ 3 dígitos/ 3 dígitos/ 3 dígitos/ 7 letras mayúsculas o dígitos",
+    "REF_NUMBER_EXPECTED_FORMAT": "Formato esperado: 2 dígitos/ 6 dígitos",
+    "WRONG_FORMAT": "Wrong Format",
+    "REFERENCE_NUMBER": "Número de referencia",
     "END_DATE": "Fecha de finalización",
     "ENTRIES_TO_MONITOR": "Entidades a monitorear",
     "EXPORT": "Exportar",
@@ -106,7 +119,7 @@
     "MONITOR_INFO": "Información a monitorear",
     "OFFICE": "Oficinas de terreno",
     "PARTNER": "Socio",
-    "PARTNERS": "Socios",
+    "CSO_PARTNERS": "Socios de la CSO",
     "PARTNER_ORGANIZATION": "Socio Implementador",
     "PD_STATUS": "Estado PD",
     "REJECTION_NOTE": "Nota de rechazo",
@@ -399,9 +412,10 @@
       "STANDARD": "Estándar"
     },
     "LEVEL": {
-      "INTERVENTION": "PD/SPD",
+      "INTERVENTION": "PD/SPD/gPD",
       "OUTPUT": "Producto del CP",
-      "PARTNER": "Socio"
+      "PARTNER": "Socio",
+      "EWP_ACTIVITY": "Intervenciones y actividades clave"
     },
     "PLACEHOLDERS": {
       "ANSWER_TYPE": "Seleccionar Tipo de respuesta",
@@ -470,7 +484,9 @@
   "LEVELS_OPTIONS": {
     "PARTNER": "Socio",
     "OUTPUT": "Producto de CP",
-    "INTERVENTION": "PD/SPD"
+    "INTERVENTION": "PD/SPD",
+    "GPD": "gPD",
+    "EWP_ACTIVITY": "Intervenciones y actividades clave"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporario",

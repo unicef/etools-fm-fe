@@ -170,13 +170,15 @@ export class ActionPointsTab extends CommentsMixin(LitElement) {
     });
   }
 
-  getRelatedInfo({partner, cp_output, intervention}: ActionPoint): {type: string; content: string} {
+  getRelatedInfo({partner, cp_output, intervention, ewp_activity}: ActionPoint): {type: string; content: string} {
     if (partner) {
       return {type: 'Partner', content: partner.name};
     } else if (cp_output) {
       return {type: 'CP Output', content: cp_output.name};
     } else if (intervention) {
       return {type: 'Intervention', content: intervention.title};
+    } else if (ewp_activity) {
+      return {type: 'Ewp Activity', content: ewp_activity};
     } else {
       return {type: '-', content: '-'};
     }

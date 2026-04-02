@@ -17,7 +17,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
   return html`
     <style>
       ${dataTableStylesLit} .filter {
-        min-width: 240px;
+        min-width: 260px;
         margin-inline-start: 16px;
       }
     </style>
@@ -107,7 +107,7 @@ export function template(this: IssueTrackerTabComponent): TemplateResult {
 
       <etools-data-table-header
         no-title
-        ?no-collapse="${!this.items.length}"
+        ?no-collapse="${!this.items?.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
         <etools-data-table-column class="col-data col-md-2" field="related_to_type">

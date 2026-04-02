@@ -12,7 +12,7 @@ import {Unsubscribe} from 'redux';
 import {updateActionPoint} from '../../../../../../redux/effects/action-points.effects';
 import {actionPointsUpdateStatusSelector} from '../../../../../../redux/selectors/action-points.selectors';
 import {getDifference} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
-import {INTERVENTION, LEVELS, OUTPUT, PARTNER} from '../../../../../common/dropdown-options';
+import {INTERVENTION, LEVELS, OUTPUT, PARTNER, EWP_ACTIVITY} from '../../../../../common/dropdown-options';
 import {applyDropdownTranslation} from '../../../../../utils/translation-helper';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {activeLanguageSelector} from '../../../../../../redux/selectors/active-language.selectors';
@@ -25,6 +25,7 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
   @property() users: User[] = [];
   @property() offices: ActionPointsOffice[] = store.getState().staticData.offices;
   @property() categories: ActionPointsCategory[] = store.getState().staticData.actionPointsCategories;
+  @property() ewpActivities: ActionPointsSection[] = [];
   @property() selectedRelatedTo: string | null = null;
   @property() activityDetails!: IActivityDetails;
 
@@ -35,7 +36,8 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
   mappings: Map<string, RelatedToFields> = new Map<string, RelatedToFields>([
     [PARTNER, 'partner'],
     [OUTPUT, 'cp_output'],
-    [INTERVENTION, 'intervention']
+    [INTERVENTION, 'intervention'],
+    [EWP_ACTIVITY, 'ewp_activity']
   ]);
 
   liteInterventions: LiteIntervention[] = [];
@@ -56,10 +58,14 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
         high_priority: false,
         partner: null,
         cp_output: null,
-        intervention: null
+        intervention: null,
+        ewp_activity: null
       };
     }
     this.activityDetails = activityDetails;
+    this.ewpActivities = (activityDetails.ewp_activities || []).flatMap((item: any) =>
+      (item.activities || []).map((act: any) => ({id: act.id, name: act.name}))
+    );
     this.activityId = activity_id;
     this.liteInterventions = (this.activityDetails.interventions || []).map((x) => ({id: x.id, name: x.number}));
     this.selectedRelatedTo = this.getRelatedTo(this.editedData);
@@ -175,7 +181,7 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     }
   }
 
-  getRelatedNames(): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] {
+  getRelatedNames(): EtoolsPartner[] | EtoolsCpOutput[] | LiteIntervention[] | string[] {
     switch (this.selectedRelatedTo) {
       case PARTNER:
         return this.activityDetails.partners || [];
@@ -183,6 +189,8 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
         return this.activityDetails.cp_outputs || [];
       case INTERVENTION:
         return this.liteInterventions;
+      case EWP_ACTIVITY:
+        return this.ewpActivities;
       default:
         return [];
     }
@@ -194,13 +202,14 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
       this.editedData.partner = null;
       this.editedData.cp_output = null;
       this.editedData.intervention = null;
+      this.editedData.ewp_activity = null;
       this.setSelectedDefaultValue();
     }
   }
   setSelectedDefaultValue() {
     const options = this.getRelatedNames();
     if (options.length === 1) {
-      const id = options[0].id;
+      const id = options[0]?.id || options[0];
       switch (this.selectedRelatedTo) {
         case PARTNER:
           this.editedData.partner = id;
@@ -211,6 +220,8 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
         case INTERVENTION:
           this.editedData.intervention = id;
           break;
+        case EWP_ACTIVITY:
+          this.editedData.ewp_activity = id;
       }
     }
   }
@@ -222,7 +233,7 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     }
   }
 
-  getSelectedRelatedName(): number | null | undefined {
+  getSelectedRelatedName(): number | string | null | undefined {
     switch (this.selectedRelatedTo) {
       case PARTNER:
         return this.editedData.partner;
@@ -230,6 +241,8 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
         return this.editedData.cp_output;
       case INTERVENTION:
         return this.editedData.intervention;
+      case EWP_ACTIVITY:
+        return this.editedData.ewp_activity;
       default:
         return null;
     }
@@ -272,17 +285,20 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
       section: actionPoint.section?.id,
       partner: actionPoint.partner ? actionPoint.partner.id : null,
       cp_output: actionPoint.cp_output ? actionPoint.cp_output.id : null,
-      intervention: actionPoint.intervention ? actionPoint.intervention.id : null
+      intervention: actionPoint.intervention ? actionPoint.intervention.id : null,
+      ewp_activity: actionPoint.ewp_activity || null
     };
   }
 
-  private getRelatedTo({partner, cp_output, intervention}: Partial<EditableActionPoint>): string | null {
+  private getRelatedTo({partner, cp_output, intervention, ewp_activity}: Partial<EditableActionPoint>): string | null {
     if (partner) {
       return PARTNER;
     } else if (cp_output) {
       return OUTPUT;
     } else if (intervention) {
       return INTERVENTION;
+    } else if (ewp_activity) {
+      return EWP_ACTIVITY;
     } else {
       return null;
     }

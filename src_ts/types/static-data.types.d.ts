@@ -40,6 +40,12 @@ type EtoolsCpOutcome = {
 type EtoolsPartner = {
   id: number;
   name: string;
+  organization_type: string;
+};
+
+type EwpActivity = {
+  cp_output: {id: number; name: string};
+  activities: string[];
 };
 
 type EtoolsTPMPartner = {

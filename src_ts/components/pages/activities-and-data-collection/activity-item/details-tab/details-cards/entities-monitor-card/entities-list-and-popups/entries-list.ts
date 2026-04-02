@@ -8,6 +8,7 @@ import '@unicef-polymer/etools-unicef/src/etools-button/etools-button';
 @customElement('entries-list')
 export class EntriesList extends LitElement {
   @property({type: Boolean, attribute: 'is-readonly'}) isReadonly = true;
+  @property({type: Boolean, attribute: 'is-ewp'}) isEwp = false;
   @property() nameList = '';
   @property() items: [] = [];
   @property() formatItem!: (item: any) => void;
@@ -64,11 +65,21 @@ export class EntriesList extends LitElement {
         .hover-block {
           display: none;
           position: absolute;
-          right: 10px;
+          right: 6px;
+          top: 15px;
+          color: var(--secondary-text-color);
+        }
+        .hover-block-edit {
+          display: none;
+          position: absolute;
+          right: 32px;
           top: 15px;
           color: var(--secondary-text-color);
         }
         .entries-item:hover > .hover-block {
+          display: block;
+        }
+        .entries-item:hover > .hover-block-edit {
           display: block;
         }
         .add-entry {
@@ -84,6 +95,17 @@ export class EntriesList extends LitElement {
         .f-left {
           float: inline-start;
         }
+        .ewp {
+          font-style: italic;
+        }
+        .actions {
+          flex-direction: row;
+          position: absolute;
+          inset-inline-end: 10px;
+          align-items: center;
+          justify-content: flex-end;
+          top: 15px;
+        }
       `
     ];
   }
@@ -92,8 +114,12 @@ export class EntriesList extends LitElement {
     fireEvent(this, 'add-entry');
   }
 
-  removeEntry(id: number): void {
-    fireEvent(this, 'remove-entry', {id});
+  removeEntry(id: number, index: number): void {
+    fireEvent(this, 'remove-entry', {id, index});
+  }
+
+  editEntry(index: number): void {
+    fireEvent(this, 'edit-entry', {index});
   }
 
   // language=HTML
@@ -104,12 +130,19 @@ export class EntriesList extends LitElement {
         <div>
           ${repeat(
             this.items || [],
-            (item: any) => html`
-              <div class="entries-item">
-                ${this.formatItem(item)}
-                ${!this.isReadonly
+            (item: any, index: number) => html`
+              <div class="entries-item ${item.ewp ? 'ewp' : ''}">
+                <label title="${this.formatItem(item)}">${this.formatItem(item)}</label>
+                ${!this.isReadonly && this.isEwp
                   ? html`
-                      <div class="hover-block" @click="${() => this.removeEntry(item.id)}">
+                      <div class="hover-block-edit" @click="${() => this.editEntry(index)}">
+                        <etools-icon name="create"></etools-icon>
+                      </div>
+                    `
+                  : ''}
+                ${!this.isReadonly && !item.ewp
+                  ? html`
+                      <div class="hover-block" @click="${() => this.removeEntry(item?.id || item, index)}">
                         <etools-icon name="delete"></etools-icon>
                       </div>
                     `

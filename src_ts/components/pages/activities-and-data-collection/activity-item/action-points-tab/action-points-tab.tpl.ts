@@ -52,7 +52,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table header   -->
       <etools-data-table-header
         no-title
-        ?no-collapse="${!this.items.length}"
+        ?no-collapse="${!this.items?.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
         <etools-data-table-column class="col-md-3 col-data">
@@ -79,7 +79,7 @@ export function template(this: ActionPointsTab): TemplateResult {
         <etools-data-table-column></etools-data-table-column>
       </etools-data-table-header>
 
-      ${!this.items.length
+      ${!this.items?.length
         ? html`
             <etools-data-table-row no-collapse .lowResolutionLayout="${this.lowResolutionLayout}">
               <div slot="row-data" class="row">
@@ -195,7 +195,7 @@ export function template(this: ActionPointsTab): TemplateResult {
       <!--   Table header   -->
       <etools-data-table-header
         no-title
-        ?no-collapse="${!this.tpmItems.length}"
+        ?no-collapse="${!this.tpmItems?.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
         <etools-data-table-column class="col-md-9 col-data">
@@ -210,7 +210,7 @@ export function template(this: ActionPointsTab): TemplateResult {
         <etools-data-table-column></etools-data-table-column>
       </etools-data-table-header>
 
-      ${!this.tpmItems.length
+      ${!this.tpmItems?.length
         ? html`
             <etools-data-table-row no-collapse>
               <div slot="row-data" class="row">

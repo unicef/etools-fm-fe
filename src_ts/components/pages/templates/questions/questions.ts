@@ -191,7 +191,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
 
         <etools-data-table-header
           no-title
-          ?no-collapse="${!this.items.length}"
+          ?no-collapse="${!this.items?.length}"
           .lowResolutionLayout="${this.lowResolutionLayout}"
         >
           <etools-data-table-column class="col-data col-md-4" field="text" sortable>
@@ -214,7 +214,7 @@ export class QuestionsTabComponent extends ListMixin()<IQuestion>(LitElement) {
           </etools-data-table-column>
         </etools-data-table-header>
 
-        ${!this.items.length
+        ${!this.items?.length
           ? html`
               <etools-data-table-row no-collapse>
                 <div slot="row-data" class="editable-row">

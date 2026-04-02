@@ -36,6 +36,8 @@ type DataCollectionOverall = {
   narrative_finding: string;
   attachments: [];
   on_track: boolean | null;
+  gpd: any;
+  ewp_activity: any;
 };
 
 type SummaryOverall = DataCollectionOverall & {

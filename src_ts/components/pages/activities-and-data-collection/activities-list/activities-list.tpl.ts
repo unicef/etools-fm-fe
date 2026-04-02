@@ -59,7 +59,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       <!-- Table Header -->
       <etools-data-table-header
         no-title
-        ?no-collapse="${!this.items.length}"
+        ?no-collapse="${!this.items?.length}"
         .lowResolutionLayout="${this.lowResolutionLayout}"
       >
         <etools-data-table-column class="col-data col-md-1">
@@ -92,7 +92,7 @@ export function template(this: ActivitiesListComponent): TemplateResult {
       </etools-data-table-header>
 
       <!-- Table Empty Row -->
-      ${!this.items.length
+      ${!this.items?.length
         ? html`
             <etools-data-table-row no-collapse>
               <div slot="row-data" class="row">

@@ -12,13 +12,17 @@ import clone from 'ramda/es/clone';
 import './entities-list-and-popups/partner-popup';
 import './entities-list-and-popups/cp-output-popup';
 import './entities-list-and-popups/intervention-popup';
+import './entities-list-and-popups/gpd-popup';
+import './entities-list-and-popups/key-intervention-popup';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
-import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
+import {Unsubscribe} from 'redux';
+import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';
 
 export const CARD_NAME = 'entities-monitor';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['cp_outputs', 'partners', 'interventions'];
@@ -30,12 +34,35 @@ export class EntitiesMonitorCard extends CommentsMixin(
   @property() activityPartners: IActivityPartner[] = [];
   @property() activityCpOutputs: IActivityCPOutput[] = [];
   @property() activityInterventions: IActivityIntervention[] = [];
+  @property() activityGpdPartners: IActivityPartner[] = [];
+  @property() activityEwpActivities: any[] = [];
+  @property() activityGPDs: string[] = [];
+  @property() fromEwpActivityText: string = '';
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   set data(data: IActivityDetails) {
     super.data = data;
-    this.activityPartners = clone(data?.partners);
+    this.activityPartners = clone((data?.partners || []).filter((x) => x.organization_type !== 'Government'));
     this.activityCpOutputs = clone(data?.cp_outputs);
     this.activityInterventions = clone(data?.interventions);
+
+    this.activityGpdPartners = clone((data?.partners || []).filter((x) => x.organization_type === 'Government'));
+    this.activityEwpActivities = clone(data?.ewp_activities || []);
+    this.activityGPDs = clone(data?.gpds || []);
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.fromEwpActivityText = getTranslation('ACTIVITY_DETAILS.FROM_PROGRAMME_ACTIVITIES');
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activeLanguageUnsubscribe();
   }
 
   render(): TemplateResult {
@@ -69,12 +96,13 @@ export class EntitiesMonitorCard extends CommentsMixin(
           <div class="row">
             <!--    Partners List    -->
             <entries-list
+              id="partnersList"
               class="col-md-4 col-12"
-              .nameList="${translate('ACTIVITY_DETAILS.PARTNERS')}"
+              .nameList="${translate('ACTIVITY_DETAILS.CSO_PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"
               .items="${this.activityPartners}"
               ?is-readonly="${!this.isEditMode}"
-              @add-entry="${() => this.openAddPartner()}"
+              @add-entry="${() => this.openAddPartner(false)}"
               @remove-entry="${({detail}: CustomEvent) =>
                 this.removeItem<EtoolsPartner>(detail.id, 'partners', 'activityPartners')}"
             >
@@ -85,7 +113,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.CP_OUTPUTS')}"
               .formatItem="${(item: EtoolsCpOutput) => item.name}"
-              .items="${this.activityCpOutputs}"
+              .items="${this.getCombinedCPOutputs(this.activityCpOutputs, this.activityEwpActivities)}"
               ?is-readonly="${!this.isEditMode}"
               @add-entry="${() => this.openAddCpOutput()}"
               @remove-entry="${({detail}: CustomEvent) =>
@@ -106,9 +134,63 @@ export class EntitiesMonitorCard extends CommentsMixin(
             >
             </entries-list>
           </div>
+          <hr />
+          <div class="row">
+            <!--  GOV  Partners List    -->
+            <entries-list
+              id="gpdPartnersList"
+              class="col-md-4 col-12"
+              .nameList="${translate('ACTIVITY_DETAILS.GOVERNMENT_PARTNERS')}"
+              .formatItem="${(item: EtoolsPartner) => item.name}"
+              .items="${this.activityGpdPartners}"
+              ?is-readonly="${!this.isEditMode}"
+              @add-entry="${() => this.openAddPartner(true)}"
+              @remove-entry="${({detail}: CustomEvent) =>
+                this.removeItem<EtoolsPartner>(detail.id, 'partners', 'activityGpdPartners')}"
+            >
+            </entries-list>
+
+            <!--    Ewp Activities    -->
+            <entries-list
+              class="col-md-4 col-12"
+              .nameList="${translate('ACTIVITY_DETAILS.PROGRAMME_ACTIVITIES')}"
+              .formatItem="${(item: EwpActivity) => this.getEwpActivityText(item)}"
+              .items="${this.activityEwpActivities}"
+              is-ewp
+              ?is-readonly="${!this.isEditMode}"
+              @add-entry="${() => this.openAddKeyIntervention()}"
+              @edit-entry="${({detail}: CustomEvent) => this.openAddKeyIntervention(detail.index)}"
+              @remove-entry="${({detail}: CustomEvent) => {
+                (this.activityEwpActivities || []).splice(detail.index, 1);
+                this.setProgrammeActivities(this.activityEwpActivities);
+                this.requestUpdate();
+              }}"
+            >
+            </entries-list>
+
+            <!--    GPDs List    -->
+            <entries-list
+              hidden
+              class="col-md-4 col-12"
+              .nameList="${translate('ACTIVITY_DETAILS.GPD')}"
+              .formatItem="${(item: string) => item}"
+              .items="${this.activityGPDs}"
+              ?is-readonly="${!this.isEditMode}"
+              @add-entry="${() => this.openAddGpd()}"
+              @remove-entry="${({detail}: CustomEvent) => {
+                this.activityGPDs = (this.activityGPDs || []).filter((x) => x != detail.id);
+                this.editedData.gpds = this.activityGPDs;
+              }}"
+            >
+            </entries-list>
+          </div>
         </div>
       </etools-card>
     `;
+  }
+
+  getEwpActivityText(item: EwpActivity) {
+    return `${item.cp_output.name}: ${(item.activities || []).map((x: any) => x.name).join(', ')}`;
   }
 
   getSpecialElements(container: HTMLElement): CommentElementMeta[] {
@@ -118,33 +200,51 @@ export class EntitiesMonitorCard extends CommentsMixin(
     return [{element, relatedTo, relatedToDescription}];
   }
 
+  getCombinedCPOutputs(activityCpOutputs: IActivityCPOutput[], ewpActivities: any[]) {
+    const ewpOutputs = (ewpActivities || []).flatMap((item: any) => ({
+      id: item.cp_output.id,
+      name: `${item.cp_output.name} (${this.fromEwpActivityText})`,
+      ewp: true
+    }));
+    return (activityCpOutputs || []).concat(ewpOutputs);
+  }
+
   protected startEdit(): void {
     super.startEdit();
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
   }
 
-  protected openAddPartner(): void {
-    openDialog({dialog: 'partner-popup'}).then(({confirmed, response}: IDialogResponse<EtoolsPartner>) => {
-      if (!confirmed) {
-        return;
+  protected openAddPartner(isGpd: boolean): void {
+    openDialog({dialog: 'partner-popup', dialogData: {isGpd: isGpd}}).then(
+      ({confirmed, response}: IDialogResponse<EtoolsPartner>) => {
+        if (!confirmed) {
+          return;
+        }
+        if (response) {
+          if (isGpd) {
+            this.activityGpdPartners = [...this.activityGpdPartners, response];
+          } else {
+            this.activityPartners = [...this.activityPartners, response];
+          }
+          this.setPartners();
+        }
       }
-      if (response) {
-        this.activityPartners = [...this.activityPartners, response];
-        this.editedData.partners = simplifyValue(this.activityPartners);
-      }
-    });
+    );
   }
 
   protected openAddCpOutput(): void {
-    openDialog({dialog: 'cp-output-popup'}).then(({confirmed, response}: IDialogResponse<EtoolsCpOutput>) => {
-      if (!confirmed) {
-        return;
+    const excludeCPOutputIDs = (this.activityCpOutputs || []).map((x: any) => x.id);
+    openDialog({dialog: 'cp-output-popup', dialogData: {excludeCPOutputIDs: excludeCPOutputIDs}}).then(
+      ({confirmed, response}: IDialogResponse<EtoolsCpOutput>) => {
+        if (!confirmed) {
+          return;
+        }
+        if (response) {
+          this.activityCpOutputs = [...this.activityCpOutputs, response];
+          this.editedData.cp_outputs = simplifyValue(this.activityCpOutputs);
+        }
       }
-      if (response) {
-        this.activityCpOutputs = [...this.activityCpOutputs, response];
-        this.editedData.cp_outputs = simplifyValue(this.activityCpOutputs);
-      }
-    });
+    );
   }
 
   protected openAddIntervention(): void {
@@ -166,7 +266,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
             interventionIds,
             this.interventions
           );
-          const outputs: IActivityPartner[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
+          const outputs: any[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
           const partners: IActivityPartner[] = this.getActiveEntities<IActivityPartner>(partnerIds, this.partners);
           this.activityInterventions = [...interventions];
           this.activityCpOutputs = [...outputs];
@@ -180,21 +280,87 @@ export class EntitiesMonitorCard extends CommentsMixin(
     );
   }
 
+  protected openAddKeyIntervention(index?: number): void {
+    let excludeCPOutputIDs = (this.activityEwpActivities || []).map((x: any) => x.cp_output.id);
+    let eWPActivity: any = null;
+    index = Number(index);
+    if (!isNaN(index) && index >= 0 && this.activityEwpActivities.length > index) {
+      eWPActivity = this.activityEwpActivities[index];
+      excludeCPOutputIDs = excludeCPOutputIDs.filter((x: number) => x !== eWPActivity.cp_output.id);
+    } else {
+      index = -1;
+    }
+
+    openDialog({
+      dialog: 'key-intervention-popup',
+      dialogData: {eWPActivity: eWPActivity, index: index, excludeCPOutputIDs: excludeCPOutputIDs}
+    }).then(({confirmed, response}: IDialogResponse<any>) => {
+      if (!confirmed) {
+        return;
+      }
+      if (response) {
+        const ewpIndex = Number(response.index);
+        delete response.index;
+        if (ewpIndex >= 0) {
+          // update existing ewp activity
+          this.activityEwpActivities[ewpIndex] = response;
+          this.activityEwpActivities = [...this.activityEwpActivities];
+        } else {
+          // new activity, add it
+          this.activityEwpActivities = [...(this.activityEwpActivities || []), response];
+        }
+        this.setProgrammeActivities(this.activityEwpActivities);
+      }
+    });
+  }
+
+  protected openAddGpd(): void {
+    openDialog({dialog: 'gpd-popup'}).then(({confirmed, response}: IDialogResponse<string>) => {
+      if (!confirmed) {
+        return;
+      }
+      if (response) {
+        this.activityGPDs = [...(this.activityGPDs || []), response];
+        this.editedData.gpds = this.activityGPDs;
+      }
+    });
+  }
+
   protected getActiveEntities<T>(ids: number[], options: (T & {id: number})[]): (T & {id: number})[] {
     return options.filter((option: T & {id: number}) => ids.includes(option.id));
+  }
+
+  protected setPartners() {
+    const allPartners = (this.activityGpdPartners || []).concat(this.activityPartners || []);
+    this.editedData.partners = simplifyValue(allPartners);
+  }
+
+  protected getProgrammeActivitiesCpOutputIDs(ewpActivities: any) {
+    return (ewpActivities || []).map((x: any) => x.cp_output.id);
+  }
+
+  protected setProgrammeActivities(ewpActivities: any) {
+    const ewp_activities = clone(ewpActivities || []);
+    (ewp_activities || []).forEach((x: any) => (x.cp_output = x.cp_output.id));
+    (ewp_activities || []).forEach((x: any) => (x.activities = simplifyValue(x.activities || [])));
+    this.editedData.ewp_activities = ewp_activities;
   }
 
   protected removeItem<T extends EtoolsCpOutput | EtoolsPartner | EtoolsIntervention>(
     id: number,
     field: keyof IActivityDetails,
-    arrayName: 'activityCpOutputs' | 'activityPartners' | 'activityInterventions'
+    arrayName: 'activityCpOutputs' | 'activityPartners' | 'activityInterventions' | 'activityGpdPartners'
   ): void {
     const collection: T[] = this[arrayName] as T[];
     const items: T[] = [...collection];
     const index: number = items.findIndex((item: T) => item.id === id);
     items.splice(index, 1);
     (this[arrayName] as T[]) = items;
-    this.editedData[field] = simplifyValue(items);
+    if (field === 'partners') {
+      this.setPartners();
+    } else {
+      this.editedData[field] = simplifyValue(items);
+    }
   }
 
   protected getPDText(item: EtoolsIntervention) {
@@ -210,6 +376,12 @@ export class EntitiesMonitorCard extends CommentsMixin(
       css`
         .card-content {
           padding: 25px 18px;
+        }
+        hr {
+          background-color: var(--gray-mid);
+          width: 100%;
+          height: 2px;
+          margin-block: 16px;
         }
       `
     ];

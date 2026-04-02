@@ -92,6 +92,17 @@
     "CP_OUTPUT": "مخرج البرنامج القطري",
     "CP_OUTPUTS": "مخرجات البرنامج القطري",
     "CP_OUTPUTS_FOUND": "تم العثور على {{عدد}} مخرجات البرنامج القطري:",
+    "PROGRAMME_ACTIVITIES": "أنشطة البرنامج",
+    "ADD_PROGRAMME_ACTIVITIES": "إضافة أنشطة البرنامج",
+    "EDIT_PROGRAMME_ACTIVITIES": "تحرير أنشطة البرنامج",
+    "FROM_PROGRAMME_ACTIVITIES": "تمت إضافتها عبر أنشطة البرنامج",
+    "GPD": "gPDs",
+    "ADD_GPD": "إضافة gPDs",
+    "WORKPLAN_WBS": "نشاط خطة العمل (WBS)",
+    "WORKPLAN_WBS_EXPECTED_FORMAT": "التنسيق المتوقع: 4 أرقام / حرفان كبيران أو رقمان / رقمان / 3 أرقام / 3 أرقام / 3 أرقام / 7 أحرف كبيرة أو أرقام",
+    "REF_NUMBER_EXPECTED_FORMAT": "التنسيق المتوقع: رقمان / 6 أرقام",
+    "WRONG_FORMAT": "Wrong Format",
+    "REFERENCE_NUMBER": "الرقم المرجعي",
     "END_DATE": "تاريخ الانتهاء",
     "ENTRIES_TO_MONITOR": "الجهات التي يجب مراقبتها",
     "EXPORT": "تصدير",
@@ -104,7 +115,9 @@
     "MONITOR_INFO": "معلومات المراقبة",
     "OFFICE": "المكاتب الميدانية",
     "PARTNER": "الشريك",
-    "PARTNERS": "‏الشركاء",
+    "CSO_PARTNERS": "شركاء CSO",
+    "GOVERNMENT_PARTNERS": "الشركاء الحكوميين",
+    "ADD_GOVERNMENT_PARTNERS": "إضافة الشركاء الحكوميين",
     "PARTNER_ORGANIZATION": "المنظمة الشريك",
     "PD_STATUS": "حالة PD",
     "REJECTION_NOTE": "ملاحظة الرفض",
@@ -399,7 +412,8 @@
     "LEVEL": {
       "INTERVENTION": "وثيقة البرامج/اتفاقية التمويل الصغير",
       "OUTPUT": "مخرج البرنامج القطري",
-      "PARTNER": "الشريك"
+      "PARTNER": "الشريك",
+      "EWP_ACTIVITY": "التدخلات والأنشطة الرئيسية"
     },
     "PLACEHOLDERS": {
       "ANSWER_TYPE": "حدد نوع الإجابة",
@@ -467,7 +481,8 @@
   "LEVELS_OPTIONS": {
     "INTERVENTION": "وثيقة البرامج/وثيقة البرامج المبسطة",
     "OUTPUT": "مخرج البرنامج القطري",
-    "PARTNER": "الشريك"
+    "PARTNER": "الشريك",
+    "EWP_ACTIVITY": "التدخلات والأنشطة الرئيسية"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "مؤقت",
