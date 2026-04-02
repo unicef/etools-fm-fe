@@ -27,7 +27,7 @@ import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/numbe
 import '@unicef-polymer/etools-form-builder/dist/rich-editor/rich-text';
 import '@unicef-polymer/etools-form-builder/dist/form-fields/single-fields/choice-field.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch';
-import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
+import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
 import './action-points-popup/summary-action-points-popup';
 import {CommentElementMeta, CommentsMixin} from '../../../../common/comments/comments-mixin';
 
@@ -132,7 +132,14 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
   protected getFindingQuestion(finding: SummaryFinding): TemplateResult {
     return html`
       <div class="layout-vertical question-container">
-        <div class="question-text">${finding.activity_question.text}</div>
+        ${finding.activity_question.question?.tooltip
+          ? html`
+              <etools-info-tooltip hoist to="body" class="question-tooltip">
+                <span slot="field" class="question-text">${finding.activity_question.text}</span>
+                <span slot="message">${finding.activity_question.question?.tooltip}</span>
+              </etools-info-tooltip>
+            `
+          : html`<div class="question-text">${finding.activity_question.text}</div>`}
         <div class="question-details">${finding.activity_question.specific_details}</div>
         <div class="flex-2 layout-horizontal layout-wrap">
           ${finding.activity_question.findings.map(
@@ -456,14 +463,17 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
     this.onTrackValue = onTrackState;
   }
 
-  private getFindingAnswer(value: string, question: IChecklistQuestion): string {
+  private getFindingAnswer(value: string | string[], question: IChecklistQuestion): string | string[] {
     if (!question.options.length) {
-      return value;
+      return Array.isArray(value) ? value.join(', ') : value;
     } else {
-      const option: QuestionOption | undefined = question.options.find(
-        (option: QuestionOption) => option.value === value
-      );
-      return (option && option.label) || '';
+      const options: string = question.options
+        .filter((option: QuestionOption) =>
+          Array.isArray(value) ? value.includes(option.value.toString()) : value === option.value.toString()
+        )
+        .map((option: QuestionOption) => option.label)
+        .join(', ');
+      return options || '';
     }
   }
 
@@ -529,6 +539,9 @@ export class SummaryCard extends CommentsMixin(MethodsMixin(LitElement)) {
         }
         rich-text[readonly]::part(rich-viewer) {
           background-color: var(--secondary-background-color);
+        }
+        .question-tooltip {
+          align-items: start;
         }
       `
     ];

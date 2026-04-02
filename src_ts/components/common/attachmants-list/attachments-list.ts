@@ -2,6 +2,7 @@ import {LitElement, TemplateResult, CSSResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {template} from './attachments-list.tpl';
 import {loadAttachmentsList, loadAttachmentsTypes} from '../../../redux/effects/attachments-list.effects';
+import {ACTIVITY_RELATED_DOCUMENTS, ACTIVITY_REPORT_ATTACHMENTS} from '../../../endpoints/endpoints-list';
 import {store} from '../../../redux/store';
 import {attachmentsListSelector, attachmentsTypesSelector} from '../../../redux/selectors/attachments-list.selectors';
 import {elevationStyles} from '@unicef-polymer/etools-modules-common/dist/styles/elevation-styles';
@@ -12,11 +13,11 @@ import {SharedStyles} from '../../styles/shared-styles';
 import {pageLayoutStyles} from '../../styles/page-layout-styles';
 import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styles';
 import {CardStyles} from '../../styles/card-styles';
+import {AttachmentsListFileTypeTooltipStyles} from '../../styles/attachments.styles';
 import {attachmentsList} from '../../../redux/reducers/attachments-list.reducer';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {CommentElementMeta, CommentsMixin} from '../comments/comments-mixin';
-
 store.addReducers({attachmentsList});
 
 @customElement('attachments-list')
@@ -80,12 +81,29 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
     return template.call(this);
   }
 
+  /** Plain-text description for native `title` on file type (from API). */
+  getFileTypeDescriptionText(label: string): string {
+    const type = this.attachmentsTypes?.find((t) => t.label === label);
+    return (type?.description ?? '').trim();
+  }
+
+  /** HTML for `info-icon-tooltip` — preserves API newlines. */
+  getFileTypeDescriptionTooltipHtml(label: string): string {
+    const text = this.getFileTypeDescriptionText(label);
+    return text ? text.replace(/\n/g, '<br>') : '';
+  }
+
+  /** For Related Documents we load file types from data-collection (ACTIVITY_REPORT_ATTACHMENTS). */
+  private get _typesStoreKey(): string {
+    return this._endpointName === ACTIVITY_RELATED_DOCUMENTS ? ACTIVITY_REPORT_ATTACHMENTS : this._endpointName;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._endpointName];
-    if (!this.attachmentsTypes || !this.attachmentsTypes.length) {
-      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._endpointName, this.additionalEndpointData));
+    this.attachmentsTypes = store.getState().attachmentsList.attachmentsTypes[this._typesStoreKey] ?? [];
+    if (!this.attachmentsTypes.length) {
+      store.dispatch<AsyncEffect>(loadAttachmentsTypes(this._typesStoreKey, this.additionalEndpointData));
     }
 
     this.attachmentsTypesUnsubscribe = store.subscribe(
@@ -95,7 +113,7 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
             this.attachmentsTypes = types;
           }
         },
-        [this._endpointName]
+        [this._typesStoreKey]
       )
     );
   }
@@ -119,7 +137,7 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
       dialog: 'edit-attachment-popup',
       dialogData: {
         editedAttachment: attachment,
-        attachmentTypes: this.attachmentsTypes,
+        attachmentTypes: this.attachmentsTypes || [],
         endpointName: this._endpointName,
         additionalEndpointData: this.additionalEndpointData
       }
@@ -151,6 +169,13 @@ export class AttachmentsListComponent extends CommentsMixin(LitElement) {
   }
 
   static get styles(): CSSResult[] {
-    return [elevationStyles, SharedStyles, pageLayoutStyles, layoutStyles, CardStyles];
+    return [
+      elevationStyles,
+      SharedStyles,
+      pageLayoutStyles,
+      layoutStyles,
+      CardStyles,
+      AttachmentsListFileTypeTooltipStyles
+    ];
   }
 }

@@ -1,4 +1,5 @@
 import '@unicef-polymer/etools-unicef/src/etools-data-table/etools-data-table.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import {CSSResultArray, LitElement, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {SharedStyles} from '../../../../../styles/shared-styles';
@@ -20,6 +21,9 @@ export class ReviewChecklistItemComponent extends CommentsMixin(LitElement) {
         etools-data-table-row::part(edt-list-row-wrapper) {
           background-color: var(--primary-background-color);
         }
+        .question-tooltip {
+          align-items: start;
+        }
       </style>
       <div class="table-container">
         <etools-data-table-row .detailsOpened="${true}">
@@ -39,7 +43,16 @@ export class ReviewChecklistItemComponent extends CommentsMixin(LitElement) {
                   related-to-description="${this.itemTitle}: ${checklistItem.text}"
                   comments-container
                 >
-                  <div class="row-details-content col-md-4 col-12">${checklistItem.text}</div>
+                  <div class="row-details-content col-md-4 col-12">
+                    ${checklistItem.question?.tooltip
+                      ? html`
+                          <etools-info-tooltip hoist to="body" class="question-tooltip">
+                            <span slot="field">${checklistItem.text}</span>
+                            <span slot="message">${checklistItem.question.tooltip}</span>
+                          </etools-info-tooltip>
+                        `
+                      : checklistItem.text}
+                  </div>
                   <div class="row-details-content col-md-8 col-12">${checklistItem.specific_details}</div>
                 </div>
               `

@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Oui",
+    "NO": "Non"
+  },
   "ACTIVITIES_LIST": {
     "TITLE": "Activités",
     "CREATE_NEW_BUTTON": "Créer",
@@ -12,7 +16,8 @@
       "CHECKLISTS_COUNT": "Listes de contrôle",
       "STATUS": "Statut",
       "SECTIONS": "Sections",
-      "PARTNER": "Partenaire"
+      "PARTNER": "Partenaire",
+      "IS_PROGRAMMATIC_VISIT": "Visite programmatique"
     },
     "REFERENCE_NO": "Numéro de référence",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "STARTS_AFTER": "Commence après",
       "END_BEFORE": "Fin avant",
       "OFFICE": "Bureau de terrain",
-      "SECTIONS": "Sections"
+      "SECTIONS": "Sections",
+      "IS_PROGRAMMATIC_VISIT": "Visite programmatique"
     }
   },
   "ACTIVITY_ADDITIONAL_INFO": {
@@ -147,9 +153,18 @@
       "reject_report": "Renvoyer le rapport"
     },
     "REASON_FOR_TRANSITION": {
-      "cancel": {"LABEL": "Commentaire d'annulation", "TITLE": "Motif d'annulation"},
-      "reject": {"LABEL": "Commentaire de rejet", "TITLE": "Motif du rejet"},
-      "reject_report": {"LABEL": "Commentaire sur le renvoi du rapport", "TITLE": "Raison du renvoi du rapport"}
+      "cancel": {
+        "LABEL": "Commentaire d'annulation",
+        "TITLE": "Motif d'annulation"
+      },
+      "reject": {
+        "LABEL": "Commentaire de rejet",
+        "TITLE": "Motif du rejet"
+      },
+      "reject_report": {
+        "LABEL": "Commentaire sur le renvoi du rapport",
+        "TITLE": "Raison du renvoi du rapport"
+      }
     },
     "STATUSES": {
       "draft": "Draft",
@@ -352,6 +367,7 @@
     "VIEW_POPUP_TITLE": "Voir la question",
     "PLACEHOLDERS": {
       "QUESTION": "Saisir le texte de la question",
+      "TOOLTIP": "Brève aide ou définition (max 500 caractères). Contenu à fournir.",
       "SECTIONS": "Sélectionnez les rubriques",
       "METHODS": "Sélectionnez les méthodes de collecte",
       "CATEGORY": "Sélectionnez le groupe",
@@ -371,7 +387,8 @@
       "IS_ACTIVE": "C'est actif",
       "SCALE_SIZE": "Taille de l'échelle",
       "ORDER": "Ordre",
-      "IS_CUSTOM": "Type de question"
+      "IS_CUSTOM": "Type de question",
+      "TOOLTIP": "Info-bulle"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "Non standard",
@@ -494,9 +511,11 @@
     "DELETE_POPUP_TITLE": "Supprimer la pièce jointe?",
     "FILE_TYPE_LABEL": "Type de document",
     "FILE_TYPE_PLACEHOLDER": "Sélectionnez le type de document",
+    "FILE_TYPE_REQUIRED": "Le type de fichier est requis",
     "COLUMNS": {
       "CREATED": "Date de téléchargement",
       "FILE_TYPE": "Type de document",
+      "CATEGORY": "Catégorie",
       "FILE": "Pièce jointe"
     }
   },

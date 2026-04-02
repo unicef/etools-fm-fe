@@ -1,4 +1,8 @@
 {
+  "GENERAL": {
+    "YES": "Sí",
+    "NO": "No"
+  },
   "ACTIVITIES_LIST": {
     "COLUMNS": {
       "CHECKLISTS_COUNT": "Listas de verificación",
@@ -10,7 +14,8 @@
       "TEAM_MEMBERS": "Miembros del equipo",
       "VISIT_LEAD": "Líder de visita",
       "SECTIONS": "Secciones",
-      "PARTNER": "Socio"
+      "PARTNER": "Socio",
+      "IS_PROGRAMMATIC_VISIT": "Visita programática"
     },
     "CREATE_NEW_BUTTON": "Crear nuevo",
     "FILTERS": {
@@ -29,7 +34,8 @@
       "VISIT_LEAD": "Líder de visita",
       "SECTIONS": "Secciones",
       "STARTS_AFTER": "Comienza después de",
-      "END_BEFORE": "Termina antes"
+      "END_BEFORE": "Termina antes",
+      "IS_PROGRAMMATIC_VISIT": "Visita programática"
     },
     "REFERENCE_NO": "Referencia",
     "TITLE": "Actividades"
@@ -385,7 +391,8 @@
       "SCALE_SIZE": "Tamaño de escala",
       "SECTIONS": "Secciones",
       "ORDER": "Pedir",
-      "IS_CUSTOM": "Tipo de pregunta"
+      "IS_CUSTOM": "Tipo de pregunta",
+      "TOOLTIP": "Información de ayuda"
     },
     "IS_CUSTOM": {
       "NON_STANDARD": "No estándar",
@@ -403,6 +410,7 @@
       "LEVEL": "Seleccionar Nivel objetivo de la pregunta",
       "METHODS": "Seleccionar Métodos de recolección",
       "QUESTION": "Ingresar el texto de la pregunta",
+      "TOOLTIP": "Breve orientación o definición (máx. 500 caracteres). Contenido a suministrar.",
       "SCALE_SIZE": "Seleccionar Tamaño de escala",
       "SECTIONS": "Seleccionar Secciones"
     },
@@ -498,12 +506,14 @@
     "COLUMNS": {
       "CREATED": "Fecha de subida",
       "FILE": "Archivo adjunto",
-      "FILE_TYPE": "Tipo de documento"
+      "FILE_TYPE": "Tipo de documento",
+      "CATEGORY": "Categoría"
     },
     "DELETE_POPUP_TITLE": "¿Eliminar documento adjunto?",
     "EDIT_POPUP_TITLE": "Editar archivo adjunto",
     "FILE_TYPE_LABEL": "Tipo de documento",
     "FILE_TYPE_PLACEHOLDER": "Seleccionar Tipo de documento",
+    "FILE_TYPE_REQUIRED": "El tipo de archivo es obligatorio",
     "RELATED_DOCUMENTS": "Documentos relacionados",
     "REPORT_ATTACHMENTS": "Anexos del informe",
     "TITLE": "Archivos adjuntos"

@@ -62,4 +62,5 @@ interface IChecklistAttachment extends IAttachment {
 type AttachmentType = {
   id: number;
   label: string;
+  description?: string;
 };
