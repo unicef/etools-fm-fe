@@ -478,6 +478,7 @@
     "BOOL": "قيمة منطقية",
     "LIKERT_SCALE": "مقياس ليكرت",
     "NUMBER": "رقم",
+    "PERCENTAGE": "النسبة المئوية",
     "NUMBER_FLOAT_TYPE": "عدد تعويم",
     "NUMBER_INTEGER_TYPE": "رقم صحيح",
     "TEXT": "نص",

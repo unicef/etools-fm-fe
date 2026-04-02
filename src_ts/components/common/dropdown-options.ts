@@ -14,6 +14,7 @@ import {
 export const FILE_TYPE = 'file';
 export const TEXT_TYPE = 'text';
 export const NUMBER_TYPE = 'number';
+export const PERCENTAGE_TYPE = 'percentage';
 export const BOOL_TYPE = 'bool';
 export const SCALE_TYPE = 'likert_scale';
 export const MULTIPLE_CHOICE = 'multiple_choice';
@@ -39,6 +40,7 @@ export const TPM = 'tpm';
 export const ANSWER_TYPES: AnswerTypeOption[] = [
   {value: TEXT_TYPE, display_name: `ANSWER_TYPE_OPTIONS.TEXT`},
   {value: NUMBER_TYPE, display_name: `ANSWER_TYPE_OPTIONS.NUMBER`},
+  {value: PERCENTAGE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.PERCENTAGE`},
   {value: BOOL_TYPE, display_name: `ANSWER_TYPE_OPTIONS.BOOL`},
   {value: SCALE_TYPE, display_name: `ANSWER_TYPE_OPTIONS.LIKERT_SCALE`},
   {value: MULTIPLE_CHOICE, display_name: `ANSWER_TYPE_OPTIONS.MULTIPLE_CHOICE`}

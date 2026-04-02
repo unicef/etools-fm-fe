@@ -481,6 +481,7 @@
     "BOOL": "Booleano",
     "LIKERT_SCALE": "Escala Likert",
     "NUMBER": "Número",
+    "PERCENTAGE": "Porcentaje",
     "NUMBER_FLOAT_TYPE": "Número flotante",
     "NUMBER_INTEGER_TYPE": "Número entero",
     "TEXT": "Texto",
