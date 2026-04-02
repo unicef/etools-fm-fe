@@ -102,12 +102,14 @@
     "PARTNER": "Partner",
     "CP_OUTPUT": "CP Output",
     "INTERVENTION": "Intervention",
-    "PARTNERS": "Partners",
+    "CSO_PARTNERS": "CSO Partners",
     "PARTNER_ORGANIZATION": "Partner Organization",
     "CP_OUTPUTS": "CP Outputs",
     "CP_OUTPUTS_FOUND": "{{ count }} CP Outputs were found:",
-    "KEY_INTERVENTIONS": "Key Interventions and Activities",
-    "ADD_KEY_INTERVENTIONS": "Add Key Interventions and Activities",
+    "PROGRAMME_ACTIVITIES": "Programme Activities",
+    "ADD_PROGRAMME_ACTIVITIES": "Add Programme Activities",
+    "EDIT_PROGRAMME_ACTIVITIES": "Edit Programme Activities",
+    "FROM_PROGRAMME_ACTIVITIES": "added via Programme Activities",
     "GOVERNMENT_PARTNERS": "Government Partners",
     "ADD_GOVERNMENT_PARTNERS": "Add Government Partners",
     "GPD": "gPDs",
@@ -424,7 +426,7 @@
       "PARTNER": "Partner",
       "OUTPUT": "CP Output",
       "INTERVENTION": "PD/SPD/gPD",
-      "EWP_ACTIVITY": "Key Interventions and Activities"
+      "EWP_ACTIVITY": "Programme Activities"
     }
   },
   "SITES": {
@@ -483,7 +485,7 @@
     "OUTPUT": "CP Output",
     "INTERVENTION": "PD/SPD",
     "GPD": "gPD",
-    "EWP_ACTIVITY": "Key Interventions and Activities"
+    "EWP_ACTIVITY": "Programme Activities"
   },
   "FACILITY_TYPE_DURATION": {
     "TEMPORARY": "Temporary",

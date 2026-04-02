@@ -64,12 +64,8 @@ export class ActionPointsPopup extends SectionsMixin(DataMixin()<EditableActionP
     }
     this.activityDetails = activityDetails;
     this.ewpActivities = (activityDetails.ewp_activities || []).flatMap((item: any) =>
-      item.activities.map((activity: string) => ({
-        id: activity,
-        name: activity
-      }))
+      (item.activities || []).map((act: any) => ({id: act.id, name: act.name}))
     );
-
     this.activityId = activity_id;
     this.liteInterventions = (this.activityDetails.interventions || []).map((x) => ({id: x.id, name: x.number}));
     this.selectedRelatedTo = this.getRelatedTo(this.editedData);

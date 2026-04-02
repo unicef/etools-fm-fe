@@ -18,9 +18,11 @@ import {layoutStyles} from '@unicef-polymer/etools-unicef/src/styles/layout-styl
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {InterventionsMixin} from '../../../../../../common/mixins/interventions-mixin';
-import {translate} from '@unicef-polymer/etools-unicef/src/etools-translate';
+import {translate, get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {FormBuilderCardStyles} from '@unicef-polymer/etools-form-builder/dist/lib/styles/form-builder-card.styles';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
+import {Unsubscribe} from 'redux';
+import {activeLanguageSelector} from '../../../../../../../redux/selectors/active-language.selectors';
 
 export const CARD_NAME = 'entities-monitor';
 const ELEMENT_FIELDS: (keyof IActivityDetails)[] = ['cp_outputs', 'partners', 'interventions'];
@@ -33,8 +35,10 @@ export class EntitiesMonitorCard extends CommentsMixin(
   @property() activityCpOutputs: IActivityCPOutput[] = [];
   @property() activityInterventions: IActivityIntervention[] = [];
   @property() activityGpdPartners: IActivityPartner[] = [];
-  @property() activityEwpActivities: string[] = [];
+  @property() activityEwpActivities: any[] = [];
   @property() activityGPDs: string[] = [];
+  @property() fromEwpActivityText: string = '';
+  private activeLanguageUnsubscribe!: Unsubscribe;
 
   set data(data: IActivityDetails) {
     super.data = data;
@@ -45,6 +49,20 @@ export class EntitiesMonitorCard extends CommentsMixin(
     this.activityGpdPartners = clone((data?.partners || []).filter((x) => x.organization_type === 'Government'));
     this.activityEwpActivities = clone(data?.ewp_activities || []);
     this.activityGPDs = clone(data?.gpds || []);
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.activeLanguageUnsubscribe = store.subscribe(
+      activeLanguageSelector(() => {
+        this.fromEwpActivityText = getTranslation('ACTIVITY_DETAILS.FROM_PROGRAMME_ACTIVITIES');
+      })
+    );
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.activeLanguageUnsubscribe();
   }
 
   render(): TemplateResult {
@@ -80,7 +98,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
             <entries-list
               id="partnersList"
               class="col-md-4 col-12"
-              .nameList="${translate('ACTIVITY_DETAILS.PARTNERS')}"
+              .nameList="${translate('ACTIVITY_DETAILS.CSO_PARTNERS')}"
               .formatItem="${(item: EtoolsPartner) => item.name}"
               .items="${this.activityPartners}"
               ?is-readonly="${!this.isEditMode}"
@@ -95,7 +113,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
               class="col-md-4 col-12"
               .nameList="${translate('ACTIVITY_DETAILS.CP_OUTPUTS')}"
               .formatItem="${(item: EtoolsCpOutput) => item.name}"
-              .items="${this.activityCpOutputs}"
+              .items="${this.getCombinedCPOutputs(this.activityCpOutputs, this.activityEwpActivities)}"
               ?is-readonly="${!this.isEditMode}"
               @add-entry="${() => this.openAddCpOutput()}"
               @remove-entry="${({detail}: CustomEvent) =>
@@ -135,14 +153,17 @@ export class EntitiesMonitorCard extends CommentsMixin(
             <!--    Ewp Activities    -->
             <entries-list
               class="col-md-4 col-12"
-              .nameList="${translate('ACTIVITY_DETAILS.KEY_INTERVENTIONS')}"
+              .nameList="${translate('ACTIVITY_DETAILS.PROGRAMME_ACTIVITIES')}"
               .formatItem="${(item: EwpActivity) => this.getEwpActivityText(item)}"
               .items="${this.activityEwpActivities}"
+              is-ewp
               ?is-readonly="${!this.isEditMode}"
               @add-entry="${() => this.openAddKeyIntervention()}"
+              @edit-entry="${({detail}: CustomEvent) => this.openAddKeyIntervention(detail.index)}"
               @remove-entry="${({detail}: CustomEvent) => {
-                this.activityEwpActivities = (this.activityEwpActivities || []).filter((x) => x != detail.id);
-                this.editedData.ewp_activities = this.activityEwpActivities;
+                (this.activityEwpActivities || []).splice(detail.index, 1);
+                this.setProgrammeActivities(this.activityEwpActivities);
+                this.requestUpdate();
               }}"
             >
             </entries-list>
@@ -179,6 +200,15 @@ export class EntitiesMonitorCard extends CommentsMixin(
     return [{element, relatedTo, relatedToDescription}];
   }
 
+  getCombinedCPOutputs(activityCpOutputs: IActivityCPOutput[], ewpActivities: any[]) {
+    const ewpOutputs = (ewpActivities || []).flatMap((item: any) => ({
+      id: item.cp_output.id,
+      name: `${item.cp_output.name} (${this.fromEwpActivityText})`,
+      ewp: true
+    }));
+    return (activityCpOutputs || []).concat(ewpOutputs);
+  }
+
   protected startEdit(): void {
     super.startEdit();
     store.dispatch(new SetEditedDetailsCard(CARD_NAME));
@@ -203,15 +233,18 @@ export class EntitiesMonitorCard extends CommentsMixin(
   }
 
   protected openAddCpOutput(): void {
-    openDialog({dialog: 'cp-output-popup'}).then(({confirmed, response}: IDialogResponse<EtoolsCpOutput>) => {
-      if (!confirmed) {
-        return;
+    const excludeCPOutputIDs = (this.activityCpOutputs || []).map((x: any) => x.id);
+    openDialog({dialog: 'cp-output-popup', dialogData: {excludeCPOutputIDs: excludeCPOutputIDs}}).then(
+      ({confirmed, response}: IDialogResponse<EtoolsCpOutput>) => {
+        if (!confirmed) {
+          return;
+        }
+        if (response) {
+          this.activityCpOutputs = [...this.activityCpOutputs, response];
+          this.editedData.cp_outputs = simplifyValue(this.activityCpOutputs);
+        }
       }
-      if (response) {
-        this.activityCpOutputs = [...this.activityCpOutputs, response];
-        this.editedData.cp_outputs = simplifyValue(this.activityCpOutputs);
-      }
-    });
+    );
   }
 
   protected openAddIntervention(): void {
@@ -233,7 +266,7 @@ export class EntitiesMonitorCard extends CommentsMixin(
             interventionIds,
             this.interventions
           );
-          const outputs: IActivityPartner[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
+          const outputs: any[] = this.getActiveEntities<IActivityCPOutput>(outputIds, this.outputs);
           const partners: IActivityPartner[] = this.getActiveEntities<IActivityPartner>(partnerIds, this.partners);
           this.activityInterventions = [...interventions];
           this.activityCpOutputs = [...outputs];
@@ -247,14 +280,36 @@ export class EntitiesMonitorCard extends CommentsMixin(
     );
   }
 
-  protected openAddKeyIntervention(): void {
-    openDialog({dialog: 'key-intervention-popup'}).then(({confirmed, response}: IDialogResponse<string>) => {
+  protected openAddKeyIntervention(index?: number): void {
+    let excludeCPOutputIDs = (this.activityEwpActivities || []).map((x: any) => x.cp_output.id);
+    let eWPActivity: any = null;
+    index = Number(index);
+    if (!isNaN(index) && index >= 0 && this.activityEwpActivities.length > index) {
+      eWPActivity = this.activityEwpActivities[index];
+      excludeCPOutputIDs = excludeCPOutputIDs.filter((x: number) => x !== eWPActivity.cp_output.id);
+    } else {
+      index = -1;
+    }
+
+    openDialog({
+      dialog: 'key-intervention-popup',
+      dialogData: {eWPActivity: eWPActivity, index: index, excludeCPOutputIDs: excludeCPOutputIDs}
+    }).then(({confirmed, response}: IDialogResponse<any>) => {
       if (!confirmed) {
         return;
       }
       if (response) {
-        this.activityEwpActivities = [...(this.activityEwpActivities || []), response];
-        this.editedData.ewp_activities = this.activityEwpActivities;
+        const ewpIndex = Number(response.index);
+        delete response.index;
+        if (ewpIndex >= 0) {
+          // update existing ewp activity
+          this.activityEwpActivities[ewpIndex] = response;
+          this.activityEwpActivities = [...this.activityEwpActivities];
+        } else {
+          // new activity, add it
+          this.activityEwpActivities = [...(this.activityEwpActivities || []), response];
+        }
+        this.setProgrammeActivities(this.activityEwpActivities);
       }
     });
   }
@@ -278,6 +333,17 @@ export class EntitiesMonitorCard extends CommentsMixin(
   protected setPartners() {
     const allPartners = (this.activityGpdPartners || []).concat(this.activityPartners || []);
     this.editedData.partners = simplifyValue(allPartners);
+  }
+
+  protected getProgrammeActivitiesCpOutputIDs(ewpActivities: any) {
+    return (ewpActivities || []).map((x: any) => x.cp_output.id);
+  }
+
+  protected setProgrammeActivities(ewpActivities: any) {
+    const ewp_activities = clone(ewpActivities || []);
+    (ewp_activities || []).forEach((x: any) => (x.cp_output = x.cp_output.id));
+    (ewp_activities || []).forEach((x: any) => (x.activities = simplifyValue(x.activities || [])));
+    this.editedData.ewp_activities = ewp_activities;
   }
 
   protected removeItem<T extends EtoolsCpOutput | EtoolsPartner | EtoolsIntervention>(

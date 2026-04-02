@@ -25,7 +25,10 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
   @property() selectedCpOutput?: EtoolsCpOutput;
   @property() cpOutputs: EtoolsCpOutput[] = [];
   @property() workplanWBSOptions: any[] = [];
+  @property() excludeCPOutputIDs: number[] = [];
   @property() showExpired = false;
+  @property() index = -1;
+  @property() title = getTranslation('ACTIVITY_DETAILS.ADD_PROGRAMME_ACTIVITIES');
   private loadingCpOutputs!: Callback;
 
   static get styles(): CSSResultArray {
@@ -59,6 +62,23 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     ];
   }
 
+  set dialogData({eWPActivity, index, excludeCPOutputIDs}: any) {
+    this.index = index;
+    this.excludeCPOutputIDs = excludeCPOutputIDs || [];
+    if (eWPActivity) {
+      this.title = getTranslation('ACTIVITY_DETAILS.EDIT_PROGRAMME_ACTIVITIES');
+      this.showExpired = true;
+      if (eWPActivity.cp_output) {
+        this.selectedCpOutput = eWPActivity.cp_output;
+        this.getWorkplanWBSOptions(Number(this.selectedCpOutput?.id));
+      }
+      if (eWPActivity.activities) {
+        this.workplanWBS = eWPActivity.activities;
+      }
+    }
+    this.loadingCpOutputs();
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     this.loadingCpOutputs = debounce(() => {
@@ -69,7 +89,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         endpoint += '&active=true';
       }
       request<EtoolsCpOutput[]>(endpoint).then((response: EtoolsCpOutput[]) => {
-        this.cpOutputs = response;
+        this.cpOutputs = (response || []).filter((x: EtoolsCpOutput) => !this.excludeCPOutputIDs.includes(x.id));
         if (!this.showExpired && this.selectedCpOutput) {
           // if only active displayed and have item already selected, check if exists in the options
           if (!this.cpOutputs.find((x) => x.id === this.selectedCpOutput!.id)) {
@@ -77,15 +97,14 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
           }
         }
       });
-    }, 100);
-    this.loadingCpOutputs();
+    }, 50);
   }
 
   addKeyIntervention(): void {
     if (validateRequiredFields(this)) {
       fireEvent(this, 'dialog-closed', {
         confirmed: true,
-        response: {cp_output: this.selectedCpOutput, activities: this.workplanWBS}
+        response: {cp_output: this.selectedCpOutput, activities: this.workplanWBS, index: this.index}
       });
     }
   }
@@ -127,6 +146,8 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
     request(`${url}&cp_output=${id}`)
       .then((res: any) => {
         this.workplanWBSOptions = res || [];
+        this.workplanWBSOptions.forEach((x: any) => (x.name = `${x.name} [${x.wbs}]`));
+        this.requestUpdate();
       })
       .catch(() => {
         fireEvent(this, 'toast', {text: getTranslation('ERROR_LOAD_ACTIVITIES_LIST')});
@@ -143,7 +164,7 @@ export class PartnerPopup extends PartnersMixin(LitElement) {
         keep-dialog-open
         .okBtnText="${translate('MAIN.BUTTONS.ADD')}"
         .cancelBtnText="${translate('CANCEL')}"
-        dialog-title="${translate('ACTIVITY_DETAILS.ADD_KEY_INTERVENTIONS')}"
+        dialog-title="${this.title}"
         ?opened="${this.dialogOpened}"
         @confirm-btn-clicked="${() => this.addKeyIntervention()}"
         @close="${this.onClose}"
