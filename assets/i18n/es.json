@@ -134,7 +134,13 @@
     "TYPE_OF_FACILITY": "Tipo de instalación",
     "ASSIGN_INFRASTRUCTURE_TYPE": "Asignar tipo de infraestructura",
     "INFRASTRUCTURE_TYPE": "Tipo de infraestructura",
-    "OBJECTIVE": "Objetivo"
+    "OBJECTIVE": "Objetivo",
+    "METHODOLOGY": "Metodología",
+    "METHOD": {
+      "KII": "Entrevistas con informantes clave (EIC)",
+      "FGD": "Grupos focales (FGD)",
+      "OBSERVATIONS": "Observaciones"
+    }
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

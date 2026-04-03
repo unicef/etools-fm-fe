@@ -132,7 +132,13 @@
     "TYPE_OF_FACILITY": "نوع المنشأة",
     "ASSIGN_INFRASTRUCTURE_TYPE": "تعيين نوع البنية التحتية",
     "INFRASTRUCTURE_TYPE": "نوع البنية التحتية",
-    "OBJECTIVE": "موضوعي"
+    "OBJECTIVE": "موضوعي",
+    "METHODOLOGY": "المنهجية",
+    "METHOD": {
+      "KII": "مقابلات مع مصادر رئيسية (KII)",
+      "FGD": "مجموعات نقاش مركزة (FGD)",
+      "OBSERVATIONS": "ملاحظات ميدانية"
+    }
   },
   "ACTIVITY_ITEM": {
     "ACTION_POINTS": {

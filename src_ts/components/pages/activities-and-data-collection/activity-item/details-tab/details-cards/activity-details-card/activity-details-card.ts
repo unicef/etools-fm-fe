@@ -18,7 +18,7 @@ import {SetEditedDetailsCard} from '../../../../../../../redux/actions/activity-
 import clone from 'ramda/es/clone';
 import {fireEvent} from '@unicef-polymer/etools-utils/dist/fire-event.util';
 import {OfficesMixin} from '../../../../../../common/mixins/offices-mixin';
-import {simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
+import {areEqual, simplifyValue} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {get as getTranslation} from '@unicef-polymer/etools-unicef/src/etools-translate';
 import {InputStyles} from '../../../../../../styles/input-styles';
 import {formatDate} from '@unicef-polymer/etools-utils/dist/date.util';
@@ -33,6 +33,7 @@ import {activeLanguageSelector} from '../../../../../../../redux/selectors/activ
 import {applyDropdownTranslation, applyPageTabsTranslation} from '../../../../../../utils/translation-helper';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.js';
+import '@unicef-polymer/etools-unicef/src/etools-checkbox/etools-checkbox';
 import {CommentElementMeta, CommentsMixin} from '../../../../../../common/comments/comments-mixin';
 import {FACILITY_TYPE_DURATION} from '../../../../../../common/dropdown-options';
 import '@unicef-polymer/etools-unicef/src/etools-info-tooltip/etools-info-tooltip';
@@ -47,7 +48,7 @@ export const CARD_NAME = 'activity-details';
 const SITE_TAB = 'SITE_TAB';
 const AREA_TAB = 'AREA_TAB';
 
-const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
+const ELEMENT_FIELDS = [
   'sections',
   'end_date',
   'start_date',
@@ -55,8 +56,15 @@ const ELEMENT_FIELDS: (keyof IActivityDetails)[] = [
   'location',
   'offices',
   'visit_goals',
+  'data_collection_methodolgy',
   'objective',
   'facility_types'
+];
+
+const DATA_COLLECTION_METHODOLOGY_OPTIONS: {value: string; labelKey: string}[] = [
+  {value: 'kii', labelKey: 'ACTIVITY_DETAILS.METHOD.KII'},
+  {value: 'fgd', labelKey: 'ACTIVITY_DETAILS.METHOD.FGD'},
+  {value: 'observations', labelKey: 'ACTIVITY_DETAILS.METHOD.OBSERVATIONS'}
 ];
 
 const ACTIVITY_DETAILS_TABS: PageTab[] = [
@@ -383,6 +391,23 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
                 dynamic-align
               ></etools-dropdown-multi>
             </div>
+            <div class="col-12">
+              <span>${translate('ACTIVITY_DETAILS.METHODOLOGY')}</span>
+              <div>
+                ${DATA_COLLECTION_METHODOLOGY_OPTIONS.map(
+                  (opt) => html`
+                    <etools-checkbox
+                      ?checked="${(this.editedData.data_collection_methodolgy || []).includes(opt.value)}"
+                      ?disabled="${!this.isEditMode}"
+                      @sl-change="${(e: any) =>
+                        this.toggleDataCollectionMethodology(opt.value, Boolean(e.target.checked))}"
+                    >
+                      ${translate(opt.labelKey)}
+                    </etools-checkbox>
+                  `
+                )}
+              </div>
+            </div>
             <div class="col-md-6 col-12">
               <etools-textarea
                 label="${translate('ACTIVITY_DETAILS.OBJECTIVE')}"
@@ -514,6 +539,16 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
       this.activityVisitGoals = visitGoals;
       this.updateModelValue('visit_goals', visitGoals);
     }
+  }
+
+  toggleDataCollectionMethodology(code: string, checked: boolean): void {
+    const current = this.editedData.data_collection_methodolgy || [];
+    const updated = checked ? Array.from(new Set([...current, code])) : current.filter((item) => item !== code);
+
+    if (areEqual(updated, current)) {
+      return;
+    }
+    this.editedData.data_collection_methodolgy = updated;
   }
 
   onChangeMapTab(tabName: string): void {
@@ -653,6 +688,12 @@ export class ActivityDetailsCard extends CommentsMixin(OfficesMixin(SectionsMixi
     if (!this.editedData.location) {
       fireEvent(this, 'toast', {
         text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('LOCATION_TO_BE_VISITED')}`
+      });
+      return;
+    }
+    if (!(((this.editedData as any).data_collection_methodolgy || []) as string[]).length) {
+      fireEvent(this, 'toast', {
+        text: `${getTranslation('THIS_FIELD_IS_REQUIRED')}: ${getTranslation('ACTIVITY_DETAILS.METHODOLOGY')}`
       });
       return;
     }

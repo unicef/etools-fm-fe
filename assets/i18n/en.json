@@ -132,7 +132,13 @@
     "TYPE_OF_FACILITY": "Type of facility",
     "ASSIGN_INFRASTRUCTURE_TYPE": "Assign Infrastructure Type",
     "INFRASTRUCTURE_TYPE": "Infrastructure Type",
-    "OBJECTIVE": "Objective"
+    "OBJECTIVE": "Objective",
+    "METHODOLOGY": "Methodology",
+    "METHOD": {
+      "KII": "Key Informant Interviews (KII)",
+      "FGD": "Focus Group Discussions (FGD)",
+      "OBSERVATIONS": "Observations"
+    }
   },
   "ACTIVITY_ITEM": {
     "NEW_ACTIVITY": "New Activity",
